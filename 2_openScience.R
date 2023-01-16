@@ -120,7 +120,7 @@ conSMEcoverAlt <- read.csv("https://portal.edirepository.org/nis/dataviewer?pack
 ## plan to use different naming conventions to reference different object types?
 
 
-## TASK: Stage, commit, and pull/push your modified code to the branch
+## TASK: Save your R script. Stage, commit, and pull/push your modified code to the branch
 ## you created for this week with an appropriate commit message.
 
 
@@ -143,7 +143,7 @@ conSMEcoverAlt <- read.csv("https://portal.edirepository.org/nis/dataviewer?pack
 ## duplicates dataframe compared to the two original dataframes?
 
 
-## TASK: Stage, commit, and pull/push your modified code to the branch
+## TASK: Save your R script. Stage, commit, and pull/push your modified code to the branch
 ## you created for this week with an appropriate commit message.
 
 
@@ -158,7 +158,7 @@ duplicates[with(duplicates, order(RecDate, Block, Plot, Taxa)),]
 ## 4934 and 12173 (if they are sorted correctly, those should be on top).
 
 
-## TASK: Stage, commit, and pull/push your modified code to the branch
+## TASK: Save your R script. Stage, commit, and pull/push your modified code to the branch
 ## you created for this week with an appropriate commit message.
 
 
@@ -186,6 +186,6 @@ noDuplicates <- unique(duplicates)
 ## TASK: Go back to our repository in GitHub through your web browser. Find the
 ## issue you created and resolve it.
 
-## TASK: Stage and commit, but this time DON'T pull/push, your modified code to 
+## TASK: Save your R script. Stage, commit, and pull/push your modified code to 
 ## the branch you created for this week with an appropriate commit message.
 
