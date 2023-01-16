@@ -52,7 +52,7 @@
 ## when you hit save?
 
 
-## TASK: Stage, commit, and push your modified .gitignore file to the branch
+## TASK: Stage, commit, and pull/push your modified .gitignore file to the branch
 ## you created for this week with an appropriate commit message.
 
 
@@ -89,7 +89,7 @@ conSMEcoverAlt <- read.csv("https://portal.edirepository.org/nis/dataviewer?pack
 ## Why might it be worse?
 
 
-## TASK: Save your R script. Then stage and commit (but don't push yet) your
+## TASK: Save your R script. Then stage, commit, and pull/push your
 ## modified code to the branch you created for this week with an appropriate 
 ## commit message. Remember, it is most effective to commit small chunks of code 
 ## often with specific commit messages!
@@ -120,5 +120,5 @@ conSMEcoverAlt <- read.csv("https://portal.edirepository.org/nis/dataviewer?pack
 ## plan to use different naming conventions to reference different object types?
 
 
-## TASK: Stage and commit (but don't push yet) your modified code to the branch
+## TASK: Stage, commit, and pull/push your modified code to the branch
 ## you created for this week with an appropriate commit message.
