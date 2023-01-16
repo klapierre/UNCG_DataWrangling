@@ -55,3 +55,42 @@
 ## TASK: Stage, commit, and push your modified .gitignore file to the branch
 ## you created for this week with an appropriate commit message.
 
+
+# ----------------------------------------------------------
+#### 3) Getting open data into R.####
+# ----------------------------------------------------------
+
+## You can import your data into R!
+
+## TASK: Start by setting your working directory to the GitHub repository folder
+## for this class on your computer using the function setwd().
+## Hint - set the working directory as the top folder.
+
+
+## TASK: Now we can import one of these datasets into R. Let's import the plant
+## species abundance datafile (CME011). To do so, use the read.csv() function, 
+## putting the relative file path and file name. Assign the dataframe you import
+## a name that includes the experiment name (conSME) and the data type (abundance)
+## using '<-' and be sure to carefully consider your naming convention when doing so.
+
+
+## Run the following code.
+conSMEcoverAlt <- read.csv("https://portal.edirepository.org/nis/dataviewer?packageid=knb-lter-knz.148.3&entityid=5716ee946efd717292fa3da9241cda7c")
+
+
+## QUESTION: What did this code do? What can you say about these two dataframes?
+
+
+## TASK: Check to see if the two dataframes are identical using an R function.
+## (Hint: remember the Week 1 assignment?)
+
+
+## QUESTION: Why might it be better to source data straight from the data portal?
+## Why might it be worse?
+
+
+## TASK: Save your R script. Then stage and commit (but don't push yet) your
+## modified code to the branch you created for this week with an appropriate 
+## commit message. Remember, it is most effective to commit small chunks of code 
+## often with specific commit messages!
+
