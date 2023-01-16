@@ -32,3 +32,26 @@
 ## have a reproducible script for data analysis related to this dataset?
 
 
+# ----------------------------------------------------------
+#### 2) Preventing GitHub from syncing the data files.####
+# ----------------------------------------------------------
+
+## We can use the .gitignore file to tell git what files not to sync to GitHub!
+
+## QUESTION: What are two reasons why we wouldn't want GitHub to sync this data?
+# GitHub is not good at storing data.
+
+
+## TASK: Check the Git tab in RStudio. Do you see your data folder listed added?
+## Now, open the .gitignore file from the files tab in RStudio.
+## Tell git to ignore the entire folder containing the data you just downloaded.
+## Save the .gitignore file.
+
+
+## QUESTION: What happened to the data folder listed in the Git tab of RStudio
+## when you hit save?
+
+
+## TASK: Stage, commit, and push your modified .gitignore file to the branch
+## you created for this week with an appropriate commit message.
+
