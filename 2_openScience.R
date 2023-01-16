@@ -122,3 +122,70 @@ conSMEcoverAlt <- read.csv("https://portal.edirepository.org/nis/dataviewer?pack
 
 ## TASK: Stage, commit, and pull/push your modified code to the branch
 ## you created for this week with an appropriate commit message.
+
+
+
+# ----------------------------------------------------------
+#### 5) Opening Issues.####
+# ----------------------------------------------------------
+
+## Sometimes there are issues with code, either your own or someone else's.
+## Opening issues in GitHub is a really effective way to keep track of these 
+## problems.
+
+## TASK: Create a new dataframe named "duplicates" by binding the rows of two 
+## conSME dataframes you made into one using the rbind() function.
+## (Hint: Very similar to the cbind function we used in the Week 1 assignment)
+
+
+## QUESTION: Looking at the information for each dataframe in the environment tab
+## of RStudio, what do you notice about the number of observations for the 
+## duplicates dataframe compared to the two original dataframes?
+
+
+## TASK: Stage, commit, and pull/push your modified code to the branch
+## you created for this week with an appropriate commit message.
+
+
+## TASK: Open the duplicates dataframe by clicking on the file name in the 
+## environment tab. Sort by Taxa, Plot, Block, Watershed, and RecDate by clicking
+## on the tops of those columns in that order.
+## You could also run the following code to get the same outcome:
+duplicates[with(duplicates, order(RecDate, Block, Plot, Taxa)),]
+
+
+## QUESTION: What do you notice about the data? Specifically, compare rows 
+## 4934 and 12173 (if they are sorted correctly, those should be on top).
+
+
+## TASK: Stage, commit, and pull/push your modified code to the branch
+## you created for this week with an appropriate commit message.
+
+
+## It looks like we have a problem (that we created for ourselves)! Let's open an
+## issue to make note of this.
+
+
+## TASK: Go to our repository in GitHub through your web browser. Click on issues
+## and start a new issue. Give it a descriptive title that references the script
+## name and line number of the issue. The write a comment describing the issue.
+
+
+## Now let's fix our issue!
+## A great function to get rid of exact duplicate columns in R is unique().
+## Run the following code.
+noDuplicates <- unique(duplicates)
+
+
+## QUESTION: Looking at the information for each dataframe in the environment tab
+## of RStudio, what do you notice about the number of observations for the 
+## noDuplicates dataframe compared to the dulpicates dataframe? What about compared
+## to the two original dataframes?
+
+
+## TASK: Go back to our repository in GitHub through your web browser. Find the
+## issue you created and resolve it.
+
+## TASK: Stage and commit, but this time DON'T pull/push, your modified code to 
+## the branch you created for this week with an appropriate commit message.
+
