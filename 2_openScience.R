@@ -94,3 +94,31 @@ conSMEcoverAlt <- read.csv("https://portal.edirepository.org/nis/dataviewer?pack
 ## commit message. Remember, it is most effective to commit small chunks of code 
 ## often with specific commit messages!
 
+
+
+# ----------------------------------------------------------
+#### 4) Thinking through your naming conventions.####
+# ----------------------------------------------------------
+
+## TASK: Check the names of the columns in the species cover dataset you imported.
+## (Hint: remember the Week 1 assignment?)
+
+
+## QUESTION: What naming convention did the dataset creators use for column names?
+
+
+## QUESTION: What naming convention do you plan to use for this course for the
+## following types of objects in R:
+## R scripts
+## vectors
+## dataframes
+## columns within dataframes
+## homemade functions
+
+
+## QUESTION: Do all of your objects follow the same naming convention or do you
+## plan to use different naming conventions to reference different object types?
+
+
+## TASK: Stage and commit (but don't push yet) your modified code to the branch
+## you created for this week with an appropriate commit message.
