@@ -3,3 +3,4 @@
 #Commit- confirm these changes with git; must make a commit message
 #Pull- get any new changes on the GitHub repository; always PULL FIRST
 #Push- send any committed (local) changes to the GitHub repository
+#Halp
