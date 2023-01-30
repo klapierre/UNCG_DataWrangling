@@ -1,10 +1,22 @@
 # ---------------------------------------------------------- #
-#### MODULE 1: Practice with R in swirl ####                                     
+#### MODULE 1: Practice with R in swirl                   ####               
 # ---------------------------------------------------------- #
 
 ## OBJECTIVE:
 ## To explore the basic building blocks of the R programming language.
 ## To become comfortable running and writing R code and working in the R Studio environment.
+
+
+# ---------------------------------------------------------- #
+#### SET UP:                                              ####
+# ---------------------------------------------------------- #
+# REMINDER: Create a new branch for this week through the GitHub website
+# called yourLastName_week4. Open the Rproject for our course
+# (UNCG_DataWrangling),pull any changes from GitHub, and navigate to the
+# branch you created for this week in RStudio's Git tab. Open this week's
+# assignment in this new branch to complete and submit on GitHub.
+# Ideally, you'll commit your answers a bit at a time as you work through
+# this assignment, rather than committing all at once at the end.
 
 
 # ---------------------------------------------------------- #
@@ -39,14 +51,14 @@ swirl()
 # You should now be able to navigate to the R Programming Course and the modules below.
 
 # ---------------------------------------------------------- #
-#### I. R Programming -> 1. Basic Building Blocks  #### 
+#### I. R Programming -> 1. Basic Building Blocks         #### 
 # ---------------------------------------------------------- #
 # QUESTION: What would you do to get back a line of code you previously ran
 # from your console without retyping the whole thing again?
 
 
 # ---------------------------------------------------------- #
-#### II. R Programming -> 2. Workspace and Files  #### 
+#### II. R Programming -> 2. Workspace and Files          #### 
 # ---------------------------------------------------------- #
 # QUESTION: What is the difference between your working directory
 # and your local workspace?
@@ -55,14 +67,14 @@ swirl()
 
 
 # ---------------------------------------------------------- #
-#### III. R Programming -> 3. Sequences of Numbers  #### 
+#### III. R Programming -> 3. Sequences of Numbers        #### 
 # ---------------------------------------------------------- #
 # QUESTION: In R, is there usually just one way or many different
 # ways of doing the same thing? Why might this be useful?
 
 
 # ---------------------------------------------------------- #
-#### IV. R Programming -> 4. Vectors  #### 
+#### IV. R Programming -> 4. Vectors                      #### 
 # ---------------------------------------------------------- #
 # QUESTION: Describe in your own words the difference between a 
 # logical vector, a character vector, an integer vector, and a 
@@ -80,7 +92,7 @@ swirl()
 
 
 # ---------------------------------------------------------- #
-#### V. R Programming -> 5. Missing Values ####  
+#### V. R Programming -> 5. Missing Values                ####  
 # ---------------------------------------------------------- #
 
 # TASK: Copy your assignment of my_data below, then repeat the code 
@@ -95,7 +107,7 @@ swirl()
 
 
 # ---------------------------------------------------------- #
-#### VI. R Programming -> 6. Subsetting  ####
+#### VI. R Programming -> 6. Subsetting                   ####
 # ---------------------------------------------------------- #
 # QUESTION: Subsetting can be an amazing thing! Describe one real world
 # scenario where you might want to subset a dataset. (you can make up anything)
@@ -106,7 +118,7 @@ swirl()
 
 
 # ---------------------------------------------------------- #
-#### VII. R Programming -> 7. Matrices and Data Frames ####
+#### VII. R Programming -> 7. Matrices and Data Frames    ####
 # ---------------------------------------------------------- #
 # QUESTION: In the code matrix[x,y], which letter represents the rows? 
 # Which letter represents the columns?
@@ -117,14 +129,14 @@ swirl()
 
 
 # ---------------------------------------------------------- #
-#### VIII. R Programming -> 8. Logic  ####
+#### VIII. R Programming -> 8. Logic                      ####
 # ---------------------------------------------------------- #
 # TASK: Leave a comment that you have completed this section. 
 # Did you feel like you were taking an LSAT?
 
 
 # ---------------------------------------------------------- #
-#### VII. R Programming -> 15. Base Graphics ####
+#### VII. R Programming -> 15. Base Graphics              ####
 # ---------------------------------------------------------- #
 
 # TASK: dim(), names(), head(), and tail() are all great functions!
@@ -140,7 +152,7 @@ swirl()
 
 
 # ---------------------------------------------------------- #
-#### PART 2: TEST WHAT YOU LEARNED ####
+#### PART 2: TEST WHAT YOU LEARNED                        ####
 # ---------------------------------------------------------- #
 
 # I) Without running the code, what does the following block 
@@ -154,10 +166,10 @@ c <- a
 c
 
 
-
 # II) Three of the following lines produce the same result. 
-# Without running the code, which one will produce a different result than the others? Please explain why. 
-# The helpfile for the log function may be useful. 
+# Without running the code, which one will produce a different result than the
+# others? Please explain why. 
+# HINT: The helpfile for the log function may be useful. 
 log(x = 1000, base = 10)
 log10(1000)
 log(base = 10, x = 1000)
@@ -182,7 +194,7 @@ elephant2_lb <- 7757
 
 
 # ---------------------------------------------------------- #
-#### PART 3: FEEDBACK ####
+#### PART 3: FEEDBACK                                     ####
 # ---------------------------------------------------------- #
 # QUESTION: What did you think of the Swirl tutorial? Was it helpful? Why 
 # or why not?
@@ -190,3 +202,5 @@ elephant2_lb <- 7757
 # QUESTION: Would you have preferred to split the Swirl tutorial over weeks
 # 1 and 3 of the class instead of the week 1 assignment you previously 
 # completed? Why or why not?
+
+# REMEMBER: Save and push your script when you're done with this assignment!
