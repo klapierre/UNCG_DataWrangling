@@ -179,3 +179,14 @@ numvector <- c(5,2,3,1,6,8)
 
 elephant1_kg <- 3492
 elephant2_lb <- 7757
+
+
+# ---------------------------------------------------------- #
+#### PART 3: FEEDBACK ####
+# ---------------------------------------------------------- #
+# QUESTION: What did you think of the Swirl tutorial? Was it helpful? Why 
+# or why not?
+
+# QUESTION: Would you have preferred to split the Swirl tutorial over weeks
+# 1 and 3 of the class instead of the week 1 assignment you previously 
+# completed? Why or why not?
