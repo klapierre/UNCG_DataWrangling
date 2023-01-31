@@ -23,3 +23,34 @@
 # The dplyr package is nested within the tidyverse package (along with many others).
 # Install tidyverse and load the library. HINT: see the end of assignment #1 if you 
 # forgot how to install and load a package.
+
+
+# ---------------------------------------------------------- #
+#### PART 1.0: LEARNING THE FUNCTIONS                     ####
+# ---------------------------------------------------------- #
+
+# We will use a dataset of water temperature in Calispell Creek and its tributaries
+# from eastern Washington State. These type of data are great for scripted analysis 
+# because their formats remain constant but graphs frequently need to be updated to 
+# reflect new data.
+# In case you're interested, Calispell is the main river, while Smalle and Winchester
+# are tributaries.
+
+# TASK: Download the data from the canvas website. Remember to save it to your working
+# directory for this class! I have already added it to your .gitignore file for you.
+
+
+# TASK: Read in the data by running the following line of code.
+rawData <- read.csv("CalispellCreekandTributaryTemperatures.csv", stringsAsFactors = TRUE) 
+
+
+# QUESTION: What do you think stringsAsFactors mean? Why would we want to make it false?
+# Try reading your data in without this extra argument included. What is the difference?
+
+
+# TASK: Let's learn a little more about our data. Run the following line of code.
+str(rawData)
+
+# QUESTION: What does it look like the str() function does?
+# How many rows does it have? How many columns? What class of data is in each column?
+
