@@ -41,7 +41,7 @@
 
 
 # TASK: Read in the data by running the following line of code.
-rawData <- read.csv("CalispellCreekandTributaryTemperatures.csv", stringsAsFactors = TRUE) 
+streamTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv", stringsAsFactors = TRUE) 
 
 
 # QUESTION: What do you think stringsAsFactors mean? Why would we want to make it false?
@@ -49,7 +49,7 @@ rawData <- read.csv("CalispellCreekandTributaryTemperatures.csv", stringsAsFacto
 
 
 # TASK: Let's learn a little more about our data. Run the following line of code.
-str(rawData)
+str(streamTemp)
 
 # QUESTION: What does it look like the str() function does?
 # How many rows does it have? How many columns? What class of data is in each column?
@@ -62,7 +62,7 @@ str(rawData)
 # Let's assign some more useable column names! We do this using the rename() function.
 # TASK: Open the file you downloaded from Canvas on your computer (e.g., using 
 # excel. Then, run the following line of code.
-colnames(rawData)
+colnames(streamTemp)
 
 
 # QUESTION: What output do you get in the console? Why is this useful?
@@ -73,14 +73,14 @@ colnames(rawData)
 # HINT: What happened to the spaces and ) in the R column names?
 
 
-# TASK: Run the following line of code.
-rawDataRename <- rename(.data=rawData,
-                        calispell_temp=Calispell.Cr.Temp.C.,
-                        Smalle_temp=Smalle.Cr.Temp.C.,
-                        Winchester_temp=Winchester.Cr.Temp..C.)
+# TASK: Run the following line of code. Note the alignment of the code components.
+streamTempRename <- rename(.data=streamTemp,
+                           calispell_temp=Calispell.Cr.Temp.C.,
+                           Smalle_temp=Smalle.Cr.Temp.C.,
+                           Winchester_temp=Winchester.Cr.Temp..C.)
 
 
-# TASK: Write your own code to find the column names of our new dataframe (rawDataRename). 
+# TASK: Write your own code to find the column names of our new dataframe (streamTempRename). 
 
 
 # QUESTION: What differences do you notice from before? In your own words, what did each line
