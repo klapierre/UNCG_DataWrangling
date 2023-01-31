@@ -85,5 +85,6 @@ rawDataRename <- rename(.data=rawData,
 
 # QUESTION: What differences do you notice from before? In your own words, what did each line
 # from the rename function do? Why might this function be useful for wrangling data?
+# In this code, does the new column name come before or after the =?
 
 
