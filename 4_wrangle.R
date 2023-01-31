@@ -64,11 +64,14 @@ str(rawData)
 # excel. Then, run the following line of code.
 colnames(rawData)
 
+
 # QUESTION: What output do you get in the console? Why is this useful?
+
 
 # QUESTION: What happened to the column title Calispell Cr Temp C) when it was loaded
 # into R?
 # HINT: What happened to the spaces and ) in the R column names?
+
 
 # TASK: Run the following line of code.
 rawDataRename <- rename(.data=rawData,
@@ -76,8 +79,11 @@ rawDataRename <- rename(.data=rawData,
                         Smalle_temp=Smalle.Cr.Temp.C.,
                         Winchester_temp=Winchester.Cr.Temp..C.)
 
+
 # TASK: Write your own code to find the column names of our new dataframe (rawDataRename). 
-colnames(rawDataRename)
+
 
 # QUESTION: What differences do you notice from before? In your own words, what did each line
 # from the rename function do? Why might this function be useful for wrangling data?
+
+
