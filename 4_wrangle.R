@@ -157,3 +157,81 @@ calispellTemp5 <- select(.data=streamTempRename,
 # TASK: Write code to check that these two new dataframes (calispellTemp3,  calispellTemp4, and calispellTemp5 are identical).
 
 
+# ---------------------------------------------------------- #
+### PART 1.3: FILTERING ROWS                              ####
+# ---------------------------------------------------------- #
+
+# Now that we've gone over how to select a subset of columns using THE select()
+# function, a natural next question is “How do I select a subset of rows?” 
+# That’s where the filter() function comes in! Isn't this fun!?
+
+# Note that filter() is really, by definition, subsetting our data. But, base R
+# has a subset() function already. So in the tidyverse world, we refer to this as
+# filtering instead.
+
+# We might be worried about high water temperatures. Let's filter the the Calispell
+# dataframe to only include data where the Calispell Creek has temperature equal or
+# greater than 15 C.
+
+# QUESTION: If you remove all of the observations (rows) with temperatures lower
+# than 15C, would you expect your new dataframe to have more, the same, or fewer
+# observations than the original dataframe?
+
+
+# TASK: Run the following code to only keep the values greater than or equal to 15C.
+calispellHighTemp <- filter(.data=calispellTemp,
+                            calispell_temp >= 15)
+
+# How do you know if it worked??
+# TASK: Check the number of observations in your dataframe! You can either do 
+# this using the str() function or by looking next to the dataframe name in the
+# R environment tab.
+
+
+# QUESTION: How many observations did the original dataframe (calispellTemp) have?
+# How many does the new dataframe (calispellHighTemp) have?
+
+
+# REALLY IMPORTANT: Even if the function runs, R can do all kinds of bad things if
+# you've accidentally coded something incorrectly. It is always really very 
+# important to think about how many rows and columns you expect your new dataframe
+# to have before you run your code and then check whether your new dataframe matches
+# your expectation.
+
+
+# We can also filter based on multiple conditions. For example, did the water get
+# hot in both of the tributaries (Winchester and Smalle Creeks)?
+# Note, we have to go back to our previous stream temperature data where these
+# columns still exist.
+highTempTributaries <- filter(.data=streamTempRename,
+                              smalle_temp >= 15, winchester_temp >= 15)
+
+# Alternatively,
+highTempTributaries <- filter(.data=streamTempRename,
+                              smalle_temp >= 15 & winchester_temp >= 15)
+
+
+# We can also filter based on "or" - if any condition is true. For example, was
+# water temp >=15 at any site?
+highTempTributaries <- filter(.data=streamTempRename,
+                              calispell_temp >= 15 | smalle_temp >= 15 | winchester_temp >= 15)
+
+
+# Finally, we might want to only get the rows which do not have missing data. We can
+# detect missing values with the is.na() function. Try it out:
+is.na(c(3, 5, NA, 6))
+
+# Now put an exclamation point (!) before is.na() to look for the opposite. This
+# changes all of the TRUEs to FALSEs and FALSEs to TRUEs (i.e., tells us what is not
+# an NA).
+!is.na(c(3, 5, NA, 6))
+
+# Time to put this all together! We can filter all of the rows of wtemp for which
+# the value of calispell_temp is NOT NA.
+calispellData <- filter(.data=calispellTemp,
+                        !is.na(calispell_temp))
+
+# QUESTION: How many observations are in the datafile calispellData? Write code to
+# determine how many values of calispell_temp were NA.
+
+
