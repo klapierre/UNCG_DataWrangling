@@ -235,3 +235,24 @@ calispellData <- filter(.data=calispellTemp,
 # determine how many values of calispell_temp were NA.
 
 
+# ---------------------------------------------------------- #
+### PART 1.4: CREATING COLUMNS                            ####
+# ---------------------------------------------------------- #
+
+# It’s very common to need to create a new variable based on the value of one or
+# more variables already in a dataset. The mutate() function does exactly this.
+
+# TASK: Here, all of our temperature data are in Celcius. But what if we want to
+# talk to a local school group about water temperature? We might want to convert
+# it to a Fahrenheit column. Let's create a Fahrenheit column by running the
+# following code:
+calispellTempF <- mutate(.data=calispellTemp,
+                         calispell_temp_F = calispell_temp*9/5 + 32)
+
+
+# QUESTION: Take a look at the new dataframe. Does it look like this worked? 
+
+
+# QUESTION: We might also want to add a column that describes the dataset. What happens when you run the following code?
+calispellTempFaquatic <- mutate(.data=calispellTempF,
+                                type='aquatic')
