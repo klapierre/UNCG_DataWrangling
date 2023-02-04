@@ -55,7 +55,7 @@ swirl()
 # ---------------------------------------------------------- #
 # QUESTION: What would you do to get back a line of code you previously ran
 # from your console without retyping the whole thing again?
-
+## type the name of the code and press enter
 
 # ---------------------------------------------------------- #
 #### II. R Programming -> 2. Workspace and Files          #### 
