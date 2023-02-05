@@ -308,3 +308,40 @@ calispellTempF5 <- separate(data=calispellTempF4,
 # QUESTION: Why isn't the column name in quotes this time?
 
 # QUESTION: Describe in your own words what the code above does.
+
+
+# ---------------------------------------------------------- #
+### PART 1.6: PIPES                                       ####
+# ---------------------------------------------------------- #
+
+# Take a look at your R environment tab (upper right of RStudio).
+# Do you feel overwhelmed by how many files are there? I do!
+# An amazing thing about tidyverse is that it can pass one function after another to
+# a dataframe using an operator called a pipe. This allows you to perform a whole
+# series of functions on one dataframe without having to create tons and tons of
+# new dataframes.
+
+# TASK: Click on the broom icon in your environment tab or run the following line of code
+# to clear your R environment.
+rm(list = ls())
+
+
+# SHORTCUT: You can efficiently type the pipe icon '%>%' by using the pipe shortcut ctl+shift+m (windows) or cmd+shift+m (mac)! Try using the shortcut to create pipes whenever needed for the rest of the assignment.
+
+
+# The pipe icon tells R to pass the dataframe it was just creating into another function.
+# This is how we can get from one function to the next without creating and naming
+# dozens of new dataframes. Hooray!
+
+# TASK: We can start by creating our original dataframe, renaming the columns,
+# selecting just the Calispell data, filtering to observations where the temperature
+# was greater or equal to 15 C, and mutate a column to Farenheit temperatures. 
+# Run the following lines of code and take a look at this new dataframe to see if R did
+# everything we expect it to have done.
+calispellHighTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv", stringsAsFactors = TRUE) %>% 
+  rename(calispell_temp=Calispell.Cr.Temp.C.,
+         smalle_temp=Smalle.Cr.Temp.C.,
+         winchester_temp=Winchester.Cr.Temp..C.) %>% 
+  select(Date, Time, calispell_temp) %>% 
+  filter(calispell_temp>=15) %>% 
+  mutate(calispell_temp_F = calispell_temp*9/5 + 32)
