@@ -154,7 +154,7 @@ calispellTemp5 <- select(.data=streamTempRename,
                          -Smalle_temp:-Winchester_temp)
 
 
-# TASK: Write code to check that these two new dataframes (calispellTemp3,  calispellTemp4, and calispellTemp5 are identical).
+# TASK: Write code to check that these three new dataframes (calispellTemp3,  calispellTemp4, and calispellTemp5 are identical).
 
 
 # ---------------------------------------------------------- #
@@ -242,7 +242,7 @@ calispellData <- filter(.data=calispellTemp,
 # It’s very common to need to create a new variable based on the value of one or
 # more variables already in a dataset. The mutate() function does exactly this.
 
-# TASK: Here, all of our temperature data are in Celcius. But what if we want to
+# TASK: Here, all of our temperature data are in Celsius. But what if we want to
 # talk to a local school group about water temperature? We might want to convert
 # it to a Fahrenheit column. Let's create a Fahrenheit column by running the
 # following code:
@@ -250,7 +250,23 @@ calispellTempF <- mutate(.data=calispellTemp,
                          calispell_temp_F = calispell_temp*9/5 + 32)
 
 
-# QUESTION: Take a look at the new dataframe. Does it look like this worked? 
+# Take a look at the new dataframeto see if it worked by either opening 
+# it from the R environment tab or running the following line of code.
+head(calispellTempF) 
+
+
+# We can also use mathematical functions on entire columns. Let's try it!
+
+# TASK: Run the following code to create a new column that sums our two existing
+# temperature columns.
+calispellTempSum <- mutate(.data=calispellTempF,
+                           sum=calispell_temp + calispell_temp_F)
+
+# Check the dataframe to see if it worked.
+
+
+# TASK: The column we just created makes no sense. Write code below to remove it
+# from the dataframe.
 
 
 # QUESTION: We might also want to add a column that describes the dataset. What happens 
