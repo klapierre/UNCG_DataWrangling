@@ -41,19 +41,22 @@
 
 
 # TASK: Read in the data by running the following line of code.
-streamTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv", stringsAsFactors = TRUE) 
+streamTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv", stringsAsFactors = TRUE)
 
 
 # QUESTION: What do you think stringsAsFactors mean? Why would we want to make it false?
 # Try reading your data in without this extra argument included. What is the difference?
-
+streamTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv")
+# ANSWER: stringsAsFactors changes strings in a data frame to factors, or groups of data. However,
+# if you would like to keep them as strings, you should make it FALSE.
 
 # TASK: Let's learn a little more about our data. Run the following line of code.
 str(streamTemp)
 
 # QUESTION: What does it look like the str() function does?
 # How many rows does it have? How many columns? What class of data is in each column?
-
+# ANSWER: Gives a summary of the data. It has 61100 rows and 5 columns. Date and Time 
+# are Factors and the temperatures are numeric.
 
 # ---------------------------------------------------------- #
 ### PART 1.1: RENAMING COLUMNS                            ####
@@ -66,11 +69,13 @@ colnames(streamTemp)
 
 
 # QUESTION: What output do you get in the console? Why is this useful?
-
+# ANSWER: You get the column names arranged in a row. This is useful because it shows 
+# all the coloumns in one space and the order they appear in the file.
 
 # QUESTION: What happened to the column title Calispell Cr Temp C) when it was loaded
 # into R?
 # HINT: What happened to the spaces and ) in the R column names?
+# ANSWER: The spaces became periods in the name.
 
 
 # TASK: Run the following line of code. Note the alignment of the code components.
@@ -81,12 +86,17 @@ streamTempRename <- rename(.data=streamTemp,
 
 
 # TASK: Write your own code to find the column names of our new dataframe (streamTempRename). 
-
+colnames(streamTempRename)
 
 # QUESTION: What differences do you notice from before? In your own words, what did each line
 # from the rename function do? Why might this function be useful for wrangling data?
 # In this code, does the new column name come before or after the =?
-
+# ANSWER: Now, the name of the stream and the marker temp is the only thing remaining,
+# separated by an underscore instead of the periods. 
+# The first line calls for the streamTemp dataset, then each line after that gives 
+# a new name (on the left) replacing the old column name (on the right). 
+# This new naming system is more simple and easy to read and code.
+# The new column name comes before the =
 
 # ---------------------------------------------------------- #
 ### PART 1.2: SELECTING COLUMNS                           ####
@@ -100,7 +110,7 @@ streamTempRename <- rename(.data=streamTemp,
 
 # TASK: Look again at the columns you have in the streamTempRename dataframe by
 # writing the necessary code below.
-
+colnames(streamTempRename)
 
 # TASK: Run the following line of code to select our columns of interest.
 calispellTemp <- select(.data=streamTempRename,
@@ -111,7 +121,9 @@ calispellTemp <- select(.data=streamTempRename,
 # by coding the appropriate R function of course. What do you notice about the 
 # new dataframe? Which columns are present? Which are absent? Are they in the same 
 # order as before?
-
+# ANSWER: The only comlumns that are present are calispell_temp, Date, and Time. 
+# Smalle_temp and Winchester_temp are absent.
+# They are also now in the order in which they were ordered in the code above, not their original order.
 
 # A nice thing to notice about this code. We didn't have to type 'streamTemp$date'
 # etc to indicate each column as we would outside of the tidyverse. The select()
@@ -122,7 +134,7 @@ calispellTemp <- select(.data=streamTempRename,
 # TASK: Recall that in R, the `:` operator is a compact way to create a sequence of
 # numbers. For example, write the code below to generate a sequence from 1 to 3.
 # HINT: Look back to assignment #1 or the swirl tutorial for help (or google!).
-
+1:3
 
 # Normally this notation is just for numbers, but the select() function allows you
 # to specify a sequence of columns this way. This can save a bunch of typing!
@@ -131,11 +143,12 @@ calispellTemp <- select(.data=streamTempRename,
 # calispell_temp columns using the sequence notation.
 # HINT: Replace the code where each column was listed out with a sequence of column
 # names. Be sure they are listed in the order they exist in the original dataframe.
-
+calispellTemp2 <- select(.data = calispellTemp,
+                         Date, Time, calispell_temp)
 
 # TASK: Write code to check your column names again to see what happened in your
 # new dataframe.
-
+colnames(calispellTemp2)
 
 # We can also specify the columns that we want to discard by selecting them out.
 # TASK: Run the following code to remove the Smalle_temp and Winchester_temp 
@@ -155,8 +168,8 @@ calispellTemp5 <- select(.data=streamTempRename,
 
 
 # TASK: Write code to check that these three new dataframes (calispellTemp3,  calispellTemp4, and calispellTemp5 are identical).
-
-
+identical(calispellTemp3, calispellTemp4)
+identical(calispellTemp4, calispellTemp5)
 # ---------------------------------------------------------- #
 ### PART 1.3: FILTERING ROWS                              ####
 # ---------------------------------------------------------- #
@@ -176,7 +189,7 @@ calispellTemp5 <- select(.data=streamTempRename,
 # QUESTION: If you remove all of the observations (rows) with temperatures lower
 # than 15C, would you expect your new dataframe to have more, the same, or fewer
 # observations than the original dataframe?
-
+# ANSWER: Fewer
 
 # TASK: Run the following code to only keep the values greater than or equal to 15C.
 calispellHighTemp <- filter(.data=calispellTemp,
@@ -186,11 +199,11 @@ calispellHighTemp <- filter(.data=calispellTemp,
 # TASK: Check the number of observations in your dataframe! You can either do 
 # this using the str() function or by looking next to the dataframe name in the
 # R environment tab.
-
+str(calispellHighTemp)
 
 # QUESTION: How many observations did the original dataframe (calispellTemp) have?
 # How many does the new dataframe (calispellHighTemp) have?
-
+# ANSWER: The original had 61100 observations and the new one has 7703.
 
 # REALLY IMPORTANT: Even if the function runs, R can do all kinds of bad things if
 # you've accidentally coded something incorrectly. It is always really very 
@@ -203,12 +216,12 @@ calispellHighTemp <- filter(.data=calispellTemp,
 # hot in both of the tributaries (Winchester and Smalle Creeks)?
 # Note, we have to go back to our previous stream temperature data where these
 # columns still exist.
-highTempTributaries <- filter(.data=streamTempRename,
-                              smalle_temp >= 15, winchester_temp >= 15)
+highTemp <- Tributaries <- filter(.data=streamTempRename,
+                              Smalle_temp >= 15, Winchester_temp >= 15)
 
 # Alternatively,
 highTempTributaries <- filter(.data=streamTempRename,
-                              smalle_temp >= 15 & winchester_temp >= 15)
+                              Smalle_temp >= 15 & Winchester_temp >= 15)
 
 
 # We can also filter based on "or" - if any condition is true. For example, was
@@ -233,7 +246,9 @@ calispellData <- filter(.data=calispellTemp,
 
 # QUESTION: How many observations are in the datafile calispellData? Write code to
 # determine how many values of calispell_temp were NA.
-
+# ANSWER: 52330
+calispellData_na <- filter(.data=calispellTemp,
+                        is.na(calispell_temp))
 
 # ---------------------------------------------------------- #
 ### PART 1.4: CREATING COLUMNS                            ####
@@ -267,12 +282,14 @@ calispellTempSum <- mutate(.data=calispellTempF,
 
 # TASK: The column we just created makes no sense. Write code below to remove it
 # from the dataframe.
-
+calispellTempSum <- select(.data = calispellTempSum,
+                           -sum)
 
 # QUESTION: We might also want to add a column that describes the dataset. What happens 
 # when you run the following code?
 calispellTempFaquatic <- mutate(.data=calispellTempF,
                                 type='aquatic')
+# ANSWER: It adds a type column for the dataset.
 
 
 # ---------------------------------------------------------- #
@@ -283,7 +300,8 @@ calispellTempFaquatic <- mutate(.data=calispellTempF,
 
 # TASK: Write code to create one more column named ecosystem in a new dataframe and 
 # fill it with the word 'stream'.
-
+calispellTempF3 <- mutate(.data = calispellTempFaquatic,
+                          ecosystem='stream')
 
 # Now we might want to create a new column that includes information from both of
 # the columns we just created. We would do so by running the following lines of code:
@@ -294,7 +312,9 @@ calispellTempF4 <- unite(data=calispellTempF3,
 
 # QUESTION: Describe in your own words what the code above does. What part creates
 # a new column? What part tells R which columns to combine? What does the sep= mean?
-
+# ANSWER: col='type_ecosystem' creates a new column called type_ecosystem,
+# c('type', 'ecosystem') combines the type and ecosystem columns
+# sep= is what is in between the words in the column type_ecosystem
 
 # Another very useful function is separate, which takes apart a column into two or
 # more pieces.
@@ -306,9 +326,10 @@ calispellTempF5 <- separate(data=calispellTempF4,
                             sep='::')
 
 # QUESTION: Why isn't the column name in quotes this time?
+# ANSWER: It is that way because type_ecosystem is already the name of the column that is being seperated.
 
 # QUESTION: Describe in your own words what the code above does.
-
+# ANSWER: it separates the column type_ecosystem into 2 columns, type and ecosystem.
 
 # ---------------------------------------------------------- #
 ### PART 1.6: PIPES                                       ####
@@ -374,6 +395,19 @@ calispellHighTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv", stri
 # HINT: The ratio of C to N is calculated as C/N.
 # (8) Keep only the following columns: Exp, Date, Plot, NTrtInfo, genus, species, 
 # Field, C, N, and CN. 
-
+cdr <- read.csv("e001_Plant aboveground biomass carbon and nitrogen.csv") %>%
+  mutate(Exp = "e001") %>% 
+  rename("C" = "X..Carbon",
+         "N" = "X..Nitrogen") %>%
+  filter(Strip == 1) %>% 
+  unite(col='NTrtInfo',
+        c('NTrt', 'NAdd'),
+        sep='_') %>% 
+  separate(col= Species,
+           into=c('genus', 'species'),
+           sep=' ') %>% 
+  mutate(CN = C/N) %>% 
+  select(Exp, Date, Plot, NTrtInfo, genus, species, Field, C, N, CN)
+  
 
 # REMEMBER: Save and push your script when you're done with this assignment!
