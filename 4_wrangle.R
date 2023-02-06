@@ -313,6 +313,10 @@ calispellTempSum <- select(.data=calispellTempSum, -"sum")
 calispellTempFaquatic <- mutate(.data=calispellTempF,
                                 type='aquatic')
 
+calispellTempFaquatic
+
+#A new column is added labeled "type" with aquatic listed for every row.
+
 
 # ---------------------------------------------------------- #
 ### PART 1.5: PASTING AND SEPARATING COLUMNS              ####
@@ -323,6 +327,8 @@ calispellTempFaquatic <- mutate(.data=calispellTempF,
 # TASK: Write code to create one more column named ecosystem in a new dataframe and 
 # fill it with the word 'stream'.
 
+calispellTempF3 <-  mutate(.data= calispellTempFaquatic
+,ecosystem='stream')
 
 # Now we might want to create a new column that includes information from both of
 # the columns we just created. We would do so by running the following lines of code:
@@ -334,6 +340,9 @@ calispellTempF4 <- unite(data=calispellTempF3,
 # QUESTION: Describe in your own words what the code above does. What part creates
 # a new column? What part tells R which columns to combine? What does the sep= mean?
 
+# "col='type_ecosystem'" creates a new column. The unite function combines type and ecosytem
+#to create type_ecosystem. Sep will provide the character for seperating the words in the rows
+#of the column. For exmaple, "aquatic::stream."
 
 # Another very useful function is separate, which takes apart a column into two or
 # more pieces.
@@ -346,9 +355,13 @@ calispellTempF5 <- separate(data=calispellTempF4,
 
 # QUESTION: Why isn't the column name in quotes this time?
 
+#The column is now preceived as a strucutre in R while putting it in quotes
+#would indicate that it is a character string.
+
+
 # QUESTION: Describe in your own words what the code above does.
 
-
+#The code separates the column type_ecosystem into two separate columns.
 # ---------------------------------------------------------- #
 ### PART 1.6: PIPES                                       ####
 # ---------------------------------------------------------- #
@@ -367,6 +380,7 @@ rm(list = ls())
 
 # SHORTCUT: You can efficiently type the pipe icon '%>%' by using the pipe shortcut ctl+shift+m (windows) or cmd+shift+m (mac)! Try using the shortcut to create pipes whenever needed for the rest of the assignment.
 
+# %>% 
 
 # The pipe icon tells R to pass the dataframe it was just creating into another function.
 # This is how we can get from one function to the next without creating and naming
@@ -413,6 +427,24 @@ calispellHighTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv", stri
 # HINT: The ratio of C to N is calculated as C/N.
 # (8) Keep only the following columns: Exp, Date, Plot, NTrtInfo, genus, species, 
 # Field, C, N, and CN. 
+
+
+
+
+cdr <- read.csv("e001_Plant aboveground biomass carbon and nitrogen.csv", stringsAsFactors = TRUE) %>% 
+  mutate(Exp = "e001") %>% rename(C= "X..Carbon", N="X..Nitrogen") %>% filter(!is.na(cdr)) %>%
+  unite(col='NTrtInfo',
+        c('NTrt', 'NAdd'),
+        sep='::')   %>% 
+  
+  separate(col=Species,
+           into=c('genus', 'species'),
+           sep=' ')     %>% 
+  mutate(CN = C/N) %>% 
+  select("Exp", "Date", "Plot", "NTrtInfo", "genus", "species", "Field", "C", "N", "CN")
+
+
+
 
 
 # REMEMBER: Save and push your script when you're done with this assignment!
