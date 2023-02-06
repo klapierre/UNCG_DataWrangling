@@ -169,6 +169,8 @@ swirl()
 # why each one might be useful.
 
 # TASK: Run the str() function on the cars dataset.
+#str()
+
 
 # QUESTION: In your own words, describe what the str() function does.
 # Why might this be useful?
@@ -219,5 +221,6 @@ elephant2_lb <- 7757
 # QUESTION: Would you have preferred to split the Swirl tutorial over weeks
 # 1 and 3 of the class instead of the week 1 assignment you previously 
 # completed? Why or why not?
+#split tutorial over weeks . its too much information and i get confused.
 
 # REMEMBER: Save and push your script when you're done with this assignment!

@@ -24,14 +24,17 @@
 ## Now try running the lines preceded by hashtags
 ## QUESTION: What happens? Why might this be useful?
 # It runs the comment and puts it in the console.
-
+#it helps to keep track and avoid unexpected errors.
 ## TASK: On a new line in the R script, type ctl+shift+c (windows) or
 ## cmd+shift+c (mac) and make yourself a note that keyboard shortcuts are awesome
-
+# keyboard shortcuts are awesome
 
 ## TASK: Use the other basic algebraic operators: '-', '*', '/' and '^' to 
 ## subtract, multiply, etc. the values 2 and 3.
-
+2-3 
+2*3
+2/3
+2^3
  
 ## Like any good interactive calculator, 
 ## R follows the standard mathematical order of operations. 
@@ -42,12 +45,15 @@
 (3+2)/8
 
 ## QUESTION: Why are the results different?
+# () made a difference in the results
 
 
 ## TASK: What is the result of: multiplying 5 by 11, 
 ## then dividing that value by 3, adding 6 to it, 
 ## and then squaring that value? 
 ## Write this operation as a single line of code.
+((5*11)/3+6)^2
+#592.1111
 
 
 
@@ -59,6 +65,7 @@
 sum(2, 3)
 
 ## QUESTION: What is 'sum'? 
+#addition of something
 
 #Now type:
 Sum(2, 3)
@@ -72,8 +79,13 @@ Sum(2, 3)
 ## take the square root, abs() for the absolute value, and exp()
 ## to take e^some number.
 
+
+
+
+
 ## TASK: What is the absolute value of e^3? Write this as
 ## a single line of code.
+abs(exp(3))
 
 
 
@@ -87,14 +99,14 @@ x <- sum(2,3)
 
 ## This can be read as "x gets 2 plus 3". Notice that R did not print the result 5 this time.
 ## To view the contents of the variable x, just type x and run:
-
+x
 
 ## Now store the results of x/8 in a new variable y:
 y <- x/8
 
 ## QUESTION: What is the value of y? Write a line of code below in your script
 ## that will print the value to your console.
-
+y
 
 
 # ----------------------------------------------------------
@@ -110,16 +122,17 @@ z <- c(1.1, 9, 3.14)
 z
 
 ## QUESTION: What do you notice about z? How many elements does it have?
+#3
 
 
 ## TASK: How long is z? Use the function length() to confirm the length of this vector.
-
+length(z)
 
 ## You can combine vectors to make a new vector. 
 
 ## TASK: Create a new vector that contains z, 555,then z again in that order.
 ## Give it a new name.
-
+newvector<-c(z,555,z)
 
 ## Numeric vectors can be used in arithmetic expressions. 
 ## Type:
@@ -129,8 +142,7 @@ z*2+100
 my_sqrt <- sqrt(z-1)
 
 ## QUESTION: Before you look at it, what do you think my_sqrt contains?
-
-
+sqrt(z-1)
 
 # ----------------------------------------------------------
 #### 5) Vectors can be created as sequences of numbers. ####
@@ -141,7 +153,7 @@ my_sqrt <- sqrt(z-1)
 1:20
 
 ## QUESTION: What happens if we instead type 20:1?
-
+20:1
 
 ## The seq() function gives us more control over the sequence
 ## Type:
@@ -157,10 +169,10 @@ my_seq <- seq(5, 10, length=30)
 
 
 ## QUESTION: What is my_seq?
-
+seq(5,10,length=30)
 
 ## TASK: Use a function to confirm that my_seq has length 30.
-
+length(my_seq)
 
 ## Maybe we want to create a vector that contains 40 0s. 
 ## Type:
@@ -171,6 +183,8 @@ rep(0, times=40)
 rep(c(0, 1, 2, 3, 4), times=10)
 
 ##TASK: Generate the same vector by integrating the seq() and rep() functions
+rep(c(0,4), times=10)
+rep(seq(0,4),times=10)
 
 
 
@@ -186,9 +200,10 @@ kims_favorite <- c("Schizachyrium", "scoparium")
 ## Let's view that vector. But typing kims_favorite takes a looong time. 
 ## To save time, type ki then press tab. What happens?
 kims_favorite
+#ki
 
 ## TASK: Use the function length to confirm the length of kims_favorite
-
+length(kims_favorite)
 
 ## What if I want genus and species to be grouped as a single character string?
 ## Type:
@@ -197,15 +212,16 @@ kims_favorite2 <- paste("Schizachyrium", "scoparium")
 kims_favorite3 <- "Schizachyrium scoparium"
 
 ## TASK: Use the function length to confirm the length of kims_favorite2
-
+length(kims_favorite2)
 
 ## TASK: Use the function 'paste' to join together the genus and species of your 
 ## favorite species. 
+my_favorite<-paste("scotch broom")
 
 
 ## TASK: Concatenate c() your favorite species and mine (kims_favorite2) 
 ## in a vector called our_favorites.
-
+our_favorites<-c("Schizachyrium scoparium","scotch broom")
 
 
 # ----------------------------------------------------------
@@ -230,9 +246,12 @@ firstVector <- 1:24
 dim(firstVector) <- c(4,6)
 
 ## QUESTION: What are the dimensions of firstVector now? Use dim() to find out
+dim(firstVector)
+
 
 
 ## QUESTION: What is the class of firstVector now? Use the class() function to find out.
+class(firstVector)
 
 
 ## Congratulations, you've changed a 24-element into a 4 row by 6 column matrix!
@@ -254,7 +273,9 @@ students <- c("Terra", "Anish", "Emma", "Delaney")
 ## rbind is the corresponding function for rows.
 secondMatrix <- cbind(students, firstMatrix)
 
+
 ## QUESTION: what attributes of the matrix change when we do this?
+#rows and columns
 
 
 ## Remember that a matrix can only contain one type of data! 
@@ -264,6 +285,8 @@ secondMatrix <- cbind(students, firstMatrix)
 ## TASK: Use rbind() to label the days Day1, Day3, Day5, Day7, Day9, and Day11
 ## in secondMatrix. Save this with a new name, thirdMatrix
 ## Hint, don't forget about the new column we added too!
+Days<-c("students","day1","day3","day5","day7","day9","day11")
+thirdMatrix<-rbind(Days,secondMatrix)
 
 
 ## Accessing elements in a matrix uses square brackets, [], with the order
@@ -274,6 +297,8 @@ thirdMatrix[3,2]
 ## TASK: Use one line of code to print to the screen 
 ## the elements in the 4th row and 2nd, 3rd, and 4th columns.
 ## Hint, think of how we listed sequences of numbers above.
+thirdMatrix[4,2:4]
+
 
 
 ## Additional Thoughts:
@@ -295,7 +320,8 @@ happyData <- data.frame(students, firstMatrix)
 
 
 ## TASK: Find the class and dimension of happyData
-
+dim(happyData)
+class(happyData)
 
 ## The names of the columns are not descriptive. 
 colnames(happyData) #note colnames() is a function that prints the column names
@@ -304,19 +330,21 @@ colnames(happyData) #note colnames() is a function that prints the column names
 ## TASK: Create a vector called cNames containing 
 ## "student", "time1", "time2", "time3", "time4", "time5", "time6"
 ## Hint: you could copy those names from above. Don't forget to concatenate using c()
-
+cNames<-c("student", "time1", "time2", "time3", "time4", "time5", "time6")
 
 ## TASK: Use the names() function to set the column names attribute for our 
 ## data frame. This will be similar to our use of dim() to set the dimension of a vector.
-
+names(happyData)=cNames
 
 ## TASK: View the final data frame.
+View(happyData)
 
 
 ## You can access specific elements of a dataframe just like you can with
 ## a matrix using the [rows, columns] notation.
 
-## TASK: Print to the console Delaney's happiness on time5 
+## TASK: Print to the console Delaney's happiness on time5
+happyData[4,"time5"]
 
 
 ## When working with dataframes you can also access entire columns 
@@ -325,6 +353,7 @@ colnames(happyData) #note colnames() is a function that prints the column names
 happyData$student
 
 ## TASK: in a single line of code, find the mean happiness at time2.
+mean(happyData$time2)
 
 
 
@@ -360,7 +389,8 @@ roll2(die=30:60)
 
 ## QUESTION: How many sides does each die now have and what is the lowest
 ## and highest number on a single die in the above example?
-
+#lowest 30 and highet 60
+length(30:60)
 
 
 # ----------------------------------------------------------
@@ -376,7 +406,7 @@ roll2(die=30:60)
 pivot_longer
 
 ## What happened? Why? 
-
+#package of different bundle is the reason its not found.
 
 ## pivot_longer is a function in the package tidyr
 ## If you haven't already, install tidyr now by uncommenting and running the following code:
@@ -386,14 +416,14 @@ pivot_longer
 library(tidyr)
 
 ## Now what happens when you print pivot_longer?
-
+pivot_longer
 
 ## pivot_longer is a function to help "tidy" data, which we will cover later
 ## but as a preview, let's use it to transform the dataframe happy data
 pivot_longer(happyData, cols = 2:ncol(happyData), names_to = "timepoints", values_to = "happiness")
 
 ## What did pivot_longer do? Why might this be useful? 
-
+#lengthens data . and it make it easier to read data.
 
 ## TASK: Now install and load the package 'nycflights13'
 ## which is one of the examples we use in the textbook.
@@ -401,6 +431,10 @@ pivot_longer(happyData, cols = 2:ncol(happyData), names_to = "timepoints", value
 
 ## What is the name of the third column of the object flights?
 ## note this object can be accessed onced nycflights13 is loaded.
+library(nycflights13)
+View(flights)
+colnames(flights)
+#day is the 3rd column
 
 
 
@@ -415,14 +449,16 @@ pivot_longer(happyData, cols = 2:ncol(happyData), names_to = "timepoints", value
 
 ## QUESTION: Using the help for the paste function, identify what is the role of the 
 ## argument 'sep'.
+#string to separate the terms.
 
 
 ## QUESTION: Does this argument have a predetermined value? What is that value?
+#space
 
 
 ## TASK: Use 'paste' to join together the genus and species names of your 
 ## favorite species using the character '_' to separate the two words.
-
+paste("Schizachyrium scoparium","scotch broom",sep = "_")
 
 
 # ----------------------------------------------------------
@@ -435,6 +471,7 @@ pivot_longer(happyData, cols = 2:ncol(happyData), names_to = "timepoints", value
 ## Install and load swirl now
 install.packages("swirl")
 library(swirl)
+
 
 ## swirl includes different modules. 
 ## To reinforce some of this lesson, and to learn more about how R treats vectors, 
