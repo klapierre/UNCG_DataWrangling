@@ -195,7 +195,7 @@ identical(calispellTemp3, calispellTemp5)
 # QUESTION: If you remove all of the observations (rows) with temperatures lower
 # than 15C, would you expect your new dataframe to have more, the same, or fewer
 # observations than the original dataframe?
-
+Fewer
 
 # TASK: Run the following code to only keep the values greater than or equal to 15C.
 calispellHighTemp <- filter(.data=calispellTemp,
@@ -207,8 +207,8 @@ calispellHighTemp <- filter(.data=calispellTemp,
 # R environment tab.
 
 
-# QUESTION: How many observations did the original dataframe (calispellTemp) have?
-# How many does the new dataframe (calispellHighTemp) have?
+# QUESTION: How many observations did the original dataframe (calispellTemp) have? 61100 observations
+# How many does the new dataframe (calispellHighTemp) have? 7703 observations
 
 
 # REALLY IMPORTANT: Even if the function runs, R can do all kinds of bad things if
@@ -223,17 +223,17 @@ calispellHighTemp <- filter(.data=calispellTemp,
 # Note, we have to go back to our previous stream temperature data where these
 # columns still exist.
 highTempTributaries <- filter(.data=streamTempRename,
-                              smalle_temp >= 15, winchester_temp >= 15)
+                              Smalle_temp >= 15, Winchester_temp >= 15)
 
 # Alternatively,
 highTempTributaries <- filter(.data=streamTempRename,
-                              smalle_temp >= 15 & winchester_temp >= 15)
+                              Smalle_temp >= 15 & Winchester_temp >= 15)
 
 
 # We can also filter based on "or" - if any condition is true. For example, was
 # water temp >=15 at any site?
 highTempTributaries <- filter(.data=streamTempRename,
-                              calispell_temp >= 15 | smalle_temp >= 15 | winchester_temp >= 15)
+                              calispell_temp >= 15 | Smalle_temp >= 15 | Winchester_temp >= 15)
 
 
 # Finally, we might want to only get the rows which do not have missing data. We can
@@ -252,6 +252,9 @@ calispellData <- filter(.data=calispellTemp,
 
 # QUESTION: How many observations are in the datafile calispellData? Write code to
 # determine how many values of calispell_temp were NA.
+52330 observations
+calispellNullData <- filter(.data=calispellTemp,
+                        is.na(calispell_temp))
 
 
 # ---------------------------------------------------------- #
@@ -286,13 +289,14 @@ calispellTempSum <- mutate(.data=calispellTempF,
 
 # TASK: The column we just created makes no sense. Write code below to remove it
 # from the dataframe.
+calispellTempSum <-select(.data=calispellTempSum, -sum)
 
 
 # QUESTION: We might also want to add a column that describes the dataset. What happens 
 # when you run the following code?
 calispellTempFaquatic <- mutate(.data=calispellTempF,
                                 type='aquatic')
-
+A column named type appears with all boxes saying aquatic
 
 # ---------------------------------------------------------- #
 ### PART 1.5: PASTING AND SEPARATING COLUMNS              ####
@@ -302,17 +306,19 @@ calispellTempFaquatic <- mutate(.data=calispellTempF,
 
 # TASK: Write code to create one more column named ecosystem in a new dataframe and 
 # fill it with the word 'stream'.
-
+calispellEco<- mutate(.data = calispellTempFaquatic,
+                      ecosystem='stream')
 
 # Now we might want to create a new column that includes information from both of
 # the columns we just created. We would do so by running the following lines of code:
-calispellTempF4 <- unite(data=calispellTempF3,
+calispellTempF4 <- unite(data=calispellEco,
                          col='type_ecosystem',
                          c('type', 'ecosystem'),
                          sep='::')
 
 # QUESTION: Describe in your own words what the code above does. What part creates
 # a new column? What part tells R which columns to combine? What does the sep= mean?
+The code combines the 'type' and 'ecosystem' columns. The unite function tells R to combine the type and ecosystem columns. sep tells R to keep the combined variables separate using ::
 
 
 # Another very useful function is separate, which takes apart a column into two or
@@ -325,9 +331,10 @@ calispellTempF5 <- separate(data=calispellTempF4,
                             sep='::')
 
 # QUESTION: Why isn't the column name in quotes this time?
+The column already exists within the dataframe
 
 # QUESTION: Describe in your own words what the code above does.
-
+The code above once again separates type and ecosystem into two separate columns
 
 # ---------------------------------------------------------- #
 ### PART 1.6: PIPES                                       ####
@@ -393,6 +400,16 @@ calispellHighTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv", stri
 # HINT: The ratio of C to N is calculated as C/N.
 # (8) Keep only the following columns: Exp, Date, Plot, NTrtInfo, genus, species, 
 # Field, C, N, and CN. 
+
+cdr<- read.csv("e001_Plant aboveground biomass carbon and nitrogen.csv", stringsAsFactors = TRUE) %>%
+  mutate(Exp='e001') %>%
+  rename(C= X..Carbon, N=X..Nitrogen) %>%
+  filter(Strip==1) %>%
+  unite(col='NTrtInfo', c('NTrt', 'NAdd'), sep='_') %>%
+  separate(col=Species, c('genus', 'species')) %>%
+  mutate(CN=C/N) %>%
+  select('Exp', 'Date', 'Plot', 'NTrtInfo', 'genus', 'species', 'Field', 'C', 'N','CN')
+  
 
 
 # REMEMBER: Save and push your script when you're done with this assignment!
