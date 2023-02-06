@@ -306,7 +306,7 @@ calispellTempFaquatic <- mutate(.data=calispellTempF,
 
 # TASK: Write code to create one more column named ecosystem in a new dataframe and 
 # fill it with the word 'stream'.
-
+calispellTempF3<- mutate(.data = calispellTempFaquatic, ecosystem = "stream")
 
 # Now we might want to create a new column that includes information from both of
 # the columns we just created. We would do so by running the following lines of code:
@@ -317,7 +317,10 @@ calispellTempF4 <- unite(data=calispellTempF3,
 
 # QUESTION: Describe in your own words what the code above does. What part creates
 # a new column? What part tells R which columns to combine? What does the sep= mean?
-
+#for the first line, we are making a new dataframe. Within that dataframe, we are using unite to combine out 
+#previous columns of type and ecosystem. The second column is what we want the column to be named.
+#The third is making a vector of the two columns we want to combine
+#the fourth is showing what we can the content of the new column to be separated by
 
 # Another very useful function is separate, which takes apart a column into two or
 # more pieces.
@@ -329,9 +332,14 @@ calispellTempF5 <- separate(data=calispellTempF4,
                             sep='::')
 
 # QUESTION: Why isn't the column name in quotes this time?
+#because we aren't making a new column, we would be calling the wrong thing in R
+#we could be calling the word rather than the column
 
 # QUESTION: Describe in your own words what the code above does.
-
+#in the first line we are making a new dataframe using the separate function and using the original calispellTempF4 data
+#we are calling the column type_ecosystem to be separated in the second line
+#in the third line we are describing what we want the column to be separated into (i.e. type and ecosystem)
+#in the last line are are saying where we want those columns to be separated
 
 # ---------------------------------------------------------- #
 ### PART 1.6: PIPES                                       ####
