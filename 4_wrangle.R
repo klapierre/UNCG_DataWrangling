@@ -7,7 +7,6 @@
 # 2. To do this in a way that each step is traceable and reproducible.
 # To this end we'll be familiarizing ourselves with and diving into the dplyr package.
 
-
 # ---------------------------------------------------------- #
 #### SET UP:                                              ####
 # ---------------------------------------------------------- #
@@ -46,14 +45,16 @@ streamTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv", stringsAsFa
 
 # QUESTION: What do you think stringsAsFactors mean? Why would we want to make it false?
 # Try reading your data in without this extra argument included. What is the difference?
-
+# It lets you change characters to factors and allows you to do more manipulations
+streamTempFalse <- read.csv("CalispellCreekandTributaryTemperatures.csv")
+# False has the character variables listed as characters while true has them listed as factors
 
 # TASK: Let's learn a little more about our data. Run the following line of code.
 str(streamTemp)
 
-# QUESTION: What does it look like the str() function does?
+# QUESTION: What does it look like the str() function does? This function lists the columns, data type, objects, and variables
 # How many rows does it have? How many columns? What class of data is in each column?
-
+# There are 61,100 rows and 5 columns. The first two columns are factors and the last three are numbers
 
 # ---------------------------------------------------------- #
 ### PART 1.1: RENAMING COLUMNS                            ####
