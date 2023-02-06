@@ -67,12 +67,11 @@ colnames(streamTemp)
 
 
 # QUESTION: What output do you get in the console? Why is this useful?
-
+#The output lists the names of the five columns in the table. This can be useful for knowing the full names of each column and variable for coding purposes
 
 # QUESTION: What happened to the column title Calispell Cr Temp C) when it was loaded
-# into R?
+# into R? The spaces were turned into periods
 # HINT: What happened to the spaces and ) in the R column names?
-
 
 # TASK: Run the following line of code. Note the alignment of the code components.
 streamTempRename <- rename(.data=streamTemp,
@@ -82,12 +81,13 @@ streamTempRename <- rename(.data=streamTemp,
 
 
 # TASK: Write your own code to find the column names of our new dataframe (streamTempRename). 
-
+colnames(streamTempRename)
 
 # QUESTION: What differences do you notice from before? In your own words, what did each line
 # from the rename function do? Why might this function be useful for wrangling data?
 # In this code, does the new column name come before or after the =?
-
+#The names of each column were consolidated and renamed. This is useful for data wrangling 
+#since it is easier now to know exactly what is in each column. The new name came before the =
 
 # ---------------------------------------------------------- #
 ### PART 1.2: SELECTING COLUMNS                           ####
