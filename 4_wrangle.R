@@ -196,7 +196,7 @@ all_equal(calispellTemp3, calispellTemp4, calispellTemp5) #google says works bet
 # QUESTION: If you remove all of the observations (rows) with temperatures lower
 # than 15C, would you expect your new dataframe to have more, the same, or fewer
 # observations than the original dataframe?
-
+#If we are removing observations - we should be observing fewer observations than in the original
 
 # TASK: Run the following code to only keep the values greater than or equal to 15C.
 calispellHighTemp <- filter(.data=calispellTemp,
@@ -206,11 +206,11 @@ calispellHighTemp <- filter(.data=calispellTemp,
 # TASK: Check the number of observations in your dataframe! You can either do 
 # this using the str() function or by looking next to the dataframe name in the
 # R environment tab.
-
+#We do see few observations. The original had 61100, and now we have 7703 (I looked in the environment)
 
 # QUESTION: How many observations did the original dataframe (calispellTemp) have?
 # How many does the new dataframe (calispellHighTemp) have?
-
+#We do see few observations. The original (calispellTemp) had 61100, and now we have 7703 (calispellHighTemp)
 
 # REALLY IMPORTANT: Even if the function runs, R can do all kinds of bad things if
 # you've accidentally coded something incorrectly. It is always really very 
@@ -253,7 +253,10 @@ calispellData <- filter(.data=calispellTemp,
 
 # QUESTION: How many observations are in the datafile calispellData? Write code to
 # determine how many values of calispell_temp were NA.
-
+#calispellData observations: 52330
+calispellData_NA <- filter(.data=calispellTemp,
+                        is.na(calispell_temp))
+#there were 8770 NAs in the calispell_temp data, and 52330 that were no NA
 
 # ---------------------------------------------------------- #
 ### PART 1.4: CREATING COLUMNS                            ####
@@ -287,13 +290,13 @@ calispellTempSum <- mutate(.data=calispellTempF,
 
 # TASK: The column we just created makes no sense. Write code below to remove it
 # from the dataframe.
-
+calispellTempNoSum <- select(.data=calispellTempSum, -sum)
 
 # QUESTION: We might also want to add a column that describes the dataset. What happens 
 # when you run the following code?
 calispellTempFaquatic <- mutate(.data=calispellTempF,
                                 type='aquatic')
-
+#It added a column called aquatic which describes the data type
 
 # ---------------------------------------------------------- #
 ### PART 1.5: PASTING AND SEPARATING COLUMNS              ####
