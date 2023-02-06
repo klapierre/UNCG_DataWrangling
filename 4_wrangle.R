@@ -274,13 +274,14 @@ calispellTempSum <- mutate(.data=calispellTempF,
 
 # TASK: The column we just created makes no sense. Write code below to remove it
 # from the dataframe.
-
+calispellTempSum <- mutate(.data=calispellTempSum,
+       sum= NULL)
 
 # QUESTION: We might also want to add a column that describes the dataset. What happens 
 # when you run the following code?
 calispellTempFaquatic <- mutate(.data=calispellTempF,
                                 type='aquatic')
-
+#a new data set is created with a new column named 'type' and 'aquatic' fills the rows of that column. 
 
 # ---------------------------------------------------------- #
 ### PART 1.5: PASTING AND SEPARATING COLUMNS              ####
@@ -290,7 +291,8 @@ calispellTempFaquatic <- mutate(.data=calispellTempF,
 
 # TASK: Write code to create one more column named ecosystem in a new dataframe and 
 # fill it with the word 'stream'.
-
+calispellTempF3 <- mutate(.data=calispellTempFaquatic,
+                            ecosystem='stream')
 
 # Now we might want to create a new column that includes information from both of
 # the columns we just created. We would do so by running the following lines of code:
@@ -301,7 +303,7 @@ calispellTempF4 <- unite(data=calispellTempF3,
 
 # QUESTION: Describe in your own words what the code above does. What part creates
 # a new column? What part tells R which columns to combine? What does the sep= mean?
-
+# unite lets R know we are combining, col creates the new column name, c() designates which columns are being combined, sep is the separator of the column values
 
 # Another very useful function is separate, which takes apart a column into two or
 # more pieces.
@@ -313,9 +315,9 @@ calispellTempF5 <- separate(data=calispellTempF4,
                             sep='::')
 
 # QUESTION: Why isn't the column name in quotes this time?
-
+#it has been set as a variable so it is known/recognizable and we are calling the specific column 
 # QUESTION: Describe in your own words what the code above does.
-
+#new data set created with the type_ecosystem separated into type and ecosystem with the separator :: being removed
 
 # ---------------------------------------------------------- #
 ### PART 1.6: PIPES                                       ####
