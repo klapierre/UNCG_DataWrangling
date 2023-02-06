@@ -55,7 +55,14 @@ str(streamTemp)
 
 # QUESTION: What does it look like the str() function does?
 # How many rows does it have? How many columns? What class of data is in each column?
-
+#is looks like it condenses the data - kind of like summary()
+#there are 5 rows and 2 columns
+#Classes (listed before the line of date in counsel view)
+#Date: character
+#Time: character
+#Calispell.Cr.Temp.C: numeric
+#Smalle.Cr.Temp.C: numeric
+#Winchester.Cr.Temp.C: numeric
 
 # ---------------------------------------------------------- #
 ### PART 1.1: RENAMING COLUMNS                            ####
@@ -68,12 +75,13 @@ colnames(streamTemp)
 
 
 # QUESTION: What output do you get in the console? Why is this useful?
-
+#Output: [1] "Date" "Time" "Calispell.Cr.Temp.C."   "Smalle.Cr.Temp.C." [5] "Winchester.Cr.Temp..C."
+#these are useful because it shows us what the current names of the columns are
 
 # QUESTION: What happened to the column title Calispell Cr Temp C) when it was loaded
 # into R?
 # HINT: What happened to the spaces and ) in the R column names?
-
+#they were replaced with periods
 
 # TASK: Run the following line of code. Note the alignment of the code components.
 streamTempRename <- rename(.data=streamTemp,
@@ -83,12 +91,17 @@ streamTempRename <- rename(.data=streamTemp,
 
 
 # TASK: Write your own code to find the column names of our new dataframe (streamTempRename). 
-
+colnames(streamTempRename)
 
 # QUESTION: What differences do you notice from before? In your own words, what did each line
 # from the rename function do? Why might this function be useful for wrangling data?
 # In this code, does the new column name come before or after the =?
-
+#these names are much more simple then what was before - there are no periods, or listing of units, and better naming convention
+#What did each line of the rename function do: The first line set what we wanted our new dataframe 
+#to be called, and selected which dataframe we were modifying (streamTemp). The next three lines
+#paired what we wanted the column to be named along with the current name
+#This is useful so that columns can be quickly renamed so that their names more more sense
+#and have better naming conventions
 
 # ---------------------------------------------------------- #
 ### PART 1.2: SELECTING COLUMNS                           ####
