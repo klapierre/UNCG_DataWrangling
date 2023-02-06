@@ -23,8 +23,8 @@
 # The dplyr package is nested within the tidyverse package (along with many others).
 # Install tidyverse and load the library. HINT: see the end of assignment #1 if you 
 # forgot how to install and load a package.
-
-
+install.packages("tidyverse")
+library(tidyverse)
 # ---------------------------------------------------------- #
 #### PART 1.0: LEARNING THE FUNCTIONS                     ####
 # ---------------------------------------------------------- #
@@ -41,20 +41,24 @@
 
 
 # TASK: Read in the data by running the following line of code.
-streamTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv", stringsAsFactors = TRUE) 
+streamTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv", stringsAsFactors = TRUE)
 
 
 # QUESTION: What do you think stringsAsFactors mean? Why would we want to make it false?
 # Try reading your data in without this extra argument included. What is the difference?
-
-
+#I think stringsAsFactors means that it changes the names of the columns.
+#We would want to make it false because it shows a line of factors.
+#Without the extra argument, it shows an extra line of data.
 # TASK: Let's learn a little more about our data. Run the following line of code.
 str(streamTemp)
-
+str(streamTempTEST)
 # QUESTION: What does it look like the str() function does?
 # How many rows does it have? How many columns? What class of data is in each column?
-
-
+#With the str() function it looks like it has more data.
+#It has 61100 rows and 5 columns.
+#The classes are Factor w/ 1821 levels, 1/1/09, 1/1/10
+dim(streamTemp)
+class(streamTemp)
 # ---------------------------------------------------------- #
 ### PART 1.1: RENAMING COLUMNS                            ####
 # ---------------------------------------------------------- #
@@ -66,12 +70,13 @@ colnames(streamTemp)
 
 
 # QUESTION: What output do you get in the console? Why is this useful?
-
+#The outcome was all the titles of the columns in the data.
+#This may be useful to show what kind of data you are using or maybe what needs to be filtered out.
 
 # QUESTION: What happened to the column title Calispell Cr Temp C) when it was loaded
 # into R?
 # HINT: What happened to the spaces and ) in the R column names?
-
+#The spaces and parentheses are not there. There are periods where there were spaces.
 
 # TASK: Run the following line of code. Note the alignment of the code components.
 streamTempRename <- rename(.data=streamTemp,
@@ -81,12 +86,15 @@ streamTempRename <- rename(.data=streamTemp,
 
 
 # TASK: Write your own code to find the column names of our new dataframe (streamTempRename). 
-
+colnames(streamTempRename)
 
 # QUESTION: What differences do you notice from before? In your own words, what did each line
 # from the rename function do? Why might this function be useful for wrangling data?
 # In this code, does the new column name come before or after the =?
-
+#The difference was that the new column names do not have Cr or C in them.
+#In the code, the first line is assigning the rename to streamTemp
+#The other lines are all renaming the columns in the data in streamTemp
+#The new column name comes before the =
 
 # ---------------------------------------------------------- #
 ### PART 1.2: SELECTING COLUMNS                           ####
