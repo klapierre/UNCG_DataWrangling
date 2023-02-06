@@ -281,13 +281,14 @@ calispellTempSum <- mutate(.data=calispellTempF,
 
 # TASK: The column we just created makes no sense. Write code below to remove it
 # from the dataframe.
-
+select(.data=calispellTempSum,
+       -sum)
 
 # QUESTION: We might also want to add a column that describes the dataset. What happens 
 # when you run the following code?
 calispellTempFaquatic <- mutate(.data=calispellTempF,
                                 type='aquatic')
-
+## it added a column called type, labeling each row as aquatic
 
 # ---------------------------------------------------------- #
 ### PART 1.5: PASTING AND SEPARATING COLUMNS              ####
@@ -297,7 +298,8 @@ calispellTempFaquatic <- mutate(.data=calispellTempF,
 
 # TASK: Write code to create one more column named ecosystem in a new dataframe and 
 # fill it with the word 'stream'.
-
+calispellTempF3 <- mutate(.data=calispellTempFaquatic,
+                               ecosystem="stream")
 
 # Now we might want to create a new column that includes information from both of
 # the columns we just created. We would do so by running the following lines of code:
@@ -308,7 +310,8 @@ calispellTempF4 <- unite(data=calispellTempF3,
 
 # QUESTION: Describe in your own words what the code above does. What part creates
 # a new column? What part tells R which columns to combine? What does the sep= mean?
-
+## it joined the columns type and ecosystem and the information within them, separated by ::. col= creates the new
+## column, c() tells R what columns to combine, sep= tells R what to separate the info with in the column
 
 # Another very useful function is separate, which takes apart a column into two or
 # more pieces.
@@ -320,9 +323,10 @@ calispellTempF5 <- separate(data=calispellTempF4,
                             sep='::')
 
 # QUESTION: Why isn't the column name in quotes this time?
-
+## because the column already exists. we used quotes when we were creating a column
 # QUESTION: Describe in your own words what the code above does.
-
+## it took the column type_ecosystem and separated it into type and ecosystem respectively. the sep= part I think removes
+## the :: from the column contents before separating them into different columns.
 
 # ---------------------------------------------------------- #
 ### PART 1.6: PIPES                                       ####
