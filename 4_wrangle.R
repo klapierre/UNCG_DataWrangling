@@ -181,6 +181,7 @@ identical(calispellTemp5, calispellTemp4)
 # QUESTION: If you remove all of the observations (rows) with temperatures lower
 # than 15C, would you expect your new dataframe to have more, the same, or fewer
 # observations than the original dataframe?
+#We would expect the new dataframe to have less observations if we are taking some out
 
 
 # TASK: Run the following code to only keep the values greater than or equal to 15C.
@@ -191,11 +192,12 @@ calispellHighTemp <- filter(.data=calispellTemp,
 # TASK: Check the number of observations in your dataframe! You can either do 
 # this using the str() function or by looking next to the dataframe name in the
 # R environment tab.
+str(calispellHighTemp)
 
 
 # QUESTION: How many observations did the original dataframe (calispellTemp) have?
 # How many does the new dataframe (calispellHighTemp) have?
-
+#61100 obs originally, 7703 obs in new dataframe 
 
 # REALLY IMPORTANT: Even if the function runs, R can do all kinds of bad things if
 # you've accidentally coded something incorrectly. It is always really very 
@@ -238,7 +240,9 @@ calispellData <- filter(.data=calispellTemp,
 
 # QUESTION: How many observations are in the datafile calispellData? Write code to
 # determine how many values of calispell_temp were NA.
-
+#52330 obs
+calispell_temp_NA <- nrow(calispellTemp)-nrow(calispellData)
+calispell_temp_NA
 
 # ---------------------------------------------------------- #
 ### PART 1.4: CREATING COLUMNS                            ####
