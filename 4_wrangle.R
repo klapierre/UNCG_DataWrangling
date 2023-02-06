@@ -198,6 +198,8 @@ all_equal(calispellTemp3, calispellTemp4, calispellTemp5)
 # than 15C, would you expect your new dataframe to have more, the same, or fewer
 # observations than the original dataframe?
 
+#Fewer
+
 
 # TASK: Run the following code to only keep the values greater than or equal to 15C.
 calispellHighTemp <- filter(.data=calispellTemp,
@@ -208,10 +210,14 @@ calispellHighTemp <- filter(.data=calispellTemp,
 # this using the str() function or by looking next to the dataframe name in the
 # R environment tab.
 
+str(calispellHighTemp)
 
 # QUESTION: How many observations did the original dataframe (calispellTemp) have?
 # How many does the new dataframe (calispellHighTemp) have?
 
+str(calispellTemp)
+
+#Original had 61100, new has 7703.
 
 # REALLY IMPORTANT: Even if the function runs, R can do all kinds of bad things if
 # you've accidentally coded something incorrectly. It is always really very 
@@ -250,11 +256,21 @@ is.na(c(3, 5, NA, 6))
 # Time to put this all together! We can filter all of the rows of wtemp for which
 # the value of calispell_temp is NOT NA.
 calispellData <- filter(.data=calispellTemp,
-                        !is.na(calispell_temp))
+                        is.na(calispell_temp))
 
 # QUESTION: How many observations are in the datafile calispellData? Write code to
 # determine how many values of calispell_temp were NA.
 
+str(calispellData)
+
+#52330 observations
+
+calispell_temp_NA <- filter(.data=calispellData,
+                           is.na(calispell_temp))
+
+str(calispell_temp_NA)
+
+#8770 observations
 
 # ---------------------------------------------------------- #
 ### PART 1.4: CREATING COLUMNS                            ####
@@ -285,10 +301,12 @@ calispellTempSum <- mutate(.data=calispellTempF,
 
 # Check the dataframe to see if it worked.
 
+view(calispellTempSum)
 
 # TASK: The column we just created makes no sense. Write code below to remove it
 # from the dataframe.
 
+calispellTempSum <- select(.data=calispellTempSum, -"sum")
 
 # QUESTION: We might also want to add a column that describes the dataset. What happens 
 # when you run the following code?
