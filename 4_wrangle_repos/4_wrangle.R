@@ -381,6 +381,8 @@ calispellHighTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv", stri
   mutate(calispell_temp_F = calispell_temp*9/5 + 32)
 
 
+# Wow so easy!
+
 # ---------------------------------------------------------- #
 #### PART 2.0: USING YOUR NEW KNOWLEDGE                   ####
 # ---------------------------------------------------------- #
