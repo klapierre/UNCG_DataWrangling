@@ -260,7 +260,9 @@ calispellData <- filter(.data=calispellTemp,
 # QUESTION: How many observations are in the datafile calispellData? Write code to
 # determine how many values of calispell_temp were NA.
 
-
+# 52330 
+# 61100-52330
+# [1] 8770
 # ---------------------------------------------------------- #
 ### PART 1.4: CREATING COLUMNS                            ####
 # ---------------------------------------------------------- #
@@ -294,12 +296,13 @@ calispellTempSum <- mutate(.data=calispellTempF,
 # TASK: The column we just created makes no sense. Write code below to remove it
 # from the dataframe.
 
+# calispellTempNoSum = select(.data=calispellTempSum,-sum)
 
 # QUESTION: We might also want to add a column that describes the dataset. What happens 
 # when you run the following code?
 calispellTempFaquatic <- mutate(.data=calispellTempF,
                                 type='aquatic')
-
+# A new column is added called "type" and it applies "aquatic" to all rows 
 
 # ---------------------------------------------------------- #
 ### PART 1.5: PASTING AND SEPARATING COLUMNS              ####
