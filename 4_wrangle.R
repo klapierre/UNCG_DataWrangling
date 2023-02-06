@@ -23,8 +23,8 @@
 # The dplyr package is nested within the tidyverse package (along with many others).
 # Install tidyverse and load the library. HINT: see the end of assignment #1 if you 
 # forgot how to install and load a package.
-
-
+library(tidyverse)
+setwd("/Users/rachaelbrenneman/Desktop/data_wrangle/UNCG_DataWrangling")
 # ---------------------------------------------------------- #
 #### PART 1.0: LEARNING THE FUNCTIONS                     ####
 # ---------------------------------------------------------- #
@@ -38,7 +38,7 @@
 
 # TASK: Download the data from the canvas website. Remember to save it to your working
 # directory for this class! I have already added it to your .gitignore file for you.
-
+#done
 
 # TASK: Read in the data by running the following line of code.
 streamTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv", stringsAsFactors = TRUE) 
@@ -46,7 +46,9 @@ streamTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv", stringsAsFa
 
 # QUESTION: What do you think stringsAsFactors mean? Why would we want to make it false?
 # Try reading your data in without this extra argument included. What is the difference?
-
+streamTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv") 
+#when the stringaAsFactors = TRUE is removed, the data will input the dates and times
+#when the argument is included it lists them as factors
 
 # TASK: Let's learn a little more about our data. Run the following line of code.
 str(streamTemp)
