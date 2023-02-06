@@ -451,9 +451,10 @@ calispellHighTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv", stri
 # Field, C, N, and CN. 
 head(cdr)
 
-cdr <- read.csv("e001_Plant aboveground biomass carbon and nitrogen.csv") 
-  
-newcdr <- mutate(.data=cdr, Exp='e001') %>% 
+library(tidyverse)
+
+cdr <- read.csv("e001_Plant aboveground biomass carbon and nitrogen.csv", stringsAsFactors = T) %>% 
+  mutate(Exp='e001') %>% 
   rename(C = X..Carbon, N = X..Nitrogen) %>% 
   filter(Strip == 1) %>% 
   unite(col='NTrtInfo', c('NTrt', 'NAdd'), sep='_') %>% 
