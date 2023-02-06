@@ -71,11 +71,14 @@ colnames(streamTemp)
 
 # QUESTION: What output do you get in the console? Why is this useful?
 
+#The console gives us all the column names of file. Useful for quickly
+#pulling column names.
 
 # QUESTION: What happened to the column title Calispell Cr Temp C) when it was loaded
 # into R?
 # HINT: What happened to the spaces and ) in the R column names?
 
+#R emilinated spaces and ) and replaced them with "."
 
 # TASK: Run the following line of code. Note the alignment of the code components.
 streamTempRename <- rename(.data=streamTemp,
@@ -86,11 +89,15 @@ streamTempRename <- rename(.data=streamTemp,
 
 # TASK: Write your own code to find the column names of our new dataframe (streamTempRename). 
 
+colnames(streamTempRename)
 
 # QUESTION: What differences do you notice from before? In your own words, what did each line
 # from the rename function do? Why might this function be useful for wrangling data?
 # In this code, does the new column name come before or after the =?
 
+#The rename function changed the names of several of the columns. This allows us to choose names
+#that make sense to us and are R friendly. This could be useful for cleaning up data and ensuring a
+#uniform dataset. New column names come before =.
 
 # ---------------------------------------------------------- #
 ### PART 1.2: SELECTING COLUMNS                           ####
@@ -105,6 +112,7 @@ streamTempRename <- rename(.data=streamTemp,
 # TASK: Look again at the columns you have in the streamTempRename dataframe by
 # writing the necessary code below.
 
+colnames(streamTempRename)
 
 # TASK: Run the following line of code to select our columns of interest.
 calispellTemp <- select(.data=streamTempRename,
@@ -116,6 +124,10 @@ calispellTemp <- select(.data=streamTempRename,
 # new dataframe? Which columns are present? Which are absent? Are they in the same 
 # order as before?
 
+colnames(calispellTemp)
+
+# "calispell_temp", "Date", "Time" are present. "Smalle_temp" and "Winchester_temp"
+#are not present. They are in a different order than before. 
 
 # A nice thing to notice about this code. We didn't have to type 'streamTemp$date'
 # etc to indicate each column as we would outside of the tidyverse. The select()
@@ -127,6 +139,7 @@ calispellTemp <- select(.data=streamTempRename,
 # numbers. For example, write the code below to generate a sequence from 1 to 3.
 # HINT: Look back to assignment #1 or the swirl tutorial for help (or google!).
 
+seq(1:3)
 
 # Normally this notation is just for numbers, but the select() function allows you
 # to specify a sequence of columns this way. This can save a bunch of typing!
@@ -136,9 +149,12 @@ calispellTemp <- select(.data=streamTempRename,
 # HINT: Replace the code where each column was listed out with a sequence of column
 # names. Be sure they are listed in the order they exist in the original dataframe.
 
+calispellTemp2 <- select(.data= calispellTemp, calispell_temp:Time)
 
 # TASK: Write code to check your column names again to see what happened in your
 # new dataframe.
+
+colnames(calispellTemp2)
 
 
 # We can also specify the columns that we want to discard by selecting them out.
@@ -160,6 +176,7 @@ calispellTemp5 <- select(.data=streamTempRename,
 
 # TASK: Write code to check that these three new dataframes (calispellTemp3,  calispellTemp4, and calispellTemp5 are identical).
 
+all_equal(calispellTemp3, calispellTemp4, calispellTemp5)
 
 # ---------------------------------------------------------- #
 ### PART 1.3: FILTERING ROWS                              ####
