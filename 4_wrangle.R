@@ -2,6 +2,8 @@
 #### MODULE 2: Wrangle some data!                         ####               
 # ---------------------------------------------------------- #
 
+library(tidyverse)
+
 ## OBJECTIVE:
 # 1. To learn how to manipulate and transform data into a form usable for analysis and graphs.
 # 2. To do this in a way that each step is traceable and reproducible.
@@ -46,14 +48,14 @@ streamTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv", stringsAsFa
 
 # QUESTION: What do you think stringsAsFactors mean? Why would we want to make it false?
 # Try reading your data in without this extra argument included. What is the difference?
-
+  #converts character strings to factors. You may want it to be false if you want R to leave strings as strings. If you do not include the arguement the date and time column is only a character string.
 
 # TASK: Let's learn a little more about our data. Run the following line of code.
 str(streamTemp)
 
 # QUESTION: What does it look like the str() function does?
 # How many rows does it have? How many columns? What class of data is in each column?
-
+  #it looks like it describes what kind of data each column contains. There are 61100 rows, 5 columns, Date and Time columns are factors, the remaining three temperature columns are numeric.
 
 # ---------------------------------------------------------- #
 ### PART 1.1: RENAMING COLUMNS                            ####
@@ -66,12 +68,12 @@ colnames(streamTemp)
 
 
 # QUESTION: What output do you get in the console? Why is this useful?
-
+  #it outputs the current names of the columns, which helps as it lets you know what R calls the cloumns.
 
 # QUESTION: What happened to the column title Calispell Cr Temp C) when it was loaded
 # into R?
 # HINT: What happened to the spaces and ) in the R column names?
-
+  # The spaces and "()"s were replaced by "."
 
 # TASK: Run the following line of code. Note the alignment of the code components.
 streamTempRename <- rename(.data=streamTemp,
@@ -81,12 +83,12 @@ streamTempRename <- rename(.data=streamTemp,
 
 
 # TASK: Write your own code to find the column names of our new dataframe (streamTempRename). 
-
+colnames(streamTempRename)
 
 # QUESTION: What differences do you notice from before? In your own words, what did each line
 # from the rename function do? Why might this function be useful for wrangling data?
 # In this code, does the new column name come before or after the =?
-
+  # Now rather than '.' for spaces there are '_'. The rename function replaced each column name with a new one, helpful as the default replacments of spaces and parentheses can be confusing. The new name is written before the old in this code.
 
 # ---------------------------------------------------------- #
 ### PART 1.2: SELECTING COLUMNS                           ####
