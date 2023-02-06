@@ -46,6 +46,7 @@ streamTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv", stringsAsFa
 
 # QUESTION: What do you think stringsAsFactors mean? Why would we want to make it false?
 # Try reading your data in without this extra argument included. What is the difference?
+
 # This being TRUE allows the data table to work more efficiently, as quoted
 # values/words are seen as variables that can or cannot be changed. FALSE is better
 # if the strings will be changed 
@@ -56,7 +57,8 @@ str(streamTemp)
 # QUESTION: What does it look like the str() function does?
 # How many rows does it have? How many columns? What class of data is in each column?
 
-
+# It displays information such as the names of the columns and what kind of data is in them.
+# 61100 rows, 5 columns. Factors in the first 2 columns and numbers in the last 3 columns 
 # ---------------------------------------------------------- #
 ### PART 1.1: RENAMING COLUMNS                            ####
 # ---------------------------------------------------------- #
