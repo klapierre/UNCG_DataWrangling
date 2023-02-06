@@ -188,16 +188,18 @@ calispellTemp5 <- select(.data=streamTempRename,
 
 # Note that filter() is really, by definition, subsetting our data. But, base R
 # has a subset() function already. So in the tidyverse world, we refer to this as
-# filtering instead.
-
+# filtering instead
 # We might be worried about high water temperatures. Let's filter the the Calispell
 # dataframe to only include data where the Calispell Creek has temperature equal or
 # greater than 15 C.
+
+# highWater = filter(.data = calispellTemp2, Calispell_temp > 15)
 
 # QUESTION: If you remove all of the observations (rows) with temperatures lower
 # than 15C, would you expect your new dataframe to have more, the same, or fewer
 # observations than the original dataframe?
 
+# Lower
 
 # TASK: Run the following code to only keep the values greater than or equal to 15C.
 calispellHighTemp <- filter(.data=calispellTemp,
@@ -208,10 +210,13 @@ calispellHighTemp <- filter(.data=calispellTemp,
 # this using the str() function or by looking next to the dataframe name in the
 # R environment tab.
 
+# There are less observations than the original data frame. I also clicked on the 
+# temp column within the data frame and saw the lowest values were 15
 
 # QUESTION: How many observations did the original dataframe (calispellTemp) have?
 # How many does the new dataframe (calispellHighTemp) have?
 
+# 61100 and 7703
 
 # REALLY IMPORTANT: Even if the function runs, R can do all kinds of bad things if
 # you've accidentally coded something incorrectly. It is always really very 
