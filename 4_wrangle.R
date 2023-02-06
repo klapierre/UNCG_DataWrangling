@@ -158,9 +158,8 @@ calispellTemp5 <- select(.data=streamTempRename,
 
 
 # TASK: Write code to check that these three new dataframes (calispellTemp3,  calispellTemp4, and calispellTemp5 are identical).
-colnames(calispellTemp3)
-colnames(calispellTemp4)
-colnames(calispellTemp5)
+calispellTemp3 == calispellTemp4
+calispellTemp4 == calispellTemp5
 
 # ---------------------------------------------------------- #
 ### PART 1.3: FILTERING ROWS                              ####
@@ -292,7 +291,8 @@ calispellTempFaquatic <- mutate(.data=calispellTempF,
 
 # TASK: Write code to create one more column named ecosystem in a new dataframe and 
 # fill it with the word 'stream'.
-
+calispellTempF3 = mutate(.data = calispellTempFaquatic,
+                         ecosystem='stream')
 
 # Now we might want to create a new column that includes information from both of
 # the columns we just created. We would do so by running the following lines of code:
@@ -303,7 +303,7 @@ calispellTempF4 <- unite(data=calispellTempF3,
 
 # QUESTION: Describe in your own words what the code above does. What part creates
 # a new column? What part tells R which columns to combine? What does the sep= mean?
-
+  # this code creates a new column out of a existing columns, placing two data points in the column separated by some character. "unite" creates the column, "col=" names the column, and a vector containing the columns to be combined is used to tell R which columns to combine, and the sep= funciton tells R what character or string to use to separate the data in each cell in the new combined column.
 
 # Another very useful function is separate, which takes apart a column into two or
 # more pieces.
@@ -315,9 +315,9 @@ calispellTempF5 <- separate(data=calispellTempF4,
                             sep='::')
 
 # QUESTION: Why isn't the column name in quotes this time?
-
+  # now that its been named its an object and not a string you're telling R to name an object
 # QUESTION: Describe in your own words what the code above does.
-
+  # the code reads a column and splits it into two columns 'type' and 'ecosystem', and tells R what part of the string is being used as a separator so that it wont be copied.
 
 # ---------------------------------------------------------- #
 ### PART 1.6: PIPES                                       ####
@@ -384,5 +384,17 @@ calispellHighTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv", stri
 # (8) Keep only the following columns: Exp, Date, Plot, NTrtInfo, genus, species, 
 # Field, C, N, and CN. 
 
+cdr = read.csv("e001_Plant aboveground biomass carbon and nitrogen.csv") %>% 
+  mutate(Exp='e001') %>% 
+  rename(C=X..Carbon, N=X..Nitrogen) %>% 
+  filter(Strip == 1) %>% 
+  unite(col='NTrtInfo',
+        c('NTrt','NAdd'),
+        sep='_') %>% 
+  separate(col=Species,
+           into=c('genus', 'species'),
+           sep=' ') %>% 
+  mutate(CN= C/N) %>% 
+  select(Exp, Date, Plot, NTrtInfo, genus, species, Field, C, N, CN)
 
 # REMEMBER: Save and push your script when you're done with this assignment!
