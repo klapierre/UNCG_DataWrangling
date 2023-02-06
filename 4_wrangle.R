@@ -323,7 +323,7 @@ calispellTemp5 <- separate(data=calispellTempF4,
 #column name isn't in quotes this time since the column is already created
 
 # QUESTION: Describe in your own words what the code above does.
-#the code above seperates the type_ecosystem columns into two seperate ones named
+#the code above separates the type_ecosystem columns into two seperate ones named
 #type and ecosystem
 
 
@@ -391,6 +391,18 @@ calispellHighTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv", stri
 # HINT: The ratio of C to N is calculated as C/N.
 # (8) Keep only the following columns: Exp, Date, Plot, NTrtInfo, genus, species, 
 # Field, C, N, and CN. 
-
+cdr <- read.csv("e001_Plant_carbon_nitrogen.csv", stringsAsFactors = TRUE) %>% 
+  mutate(Exp="e001") %>% 
+  rename(C=X..Carbon, N= X..Nitrogen) %>% 
+  filter(Strip == 1) %>% 
+  unite(col='NTrtInfo',
+        c('NTrt', 'NAdd'),
+        sep='_') %>% 
+  separate(col=Species,
+           into=c('genus', 'species'),
+           sep=' ') %>% 
+  mutate(CN= C/N) %>% 
+  select(-NitrAdd, -Strip, -Field)
+  
 
 # REMEMBER: Save and push your script when you're done with this assignment!
