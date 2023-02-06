@@ -270,19 +270,20 @@ head(calispellTempF)
 # temperature columns.
 calispellTempSum <- mutate(.data=calispellTempF,
                            sum=calispell_temp + calispell_temp_F)
-
+str(calispellTempSum)
 # Check the dataframe to see if it worked.
 
 
 # TASK: The column we just created makes no sense. Write code below to remove it
 # from the dataframe.
-
+calispellTempNoSum <- select(.data=calispellTempSum,
+                           -sum)
 
 # QUESTION: We might also want to add a column that describes the dataset. What happens 
 # when you run the following code?
 calispellTempFaquatic <- mutate(.data=calispellTempF,
                                 type='aquatic')
-
+#This function added a column that lists the type of measurement for each observation
 
 # ---------------------------------------------------------- #
 ### PART 1.5: PASTING AND SEPARATING COLUMNS              ####
