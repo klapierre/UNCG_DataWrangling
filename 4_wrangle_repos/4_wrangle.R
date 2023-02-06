@@ -389,7 +389,7 @@ calispellHighTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv", stri
 
 # Put the functions you just learned to the test! We can use our skills to clean
 # up a dataset of leaf carbon and nitrogen percentages from a nitrogen addition experiment
-# in a grassland in Minnesota. We want to end up with nicely named variables, all the info
+# in a grassland in Minnesota. We want to end up with nicely named variables, all the into
 # we need about the experiment (but not too much info!), remove some observations that
 # were collected a little differently than others, split apart a column into more
 # functional parts, and ultimately calculate the C:N ratio (a useful number for
@@ -411,5 +411,11 @@ calispellHighTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv", stri
 # (8) Keep only the following columns: Exp, Date, Plot, NTrtInfo, genus, species, 
 # Field, C, N, and CN. 
 
+# cdr = read.csv("e001_Plant aboveground biomass carbon and nitrogen.csv")%>% 
+# mutate(Exp = "e001") %>% rename(C = X..Carbon, N = X..Nitrogen) %>% 
+# filter(Strip!=1) %>% unite(col = "NTrtInfo", c("NTrt", "NAdd"),sep = "_" ) %>%
+# separate(col = "Species",into = c("genus","species"), sep = " ") %>% 
+# mutate(CN = C/N) %>% 
+# select(Exp, Date, Plot, NTrtInfo, genus, species, Field, C, N, CN)
 
 # REMEMBER: Save and push your script when you're done with this assignment!
