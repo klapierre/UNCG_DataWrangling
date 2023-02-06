@@ -313,6 +313,7 @@ calispellTempFaquatic <- mutate(.data=calispellTempF,
 # TASK: Write code to create one more column named ecosystem in a new dataframe and 
 # fill it with the word 'stream'.
 
+# calispellTempFecosystem = mutate(.data = calispellTempFaquatic, ecosystem = "stream")
 
 # Now we might want to create a new column that includes information from both of
 # the columns we just created. We would do so by running the following lines of code:
@@ -324,6 +325,8 @@ calispellTempF4 <- unite(data=calispellTempF3,
 # QUESTION: Describe in your own words what the code above does. What part creates
 # a new column? What part tells R which columns to combine? What does the sep= mean?
 
+# col = creates the new column, c() combines the two columns "type" and "ecosystem"
+# Sep= indicates the visual separation of the elements 
 
 # Another very useful function is separate, which takes apart a column into two or
 # more pieces.
@@ -336,8 +339,10 @@ calispellTempF5 <- separate(data=calispellTempF4,
 
 # QUESTION: Why isn't the column name in quotes this time?
 
+# Its already present 
 # QUESTION: Describe in your own words what the code above does.
 
+#It creates 2 new columns where type and ecosystem are separated into their own 
 
 # ---------------------------------------------------------- #
 ### PART 1.6: PIPES                                       ####
