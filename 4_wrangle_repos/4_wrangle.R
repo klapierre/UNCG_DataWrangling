@@ -121,6 +121,8 @@ calispellTemp <- select(.data=streamTempRename,
 # new dataframe? Which columns are present? Which are absent? Are they in the same 
 # order as before?
 
+# The columns for winchester and smalle are omitted, and the order has changed. 
+# Now calispell_temp is first then date then time. 
 
 # A nice thing to notice about this code. We didn't have to type 'streamTemp$date'
 # etc to indicate each column as we would outside of the tidyverse. The select()
@@ -132,6 +134,7 @@ calispellTemp <- select(.data=streamTempRename,
 # numbers. For example, write the code below to generate a sequence from 1 to 3.
 # HINT: Look back to assignment #1 or the swirl tutorial for help (or google!).
 
+# > seq(1:3)
 
 # Normally this notation is just for numbers, but the select() function allows you
 # to specify a sequence of columns this way. This can save a bunch of typing!
@@ -141,10 +144,13 @@ calispellTemp <- select(.data=streamTempRename,
 # HINT: Replace the code where each column was listed out with a sequence of column
 # names. Be sure they are listed in the order they exist in the original dataframe.
 
+# calispellTemp2 = select(.data = streamTempRename, Date:Time, Time:Calispell_temp)
 
 # TASK: Write code to check your column names again to see what happened in your
 # new dataframe.
 
+# colnames(calispellTemp2)
+#[1] "Date"           "Time"           "Calispell_temp"
 
 # We can also specify the columns that we want to discard by selecting them out.
 # TASK: Run the following code to remove the Smalle_temp and Winchester_temp 
@@ -165,6 +171,12 @@ calispellTemp5 <- select(.data=streamTempRename,
 
 # TASK: Write code to check that these three new dataframes (calispellTemp3,  calispellTemp4, and calispellTemp5 are identical).
 
+#identical(calispellTemp3, calispellTemp4)
+#[1] TRUE
+# identical(calispellTemp3,calispellTemp5)
+#[1] TRUE
+#identical(calispellTemp4, calispellTemp5)
+#[1] TRUE
 
 # ---------------------------------------------------------- #
 ### PART 1.3: FILTERING ROWS                              ####
