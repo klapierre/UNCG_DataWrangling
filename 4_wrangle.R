@@ -359,7 +359,6 @@ rm(list = ls())
 
 # SHORTCUT: You can efficiently type the pipe icon '%>%' by using the pipe shortcut ctl+shift+m (windows) or cmd+shift+m (mac)! Try using the shortcut to create pipes whenever needed for the rest of the assignment.
 
-
 # The pipe icon tells R to pass the dataframe it was just creating into another function.
 # This is how we can get from one function to the next without creating and naming
 # dozens of new dataframes. Hooray!
@@ -405,6 +404,15 @@ calispellHighTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv", stri
 # HINT: The ratio of C to N is calculated as C/N.
 # (8) Keep only the following columns: Exp, Date, Plot, NTrtInfo, genus, species, 
 # Field, C, N, and CN. 
+cdr <- read.csv("e001_Plant aboveground biomass carbon and nitrogen.csv", stringsAsFactors = TRUE) %>% 
+  mutate(Exp = "e001") %>%
+  rename(C = X..Carbon, N = X..Nitrogen) %>% 
+  filter(Strip == 1) %>% 
+  unite(col = NTrtInfo, c('NTrt', 'NAdd'),sep= '_') %>% 
+  separate(col = Species, into=c('genus', 'species'),sep = ' ') %>% 
+  mutate(CN = C/N) %>% 
+  select(Exp, Date, Plot, NTrtInfo, genus, species, Field, C, N, CN)
+  
 
-
+  head(cdr)
 # REMEMBER: Save and push your script when you're done with this assignment!
