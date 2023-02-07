@@ -431,7 +431,7 @@ cdr <- read.csv("e001_Plant aboveground biomass carbon and nitrogen.csv") %>%
 # Field, C, N, and CN. 
 cdr <- read_csv("e001_Plant aboveground biomass carbon and nitrogen.csv")%>%
   mutate(Exp='e001') %>% 
-  rename(C='X..Carbon',N='X..Nitrogen')%>% 
+  rename(C='% Carbon',N='% Nitrogen')%>% 
   filter(Strip==1) %>% 
   unite(col='NTrtInfo',
         c('NTrt', 'NAdd'),
