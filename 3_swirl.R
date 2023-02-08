@@ -55,23 +55,25 @@ swirl()
 # ---------------------------------------------------------- #
 # QUESTION: What would you do to get back a line of code you previously ran
 # from your console without retyping the whole thing again?
-
+# using the up arrow key
 
 # ---------------------------------------------------------- #
 #### II. R Programming -> 2. Workspace and Files          #### 
 # ---------------------------------------------------------- #
 # QUESTION: What is the difference between your working directory
 # and your local workspace?
-
+# the workind directory is where files/scripts are saved on your computer whereas 
+# your local workspace is what R studio is using/the data it has stored from your script
 # QUESTION: How do you find help files for a function using R code?
-
+# type ? in front of the function
 
 # ---------------------------------------------------------- #
 #### III. R Programming -> 3. Sequences of Numbers        #### 
 # ---------------------------------------------------------- #
 # QUESTION: In R, is there usually just one way or many different
 # ways of doing the same thing? Why might this be useful?
-
+# there are usually many different ways to achieve the same thing. This can be beneficial because it allows people to achieve their goal in
+# whatever way works best for their brains.
 
 # ---------------------------------------------------------- #
 #### IV. R Programming -> 4. Vectors                      #### 
@@ -79,17 +81,20 @@ swirl()
 # QUESTION: Describe in your own words the difference between a 
 # logical vector, a character vector, an integer vector, and a 
 # numeric vector.
-
+# logical vectors are the result of logical conditions, resulting in TRUE, FALSE, and NA
+# character vectors are vectors containing words/letters rather than numeric values
+# integer vectors are made up of integers
+# numeric vectors are made up of numeric values
 # QUESTION: What does <= stand for?
-
+# less than or equal to
 # QUESTION: What does == stand for?
-
+# equal to
 # QUESTION: What does != stand for?
-
+# not equal to
 # QUESTION: What does | mean in R?
-
+# or, it shows if at least one of two expressions is TRUE
 # QUESTION: What does & mean when testing for TRUE/FALSE statements?
-
+# it means AND and it tells you if both expressions are TRUE, if not it computes FALSE
 
 # ---------------------------------------------------------- #
 #### V. R Programming -> 5. Missing Values                ####  
@@ -101,39 +106,44 @@ swirl()
 # are identical.
 # Hint: You can always Google or in R type ?identical() to get
 # help on using this (or any) function.
-
-
+my_data <- sample(c(y, z), 100)
+my_data2 <- sample(c(y, z), 100)
+identical(my_data, my_data2)
 # QUESTION: Explain why my_data and my_data2 were or were not identical.
-
+# because the sample function randomly samples 100 numbers from the vector c(y, z) so each has different 
+# outcomes even though they were written with the same code
 
 # ---------------------------------------------------------- #
 #### VI. R Programming -> 6. Subsetting                   ####
 # ---------------------------------------------------------- #
 # QUESTION: Subsetting can be an amazing thing! Describe one real world
 # scenario where you might want to subset a dataset. (you can make up anything)
-
+# when you only want the values that are usable for one part of your research like a specific plant trait or something
 # QUESTION: Sometimes R gives you an answer to a question that shouldn't be
 # asked (e.g., when you asked for the 3000th variable in your vector x). Why
 # might this be an issue?
-
+# if you don't remember the scope of your vector (or whatever you are working on that has values), you may not know if
+# what you're asking for is possible for R to tell you until you've done it through trial and error
 
 # ---------------------------------------------------------- #
 #### VII. R Programming -> 7. Matrices and Data Frames    ####
 # ---------------------------------------------------------- #
 # QUESTION: In the code matrix[x,y], which letter represents the rows? 
 # Which letter represents the columns?
-
+# x represents rows, y represents columns
 
 # QUESTION: What are two different ways you could assign the numbers 1-20
 # into a matrix with 4 rows and 5 columns?
-
-
+my_vector <- 1:20
+dim(my_vector) <- c(4, 5)
+# or
+matrix(1:20, 4, 5)
 # ---------------------------------------------------------- #
 #### VIII. R Programming -> 8. Logic                      ####
 # ---------------------------------------------------------- #
 # TASK: Leave a comment that you have completed this section. 
 # Did you feel like you were taking an LSAT?
-
+# completed this section! it was very multiple choice heavy
 
 # ---------------------------------------------------------- #
 #### VII. R Programming -> 15. Base Graphics              ####
@@ -141,15 +151,25 @@ swirl()
 
 # TASK: dim(), names(), head(), and tail() are all great functions!
 # Run each of them on the cars dataset.
-
+dim(cars)
+names(cars)
+head(cars)
+tail(cars)
 # QUESTION: In your own words, describe what each of these functions do and
 # why each one might be useful.
-
+# head() showed the first 6 rows of the cars dataset
+# tail() showed the last 6 rows of the cars dataset. Both head() and tail() can be good for seeing a snapshot of the dataframe
+# you're working with or if you want to see where the data starts vs. where it ends
+# dim() shows the dimensions of the cars dataset (50 rows, 2 columns). This is useful if you want to quickly see the scale of
+# the data frame without loading the entire thing
+# names() shows the column names of the cars dataset. This is useful if you want to see the type of data that's contained 
+# in the data frame
 # TASK: Run the str() function on the cars dataset.
-
+str(cars)
 # QUESTION: In your own words, describe what the str() function does.
 # Why might this be useful?
-
+# it shows you how many observations and variables there are. This can be super useful in showing you how many variables/types 
+# of data you have, and then how many values you have under each type of variable/data
 
 # ---------------------------------------------------------- #
 #### PART 2: TEST WHAT YOU LEARNED                        ####
@@ -164,7 +184,8 @@ b <- 4
 a <- b
 c <- a
 c
-
+# it prints 4. This is because it runs in the order of what was written, so once a variable is overwritten, that is its new value.
+# in the case of this block of code, c was most recently given the value of a, whose most recent value was 4
 
 # II) Three of the following lines produce the same result. 
 # Without running the code, which one will produce a different result than the
@@ -174,7 +195,9 @@ log(x = 1000, base = 10)
 log10(1000)
 log(base = 10, x = 1000)
 log(10, 1000)
-
+# I think the last line, log(10, 1000), will produce a different result because the first and third line are basically the same,
+# just that x and base are assigned their values in a different order. The 2nd line uses log base 10 just like the first
+# and the third by saying log10 before the parentheses. the last line computes the log base 10 of both 10 and 1000.
 
 
 # III) Use one of R's built in functions to create a new vector that is 
@@ -182,7 +205,7 @@ log(10, 1000)
 # this function, but a combination of Google and function documentation 
 # should get you there.
 numvector <- c(5,2,3,1,6,8)
-
+numvector <- sort(c(5, 2, 3, 1, 6, 8), decreasing = TRUE)
 
 # IV) Which elephant weighs more? 
 # Convert one’s weight to the units of the other, and store the result in an 
@@ -191,16 +214,20 @@ numvector <- c(5,2,3,1,6,8)
 
 elephant1_kg <- 3492
 elephant2_lb <- 7757
-
-
+elephant1_lb <- 7698.54
+elephant2_kg <- 3518.516
+elephant1_kg > elephant2_kg
+# the result is false so no, elephant1 is not heavier than elephant2
 # ---------------------------------------------------------- #
 #### PART 3: FEEDBACK                                     ####
 # ---------------------------------------------------------- #
 # QUESTION: What did you think of the Swirl tutorial? Was it helpful? Why 
 # or why not?
-
+# I think swirl is super helpful. Especially when you get stuck, rather than getting frustrated because you can't move on,
+# skipping allows you to get the answer
 # QUESTION: Would you have preferred to split the Swirl tutorial over weeks
 # 1 and 3 of the class instead of the week 1 assignment you previously 
 # completed? Why or why not?
+# I think completing Swirl over the first 2 weeks would have been better since it is slightly more beginner friendly.
 
 # REMEMBER: Save and push your script when you're done with this assignment!
