@@ -252,7 +252,8 @@ elephant2_lb <- 7757
 
 elephant2_lb > elephant1_kg
 
-#True. Elephant1 weights more
+
+#True. Elephant2 weights more
 # ---------------------------------------------------------- #
 #### PART 3: FEEDBACK                                     ####
 # ---------------------------------------------------------- #
