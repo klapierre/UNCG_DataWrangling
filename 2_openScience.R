@@ -4,7 +4,7 @@
 ## Know where to find data and how to bring it into the R environment.
 ## Set up a good file management system for yourself, which you can build on in the future.
 ## Branch from a GitHub repository and practice staging, committing, and pull/pushing code. 
-## Create a resource to refer back to.
+## Create a resource to refer back to..
 
 # ----------------------------------------------------------
 #### 1) Finding and interpreting open data.####
@@ -18,19 +18,24 @@
 
 ## QUESTION: Open up the file "knb-lter-knz.148.3.txt". What does this file contain?
 
+## contact information for the dataset contributors 
 
 ## QUESTION: From this file, who are the dataset contributors?
 
+## K. Komatsu, M. Avolio, A. Hope, S. Koerner
 
 ## QUESTION: From this file, what are the start and end dates of the dataset?
 
+## 1/1/2019 - 12/31/2021
 
 ## QUESTION: Is the data collection still ongoing?
 
+## Yes
 
 ## QUESTION: Given your answer to the previous question, why might it be good to
 ## have a reproducible script for data analysis related to this dataset?
 
+## As data continues to be collected and analyzed, consistency is very important
 
 # ----------------------------------------------------------
 #### 2) Preventing GitHub from syncing the data files.####
@@ -41,6 +46,7 @@
 ## QUESTION: What are two reasons why we wouldn't want GitHub to sync this data?
 # GitHub is not good at storing data.
 
+## It contains personal information 
 
 ## TASK: Check the Git tab in RStudio. Do you see your data folder listed added?
 ## Now, open the .gitignore file from the files tab in RStudio.
@@ -51,10 +57,13 @@
 ## QUESTION: What happened to the data folder listed in the Git tab of RStudio
 ## when you hit save?
 
+## It disappeared from the git tab
+
 
 ## TASK: Stage, commit, and pull/push your modified .gitignore file to the branch
 ## you created for this week with an appropriate commit message.
 
+## Done! 
 
 # ----------------------------------------------------------
 #### 3) Getting open data into R.####
@@ -73,6 +82,7 @@
 ## a name that includes the experiment name (conSME) and the data type (abundance)
 ## using '<-' and be sure to carefully consider your naming convention when doing so.
 
+## conSME_abundance = read_csv("Levi_conSME_data/CME011.csv")
 
 ## Run the following code.
 conSMEcoverAlt <- read.csv("https://portal.edirepository.org/nis/dataviewer?packageid=knb-lter-knz.148.3&entityid=5716ee946efd717292fa3da9241cda7c")
@@ -80,14 +90,19 @@ conSMEcoverAlt <- read.csv("https://portal.edirepository.org/nis/dataviewer?pack
 
 ## QUESTION: What did this code do? What can you say about these two dataframes?
 
+## It opened a dataset that is identical to the one opened from the provided dataset
 
 ## TASK: Check to see if the two dataframes are identical using an R function.
 ## (Hint: remember the Week 1 assignment?)
 
+##identical(conSMEcoverAlt,conSME_abundance)
+## Mine said FALSE but it should have said TRUE 
 
 ## QUESTION: Why might it be better to source data straight from the data portal?
 ## Why might it be worse?
 
+## Changes in the data may be updated between views, which can be good for accuracy 
+## but bad if not updated in R Studio 
 
 ## TASK: Save your R script. Then stage, commit, and pull/push your
 ## modified code to the branch you created for this week with an appropriate 
@@ -103,22 +118,28 @@ conSMEcoverAlt <- read.csv("https://portal.edirepository.org/nis/dataviewer?pack
 ## TASK: Check the names of the columns in the species cover dataset you imported.
 ## (Hint: remember the Week 1 assignment?)
 
+## colnames(conSMEcoverAlt)
 
 ## QUESTION: What naming convention did the dataset creators use for column names?
-
+## First letter of each word uppercase, no underscores between words, shortened words
 
 ## QUESTION: What naming convention do you plan to use for this course for the
 ## following types of objects in R:
-## R scripts
+## R scripts 
+# Capital first letter of first word, underscore between words, last name first
 ## vectors
+# Capital first letter of first word, underscore between words
 ## dataframes
+# Capital first letter of first word, underscore between words
 ## columns within dataframes
+# Capital first letter of first word, underscore between words
 ## homemade functions
-
+## all lowercase 
 
 ## QUESTION: Do all of your objects follow the same naming convention or do you
 ## plan to use different naming conventions to reference different object types?
 
+#They are all the same except for homemade functions
 
 ## TASK: Save your R script. Stage, commit, and pull/push your modified code to the branch
 ## you created for this week with an appropriate commit message.
@@ -137,11 +158,13 @@ conSMEcoverAlt <- read.csv("https://portal.edirepository.org/nis/dataviewer?pack
 ## conSME dataframes you made into one using the rbind() function.
 ## (Hint: Very similar to the cbind function we used in the Week 1 assignment)
 
+# Duplicates = rbind(conSME_abundance,conSMEcoverAlt)
 
 ## QUESTION: Looking at the information for each dataframe in the environment tab
 ## of RStudio, what do you notice about the number of observations for the 
 ## duplicates dataframe compared to the two original dataframes?
 
+## It is twice the number of observations, but the same number of variables
 
 ## TASK: Save your R script. Stage, commit, and pull/push your modified code to the branch
 ## you created for this week with an appropriate commit message.
@@ -157,6 +180,7 @@ duplicates[with(duplicates, order(RecDate, Block, Plot, Taxa)),]
 ## QUESTION: What do you notice about the data? Specifically, compare rows 
 ## 4934 and 12173 (if they are sorted correctly, those should be on top).
 
+## Yes, those rows are at the top 
 
 ## TASK: Save your R script. Stage, commit, and pull/push your modified code to the branch
 ## you created for this week with an appropriate commit message.
@@ -182,6 +206,7 @@ noDuplicates <- unique(duplicates)
 ## noDuplicates dataframe compared to the dulpicates dataframe? What about compared
 ## to the two original dataframes?
 
+## It's about 400 less observations than duplicates 
 
 ## TASK: Go back to our repository in GitHub through your web browser. Find the
 ## issue you created and resolve it.
@@ -197,13 +222,15 @@ noDuplicates <- unique(duplicates)
 
 ## TASK: Type a comment below.
 
+## Hello
 
 ## TASK: Follow these instructions carefully!
 ## Save your R script. Stage and commit with the commit message "learning to amend",
 ## but this time DON'T pull/push your modified code!
 
-## TASK: Type another comment below.
+## TASK: Type another comment
 
+## Hello again 
 
 ## TASK: Save your R script. Open up the commit window in RStudio.
 
@@ -211,7 +238,7 @@ noDuplicates <- unique(duplicates)
 ## QUESTION: How many commits are you ahead of your branch on GitHub?
 ## (Hint: look for the message "Your branch is ahead of..." near the top of the 
 ## window.)
-
+## One commit
 
 ## TASK: Stage your modified code and check the "Amend previous commit" box.
 ## Then commit your code (still don't pull/push).
@@ -219,6 +246,8 @@ noDuplicates <- unique(duplicates)
 
 ## QUESTION: What happened when you clicked "Amend previous commit"?
 ## How many commits is your branch ahead by now?
+
+## my previous comment showed up. It still says ahead by 1
 
 
 ## TASK: Once you've answered the above questions, save your R script one last time. 
