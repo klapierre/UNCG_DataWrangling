@@ -247,11 +247,12 @@ numevector2 <- sort(numvector, decreasing=TRUE, na.last=NA)
 # appropriately-named new variable. Test whether elephant1 weights more than 
 # elephant2 using an equation that returns either true or false (1 kg ≈ 2.2 lb).
 
-elephant1_kg <- 3492
+elephant1_kg <- 3492*2.2
 elephant2_lb <- 7757
 
-elephant2_lb == elephant1_kg
+elephant2_lb > elephant1_kg
 
+#True. Elephant1 weights more
 # ---------------------------------------------------------- #
 #### PART 3: FEEDBACK                                     ####
 # ---------------------------------------------------------- #
