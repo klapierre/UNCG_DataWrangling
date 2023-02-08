@@ -17,19 +17,23 @@
 
 
 ## QUESTION: Open up the file "knb-lter-knz.148.3.txt". What does this file contain?
-
+#it is a text file containing data and information from an experiment
 
 ## QUESTION: From this file, who are the dataset contributors?
-
+#Kim, Kevin, Sally, Meghan, Andrew, and Allison
 
 ## QUESTION: From this file, what are the start and end dates of the dataset?
-
+#Start Date:  2019-01-01
+#End Date:  2021-12-31
 
 ## QUESTION: Is the data collection still ongoing?
-
+#Perhaps- maintenance is ongoing
 
 ## QUESTION: Given your answer to the previous question, why might it be good to
 ## have a reproducible script for data analysis related to this dataset?
+#if data collection is still ongoing, it is important to have a reproductible 
+#script so the tests and anaylsises that have been run so far can be run on 
+#the new data
 
 
 # ----------------------------------------------------------
@@ -40,7 +44,8 @@
 
 ## QUESTION: What are two reasons why we wouldn't want GitHub to sync this data?
 # GitHub is not good at storing data.
-
+#We don't want to store data on github because the data may still be updating and being adjusted
+#Github may not be the most secure place to save data
 
 ## TASK: Check the Git tab in RStudio. Do you see your data folder listed added?
 ## Now, open the .gitignore file from the files tab in RStudio.
@@ -50,6 +55,7 @@
 
 ## QUESTION: What happened to the data folder listed in the Git tab of RStudio
 ## when you hit save?
+#it is no longer visible in the git tab
 
 
 ## TASK: Stage, commit, and pull/push your modified .gitignore file to the branch
@@ -72,22 +78,24 @@
 ## putting the relative file path and file name. Assign the dataframe you import
 ## a name that includes the experiment name (conSME) and the data type (abundance)
 ## using '<-' and be sure to carefully consider your naming convention when doing so.
-
+conSME_abundance <- read.csv("CME011.csv")
 
 ## Run the following code.
 conSMEcoverAlt <- read.csv("https://portal.edirepository.org/nis/dataviewer?packageid=knb-lter-knz.148.3&entityid=5716ee946efd717292fa3da9241cda7c")
 
 
 ## QUESTION: What did this code do? What can you say about these two dataframes?
-
+#This code made a similar data set to the one I just inserted into R. They look very similar from a glance
 
 ## TASK: Check to see if the two dataframes are identical using an R function.
 ## (Hint: remember the Week 1 assignment?)
-
+identical(conSME_abundance, conSMEcoverAlt)
+#True!
 
 ## QUESTION: Why might it be better to source data straight from the data portal?
 ## Why might it be worse?
-
+#It might be better because there could be less of a chance that data could get lost or the file corrupted on your personal device
+#It might be work because then you can't filter out any unneccesary information before inserting into R
 
 ## TASK: Save your R script. Then stage, commit, and pull/push your
 ## modified code to the branch you created for this week with an appropriate 
@@ -105,7 +113,7 @@ conSMEcoverAlt <- read.csv("https://portal.edirepository.org/nis/dataviewer?pack
 
 
 ## QUESTION: What naming convention did the dataset creators use for column names?
-
+#They used one word names with capitals
 
 ## QUESTION: What naming convention do you plan to use for this course for the
 ## following types of objects in R:
@@ -114,11 +122,11 @@ conSMEcoverAlt <- read.csv("https://portal.edirepository.org/nis/dataviewer?pack
 ## dataframes
 ## columns within dataframes
 ## homemade functions
-
+#I prefer using rscript and vectors to c/rbind to dataframes
 
 ## QUESTION: Do all of your objects follow the same naming convention or do you
 ## plan to use different naming conventions to reference different object types?
-
+#I think I will use the same naming convention 
 
 ## TASK: Save your R script. Stage, commit, and pull/push your modified code to the branch
 ## you created for this week with an appropriate commit message.
@@ -136,12 +144,12 @@ conSMEcoverAlt <- read.csv("https://portal.edirepository.org/nis/dataviewer?pack
 ## TASK: Create a new dataframe named "duplicates" by binding the rows of two 
 ## conSME dataframes you made into one using the rbind() function.
 ## (Hint: Very similar to the cbind function we used in the Week 1 assignment)
-
+duplicates <- rbind(conSME_abundance, conSMEcoverAlt)
 
 ## QUESTION: Looking at the information for each dataframe in the environment tab
 ## of RStudio, what do you notice about the number of observations for the 
 ## duplicates dataframe compared to the two original dataframes?
-
+#the number of observations in the duplicated data frame is double the original data frames
 
 ## TASK: Save your R script. Stage, commit, and pull/push your modified code to the branch
 ## you created for this week with an appropriate commit message.
@@ -156,7 +164,7 @@ duplicates[with(duplicates, order(RecDate, Block, Plot, Taxa)),]
 
 ## QUESTION: What do you notice about the data? Specifically, compare rows 
 ## 4934 and 12173 (if they are sorted correctly, those should be on top).
-
+#There are two of each observation (4934 and 12173 are identical)
 
 ## TASK: Save your R script. Stage, commit, and pull/push your modified code to the branch
 ## you created for this week with an appropriate commit message.
@@ -181,7 +189,7 @@ noDuplicates <- unique(duplicates)
 ## of RStudio, what do you notice about the number of observations for the 
 ## noDuplicates dataframe compared to the dulpicates dataframe? What about compared
 ## to the two original dataframes?
-
+#the number of observations is less than half of the observations in the duplicates dataframe and less than the observations in the original dataframes
 
 ## TASK: Go back to our repository in GitHub through your web browser. Find the
 ## issue you created and resolve it.
@@ -196,14 +204,14 @@ noDuplicates <- unique(duplicates)
 # ----------------------------------------------------------
 
 ## TASK: Type a comment below.
-
+#Hi Kim!
 
 ## TASK: Follow these instructions carefully!
 ## Save your R script. Stage and commit with the commit message "learning to amend",
 ## but this time DON'T pull/push your modified code!
 
 ## TASK: Type another comment below.
-
+#Howdy kim!
 
 ## TASK: Save your R script. Open up the commit window in RStudio.
 
@@ -211,7 +219,7 @@ noDuplicates <- unique(duplicates)
 ## QUESTION: How many commits are you ahead of your branch on GitHub?
 ## (Hint: look for the message "Your branch is ahead of..." near the top of the 
 ## window.)
-
+# 1 commit
 
 ## TASK: Stage your modified code and check the "Amend previous commit" box.
 ## Then commit your code (still don't pull/push).
@@ -219,7 +227,7 @@ noDuplicates <- unique(duplicates)
 
 ## QUESTION: What happened when you clicked "Amend previous commit"?
 ## How many commits is your branch ahead by now?
-
+#There is still only one commit
 
 ## TASK: Once you've answered the above questions, save your R script one last time. 
 ## Stage your modified code, amend it to the previous commit, and finally pull/push
