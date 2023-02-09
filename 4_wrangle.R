@@ -265,9 +265,9 @@ calispellTempF <- mutate(.data=calispellTemp,
                          calispell_temp_F = calispell_temp*9/5 + 32)
 
 
-# Take a look at the new dataframeto see if it worked by either opening 
+# Take a look at the new dataframe to see if it worked by either opening 
 # it from the R environment tab or running the following line of code.
-head(calispellTempF) 
+head(calispellTempF)
 
 
 # We can also use mathematical functions on entire columns. Let's try it!
@@ -278,18 +278,19 @@ calispellTempSum <- mutate(.data=calispellTempF,
                            sum=calispell_temp + calispell_temp_F)
 
 # Check the dataframe to see if it worked.
-
-
+calispellTempSum
+#This did work because there is an extra column that added the values in each row.
 # TASK: The column we just created makes no sense. Write code below to remove it
 # from the dataframe.
-
+calispellTempSum2 <- select(.data=calispellTempSum,
+                            -sum)
 
 # QUESTION: We might also want to add a column that describes the dataset. What happens 
 # when you run the following code?
 calispellTempFaquatic <- mutate(.data=calispellTempF,
                                 type='aquatic')
-
-
+calispellTempFaquatic
+#The code sorted the column type to aquatic.
 # ---------------------------------------------------------- #
 ### PART 1.5: PASTING AND SEPARATING COLUMNS              ####
 # ---------------------------------------------------------- #
