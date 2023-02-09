@@ -55,23 +55,28 @@ swirl()
 # ---------------------------------------------------------- #
 # QUESTION: What would you do to get back a line of code you previously ran
 # from your console without retyping the whole thing again?
-
+#You can hit the up arrow until you reach the line of code you want
+#Or type the first two letters and hit tab and R will show the options related to what you typed.
 
 # ---------------------------------------------------------- #
 #### II. R Programming -> 2. Workspace and Files          #### 
 # ---------------------------------------------------------- #
 # QUESTION: What is the difference between your working directory
 # and your local workspace?
-
+#Working directory lists all the files that have been pulled up in Rstudio.
+#local workspace is the current R environment
 # QUESTION: How do you find help files for a function using R code?
-
+#You put a question mark in front of the function and run it.
+#The instructions pop up under help on the right side.
 
 # ---------------------------------------------------------- #
 #### III. R Programming -> 3. Sequences of Numbers        #### 
 # ---------------------------------------------------------- #
 # QUESTION: In R, is there usually just one way or many different
 # ways of doing the same thing? Why might this be useful?
-
+#There are usually many ways to do the same thing
+#This is useful because some ways can be short hand for quick results and others provide a way 
+#to get more detailed in your results.
 
 # ---------------------------------------------------------- #
 #### IV. R Programming -> 4. Vectors                      #### 
@@ -79,17 +84,20 @@ swirl()
 # QUESTION: Describe in your own words the difference between a 
 # logical vector, a character vector, an integer vector, and a 
 # numeric vector.
-
+#A logical vector contain true, false, and na values 
+#A character vector contains words
+#Integer vectors are whole numbers only
+#Numeric vectors contain any numerical values
 # QUESTION: What does <= stand for?
-
+#<= is asking if the values are less than or equal to the certain number
 # QUESTION: What does == stand for?
-
+#== represents exact equality
 # QUESTION: What does != stand for?
-
+#!= represents inequality
 # QUESTION: What does | mean in R?
-
+# At least one of the statements are true.
 # QUESTION: What does & mean when testing for TRUE/FALSE statements?
-
+#Both statements are both true
 
 # ---------------------------------------------------------- #
 #### V. R Programming -> 5. Missing Values                ####  
@@ -102,38 +110,40 @@ swirl()
 # Hint: You can always Google or in R type ?identical() to get
 # help on using this (or any) function.
 
-
 # QUESTION: Explain why my_data and my_data2 were or were not identical.
-
+#my_data and my_data2 were identical because it was copied.
 
 # ---------------------------------------------------------- #
 #### VI. R Programming -> 6. Subsetting                   ####
 # ---------------------------------------------------------- #
 # QUESTION: Subsetting can be an amazing thing! Describe one real world
 # scenario where you might want to subset a dataset. (you can make up anything)
-
+#In the case of wanting to get rid of a certain amount of your data, subsetting would be useful.
 # QUESTION: Sometimes R gives you an answer to a question that shouldn't be
 # asked (e.g., when you asked for the 3000th variable in your vector x). Why
 # might this be an issue?
-
+#If you are looking for a specific value in your vector, and enter something wrong R
+#still gives you an answer which could cause a mistake in code.
 
 # ---------------------------------------------------------- #
 #### VII. R Programming -> 7. Matrices and Data Frames    ####
 # ---------------------------------------------------------- #
 # QUESTION: In the code matrix[x,y], which letter represents the rows? 
 # Which letter represents the columns?
-
+#x represents rows and y represents columns
 
 # QUESTION: What are two different ways you could assign the numbers 1-20
 # into a matrix with 4 rows and 5 columns?
-
+#matrix(data = 1:20, nrow = 4, ncol = 5)
+#make a vector of 1:20 then assign dimensions (4, 5)
 
 # ---------------------------------------------------------- #
 #### VIII. R Programming -> 8. Logic                      ####
 # ---------------------------------------------------------- #
 # TASK: Leave a comment that you have completed this section. 
 # Did you feel like you were taking an LSAT?
-
+#I have completed this section
+#Definitely, getting some good math practice in!
 
 # ---------------------------------------------------------- #
 #### VII. R Programming -> 15. Base Graphics              ####
@@ -144,12 +154,20 @@ swirl()
 
 # QUESTION: In your own words, describe what each of these functions do and
 # why each one might be useful.
-
+#head() shows two columns: speed and distance.
+#This may be useful to see how long it takes for the cars to stop
+#dim() shows the dimensions of the data
+#This may be useful to see how much data you have
+#names() shows the titles of the columns
+#Useful becuase it shows the kind of data related to the cars
+#tail() shows the end of the data
+#This may be useful for seeing the last pieces of data collected
 # TASK: Run the str() function on the cars dataset.
 
 # QUESTION: In your own words, describe what the str() function does.
 # Why might this be useful?
-
+#The str() function shows kind of a summary of the data.
+#This may be useful to get a overall idea about the data.
 
 # ---------------------------------------------------------- #
 #### PART 2: TEST WHAT YOU LEARNED                        ####
@@ -164,7 +182,7 @@ b <- 4
 a <- b
 c <- a
 c
-
+#The block of code prints 3 because c says a + b so 1+2=3
 
 # II) Three of the following lines produce the same result. 
 # Without running the code, which one will produce a different result than the
@@ -174,6 +192,8 @@ log(x = 1000, base = 10)
 log10(1000)
 log(base = 10, x = 1000)
 log(10, 1000)
+#log(10, 1000) would produce a different result because it does not label the numbers so 
+#it would be taking the natural log of 10 and 1000
 
 
 
@@ -182,7 +202,7 @@ log(10, 1000)
 # this function, but a combination of Google and function documentation 
 # should get you there.
 numvector <- c(5,2,3,1,6,8)
-
+#You would put it in descending order by typing order(-numvector)
 
 # IV) Which elephant weighs more? 
 # Convert one’s weight to the units of the other, and store the result in an 
@@ -191,16 +211,20 @@ numvector <- c(5,2,3,1,6,8)
 
 elephant1_kg <- 3492
 elephant2_lb <- 7757
-
+#I converted elephant2_lb and labeled it elephant2_kg 
+#By typing (elephant1_kg == elephant2_kg) the answer came to FALSE
+#and elephant2 is heavier
 
 # ---------------------------------------------------------- #
 #### PART 3: FEEDBACK                                     ####
 # ---------------------------------------------------------- #
 # QUESTION: What did you think of the Swirl tutorial? Was it helpful? Why 
 # or why not?
-
+#I found the swirl tutorial to be very interactive and a lot more helpful than previous assignments.
 # QUESTION: Would you have preferred to split the Swirl tutorial over weeks
 # 1 and 3 of the class instead of the week 1 assignment you previously 
 # completed? Why or why not?
+#I would prefer the way it was set up to have the intro assignment spread out because I 
+#found that assignment to be more difficult than the swirl assignment.
 
 # REMEMBER: Save and push your script when you're done with this assignment!
