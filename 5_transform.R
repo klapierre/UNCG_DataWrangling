@@ -162,6 +162,62 @@ streamTempMeans <- streamTempMDY %>%
 # QUESTION: What columns did we group by to get our new means? What does the new dataframe show?
 
 
+# ---------------------------------------------------------- #
+### PART 1.3: PRACTICING THESE SKILLS                     ####
+# ---------------------------------------------------------- #
+
+# Let's return to our flight delays question from last week. Recall that we are interested 
+# in avoiding flights with long delays. Load the data for New York City flights by running 
+# the following code:
+flightData <- nycflights13::flights
+
+# TASK: Write a pipeline to figure out which airport of origin to avoid when flying to Raleigh 
+# by taking the original flight dataframe (flightData) and performing the following tasks:
+# (1) filter to keep only flights that have RDU as the destination (dest column);
+# (2) groups the data by airport of origin (origin column);
+# (3) summarize to find the mean arrival delay (arr_delay column) remembering to remove NAs;
+# (4) ungroup the dataframe;
+# (5) assign the output to a dataframe named airportDelaySummary.
+
+
+# QUESTION: Which airport should you avoid if you want the shortest delays?
+
+
+# TASK: Write a pipeline to figure out which month of the year to avoid when flying to Raleigh 
+# by taking the original flight dataframe (flightData) and performing the following tasks:
+# (1) filter to keep only flights that have RDU as the destination (dest column);
+# (2) groups the data by hour;
+# (3) summarize to find the mean AND the maximum arrival delay (arr_delay column), 
+#     remembering to remove NAs;
+# (4) ungroup the dataframe;
+# (5) assign the output to a dataframe named timeDelaySummary
+
+
+# QUESTION: What is the earliest hour of the day that flights leave New York for Raleigh?
+
+
+# QUESTION: Which hour of the day has the longest mean delay? What about the longest maximum delay?
+
+
+# TASK: Write a pipeline to figure out which month of the year and airport to avoid when flying
+# to Raleigh by taking the original flight dataframe (flightData) and performing the following tasks:
+# (1) filter to keep only flights that have RDU as the destination (dest column);
+# (2) groups the data by month AND origin;
+# (3) summarize to find the mean arrival delay (arr_delay column), remembering to remove NAs;
+# (4) ungroup the dataframe;
+# (5) assign the output to a dataframe named monthlyDelaySummary
+
+
+# QUESTION: Which month and airport has the longest mean delay?
+
+
+
+
+
+
+
+
+
 
 
 # REMINDER: If you haven't already, make sure to commit and push your code to your branch in GitHub!
