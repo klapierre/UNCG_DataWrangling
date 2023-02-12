@@ -361,6 +361,34 @@ willowClean5 <- willowClean4 %>%
 # planted? What year were willow seedlings that were identified with numbers planted?
 
 
+# ---------------------------------------------------------- #
+### PART 2.5: RELATIONAL DATA                             ####
+# ---------------------------------------------------------- #
+
+# Final problem!Multiple types of observational units are stored in the same table. We have information
+# about each plot's treatments AND information about willow growth in a single table.
+# We'll fix this by making a relational database. To do so, we'll need to make two separate dataframes.
+# We can call one plotInfo and the other willowData.
+
+# QUESTION: What columns would go in each of our two relational databases?
+
+# Let's do it! Run the following code:
+plotInfo <- willowClean5 %>%
+  select(block:temp) %>%
+  unique()
+
+willowData <- willowClean5 %>%
+  select(block, plot, willow_ID:year)
+
+# It might seem trivial to have this be a relational database, but it's super useful for larger
+# and more complicated datasets.
+
+# TASK: Write code to join these two dataframes back together into a new dataframe called willowDataTrt
+# using the left_join() function.
+
+
+# ON YOUR OWN: There are so many ways to join databases! Think through when you might want to use each type.
+
 
 
 
