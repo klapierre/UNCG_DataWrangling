@@ -211,9 +211,28 @@ flightData <- nycflights13::flights
 # QUESTION: Which month and airport has the longest mean delay?
 
 
+# ---------------------------------------------------------- #
+### PART 2.0: INTRO TO TIDY DATA                          ####
+# ---------------------------------------------------------- #
+
+# QUESTION: What are three characteristics of tidy data?
 
 
+# There are five common problems associated with messy data:
+# 1. Column headers are values, not variable names
+# 2. Multiple variables are stored in one column
+# 3. Variables are stored in both rows and columns
+# 4. Multiple types of observational units are stored in the same table
+# 5. A single observational unit is stored in multiple tables
 
+# Here we will build a workflow to demonstrate how we can tidy up a dataset.
+# Let's start by clearing our R environmnet and then bringing the Willow Seedling Survey data into R 
+# by running the following line of code:
+rm(list = ls())
+willow <- read_csv("Niwot_Salix_2014_WillowSeedlingSurvey.csv", skip = 10)
+
+# QUESTION: What do you think the statement 'skip = 10' means in the code above?
+# HINT: Compare the csv file on your computer and the dataframe that you loaded into R.
 
 
 
