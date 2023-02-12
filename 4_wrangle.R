@@ -355,7 +355,6 @@ calispellHighTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv", stri
   filter(calispell_temp>=15) %>% 
   mutate(calispell_temp_F = calispell_temp*9/5 + 32)
 
-
 # ---------------------------------------------------------- #
 #### PART 2.0: USING YOUR NEW KNOWLEDGE                   ####
 # ---------------------------------------------------------- #
@@ -369,20 +368,29 @@ calispellHighTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv", stri
 # understanding plant nutrient status).
 
 # TASK: Perform the following steps in one workflow (i.e., using pipes):
-# (1) Create a dataframe called cdr and load the .csv file 
+## (1) Create a dataframe called cdr and load the .csv file 
 # 'e001_Plant aboveground biomass carbon and nitrogen.csv' into it.
-# (2) Add a column named 'Exp' and fill it with the text 'e001' so we know what 
+## (2) Add a column named 'Exp' and fill it with the text 'e001' so we know what 
 # experiment we're working with.
-# (3) Rename our last two columns that were originally '% Carbon' and '% Nitrogen' in
+## (3) Rename our last two columns that were originally '% Carbon' and '% Nitrogen' in
 # our csv file. Make the new names 'C' and 'N', respectively.
-# (4) Remove any observations that were not obtained from Strip 1.
-# (5) Create a new column called NTrtInfo that include the information from both NTrt 
+## (4) Remove any observations that were not obtained from Strip 1.
+## (5) Create a new column called NTrtInfo that include the information from both NTrt 
 # and NAdd, separated by an underscore.
-# (6) Split the Species column into two columns, one named 'genus' and one named 'species'.
-# (7) Create a column called CN that contains the ratio of C to N for each observation.
+## (6) Split the Species column into two columns, one named 'genus' and one named 'species'.
+## (7) Create a column called CN that contains the ratio of C to N for each observation.
 # HINT: The ratio of C to N is calculated as C/N.
 # (8) Keep only the following columns: Exp, Date, Plot, NTrtInfo, genus, species, 
 # Field, C, N, and CN. 
-
+cdr <- read.csv("e001_Plant aboveground biomass carbon and nitrogen.csv", stringsAsFactors = TRUE) %>% 
+  mutate(Exp='e001') %>% 
+  rename(C=X..Carbon,
+         N=X..Nitrogen) %>% 
+  filter(Strip==1) %>% 
+  unite('NTrtInfo', NTrt:NAdd, remove=FALSE) %>% 
+  separate(Species, c('genus', 'species')) %>% 
+  mutate(CN= C/N) %>% 
+  select(Exp, Date, Plot, NTrtInfo, genus, species, Field, C, N, CN)
+ 
 
 # REMEMBER: Save and push your script when you're done with this assignment!
