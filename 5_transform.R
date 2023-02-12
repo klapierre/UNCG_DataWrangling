@@ -284,6 +284,37 @@ willowClean <- willowFill %>%
 # TASK: Annotate (add comments) the code above to indicate what each line does.
 
 
+# ---------------------------------------------------------- #
+### PART 2.3: PIVOT WIDER                                 ####
+# ---------------------------------------------------------- #
+
+# Yikes, another common problem, the variables are stored in both rows and columns!
+
+# QUESTION: What column contains the labels that tell us there are multiple variables stored
+# in one column? What column contains the corresponding date for these variables?
+
+
+# Good news, we can fix this problem with the complementary function to pivot_longer().
+# This time we will use the pivot_wider() function to turn one column into multiple.
+willowCleaner  <- willowClean %>%
+  pivot_wider(names_from = variable,
+              values_from = value)
+
+
+# TASK: Take a look at our new dataframe. How does it differ from the previous?
+# Annotate (add comments) the code above to indicate what each line does.
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
