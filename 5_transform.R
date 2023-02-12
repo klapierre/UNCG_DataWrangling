@@ -99,6 +99,53 @@ streamTempSummary <- streamTemp %>%
 # Where did the date and time columns go?
 
 
+# RECOMMENDED: Take a look at the summarize help file, particularly the "Useful functions" section
+# to see all of the different ways you can summarize your dataframe.
+
+
+# ---------------------------------------------------------- #
+### PART 1.2: GROUPING DATA                               ####
+# ---------------------------------------------------------- #
+
+# Summarizing data is great, but it can be more useful to get summaries for particular 
+# subsets of the data.
+
+# TASK: Write code to do the following:
+# (1) Separate the date column into columns named month, day, and year;
+# (2) Mutate the year column to paste '20' to the front of each year value;
+# (3) Call your new dataframe streamTempMDY.
+# HINT: Check the help documentation for the separate(), mutate(), and paste() functions.
+
+
+# TASK: Write code to create a new dataframe called streamTempJan that filters only
+# rows where the month column is equal to 1 from the streamTempMDY dataframe.
+
+
+# TASK: Write code that uses the summarize function to find the mean temperature for Calispell,
+# Smalle, and Winchester streams in only January.
+
+
+# Now imagine you had to repeat this set of steps (creating new filtered dataframes) for all 12 months!
+# That would not only be tedious, but would also clutter up our R environment.
+# Instead, we can use the handy group_by() function before the summarize() function to tell
+# R that we want to get the summary stats for each of the groups we specify.
+# Try running the following code:
+streamTempMonthlyMean <- streamTempMDY %>% 
+  group_by(month) %>% 
+  summarize(across(.cols=c('calispell', 'smalle', 'winchester'), 
+                   .fns=mean,
+                   na.rm=T)) %>% 
+  ungroup()
+
+# NOTE: Whenever you group a dataframe, you should always ungroup after performing your function.
+# Otherwise, R will consider that dataframe to be grouped forever, which can mess up future functions.
+
+
+# QUESTION: When you look at the streamTempMonthlyMean dataframe, how many means do you see for 
+# each stream?
+
+
+
 
 
 
