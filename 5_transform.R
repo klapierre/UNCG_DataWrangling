@@ -151,7 +151,15 @@ streamTempMonthlyMean <- streamTempMDY %>%
 # before the summarize() function?
 
 
+# We can also group by multiple columns. Try running the following code:
+streamTempMeans <- streamTempMDY %>% 
+  group_by(month, year) %>% 
+  summarize(across(.cols=c('calispell', 'smalle', 'winchester'), 
+                   .fns=mean,
+                   na.rm=T)) %>% 
+  ungroup()
 
+# QUESTION: What columns did we group by to get our new means? What does the new dataframe show?
 
 
 
