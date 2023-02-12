@@ -365,7 +365,11 @@ willowClean5 <- willowClean4 %>%
 ### PART 2.5: RELATIONAL DATA                             ####
 # ---------------------------------------------------------- #
 
+<<<<<<< HEAD
 # Final problem! Multiple types of observational units are stored in the same table. We have information
+=======
+# Final problem!Multiple types of observational units are stored in the same table. We have information
+>>>>>>> 71db2c30d5915e436ef151cc2c7496e0bb59e105
 # about each plot's treatments AND information about willow growth in a single table.
 # We'll fix this by making a relational database. To do so, we'll need to make two separate dataframes.
 # We can call one plotInfo and the other willowData.
