@@ -392,6 +392,27 @@ willowData <- willowClean5 %>%
 
 
 # ---------------------------------------------------------- #
+### PART 2.6: PRACTICING YOUR SKILLS                      ####
+# ---------------------------------------------------------- #
+
+# Let's go back to the data of leaf carbon and nitrogen percentages from a nitrogen addition experiment
+# in a grassland in Minnesota.
+
+# TASK: Perform the following steps in one workflow (i.e., using pipes):
+# (1) Create a dataframe called cdr and load the .csv file 
+# 'e001_Plant aboveground biomass carbon and nitrogen.csv' into it.
+# (2) Rename our last two columns that were originally '% Carbon' and '% Nitrogen' in
+# our csv file. Make the new names 'C' and 'N', respectively.
+# (3) Remove any observations that were not obtained from Strips 1 or 2 using an %in% statement.
+# (4) pivot_longer the C and N data so that there is one column called element that contains C or N
+#     and another column called percentage that contains the values of either %C or %N.
+# (5) group_by() Date, Plot, NTrt, Species, Field, and Strip and then use the summarize() function
+#     to calculate the mean value of the percentage column for each group. Store the mean values
+#     in a column called 'percentage_mean'. Don't forget to ungroup at the end!
+# (6) pivot_wider so that the values of percentage_mean are contained in different columns
+
+
+# ---------------------------------------------------------- #
 ### PART 3.0: SUBMIT YOUR WORK                            ####
 # ---------------------------------------------------------- #
 
