@@ -235,6 +235,27 @@ willow <- read_csv("Niwot_Salix_2014_WillowSeedlingSurvey.csv", skip = 10)
 # HINT: Compare the csv file on your computer and the dataframe that you loaded into R.
 
 
+# ---------------------------------------------------------- #
+### PART 2.1: FILL MISSING DATA                           ####
+# ---------------------------------------------------------- #
+
+# Sometimes when a data source has primarily been used for data entry, missing values indicate that the
+# previous value should be carried forward.
+
+# QUESTION: To clean up the willow dataframe, where do we want to fill in values? That is, which columns
+# have lots of NAs.
+
+
+# We can fix our missing value problem using the fill() function (try it by running the following code):
+willowFill <- willow %>%
+  fill(block:temp)
+
+# QUESTION: What does the code 'block:temp' mean when passed to the fill() function above?
+
+
+# QUESTION: Looking at the dataframe willowFill, describe what happened compared to our initial dataframe.
+
+
 
 
 
