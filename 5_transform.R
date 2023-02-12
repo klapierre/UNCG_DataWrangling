@@ -256,6 +256,29 @@ willowFill <- willow %>%
 # QUESTION: Looking at the dataframe willowFill, describe what happened compared to our initial dataframe.
 
 
+# ---------------------------------------------------------- #
+### PART 2.2: PIVOT LONGER                                ####
+# ---------------------------------------------------------- #
+
+# Another common problem, the column headers are values instead of variable names!
+# In this case, the columns w1 through wC are individual willow seedlings that were sampled repeatedly.
+
+# TASK: Write code to indicate the sequence of columns from w1 through wC. 
+
+
+# We can fix this problem using the pivot_longer() function. And while we're at it, let's get rid of the 'w' in front 
+# of each willow individual number. Run the following code:
+willowClean <- willowFill %>%
+  pivot_longer(cols = w_1:w_C,
+               names_to = "willow_id",
+               values_to = "value") %>%
+  separate(col = willow_id,
+           into = c("remove", "willow_ID"),
+           sep = "_") %>%
+  select(-remove)
+
+# TASK: Annotate (add comments) the code above to indicate what each line does.
+
 
 
 
