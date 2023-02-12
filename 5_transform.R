@@ -58,7 +58,8 @@ streamTempLength <- streamTemp %>%
 
 
 # It can be a bit tedious to type out all the column names and the length function
-# multiple times. We can simplify this as follows (try running the code):
+# multiple times. The across() function within the summarize() step can help us to 
+# identify multiple columns to summarize the data for. Try running the following code:
 streamTempLength <- streamTemp %>% 
   summarize(across(.cols=c('calispell', 'smalle', 'winchester'), 
                    .fns=length))
@@ -66,8 +67,9 @@ streamTempLength <- streamTemp %>%
 # TASK: Using comments in the code above, describe what each line is doing.
 
 
-# We might want to know some other statistics about our data, such as the max,
-# min, and mean values. Try running the following code:
+# We might also want to know some other statistics about our data, such as the max,
+# min, and mean values. The across() function is useful for this too, by letting
+# you set multiple functions to summarize each column by. Try running the following code:
 streamTempSummary <- streamTemp %>% 
   summarize(across(.cols=c('calispell', 'smalle', 'winchester'), 
                    .fns=list(maximum=max, mean=mean, minimim=min)))
@@ -144,6 +146,9 @@ streamTempMonthlyMean <- streamTempMDY %>%
 # QUESTION: When you look at the streamTempMonthlyMean dataframe, how many means do you see for 
 # each stream?
 
+
+# QUESTION: In your own words, what do you think the group_by() function does when used
+# before the summarize() function?
 
 
 
