@@ -22,8 +22,8 @@
 # REMINDER: The dplyr and tidyr packages are nested within the tidyverse package
 # (along with many others). Be sure to start by loading the tidyverse library.
 # HINT: see the end of assignment #1 if you forgot how to load a package.
-
-
+library("tidyverse")
+install.packages("tidyverse")
 # ---------------------------------------------------------- #
 #### PART 1.0: LEARNING THE FUNCTIONS                     ####
 # ---------------------------------------------------------- #
@@ -34,28 +34,31 @@
 # TASK: Read in the CalispellCreekandTributaryTemperatures.csv file and assign it to a dataframe
 # named streamTemp.
 # HINT: Check last week's assignment if you forget how to read data into R.
-
-
+streamTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv", stringsAsFactors = FALSE) %>%
+  rename(calispell=Calispell.Cr.Temp.C. ,
+         smalle=Smalle.Cr.Temp.C. ,
+         winchester=Winchester.Cr.Temp..C.) %>% 
+    mutate(data_type='temp_C')
 # ---------------------------------------------------------- #
 ### PART 1.1: SUMMARIZING DATA                            ####
 # ---------------------------------------------------------- #
 
 # We can use the summarize() function to get a lot of quick stats on our data!
 # Let's try out the length function by running the following code:
-streamTempLength <- streamTemp %>% 
+streamTempLength <- streamTemp %>%
   summarize(calispell_length = length(calispell),
             smalle_length = length(smalle),
             winchester_length = length(winchester))
 
 # QUESTION: When you open the streamTempLength dataframe, what value is in each column?
-
-
+tibble(streamTempLength)
+## 61100 are the values in each column.
 # QUESTION: How does this number compare to the number of observations listed by the dataframe
 # in the R environment tab?
-
+## In the environment tab it says 1 obs. and 3 variables and after opening it they match what R put in the console.
 
 # QUESTION: Based on your previous answers, what do you think the length function does?
-
+## looks to shorten the length and make the data more appealing to the eye.
 
 # It can be a bit tedious to type out all the column names and the length function
 # multiple times. The across() function within the summarize() step can help us to 
@@ -65,7 +68,7 @@ streamTempLength <- streamTemp %>%
                    .fns=length))
 
 # TASK: Using comments in the code above, describe what each line is doing.
-
+## the summarize is excluding wordy data and across is telling R which columns to summarize.
 
 # We might also want to know some other statistics about our data, such as the max,
 # min, and mean values. The across() function is useful for this too, by letting
@@ -75,14 +78,14 @@ streamTempSummary <- streamTemp %>%
                    .fns=list(maximum=max, mean=mean, minimim=min)))
 
 # TASK: Write code to view the column names of the streamTempSummary dataframe.
-
-
+colnames(streamTempSummary)
 # QUESTION: How does R know what to name each column when we use the summarize function above?
-
+## R takes the original names that we had gave the columns then adds what we are summarizing ie max, min, and mean.
 
 # QUESTION: What values do you see for the columns when you open up the dataframe streamTempSummary?
-# Why do you think this is?
-
+# Why do you think this is? 
+tibble(streamTempSummary)
+## I see N/A values. This is because there are no observations for this data.
 
 # Recall that our data had a lot of missing values. R doesn't know how to find the mean, max,
 # or min of a group of observations that include NAs.
