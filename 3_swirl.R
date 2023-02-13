@@ -174,7 +174,8 @@ b <- 4
 a <- b
 c <- a
 c
-
+#This block of code assigns values to variables and then nests certain variables
+# within others to create a string of information to be used.
 
 # II) Three of the following lines produce the same result. 
 # Without running the code, which one will produce a different result than the
@@ -184,7 +185,8 @@ log(x = 1000, base = 10)
 log10(1000)
 log(base = 10, x = 1000)
 log(10, 1000)
-
+# I am not entirely sure, but I would assume the last one would yield a different result,
+# because they are treated as two entirely different variables within the logarithm
 
 
 # III) Use one of R's built in functions to create a new vector that is 
@@ -192,7 +194,7 @@ log(10, 1000)
 # this function, but a combination of Google and function documentation 
 # should get you there.
 numvector <- c(5,2,3,1,6,8)
-
+ordered <- numvecctor[order(numvector,decreasing=TRUE)]
 
 # IV) Which elephant weighs more? 
 # Convert one’s weight to the units of the other, and store the result in an 
@@ -202,15 +204,22 @@ numvector <- c(5,2,3,1,6,8)
 elephant1_kg <- 3492
 elephant2_lb <- 7757
 
+elephant1_kg <- 3492
+elephant2_lb <- 7757
+elephant2_kg <- elephtant2_lb/2.2
+elephant1_kg < elephant2_kg
 
 # ---------------------------------------------------------- #
 #### PART 3: FEEDBACK                                     ####
 # ---------------------------------------------------------- #
 # QUESTION: What did you think of the Swirl tutorial? Was it helpful? Why 
 # or why not?
+# This was SUPER helpful. I was introduced to a ton of new skills and information
+# that I will be using far after this class, and I will likely come back to swirl for help.
 
 # QUESTION: Would you have preferred to split the Swirl tutorial over weeks
 # 1 and 3 of the class instead of the week 1 assignment you previously 
 # completed? Why or why not?
+# I would have definitely preferred this split into multiple parts rather than just one week.
 
 # REMEMBER: Save and push your script when you're done with this assignment!
