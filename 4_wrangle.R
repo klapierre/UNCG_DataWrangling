@@ -108,7 +108,7 @@ colnames(streamTempRename)
 
 # TASK: Look again at the columns you have in the streamTempRename dataframe by
 # writing the necessary code below.
-
+select(streamTempRename, "calispell_temp")
 
 # TASK: Run the following line of code to select our columns of interest.
 calispellTemp <- select(.data=streamTempRename,
@@ -119,7 +119,8 @@ calispellTemp <- select(.data=streamTempRename,
 # by coding the appropriate R function of course. What do you notice about the 
 # new dataframe? Which columns are present? Which are absent? Are they in the same 
 # order as before?
-
+# This dataframe only includes informamtion pertaining to the date and time
+# of the calispell_temp observations.
 
 # A nice thing to notice about this code. We didn't have to type 'streamTemp$date'
 # etc to indicate each column as we would outside of the tidyverse. The select()
@@ -130,7 +131,7 @@ calispellTemp <- select(.data=streamTempRename,
 # TASK: Recall that in R, the `:` operator is a compact way to create a sequence of
 # numbers. For example, write the code below to generate a sequence from 1 to 3.
 # HINT: Look back to assignment #1 or the swirl tutorial for help (or google!).
-
+1:3
 
 # Normally this notation is just for numbers, but the select() function allows you
 # to specify a sequence of columns this way. This can save a bunch of typing!
@@ -139,11 +140,12 @@ calispellTemp <- select(.data=streamTempRename,
 # calispell_temp columns using the sequence notation.
 # HINT: Replace the code where each column was listed out with a sequence of column
 # names. Be sure they are listed in the order they exist in the original dataframe.
-
+calispellTemp2 <- select(.data=calispellTemp, 
+                         +                          calispell_temp, Date, Time)
 
 # TASK: Write code to check your column names again to see what happened in your
 # new dataframe.
-
+colnames(calispellTemp2)
 
 # We can also specify the columns that we want to discard by selecting them out.
 # TASK: Run the following code to remove the Smalle_temp and Winchester_temp 
@@ -163,8 +165,9 @@ calispellTemp5 <- select(.data=streamTempRename,
 
 
 # TASK: Write code to check that these three new dataframes (calispellTemp3,  calispellTemp4, and calispellTemp5 are identical).
-
-
+identical(calispellTemp3,calispellTemp4)
+identical(calispellTemp3,calispellTemp5)
+identical(calispellTemp5,calispellTemp4)
 # ---------------------------------------------------------- #
 ### PART 1.3: FILTERING ROWS                              ####
 # ---------------------------------------------------------- #
