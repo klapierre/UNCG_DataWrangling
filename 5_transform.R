@@ -197,12 +197,15 @@ flightData <- nycflights13::flights
 # (4) ungroup the dataframe;
 # (5) assign the output to a dataframe named airportDelaySummary.
 
+airportDelaySummary <- flightdata %>% filter(dest == "RDU") %>% group_by(origin) %>% summarize(across(.cols = "arr_delay", .fns=mean,na.rm=T)) %>% ungroup()
 
 # QUESTION: Which airport should you avoid if you want the shortest delays?
 
+#EWR
 
 # TASK: Write a pipeline to figure out which month of the year to avoid when flying to Raleigh 
-# by taking the original flight dataframe (flightData) and performing the following tasks:
+# by taking the original flight dataframe (flightData) and performing the following tasks
+
 # (1) filter to keep only flights that have RDU as the destination (dest column);
 # (2) groups the data by hour;
 # (3) summarize to find the mean AND the maximum arrival delay (arr_delay column), 
