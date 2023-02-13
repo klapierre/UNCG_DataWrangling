@@ -204,8 +204,16 @@ flightData <- nycflights13::flights
 # (4) ungroup the dataframe;
 # (5) assign the output to a dataframe named airportDelaySummary.
 
+airportDelaySummary <- flightData %>% 
+  filter(dest == 'RDU') %>% 
+  group_by(origin) %>% 
+  summarize((across(.cols=c('arr_delay'),
+                            .fns=mean,
+                            na.rm=T))) %>% 
+  ungroup()
+  
 
-# QUESTION: Which airport should you avoid if you want the shortest delays?
+# QUESTION: Which airport should you avoid if you want the shortest delays? EWR
 
 
 # TASK: Write a pipeline to figure out which month of the year to avoid when flying to Raleigh 
@@ -216,12 +224,21 @@ flightData <- nycflights13::flights
 #     remembering to remove NAs;
 # (4) ungroup the dataframe;
 # (5) assign the output to a dataframe named timeDelaySummary
+timeDelaySummary <- flightData %>% 
+  filter(dest == 'RDU') %>% 
+  group_by(hour) %>% 
+  summarize(across(.cols=c('arr_delay'), 
+                   .fns=list(maximum=max, mean=mean), 
+                   na.rm=T)) %>%  
+            ungroup()
+  
+
+# QUESTION: What is the earliest hour of the day that flights leave New York for Raleigh? 6 am
 
 
-# QUESTION: What is the earliest hour of the day that flights leave New York for Raleigh?
-
-
-# QUESTION: Which hour of the day has the longest mean delay? What about the longest maximum delay?
+# QUESTION: Which hour of the day has the longest mean delay? What about the longest maximum delay? 
+#mean= 22
+#max= 12
 
 
 # TASK: Write a pipeline to figure out which month of the year and airport to avoid when flying
@@ -232,9 +249,16 @@ flightData <- nycflights13::flights
 # (4) ungroup the dataframe;
 # (5) assign the output to a dataframe named monthlyDelaySummary
 
-
+monthlyDelaySummary <- flightData %>% 
+  filter(dest == 'RDU') %>% 
+  group_by(origin, month) %>% 
+  summarize((across(.cols=c('arr_delay'),
+                    .fns=mean,
+                    na.rm=T))) %>% 
+  ungroup()
+  
 # QUESTION: Which month and airport has the longest mean delay?
-
+#EWR, month 3
 
 # ---------------------------------------------------------- #
 ### PART 2.0: INTRO TO TIDY DATA                          ####
