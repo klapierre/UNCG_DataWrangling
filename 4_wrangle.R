@@ -46,13 +46,16 @@ streamTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv", stringsAsFa
 
 # QUESTION: What do you think stringsAsFactors mean? Why would we want to make it false?
 # Try reading your data in without this extra argument included. What is the difference?
-
+# This argument allows us to treat our strings of information as their own factors,
+# without it they would remain as just strings of numbers.
 
 # TASK: Let's learn a little more about our data. Run the following line of code.
 str(streamTemp)
 
 # QUESTION: What does it look like the str() function does?
+# The str() function compacts the information in a dataset.
 # How many rows does it have? How many columns? What class of data is in each column?
+# streamTemp has 61100 rows, 5 columns, and the data in each column is an observed number.
 
 
 # ---------------------------------------------------------- #
