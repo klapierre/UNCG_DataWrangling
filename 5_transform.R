@@ -1,3 +1,6 @@
+
+library(tidyverse)
+
 # ---------------------------------------------------------- #
 #### MODULE 2: Transform some data!                         ####               
 # ---------------------------------------------------------- #
@@ -34,7 +37,11 @@
 # TASK: Read in the CalispellCreekandTributaryTemperatures.csv file and assign it to a dataframe
 # named streamTemp.
 # HINT: Check last week's assignment if you forget how to read data into R.
-
+streamTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv", stringsAsFactors = F) %>% 
+  rename(calispell=Calispell.Cr.Temp.C.,
+         smalle=Smalle.Cr.Temp.C.,
+         winchester=Winchester.Cr.Temp..C.) %>%
+  mutate(data_type = "temp_c")
 
 # ---------------------------------------------------------- #
 ### PART 1.1: SUMMARIZING DATA                            ####
@@ -48,14 +55,14 @@ streamTempLength <- streamTemp %>%
             winchester_length = length(winchester))
 
 # QUESTION: When you open the streamTempLength dataframe, what value is in each column?
-
+  ## 61100
 
 # QUESTION: How does this number compare to the number of observations listed by the dataframe
 # in the R environment tab?
-
+  ## same number of observations as in streamTemp
 
 # QUESTION: Based on your previous answers, what do you think the length function does?
-
+  ##the length function lists the number of rows in a data frame, or the number of values in a vector.
 
 # It can be a bit tedious to type out all the column names and the length function
 # multiple times. The across() function within the summarize() step can help us to 
@@ -65,7 +72,7 @@ streamTempLength <- streamTemp %>%
                    .fns=length))
 
 # TASK: Using comments in the code above, describe what each line is doing.
-
+  # the first line identifies the columns to apply a function to, the second line names the function that will be applied to each of the columns
 
 # We might also want to know some other statistics about our data, such as the max,
 # min, and mean values. The across() function is useful for this too, by letting
@@ -75,14 +82,14 @@ streamTempSummary <- streamTemp %>%
                    .fns=list(maximum=max, mean=mean, minimim=min)))
 
 # TASK: Write code to view the column names of the streamTempSummary dataframe.
-
+colnames(streamTempSummary)
 
 # QUESTION: How does R know what to name each column when we use the summarize function above?
-
+  # the final line tells R what name to apend to each column name for the function using the '='
 
 # QUESTION: What values do you see for the columns when you open up the dataframe streamTempSummary?
 # Why do you think this is?
-
+  # All NA, very probably because the source data had a lot of NA values.
 
 # Recall that our data had a lot of missing values. R doesn't know how to find the mean, max,
 # or min of a group of observations that include NAs.
@@ -94,12 +101,23 @@ streamTempSummary <- streamTemp %>%
                    na.rm=T))
 
 # QUESTION: Now what values do you see for the columns when you open up the dataframe
+    # 22.38
+    # 7.985702
+    # -0.28
+    # 20.05
+    # 5.928555
+    # -0.1
+    # 18.65
+    # 6.089913
+    # -1.75
 # streamTempSummary? What line of the above code removed the NAs from our data?
+  # the na.rm=T line
 
 
 # QUESTION: What happened to the column we created in the beginning called data_type?
+    # It was ignored because we did not list it in the command for columns to summerize
 # Where did the date and time columns go?
-
+    # the same as the data_type column
 
 # RECOMMENDED: Take a look at the summarize help file, particularly the "Useful functions" section
 # to see all of the different ways you can summarize your dataframe.
