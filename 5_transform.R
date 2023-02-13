@@ -98,11 +98,12 @@ streamTempSummary <- streamTemp %>%
 
 # QUESTION: Now what values do you see for the columns when you open up the dataframe
 # streamTempSummary? What line of the above code removed the NAs from our data?
-
+tibble(streamTempSummary)
+## I am seeing numerical values. na.rm=T is the code that removed it.
 
 # QUESTION: What happened to the column we created in the beginning called data_type?
 # Where did the date and time columns go?
-
+## the data type column is gone. I dont see where we added it?
 
 # RECOMMENDED: Take a look at the summarize help file, particularly the "Useful functions" section
 # to see all of the different ways you can summarize your dataframe.
