@@ -46,13 +46,18 @@ streamTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv", stringsAsFa
 
 # QUESTION: What do you think stringsAsFactors mean? Why would we want to make it false?
 # Try reading your data in without this extra argument included. What is the difference?
+# This means the cahracter vectors have been converted into factors. 
+# We would want to make it false if we wanted to handle the information as characters rather than factors. 
+# The difference would be in how the data gets processed and how well we can run math analysis on it
 
 
 # TASK: Let's learn a little more about our data. Run the following line of code.
 str(streamTemp)
 
 # QUESTION: What does it look like the str() function does?
+# This gave me an overview of the data. At first glance one would say the data had been transposed.
 # How many rows does it have? How many columns? What class of data is in each column?
+# 5 rows, 2 columns, factors in date and time while numbers in the bottom 3 rows
 
 
 # ---------------------------------------------------------- #
@@ -66,12 +71,12 @@ colnames(streamTemp)
 
 
 # QUESTION: What output do you get in the console? Why is this useful?
-
+# I received the columns names of the dataset. This is useful for when I want to view specific columns or reorganize them.
 
 # QUESTION: What happened to the column title Calispell Cr Temp C) when it was loaded
 # into R?
 # HINT: What happened to the spaces and ) in the R column names?
-
+# The spaces and ")" were both replaced with "."
 
 # TASK: Run the following line of code. Note the alignment of the code components.
 streamTempRename <- rename(.data=streamTemp,
@@ -81,12 +86,14 @@ streamTempRename <- rename(.data=streamTemp,
 
 
 # TASK: Write your own code to find the column names of our new dataframe (streamTempRename). 
-
+colnames(streamTempRename)
 
 # QUESTION: What differences do you notice from before? In your own words, what did each line
 # from the rename function do? Why might this function be useful for wrangling data?
 # In this code, does the new column name come before or after the =?
-
+# Different names for each of the columns. 
+# this is useful for wrangling data by making a visually easy way of renaming columns
+# the new column name comes before the "=".
 
 # ---------------------------------------------------------- #
 ### PART 1.2: SELECTING COLUMNS                           ####
