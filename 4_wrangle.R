@@ -23,8 +23,8 @@
 # The dplyr package is nested within the tidyverse package (along with many others).
 # Install tidyverse and load the library. HINT: see the end of assignment #1 if you 
 # forgot how to install and load a package.
-
-
+library("tidyverse")
+install.packages("tidyverse")
 # ---------------------------------------------------------- #
 #### PART 1.0: LEARNING THE FUNCTIONS                     ####
 # ---------------------------------------------------------- #
@@ -46,14 +46,16 @@ streamTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv", stringsAsFa
 
 # QUESTION: What do you think stringsAsFactors mean? Why would we want to make it false?
 # Try reading your data in without this extra argument included. What is the difference?
-
+## stringasfators tells R whether or not to convert the files as factors. 
+streamTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv")
+## Without the additional argument it did not give me the "no documentation for stringasfactors"
 
 # TASK: Let's learn a little more about our data. Run the following line of code.
 str(streamTemp)
 
 # QUESTION: What does it look like the str() function does?
 # How many rows does it have? How many columns? What class of data is in each column?
-
+##It pushes the data frame to the console and it has 6 rows and 3 columns.
 
 # ---------------------------------------------------------- #
 ### PART 1.1: RENAMING COLUMNS                            ####
@@ -66,27 +68,24 @@ colnames(streamTemp)
 
 
 # QUESTION: What output do you get in the console? Why is this useful?
-
+## It isolated the row names. This is useful to be able to isolate the names you want to manipulate.
 
 # QUESTION: What happened to the column title Calispell Cr Temp C) when it was loaded
 # into R?
 # HINT: What happened to the spaces and ) in the R column names?
-
+## Spaces were replaced with periods and the parenthasese with quotations.
 
 # TASK: Run the following line of code. Note the alignment of the code components.
-streamTempRename <- rename(.data=streamTemp,
-                           calispell_temp=Calispell.Cr.Temp.C.,
-                           Smalle_temp=Smalle.Cr.Temp.C.,
-                           Winchester_temp=Winchester.Cr.Temp..C.)
+streamTempRename<- rename(.data=streamTemp, calispell_temp=Calispell.Cr.Temp.C., Smalle_temp=Smalle.Cr.Temp.C., Winchester_temp=Winchester.Cr.Temp..C.)
 
 
 # TASK: Write your own code to find the column names of our new dataframe (streamTempRename). 
-
+data_frame(streamTempRename)
 
 # QUESTION: What differences do you notice from before? In your own words, what did each line
 # from the rename function do? Why might this function be useful for wrangling data?
 # In this code, does the new column name come before or after the =?
-
+## the data is much more organized and easier to read.
 
 # ---------------------------------------------------------- #
 ### PART 1.2: SELECTING COLUMNS                           ####
@@ -105,13 +104,13 @@ streamTempRename <- rename(.data=streamTemp,
 # TASK: Run the following line of code to select our columns of interest.
 calispellTemp <- select(.data=streamTempRename,
                         calispell_temp, Date, Time)
-
+data.frame(calispellTemp)
 
 # QUESTION: Take a look at the column names for our new dataframe (calispellTemp),
 # by coding the appropriate R function of course. What do you notice about the 
 # new dataframe? Which columns are present? Which are absent? Are they in the same 
 # order as before?
-
+## the calispell temp, date and time are presented. All other locations temps are absent.
 
 # A nice thing to notice about this code. We didn't have to type 'streamTemp$date'
 # etc to indicate each column as we would outside of the tidyverse. The select()
@@ -122,7 +121,7 @@ calispellTemp <- select(.data=streamTempRename,
 # TASK: Recall that in R, the `:` operator is a compact way to create a sequence of
 # numbers. For example, write the code below to generate a sequence from 1 to 3.
 # HINT: Look back to assignment #1 or the swirl tutorial for help (or google!).
-
+seq(1:3)
 
 # Normally this notation is just for numbers, but the select() function allows you
 # to specify a sequence of columns this way. This can save a bunch of typing!
@@ -131,11 +130,12 @@ calispellTemp <- select(.data=streamTempRename,
 # calispell_temp columns using the sequence notation.
 # HINT: Replace the code where each column was listed out with a sequence of column
 # names. Be sure they are listed in the order they exist in the original dataframe.
-
+calispellTemp2 <- select(.data=streamTempRename,
+                        calispell_temp, Date, Time)
 
 # TASK: Write code to check your column names again to see what happened in your
 # new dataframe.
-
+data_frame(calispellTemp2)
 
 # We can also specify the columns that we want to discard by selecting them out.
 # TASK: Run the following code to remove the Smalle_temp and Winchester_temp 
@@ -156,7 +156,7 @@ calispellTemp5 <- select(.data=streamTempRename,
 
 # TASK: Write code to check that these three new dataframes (calispellTemp3,  calispellTemp4, and calispellTemp5 are identical).
 
-
+data.frame(calispellTemp3,  calispellTemp4, calispellTemp5)
 # ---------------------------------------------------------- #
 ### PART 1.3: FILTERING ROWS                              ####
 # ---------------------------------------------------------- #
@@ -176,21 +176,21 @@ calispellTemp5 <- select(.data=streamTempRename,
 # QUESTION: If you remove all of the observations (rows) with temperatures lower
 # than 15C, would you expect your new dataframe to have more, the same, or fewer
 # observations than the original dataframe?
-
+## I would expect fewer observations.
 
 # TASK: Run the following code to only keep the values greater than or equal to 15C.
 calispellHighTemp <- filter(.data=calispellTemp,
                             calispell_temp >= 15)
-
+data.frame(calispellTemp)
 # How do you know if it worked??
 # TASK: Check the number of observations in your dataframe! You can either do 
 # this using the str() function or by looking next to the dataframe name in the
 # R environment tab.
-
+data.frame(calispellHighTemp)
 
 # QUESTION: How many observations did the original dataframe (calispellTemp) have?
 # How many does the new dataframe (calispellHighTemp) have?
-
+## 60767 for the old set and 7360 for the new set.
 
 # REALLY IMPORTANT: Even if the function runs, R can do all kinds of bad things if
 # you've accidentally coded something incorrectly. It is always really very 
@@ -233,8 +233,8 @@ calispellData <- filter(.data=calispellTemp,
 
 # QUESTION: How many observations are in the datafile calispellData? Write code to
 # determine how many values of calispell_temp were NA.
-
-
+data.frame(calispellData)
+## 333 rows maxed plus 51997 rows after the max.
 # ---------------------------------------------------------- #
 ### PART 1.4: CREATING COLUMNS                            ####
 # ---------------------------------------------------------- #
@@ -263,18 +263,19 @@ calispellTempSum <- mutate(.data=calispellTempF,
                            sum=calispell_temp + calispell_temp_F)
 
 # Check the dataframe to see if it worked.
-
+data.frame(calispellTempSum)
 
 # TASK: The column we just created makes no sense. Write code below to remove it
 # from the dataframe.
-
+calispellTempSum2 <- mutate(.data=calispellTempF,
+                           sum=calispell_temp - calispell_temp_F)
 
 # QUESTION: We might also want to add a column that describes the dataset. What happens 
 # when you run the following code?
 calispellTempFaquatic <- mutate(.data=calispellTempF,
                                 type='aquatic')
-
-
+data.frame(calispellTempFaquatic)
+## it took away the sum column.
 # ---------------------------------------------------------- #
 ### PART 1.5: PASTING AND SEPARATING COLUMNS              ####
 # ---------------------------------------------------------- #
@@ -283,32 +284,32 @@ calispellTempFaquatic <- mutate(.data=calispellTempF,
 
 # TASK: Write code to create one more column named ecosystem in a new dataframe and 
 # fill it with the word 'stream'.
+calispellTemp3<- mutate(calispellTemp2, ecosystem = "stream")
 
-
+print(calispellTemp3)
 # Now we might want to create a new column that includes information from both of
 # the columns we just created. We would do so by running the following lines of code:
-calispellTempF4 <- unite(data=calispellTempF3,
-                         col='type_ecosystem',
-                         c('type', 'ecosystem'),
+calispellTemp4 <- unite(data=calispellTemp3,
+                         col='ecosystem',
+                         c('ecosystem'),
                          sep='::')
-
+print(calispellTemp4)
 # QUESTION: Describe in your own words what the code above does. What part creates
 # a new column? What part tells R which columns to combine? What does the sep= mean?
-
-
+## The code creates a more readable column name by eliminating the periods. sep is a seperation function and the = tells the function what to sepreate. 
 # Another very useful function is separate, which takes apart a column into two or
 # more pieces.
 
 # TASK: Run the following code:
-calispellTempF5 <- separate(data=calispellTempF4,
-                            col=type_ecosystem,
-                            into=c('type', 'ecosystem'),
+calispellTempF5 <- separate(data=calispellTemp4,
+                            col=ecosystem,
+                            into=c( 'ecosystem'),
                             sep='::')
 
 # QUESTION: Why isn't the column name in quotes this time?
-
+## Becuase this code removed the quotes.
 # QUESTION: Describe in your own words what the code above does.
-
+## this code removes the quotes that are between the column names.
 
 # ---------------------------------------------------------- #
 ### PART 1.6: PIPES                                       ####
@@ -374,6 +375,5 @@ calispellHighTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv", stri
 # HINT: The ratio of C to N is calculated as C/N.
 # (8) Keep only the following columns: Exp, Date, Plot, NTrtInfo, genus, species, 
 # Field, C, N, and CN. 
-
 
 # REMEMBER: Save and push your script when you're done with this assignment!
