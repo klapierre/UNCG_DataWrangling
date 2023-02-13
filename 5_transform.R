@@ -22,7 +22,7 @@
 # REMINDER: The dplyr and tidyr packages are nested within the tidyverse package
 # (along with many others). Be sure to start by loading the tidyverse library.
 # HINT: see the end of assignment #1 if you forgot how to load a package.
-
+library(tidyverse)
 
 # ---------------------------------------------------------- #
 #### PART 1.0: LEARNING THE FUNCTIONS                     ####
@@ -33,29 +33,36 @@
 
 # TASK: Read in the CalispellCreekandTributaryTemperatures.csv file and assign it to a dataframe
 # named streamTemp.
+streamTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv", stringsAsFactors = F) %>% 
+  rename(calispell = Calispell.Cr.Temp.C.,
+         smalle = Smalle.Cr.Temp.C.,
+         winchester = Winchester.Cr.Temp..C.) %>% 
+  mutate(data_type = 'temp_C')
+
 # HINT: Check last week's assignment if you forget how to read data into R.
 
 
 # ---------------------------------------------------------- #
 ### PART 1.1: SUMMARIZING DATA                            ####
 # ---------------------------------------------------------- #
-
 # We can use the summarize() function to get a lot of quick stats on our data!
 # Let's try out the length function by running the following code:
+
 streamTempLength <- streamTemp %>% 
   summarize(calispell_length = length(calispell),
             smalle_length = length(smalle),
             winchester_length = length(winchester))
 
 # QUESTION: When you open the streamTempLength dataframe, what value is in each column?
-
+# ANSWER: 61100
 
 # QUESTION: How does this number compare to the number of observations listed by the dataframe
 # in the R environment tab?
+# ANSWER: 61100
 
 
 # QUESTION: Based on your previous answers, what do you think the length function does?
-
+# ANSWER: It retrieves the number of observations that is in the columns.
 
 # It can be a bit tedious to type out all the column names and the length function
 # multiple times. The across() function within the summarize() step can help us to 
@@ -65,7 +72,7 @@ streamTempLength <- streamTemp %>%
                    .fns=length))
 
 # TASK: Using comments in the code above, describe what each line is doing.
-
+# ANSWER: The first line creates a new data frame that has the information from the streamTemp data frame. The second line summarizes the data across the columns specified, and the third line details that we want to summarize based on the length of each column.
 
 # We might also want to know some other statistics about our data, such as the max,
 # min, and mean values. The across() function is useful for this too, by letting
@@ -75,13 +82,14 @@ streamTempSummary <- streamTemp %>%
                    .fns=list(maximum=max, mean=mean, minimim=min)))
 
 # TASK: Write code to view the column names of the streamTempSummary dataframe.
-
+colnames(streamTempSummary)
 
 # QUESTION: How does R know what to name each column when we use the summarize function above?
-
+# ANSWER: We assigned the addition of maximum, mean, and minimum to each of the respective functions, which gets added to the original names.
 
 # QUESTION: What values do you see for the columns when you open up the dataframe streamTempSummary?
 # Why do you think this is?
+# ANSWER: NAs, I think this is because there are NAs present in the data and R does not know how to handle that data, for example, the mean of NA is NA.
 
 
 # Recall that our data had a lot of missing values. R doesn't know how to find the mean, max,
@@ -95,11 +103,11 @@ streamTempSummary <- streamTemp %>%
 
 # QUESTION: Now what values do you see for the columns when you open up the dataframe
 # streamTempSummary? What line of the above code removed the NAs from our data?
-
+# ANSWER: 22.38, 7.985702, -0.28, 20.05, 5.928555, -0.1, 18.65, 6.089913, -1.75. na.rm=T is what removed the NAs from our data.
 
 # QUESTION: What happened to the column we created in the beginning called data_type?
 # Where did the date and time columns go?
-
+# ANSWER: The data_type column was not included in the summarize sections that was specified in the code. The same idea can be applied to the date and time.
 
 # RECOMMENDED: Take a look at the summarize help file, particularly the "Useful functions" section
 # to see all of the different ways you can summarize your dataframe.
