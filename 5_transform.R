@@ -35,6 +35,7 @@
 # named streamTemp.
 # HINT: Check last week's assignment if you forget how to read data into R.
 
+streamTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv", stringsAsFactors = F) %>% mutate(data_type = 'temp_C')
 
 # ---------------------------------------------------------- #
 ### PART 1.1: SUMMARIZING DATA                            ####
@@ -42,6 +43,13 @@
 
 # We can use the summarize() function to get a lot of quick stats on our data!
 # Let's try out the length function by running the following code:
+
+library(tidyverse)
+
+head(streamTemp)
+
+streamTemp <- rename(streamTemp, calispell = Calispell.Cr.Temp.C., smalle = Smalle.Cr.Temp.C., winchester = Winchester.Cr.Temp..C.)
+
 streamTempLength <- streamTemp %>% 
   summarize(calispell_length = length(calispell),
             smalle_length = length(smalle),
@@ -49,45 +57,61 @@ streamTempLength <- streamTemp %>%
 
 # QUESTION: When you open the streamTempLength dataframe, what value is in each column?
 
+# 61,100
 
 # QUESTION: How does this number compare to the number of observations listed by the dataframe
 # in the R environment tab?
 
+# 1 obs. of 3 variables
+
 
 # QUESTION: Based on your previous answers, what do you think the length function does?
 
+# Counts the number of entries for each column.
 
 # It can be a bit tedious to type out all the column names and the length function
 # multiple times. The across() function within the summarize() step can help us to 
 # identify multiple columns to summarize the data for. Try running the following code:
+
 streamTempLength <- streamTemp %>% 
   summarize(across(.cols=c('calispell', 'smalle', 'winchester'), 
                    .fns=length))
 
+?summarize
+?across
+
 # TASK: Using comments in the code above, describe what each line is doing.
 
+# Take the "streamTemp" df. Use the across function within summarize. .Cols funtion chooses columns to transform
+# fns applies a funciton to each column.
 
 # We might also want to know some other statistics about our data, such as the max,
 # min, and mean values. The across() function is useful for this too, by letting
 # you set multiple functions to summarize each column by. Try running the following code:
+
 streamTempSummary <- streamTemp %>% 
   summarize(across(.cols=c('calispell', 'smalle', 'winchester'), 
-                   .fns=list(maximum=max, mean=mean, minimim=min)))
+                   .fns=list(maximum=max, mean=mean, minimum=min)))
 
 # TASK: Write code to view the column names of the streamTempSummary dataframe.
+
+head(streamTempSummary)
 
 
 # QUESTION: How does R know what to name each column when we use the summarize function above?
 
+# we told it what to name each column with the .fns function
 
 # QUESTION: What values do you see for the columns when you open up the dataframe streamTempSummary?
 # Why do you think this is?
 
+# A whole bunch of NAs because of all those pesky missing values.
 
 # Recall that our data had a lot of missing values. R doesn't know how to find the mean, max,
 # or min of a group of observations that include NAs.
 # To fix this problem, we need to add a statement telling R to remove the NAs when calculating
 # these summary stats. Run the following code:
+
 streamTempSummary <- streamTemp %>% 
   summarize(across(.cols=c('calispell', 'smalle', 'winchester'), 
                    .fns=list(maximum=max, mean=mean, minimim=min),
@@ -96,13 +120,19 @@ streamTempSummary <- streamTemp %>%
 # QUESTION: Now what values do you see for the columns when you open up the dataframe
 # streamTempSummary? What line of the above code removed the NAs from our data?
 
+head(streamTempSummary)
 
 # QUESTION: What happened to the column we created in the beginning called data_type?
 # Where did the date and time columns go?
 
+# These columns got dropped as we didn't select them for mutation in the "streamTempSummary" line
 
 # RECOMMENDED: Take a look at the summarize help file, particularly the "Useful functions" section
 # to see all of the different ways you can summarize your dataframe.
+
+?summarize
+
+# Would ya look at all those neat features.
 
 
 # ---------------------------------------------------------- #
@@ -119,21 +149,34 @@ streamTempSummary <- streamTemp %>%
 # HINT: Check the help documentation for the separate(), mutate(), and paste() functions.
 
 
+?separate
+?mutate
+?paste
+?as.numeric
+
+streamTempMDY <- streamTemp %>% separate("Date", c("Month", "Day", "Year"), sep = "/") %>% mutate(year_start = "20") %>% 
+  unite(col = Year, c("year_start", "Year"), sep = "")
+
+
 # TASK: Write code to create a new dataframe called streamTempJan that filters only
 # rows where the month column is equal to 1 from the streamTempMDY dataframe.
+
+streamTempJan <- streamTempMDY %>% filter(Month == 1)
 
 
 # TASK: Write code that uses the summarize function to find the mean temperature for Calispell,
 # Smalle, and Winchester streams in only January.
 
+MeanJanTemp <- streamTempJan %>% summarize(across(.cols = c('calispell','smalle','winchester'), .fns = mean, na.rm = T))
 
 # Now imagine you had to repeat this set of steps (creating new filtered dataframes) for all 12 months!
 # That would not only be tedious, but would also clutter up our R environment.
 # Instead, we can use the handy group_by() function before the summarize() function to tell
 # R that we want to get the summary stats for each of the groups we specify.
 # Try running the following code:
+
 streamTempMonthlyMean <- streamTempMDY %>% 
-  group_by(month) %>% 
+  group_by(Month) %>% 
   summarize(across(.cols=c('calispell', 'smalle', 'winchester'), 
                    .fns=mean,
                    na.rm=T)) %>% 
@@ -146,14 +189,19 @@ streamTempMonthlyMean <- streamTempMDY %>%
 # QUESTION: When you look at the streamTempMonthlyMean dataframe, how many means do you see for 
 # each stream?
 
+# one mean for each stream for each month
+
 
 # QUESTION: In your own words, what do you think the group_by() function does when used
 # before the summarize() function?
 
+# Tells R to group by common values within a column.
+
 
 # We can also group by multiple columns. Try running the following code:
+
 streamTempMeans <- streamTempMDY %>% 
-  group_by(month, year) %>% 
+  group_by(Month, Year) %>% 
   summarize(across(.cols=c('calispell', 'smalle', 'winchester'), 
                    .fns=mean,
                    na.rm=T)) %>% 
@@ -161,6 +209,7 @@ streamTempMeans <- streamTempMDY %>%
 
 # QUESTION: What columns did we group by to get our new means? What does the new dataframe show?
 
+# We grouped by year and Month. So for available data sets we get a mean value for each year and each month within each year.
 
 # ---------------------------------------------------------- #
 ### PART 1.3: PRACTICING THESE SKILLS                     ####
@@ -180,8 +229,16 @@ flightData <- nycflights13::flights
 # (5) assign the output to a dataframe named airportDelaySummary.
 
 
+airportDelaySummary <- flightData %>% filter(dest == "RDU") %>% 
+  group_by(origin) %>% summarize(across(.cols = c('arr_delay'), .fns=mean, na.rm = T)) %>% 
+  
+  ungroup()
+
+
+
 # QUESTION: Which airport should you avoid if you want the shortest delays?
 
+# Avoid EWR
 
 # TASK: Write a pipeline to figure out which month of the year to avoid when flying to Raleigh 
 # by taking the original flight dataframe (flightData) and performing the following tasks:
@@ -193,10 +250,21 @@ flightData <- nycflights13::flights
 # (5) assign the output to a dataframe named timeDelaySummary
 
 
+timeDelaySummary <- flightData %>% filter(dest == "RDU") %>% 
+  group_by(hour) %>% summarize(across(.cols = c('arr_delay'), .fns = list(maximum = max, mean = mean), na.rm = T)) %>% 
+  
+  ungroup()
+  
+            
+
 # QUESTION: What is the earliest hour of the day that flights leave New York for Raleigh?
 
+# 6 o'clock
 
 # QUESTION: Which hour of the day has the longest mean delay? What about the longest maximum delay?
+
+# Longest mean delay : 22
+#Longest max delay : 12
 
 
 # TASK: Write a pipeline to figure out which month of the year and airport to avoid when flying
@@ -208,8 +276,17 @@ flightData <- nycflights13::flights
 # (5) assign the output to a dataframe named monthlyDelaySummary
 
 
+monthlyDelaySummary <- flightData %>% filter(dest == "RDU") %>% 
+  group_by(month, origin) %>% summarize(across(.cols = c('arr_delay'), .fns = mean, na.rm = T)) %>% 
+  
+  ungroup()
+
+
+
+
 # QUESTION: Which month and airport has the longest mean delay?
 
+# March in EWR
 
 # ---------------------------------------------------------- #
 ### PART 2.0: INTRO TO TIDY DATA                          ####
@@ -416,3 +493,4 @@ willowData <- willowClean5 %>%
 # ---------------------------------------------------------- #
 
 # REMINDER: If you haven't already, make sure to commit and push your code to your branch in GitHub!
+
