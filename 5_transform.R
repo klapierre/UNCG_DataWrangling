@@ -279,7 +279,7 @@ monthlyDelaySummary <- flightData %>%
 # ---------------------------------------------------------- #
 
 # QUESTION: What are three characteristics of tidy data?
-
+    # columns as variables, rows as observations. no unnecessary repeated data. each column is only one variable. 
 
 # There are five common problems associated with messy data:
 # 1. Column headers are values, not variable names
