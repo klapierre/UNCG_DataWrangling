@@ -31,9 +31,14 @@
 # Let's go back to our dataset of water temperature in Calispell Creek and its tributaries
 # from eastern Washington State.
 
-# TASK: Read in the CalispellCreekandTributaryTemperatures.csv file and assign it to a dataframe
-# named streamTemp.
-# HINT: Check last week's assignment if you forget how to read data into R.
+# TASK: Complete the following steps in one pipeline:
+# (1) Read in the CalispellCreekandTributaryTemperatures.csv file, this time setting
+# stringsAsFactors to F;
+# (2) Rename the appropriate columns calispell, smalle, and winchester;
+# (3) Create a column called "data_type" and fill it with the text "temp_C"
+# (4) Assign the created dataframe the name streamTemp.
+# HINT: Refer back to last week's assignment if you forget the functions to complete each
+# of these steps or how to pipe them together.
 
 
 # ---------------------------------------------------------- #
