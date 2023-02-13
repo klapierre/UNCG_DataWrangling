@@ -277,7 +277,7 @@ willowFill <- willow %>%
   fill(block:temp)
 
 # QUESTION: What does the code 'block:temp' mean when passed to the fill() function above?
-#fill NA values in columns block through temp/
+#fill NA values in columns block through temp
 
 # QUESTION: Looking at the dataframe willowFill, describe what happened compared to our initial dataframe.
 #any NA vlaues in the first few columns were filled with the nearest value above on the respective column
@@ -290,7 +290,7 @@ willowFill <- willow %>%
 # In this case, the columns w1 through wC are individual willow seedlings that were sampled repeatedly.
 
 # TASK: Write code to indicate the sequence of columns from w1 through wC. 
-
+cols = w1:wC
 
 # We can fix this problem using the pivot_longer() function. pivot_longer() takes multiple columns
 # and condenses them into just two columns, one that indicates what column the data came from and the other
@@ -298,13 +298,13 @@ willowFill <- willow %>%
 # And while we're at it, let's get rid of the 'w' in front of each willow individual number.
 # Run the following code:
 willowClean <- willowFill %>%
-  pivot_longer(cols = w_1:w_C,
+  pivot_longer(cols = w_1:w_C,  #columns w_1:w_C placed into 1 column named willow_id
                names_to = "willow_id",
-               values_to = "value") %>%
-  separate(col = willow_id,
-           into = c("remove", "willow_ID"),
+               values_to = "value") %>% #results of willow_id values into this column 
+  separate(col = willow_id,  #this column
+           into = c("remove", "willow_ID"), #remove will contain 1st value (w) which will later be removed as it is redundant
            sep = "_") %>%
-  select(-remove)
+  select(-remove) #remove the 'remove' column
 
 
 # TASK: Annotate (add comments) the code above to indicate what each line does.
