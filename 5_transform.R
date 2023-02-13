@@ -129,14 +129,19 @@ streamTempSummary <- streamTemp %>%
 # (3) Call your new dataframe streamTempMDY.
 # HINT: Check the help documentation for the separate(), mutate(), and paste() functions.
 
+streamTempMDY <- separate(streamTemp, col = "Date", into = c("Month", "Day", "Year"), sep = "/") 
+streamTempMDY <- mutate(streamTempMDY, Year = as.integer(Year)+2000)
 
 # TASK: Write code to create a new dataframe called streamTempJan that filters only
 # rows where the month column is equal to 1 from the streamTempMDY dataframe.
+
+streamTempJan <- filter(streamTempMDY, Month== 1)
 
 
 # TASK: Write code that uses the summarize function to find the mean temperature for Calispell,
 # Smalle, and Winchester streams in only January.
 
+summarize(streamTempJan,(across(.cols=c("calispell","smalle","winchester"),.fns =list(mean), na.rm= T)))
 
 # Now imagine you had to repeat this set of steps (creating new filtered dataframes) for all 12 months!
 # That would not only be tedious, but would also clutter up our R environment.
@@ -156,11 +161,12 @@ streamTempMonthlyMean <- streamTempMDY %>%
 
 # QUESTION: When you look at the streamTempMonthlyMean dataframe, how many means do you see for 
 # each stream?
-
+# Each stream has 12 means, one for each month
 
 # QUESTION: In your own words, what do you think the group_by() function does when used
 # before the summarize() function?
 
+# It combines similar values in a given column, in this case Month, rather than repeating
 
 # We can also group by multiple columns. Try running the following code:
 streamTempMeans <- streamTempMDY %>% 
@@ -172,6 +178,7 @@ streamTempMeans <- streamTempMDY %>%
 
 # QUESTION: What columns did we group by to get our new means? What does the new dataframe show?
 
+# Grouped by month and year, meaning the dataframe shows multiple means for each stream depending on what data is available. 
 
 # ---------------------------------------------------------- #
 ### PART 1.3: PRACTICING THESE SKILLS                     ####
