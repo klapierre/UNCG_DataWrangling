@@ -133,6 +133,7 @@ swirl()
 # ---------------------------------------------------------- #
 # TASK: Leave a comment that you have completed this section. 
 # Did you feel like you were taking an LSAT?
+# Done, and my head is swimming! 
 
 
 # ---------------------------------------------------------- #
@@ -141,18 +142,27 @@ swirl()
 
 # TASK: dim(), names(), head(), and tail() are all great functions!
 # Run each of them on the cars dataset.
+dim(cars)
+names(cars)
+head(cars)
+tail(cars)
 
 # QUESTION: In your own words, describe what each of these functions do and
 # why each one might be useful.
-
+# dim() shows the dimensions and size of the object of interest.
+# names() shows each of the names associated with the column variables
+# head() and tail() show the beginning and end of an object, respectively.
 # TASK: Run the str() function on the cars dataset.
+str(cars)
 
 # QUESTION: In your own words, describe what the str() function does.
 # Why might this be useful?
-
+# str() gives a basic overview of all of the data within an object. This
+# could be helpful in viewing the basics of a dataset before jumping into analysis.
 
 # ---------------------------------------------------------- #
 #### PART 2: TEST WHAT YOU LEARNED                        ####
+
 # ---------------------------------------------------------- #
 
 # I) Without running the code, what does the following block 
