@@ -130,19 +130,34 @@ View(streamTempSummary)
 # Summarizing data is great, but it can be more useful to get summaries for particular 
 # subsets of the data.
 
+?separate
+?mutate
+?paste
 # TASK: Write code to do the following:
 # (1) Separate the date column into columns named month, day, and year;
 # (2) Mutate the year column to paste '20' to the front of each year value;
 # (3) Call your new dataframe streamTempMDY.
 # HINT: Check the help documentation for the separate(), mutate(), and paste() functions.
-
+streamTempMDY <- streamTemp %>%
+                    separate(Date,
+                             into=c('Month','Day','Year'),
+                             sep='/') %>%
+                    mutate(Year=paste(as.character(20),as.character(Year),
+                                      sep=""))
 
 # TASK: Write code to create a new dataframe called streamTempJan that filters only
 # rows where the month column is equal to 1 from the streamTempMDY dataframe.
+?filter
 
+streamTempJan <- streamTempMDY %>%
+                    filter(Month==1, na.rm=TRUE)
 
 # TASK: Write code that uses the summarize function to find the mean temperature for Calispell,
 # Smalle, and Winchester streams in only January.
+streamTempJanSummary <- streamTempJan %>% 
+  summarize(across(.cols=c('calispell', 'smalle', 'winchester'), 
+                   .fns=list(mean=mean),
+                   na.rm=T))
 
 
 # Now imagine you had to repeat this set of steps (creating new filtered dataframes) for all 12 months!
@@ -151,7 +166,7 @@ View(streamTempSummary)
 # R that we want to get the summary stats for each of the groups we specify.
 # Try running the following code:
 streamTempMonthlyMean <- streamTempMDY %>% 
-  group_by(month) %>% 
+  group_by(Month) %>% 
   summarize(across(.cols=c('calispell', 'smalle', 'winchester'), 
                    .fns=mean,
                    na.rm=T)) %>% 
@@ -163,22 +178,23 @@ streamTempMonthlyMean <- streamTempMDY %>%
 
 # QUESTION: When you look at the streamTempMonthlyMean dataframe, how many means do you see for 
 # each stream?
-
+## 12 rows for each stream column.
 
 # QUESTION: In your own words, what do you think the group_by() function does when used
 # before the summarize() function?
-
+## Groups each row by each of the values in the selected column (in this case, Month).
 
 # We can also group by multiple columns. Try running the following code:
 streamTempMeans <- streamTempMDY %>% 
-  group_by(month, year) %>% 
+  group_by(Month, Year) %>% 
   summarize(across(.cols=c('calispell', 'smalle', 'winchester'), 
                    .fns=mean,
                    na.rm=T)) %>% 
   ungroup()
 
 # QUESTION: What columns did we group by to get our new means? What does the new dataframe show?
-
+## We grouped by both Month and Year, showing us what every mean was for each column
+## in every listed month/year combo.
 
 # ---------------------------------------------------------- #
 ### PART 1.3: PRACTICING THESE SKILLS                     ####
