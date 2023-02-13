@@ -375,5 +375,14 @@ calispellHighTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv", stri
 # HINT: The ratio of C to N is calculated as C/N.
 # (8) Keep only the following columns: Exp, Date, Plot, NTrtInfo, genus, species, 
 # Field, C, N, and CN. 
+cdr<- read.csv("eoo1_Plant above ground biomass carbon and nitrogen.csv")%>% 
+  mutate(Exp='e001') %>%
+  rename(c="% Carbon" , N='% Nitrogen')%>%
+  filter(Strip==1) %>%
+  unite(col='NTrtInfo' ,c('NTrt' , 'NAdd'), sep='_') %>%
+  seperate(col=Species, into=c('genus' , 'species'), sep=' ') %>%
+  mutate(CN=C/N) %>%
+  select(-NTrt, -NAdd, -NitrAdd, -NAtm.NAdd)
+
 
 # REMEMBER: Save and push your script when you're done with this assignment!
