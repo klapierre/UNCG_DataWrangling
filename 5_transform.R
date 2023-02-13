@@ -242,7 +242,7 @@ monthlyDelaySummary <- flightData %>%
 # ---------------------------------------------------------- #
 
 # QUESTION: What are three characteristics of tidy data?
-
+## variables are columns, observations are rows, and each individual cell is one value
 
 # There are five common problems associated with messy data:
 # 1. Column headers are values, not variable names
@@ -259,7 +259,7 @@ willow <- read_csv("Niwot_Salix_2014_WillowSeedlingSurvey.csv", skip = 10)
 
 # QUESTION: What do you think the statement 'skip = 10' means in the code above?
 # HINT: Compare the csv file on your computer and the dataframe that you loaded into R.
-
+## it skips the first 10 rows since those are just notes
 
 # ---------------------------------------------------------- #
 ### PART 2.1: FILL MISSING DATA                           ####
@@ -270,17 +270,18 @@ willow <- read_csv("Niwot_Salix_2014_WillowSeedlingSurvey.csv", skip = 10)
 
 # QUESTION: To clean up the willow dataframe, where do we want to fill in values? That is, which columns
 # have lots of NAs.
-
+## block, plot, code, snow, N, and temp
 
 # We can fix our missing value problem using the fill() function (try it by running the following code):
 willowFill <- willow %>%
   fill(block:temp)
 
 # QUESTION: What does the code 'block:temp' mean when passed to the fill() function above?
-
+## it means that the function applies to all columns inbetween block to temp, including block and temp
 
 # QUESTION: Looking at the dataframe willowFill, describe what happened compared to our initial dataframe.
-
+## it filled the empty cells underneath the filled portions with the previous data until it reached a filled
+## section, after which it filled following cells with the new information
 
 # ---------------------------------------------------------- #
 ### PART 2.2: PIVOT LONGER                                ####
@@ -290,21 +291,21 @@ willowFill <- willow %>%
 # In this case, the columns w1 through wC are individual willow seedlings that were sampled repeatedly.
 
 # TASK: Write code to indicate the sequence of columns from w1 through wC. 
-
+w1:wC
 
 # We can fix this problem using the pivot_longer() function. pivot_longer() takes multiple columns
 # and condenses them into just two columns, one that indicates what column the data came from and the other
 # that contains the data itself.
 # And while we're at it, let's get rid of the 'w' in front of each willow individual number.
 # Run the following code:
-willowClean <- willowFill %>%
-  pivot_longer(cols = w_1:w_C,
-               names_to = "willow_id",
-               values_to = "value") %>%
-  separate(col = willow_id,
-           into = c("remove", "willow_ID"),
-           sep = "_") %>%
-  select(-remove)
+willowClean <- willowFill %>% # indicating what dataframe to use
+  pivot_longer(cols = w_1:w_C, # what columns to use
+               names_to = "willow_id", # name the column that tells us where the data came from
+               values_to = "value") %>% # name the column that holds the values
+  separate(col = willow_id, # indicating what column to separate
+           into = c("remove", "willow_ID"), # indicating what to name the separated columns
+           sep = "_") %>% # getting rid of the _ in willow_id
+  select(-remove) # taking out the remove column
 
 
 # TASK: Annotate (add comments) the code above to indicate what each line does.
@@ -318,18 +319,19 @@ willowClean <- willowFill %>%
 
 # QUESTION: What column contains the labels that tell us there are multiple variables stored
 # in one column? What column contains the corresponding date for these variables?
-
+## the variables column tells us there are multiple variables
+## the date is listed at the top of the csv file
 
 # Good news, we can fix this problem with the complementary function to pivot_longer().
 # This time we will use the pivot_wider() function to turn one column into multiple.
-willowCleaner  <- willowClean %>%
-  pivot_wider(names_from = variable,
-              values_from = value)
+willowCleaner  <- willowClean %>% # indicates what dataframe to use
+  pivot_wider(names_from = variable, # what column we want to get the names from
+              values_from = value) # what column we want to get the values from
 
 
 # TASK: Take a look at our new dataframe. How does it differ from the previous?
 # Annotate (add comments) the code above to indicate what each line does.
-
+## the new data frame only has variables as columns, and that is a single variable per column
 
 # ---------------------------------------------------------- #
 ### PART 2.4: IF ELSE                                     ####
