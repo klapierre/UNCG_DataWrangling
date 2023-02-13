@@ -212,10 +212,15 @@ flightData <- nycflights13::flights
 # (3) summarize to find the mean arrival delay (arr_delay column) remembering to remove NAs;
 # (4) ungroup the dataframe;
 # (5) assign the output to a dataframe named airportDelaySummary.
+airportDelaySummary <- flightData %>%
+                          filter(dest=='RDU', rm.na=TRUE) %>%
+                          group_by(origin) %>%
+                          summarize(across(.cols=arr_delay, .fns=mean, na.rm=T)) %>%
+                          ungroup()
 
 
 # QUESTION: Which airport should you avoid if you want the shortest delays?
-
+## Avoid EWR if you don't want a long delay.
 
 # TASK: Write a pipeline to figure out which month of the year to avoid when flying to Raleigh 
 # by taking the original flight dataframe (flightData) and performing the following tasks:
@@ -225,13 +230,19 @@ flightData <- nycflights13::flights
 #     remembering to remove NAs;
 # (4) ungroup the dataframe;
 # (5) assign the output to a dataframe named timeDelaySummary
-
+timeDelaySummary <- flightData %>%
+                          filter(dest=='RDU', rm.na=TRUE) %>%
+                          group_by(hour) %>%
+                          summarize(across(.cols=arr_delay,
+                                           .fns=list(mean=mean,maximum=max),
+                                           na.rm=T)) %>%
+                          ungroup()
 
 # QUESTION: What is the earliest hour of the day that flights leave New York for Raleigh?
-
+## 6 AM.
 
 # QUESTION: Which hour of the day has the longest mean delay? What about the longest maximum delay?
-
+## 10 PM has the longest mean delay, while noon has the longest max delay.
 
 # TASK: Write a pipeline to figure out which month of the year and airport to avoid when flying
 # to Raleigh by taking the original flight dataframe (flightData) and performing the following tasks:
@@ -241,9 +252,17 @@ flightData <- nycflights13::flights
 # (4) ungroup the dataframe;
 # (5) assign the output to a dataframe named monthlyDelaySummary
 
+monthlyDelaySummary <- flightData %>%
+                        filter(dest=='RDU', rm.na=TRUE) %>%
+                        group_by(month, origin) %>%
+                        summarize(across(.cols=arr_delay,
+                                          .fns=mean,
+                                          na.rm=T)) %>%
+                        ungroup()
+
 
 # QUESTION: Which month and airport has the longest mean delay?
-
+## March in EWR has the longest mean delay.
 
 # ---------------------------------------------------------- #
 ### PART 2.0: INTRO TO TIDY DATA                          ####
