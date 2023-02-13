@@ -127,15 +127,28 @@ streamTempSummary <- streamTemp %>%
 # (2) Mutate the year column to paste '20' to the front of each year value;
 # (3) Call your new dataframe streamTempMDY.
 # HINT: Check the help documentation for the separate(), mutate(), and paste() functions.
+streamTempMDY <- streamTemp %>% 
+  separate(col=Date,
+           into=c('month', 'date', 'year_00'), 
+           sep='/') %>% 
+  mutate(twenty = 20) %>% 
+  unite(col='year',
+        c('twenty', 'year_00'),
+        sep='')
 
 
 # TASK: Write code to create a new dataframe called streamTempJan that filters only
 # rows where the month column is equal to 1 from the streamTempMDY dataframe.
+streamTempJan <- streamTempMDY %>% 
+  filter(month == 1)
 
 
 # TASK: Write code that uses the summarize function to find the mean temperature for Calispell,
 # Smalle, and Winchester streams in only January.
-
+streamTempJanSum <- streamTempMDY %>% 
+  filter(month == 1) %>% 
+  summarize(across(.cols=c('calispell', 'smalle', 'winchester'), 
+                   .fns=list(mean=mean), na.rm=T))
 
 # Now imagine you had to repeat this set of steps (creating new filtered dataframes) for all 12 months!
 # That would not only be tedious, but would also clutter up our R environment.
@@ -154,11 +167,12 @@ streamTempMonthlyMean <- streamTempMDY %>%
 
 
 # QUESTION: When you look at the streamTempMonthlyMean dataframe, how many means do you see for 
-# each stream?
+# each stream? 12, one for each month
 
 
-# QUESTION: In your own words, what do you think the group_by() function does when used
-# before the summarize() function?
+
+# QUESTION: In your own words, what do you think the group_by() function does when used before the summarize() function?
+#I think the group_by() function allows for the data to be summarized as specific units instead of together as one
 
 
 # We can also group by multiple columns. Try running the following code:
@@ -169,7 +183,8 @@ streamTempMeans <- streamTempMDY %>%
                    na.rm=T)) %>% 
   ungroup()
 
-# QUESTION: What columns did we group by to get our new means? What does the new dataframe show?
+# QUESTION: What columns did we group by to get our new means? What does the new dataframe show
+#We grouped the columns by both year and month. This shows the monthly average by year for each stream
 
 
 # ---------------------------------------------------------- #
