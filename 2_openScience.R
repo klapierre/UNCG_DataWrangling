@@ -17,20 +17,20 @@
 
 
 ## QUESTION: Open up the file "knb-lter-knz.148.3.txt". What does this file contain?
-
+# This contains contact information and data formating
 
 ## QUESTION: From this file, who are the dataset contributors?
-
+#Kimberly K, Meghan A, Andrew H, Sally K, Allison L, Kevin W, Konza L
 
 ## QUESTION: From this file, what are the start and end dates of the dataset?
-
+#start: Jan 1, 2019. end: December 31, 2021
 
 ## QUESTION: Is the data collection still ongoing?
-
+#yes
 
 ## QUESTION: Given your answer to the previous question, why might it be good to
 ## have a reproducible script for data analysis related to this dataset?
-
+#to help continue where you left off in your project in case information goes missing or errors start popping up.
 
 # ----------------------------------------------------------
 #### 2) Preventing GitHub from syncing the data files.####
@@ -50,6 +50,7 @@
 
 ## QUESTION: What happened to the data folder listed in the Git tab of RStudio
 ## when you hit save?
+# The file disappeared, it will now be ignored by Git.
 
 
 ## TASK: Stage, commit, and pull/push your modified .gitignore file to the branch
@@ -65,6 +66,7 @@
 ## TASK: Start by setting your working directory to the GitHub repository folder
 ## for this class on your computer using the function setwd().
 ## Hint - set the working directory as the top folder.
+setwd("C:/Users/Stephanie/Desktop/Coding/UNCG_DataWrangling/Mota_conSME_data")
 
 
 ## TASK: Now we can import one of these datasets into R. Let's import the plant
@@ -72,6 +74,8 @@
 ## putting the relative file path and file name. Assign the dataframe you import
 ## a name that includes the experiment name (conSME) and the data type (abundance)
 ## using '<-' and be sure to carefully consider your naming convention when doing so.
+CME011 <- read.csv("C:/Users/Stephanie/Desktop/Coding/UNCG_DataWrangling/Mota_conSME_data/CME011.csv")
+
 
 
 ## Run the following code.
@@ -79,14 +83,17 @@ conSMEcoverAlt <- read.csv("https://portal.edirepository.org/nis/dataviewer?pack
 
 
 ## QUESTION: What did this code do? What can you say about these two dataframes?
+# this code printed out a data frame. it appears the two dataframes are identical
 
 
 ## TASK: Check to see if the two dataframes are identical using an R function.
 ## (Hint: remember the Week 1 assignment?)
-
+identical(conSMEcoverAlt,CME011)
 
 ## QUESTION: Why might it be better to source data straight from the data portal?
 ## Why might it be worse?
+# it could be better because this makes it faster to get your data. And if someone else edits it then you'll have immediate access to it
+# could be worse because if your data gets moved then the code would not work anymore.
 
 
 ## TASK: Save your R script. Then stage, commit, and pull/push your
@@ -102,9 +109,12 @@ conSMEcoverAlt <- read.csv("https://portal.edirepository.org/nis/dataviewer?pack
 
 ## TASK: Check the names of the columns in the species cover dataset you imported.
 ## (Hint: remember the Week 1 assignment?)
+colnames(CME011)
 
 
 ## QUESTION: What naming convention did the dataset creators use for column names?
+# Capitalize each word but no spaces in between for each title.
+# camel case naming convention
 
 
 ## QUESTION: What naming convention do you plan to use for this course for the
@@ -118,7 +128,8 @@ conSMEcoverAlt <- read.csv("https://portal.edirepository.org/nis/dataviewer?pack
 
 ## QUESTION: Do all of your objects follow the same naming convention or do you
 ## plan to use different naming conventions to reference different object types?
-
+# For now I will stick to putting an underscore - Sanke case - between names for all the different objects.
+# that is, until I get a better understanding of what I am doing in R.
 
 ## TASK: Save your R script. Stage, commit, and pull/push your modified code to the branch
 ## you created for this week with an appropriate commit message.
@@ -136,12 +147,13 @@ conSMEcoverAlt <- read.csv("https://portal.edirepository.org/nis/dataviewer?pack
 ## TASK: Create a new dataframe named "duplicates" by binding the rows of two 
 ## conSME dataframes you made into one using the rbind() function.
 ## (Hint: Very similar to the cbind function we used in the Week 1 assignment)
+duplicates <- rbind (CME011, conSMEcoverAlt)
 
 
 ## QUESTION: Looking at the information for each dataframe in the environment tab
 ## of RStudio, what do you notice about the number of observations for the 
 ## duplicates dataframe compared to the two original dataframes?
-
+# the number of observations is the sum of the observations from the two dataframes.
 
 ## TASK: Save your R script. Stage, commit, and pull/push your modified code to the branch
 ## you created for this week with an appropriate commit message.
@@ -156,6 +168,7 @@ duplicates[with(duplicates, order(RecDate, Block, Plot, Taxa)),]
 
 ## QUESTION: What do you notice about the data? Specifically, compare rows 
 ## 4934 and 12173 (if they are sorted correctly, those should be on top).
+# everything about them is the same except for their number.Wait a second, two of everything?
 
 
 ## TASK: Save your R script. Stage, commit, and pull/push your modified code to the branch
@@ -181,6 +194,7 @@ noDuplicates <- unique(duplicates)
 ## of RStudio, what do you notice about the number of observations for the 
 ## noDuplicates dataframe compared to the dulpicates dataframe? What about compared
 ## to the two original dataframes?
+# the number of observations dropped by over half! There are now less observations than the original data frames.
 
 
 ## TASK: Go back to our repository in GitHub through your web browser. Find the
@@ -196,14 +210,14 @@ noDuplicates <- unique(duplicates)
 # ----------------------------------------------------------
 
 ## TASK: Type a comment below.
-
+# 《=^ェ^=》
 
 ## TASK: Follow these instructions carefully!
 ## Save your R script. Stage and commit with the commit message "learning to amend",
 ## but this time DON'T pull/push your modified code!
 
 ## TASK: Type another comment below.
-
+# 〝(ˆ(oo)ˆ)〞
 
 ## TASK: Save your R script. Open up the commit window in RStudio.
 
@@ -211,6 +225,7 @@ noDuplicates <- unique(duplicates)
 ## QUESTION: How many commits are you ahead of your branch on GitHub?
 ## (Hint: look for the message "Your branch is ahead of..." near the top of the 
 ## window.)
+# I am ahead of my branch by 1 commit
 
 
 ## TASK: Stage your modified code and check the "Amend previous commit" box.
@@ -219,7 +234,7 @@ noDuplicates <- unique(duplicates)
 
 ## QUESTION: What happened when you clicked "Amend previous commit"?
 ## How many commits is your branch ahead by now?
-
+# the file disappeared from the git tab. I am still 1 commit ahead of the branch I am working in.
 
 ## TASK: Once you've answered the above questions, save your R script one last time. 
 ## Stage your modified code, amend it to the previous commit, and finally pull/push
