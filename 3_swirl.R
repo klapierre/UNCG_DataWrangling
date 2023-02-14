@@ -120,19 +120,27 @@ swirl()
 # ---------------------------------------------------------- #
 #### VII. R Programming -> 7. Matrices and Data Frames    ####
 # ---------------------------------------------------------- #
+
+# So I accidentally deleted my swirl file when switching between branches. This is where I left off.
+
+
 # QUESTION: In the code matrix[x,y], which letter represents the rows? 
 # Which letter represents the columns?
-
+# x = rows, y = columns
 
 # QUESTION: What are two different ways you could assign the numbers 1-20
 # into a matrix with 4 rows and 5 columns?
-
+# matrix(1:20,4,5) 
+# or 
+# my_vector <- 1:20 + dim 4,5 
 
 # ---------------------------------------------------------- #
 #### VIII. R Programming -> 8. Logic                      ####
 # ---------------------------------------------------------- #
 # TASK: Leave a comment that you have completed this section. 
+# completed
 # Did you feel like you were taking an LSAT?
+# LSAT = a reading comprehension exam. Yes I did feel like I had to read everything very carefully
 
 
 # ---------------------------------------------------------- #
@@ -145,11 +153,16 @@ swirl()
 # QUESTION: In your own words, describe what each of these functions do and
 # why each one might be useful.
 
+# dim = dimensions, helpful for figuing out the dimmensions
+# names = names, helpful for figuring out how the categories are named
+# head = beginning, helpful for telling us which comes first
+# tail = end, helpful for telling us which comes last
+
 # TASK: Run the str() function on the cars dataset.
 
 # QUESTION: In your own words, describe what the str() function does.
 # Why might this be useful?
-
+# gives a summary of the dataset. useful for viewing everything you need to know with a single code
 
 # ---------------------------------------------------------- #
 #### PART 2: TEST WHAT YOU LEARNED                        ####
@@ -165,6 +178,7 @@ a <- b
 c <- a
 c
 
+# it prints "4". Because c = a, a = b, and b = 4
 
 # II) Three of the following lines produce the same result. 
 # Without running the code, which one will produce a different result than the
@@ -175,6 +189,7 @@ log10(1000)
 log(base = 10, x = 1000)
 log(10, 1000)
 
+# the last one would print something different. All the others set their base to 10 and their x to 1000. The last one flips the values.
 
 
 # III) Use one of R's built in functions to create a new vector that is 
@@ -182,6 +197,8 @@ log(10, 1000)
 # this function, but a combination of Google and function documentation 
 # should get you there.
 numvector <- c(5,2,3,1,6,8)
+
+sort(numvector, decreasing = TRUE)
 
 
 # IV) Which elephant weighs more? 
@@ -192,6 +209,11 @@ numvector <- c(5,2,3,1,6,8)
 elephant1_kg <- 3492
 elephant2_lb <- 7757
 
+elephant2_kg <- elephant2_lb/2.2
+elephant_result <- elephant2_kg > elephant1_kg
+elephant_result
+
+# elephant 2 > elephant 1 = TRUE
 
 # ---------------------------------------------------------- #
 #### PART 3: FEEDBACK                                     ####
@@ -199,8 +221,12 @@ elephant2_lb <- 7757
 # QUESTION: What did you think of the Swirl tutorial? Was it helpful? Why 
 # or why not?
 
+# The tutorial helped me review and practice some of the many R skills
+
 # QUESTION: Would you have preferred to split the Swirl tutorial over weeks
 # 1 and 3 of the class instead of the week 1 assignment you previously 
 # completed? Why or why not?
+
+# Personally I prefer having done swirl after the week 1 assignment. After creating my own meaning for the code I get a course which confirms or corrects what I figured out on my own.
 
 # REMEMBER: Save and push your script when you're done with this assignment!
