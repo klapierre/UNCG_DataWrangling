@@ -55,22 +55,28 @@ swirl()
 # ---------------------------------------------------------- #
 # QUESTION: What would you do to get back a line of code you previously ran
 # from your console without retyping the whole thing again?
-
+## To recall previously run lines of code, simply press the up button
+## Until the desired line appears in the working console.
 
 # ---------------------------------------------------------- #
 #### II. R Programming -> 2. Workspace and Files          #### 
 # ---------------------------------------------------------- #
 # QUESTION: What is the difference between your working directory
 # and your local workspace?
+# The working directory is where we pull data to work from, the
+# workspace is where our variables and data are stored to be worked with. 
 
 # QUESTION: How do you find help files for a function using R code?
-
+# By typing a "?" before the function.
 
 # ---------------------------------------------------------- #
 #### III. R Programming -> 3. Sequences of Numbers        #### 
 # ---------------------------------------------------------- #
 # QUESTION: In R, is there usually just one way or many different
 # ways of doing the same thing? Why might this be useful?
+# There are multiple ways of executing a task in R, this is useful as it allows
+# R programmers a wide range of executing similar tasks, but with varying
+# levels of specificity and customization.
 
 
 # ---------------------------------------------------------- #
@@ -81,14 +87,19 @@ swirl()
 # numeric vector.
 
 # QUESTION: What does <= stand for?
+# less than or equal to
 
 # QUESTION: What does == stand for?
+# exact equality
 
 # QUESTION: What does != stand for?
+# Ineduqalities
 
 # QUESTION: What does | mean in R?
+# This states at least one of the statements is TRUE
 
 # QUESTION: What does & mean when testing for TRUE/FALSE statements?
+# This states that both statements are TRUE
 
 
 # ---------------------------------------------------------- #
@@ -97,24 +108,38 @@ swirl()
 
 # TASK: Copy your assignment of my_data below, then repeat the code 
 # that generated my_data to create my_data2. 
+y <- rnorm(1000)
+z <-  rep(NA, 1000)
+my_data <- sample(c(y,z),100)
+y <- rnorm(1000)
+z <- rnorm(NA,1000)
+my_data2 <-  sample(c(y,z),100)
 # Using the R function identical(), test whether my_data and my_data2 
 # are identical.
+identical(my_data,my_data2)
+#FALSE
 # Hint: You can always Google or in R type ?identical() to get
 # help on using this (or any) function.
 
 
 # QUESTION: Explain why my_data and my_data2 were or were not identical.
-
+# From what I can tell, the two variables differ due to them switching off
+## counting which lines are NA or an actual number.
 
 # ---------------------------------------------------------- #
 #### VI. R Programming -> 6. Subsetting                   ####
 # ---------------------------------------------------------- #
 # QUESTION: Subsetting can be an amazing thing! Describe one real world
 # scenario where you might want to subset a dataset. (you can make up anything)
+# By subsetting we are able to select a portion of our data to work with our of a larger
+# dataset. This would be useful in a number of scenarios, but especially if we are
+# trying to look at data in a specific region or place out of a larger range of locations.
 
 # QUESTION: Sometimes R gives you an answer to a question that shouldn't be
 # asked (e.g., when you asked for the 3000th variable in your vector x). Why
 # might this be an issue?
+# This can be an issue because it can confuse or muddle our information, or result in
+# an inconclusive answer.
 
 
 # ---------------------------------------------------------- #
@@ -122,10 +147,14 @@ swirl()
 # ---------------------------------------------------------- #
 # QUESTION: In the code matrix[x,y], which letter represents the rows? 
 # Which letter represents the columns?
+# x= rows, y= columns
 
 
 # QUESTION: What are two different ways you could assign the numbers 1-20
 # into a matrix with 4 rows and 5 columns?
+#You could create a vector by assigning it dimensions. Or you could run the below line.
+matrix= (data=1:20,nrow=4,ncol=5,byrow= FALSE)
+
 
 
 # ---------------------------------------------------------- #
