@@ -140,8 +140,8 @@ calispellTemp <- select(.data=streamTempRename,
 # calispell_temp columns using the sequence notation.
 # HINT: Replace the code where each column was listed out with a sequence of column
 # names. Be sure they are listed in the order they exist in the original dataframe.
-calispellTemp2 <- select(.data=calispellTemp, 
-                         +                          calispell_temp, Date, Time)
+calispellTemp2 <- select(.data=calispellTemp, calispell_temp, Date, Time)
+
 
 # TASK: Write code to check your column names again to see what happened in your
 # new dataframe.
@@ -176,6 +176,8 @@ identical(calispellTemp5,calispellTemp4)
 # function, a natural next question is “How do I select a subset of rows?” 
 # That’s where the filter() function comes in! Isn't this fun!?
 
+# Yes, it is!!!
+
 # Note that filter() is really, by definition, subsetting our data. But, base R
 # has a subset() function already. So in the tidyverse world, we refer to this as
 # filtering instead.
@@ -187,6 +189,8 @@ identical(calispellTemp5,calispellTemp4)
 # QUESTION: If you remove all of the observations (rows) with temperatures lower
 # than 15C, would you expect your new dataframe to have more, the same, or fewer
 # observations than the original dataframe?
+# If we remove any of the observations, we will have fewer observations than the 
+# original dataframe.
 
 
 # TASK: Run the following code to only keep the values greater than or equal to 15C.
@@ -197,10 +201,13 @@ calispellHighTemp <- filter(.data=calispellTemp,
 # TASK: Check the number of observations in your dataframe! You can either do 
 # this using the str() function or by looking next to the dataframe name in the
 # R environment tab.
+str(calispellHighTemp)
+
 
 
 # QUESTION: How many observations did the original dataframe (calispellTemp) have?
 # How many does the new dataframe (calispellHighTemp) have?
+# The original had 3 observations, and the new also has 3 observations.
 
 
 # REALLY IMPORTANT: Even if the function runs, R can do all kinds of bad things if
@@ -244,7 +251,7 @@ calispellData <- filter(.data=calispellTemp,
 
 # QUESTION: How many observations are in the datafile calispellData? Write code to
 # determine how many values of calispell_temp were NA.
-
+sum(is.na(calispellData))
 
 # ---------------------------------------------------------- #
 ### PART 1.4: CREATING COLUMNS                            ####
