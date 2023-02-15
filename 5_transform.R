@@ -296,7 +296,7 @@ willow <- read_csv("Niwot_Salix_2014_WillowSeedlingSurvey.csv", skip = 10)
 
 # QUESTION: What do you think the statement 'skip = 10' means in the code above?
 # HINT: Compare the csv file on your computer and the dataframe that you loaded into R.
-
+    # I think the skip = 10 line tells R to omit the first 10 rows of the file.
 
 # ---------------------------------------------------------- #
 ### PART 2.1: FILL MISSING DATA                           ####
@@ -307,17 +307,17 @@ willow <- read_csv("Niwot_Salix_2014_WillowSeedlingSurvey.csv", skip = 10)
 
 # QUESTION: To clean up the willow dataframe, where do we want to fill in values? That is, which columns
 # have lots of NAs.
-
+    # we have a lot of NA's in the 'block' through 'temp' columns and then again in the 'w-1' through 'w_C' columns when a tree is dead.
 
 # We can fix our missing value problem using the fill() function (try it by running the following code):
 willowFill <- willow %>%
   fill(block:temp)
 
 # QUESTION: What does the code 'block:temp' mean when passed to the fill() function above?
-
+    # the 'block:temp' section tells the function the run across all the columns between and including block and temp.
 
 # QUESTION: Looking at the dataframe willowFill, describe what happened compared to our initial dataframe.
-
+    # the NA cells have been filled by carrying the most recent non-NA entry down.
 
 # ---------------------------------------------------------- #
 ### PART 2.2: PIVOT LONGER                                ####
@@ -327,21 +327,30 @@ willowFill <- willow %>%
 # In this case, the columns w1 through wC are individual willow seedlings that were sampled repeatedly.
 
 # TASK: Write code to indicate the sequence of columns from w1 through wC. 
-
+willow$w_1:willow$w_C
 
 # We can fix this problem using the pivot_longer() function. pivot_longer() takes multiple columns
 # and condenses them into just two columns, one that indicates what column the data came from and the other
 # that contains the data itself.
 # And while we're at it, let's get rid of the 'w' in front of each willow individual number.
 # Run the following code:
+
 willowClean <- willowFill %>%
+  # assigns an object name and what dataframe it pulls from
   pivot_longer(cols = w_1:w_C,
+               # indicates which columns the pivot_longer function is acting on
                names_to = "willow_id",
+               # assigns the name to the new column that denotes the name of the original column the values are pulled from
                values_to = "value") %>%
+               # names the column that stores the values from the original columns
   separate(col = willow_id,
+           # identifies the column the separate function will act on
            into = c("remove", "willow_ID"),
+           # names the columns the data in the original column will be separated into
            sep = "_") %>%
+           # identifies the character used to separate the data in the original column, that way the number and A,B,and C labels can be separated from the 'w'
   select(-remove)
+  # selects all columns excluding the 'remove' column that contains only the character 'w' in each row
 
 
 # TASK: Annotate (add comments) the code above to indicate what each line does.
@@ -355,13 +364,17 @@ willowClean <- willowFill %>%
 
 # QUESTION: What column contains the labels that tell us there are multiple variables stored
 # in one column? What column contains the corresponding date for these variables?
+    # the 'variable' column shows there are multiple variables in that column, the 'value' column contains the data for those variables
 
 
 # Good news, we can fix this problem with the complementary function to pivot_longer().
 # This time we will use the pivot_wider() function to turn one column into multiple.
 willowCleaner  <- willowClean %>%
+  # names the new dataframe and indicates what dataframe we're making it out of
   pivot_wider(names_from = variable,
+              # tells the pivot_wider function where to pull names from to make new columns
               values_from = value)
+              # tells the pivot_wider function where to pull values for the new columns
 
 
 # TASK: Take a look at our new dataframe. How does it differ from the previous?
@@ -379,20 +392,27 @@ willowCleaner  <- willowClean %>%
 # seedling was planted.
 
 # TASK: Verbally describe how you would want to change this problem (i.e., pseudocode).
-
+    # I would want to store data on if the plant is alive in a separate column, so I would make a column where the cell reads "alive" if the plant is alive and "dead" if the plant is dead and remove all mention of if the plant is alive from the ht1 column
+    # I would do something similar for the date information, where I make a new column for 'year' that would indicate the hear the tree was planted, 2006 for 1-10 and 2007 for A-C
 
 # ifelse() is a very powerful function that helps us with this problem!
 
 # TASK: Look at the ifelse help file and describe in your own words the ordering of the syntax.
 # logical statement, if the statement is TRUE then use the yes value provides, otherwise use the no value.
 
+    # you define a test such that if a statement is true under that test, it returns the result for what you put in the 'yes' section and if false then returns the 'no' section.
+
 # We can nest the ifelse() function within a mutate() function to create a new column that contains
 # one entry if the logical statement we provide is TRUE and another if the logical statement is FALSE.
 # Run the following code to try it out to help fix our first problem (ht1 column has information on 
 # both plant status and actual height values).
-willowClean3 <- willowClean2 %>%
+
+willowClean3 <- willowCleaner %>%
+  # naming the dataframe and directing where the data will come from
   mutate(status = ifelse(ht1 == 'dead', 'dead', 'alive')) %>% 
+  # names a column 'status' where if the value for 'ht1' reads as 'dead" the value in the 'status' column is seat to 'dead', if its not equal to 'dead' in the 'ht1' column the value in the 'status' column is set to 'alive'
   mutate(ht1 = ifelse(status == 'dead', NA, ht1))
+  # this line mutates the 'ht1' column such that if the value of the 'dead' column reads dead then the value in the 'ht1' column is set to NA, otherwise it is set to itself and does not change.
 
 # TASK: Annotate the previous lines of code to indicate what each is doing.
 
@@ -400,6 +420,7 @@ willowClean3 <- willowClean2 %>%
 # QUESTION: This is a good time to make sure the relevant columns are numeric. Run the str() function
 # on this dataframe. What class is the ht1 column?
 
+str(willowClean3) #the ht1 column is class character
 
 # Let's make the ht1 column numeric. And while we're at it, the columns ht2, cnpy1, and cnpy2 should also
 # be made numeric. We can do so by running the following code:
@@ -412,6 +433,7 @@ willowClean4 <- willowClean3 %>%
 # TASK: Run the str() function again to view the classes for each column in willowClean4. Did we
 # succeed in making the columns we wanted into numeric classes?
 
+str(willowClean4) # we succeeded in changing the columns to numeric
 
 # %in% is another powerful function! With %in% we can use logical statements on a whole bunch of stuff at
 # once, instead of making a billion ifelse statements. Let's try it out to fix our second problem,
@@ -422,7 +444,7 @@ willowClean5 <- willowClean4 %>%
 # QUESTION: Based on the lines of code above, what can you conclude about willow seedlings with identifiers
 # that were letters versus numbers? That is, what year were willow seedlings that were identified with letters
 # planted? What year were willow seedlings that were identified with numbers planted?
-
+    # the numbered seedlings were planted in 2007 while the lettered seedlings were planted in 2006
 
 # ---------------------------------------------------------- #
 ### PART 2.5: RELATIONAL DATA                             ####
