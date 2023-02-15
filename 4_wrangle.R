@@ -222,17 +222,17 @@ str(calispellHighTemp)
 # Note, we have to go back to our previous stream temperature data where these
 # columns still exist.
 highTempTributaries <- filter(.data=streamTempRename,
-                              smalle_temp >= 15, winchester_temp >= 15)
+                              Smalle_temp >= 15, Winchester_temp >= 15)
 
 # Alternatively,
 highTempTributaries <- filter(.data=streamTempRename,
-                              smalle_temp >= 15 & winchester_temp >= 15)
+                              Smalle_temp >= 15 & Winchester_temp >= 15)
 
 
 # We can also filter based on "or" - if any condition is true. For example, was
 # water temp >=15 at any site?
 highTempTributaries <- filter(.data=streamTempRename,
-                              calispell_temp >= 15 | smalle_temp >= 15 | winchester_temp >= 15)
+                              calispell_temp >= 15 | Smalle_temp >= 15 | Winchester_temp >= 15)
 
 
 # Finally, we might want to only get the rows which do not have missing data. We can
@@ -281,16 +281,15 @@ calispellTempSum <- mutate(.data=calispellTempF,
                            sum=calispell_temp + calispell_temp_F)
 
 # Check the dataframe to see if it worked.
-
+str(calispellTempSum)
 
 # TASK: The column we just created makes no sense. Write code below to remove it
 # from the dataframe.
-
+calispellTempDelete=subset(calispellTempSum,select=-sum)
 
 # QUESTION: We might also want to add a column that describes the dataset. What happens 
 # when you run the following code?
-calispellTempFaquatic <- mutate(.data=calispellTempF,
-                                type='aquatic')
+# A new column was added which describes the environment of the research site.
 
 
 # ---------------------------------------------------------- #
