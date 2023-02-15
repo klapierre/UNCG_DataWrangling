@@ -268,11 +268,15 @@ timeDelaySummary <- flightData %>% filter(dest == "RDU") %>% group_by(hour) %>% 
 # (5) assign the output to a dataframe named monthlyDelaySummary
 
 
-montlyDelaySummary <- flightData 
+monthlyDelaySummary <- flightData %>% filter(dest == "RDU") %>% group_by(month, origin) %>% summarize(across(.cols=c('arr_delay'), 
+                                                                                                            .fns=list(mean=mean, max=max),
+                                                                                                            na.rm=T)) %>% 
+  ungroup()
 
 
 # QUESTION: Which month and airport has the longest mean delay?
 
+#Month 3, airport EWR.
 
 # ---------------------------------------------------------- #
 ### PART 2.0: INTRO TO TIDY DATA                          ####
@@ -280,6 +284,7 @@ montlyDelaySummary <- flightData
 
 # QUESTION: What are three characteristics of tidy data?
 
+#Every variable forms its own column, every observation has it's own row and each cell contains a single measurement. 
 
 # There are five common problems associated with messy data:
 # 1. Column headers are values, not variable names
@@ -297,6 +302,7 @@ willow <- read_csv("Niwot_Salix_2014_WillowSeedlingSurvey.csv", skip = 10)
 # QUESTION: What do you think the statement 'skip = 10' means in the code above?
 # HINT: Compare the csv file on your computer and the dataframe that you loaded into R.
 
+#Skips 10 rows in excel. Removes the housekeeping labels at the top.
 
 # ---------------------------------------------------------- #
 ### PART 2.1: FILL MISSING DATA                           ####
@@ -308,6 +314,7 @@ willow <- read_csv("Niwot_Salix_2014_WillowSeedlingSurvey.csv", skip = 10)
 # QUESTION: To clean up the willow dataframe, where do we want to fill in values? That is, which columns
 # have lots of NAs.
 
+#block, plot,	code,	snow,	n, temp and even some of the w_1, w_2, w_3, etc. 
 
 # We can fix our missing value problem using the fill() function (try it by running the following code):
 willowFill <- willow %>%
@@ -315,8 +322,12 @@ willowFill <- willow %>%
 
 # QUESTION: What does the code 'block:temp' mean when passed to the fill() function above?
 
+#Fills all empty cells with the approprite temp.
+
 
 # QUESTION: Looking at the dataframe willowFill, describe what happened compared to our initial dataframe.
+
+#The empty cells have been filed with a value that is meaningful to R.
 
 
 # ---------------------------------------------------------- #
@@ -328,20 +339,22 @@ willowFill <- willow %>%
 
 # TASK: Write code to indicate the sequence of columns from w1 through wC. 
 
+wseq <- w_1:w_c
+
 
 # We can fix this problem using the pivot_longer() function. pivot_longer() takes multiple columns
 # and condenses them into just two columns, one that indicates what column the data came from and the other
 # that contains the data itself.
 # And while we're at it, let's get rid of the 'w' in front of each willow individual number.
 # Run the following code:
-willowClean <- willowFill %>%
-  pivot_longer(cols = w_1:w_C,
-               names_to = "willow_id",
-               values_to = "value") %>%
-  separate(col = willow_id,
+willowClean <- willowFill %>%       #storing the following in willowClean
+  pivot_longer(cols = w_1:w_C, #condensiing w_1:w_C into two columns.
+               names_to = "willow_id",  # Creates a column named willow_id
+               values_to = "value") %>% #creates a value column to store values from the original columns. 
+  separate(col = willow_id, 
            into = c("remove", "willow_ID"),
-           sep = "_") %>%
-  select(-remove)
+           sep = "_") %>%  #seperates willow_id into remove and willow_ID
+  select(-remove) #removes remove
 
 
 # TASK: Annotate (add comments) the code above to indicate what each line does.
