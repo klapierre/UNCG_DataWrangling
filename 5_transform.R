@@ -467,6 +467,9 @@ view(willowClean5)
 
 # QUESTION: What columns would go in each of our two relational databases?
 
+#plotInfo will have block, plot, code, snow, n and temp
+#willowData will have block, plot, willow_ID, ht1, ht2, cnpy1, cnpy2, notes, status and year.
+
 # Let's do it! Run the following code:
 plotInfo <- willowClean5 %>%
   select(block:temp) %>%
