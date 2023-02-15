@@ -369,16 +369,21 @@ willowClean <- willowFill %>%       #storing the following in willowClean
 # QUESTION: What column contains the labels that tell us there are multiple variables stored
 # in one column? What column contains the corresponding date for these variables?
 
+# The variable column highlights the multiple variables. The date is not present in this cleaned up table. 
 
 # Good news, we can fix this problem with the complementary function to pivot_longer().
 # This time we will use the pivot_wider() function to turn one column into multiple.
-willowCleaner  <- willowClean %>%
-  pivot_wider(names_from = variable,
-              values_from = value)
+willowCleaner  <- willowClean %>% #Stores data in Willowcleaner
+  pivot_wider(names_from = variable, #Pulls names from the variable column to create new columns. 
+              values_from = value) #Pulls values from the value column for the columns made above. 
 
 
 # TASK: Take a look at our new dataframe. How does it differ from the previous?
 # Annotate (add comments) the code above to indicate what each line does.
+
+View(willowCleaner)
+
+#The variables are now their own columns.
 
 
 # ---------------------------------------------------------- #
@@ -393,19 +398,25 @@ willowCleaner  <- willowClean %>%
 
 # TASK: Verbally describe how you would want to change this problem (i.e., pseudocode).
 
+##We need to separate the dead/alive markers into their own column. We may consider replacing the dead/alive markers with N/As or removing them entirely. 
 
 # ifelse() is a very powerful function that helps us with this problem!
 
 # TASK: Look at the ifelse help file and describe in your own words the ordering of the syntax.
 # logical statement, if the statement is TRUE then use the yes value provides, otherwise use the no value.
 
+
+?ifelse()
+
+#We first test for specific object and than receive the "Yes" values for the object followed by the "no" values for an object.
+
 # We can nest the ifelse() function within a mutate() function to create a new column that contains
 # one entry if the logical statement we provide is TRUE and another if the logical statement is FALSE.
 # Run the following code to try it out to help fix our first problem (ht1 column has information on 
 # both plant status and actual height values).
-willowClean3 <- willowClean2 %>%
-  mutate(status = ifelse(ht1 == 'dead', 'dead', 'alive')) %>% 
-  mutate(ht1 = ifelse(status == 'dead', NA, ht1))
+willowClean3 <- willowCleaner %>%  #storing all following code in willowClean3
+  mutate(status = ifelse(ht1 == 'dead', 'dead', 'alive')) %>%  #Creates a column called status that stores the dead/alive values from ht1.
+  mutate(ht1 = ifelse(status == 'dead', NA, ht1)) #creates a column called ht1 which replaced "dead" with NA. Else uses original ht1 values.
 
 # TASK: Annotate the previous lines of code to indicate what each is doing.
 
@@ -413,6 +424,9 @@ willowClean3 <- willowClean2 %>%
 # QUESTION: This is a good time to make sure the relevant columns are numeric. Run the str() function
 # on this dataframe. What class is the ht1 column?
 
+str(willowClean3)
+
+#Character. 
 
 # Let's make the ht1 column numeric. And while we're at it, the columns ht2, cnpy1, and cnpy2 should also
 # be made numeric. We can do so by running the following code:
@@ -425,6 +439,9 @@ willowClean4 <- willowClean3 %>%
 # TASK: Run the str() function again to view the classes for each column in willowClean4. Did we
 # succeed in making the columns we wanted into numeric classes?
 
+str(willowClean4)
+
+#Yes!
 
 # %in% is another powerful function! With %in% we can use logical statements on a whole bunch of stuff at
 # once, instead of making a billion ifelse statements. Let's try it out to fix our second problem,
@@ -436,6 +453,9 @@ willowClean5 <- willowClean4 %>%
 # that were letters versus numbers? That is, what year were willow seedlings that were identified with letters
 # planted? What year were willow seedlings that were identified with numbers planted?
 
+view(willowClean5)
+
+#2006 was letters whereas 2007 was numbers. 
 
 # ---------------------------------------------------------- #
 ### PART 2.5: RELATIONAL DATA                             ####
