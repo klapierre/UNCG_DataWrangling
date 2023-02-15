@@ -222,17 +222,17 @@ str(calispellHighTemp)
 # Note, we have to go back to our previous stream temperature data where these
 # columns still exist.
 highTempTributaries <- filter(.data=streamTempRename,
-                              smalle_temp >= 15, winchester_temp >= 15)
+                              Smalle_temp >= 15, Winchester_temp >= 15)
 
 # Alternatively,
 highTempTributaries <- filter(.data=streamTempRename,
-                              smalle_temp >= 15 & winchester_temp >= 15)
+                              Smalle_temp >= 15 & Winchester_temp >= 15)
 
 
 # We can also filter based on "or" - if any condition is true. For example, was
 # water temp >=15 at any site?
 highTempTributaries <- filter(.data=streamTempRename,
-                              calispell_temp >= 15 | smalle_temp >= 15 | winchester_temp >= 15)
+                              calispell_temp >= 15 | Smalle_temp >= 15 | Winchester_temp >= 15)
 
 
 # Finally, we might want to only get the rows which do not have missing data. We can
@@ -281,16 +281,17 @@ calispellTempSum <- mutate(.data=calispellTempF,
                            sum=calispell_temp + calispell_temp_F)
 
 # Check the dataframe to see if it worked.
-
+str(calispellTempSum)
 
 # TASK: The column we just created makes no sense. Write code below to remove it
 # from the dataframe.
-
+calispellTempDelete=subset(calispellTempSum,select=-sum)
 
 # QUESTION: We might also want to add a column that describes the dataset. What happens 
 # when you run the following code?
 calispellTempFaquatic <- mutate(.data=calispellTempF,
                                 type='aquatic')
+# A new column was added which describes the environment of the research site.
 
 
 # ---------------------------------------------------------- #
@@ -301,7 +302,7 @@ calispellTempFaquatic <- mutate(.data=calispellTempF,
 
 # TASK: Write code to create one more column named ecosystem in a new dataframe and 
 # fill it with the word 'stream'.
-
+calispellTempF3 <- mutate(.data=calispellTempFaquatic,ecosystem='stream')
 
 # Now we might want to create a new column that includes information from both of
 # the columns we just created. We would do so by running the following lines of code:
@@ -312,6 +313,8 @@ calispellTempF4 <- unite(data=calispellTempF3,
 
 # QUESTION: Describe in your own words what the code above does. What part creates
 # a new column? What part tells R which columns to combine? What does the sep= mean?
+# This allows us to combine the two columns into one, but seperate the information by the set variable,
+# In this case, '::' was used.
 
 
 # Another very useful function is separate, which takes apart a column into two or
@@ -324,8 +327,11 @@ calispellTempF5 <- separate(data=calispellTempF4,
                             sep='::')
 
 # QUESTION: Why isn't the column name in quotes this time?
-
+# We do not need to indicate the the type_ecosystem is within the same column,
+# the information can be separated. 
 # QUESTION: Describe in your own words what the code above does.
+# The above code takes the combined information and separates them back out into
+# their original columns.
 
 
 # ---------------------------------------------------------- #
@@ -364,6 +370,7 @@ calispellHighTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv", stri
   filter(calispell_temp>=15) %>% 
   mutate(calispell_temp_F = calispell_temp*9/5 + 32)
 
+#Success!
 
 # ---------------------------------------------------------- #
 #### PART 2.0: USING YOUR NEW KNOWLEDGE                   ####
@@ -393,5 +400,17 @@ calispellHighTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv", stri
 # (8) Keep only the following columns: Exp, Date, Plot, NTrtInfo, genus, species, 
 # Field, C, N, and CN. 
 
+cdr <- read_csv("e001_Plant aboveground biomass carbon and nitrogen.csv")%>%
+  mutate(Exp='e001') %>% 
+  rename(C='% Carbon',N='% Nitrogen')%>% 
+  filter(Strip==1) %>% 
+  unite(col="NTrtInfo",
+        c('NTrt', 'NAdd'),
+        sep='_') %>% 
+  separate(col=species,
+           into=c('genus','species'),
+           sep=' ') %>% 
+  mutate(CN=C/N) %>% 
+  select(-NTrt, -NAdd, -NitrAdd, -NAtm.NAdd)
 
 # REMEMBER: Save and push your script when you're done with this assignment!
