@@ -298,6 +298,44 @@ ggplot(redband, aes(x = Length, y = Weight, color = as.factor(ScaleAge))) +
 # QUESTION: What is different about this graph from before?
 
 
+# ---------------------------------------------------------- #
+#### PART 1.7: ALTERING SCALES                            ####
+# ---------------------------------------------------------- #
+
+# A scale controls the mapping from data to aesthetic attribute. For example, 
+# the following are all aspects of scale: the size and color of points and lines,
+# as well as axis limits and labels.
+
+# Let's start by revisiting our basic length by weight scatter plot by running the
+# following code:
+ggplot(redband, aes(x = Length, y = Weight)) + 
+  geom_point()
+
+# We could alter the size and color and shape of the points, as we have done before:
+ggplot(redband, aes(x = Length, y = Weight)) + 
+  geom_point(size=1, color="darkblue", shape=1)
+
+# We could add on to alter the x and y axes scales; for example, let's make put 
+# them on a log10 scale by running the following code:
+ggplot(redband, aes(x = Length, y = Weight)) + 
+  geom_point(size=1, color="darkblue", shape=1) +
+  scale_x_log10() + 
+  scale_y_log10()
+
+# We could customize the x and y axis labels to include species name and units:
+ggplot(redband, aes(x = Length, y = Weight)) + 
+  geom_point(size=1, color="darkblue", shape=1) +
+  scale_x_log10() + 
+  scale_y_log10() +
+  xlab("Redband trout length (mm)") + 
+  ylab("Redband trout weight (g)")
+
+# TASK: Write code below to make a boxplot of scale age vs length on a linear-log
+# scale (i.e., with scale age on a linear x axis and length on a log y axis).
+# Fill in your boxplots with your favorite color and make the outline your least
+# favorite color. Label the x-axis Scale Age (years) and the y-axis Length (mm).
+
+
 
 
 
