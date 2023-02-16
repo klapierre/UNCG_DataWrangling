@@ -180,6 +180,26 @@ ggplot(redband, aes(x=ScaleAge, y=Length)) +
 # length and weight.
 
 
+# ---------------------------------------------------------- #
+#### PART 1.4 ADDING AESTHETICS TO GEOMETRIC OBJECTS      ####
+# ---------------------------------------------------------- #
+
+# We can also add aesthetics to any geometric object!
+# For example, we can integrate the relationships we plotted above among Redband
+# age, length, and weight by coloring points on our figure plotting length vs weight
+# based on ScaleAge. To do this, we have to nest an aes() statement within the 
+# geom_point() statement. Try it out by running the following code:
+ggplot(redband, aes(x=Length, y=Weight)) + 
+  geom_point(aes(color=as.factor(ScaleAge)))
+
+# TASK: Copy and paste the code above to make the same graph, but this time remove
+# as.factor() from the part where we color by ScaleAge.
+
+
+# QUESTION: What differs between the graph where ScaleAge was wrapped in the as.factor()
+# statement and the graph where you removed as.factor()? Why?
+
+
 
 
 
