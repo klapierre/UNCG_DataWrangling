@@ -62,6 +62,28 @@
 # HINT: see the end of assignment #1 if you forgot how to load a package.
 
 
+# ---------------------------------------------------------- #
+### Part 1.0 TIDY THE DATA                                ####                                           
+# ---------------------------------------------------------- #
+
+# This week we'll be starting with a dataset of fish that were found at different
+# locations in the Spokane river in 2013. We will focus on the Redband Trout, which
+# is a subspecies of Rainbow Trout. Redband Trout have been facing population
+# declines due to habitat loss and competition with non-native species.
+
+# HINT: Refer back to the 4_wrangle.R and 5_transform.R assignments if you forget
+# how to achieve any of the tasks in this section.
+
+# TASK: Write code to perform the following steps within one pipeline:
+# (1) Load the csv file "LowerSpokaneFish.csv" and assign it to a 
+#     dataframe called redband.
+# (2) Filter the dataframe to only include observations that have "RB" in the
+#     Species column.
+# (3) Further filter the dataframe to include only fish that have been aged
+#     by removing any observations where ScaleAge is NA.
+redband <- read.csv(file = "LowerSpokaneFish.csv") %>% 
+  filter(Species=='RB', !is.na(ScaleAge))
+
 
 
 
