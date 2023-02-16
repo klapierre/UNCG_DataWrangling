@@ -196,8 +196,8 @@ ggplot(redband, aes(x=Length, y=Weight)) +
 # as.factor() from the part where we color by ScaleAge.
 
 
-# QUESTION: What differs between the graph where ScaleAge was wrapped in the
-# as.factor() statement and the graph where you removed as.factor()? Why?
+# QUESTION: What differs between the graph where ScaleAge was wrapped in the as.factor()
+# statement and the graph where you removed as.factor()? Why?
 
 
 # TASK: Visit the ggplot Cookbook webpage at http://www.cookbook-r.com/Graphs/
