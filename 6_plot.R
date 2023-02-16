@@ -336,6 +336,35 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 # favorite color. Label the x-axis Scale Age (years) and the y-axis Length (mm).
 
 
+# ---------------------------------------------------------- #
+#### PART 1.8: SPECIFYING FACETS                          ####
+# ---------------------------------------------------------- #
+
+# Faceting makes it easy to graph different subsets of an entire dataset.
+# For example, we could relate length and weight within each age class.
+# We do that by adding a facet specification to our initial graph:
+ggplot(redband, aes(x = Length, y = Weight)) + 
+  geom_point() + 
+  facet_wrap(~ScaleAge)
+
+# We can allow the scales to vary and be unique for each graph by adding a
+# statement to the facet_wrap statement:
+ggplot(redband, aes(x = Length, y = Weight)) + 
+  geom_point() + 
+  facet_wrap(~ScaleAge, scales="free")
+
+# We could also make a grid by faceting one variable by another.
+ggplot(redband, aes(x = Length, y = Weight)) + 
+  geom_point() + 
+  facet_grid(Year~ScaleAge) 
+
+# TASK: Make a histogram of length faceted by scale age.
+# Keep the x-axis consistent across all subpanels, but allow the y-axis to be 
+# specified uniquely for each subpanel.
+# HINT: Check the help file for facet_wrap if you're unsure. Look under the 
+# Arguments section for scales.
+
+
 
 
 
