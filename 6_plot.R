@@ -114,7 +114,7 @@ ggplot(redband, aes(x = Length))
 
 
 # ---------------------------------------------------------- #
-#### PART 1.2 GEOMETRIC OBJECTS                           ####
+#### PART 1.2 GEOMETRIC OBJECT - HISTOGRAM                ####
 # ---------------------------------------------------------- #
 
 # Now let's add in the data! Run the following code to include a geometric
@@ -154,6 +154,30 @@ ggplot(redband, aes(x = Length)) +
 # QUESTION: What warning message is generated in the console when you create the 
 # weight histogram? What does this warning message mean? Do you think it is ok 
 # to proceed or should you alter your code to get rid of this warning?
+
+
+# ---------------------------------------------------------- #
+#### PART 1.3 GEOMETRIC OBJECT: POINTS                    ####
+# ---------------------------------------------------------- #
+
+# QUESTION: In the code below, what is the dataframe being examined?
+# What are the aesthetics? What will the resulting graph be plotting?
+ggplot(redband, aes(x=ScaleAge, y=Length))
+
+
+# When we start, we tell ggplot that we want certain aesthetics (x- and y-axis).
+# But without specifying a geometric object (what shape to add to the plot), we won't
+# see any data! Let's add a new type of geometric object (points!) by running the 
+# following code:
+ggplot(redband, aes(x=ScaleAge, y=Length)) + 
+  geom_point()
+
+# QUESTION: Based on the figure that was generated from the code above, 
+# what would you conclude about the relationship between fish age and length?
+
+
+# TASK: Write your own code to visualize the relationship between Redband 
+# length and weight.
 
 
 
