@@ -1,5 +1,5 @@
 # ---------------------------------------------------------- #
-#### MODULE 4: Plot some data!                            ####               
+#### MODULE 3: Plot some data!                            ####               
 # ---------------------------------------------------------- #
 
 ## OBJECTIVE:
@@ -18,26 +18,51 @@
 # this assignment, rather than committing all at once at the end.
 
 
+# ---------------------------------------------------------- #
+#### UNDERSTANDING A GRAMMER OF GRAPHICS                  ####
+# ---------------------------------------------------------- #
+
+# About a grammar of graphics:
+# The author of ggplot2, Hadley Wickham, discusses his graphing philosophy in his 
+# paper titled Grammar of Graphics: http://vita.had.co.nz/papers/layered-grammar.pdf
+
+# What is a grammar of graphics?
+# A grammar of graphics is a vocabulary that enables us to concisely describe the 
+# components of a graph. This allows us to move beyond named graphics (e.g., a "bar 
+# graph") and gain insight into the structure that underlies graphics.
+
+# Components that make up a graph include:
+## Data and aesthetic mapping
+## Geometric objects
+## Scales
+## Facet specification
+## Statistical transformations
+## The coordinate system (position)
+
+# Together, the data, mapping, statistical transformation and geometric object 
+# form a layer. A plot may have multiple layers; for example, overlaying points
+# representing data with a smoothed line representing a best-fit model.
+
+# Thus, a layered grammar of graphics builds a plot this way:
+## A default dataset and set of mappings from variables to aesthetics.
+# (1) One or more layers, each containing one of the following:
+#     (a) geometric object, 
+#     (b) statistical transformation,
+#     (c) position adjustment, 
+#     (d) dataset, 
+#     (e) a set of aesthetic mappings.
+# (2) One scale for each aesthetic mapping.
+# (3) A coordinate system (ie, Cartesian, Polar, etc).
+# (4) The facet specification.
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# REMINDER: The ggplot2 package is nested within the tidyverse package
-# (along with many others). Be sure to start by loading the tidyverse library.
+# TASK: We will be using the ggplot2 package for graphing. Fortunately, ggplot2 
+# is nested within the tidyverse package (along with many others).
+# Start by writing code to load the tidyverse library.
 # HINT: see the end of assignment #1 if you forgot how to load a package.
-library("tidyverse")
+
+
+
 
 
 
