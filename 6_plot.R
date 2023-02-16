@@ -213,6 +213,20 @@ ggplot(redband, aes(x=Length, y=Weight)) +
 # so that the size AND color of the points varies with ScaleAge.
 
 
+# It is important to note that different kinds of geometric objects have different
+# types of associated aesthetics. Points and lines have colors, while bars and
+# boxplots have fills and colors. Try running the following lines of code:
+ggplot(redband, aes(x = as.factor(ScaleAge), y = Weight)) + 
+  geom_boxplot(color = 'purple', fill = 'green')
+
+# QUESTION: What does color mean for boxplots? What does fill mean for boxplots?
+
+
+# QUESTION: Why did we have to specify as.factor() for ScaleAge in the initial
+# aes() statement? 
+# HINT: Try running the code without that statement, what happens?
+
+
 # ---------------------------------------------------------- #
 #### PART 1.5 ADDING A LAYER: STATISTICAL TRANSFORMATIONS #### 
 # ---------------------------------------------------------- #
@@ -267,6 +281,21 @@ ggplot(redband, aes(x = as.factor(ScaleAge), y=Weight)) +
 # (3) points colored by ScaleAge as a factor
 # (4) quadratic line that is black in color and size=2 (HINT: check ggplot
 #     cookbook to help figure out how to change line color and size).
+
+
+# ---------------------------------------------------------- #
+#### PART 1.6 AESTHETICS PLACEMENT MATTERS!               #### 
+# ---------------------------------------------------------- #
+
+# In our previous figures, we have been placing the aesthetics statements for our
+# lines in the geometric object functions. What happens if we move the aesthetics
+# for color up into the initial ggplot aesthetics statement? Try it out by running
+# the following code:
+ggplot(redband, aes(x = Length, y = Weight, color = as.factor(ScaleAge))) + 
+  geom_point() + 
+  geom_smooth(method='lm', se=F)
+
+# QUESTION: What is different about this graph from before?
 
 
 
