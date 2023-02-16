@@ -213,6 +213,62 @@ ggplot(redband, aes(x=Length, y=Weight)) +
 # so that the size AND color of the points varies with ScaleAge.
 
 
+# ---------------------------------------------------------- #
+#### PART 1.5 ADDING A LAYER: STATISTICAL TRANSFORMATIONS #### 
+# ---------------------------------------------------------- #
+
+# A statistical transformation takes a dataset as input and visualizes a new, 
+# processed dataset with new variables as output.For example, we could relate 
+# length and weight by calculating and graphing a smoothing function by running
+# the following code:
+ggplot(redband, aes(x = Length, y = Weight)) + 
+  geom_point() + 
+  geom_smooth()
+
+# QUESTION: Using the geom_smooth help page, what type of function is being used 
+# in the above graph for our statistical transformation fit?
+# HINT: What is the default model type for a dataframe of our size?
+
+
+# We also can specify a specific model to fit. Try running the following code to
+# specify a linear model:
+ggplot(redband, aes(x = Length, y = Weight)) + 
+  geom_point() + 
+  geom_smooth(formula = y ~ x)
+
+# TASK: As with most things in R, there are multiple ways to accomplish the same
+# task. Using the geom_smooth help page, write code below to specify a linear
+# model using a method= statement instead of the formula= statement.
+
+
+# A linear model does not seem like a good fit to our data. Try running the
+# following code to generate a quadratic model.
+ggplot(redband, aes(x = Length, y = Weight)) + 
+  geom_point() + 
+  geom_smooth(formula = y ~ poly(x,2))
+
+
+# Another example of a statistical transformation is geom_boxplot(), which
+# calculates a new dataset by statistically transforming the dataframe and
+# aesthetics. In the code below, ggplot creates a dataframe of  the mean and
+# upper and lower quantiles of Weight within ScaleAge. Then it adds this
+# transformed data as a geometric object to our axis aesthetics.
+ggplot(redband, aes(x = as.factor(ScaleAge), y=Weight)) + 
+  geom_boxplot()
+
+# QUESTION: Name another statistical transformation we have already used in this
+# assignment.
+# HINT: It was in the very first part of the assignment.
+
+
+# TASK: Let's put this all together! Create a graph with the following:
+# (1) redband dataframe,
+# (2) x-axis = Length, y-axis = Weight
+# (3) points colored by ScaleAge as a factor
+# (4) quadratic line that is black in color and size=2 (HINT: check ggplot
+#     cookbook to help figure out how to change line color and size).
+
+
 
 
 
