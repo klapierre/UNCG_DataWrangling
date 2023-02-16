@@ -365,28 +365,18 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 # Arguments section for scales.
 
 
+# ---------------------------------------------------------- #
+#### PART 2.0: PUTTING IT ALL TOGETHER                    ####
+# ---------------------------------------------------------- #
+
+# TASK: Import the full SpokaneFish dataset (i.e., don't filter down to a single
+# species). Remove any observations without ScaleAge.
+# Then make a set of plots faceted by species, with each plot displaying fish 
+# age as a factor vs length, putting length on a log10 scale, points as filled 
+# triangles colored by species, informative x and y axes labels that include units.
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+# QUESTION: Why do you think we focused on Redband Trout for most of this assignment?
 
 
 # REMEMBER: Save and push your script when you're done with this assignment!
