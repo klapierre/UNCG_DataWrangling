@@ -456,6 +456,8 @@ willowClean5 <- willowClean4 %>%
 
 # QUESTION: What columns would go in each of our two relational databases?
 
+    # columns 'block':'temp' will go in the plotInfo dataframe and 'block' 'plot' and 'willow_ID':'year' will go in the willowData dataframe.
+
 # Let's do it! Run the following code:
 plotInfo <- willowClean5 %>%
   select(block:temp) %>%
@@ -470,6 +472,7 @@ willowData <- willowClean5 %>%
 # TASK: Write code to join these two dataframes back together into a new dataframe called willowDataTrt
 # using the left_join() function.
 
+willowDataTrt <- left_join(plotInfo, willowData)
 
 # ON YOUR OWN: There are so many ways to join databases! Think through when you might want to use each type.
 # We will practice more with joining data in the coming weeks.
@@ -494,6 +497,18 @@ willowData <- willowClean5 %>%
 #     to calculate the mean value of the percentage column for each group. Store the mean values
 #     in a column called 'percentage_mean'. Don't forget to ungroup at the end!
 # (6) pivot_wider so that the values of percentage_mean are contained in different columns
+
+cdr <- read.csv("e001_Plant aboveground biomass carbon and nitrogen.csv") %>% 
+  rename(C=X..Carbon, N=X..Nitrogen) %>% 
+  filter(Strip %in%c(1,2)) %>% 
+  pivot_longer(cols = C:N,
+               names_to = 'element',
+               values_to = 'percentage') %>% 
+  group_by(Date, Plot, NTrt, Species, Field, Strip) %>% 
+  summarize('percentage_mean'  = mean(percentage)) %>%
+  pivot_wider(names_from = percentage_mean,
+              values_from = percentage_mean) %>%
+  ungroup()
 
 
 # ---------------------------------------------------------- #
