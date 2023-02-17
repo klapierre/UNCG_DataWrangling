@@ -284,7 +284,74 @@ ggplot(redband, aes(x = as.factor(ScaleAge), y=Weight)) +
 
 
 # ---------------------------------------------------------- #
-#### PART 1.6 AESTHETICS PLACEMENT MATTERS!               #### 
+#### PART 1.6 DATA IN VS DATA OUT                         #### 
+# ---------------------------------------------------------- #
+
+# Some figures take your raw data and plot it (like our dot plots above). Others
+# take your raw data and summarize it (like our boxplots above). But some require
+# you to summarize your own data before passing it into ggplot.
+
+# Let's investigate. Try running the following code to make a boxplot. This code
+# passes our raw data on Redband Trout weight into ggplot and asks to make a bar
+# graph separated by fish age.
+ggplot(redband, aes(x = as.factor(ScaleAge), y = Weight)) + 
+  geom_bar(stat='identity')
+
+# QUESTION: What is the graph output? Note the scale of the y-axis. Does this seem
+# right to you? What do you think happened to result in this graph?
+
+
+# Typically, when plotting a bar graph we want to have the output show the mean
+# and standard error for each category. But unlike when we use the geom_boxplot 
+# object, ggplot doesn't calculate these values for us when we when call the 
+# geom_bar() object. So we'll have to do this ourselves.
+
+# TASK: Write code to make a new dataframe called redbandSummary that does each
+# of the following in a single pipeline:
+# (1) Takes the redband data,
+# (2) Groups by ScaleAge,
+# (3) Summarizes to calculate a new column called Weight_mean that includes the 
+#     mean weight for each group AND a new column called Weight_sd that includes
+#     the standard deviation of weight for each group,
+# (4) Mutates to create a new column called Weight_se that includes the standard
+#     error of weight for each group (se=1.96*sd).
+# HINT:Don't forget to remove NAs and ungroup at the appropriate place.
+
+
+# Let's try again to make our bargraph by running the following code:
+ggplot(redbandSummary, aes(x = as.factor(ScaleAge), y = Weight_mean)) + 
+  geom_bar(stat='identity')
+
+# QUESTION: What does the stat='identity' part do in the code above? Check the 
+# geom_bar() help or google to find the answer.
+
+
+# The above code gave us nice bars.  Now we need to add error bars! We will do this
+# by adding in a second geometric object that specifies errorbars. Try it by
+# running the following code:
+ggplot(redbandSummary, aes(x = as.factor(ScaleAge), y = Weight_mean)) + 
+  geom_bar(stat='identity') +
+  geom_errorbar(aes(ymin=Weight_mean-Weight_se,
+                    ymax=Weight_mean+Weight_se,
+                    width=0.2))
+
+# QUESTION: Annotate the code above with what each line does.
+
+
+# QUESTION: What does the statement width=0.2 do? If you're unsure, try removing
+# it and seeing what happens.
+
+
+# TASK: Modify the code below to make the bar fill light green, the bar outline 
+# dark green, and the error bars dark orange with end caps 40% the bar width.
+ggplot(redbandSummary, aes(x = as.factor(ScaleAge), y = Weight_mean)) + 
+  geom_bar(stat='identity') +
+  geom_errorbar(aes(ymin=Weight_mean-Weight_se,
+                    ymax=Weight_mean+Weight_se,
+                    width=0.2))
+
+# ---------------------------------------------------------- #
+#### PART 1.7 AESTHETICS PLACEMENT MATTERS!               #### 
 # ---------------------------------------------------------- #
 
 # In our previous figures, we have been placing the aesthetics statements for our
@@ -299,7 +366,7 @@ ggplot(redband, aes(x = Length, y = Weight, color = as.factor(ScaleAge))) +
 
 
 # ---------------------------------------------------------- #
-#### PART 1.7: ALTERING SCALES                            ####
+#### PART 1.8: ALTERING SCALES                            ####
 # ---------------------------------------------------------- #
 
 # A scale controls the mapping from data to aesthetic attribute. For example, 
@@ -337,7 +404,7 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 
 
 # ---------------------------------------------------------- #
-#### PART 1.8: SPECIFYING FACETS                          ####
+#### PART 1.9: SPECIFYING FACETS                          ####
 # ---------------------------------------------------------- #
 
 # Faceting makes it easy to graph different subsets of an entire dataset.
@@ -369,8 +436,8 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 #### PART 2.0: PUTTING IT ALL TOGETHER                    ####
 # ---------------------------------------------------------- #
 
-# TASK: Import the full SpokaneFish dataset (i.e., don't filter down to a single
-# species). Remove any observations without ScaleAge.
+# TASK: Import the full SpokaneFish dataset, keeping all observations (i.e., 
+# don't filter down to a single species or remove observations without scale age).
 # Then make a set of plots faceted by species, with each plot displaying fish 
 # age as a factor vs length, putting length on a log10 scale, points as filled 
 # triangles colored by species, informative x and y axes labels that include units.
