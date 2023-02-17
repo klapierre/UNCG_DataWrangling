@@ -443,6 +443,21 @@ willowDataTrt <- left_join(plotInfo, willowData)
 #     in a column called 'percentage_mean'. Don't forget to ungroup at the end!
 # (6) pivot_wider so that the values of percentage_mean are contained in different columns
 
+cdr <- read.csv("e001_Plant aboveground biomass carbon and nitrogen.csv") %>% 
+  rename(C=X..Carbon, N=X..Nitrogen) %>% 
+  filter(cdr$Strip %in% c("2 & 3", "3")) %>% 
+  pivot_longer(cols=C:N,
+               names_to="element",
+               values_to="percentage") %>% 
+  group_by(Date, Plot, NTrt, Species, Field, Strip, element) %>% 
+  summarize(across(.cols="percentage", .fns=list(mean=mean), na.rm=T)) %>% 
+  pivot_wider(names_from=element,
+              values_from=percentage_mean) %>% 
+  ungroup()
+
+## I kept the element column in the group_by statement because I didn't see how to do step number 6 where we split the mean
+## percentages into two columns. I assumed you wanted them to be split into one average C % column and one average N % column,
+## The only way I could see to do that was by keeping the elements column in the group by statement.
 
 # ---------------------------------------------------------- #
 ### PART 3.0: SUBMIT YOUR WORK                            ####
