@@ -404,7 +404,113 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 
 
 # ---------------------------------------------------------- #
-#### PART 1.9: SPECIFYING FACETS                          ####
+#### PART 1.9: SETTING THEMES                             ####
+# ---------------------------------------------------------- #
+
+# In lots of ways, the default graphics in ggplot may be less than ideal. We
+# can change a lot of these defaults through altering the aesthetics of the 
+# geometric objects we are creating (e.g., changing the point or bar colors).
+
+# But to change the aesthetics of the overall plot (i.e., the non-data parts of
+# our graphic), we have to alter the "theme".
+
+# There are some "complete themes" that are set up in ggplot that we can work from.
+# For example, try the following code to create our Redband dot plot with the
+# black and white theme.
+ggplot(redband, aes(x = Length, y = Weight)) + 
+  geom_point() +
+  theme_bw()
+
+# What about the following code for the minimalistic theme?
+ggplot(redband, aes(x = Length, y = Weight)) + 
+  geom_point() +
+  theme_minimal()
+
+# Or the void theme?
+ggplot(redband, aes(x = Length, y = Weight)) + 
+  geom_point() +
+  theme_void()
+
+# TASK: Check out the section on complete themes in the ggplot2 book here:
+# https://ggplot2-book.org/polishing.html#themes.  Try out two more themes below.
+
+
+# Rather than using the pre-set themes, we can also create our own! 
+# The theme can be set to modify the text of plot titles, axis titles, axis labels,
+# and legend elements (more about legends next week) to modify things such as
+# font size, color, justification, and angle.
+# We can also modify grid lines, background color, outline color, tick length,
+# and more!
+# Themes are super powerful!
+
+# QUESTION: Compare the output for each of the following figures.
+# Based on the output, what do you think panel.grid.minor vs panel.background 
+# refer to? What does the aesthetic element_blank() do?
+ggplot(redband, aes(x = Length, y = Weight)) + 
+  geom_point() +
+  theme(panel.grid.minor = element_blank())
+
+ggplot(redband, aes(x = Length, y = Weight)) + 
+  geom_point() +
+  theme(panel.background = element_blank())
+
+
+# Try running the following code to alter text size:
+ggplot(redband, aes(x = Length, y = Weight)) + 
+  geom_point() +
+  theme(axis.title.y=element_text(size=100))
+
+# QUESTION: What does element_text() refer to in the code above?
+
+
+# TASK: Write your own code below to change the size of the x-axis labels
+# (i.e., the numbers along the x-axis) to 50. 
+# HINT: Check out the ggplot cookbook or ggplot2 themes websites for help.
+
+
+# We can set the theme to include all kinds of variations by adding them all to
+# the theme statement for an individual ggplot.
+ggplot(redband, aes(x = Length, y = Weight)) + 
+  geom_point() +
+  xlab("Redband trout length (mm)") + 
+  ylab("Redband trout weight (g)") +
+  theme_bw() +
+  theme(axis.title.x=element_text(size=20,
+                                  vjust=-0.35,
+                                  margin=margin(t=15)),
+        axis.text.x=element_text(size=16),
+        axis.title.y=element_text(size=20,
+                                  angle=90,
+                                  vjust=0.5,
+                                  margin=margin(r=15)),
+        axis.text.y=element_text(size=16),
+        plot.title = element_text(size=24,
+                                  vjust=2),
+        panel.grid.major=element_blank(),
+        panel.grid.minor=element_blank(),
+        legend.title=element_blank(),
+        legend.text=element_text(size=20))
+
+# Another great thing is that we can set the theme without specifying a graph.
+# That way the theme is set for all graphics we make throughout the code (unless
+# we later specify a theme update for any given figure). This is handy to unify
+# the overall look of our garphics without having to type it all out every time.
+# Run the following code to set our theme for the rest of the assignment.
+theme_set(theme_bw())
+theme_update(axis.title.x = element_text(size = 20, vjust = -0.35, margin = margin(t = 15)),
+             axis.text.x = element_text(size = 16),
+             axis.title.y = element_text(size = 20, angle = 90,
+                                         vjust = 0.5, margin = margin(r = 15)),
+             axis.text.y = element_text(size = 16),
+             plot.title = element_text(size = 24, vjust = 2),
+             panel.grid.major = element_blank(),
+             panel.grid.minor = element_blank(),
+             legend.title = element_blank(),
+             legend.text = element_text(size = 20))
+
+
+# ---------------------------------------------------------- #
+#### PART 1.10: SPECIFYING FACETS                          ####
 # ---------------------------------------------------------- #
 
 # Faceting makes it easy to graph different subsets of an entire dataset.
@@ -435,6 +541,12 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 # ---------------------------------------------------------- #
 #### PART 2.0: PUTTING IT ALL TOGETHER                    ####
 # ---------------------------------------------------------- #
+
+# QUESTION: So far in this assignment we have made a histogram, a boxplot, a bar
+# graph, and a dot plot with a trend line. Which of these figures was an example
+# of a correlation? Which showed deviations from a benchmark or baseline? And which
+# was an example of a distribution?
+
 
 # TASK: Import the full SpokaneFish dataset, keeping all observations (i.e., 
 # don't filter down to a single species or remove observations without scale age).
