@@ -348,7 +348,7 @@ willowClean <- willowFill %>% #new dataframe's name and source of data
 
 # Good news, we can fix this problem with the complementary function to pivot_longer().
 # This time we will use the pivot_wider() function to turn one column into multiple.
-willowCleaner  <- willowClean %>% #new dataframe's name and source of data
+willowClean2  <- willowClean %>% #new dataframe's name and source of data
   pivot_wider(names_from = variable, #take the new columns' names from variable and assign the values from the value column
               values_from = value)
 
@@ -370,27 +370,32 @@ willowCleaner  <- willowClean %>% #new dataframe's name and source of data
 # seedling was planted.
 
 # TASK: Verbally describe how you would want to change this problem (i.e., pseudocode).
-
+#for the dead trees, we would want to separate dead or alive from the tree height
+#similar for the seedlings, we would want to separate ID from planting information
 
 # ifelse() is a very powerful function that helps us with this problem!
 
 # TASK: Look at the ifelse help file and describe in your own words the ordering of the syntax.
+?ifelse()
+#answers yes or no if the data is true/false depending on the element of the test
+
 # logical statement, if the statement is TRUE then use the yes value provides, otherwise use the no value.
 
 # We can nest the ifelse() function within a mutate() function to create a new column that contains
 # one entry if the logical statement we provide is TRUE and another if the logical statement is FALSE.
 # Run the following code to try it out to help fix our first problem (ht1 column has information on 
 # both plant status and actual height values).
-willowClean3 <- willowClean2 %>%
-  mutate(status = ifelse(ht1 == 'dead', 'dead', 'alive')) %>% 
-  mutate(ht1 = ifelse(status == 'dead', NA, ht1))
+willowClean3 <- willowClean2 %>% #new dataframe's name and source of data
+  mutate(status = ifelse(ht1 == 'dead', 'dead', 'alive')) %>% #creates new column to answer if a tree is dead or alive from the ht1 column
+  mutate(ht1 = ifelse(status == 'dead', NA, ht1)) #creates new column to answer if a tree is dead or has a value listed for height
 
 # TASK: Annotate the previous lines of code to indicate what each is doing.
 
 
 # QUESTION: This is a good time to make sure the relevant columns are numeric. Run the str() function
 # on this dataframe. What class is the ht1 column?
-
+str(willowClean3)
+#character
 
 # Let's make the ht1 column numeric. And while we're at it, the columns ht2, cnpy1, and cnpy2 should also
 # be made numeric. We can do so by running the following code:
@@ -402,7 +407,8 @@ willowClean4 <- willowClean3 %>%
 
 # TASK: Run the str() function again to view the classes for each column in willowClean4. Did we
 # succeed in making the columns we wanted into numeric classes?
-
+str(willowClean4)
+#yes!
 
 # %in% is another powerful function! With %in% we can use logical statements on a whole bunch of stuff at
 # once, instead of making a billion ifelse statements. Let's try it out to fix our second problem,
@@ -413,7 +419,7 @@ willowClean5 <- willowClean4 %>%
 # QUESTION: Based on the lines of code above, what can you conclude about willow seedlings with identifiers
 # that were letters versus numbers? That is, what year were willow seedlings that were identified with letters
 # planted? What year were willow seedlings that were identified with numbers planted?
-
+#seedlings with numbers were planted in 2006
 
 # ---------------------------------------------------------- #
 ### PART 2.5: RELATIONAL DATA                             ####
@@ -424,6 +430,8 @@ willowClean5 <- willowClean4 %>%
 # We can call one plotInfo and the other willowData.
 
 # QUESTION: What columns would go in each of our two relational databases?
+#plotinfo: block, plot, snow, code, n, temp
+#willowData: col(willowID:year)
 
 # Let's do it! Run the following code:
 plotInfo <- willowClean5 %>%
@@ -438,7 +446,7 @@ willowData <- willowClean5 %>%
 
 # TASK: Write code to join these two dataframes back together into a new dataframe called willowDataTrt
 # using the left_join() function.
-
+willowDataTrt <- left_join(willowData, plotInfo)
 
 # ON YOUR OWN: There are so many ways to join databases! Think through when you might want to use each type.
 # We will practice more with joining data in the coming weeks.
