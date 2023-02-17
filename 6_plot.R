@@ -539,6 +539,32 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 
 
 # ---------------------------------------------------------- #
+#### PART 1.11: SAVING YOUR GRAPHICS                      ####
+# ---------------------------------------------------------- #
+
+# You've made some beautiful figures and now you probably want to save them!
+# ggplot provides a handy way to do this with the ggsave() function.
+
+# The ggsave() function has some nice defaults. These include saving the last plot
+# you created at 300 dpi (dots per inch). But you can alter a lot of setting to
+# customize this output.
+
+# Try running the following code:
+ggsave("Redband_histogram_facet.png")
+
+# QUESTION: Where did this file show up? And what was the graph?
+
+
+# TASK: Investigate the ggsave() function through the help files. Then write
+# code to save the file at 600 dpi, 10 inch width and 8 inch height.
+
+
+# NOTE: You can also save the graphics you make by exporting them from the plots
+# tab in RStudio. However, this can be less precise than specifying the graphic
+# attributes using the ggsave function.
+
+
+# ---------------------------------------------------------- #
 #### PART 2.0: PUTTING IT ALL TOGETHER                    ####
 # ---------------------------------------------------------- #
 
@@ -548,11 +574,14 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 # was an example of a distribution?
 
 
+
 # TASK: Import the full SpokaneFish dataset, keeping all observations (i.e., 
 # don't filter down to a single species or remove observations without scale age).
 # Then make a set of plots faceted by species, with each plot displaying fish 
 # age as a factor vs length, putting length on a log10 scale, points as filled 
 # triangles colored by species, informative x and y axes labels that include units.
+# Then save your file as a .png with an informative figure name at a width of 9
+# inches and a height of 7 inches and 450 dpi.
 
 
 # QUESTION: Why do you think we focused on Redband Trout for most of this assignment?
