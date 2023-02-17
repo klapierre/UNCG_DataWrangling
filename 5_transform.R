@@ -265,7 +265,7 @@ monthlyDelaySummary <- flightData %>%
 # ---------------------------------------------------------- #
 
 # QUESTION: What are three characteristics of tidy data?
-
+#each variable is a column, each observation forms a row, and each cell is a single measurement
 
 # There are five common problems associated with messy data:
 # 1. Column headers are values, not variable names
@@ -282,6 +282,7 @@ willow <- read_csv("Niwot_Salix_2014_WillowSeedlingSurvey.csv", skip = 10)
 
 # QUESTION: What do you think the statement 'skip = 10' means in the code above?
 # HINT: Compare the csv file on your computer and the dataframe that you loaded into R.
+#I beleive i skips the first 10 lines of the excel file since it contains no data
 
 
 # ---------------------------------------------------------- #
@@ -293,6 +294,7 @@ willow <- read_csv("Niwot_Salix_2014_WillowSeedlingSurvey.csv", skip = 10)
 
 # QUESTION: To clean up the willow dataframe, where do we want to fill in values? That is, which columns
 # have lots of NAs.
+#literally every column lol. I think we should start by splitting the variable column into their own columns and only have variables in the header, not within the data sheet
 
 
 # We can fix our missing value problem using the fill() function (try it by running the following code):
@@ -300,10 +302,11 @@ willowFill <- willow %>%
   fill(block:temp)
 
 # QUESTION: What does the code 'block:temp' mean when passed to the fill() function above?
+#It fills in the data from column block to column temp
 
 
 # QUESTION: Looking at the dataframe willowFill, describe what happened compared to our initial dataframe.
-
+#It copied the data from the filled blocks down into the blocks that were empty
 
 # ---------------------------------------------------------- #
 ### PART 2.2: PIVOT LONGER                                ####
@@ -313,21 +316,21 @@ willowFill <- willow %>%
 # In this case, the columns w1 through wC are individual willow seedlings that were sampled repeatedly.
 
 # TASK: Write code to indicate the sequence of columns from w1 through wC. 
-
+col(w_1:w_C)
 
 # We can fix this problem using the pivot_longer() function. pivot_longer() takes multiple columns
 # and condenses them into just two columns, one that indicates what column the data came from and the other
 # that contains the data itself.
 # And while we're at it, let's get rid of the 'w' in front of each willow individual number.
 # Run the following code:
-willowClean <- willowFill %>%
-  pivot_longer(cols = w_1:w_C,
-               names_to = "willow_id",
-               values_to = "value") %>%
+willowClean <- willowFill %>% #new dataframe's name and source of data
+  pivot_longer(cols = w_1:w_C, #selected columns
+               names_to = "willow_id", #new column name
+               values_to = "value") %>% #values for each variable
   separate(col = willow_id,
            into = c("remove", "willow_ID"),
-           sep = "_") %>%
-  select(-remove)
+           sep = "_") %>% #seprate column willow_id into remove and Willow_ID, seperated by _, seperated W from willow number
+  select(-remove) #deleted column remove
 
 
 # TASK: Annotate (add comments) the code above to indicate what each line does.
