@@ -298,13 +298,13 @@ cols = w1:wC
 # And while we're at it, let's get rid of the 'w' in front of each willow individual number.
 # Run the following code:
 willowClean <- willowFill %>%
-  pivot_longer(cols = w_1:w_C,  #columns w_1:w_C placed into 1 column named willow_id
-               names_to = "willow_id",
-               values_to = "value") %>% #results of willow_id values into this column 
-  separate(col = willow_id,  #this column
+  pivot_longer(cols = w_1:w_C,  #columns w_1:w_C placed into 2 columns (from 13 columns)
+               names_to = "willow_id", #names of columns placed in a column named willow_id
+               values_to = "value") %>% #values the original columns placed into a column named values 
+  separate(col = willow_id,  #separate this column
            into = c("remove", "willow_ID"), #remove will contain 1st value (w) which will later be removed as it is redundant
-           sep = "_") %>%
-  select(-remove) #remove the 'remove' column
+           sep = "_") %>% #what separates the 2 character strings
+  select(-remove) #remove the 'remove' column named w
 
 
 # TASK: Annotate (add comments) the code above to indicate what each line does.
@@ -317,14 +317,14 @@ willowClean <- willowFill %>%
 # Yikes, another common problem, the variables are stored in both rows and columns!
 
 # QUESTION: What column contains the labels that tell us there are multiple variables stored
-# in one column? What column contains the corresponding date for these variables?
-
+# in one column? What column contains the corresponding date(data?) for these variables?
+#column named 'variable' contains multiple variables and the column 'value' contains the data for the varibles.
 
 # Good news, we can fix this problem with the complementary function to pivot_longer().
 # This time we will use the pivot_wider() function to turn one column into multiple.
-willowCleaner  <- willowClean %>%
-  pivot_wider(names_from = variable,
-              values_from = value)
+willowCleaner  <- willowClean %>% 
+  pivot_wider(names_from = variable, #column 'variable' contents are separated into their own columns (5 new columns)
+              values_from = value) #values for these new columns are taken from the 'value' column
 
 
 # TASK: Take a look at our new dataframe. How does it differ from the previous?
