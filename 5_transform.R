@@ -338,13 +338,14 @@ willowClean <- willowFill %>% #makes new dataframe and indicates where we are ta
 
 # QUESTION: What column contains the labels that tell us there are multiple variables stored
 # in one column? What column contains the corresponding date for these variables?
-
+#variable is full of a lot of random things
+#amd value
 
 # Good news, we can fix this problem with the complementary function to pivot_longer().
 # This time we will use the pivot_wider() function to turn one column into multiple.
-willowCleaner  <- willowClean %>%
-  pivot_wider(names_from = variable,
-              values_from = value)
+willowClean2  <- willowClean %>% #make new dataframe and indicate where data is coming from
+  pivot_wider(names_from = variable, #used pivot wider to make new columns using the names from the variable column
+              values_from = value) #same as above but using the value column
 
 
 # TASK: Take a look at our new dataframe. How does it differ from the previous?
@@ -362,27 +363,30 @@ willowCleaner  <- willowClean %>%
 # seedling was planted.
 
 # TASK: Verbally describe how you would want to change this problem (i.e., pseudocode).
-
+#make a new datframe using the willowCleaner data
+#use pivot wider on ht1 and willow_ID to extend and make more columns
+#use the names from in the columns
 
 # ifelse() is a very powerful function that helps us with this problem!
 
 # TASK: Look at the ifelse help file and describe in your own words the ordering of the syntax.
 # logical statement, if the statement is TRUE then use the yes value provides, otherwise use the no value.
+#ifelse will tell you if there are elements within a column called what you have entered as the test
 
 # We can nest the ifelse() function within a mutate() function to create a new column that contains
 # one entry if the logical statement we provide is TRUE and another if the logical statement is FALSE.
 # Run the following code to try it out to help fix our first problem (ht1 column has information on 
 # both plant status and actual height values).
-willowClean3 <- willowClean2 %>%
-  mutate(status = ifelse(ht1 == 'dead', 'dead', 'alive')) %>% 
-  mutate(ht1 = ifelse(status == 'dead', NA, ht1))
+willowClean3 <- willowClean2 %>% #new dataframe and data
+  mutate(status = ifelse(ht1 == 'dead', 'dead', 'alive')) %>% #altering ht1, setting dead, dead, and alive as what ifelse will return
+  mutate(ht1 = ifelse(status == 'dead', NA, ht1)) #same as a above but with status 
 
 # TASK: Annotate the previous lines of code to indicate what each is doing.
-
+#done
 
 # QUESTION: This is a good time to make sure the relevant columns are numeric. Run the str() function
 # on this dataframe. What class is the ht1 column?
-
+str(willowClean3)
 
 # Let's make the ht1 column numeric. And while we're at it, the columns ht2, cnpy1, and cnpy2 should also
 # be made numeric. We can do so by running the following code:
@@ -394,7 +398,7 @@ willowClean4 <- willowClean3 %>%
 
 # TASK: Run the str() function again to view the classes for each column in willowClean4. Did we
 # succeed in making the columns we wanted into numeric classes?
-
+str(willowClean4) #yes, we did succeed
 
 # %in% is another powerful function! With %in% we can use logical statements on a whole bunch of stuff at
 # once, instead of making a billion ifelse statements. Let's try it out to fix our second problem,
@@ -405,7 +409,8 @@ willowClean5 <- willowClean4 %>%
 # QUESTION: Based on the lines of code above, what can you conclude about willow seedlings with identifiers
 # that were letters versus numbers? That is, what year were willow seedlings that were identified with letters
 # planted? What year were willow seedlings that were identified with numbers planted?
-
+#the letters were all planted in 2006
+#numbers were planted in 2007
 
 # ---------------------------------------------------------- #
 ### PART 2.5: RELATIONAL DATA                             ####
@@ -416,7 +421,7 @@ willowClean5 <- willowClean4 %>%
 # We can call one plotInfo and the other willowData.
 
 # QUESTION: What columns would go in each of our two relational databases?
-
+#maybe willow_id, plot and block
 # Let's do it! Run the following code:
 plotInfo <- willowClean5 %>%
   select(block:temp) %>%
@@ -430,7 +435,7 @@ willowData <- willowClean5 %>%
 
 # TASK: Write code to join these two dataframes back together into a new dataframe called willowDataTrt
 # using the left_join() function.
-
+willowDataTrt <- left_join(plotInfo, willowData)
 
 # ON YOUR OWN: There are so many ways to join databases! Think through when you might want to use each type.
 # We will practice more with joining data in the coming weeks.
@@ -455,8 +460,15 @@ willowData <- willowClean5 %>%
 #     to calculate the mean value of the percentage column for each group. Store the mean values
 #     in a column called 'percentage_mean'. Don't forget to ungroup at the end!
 # (6) pivot_wider so that the values of percentage_mean are contained in different columns
-
-
+cdr <- read.csv("e001_Plant aboveground biomass carbon and nitrogen.csv", stringsAsFactors = F) %>% 
+  rename(C=X..Carbon, N=X..Nitrogen) %>% 
+  mutate(Strip = ifelse(Strip %in% c("1", "2"), 1, 2)) %>% 
+  pivot_longer(cols = C:N, names_to = "element", values_to = "percentage") %>% 
+  group_by(Date, Plot, NTrt, Species, Field, Strip) %>% 
+  summarize(percentage_mean = mean(percentage)) %>% 
+  ungroup()
+  
+  
 # ---------------------------------------------------------- #
 ### PART 3.0: SUBMIT YOUR WORK                            ####
 # ---------------------------------------------------------- #
