@@ -279,7 +279,7 @@ willow <- read_csv("Niwot_Salix_2014_WillowSeedlingSurvey.csv", skip = 10)
 
 # QUESTION: What do you think the statement 'skip = 10' means in the code above?
 # HINT: Compare the csv file on your computer and the dataframe that you loaded into R.
-
+#it skipped the first 10 rows in the excel sheet
 
 # ---------------------------------------------------------- #
 ### PART 2.1: FILL MISSING DATA                           ####
@@ -290,17 +290,17 @@ willow <- read_csv("Niwot_Salix_2014_WillowSeedlingSurvey.csv", skip = 10)
 
 # QUESTION: To clean up the willow dataframe, where do we want to fill in values? That is, which columns
 # have lots of NAs.
-
+#there are a lot of blanks in the plot and specific data columns
 
 # We can fix our missing value problem using the fill() function (try it by running the following code):
 willowFill <- willow %>%
   fill(block:temp)
 
 # QUESTION: What does the code 'block:temp' mean when passed to the fill() function above?
-
+#it filled in the all of the empty spaces starting from block to the temp column
 
 # QUESTION: Looking at the dataframe willowFill, describe what happened compared to our initial dataframe.
-
+#the columns that we indicated have been filled in with the first row of their column's data
 
 # ---------------------------------------------------------- #
 ### PART 2.2: PIVOT LONGER                                ####
@@ -310,25 +310,25 @@ willowFill <- willow %>%
 # In this case, the columns w1 through wC are individual willow seedlings that were sampled repeatedly.
 
 # TASK: Write code to indicate the sequence of columns from w1 through wC. 
-
+w1:wC
 
 # We can fix this problem using the pivot_longer() function. pivot_longer() takes multiple columns
 # and condenses them into just two columns, one that indicates what column the data came from and the other
 # that contains the data itself.
 # And while we're at it, let's get rid of the 'w' in front of each willow individual number.
 # Run the following code:
-willowClean <- willowFill %>%
-  pivot_longer(cols = w_1:w_C,
-               names_to = "willow_id",
-               values_to = "value") %>%
-  separate(col = willow_id,
+willowClean <- willowFill %>% #makes new dataframe and indicates where we are taking the data from
+  pivot_longer(cols = w_1:w_C, #uses pivot longer function with columns w_1:w_C
+               names_to = "willow_id", #names the new column willow_id
+               values_to = "value") %>% #made value column
+  separate(col = willow_id, #separate the willow_id column into remove and willow_ID
            into = c("remove", "willow_ID"),
-           sep = "_") %>%
-  select(-remove)
+           sep = "_") %>% #used _ as separation method
+  select(-remove) #got rid of remove
 
 
 # TASK: Annotate (add comments) the code above to indicate what each line does.
-
+#done
 
 # ---------------------------------------------------------- #
 ### PART 2.3: PIVOT WIDER                                 ####
