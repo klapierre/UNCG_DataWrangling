@@ -63,12 +63,12 @@ streamTempLength <- streamTemp %>%
 # It can be a bit tedious to type out all the column names and the length function
 # multiple times. The across() function within the summarize() step can help us to 
 # identify multiple columns to summarize the data for. Try running the following code:
-streamTempLength <- streamTemp %>% 
-  summarize(across(.cols=c('calispell', 'smalle', 'winchester'), 
+streamTempLength <- streamTemp %>% #creating a new dataset based on streamTemp dataset
+  summarize(across(.cols=c('calispell', 'smalle', 'winchester'), #gives us the length of each column
                    .fns=length))
 
 # TASK: Using comments in the code above, describe what each line is doing.
-#creating a new dataset based on streamTemp dataset. Summarize across the collective column lengths
+
 
 # We might also want to know some other statistics about our data, such as the max,
 # min, and mean values. The across() function is useful for this too, by letting
@@ -122,6 +122,7 @@ streamTempSummary <- streamTemp %>%
 # HINT: Check the help documentation for the separate(), mutate(), and paste() functions.
 streamTempMDY <- streamTemp %>% 
   separate(Date, c('Month', 'Day', 'Year'))
+  #20 already in front of each year value
 
 # TASK: Write code to create a new dataframe called streamTempJan that filters only
 # rows where the month column is equal to 1 from the streamTempMDY dataframe.
@@ -270,17 +271,17 @@ willow <- read_csv("Niwot_Salix_2014_WillowSeedlingSurvey.csv", skip = 10)
 
 # QUESTION: To clean up the willow dataframe, where do we want to fill in values? That is, which columns
 # have lots of NAs.
-#practically every column except variable
+#practically every column except for the column named variable
 
 # We can fix our missing value problem using the fill() function (try it by running the following code):
 willowFill <- willow %>%
   fill(block:temp)
 
 # QUESTION: What does the code 'block:temp' mean when passed to the fill() function above?
-#fill NA values in columns block through temp
+#replace NA with values in columns block through temp
 
 # QUESTION: Looking at the dataframe willowFill, describe what happened compared to our initial dataframe.
-#any NA vlaues in the first few columns were filled with the nearest value above on the respective column
+#any NA values in the first few columns were filled with the nearest value above on the respective column
 
 # ---------------------------------------------------------- #
 ### PART 2.2: PIVOT LONGER                                ####
