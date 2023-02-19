@@ -342,7 +342,8 @@ willowCleaner  <- willowClean %>%
 # seedling was planted.
 
 # TASK: Verbally describe how you would want to change this problem (i.e., pseudocode).
-
+#separate the contents in ht1 into 2 columns, 1 containing height and the other containing the status of the plant
+# pivot wider function could be used on willow_ID
 
 # ifelse() is a very powerful function that helps us with this problem!
 
@@ -353,16 +354,16 @@ willowCleaner  <- willowClean %>%
 # one entry if the logical statement we provide is TRUE and another if the logical statement is FALSE.
 # Run the following code to try it out to help fix our first problem (ht1 column has information on 
 # both plant status and actual height values).
-willowClean3 <- willowClean2 %>%
-  mutate(status = ifelse(ht1 == 'dead', 'dead', 'alive')) %>% 
-  mutate(ht1 = ifelse(status == 'dead', NA, ht1))
+willowClean3 <- willowCleaner %>%
+  mutate(status = ifelse(ht1 == 'dead', 'dead', 'alive')) %>% #create column named status, if row is dead, print dead, if not print alive
+  mutate(ht1 = ifelse(status == 'dead', NA, ht1)) #create column named ht1, if row is dead, print NA, if not print ht1 value
 
 # TASK: Annotate the previous lines of code to indicate what each is doing.
 
 
 # QUESTION: This is a good time to make sure the relevant columns are numeric. Run the str() function
 # on this dataframe. What class is the ht1 column?
-
+#character
 
 # Let's make the ht1 column numeric. And while we're at it, the columns ht2, cnpy1, and cnpy2 should also
 # be made numeric. We can do so by running the following code:
@@ -374,7 +375,7 @@ willowClean4 <- willowClean3 %>%
 
 # TASK: Run the str() function again to view the classes for each column in willowClean4. Did we
 # succeed in making the columns we wanted into numeric classes?
-
+#yes they are now numeric
 
 # %in% is another powerful function! With %in% we can use logical statements on a whole bunch of stuff at
 # once, instead of making a billion ifelse statements. Let's try it out to fix our second problem,
@@ -385,7 +386,7 @@ willowClean5 <- willowClean4 %>%
 # QUESTION: Based on the lines of code above, what can you conclude about willow seedlings with identifiers
 # that were letters versus numbers? That is, what year were willow seedlings that were identified with letters
 # planted? What year were willow seedlings that were identified with numbers planted?
-
+#seedlings identified as with letters were plated in 2006 and those identified with numbers ere planted in 2007
 
 # ---------------------------------------------------------- #
 ### PART 2.5: RELATIONAL DATA                             ####
@@ -396,6 +397,7 @@ willowClean5 <- willowClean4 %>%
 # We can call one plotInfo and the other willowData.
 
 # QUESTION: What columns would go in each of our two relational databases?
+#a separate database can be made made including the conditions (code, snow, n, temp) along with block and plot columns to relate back to the other data
 
 # Let's do it! Run the following code:
 plotInfo <- willowClean5 %>%
@@ -410,8 +412,8 @@ willowData <- willowClean5 %>%
 
 # TASK: Write code to join these two dataframes back together into a new dataframe called willowDataTrt
 # using the left_join() function.
-
-
+willowDataTrt <- left_join(plotInfo, willowData)
+identical(willowClean5, willowDataTrt)
 # ON YOUR OWN: There are so many ways to join databases! Think through when you might want to use each type.
 # We will practice more with joining data in the coming weeks.
 
@@ -435,7 +437,21 @@ willowData <- willowClean5 %>%
 #     to calculate the mean value of the percentage column for each group. Store the mean values
 #     in a column called 'percentage_mean'. Don't forget to ungroup at the end!
 # (6) pivot_wider so that the values of percentage_mean are contained in different columns
+cdr <- read.csv('e001_Plant aboveground biomass carbon and nitrogen.csv') %>% 
+  rename(C=X..Carbon,
+         N=X..Nitrogen) %>% 
+  filter(Strip %in% c(1,2)) %>% 
+  pivot_longer(cols = C:N,
+               names_to = "elements" ,
+               values_to = "percentage") %>% 
+  group_by(Date, Plot, NTrt, Species, Field, Strip) %>% 
+  summarise(across(.cols= "percentage" ,
+                   .fns=list(mean=mean))) %>% 
+  ungroup() %>% 
+  pivot_wider(names_from = percentage_mean,
+              values_from = percentage_mean)
 
+  
 
 # ---------------------------------------------------------- #
 ### PART 3.0: SUBMIT YOUR WORK                            ####
