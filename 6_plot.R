@@ -60,7 +60,7 @@
 # is nested within the tidyverse package (along with many others).
 # Start by writing code to load the tidyverse library.
 # HINT: see the end of assignment #1 if you forgot how to load a package.
-
+library(tidyr)
 
 # ---------------------------------------------------------- #
 ### PART 1.0: TIDY THE DATA                               ####                                           

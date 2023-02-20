@@ -410,6 +410,7 @@ willowData <- willowClean5 %>%
 #     in a column called 'percentage_mean'. Don't forget to ungroup at the end!
 # (6) pivot_wider so that the values of percentage_mean are contained in different columns
 
+##** make colomn called element and percentage and you gotta group by element at step number 5
 
 # ---------------------------------------------------------- #
 ### PART 3.0: SUBMIT YOUR WORK                            ####
