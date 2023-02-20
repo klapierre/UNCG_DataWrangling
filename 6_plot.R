@@ -578,7 +578,7 @@ ggsave("Redband_histogram_facet.png")
 # TASK: Import the full SpokaneFish dataset, keeping all observations (i.e., 
 # don't filter down to a single species or remove observations without scale age).
 # Then make a set of plots faceted by species, with each plot displaying fish 
-# age as a factor vs length, putting length on a log10 scale, points as filled 
+# weight vs length, putting length on a log10 scale, points as filled 
 # triangles colored by species, informative x and y axes labels that include units.
 # Then save your file as a .png with an informative figure name at a width of 9
 # inches and a height of 7 inches and 450 dpi.
