@@ -472,6 +472,7 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 # QUESTION: Compare the output for each of the following figures.
 # Based on the output, what do you think panel.grid.minor vs panel.background 
 # refer to? What does the aesthetic element_blank() do?
+#It changes the panels we see behind the graph and element blank does not include them on the graph at all. The two graphs are missing the minor grid and entire background respectively
 ggplot(redband, aes(x = Length, y = Weight)) + 
   geom_point() +
   theme(panel.grid.minor = element_blank())
@@ -487,15 +488,20 @@ ggplot(redband, aes(x = Length, y = Weight)) +
   theme(axis.title.y=element_text(size=100))
 
 # QUESTION: What does element_text() refer to in the code above?
-
+#Y axis text size
 
 # TASK: Write your own code below to change the size of the x-axis labels
 # (i.e., the numbers along the x-axis) to 50. 
 # HINT: Check out the ggplot cookbook or ggplot2 themes websites for help.
 
+ggplot(redband, aes(x = Length, y = Weight)) + 
+  geom_point() +
+  theme(axis.text.x = element_text(size=50))
+
 
 # We can set the theme to include all kinds of variations by adding them all to
 # the theme statement for an individual ggplot.
+
 ggplot(redband, aes(x = Length, y = Weight)) + 
   geom_point() +
   xlab("Redband trout length (mm)") + 
@@ -563,6 +569,11 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 # HINT: Check the help file for facet_wrap if you're unsure. Look under the 
 # Arguments section for scales.
 
+?facet_wrap
+
+ggplot(redband, aes(x = Length)) + 
+  geom_histogram() +
+  facet_wrap(~ScaleAge, scales= 'free_y') 
 
 # ---------------------------------------------------------- #
 #### PART 1.11: SAVING YOUR GRAPHICS                      ####
