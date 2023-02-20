@@ -464,11 +464,12 @@ cdr <- read.csv("e001_Plant aboveground biomass carbon and nitrogen.csv", string
   rename(C=X..Carbon, N=X..Nitrogen) %>% 
   mutate(Strip = ifelse(Strip %in% c("1", "2"), 1, 2)) %>% 
   pivot_longer(cols = C:N, names_to = "element", values_to = "percentage") %>% 
-  group_by(Date, Plot, NTrt, Species, Field, Strip) %>% 
+  group_by(Date, Plot, NTrt, Species, Field, Strip, element) %>% 
   summarize(percentage_mean = mean(percentage)) %>% 
+  pivot_wider(names_from = "element", values_from = percentage_mean)
   ungroup()
   
-  
+
 # ---------------------------------------------------------- #
 ### PART 3.0: SUBMIT YOUR WORK                            ####
 # ---------------------------------------------------------- #
