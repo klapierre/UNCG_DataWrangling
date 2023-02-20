@@ -113,7 +113,7 @@ ggplot(redband, aes(x = Length))
 # included in the output?
 
 # An X axis is created with values 100-400 and a title. No data is included because
-# no Y axis was specified 
+# no Y axis was specified  
 
 # ---------------------------------------------------------- #
 #### PART 1.2 GEOMETRIC OBJECT - HISTOGRAM                ####
