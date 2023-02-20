@@ -238,7 +238,7 @@ ggplot(redband, aes(x = as.factor(ScaleAge), y = Weight)) +
 # QUESTION: Why did we have to specify as.factor() for ScaleAge in the initial
 # aes() statement? 
 # HINT: Try running the code without that statement, what happens?
-# ANSWER: Without the as.factor, it only creates one big boxplot.
+# ANSWER: Without the as.factor, it only creates one big box plot.
 
 # ---------------------------------------------------------- #
 #### PART 1.5 ADDING A LAYER: STATISTICAL TRANSFORMATIONS #### 
@@ -255,6 +255,7 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 # QUESTION: Using the geom_smooth help page, what type of function is being used 
 # in the above graph for our statistical transformation fit?
 # HINT: What is the default model type for a dataframe of our size?
+# ANSWER: gam
 
 
 # We also can specify a specific model to fit. Try running the following code to
@@ -266,7 +267,9 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 # TASK: As with most things in R, there are multiple ways to accomplish the same
 # task. Using the geom_smooth help page, write code below to specify a linear
 # model using a method= statement instead of the formula= statement.
-
+ggplot(redband, aes(x = Length, y = Weight)) + 
+  geom_point() + 
+  geom_smooth(method = lm)
 
 # A linear model does not seem like a good fit to our data. Try running the
 # following code to generate a quadratic model.
@@ -286,6 +289,7 @@ ggplot(redband, aes(x = as.factor(ScaleAge), y=Weight)) +
 # QUESTION: Name another statistical transformation we have already used in this
 # assignment.
 # HINT: It was in the very first part of the assignment.
+# ANSWER: histogram
 
 
 # TASK: Let's put this all together! Create a graph with the following:
@@ -294,7 +298,10 @@ ggplot(redband, aes(x = as.factor(ScaleAge), y=Weight)) +
 # (3) points colored by ScaleAge as a factor
 # (4) quadratic line that is black in color and size=2 (HINT: check ggplot
 #     cookbook to help figure out how to change line color and size).
-
+ggplot(redband, aes(x = Length, y = Weight)) + 
+  geom_point(aes(color = as.factor(ScaleAge)))+
+  geom_smooth(color= "black", size = 2, formula = y ~ poly(x,2))
+  
 
 # ---------------------------------------------------------- #
 #### PART 1.6 DATA IN VS DATA OUT                         #### 
