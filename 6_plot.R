@@ -253,7 +253,8 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 # QUESTION: Using the geom_smooth help page, what type of function is being used 
 # in the above graph for our statistical transformation fit?
 # HINT: What is the default model type for a dataframe of our size?
-
+?geom_smooth
+#geom_smooth with a null function is based on the size of the largest group of data
 
 # We also can specify a specific model to fit. Try running the following code to
 # specify a linear model:
@@ -284,7 +285,7 @@ ggplot(redband, aes(x = as.factor(ScaleAge), y=Weight)) +
 # QUESTION: Name another statistical transformation we have already used in this
 # assignment.
 # HINT: It was in the very first part of the assignment.
-
+#geom_histogram()
 
 # TASK: Let's put this all together! Create a graph with the following:
 # (1) redband dataframe,
@@ -293,6 +294,10 @@ ggplot(redband, aes(x = as.factor(ScaleAge), y=Weight)) +
 # (4) quadratic line that is black in color and size=2 (HINT: check ggplot
 #     cookbook to help figure out how to change line color and size).
 
+ggplot(redband, aes(x=Length, y=Weight)) + 
+  geom_point(aes(color=as.factor(ScaleAge))) +
+  geom_smooth(formula = y ~ poly(x,2), col="black",
+  size = 2)
 
 # ---------------------------------------------------------- #
 #### PART 1.6 DATA IN VS DATA OUT                         #### 
