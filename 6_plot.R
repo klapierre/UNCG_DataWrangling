@@ -390,7 +390,8 @@ ggplot(redband, aes(x = Length, y = Weight, color = as.factor(ScaleAge))) +
   geom_smooth(method='lm', se=F)
 
 # QUESTION: What is different about this graph from before?
-
+## we got individual geom_smooth lines matching the colors of the ScaleAge legend and only applying
+## to those individual scale ages
 
 # ---------------------------------------------------------- #
 #### PART 1.8: ALTERING SCALES                            ####
@@ -428,7 +429,10 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 # scale (i.e., with scale age on a linear x axis and length on a log y axis).
 # Fill in your boxplots with your favorite color and make the outline your least
 # favorite color. Label the x-axis Scale Age (years) and the y-axis Length (mm).
-
+ggplot(redband, aes(x = as.factor(ScaleAge), y = Length))+
+  geom_boxplot(color="purple", fill="grey")+
+  xlab("Scale Age (years")+
+  ylab("Length (mm)")
 
 # ---------------------------------------------------------- #
 #### PART 1.9: SETTING THEMES                             ####
@@ -460,7 +464,13 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 
 # TASK: Check out the section on complete themes in the ggplot2 book here:
 # https://ggplot2-book.org/polishing.html#themes.  Try out two more themes below.
+ggplot(redband, aes(x = Length, y = Weight)) + 
+  geom_point() +
+  theme_light()
 
+ggplot(redband, aes(x = Length, y = Weight)) + 
+  geom_point() +
+  theme_classic()
 
 # Rather than using the pre-set themes, we can also create our own! 
 # The theme can be set to modify the text of plot titles, axis titles, axis labels,
@@ -480,7 +490,9 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 ggplot(redband, aes(x = Length, y = Weight)) + 
   geom_point() +
   theme(panel.background = element_blank())
-
+## panel.background refers to the overall background and panel.grid.minor refers to the grid lines
+## element_blank() makes it blank/doesn't exist. So panel.grid.minor=element)blank made it so that 
+## there were no grid lines and panel.background=element_blank made it so that the background is empty
 
 # Try running the following code to alter text size:
 ggplot(redband, aes(x = Length, y = Weight)) + 
@@ -488,12 +500,14 @@ ggplot(redband, aes(x = Length, y = Weight)) +
   theme(axis.title.y=element_text(size=100))
 
 # QUESTION: What does element_text() refer to in the code above?
-
+## the actual text of the y axis label
 
 # TASK: Write your own code below to change the size of the x-axis labels
 # (i.e., the numbers along the x-axis) to 50. 
 # HINT: Check out the ggplot cookbook or ggplot2 themes websites for help.
-
+ggplot(redband, aes(x = Length, y = Weight)) + 
+  geom_point() +
+  theme(axis.text.x=element_text(size=50))
 
 # We can set the theme to include all kinds of variations by adding them all to
 # the theme statement for an individual ggplot.
@@ -563,7 +577,9 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 # specified uniquely for each subpanel.
 # HINT: Check the help file for facet_wrap if you're unsure. Look under the 
 # Arguments section for scales.
-
+ggplot(redband, aes(x=Length))+
+  geom_histogram()+
+  facet_wrap(~ScaleAge, scales="free_y")
 
 # ---------------------------------------------------------- #
 #### PART 1.11: SAVING YOUR GRAPHICS                      ####
