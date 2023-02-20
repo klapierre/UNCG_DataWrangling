@@ -385,7 +385,7 @@ ggplot(redband, aes(x = Length, y = Weight, color = as.factor(ScaleAge))) +
   geom_smooth(method='lm', se=F)
 
 # QUESTION: What is different about this graph from before?
-
+#The smooth lines are colored, everything has the same aesthetic
 
 # ---------------------------------------------------------- #
 #### PART 1.8: ALTERING SCALES                            ####
