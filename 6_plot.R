@@ -634,6 +634,6 @@ ggplot(fishies, aes(x = as.factor(ScaleAge), y=Length)) + geom_point(shape=24, a
   ylab('Length (mm)')
 
 # QUESTION: Why do you think we focused on Redband Trout for most of this assignment?
-
+#Because there are a lot of measurements in that species
 
 # REMEMBER: Save and push your script when you're done with this assignment!
