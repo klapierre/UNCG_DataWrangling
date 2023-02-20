@@ -289,8 +289,11 @@ calispellTempDelete=subset(calispellTempSum,select=-sum)
 
 # QUESTION: We might also want to add a column that describes the dataset. What happens 
 # when you run the following code?
+<<<<<<< HEAD
 calispellTempFaquatic <- mutate(.data=calispellTempF,
                                 type='aquatic')
+=======
+>>>>>>> 08d3a3f424adf28f30c4cb14c505a96b45f48c41
 # A new column was added which describes the environment of the research site.
 
 

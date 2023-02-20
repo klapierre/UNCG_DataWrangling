@@ -41,6 +41,10 @@
 # (4) Assign the created dataframe the name streamTemp.
 # HINT: Refer back to last week's assignment if you forget the functions to complete each
 # of these steps or how to pipe them together.
+streamTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv",stringsAsFactors = F)%>%
+  rename(calispell="Calispell.Cr.Temp.C.",smalle="Smalle.Cr.Temp.C.",winchester="Winchester.Cr.Temp..C.")%>%
+  mutate(data_type="temp_C")
+
 
 
 # ---------------------------------------------------------- #
