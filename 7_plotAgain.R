@@ -42,10 +42,76 @@
 # HINT: see the end of assignment #1 if you forgot how to load a package.
 
 
+
 # ---------------------------------------------------------- #
-#### 1.0                                           ####
+#### 1.0 CORRELATION                                      ####
 # ---------------------------------------------------------- #
 
+# We learned how to make correlations last week, but it never hurts to get
+# more practice! Let's start by using a data set built into ggplot2.
+# The mpg dataset looks at the gas efficiency of different cars. Run the following
+# code to load the data:
+data(mpg, package = "ggplot2")
+
+# TASK: Create a scatterplot (i.e., a dot plot) to relate city and highway mileage.
+# Color the points by the class of car (class column) and label the x and y axis 
+# to be more informative (City Mileage (MPG) vs Highway Mileage (MPG)).
+# HINT: Refer back to last week's assignment or the ggplot help resources if you 
+# forget how to make a scatterplot.
+
+
+# Looks alright, but the graph may be hiding some information...
+# QUESTION: How many data points are in the mpg dataframe?
+
+
+# QUESTION: Approximately how many dots are in the graph you just made? How does
+# that compare to the number of observations in the dataframe?
+
+
+# Try another correlation-focused geom that addresses this problem by running
+# the following code:
+ggplot(data=mpg, aes(x=cty, y=hwy)) + 
+  geom_jitter()
+
+# TASK: The default in geom_jitter is to jitter (or slightly move) the points away
+# from each other in both the x and y directions. Check the help file for geom_jitter
+# and write code below to make a graph where you jitter points in only the x-dimension
+# by 0.5.
+
+
+# ---------------------------------------------------------- #
+#### 2.0 DEVIATION                                        ####
+# ---------------------------------------------------------- #
+
+# Deviations are used to compare variation in values between small number of 
+# items (or categories) with respect to a fixed reference.
+
+# Whether the graphical type is a deviation graph or a composition graph (or a 
+# ranking graph) may depend on the underlying data structure.
+
+# We used geom_bar() last week with factor data to create a bar graph. But
+# geom_bar() is a bit tricky because it can make EITHER a bar graph or a histogram
+# depending on the data you give it. The default of geom_bar() is to set stat to 
+# count so if you give it just a continuous x value, it will make a histogram. Try
+# it with the following code:
+ggplot(data=mpg, aes(x=hwy)) + 
+  geom_bar()
+
+# In order to have the geom create bars and not a histogram, you must:
+# 1) Set stat = identity
+# 2) Provide both an x and a y inside the aes(), where x is either a character 
+# or factor and y is numeric.
+
+# TASK: Create a dataframe of summary statistics for the mpg data, calculating the
+# mean, standard deviation, and standard error for highway mpg grouping by class.
+# HINT: Look back at the Transform assignment if you forget how to summarize the
+# data. Also, standard error = 1.96*standard deviation.
+
+
+# TASK: Create a bar graph showing the average highway MPG on the y-axis and 
+# car class on the x-axis. Fill the bars by class. Add in error bar caps that are 20%
+# the width pf the bars. Rename the x and y axes to be more meaningful.
+# HINT: Don't forget to change stat from the default in your geom_bar() statement!
 
 
 # REMEMBER: Save and push your script when you're done with this assignment!
