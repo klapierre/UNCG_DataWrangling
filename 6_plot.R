@@ -427,8 +427,8 @@ ggplot(redband, aes(x = as.factor(ScaleAge), y = Length)) +
   geom_boxplot(color="lightblue", fill="darkgreen") +
   #scale_x_log10() + 
   scale_y_log10() +
-  xlab("Scale Age (years") + 
-  ylab("Lenght (mm")
+  xlab("Scale Age (years)") + 
+  ylab("Length (mm)")
 
 # ---------------------------------------------------------- #
 #### PART 1.9: SETTING THEMES                             ####
