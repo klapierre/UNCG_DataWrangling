@@ -279,7 +279,7 @@ bad_month_airport
 # Let's start by clearing our R environmnet and then bringing the Willow Seedling Survey data into R 
 # by running the following line of code:
 rm(list = ls())
-willow <- read.csv("Niwot_Salix_2014_WillowSeedlingSurvey.csv", skip = 10)
+willow <- read.csv('Niwot_Salix_2014_WillowSeedlingSurvey (1).csv', skip = 10)
 
 # QUESTION: What do you think the statement 'skip = 10' means in the code above?
 # HINT: Compare the csv file on your computer and the dataframe that you loaded into R.
@@ -292,19 +292,18 @@ willow <- read.csv("Niwot_Salix_2014_WillowSeedlingSurvey.csv", skip = 10)
 # Sometimes when a data source has primarily been used for data entry, missing values indicate that the
 # previous value should be carried forward.
 
-# QUESTION: To clean up the willow dataframe, where do we want to fill in values? That is, which columns
-# have lots of NAs.
-
-
+# QUESTION: To clean up the willow dataframe, where do we want to fill in values? That is, which columns have lots of NAs.
+willow
+#The block column has a lot of NAs
 # We can fix our missing value problem using the fill() function (try it by running the following code):
 willowFill <- willow %>%
   fill(block:temp)
 
 # QUESTION: What does the code 'block:temp' mean when passed to the fill() function above?
-
-
+#'block:temp' function with the function fill() fills in the missing values from the end of block to the start of the temp columns.
+willowFill
 # QUESTION: Looking at the dataframe willowFill, describe what happened compared to our initial dataframe.
-
+#The new dataframe willowFill is a bit more organized compared to the original. It is easier to read.
 
 # ---------------------------------------------------------- #
 ### PART 2.2: PIVOT LONGER                                ####
