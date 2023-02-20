@@ -348,19 +348,22 @@ willowClean <- willowFill %>%
 
 # QUESTION: What column contains the labels that tell us there are multiple variables stored
 # in one column? What column contains the corresponding date for these variables?
-
+#The columns that contains the corresponding dates are in the first 10 rows that were cut off before.
 
 # Good news, we can fix this problem with the complementary function to pivot_longer().
 # This time we will use the pivot_wider() function to turn one column into multiple.
 willowCleaner  <- willowClean %>%
+  #This assigns the dataframe a new name
   pivot_wider(names_from = variable,
+              #The data is set in a wider position 
               values_from = value)
+#This sets a value column
 
 
 # TASK: Take a look at our new dataframe. How does it differ from the previous?
 # Annotate (add comments) the code above to indicate what each line does.
-
-
+willowCleaner
+#The new dataframe is more organized and the columns are less spaced out.
 # ---------------------------------------------------------- #
 ### PART 2.4: IF ELSE                                     ####
 # ---------------------------------------------------------- #
