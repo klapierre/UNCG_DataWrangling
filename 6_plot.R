@@ -465,8 +465,7 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 # favorite color. Label the x-axis Scale Age (years) and the y-axis Length (mm).
 
 ggplot(redband, aes(x = as.factor(ScaleAge), y = Length)) +
-geom_boxplot(size=1, color="darkblue", shape=1) +
-scale_x_log10() + 
+geom_boxplot(size=1, color="red", shape=1) +
 scale_y_log10() +
 xlab("Age (years)") +
 ylab("Length (mm)")
@@ -503,6 +502,15 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 # https://ggplot2-book.org/polishing.html#themes.  Try out two more themes below.
 
 
+ggplot(redband, aes(x = Length, y = Weight)) + 
+  geom_point() +
+  theme_dark()
+
+ggplot(redband, aes(x = Length, y = Weight)) + 
+  geom_point() +
+  theme_light()
+
+
 # Rather than using the pre-set themes, we can also create our own! 
 # The theme can be set to modify the text of plot titles, axis titles, axis labels,
 # and legend elements (more about legends next week) to modify things such as
@@ -522,6 +530,9 @@ ggplot(redband, aes(x = Length, y = Weight)) +
   geom_point() +
   theme(panel.background = element_blank())
 
+#panel.grid.minor creates small grids as the background. panel.background creates one
+#large background. element_blank() creates a blank element. 
+
 
 # Try running the following code to alter text size:
 ggplot(redband, aes(x = Length, y = Weight)) + 
@@ -530,11 +541,15 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 
 # QUESTION: What does element_text() refer to in the code above?
 
+#Size of the text in the y element. Makes it way to big. 
 
 # TASK: Write your own code below to change the size of the x-axis labels
 # (i.e., the numbers along the x-axis) to 50. 
 # HINT: Check out the ggplot cookbook or ggplot2 themes websites for help.
 
+ggplot(redband, aes(x = Length, y = Weight)) + 
+  geom_point() +
+  theme(axis.title.x=element_text(size=50))
 
 # We can set the theme to include all kinds of variations by adding them all to
 # the theme statement for an individual ggplot.
@@ -605,6 +620,11 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 # HINT: Check the help file for facet_wrap if you're unsure. Look under the 
 # Arguments section for scales.
 
+ggplot(redband, aes(x = Length)) + 
+  geom_histogram() + 
+  facet_wrap(~ScaleAge, scales="free_y")
+
+?facet_wrap
 
 # ---------------------------------------------------------- #
 #### PART 1.11: SAVING YOUR GRAPHICS                      ####
@@ -622,10 +642,14 @@ ggsave("Redband_histogram_facet.png")
 
 # QUESTION: Where did this file show up? And what was the graph?
 
+#Appeared in the files areas of R. The graph was a histogram but very disortd.
 
 # TASK: Investigate the ggsave() function through the help files. Then write
 # code to save the file at 600 dpi, 10 inch width and 8 inch height.
 
+?ggsave()
+
+ggsave("Redband_histogram_facet.png", dpi = 600, width = 10, height = 8)
 
 # NOTE: You can also save the graphics you make by exporting them from the plots
 # tab in RStudio. However, this can be less precise than specifying the graphic
@@ -641,6 +665,8 @@ ggsave("Redband_histogram_facet.png")
 # of a correlation? Which showed deviations from a benchmark or baseline? And which
 # was an example of a distribution?
 
+#Dot plot with trend line is an example of a correlations. Boxplots show deviations from a benchmark or baseline.
+#Histograms show distribution. 
 
 
 # TASK: Import the full SpokaneFish dataset, keeping all observations (i.e., 
@@ -650,6 +676,15 @@ ggsave("Redband_histogram_facet.png")
 # triangles colored by species, informative x and y axes labels that include units.
 # Then save your file as a .png with an informative figure name at a width of 9
 # inches and a height of 7 inches and 450 dpi.
+
+SpokeaneFish <- read.csv("LowerSpokaneFish.csv")
+
+ggplot(SpokeaneFish, aes(x = Length, y = ScaleAge)) + 
+  geom_point(size=1, color= as.factor(Species), shape=2) +
+  scale_x_log10() +
+  xlab("Redband trout length (mm)") + 
+  ylab("Age (years)") +
+  facet_wrap(~Species, scales="free")
 
 
 # QUESTION: Why do you think we focused on Redband Trout for most of this assignment?
