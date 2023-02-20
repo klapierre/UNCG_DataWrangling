@@ -269,7 +269,7 @@ calispellTempF <- mutate(.data=calispellTemp,
                          calispell_temp_F = calispell_temp*9/5 + 32)
 
 
-# Take a look at the new dataframeto see if it worked by either opening 
+# Take a look at the new dataframe to see if it worked by either opening 
 # it from the R environment tab or running the following line of code.
 head(calispellTempF) 
 
@@ -282,17 +282,20 @@ calispellTempSum <- mutate(.data=calispellTempF,
                            sum=calispell_temp + calispell_temp_F)
 
 # Check the dataframe to see if it worked.
-
+head(calispellTempSum)
 
 # TASK: The column we just created makes no sense. Write code below to remove it
 # from the dataframe.
-
+calispellTempSum <- select(.data=calispellTempSum,
+                         -sum)
 
 # QUESTION: We might also want to add a column that describes the dataset. What happens 
 # when you run the following code?
 calispellTempFaquatic <- mutate(.data=calispellTempF,
                                 type='aquatic')
+head(calispellTempFaquatic)
 
+#it added another column that says "type" and lists everything to be aquatic
 
 # ---------------------------------------------------------- #
 ### PART 1.5: PASTING AND SEPARATING COLUMNS              ####
@@ -302,17 +305,23 @@ calispellTempFaquatic <- mutate(.data=calispellTempF,
 
 # TASK: Write code to create one more column named ecosystem in a new dataframe and 
 # fill it with the word 'stream'.
+calispellTempFstream <- mutate(.data=calispellTempFaquatic,
+                                ecosystem='stream')
 
-
+head(calispellTempFstream)
 # Now we might want to create a new column that includes information from both of
 # the columns we just created. We would do so by running the following lines of code:
-calispellTempF4 <- unite(data=calispellTempF3,
+calispellTempF4 <- unite(data=calispellTempFstream,
                          col='type_ecosystem',
                          c('type', 'ecosystem'),
                          sep='::')
 
 # QUESTION: Describe in your own words what the code above does. What part creates
 # a new column? What part tells R which columns to combine? What does the sep= mean?
+# It combined the type column with the ecosystem column into a new column called "type_ecosystem"
+# The combining was done using the "c ()" function
+# The "sep=" function told R to separate the stuff from the type column and the ecosystem column with whatever we wanted. 
+# In this case, they got separated with "::"
 
 
 # Another very useful function is separate, which takes apart a column into two or
@@ -325,9 +334,10 @@ calispellTempF5 <- separate(data=calispellTempF4,
                             sep='::')
 
 # QUESTION: Why isn't the column name in quotes this time?
+# Because the column already exists
 
 # QUESTION: Describe in your own words what the code above does.
-
+# It separated the column "type_ecosystem" based on the "::" into two columns: "type" and "ecosystem"
 
 # ---------------------------------------------------------- #
 ### PART 1.6: PIPES                                       ####
