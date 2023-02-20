@@ -493,7 +493,7 @@ willowDataTrt <- left_join(plotInfo, willowData)
 # (3) Remove any observations that were not obtained from Strips 1 or 2 using an %in% statement.
 # (4) pivot_longer the C and N data so that there is one column called element that contains C or N
 #     and another column called percentage that contains the values of either %C or %N.
-# (5) group_by() Date, Plot, NTrt, Species, Field, and Strip and then use the summarize() function
+# (5) group_by() Date, Plot, NTrt, Species, Field, Strip, and element and then use the summarize() function
 #     to calculate the mean value of the percentage column for each group. Store the mean values
 #     in a column called 'percentage_mean'. Don't forget to ungroup at the end!
 # (6) pivot_wider so that the values of percentage_mean are contained in different columns
@@ -504,12 +504,15 @@ cdr <- read.csv("e001_Plant aboveground biomass carbon and nitrogen.csv") %>%
   pivot_longer(cols = C:N,
                names_to = 'element',
                values_to = 'percentage') %>% 
-  group_by(Date, Plot, NTrt, Species, Field, Strip) %>% #the question doesn't ask me to group by element, so im kinda confused about why its important to rename the %carbon and %nitrogen columns when they get dropped later.
+  group_by(Date, Plot, NTrt, Species, Field, Strip, element) %>% #the question doesn't ask me to group by element, so im kinda confused about why its important to rename the %carbon and %nitrogen columns when they get dropped later.
   # I'll have to come back to this once I know what to do for sure.
+
+### It did need to include element, and now I also can get names for pivot_wider from the element column ###
   summarize('percentage_mean'  = mean(percentage)) %>%
-  pivot_wider(names_from = percentage_mean,
-              values_from = percentage_mean) %>%
-  ungroup()
+  ungroup() %>% 
+  pivot_wider(names_from = element,
+              values_from = percentage_mean)
+  
 
 
 # ---------------------------------------------------------- #
