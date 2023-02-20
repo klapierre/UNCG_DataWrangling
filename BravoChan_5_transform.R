@@ -384,7 +384,7 @@ willowCleaner  <- willowClean %>% #creates a new data frame for the cleaner data
 # one entry if the logical statement we provide is TRUE and another if the logical statement is FALSE.
 # Run the following code to try it out to help fix our first problem (ht1 column has information on 
 # both plant status and actual height values).
-willowClean3 <- willowClean2 %>% #it creates a new data frame for the cleaned up data
+willowClean3 <- willowCleaner %>% #it creates a new data frame for the cleaned up data
   mutate(status = ifelse(ht1 == 'dead', 'dead', 'alive')) %>% #it creates a new column 'status' within the new data frame
   mutate(ht1 = ifelse(status == 'dead', NA, ht1)) #it replaces the value 'dead' with 'NA' in the new ht1 column
 
@@ -476,7 +476,7 @@ willowDataTrt5 <- full_join(willowData, plotInfo, by = "plot")
 #     in a column called 'percentage_mean'. Don't forget to ungroup at the end!
 # (6) pivot_wider so that the values of percentage_mean are contained in different columns
 cdr <- read.csv("e001_Plant aboveground biomass carbon and nitrogen.csv") %>%
-  rename(C = '% Carbon', N = '% Nitrogen') %>%
+  rename(C = 'X..Carbon', N = 'X..Nitrogen') %>%
   filter(Field %in% c("Strip 1", "Strip 2")) %>%
   pivot_longer(cols = c(C, N), names_to = "element", values_to = "percentage") %>%
   group_by(Date, Plot, NTrt, Species, Field, Strip) %>%
