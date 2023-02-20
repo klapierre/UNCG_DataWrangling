@@ -2,6 +2,8 @@
 #### MODULE 3: Plot some data!                            ####               
 # ---------------------------------------------------------- #
 
+library(tidyverse)
+
 ## OBJECTIVE:
 # 1. To develop a "grammar of graphics".
 # 2. To become comfortable using ggplot2 for exploratory data visualization.
@@ -60,7 +62,7 @@
 # is nested within the tidyverse package (along with many others).
 # Start by writing code to load the tidyverse library.
 # HINT: see the end of assignment #1 if you forgot how to load a package.
-
+    # did this above at the top of the page
 
 # ---------------------------------------------------------- #
 ### PART 1.0: TIDY THE DATA                               ####                                           
