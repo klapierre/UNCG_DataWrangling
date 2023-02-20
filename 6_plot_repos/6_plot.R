@@ -328,6 +328,8 @@ ggplot(redband, aes(x = as.factor(ScaleAge), y = Weight)) +
 # QUESTION: What is the graph output? Note the scale of the y-axis. Does this seem
 # right to you? What do you think happened to result in this graph?
 
+# What looks like a bar graph is created, however the Y axis range is wayyy to high. 
+# Instead, a stacked graph is created making the scale too high. 
 
 # Typically, when plotting a bar graph we want to have the output show the mean
 # and standard error for each category. But unlike when we use the geom_boxplot 
@@ -345,6 +347,7 @@ ggplot(redband, aes(x = as.factor(ScaleAge), y = Weight)) +
 #     error of weight for each group (se=1.96*sd).
 # HINT:Don't forget to remove NAs and ungroup at the appropriate place.
 
+redbandSummary <- redband %>% group_by(ScaleAge) %>% summarize(Weight_mean = mean(Weight, na.rm = T), Weight_sd = sd(Weight, na.rm = T)) %>% mutate(Weight_se = Weight_sd*1.96) %>% ungroup()
 
 # Let's try again to make our bargraph by running the following code:
 ggplot(redbandSummary, aes(x = as.factor(ScaleAge), y = Weight_mean)) + 
@@ -353,6 +356,7 @@ ggplot(redbandSummary, aes(x = as.factor(ScaleAge), y = Weight_mean)) +
 # QUESTION: What does the stat='identity' part do in the code above? Check the 
 # geom_bar() help or google to find the answer.
 
+# It leaves the data as it is in the dataframe
 
 # The above code gave us nice bars.  Now we need to add error bars! We will do this
 # by adding in a second geometric object that specifies errorbars. Try it by
@@ -365,10 +369,19 @@ ggplot(redbandSummary, aes(x = as.factor(ScaleAge), y = Weight_mean)) +
 
 # QUESTION: Annotate the code above with what each line does.
 
+# ggplot(redbandSummary, aes(x = as.factor(ScaleAge), y = Weight_mean)) + 
+# geom_bar(stat='identity') -> makes the bar graph as indicated with each age having
+# its own bar
+# + geom_errorbar(aes(ymin=Weight_mean-Weight_se,ymax=Weight_mean+Weight_se, width=0.2))
+# ymin is the mean weight and mean standard error subtracted, and ymax is the opposite, 
+# indicating the highest and lowest points of the error bars. The indicated width 
+# is the width of the error bars
 
 # QUESTION: What does the statement width=0.2 do? If you're unsure, try removing
 # it and seeing what happens.
 
+# It shortens the size of the horizontal lines in the error bars. While their position
+# doesnt change, the default size is too long visually 
 
 # TASK: Modify the code below to make the bar fill light green, the bar outline 
 # dark green, and the error bars dark orange with end caps 40% the bar width.
@@ -377,6 +390,9 @@ ggplot(redbandSummary, aes(x = as.factor(ScaleAge), y = Weight_mean)) +
   geom_errorbar(aes(ymin=Weight_mean-Weight_se,
                     ymax=Weight_mean+Weight_se,
                     width=0.2))
+
+ggplot(redbandSummary, aes(x=as.factor(ScaleAge), y=Weight_mean)) + geom_bar(stat="identity", color = "darkgreen", fill = "lightgreen") + geom_errorbar(aes(ymin=Weight_mean - Weight_se, ymax = Weight_mean + Weight_se, width = 0.4, color = "darkorange"))  
+
 
 # ---------------------------------------------------------- #
 #### PART 1.7 AESTHETICS PLACEMENT MATTERS!               #### 
