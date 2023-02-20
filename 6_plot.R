@@ -168,6 +168,7 @@ redband_na <- filter(.data=redband,
 
 # QUESTION: In the code below, what is the dataframe being examined?
 # What are the aesthetics? What will the resulting graph be plotting?
+# ANSWER: redband data frame, the x axis will be scale age and the y axis will be length. There will be no data plotted since their is no geometrical shape to show the data.
 ggplot(redband, aes(x=ScaleAge, y=Length))
 
 
@@ -180,10 +181,12 @@ ggplot(redband, aes(x=ScaleAge, y=Length)) +
 
 # QUESTION: Based on the figure that was generated from the code above, 
 # what would you conclude about the relationship between fish age and length?
-
+# ANSWER: There is a positive correlation between age and length.
 
 # TASK: Write your own code to visualize the relationship between Redband 
 # length and weight.
+ggplot(redband, aes(x=Length, y=Weight)) +
+  geom_point()
 
 
 # ---------------------------------------------------------- #
