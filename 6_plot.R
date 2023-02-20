@@ -445,13 +445,20 @@ ggplot(redband, aes(x = Length, y = Weight, color = as.factor(ScaleAge))) +
 # following code:
 ggplot(redband, aes(x = Length, y = Weight)) + 
   geom_point()
-
+ggplot(redband, aes(x = Length, y = Weight)) + 
+  geom_point()
 # We could alter the size and color and shape of the points, as we have done before:
+ggplot(redband, aes(x = Length, y = Weight)) + 
+  geom_point(size=1, color="darkblue", shape=1)
 ggplot(redband, aes(x = Length, y = Weight)) + 
   geom_point(size=1, color="darkblue", shape=1)
 
 # We could add on to alter the x and y axes scales; for example, let's make put 
 # them on a log10 scale by running the following code:
+ggplot(redband, aes(x = Length, y = Weight)) + 
+  geom_point(size=1, color="darkblue", shape=1) +
+  scale_x_log10() + 
+  scale_y_log10()
 ggplot(redband, aes(x = Length, y = Weight)) + 
   geom_point(size=1, color="darkblue", shape=1) +
   scale_x_log10() + 
@@ -464,12 +471,22 @@ ggplot(redband, aes(x = Length, y = Weight)) +
   scale_y_log10() +
   xlab("Redband trout length (mm)") + 
   ylab("Redband trout weight (g)")
-
+ggplot(redband, aes(x = Length, y = Weight)) + 
+  geom_point(size=1, color="darkblue", shape=1) +
+  scale_x_log10() + 
+  scale_y_log10() +
+  xlab("Redband trout length (mm)") + 
+  ylab("Redband trout weight (g)")
 # TASK: Write code below to make a boxplot of scale age vs length on a linear-log
 # scale (i.e., with scale age on a linear x axis and length on a log y axis).
 # Fill in your boxplots with your favorite color and make the outline your least
 # favorite color. Label the x-axis Scale Age (years) and the y-axis Length (mm).
-
+ggplot(redband, aes(x = ScalerAge, y = Length)) + 
+  geom_point(size=1, color="purple", shape=1) +
+  scale_x_log10() + 
+  scale_y_log10() +
+  xlab("Redband trout Age (years)") + 
+  ylab("Redband trout Length (mm)")
 
 # ---------------------------------------------------------- #
 #### PART 1.9: SETTING THEMES                             ####
