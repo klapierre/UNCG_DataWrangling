@@ -157,11 +157,13 @@ ggplot(redband, aes(x = ScaleAge)) +
 # TASK: Fish weight is also an interesting variable. Make a histogram that plots
 # the distribution of Weight for the redband dataframe.
 ggplot(redband, aes(x=Weight)) +
+  geom_histogram(binwidth=75)
 
-# QUESTION: What warning message is generated in the console when you create the 
+# QUESTION: What warning message is generated in the console when you create the
 # weight histogram? What does this warning message mean? Do you think it is ok 
 # to proceed or should you alter your code to get rid of this warning?
 
+    # I get the warning message 'Removed 88 rows containing non-finite values (stat_bin).' This means it ignored 88 rows that contained a NA in Weight. I would alter my code to remove those entries from the data set used for graphing, that way all graphs use the same population size.
 
 # ---------------------------------------------------------- #
 #### PART 1.3 GEOMETRIC OBJECT: POINTS                    ####
@@ -170,7 +172,7 @@ ggplot(redband, aes(x=Weight)) +
 # QUESTION: In the code below, what is the dataframe being examined?
 # What are the aesthetics? What will the resulting graph be plotting?
 ggplot(redband, aes(x=ScaleAge, y=Length))
-
+    # the dataframe used is the redband dataframe, it calls for aesthetics for x-axis and y-axis, and the resulting graph will result in a plot containing just the labeled x- and y-axis labeled ScaleAge and Length respectively.
 
 # When we start, we tell ggplot that we want certain aesthetics (x- and y-axis).
 # But without specifying a geometric object (what shape to add to the plot), we won't
@@ -182,10 +184,14 @@ ggplot(redband, aes(x=ScaleAge, y=Length)) +
 # QUESTION: Based on the figure that was generated from the code above, 
 # what would you conclude about the relationship between fish age and length?
 
+    # fish age is positively correlated with length, and it looks like its aan exponential relation.
 
 # TASK: Write your own code to visualize the relationship between Redband 
 # length and weight.
 
+ggplot(redband, aes(x=ScaleAge, y=Length)) + 
+  geom_point() +
+  geom_smooth(method = loess)
 
 # ---------------------------------------------------------- #
 #### PART 1.4 ADDING AESTHETICS TO GEOMETRIC OBJECTS      ####
