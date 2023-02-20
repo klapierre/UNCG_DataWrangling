@@ -375,7 +375,8 @@ rm(list = ls())
 # was greater or equal to 15 C, and mutate a column to Farenheit temperatures. 
 # Run the following lines of code and take a look at this new dataframe to see if R did
 # everything we expect it to have done.
-calispellHighTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv", stringsAsFactors = TRUE) %>% 
+calispellHighTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv", 
+                              stringsAsFactors = TRUE) %>% 
   rename(calispell_temp=Calispell.Cr.Temp.C.,
          smalle_temp=Smalle.Cr.Temp.C.,
          winchester_temp=Winchester.Cr.Temp..C.) %>% 
