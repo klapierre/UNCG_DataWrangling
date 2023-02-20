@@ -644,9 +644,9 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 # specified uniquely for each subpanel.
 # HINT: Check the help file for facet_wrap if you're unsure. Look under the 
 # Arguments section for scales.
-ggplot(redband, aes(x = Length, y = ScaleAge)) + 
-  geom_histogram() + 
-  facet_grid(Length~ScaleAge) 
+ggplot(redband,aes(x=Length)) +
+  geom_histogram(binwidth=50)
+  
 
 # ---------------------------------------------------------- #
 #### PART 1.11: SAVING YOUR GRAPHICS                      ####
@@ -660,14 +660,15 @@ ggplot(redband, aes(x = Length, y = ScaleAge)) +
 # customize this output.
 
 # Try running the following code:
-ggsave("Redband_histogram_facet.png")
+ggsave("redband_histogram_facet.png")
 
 # QUESTION: Where did this file show up? And what was the graph?
-
+## The graph is a histogram and showed up in image.
 
 # TASK: Investigate the ggsave() function through the help files. Then write
 # code to save the file at 600 dpi, 10 inch width and 8 inch height.
-
+ggsave("Redband_histogram_facet.png", dpi=600)
+?ggsave
 
 # NOTE: You can also save the graphics you make by exporting them from the plots
 # tab in RStudio. However, this can be less precise than specifying the graphic
