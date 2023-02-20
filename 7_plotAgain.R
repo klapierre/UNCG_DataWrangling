@@ -22,6 +22,19 @@
 # Official ggplot2 Book: https://ggplot2-book.org/
 # Themes in ggplot2: https://ggplot2-book.org/polishing.html#themes
 
+# In ggplot2, aesthetic means “something you can see”. Each aesthetic is a
+# mapping between a visual cue and a variable.
+# Examples include:
+# position (i.e., on the x and y axes)
+# color (“outside” color)
+# fill (“inside” color)
+# shape (of points)
+# line type
+# size
+
+# Each type of geometric object (geom) accepts only a subset of all aesthetics.
+# Refer to the geom help pages to see what mappings each geom accepts. Aesthetic
+# mappings are set with the aes() function.
 
 # TASK: We will be using the ggplot2 package for graphing. Fortunately, ggplot2 
 # is nested within the tidyverse package (along with many others).
@@ -29,6 +42,9 @@
 # HINT: see the end of assignment #1 if you forgot how to load a package.
 
 
+# ---------------------------------------------------------- #
+#### 1.0                                           ####
+# ---------------------------------------------------------- #
 
 
 
