@@ -23,7 +23,7 @@
 # The dplyr package is nested within the tidyverse package (along with many others).
 # Install tidyverse and load the library. HINT: see the end of assignment #1 if you 
 # forgot how to install and load a package.
-
+library(dplyr)
 
 # ---------------------------------------------------------- #
 #### PART 1.0: LEARNING THE FUNCTIONS                     ####
@@ -81,8 +81,8 @@ colnames(streamTemp)
 # TASK: Run the following line of code. Note the alignment of the code components.
 streamTempRename <- rename(.data=streamTemp,
                            calispell_temp=Calispell.Cr.Temp.C.,
-                           Smalle_temp=Smalle.Cr.Temp.C.,
-                           Winchester_temp=Winchester.Cr.Temp..C.)
+                           smalle_temp=Smalle.Cr.Temp.C.,
+                           winchester_temp=Winchester.Cr.Temp..C.)
 
 
 # TASK: Write your own code to find the column names of our new dataframe (streamTempRename). 
@@ -118,7 +118,10 @@ calispellTemp <- select(.data=streamTempRename,
 # by coding the appropriate R function of course. What do you notice about the 
 # new dataframe? Which columns are present? Which are absent? Are they in the same 
 # order as before?
-
+colnames(calispellTemp)
+# There are only 3 columns present: calispell_temp, Date, and Time. 
+# The ones missing are Smalle_temp, and Winchester_temp.
+# They are not in the same order as before.
 
 # A nice thing to notice about this code. We didn't have to type 'streamTemp$date'
 # etc to indicate each column as we would outside of the tidyverse. The select()
@@ -129,7 +132,7 @@ calispellTemp <- select(.data=streamTempRename,
 # TASK: Recall that in R, the `:` operator is a compact way to create a sequence of
 # numbers. For example, write the code below to generate a sequence from 1 to 3.
 # HINT: Look back to assignment #1 or the swirl tutorial for help (or google!).
-
+1:3
 
 # Normally this notation is just for numbers, but the select() function allows you
 # to specify a sequence of columns this way. This can save a bunch of typing!
@@ -138,11 +141,13 @@ calispellTemp <- select(.data=streamTempRename,
 # calispell_temp columns using the sequence notation.
 # HINT: Replace the code where each column was listed out with a sequence of column
 # names. Be sure they are listed in the order they exist in the original dataframe.
+calispellTemp2 <- select(.data=streamTempRename,
+                         Date:calispell_temp)
 
 
 # TASK: Write code to check your column names again to see what happened in your
 # new dataframe.
-
+colnames(calispellTemp2)
 
 # We can also specify the columns that we want to discard by selecting them out.
 # TASK: Run the following code to remove the Smalle_temp and Winchester_temp 
@@ -161,8 +166,8 @@ calispellTemp5 <- select(.data=streamTempRename,
                          -Smalle_temp:-Winchester_temp)
 
 
-# TASK: Write code to check that these three new dataframes (calispellTemp3,  calispellTemp4, and calispellTemp5 are identical).
-
+# TASK: Write code to check that these three new dataframes (calispellTemp3, calispellTemp4, and calispellTemp5 are identical).
+all_equal(calispellTemp3, calispellTemp4, calispellTemp5)
 
 # ---------------------------------------------------------- #
 ### PART 1.3: FILTERING ROWS                              ####
@@ -183,6 +188,7 @@ calispellTemp5 <- select(.data=streamTempRename,
 # QUESTION: If you remove all of the observations (rows) with temperatures lower
 # than 15C, would you expect your new dataframe to have more, the same, or fewer
 # observations than the original dataframe?
+# i would expect there to be fewer obsercations because we are removing rows
 
 
 # TASK: Run the following code to only keep the values greater than or equal to 15C.
@@ -193,17 +199,19 @@ calispellHighTemp <- filter(.data=calispellTemp,
 # TASK: Check the number of observations in your dataframe! You can either do 
 # this using the str() function or by looking next to the dataframe name in the
 # R environment tab.
-
+str(calispellHighTemp)
 
 # QUESTION: How many observations did the original dataframe (calispellTemp) have?
 # How many does the new dataframe (calispellHighTemp) have?
-
+# the original ad 61100 observations
+# this new one has 7703 observations
 
 # REALLY IMPORTANT: Even if the function runs, R can do all kinds of bad things if
 # you've accidentally coded something incorrectly. It is always really very 
 # important to think about how many rows and columns you expect your new dataframe
 # to have before you run your code and then check whether your new dataframe matches
 # your expectation.
+# ✓ ✓
 
 
 # We can also filter based on multiple conditions. For example, did the water get
@@ -240,7 +248,11 @@ calispellData <- filter(.data=calispellTemp,
 
 # QUESTION: How many observations are in the datafile calispellData? Write code to
 # determine how many values of calispell_temp were NA.
+# there are 52330 observations in the datafile calispellData
 
+calispellData_NA <- filter(.data=calispellTemp,
+                           is.na(calispell_temp))
+#8770 observations
 
 # ---------------------------------------------------------- #
 ### PART 1.4: CREATING COLUMNS                            ####
