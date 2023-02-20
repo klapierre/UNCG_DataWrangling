@@ -359,11 +359,14 @@ willowClean <- willowFill %>%
 # Good news, we can fix this problem with the complementary function to pivot_longer().
 # This time we will use the pivot_wider() function to turn one column into multiple.
 willowCleaner  <- willowClean %>%
+  ## Sets the pipe and the new dataset name.
   pivot_wider(names_from = variable,
               values_from = value)
+## Ends the pipe and adds new value columns from the column 'variable'.
 
 
 # TASK: Take a look at our new dataframe. How does it differ from the previous?
+## It has fewer observations, since they have been moved into variables.
 # Annotate (add comments) the code above to indicate what each line does.
 
 
@@ -378,27 +381,34 @@ willowCleaner  <- willowClean %>%
 # seedling was planted.
 
 # TASK: Verbally describe how you would want to change this problem (i.e., pseudocode).
+## I would try and select out the variables I want - for example, if I don't want
+## and 'dead' variables, just go ahead and remove those. (If==dead -> go away)
 
 
 # ifelse() is a very powerful function that helps us with this problem!
 
 # TASK: Look at the ifelse help file and describe in your own words the ordering of the syntax.
 # logical statement, if the statement is TRUE then use the yes value provides, otherwise use the no value.
+?ifelse
+## If else provides a test function, and asks whether the answer to this test function is yes, and if not, it is equal to no.
 
 # We can nest the ifelse() function within a mutate() function to create a new column that contains
 # one entry if the logical statement we provide is TRUE and another if the logical statement is FALSE.
 # Run the following code to try it out to help fix our first problem (ht1 column has information on 
 # both plant status and actual height values).
-willowClean3 <- willowClean2 %>%
+willowClean3 <- willowCleaner %>%
   mutate(status = ifelse(ht1 == 'dead', 'dead', 'alive')) %>% 
+  ## Asks if the ht1 column has the value 'dead', from the options 'dead' or 'alive'.
   mutate(ht1 = ifelse(status == 'dead', NA, ht1))
+  ## If the ht1 column is equal to dead, it replaces it with NA in the column ht1.
 
 # TASK: Annotate the previous lines of code to indicate what each is doing.
 
 
 # QUESTION: This is a good time to make sure the relevant columns are numeric. Run the str() function
 # on this dataframe. What class is the ht1 column?
-
+str(willowClean3)
+## Character class.
 
 # Let's make the ht1 column numeric. And while we're at it, the columns ht2, cnpy1, and cnpy2 should also
 # be made numeric. We can do so by running the following code:
@@ -410,6 +420,8 @@ willowClean4 <- willowClean3 %>%
 
 # TASK: Run the str() function again to view the classes for each column in willowClean4. Did we
 # succeed in making the columns we wanted into numeric classes?
+str(willowClean4)
+##Yes, all these columns are now numeric.
 
 
 # %in% is another powerful function! With %in% we can use logical statements on a whole bunch of stuff at
@@ -421,17 +433,22 @@ willowClean5 <- willowClean4 %>%
 # QUESTION: Based on the lines of code above, what can you conclude about willow seedlings with identifiers
 # that were letters versus numbers? That is, what year were willow seedlings that were identified with letters
 # planted? What year were willow seedlings that were identified with numbers planted?
+## The ABC willows were planted in 2006, while the numeric willows were planted in 2007.
 
+view(willowClean5)
 
 # ---------------------------------------------------------- #
 ### PART 2.5: RELATIONAL DATA                             ####
-# ---------------------------------------------------------- #]
+# ---------------------------------------------------------- #
 # Final problem! Multiple types of observational units are stored in the same table. We have information
 # about each plot's treatments AND information about willow growth in a single table.
 # We'll fix this by making a relational database. To do so, we'll need to make two separate dataframes.
 # We can call one plotInfo and the other willowData.
 
 # QUESTION: What columns would go in each of our two relational databases?
+## All of the identifying information such as the location each is from and temp, would
+## go into plotInfo. willowData would be the information for each individual willow
+## like ID#, height, planting year, etc.
 
 # Let's do it! Run the following code:
 plotInfo <- willowClean5 %>%
@@ -446,7 +463,7 @@ willowData <- willowClean5 %>%
 
 # TASK: Write code to join these two dataframes back together into a new dataframe called willowDataTrt
 # using the left_join() function.
-
+WillowDataTrt <- left_join(plotInfo, willowData)
 
 # ON YOUR OWN: There are so many ways to join databases! Think through when you might want to use each type.
 # We will practice more with joining data in the coming weeks.
@@ -472,6 +489,23 @@ willowData <- willowClean5 %>%
 #     in a column called 'percentage_mean'. Don't forget to ungroup at the end!
 # (6) pivot_wider so that the values of percentage_mean are contained in different columns
 
+cdr <- read.csv("C:\\Users\\leoiv\\Downloads\\e001_Plant aboveground biomass carbon and nitrogen.csv", stringsAsFactors = TRUE) %>%
+  rename(C=X..Carbon, N=X..Nitrogen) %>%
+  filter(Strip %in% c("1", "2")) %>%
+  pivot_longer(cols=C:N,
+               names_to = "element_percentage",
+               values_to = "value") %>%
+  group_by(Date, Plot, NTrt, Species, Field, Strip, element_percentage) %>%
+  summarize(across(.cols=c(value),
+                   .fns=mean,
+                   na.rm=TRUE)) %>%
+  ungroup() %>%
+pivot_wider(names_from=element_percentage,
+              values_from = value) 
+ 
+
+## None of this is working and I have no idea why. Saving for later.
+## EDIT: Fixed it! Thank you Dr. Komatsu.
 
 # ---------------------------------------------------------- #
 ### PART 3.0: SUBMIT YOUR WORK                            ####
