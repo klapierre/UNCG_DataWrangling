@@ -5,7 +5,8 @@
 ## OBJECTIVE:
 # 1. To develop a "grammar of graphics".
 # 2. To become comfortable using ggplot2 for exploratory data visualization.
-
+library("tidyverse")
+install.packages("tidyverse")
 
 # ---------------------------------------------------------- #
 #### SET UP:                                              ####
@@ -84,6 +85,8 @@
 redband <- read.csv(file = "LowerSpokaneFish.csv") %>% 
   filter(Species=='RB', !is.na(ScaleAge))
 
+redband<- read.csv(file = "LowerSpokanFish.csv") %>%
+  filter(Species=='RB', !is.na(ScaleAge))
 
 # ---------------------------------------------------------- #
 ### PART 1.1 AESTHETICS AND MAPPING                       ####
