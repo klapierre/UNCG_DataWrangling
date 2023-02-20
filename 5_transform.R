@@ -31,11 +31,14 @@
 # Let's go back to our dataset of water temperature in Calispell Creek and its tributaries
 # from eastern Washington State.
 
-# TASK: Read in the CalispellCreekandTributaryTemperatures.csv file and assign it to a dataframe
-# named streamTemp.
+# TASK: Read in the
+
+streamTemp<- read.csv("CalispellCreekandTributaryTemperatures.csv", stringsAsFactors = F)
+
+#and assign it to a dataframe named streamTemp.
 # HINT: Check last week's assignment if you forget how to read data into R.
 
-
+streamTemp<-rename(streamTemp, calispell=Calispell.Cr.Temp.C., smalle= Smalle.Cr.Temp.C., winchester=Winchester.Cr.Temp..C.)
 # ---------------------------------------------------------- #
 ### PART 1.1: SUMMARIZING DATA                            ####
 # ---------------------------------------------------------- #
@@ -48,20 +51,21 @@ streamTempLength <- streamTemp %>%
             winchester_length = length(winchester))
 
 # QUESTION: When you open the streamTempLength dataframe, what value is in each column?
-
+61100
 
 # QUESTION: How does this number compare to the number of observations listed by the dataframe
 # in the R environment tab?
-
+It is exactly the same as the streamTemp dataframe
 
 # QUESTION: Based on your previous answers, what do you think the length function does?
+Measures the number of datapoints of  a specific column or variable
 
 
 # It can be a bit tedious to type out all the column names and the length function
 # multiple times. The across() function within the summarize() step can help us to 
 # identify multiple columns to summarize the data for. Try running the following code:
 streamTempLength <- streamTemp %>% 
-  summarize(across(.cols=c('calispell', 'smalle', 'winchester'), 
+  summarize(across(.cols=c('calispell.cr.', 'smalle', 'winchester'), 
                    .fns=length))
 
 # TASK: Using comments in the code above, describe what each line is doing.
@@ -75,14 +79,15 @@ streamTempSummary <- streamTemp %>%
                    .fns=list(maximum=max, mean=mean, minimim=min)))
 
 # TASK: Write code to view the column names of the streamTempSummary dataframe.
-
+colnames(streamTempSummary)
 
 # QUESTION: How does R know what to name each column when we use the summarize function above?
-
+We have told the program to name these colums as such
 
 # QUESTION: What values do you see for the columns when you open up the dataframe streamTempSummary?
 # Why do you think this is?
-
+NA
+Likely, because there are multiple NAs in the dataframe
 
 # Recall that our data had a lot of missing values. R doesn't know how to find the mean, max,
 # or min of a group of observations that include NAs.
@@ -95,11 +100,12 @@ streamTempSummary <- streamTemp %>%
 
 # QUESTION: Now what values do you see for the columns when you open up the dataframe
 # streamTempSummary? What line of the above code removed the NAs from our data?
-
+The appropriate max and mins 
+na.rm=T
 
 # QUESTION: What happened to the column we created in the beginning called data_type?
 # Where did the date and time columns go?
-
+They were filtered out
 
 # RECOMMENDED: Take a look at the summarize help file, particularly the "Useful functions" section
 # to see all of the different ways you can summarize your dataframe.
@@ -118,22 +124,30 @@ streamTempSummary <- streamTemp %>%
 # (3) Call your new dataframe streamTempMDY.
 # HINT: Check the help documentation for the separate(), mutate(), and paste() functions.
 
+streamMDY<- separate(streamTemp, Date, c("Month", "Day", "Year"), remove = TRUE, convert = FALSE, extra = "warn", fill="warn") %>% 
+  mutate("Century"="20") %>% 
+  unite(col="Year", c(Century, Year), sep="")
 
 # TASK: Write code to create a new dataframe called streamTempJan that filters only
 # rows where the month column is equal to 1 from the streamTempMDY dataframe.
+streamTempJan<- filter(streamMDY, Month==1)
 
 
 # TASK: Write code that uses the summarize function to find the mean temperature for Calispell,
 # Smalle, and Winchester streams in only January.
 
+Janall<-streamTempJan %>%
+  summarise(across(.cols=c('calispell', 'smalle', 'winchester'), 
+        .fns=list(mean=mean),
+        na.rm=T))
 
 # Now imagine you had to repeat this set of steps (creating new filtered dataframes) for all 12 months!
 # That would not only be tedious, but would also clutter up our R environment.
 # Instead, we can use the handy group_by() function before the summarize() function to tell
 # R that we want to get the summary stats for each of the groups we specify.
 # Try running the following code:
-streamTempMonthlyMean <- streamTempMDY %>% 
-  group_by(month) %>% 
+streamTempMonthlyMean <- streamMDY %>% 
+  group_by(Month) %>% 
   summarize(across(.cols=c('calispell', 'smalle', 'winchester'), 
                    .fns=mean,
                    na.rm=T)) %>% 
@@ -145,22 +159,23 @@ streamTempMonthlyMean <- streamTempMDY %>%
 
 # QUESTION: When you look at the streamTempMonthlyMean dataframe, how many means do you see for 
 # each stream?
-
+ 12 means for each stream
 
 # QUESTION: In your own words, what do you think the group_by() function does when used
 # before the summarize() function?
 
-
+The group_by() function allows us to filter using a specific column 
+ 
 # We can also group by multiple columns. Try running the following code:
-streamTempMeans <- streamTempMDY %>% 
-  group_by(month, year) %>% 
+streamTempMeans <- streamMDY %>% 
+  group_by(Month, Year) %>% 
   summarize(across(.cols=c('calispell', 'smalle', 'winchester'), 
                    .fns=mean,
                    na.rm=T)) %>% 
   ungroup()
 
 # QUESTION: What columns did we group by to get our new means? What does the new dataframe show?
-
+Month and Year. It shows the average of all months in all years
 
 # ---------------------------------------------------------- #
 ### PART 1.3: PRACTICING THESE SKILLS                     ####
@@ -179,9 +194,17 @@ flightData <- nycflights13::flights
 # (4) ungroup the dataframe;
 # (5) assign the output to a dataframe named airportDelaySummary.
 
+airportDelaySummary<-flightData %>%
+  filter(dest== "RDU") %>% 
+  group_by(origin) %>% 
+  summarise((across(.cols=c('arr_delay'), 
+                    .fns=mean,
+                    na.rm=T))) %>% 
+  ungroup()
+
 
 # QUESTION: Which airport should you avoid if you want the shortest delays?
-
+EWR
 
 # TASK: Write a pipeline to figure out which month of the year to avoid when flying to Raleigh 
 # by taking the original flight dataframe (flightData) and performing the following tasks:
@@ -192,12 +215,36 @@ flightData <- nycflights13::flights
 # (4) ungroup the dataframe;
 # (5) assign the output to a dataframe named timeDelaySummary
 
+timeDelaySummary<-flightData %>%
+  filter(dest== "RDU") %>% 
+  group_by(hour) %>% 
+  summarise((across(.cols=c('arr_delay'), 
+                    .fns=list(mean, maximum=max),
+                    na.rm=T))) %>%
+  ungroup()
+
+
 
 # QUESTION: What is the earliest hour of the day that flights leave New York for Raleigh?
+6:00
 
+timeDelaySumYork<-flightData %>%
+  filter(dest== "RDU", origin=="EWR") %>% 
+  group_by(hour) %>% 
+  summarise((across(.cols=c('minute'), 
+                    .fns=min,
+                    na.rm=T))) %>%
+  ungroup()
 
 # QUESTION: Which hour of the day has the longest mean delay? What about the longest maximum delay?
-
+Hour 22; Hour 12
+timeDelayhour<-flightData %>%
+  filter(dest== "RDU") %>% 
+  group_by(hour) %>% 
+  summarise((across(.cols=c('arr_delay'), 
+                    .fns=list(mean, maximum=max),
+                    na.rm=T))) %>%
+  ungroup()
 
 # TASK: Write a pipeline to figure out which month of the year and airport to avoid when flying
 # to Raleigh by taking the original flight dataframe (flightData) and performing the following tasks:
@@ -207,9 +254,17 @@ flightData <- nycflights13::flights
 # (4) ungroup the dataframe;
 # (5) assign the output to a dataframe named monthlyDelaySummary
 
+monthlyDelaySummary<-flightData %>%
+  filter(dest== "RDU") %>% 
+  group_by(month, origin) %>% 
+  summarise((across(.cols=c('arr_delay'), 
+                    .fns=mean,
+                    na.rm=T))) %>%
+  ungroup()
+
 
 # QUESTION: Which month and airport has the longest mean delay?
-
+Month 3, EWR
 
 # ---------------------------------------------------------- #
 ### PART 2.0: INTRO TO TIDY DATA                          ####
