@@ -250,7 +250,7 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 # QUESTION: Using the geom_smooth help page, what type of function is being used 
 # in the above graph for our statistical transformation fit?
 # HINT: What is the default model type for a dataframe of our size?
-
+Non-standard geom. formula= y ~ s(x, bs = "cs")
 
 # We also can specify a specific model to fit. Try running the following code to
 # specify a linear model:
@@ -261,7 +261,8 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 # TASK: As with most things in R, there are multiple ways to accomplish the same
 # task. Using the geom_smooth help page, write code below to specify a linear
 # model using a method= statement instead of the formula= statement.
-
+ggplot(redband, aes(x = Length, y = Weight)) + 
+  geom_point() + geom_smooth(method="REML")
 
 # A linear model does not seem like a good fit to our data. Try running the
 # following code to generate a quadratic model.
@@ -281,7 +282,7 @@ ggplot(redband, aes(x = as.factor(ScaleAge), y=Weight)) +
 # QUESTION: Name another statistical transformation we have already used in this
 # assignment.
 # HINT: It was in the very first part of the assignment.
-
+Scatterplots: geom_point()
 
 # TASK: Let's put this all together! Create a graph with the following:
 # (1) redband dataframe,
@@ -290,6 +291,8 @@ ggplot(redband, aes(x = as.factor(ScaleAge), y=Weight)) +
 # (4) quadratic line that is black in color and size=2 (HINT: check ggplot
 #     cookbook to help figure out how to change line color and size).
 
+ggplot(redband, aes(x=Length, y=Weight)) + 
+  geom_point(aes(color=as.factor(ScaleAge)))+ geom_smooth(formula = y ~ poly(x,2), colour="black", size=2)
 
 # ---------------------------------------------------------- #
 #### PART 1.6 DATA IN VS DATA OUT                         #### 
@@ -307,7 +310,7 @@ ggplot(redband, aes(x = as.factor(ScaleAge), y = Weight)) +
 
 # QUESTION: What is the graph output? Note the scale of the y-axis. Does this seem
 # right to you? What do you think happened to result in this graph?
-
+The graph scale does not seem to be correct. The output may be measuring in a different unit than intended
 
 # Typically, when plotting a bar graph we want to have the output show the mean
 # and standard error for each category. But unlike when we use the geom_boxplot 
@@ -325,14 +328,19 @@ ggplot(redband, aes(x = as.factor(ScaleAge), y = Weight)) +
 #     error of weight for each group (se=1.96*sd).
 # HINT:Don't forget to remove NAs and ungroup at the appropriate place.
 
+redbandsummary<- redband %>%
+  group_by(ScaleAge) %>%
+  summarise(Weight_mean=(mean(Weight, na.rm=T)), Weight_sd=sd(Weight,na.rm=T)) %>%
+  mutate(Weight_se=1.96*Weight_sd) %>%
+  ungroup()
 
 # Let's try again to make our bargraph by running the following code:
-ggplot(redbandSummary, aes(x = as.factor(ScaleAge), y = Weight_mean)) + 
+ggplot(redbandsummary, aes(x = as.factor(ScaleAge), y = Weight_mean)) + 
   geom_bar(stat='identity')
 
 # QUESTION: What does the stat='identity' part do in the code above? Check the 
 # geom_bar() help or google to find the answer.
-
+The 
 
 # The above code gave us nice bars.  Now we need to add error bars! We will do this
 # by adding in a second geometric object that specifies errorbars. Try it by
