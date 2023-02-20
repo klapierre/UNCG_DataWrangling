@@ -269,10 +269,14 @@ ggplot(redband, aes(x = Length, y = Weight)) +
   geom_point() + 
   geom_smooth()
 
+ggplot(redband, aes(x=Length, y=Weight)) + 
+  geom_point() +
+  geom_smooth()
+
 # QUESTION: Using the geom_smooth help page, what type of function is being used 
 # in the above graph for our statistical transformation fit?
 # HINT: What is the default model type for a dataframe of our size?
-
+## Smooth adds a line to the data that fits the plots on the graph.
 
 # We also can specify a specific model to fit. Try running the following code to
 # specify a linear model:
@@ -280,10 +284,16 @@ ggplot(redband, aes(x = Length, y = Weight)) +
   geom_point() + 
   geom_smooth(formula = y ~ x)
 
+ggplot(redband, aes(x=Length, y=Weight)) +
+  geom_point() +
+  geom_smooth(formula= y~x)
+
 # TASK: As with most things in R, there are multiple ways to accomplish the same
 # task. Using the geom_smooth help page, write code below to specify a linear
 # model using a method= statement instead of the formula= statement.
-
+ggplot(redband, aes(x=Length, y=Weight)) +
+  geom_point() +
+  geom_smooth(method= y~x)
 
 # A linear model does not seem like a good fit to our data. Try running the
 # following code to generate a quadratic model.
@@ -291,6 +301,9 @@ ggplot(redband, aes(x = Length, y = Weight)) +
   geom_point() + 
   geom_smooth(formula = y ~ poly(x,2))
 
+ggplot(redband,aes(x=Length, y=Weight)) +
+  geom_point() +
+  geom_smooth(formula= y~ poly(x,2))
 
 # Another example of a statistical transformation is geom_boxplot(), which
 # calculates a new dataset by statistically transforming the dataframe and
@@ -300,10 +313,12 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 ggplot(redband, aes(x = as.factor(ScaleAge), y=Weight)) + 
   geom_boxplot()
 
+ggplot(redband, aes(x = as.factor(ScaleAge), y=Weight)) + 
+  geom_boxplot()
 # QUESTION: Name another statistical transformation we have already used in this
 # assignment.
 # HINT: It was in the very first part of the assignment.
-
+## We could've used a histogram graph.
 
 # TASK: Let's put this all together! Create a graph with the following:
 # (1) redband dataframe,
@@ -311,7 +326,8 @@ ggplot(redband, aes(x = as.factor(ScaleAge), y=Weight)) +
 # (3) points colored by ScaleAge as a factor
 # (4) quadratic line that is black in color and size=2 (HINT: check ggplot
 #     cookbook to help figure out how to change line color and size).
-
+ggplot(redband, aes(x=Length, y=Weight)) +
+  geom_point(aes(color=as.factor(ScaleAge), size=as.factor(ScaleAge)))
 
 # ---------------------------------------------------------- #
 #### PART 1.6 DATA IN VS DATA OUT                         #### 
