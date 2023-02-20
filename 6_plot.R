@@ -313,7 +313,7 @@ ggplot(redband, aes(x = as.factor(ScaleAge), y = Weight)) +
 
 # QUESTION: What is the graph output? Note the scale of the y-axis. Does this seem
 # right to you? What do you think happened to result in this graph?
-
+#weight goes up to 80,000 on the y-axis. I think it took the sum weight of each factor of ScaleAge rather than taking the averages.
 
 # Typically, when plotting a bar graph we want to have the output show the mean
 # and standard error for each category. But unlike when we use the geom_boxplot 
@@ -330,7 +330,12 @@ ggplot(redband, aes(x = as.factor(ScaleAge), y = Weight)) +
 # (4) Mutates to create a new column called Weight_se that includes the standard
 #     error of weight for each group (se=1.96*sd).
 # HINT:Don't forget to remove NAs and ungroup at the appropriate place.
-
+redbandSummary <- redband %>% 
+  group_by(ScaleAge) %>% 
+  summarise(across(.cols= "Weight" ,
+                   .fns=list(mean=mean, sd=sd), na.rm=T)) %>% 
+  ungroup() %>% 
+  mutate(Weight_se = 1.96*Weight_sd)
 
 # Let's try again to make our bargraph by running the following code:
 ggplot(redbandSummary, aes(x = as.factor(ScaleAge), y = Weight_mean)) + 
@@ -338,31 +343,32 @@ ggplot(redbandSummary, aes(x = as.factor(ScaleAge), y = Weight_mean)) +
 
 # QUESTION: What does the stat='identity' part do in the code above? Check the 
 # geom_bar() help or google to find the answer.
-
+#enables you to plot bars where the bar length is set by variable mapping
 
 # The above code gave us nice bars.  Now we need to add error bars! We will do this
 # by adding in a second geometric object that specifies errorbars. Try it by
 # running the following code:
-ggplot(redbandSummary, aes(x = as.factor(ScaleAge), y = Weight_mean)) + 
-  geom_bar(stat='identity') +
-  geom_errorbar(aes(ymin=Weight_mean-Weight_se,
+ggplot(redbandSummary, aes(x = as.factor(ScaleAge), y = Weight_mean)) + #data from 'redbandSummary' with ScaleAge as descrete x values and Weight_meanon the y-axis 
+  geom_bar(stat='identity') + 
+  geom_errorbar(aes(ymin=Weight_mean-Weight_se, #set min and max values for errorbars 
                     ymax=Weight_mean+Weight_se,
-                    width=0.2))
+                    width=0.2)) #width of error bar
 
 # QUESTION: Annotate the code above with what each line does.
 
 
 # QUESTION: What does the statement width=0.2 do? If you're unsure, try removing
 # it and seeing what happens.
-
+#determines the width of the error bars
 
 # TASK: Modify the code below to make the bar fill light green, the bar outline 
 # dark green, and the error bars dark orange with end caps 40% the bar width.
 ggplot(redbandSummary, aes(x = as.factor(ScaleAge), y = Weight_mean)) + 
-  geom_bar(stat='identity') +
+  geom_bar(stat='identity' , color='darkgreen', fill= 'green') +
   geom_errorbar(aes(ymin=Weight_mean-Weight_se,
                     ymax=Weight_mean+Weight_se,
-                    width=0.2))
+                    width=0.4,
+                    color= 'orange'))
 
 # ---------------------------------------------------------- #
 #### PART 1.7 AESTHETICS PLACEMENT MATTERS!               #### 
@@ -377,7 +383,7 @@ ggplot(redband, aes(x = Length, y = Weight, color = as.factor(ScaleAge))) +
   geom_smooth(method='lm', se=F)
 
 # QUESTION: What is different about this graph from before?
-
+#there is a trend line for each factor of ScaleAge instead of a single continuous line throughout the data.
 
 # ---------------------------------------------------------- #
 #### PART 1.8: ALTERING SCALES                            ####
@@ -415,7 +421,11 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 # scale (i.e., with scale age on a linear x axis and length on a log y axis).
 # Fill in your boxplots with your favorite color and make the outline your least
 # favorite color. Label the x-axis Scale Age (years) and the y-axis Length (mm).
-
+ggplot(redband, aes(x=as.factor(ScaleAge), y = Length)) +
+  geom_boxplot(fill= "blue", color= 'yellow') +
+  scale_y_log10() +
+  xlab("Scale Age (years)") + 
+  ylab("Length (mm)")
 
 # ---------------------------------------------------------- #
 #### PART 1.9: SETTING THEMES                             ####
