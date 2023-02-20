@@ -477,9 +477,9 @@ willowDataTrt5 <- full_join(willowData, plotInfo, by = "plot")
 # (6) pivot_wider so that the values of percentage_mean are contained in different columns
 cdr <- read.csv("e001_Plant aboveground biomass carbon and nitrogen.csv") %>%
   rename(C = 'X..Carbon', N = 'X..Nitrogen') %>%
-  filter(Field %in% c("Strip 1", "Strip 2")) %>%
+  filter(Strip %in% c("1", "2")) %>%
   pivot_longer(cols = c(C, N), names_to = "element", values_to = "percentage") %>%
-  group_by(Date, Plot, NTrt, Species, Field, Strip) %>%
+  group_by(Date, Plot, NTrt, Species, Field, Strip,element) %>%
   summarize(percentage_mean = mean(percentage)) %>%
   ungroup() %>%
   pivot_wider(names_from = Field, values_from = percentage_mean)
