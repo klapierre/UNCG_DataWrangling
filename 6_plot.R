@@ -637,18 +637,30 @@ ggsave(filename = "Better Redband histogram facet.png", dpi = 600, units = "in",
 # of a correlation? Which showed deviations from a benchmark or baseline? And which
 # was an example of a distribution?
 
+    # the dot plot with a trend line is an example of a correlation, the box plot and bar chart are examples of a deviation from a benchmark, and the histogram is an example of a distribution.
 
 
 # TASK: Import the full SpokaneFish dataset, keeping all observations (i.e., 
 # don't filter down to a single species or remove observations without scale age).
 # Then make a set of plots faceted by species, with each plot displaying fish 
-# age as a factor vs length, putting length on a log10 scale, points as filled 
+# Weight vs length, putting length on a log10 scale, points as filled 
 # triangles colored by species, informative x and y axes labels that include units.
 # Then save your file as a .png with an informative figure name at a width of 9
 # inches and a height of 7 inches and 450 dpi.
 
+spokaneFishFull <- read.csv("LowerSpokaneFish.csv")
+
+ggplot(spokaneFishFull, aes(x = Weight, y = Length)) +
+  geom_point(shape = 17, aes(color = as.factor(Species))) +
+  facet_wrap(~Species) +
+  scale_y_log10() +
+  ylab("Length (mm)") +
+  xlab("Weight (g)")
+
+ggsave(filename = "Spokane Fish Weight vs Length Faceted by Species.png", unit = "in", height = 7, width = 9, dpi = 450)
 
 # QUESTION: Why do you think we focused on Redband Trout for most of this assignment?
 
+    # The difference between the full fish data and the data filtering for Redband Trout is only 39 observations. We don't lose much data by limiting ourselves to just the Redband Trout, while more importantly keeping our comparisons between length, weight, and age within the same species without needing to make all of our graphs faceted by species.
 
 # REMEMBER: Save and push your script when you're done with this assignment!
