@@ -207,11 +207,13 @@ ggplot(redband, aes(x=Length, y=Weight)) +
 
 # TASK: Copy and paste the code above to make the same graph, but this time remove
 # as.factor() from the part where we color by ScaleAge.
-
+ggplot(redband, aes(x=Length, y=Weight)) + 
+  geom_point(aes(color=ScaleAge))
 
 # QUESTION: What differs between the graph where ScaleAge was wrapped in the
 # as.factor() statement and the graph where you removed as.factor()? Why?
 
+    # in the graph that had the as.factor statement, the points were assigned distinct hues of color based on each age, and age is treated as a discrete value. In the second graph, age is treated as continuous and the points are colored along a gradient to reflect this.
 
 # TASK: Visit the ggplot Cookbook webpage at http://www.cookbook-r.com/Graphs/
 # This website is a great go-to place to find how to change all kinds of things
@@ -220,11 +222,13 @@ ggplot(redband, aes(x=Length, y=Weight)) +
 # TASK: Copy and paste the code for our previous graph below. Then modify the
 # aesthetics of the geometric object so that the size of the points varies with 
 # as.factor(ScaleAge).
-
+ggplot(redband, aes(x=Length, y=Weight)) + 
+  geom_point(aes(size=as.factor(ScaleAge)))
 
 # TASK: Modify the aesthetics of the geometric object from the previous graph
 # so that the size AND color of the points varies with ScaleAge.
-
+ggplot(redband, aes(x=Length, y=Weight)) + 
+  geom_point(aes(color=as.factor(ScaleAge), size=as.factor(ScaleAge)))
 
 # It is important to note that different kinds of geometric objects have different
 # types of associated aesthetics. Points and lines have colors, while bars and
@@ -234,11 +238,15 @@ ggplot(redband, aes(x = as.factor(ScaleAge), y = Weight)) +
 
 # QUESTION: What does color mean for boxplots? What does fill mean for boxplots?
 
+    # color means the boarder color, and fill means thhe color inside the shape's outline
 
 # QUESTION: Why did we have to specify as.factor() for ScaleAge in the initial
 # aes() statement? 
 # HINT: Try running the code without that statement, what happens?
+ggplot(redband, aes(x = ScaleAge, y = Weight)) + 
+  geom_boxplot(color = 'purple', fill = 'green')
 
+    # without specifying scale age as a factor, it becomes a continuous value and creates one really wide box
 
 # ---------------------------------------------------------- #
 #### PART 1.5 ADDING A LAYER: STATISTICAL TRANSFORMATIONS #### 
