@@ -203,7 +203,7 @@ airportDelaySummary <- flightData %>%
 
 
 # QUESTION: Which airport should you avoid if you want the shortest delays?
-# EWR
+# ANSWER: EWR
 
 # TASK: Write a pipeline to figure out which month of the year to avoid when flying to Raleigh 
 # by taking the original flight dataframe (flightData) and performing the following tasks:
@@ -299,21 +299,22 @@ willowFill <- willow %>%
 # In this case, the columns w1 through wC are individual willow seedlings that were sampled repeatedly.
 
 # TASK: Write code to indicate the sequence of columns from w1 through wC. 
-
+select(.data= willowFill,
+       w_1:w_C)
 
 # We can fix this problem using the pivot_longer() function. pivot_longer() takes multiple columns
 # and condenses them into just two columns, one that indicates what column the data came from and the other
 # that contains the data itself.
 # And while we're at it, let's get rid of the 'w' in front of each willow individual number.
 # Run the following code:
-willowClean <- willowFill %>%
-  pivot_longer(cols = w_1:w_C,
-               names_to = "willow_id",
-               values_to = "value") %>%
-  separate(col = willow_id,
-           into = c("remove", "willow_ID"),
-           sep = "_") %>%
-  select(-remove)
+willowClean <- willowFill %>% #creates a new data frame called willowClean from willowFill
+  pivot_longer(cols = w_1:w_C, #Takes columns w_1 to w_C and condenses them into 2 columns
+               names_to = "willow_id", #indicates which column the data came from
+               values_to = "value") %>% #contains the data itself
+  separate(col = willow_id, #separate column willow_id
+           into = c("remove", "willow_ID"), #into two different columns named remove and willow_ID
+           sep = "_") %>%  #separates things into the two columns if they are seperated by _
+  select(-remove) #selects and removes the remove column
 
 
 # TASK: Annotate (add comments) the code above to indicate what each line does.
