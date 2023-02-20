@@ -480,9 +480,9 @@ cdr <- read.csv("e001_Plant_carbon_nitrogen.csv")  %>%
   summarize(across(.cols=c('Percentage'), 
                    .fns=list(mean=mean), 
                    na.rm=T)) %>% 
-  ungroup() %>% 
   pivot_wider(names_from = Element, 
-              values_from = Percentage_mean)
+              values_from = Percentage_mean) %>% 
+  ungroup() 
 
 
 # ---------------------------------------------------------- #
