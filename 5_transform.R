@@ -59,13 +59,15 @@ streamTempLength <- streamTemp %>%
             winchester_length = length(winchester))
 
 # QUESTION: When you open the streamTempLength dataframe, what value is in each column?
-
+# The value is the length of each column.
 
 # QUESTION: How does this number compare to the number of observations listed by the dataframe
 # in the R environment tab?
+# These numbers are equal to eachother.
 
 
 # QUESTION: Based on your previous answers, what do you think the length function does?
+# length measures the length of each column variable and counts how long each is.
 
 
 # It can be a bit tedious to type out all the column names and the length function
@@ -74,6 +76,8 @@ streamTempLength <- streamTemp %>%
 streamTempLength <- streamTemp %>% 
   summarize(across(.cols=c('calispell', 'smalle', 'winchester'), 
                    .fns=length))
+# Summarize allows us to use multiple functions at once. Across applies one function across multiple variables
+# .cols selects each column that we specify within c(). The .fns allows us to select the function we wish to use.
 
 # TASK: Using comments in the code above, describe what each line is doing.
 
@@ -86,14 +90,16 @@ streamTempSummary <- streamTemp %>%
                    .fns=list(maximum=max, mean=mean, minimim=min)))
 
 # TASK: Write code to view the column names of the streamTempSummary dataframe.
-
+colnames(streamTempSummary)
 
 # QUESTION: How does R know what to name each column when we use the summarize function above?
-
+# Because we specify each column with the .cols function.
 
 # QUESTION: What values do you see for the columns when you open up the dataframe streamTempSummary?
 # Why do you think this is?
-
+# Each column contains NA. There were likely missing values in each column that were not
+# able to be ignored or used within the functions we wished to use. So R can only print them
+# As NA.
 
 # Recall that our data had a lot of missing values. R doesn't know how to find the mean, max,
 # or min of a group of observations that include NAs.
@@ -106,10 +112,12 @@ streamTempSummary <- streamTemp %>%
 
 # QUESTION: Now what values do you see for the columns when you open up the dataframe
 # streamTempSummary? What line of the above code removed the NAs from our data?
-
+# Now there are numeric values within each column. The NAs were removed with na.rm.
 
 # QUESTION: What happened to the column we created in the beginning called data_type?
 # Where did the date and time columns go?
+# These columns were not specified and therefore not used to calculate numeric values.
+
 
 
 # RECOMMENDED: Take a look at the summarize help file, particularly the "Useful functions" section
