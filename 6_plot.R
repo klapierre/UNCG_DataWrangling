@@ -264,6 +264,7 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 # in the above graph for our statistical transformation fit?
 # HINT: What is the default model type for a dataframe of our size?
 
+    # because we have fewer than 1000 points, geom_smooth() is using stats::loess() for the smoothing function
 
 # We also can specify a specific model to fit. Try running the following code to
 # specify a linear model:
@@ -274,7 +275,9 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 # TASK: As with most things in R, there are multiple ways to accomplish the same
 # task. Using the geom_smooth help page, write code below to specify a linear
 # model using a method= statement instead of the formula= statement.
-
+ggplot(redband, aes(x = Length, y = Weight)) + 
+  geom_point() + 
+  geom_smooth(method=lm)
 
 # A linear model does not seem like a good fit to our data. Try running the
 # following code to generate a quadratic model.
@@ -295,6 +298,7 @@ ggplot(redband, aes(x = as.factor(ScaleAge), y=Weight)) +
 # assignment.
 # HINT: It was in the very first part of the assignment.
 
+    # a histogram
 
 # TASK: Let's put this all together! Create a graph with the following:
 # (1) redband dataframe,
@@ -303,6 +307,9 @@ ggplot(redband, aes(x = as.factor(ScaleAge), y=Weight)) +
 # (4) quadratic line that is black in color and size=2 (HINT: check ggplot
 #     cookbook to help figure out how to change line color and size).
 
+ggplot(redband, aes(x=Length, y=Weight)) +
+  geom_point(aes(color=as.factor(ScaleAge))) +
+  geom_smooth(color="black", size=2)
 
 # ---------------------------------------------------------- #
 #### PART 1.6 DATA IN VS DATA OUT                         #### 
@@ -321,6 +328,7 @@ ggplot(redband, aes(x = as.factor(ScaleAge), y = Weight)) +
 # QUESTION: What is the graph output? Note the scale of the y-axis. Does this seem
 # right to you? What do you think happened to result in this graph?
 
+    # the x-axis is named strangl. The values for weight also go insanely high, I would guess its summing the observations to give total weight.
 
 # Typically, when plotting a bar graph we want to have the output show the mean
 # and standard error for each category. But unlike when we use the geom_boxplot 
@@ -338,6 +346,11 @@ ggplot(redband, aes(x = as.factor(ScaleAge), y = Weight)) +
 #     error of weight for each group (se=1.96*sd).
 # HINT:Don't forget to remove NAs and ungroup at the appropriate place.
 
+redbandSummary <- redband %>% 
+  group_by(ScaleAge) %>% 
+  summarize(Weight_mean = mean(Weight, na.rm = TRUE), Weight_sd = sd(Weight, na.rm = TRUE)) %>% 
+  ungroup() %>% 
+  mutate(Weight_se = Weight_sd*1.96)
 
 # Let's try again to make our bargraph by running the following code:
 ggplot(redbandSummary, aes(x = as.factor(ScaleAge), y = Weight_mean)) + 
@@ -346,15 +359,21 @@ ggplot(redbandSummary, aes(x = as.factor(ScaleAge), y = Weight_mean)) +
 # QUESTION: What does the stat='identity' part do in the code above? Check the 
 # geom_bar() help or google to find the answer.
 
+    # stat="identity" tells the bars to use the identity of the y-axis value for bar height rather than default to count for bar height
 
 # The above code gave us nice bars.  Now we need to add error bars! We will do this
 # by adding in a second geometric object that specifies errorbars. Try it by
 # running the following code:
 ggplot(redbandSummary, aes(x = as.factor(ScaleAge), y = Weight_mean)) + 
+  # names the data used and sets up the x- and y-axis
   geom_bar(stat='identity') +
+  # creates bars, using Weight_mean for the height of the bars
   geom_errorbar(aes(ymin=Weight_mean-Weight_se,
+                    # sets the point for the bottom of the error bar to be the value for Weight_mean - the value for Weight_se
                     ymax=Weight_mean+Weight_se,
+                    # sets the point for the top of the error bar to be the value for Weight_mean + the value for Weight_se
                     width=0.2))
+                    # sets the width of the error bars to 0.2
 
 # QUESTION: Annotate the code above with what each line does.
 
@@ -362,11 +381,12 @@ ggplot(redbandSummary, aes(x = as.factor(ScaleAge), y = Weight_mean)) +
 # QUESTION: What does the statement width=0.2 do? If you're unsure, try removing
 # it and seeing what happens.
 
+    # the width=0.2 statement changes the width of the top and bottom cross bars on the error bars, making them much smaller than default. I guess its .2 of the width of the bar in the bar chart, as setting width=1 makes the cross bars on thhe error bars equal in width to the graph bars.
 
 # TASK: Modify the code below to make the bar fill light green, the bar outline 
 # dark green, and the error bars dark orange with end caps 40% the bar width.
 ggplot(redbandSummary, aes(x = as.factor(ScaleAge), y = Weight_mean)) + 
-  geom_bar(stat='identity') +
+  geom_bar(stat='identity', color = "dark green", fill = "light green") +
   geom_errorbar(aes(ymin=Weight_mean-Weight_se,
                     ymax=Weight_mean+Weight_se,
                     width=0.2))
