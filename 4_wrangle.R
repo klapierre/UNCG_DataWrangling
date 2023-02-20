@@ -80,7 +80,7 @@ colnames(streamTemp)
 
 # TASK: Run the following line of code. Note the alignment of the code components.
 streamTempRename <- rename(.data=streamTemp,
-                           calispell_temp=Calispell.Cr.Temp.C.,
+                           Calispell_temp=Calispell.Cr.Temp.C.,
                            Smalle_temp=Smalle.Cr.Temp.C.,
                            Winchester_temp=Winchester.Cr.Temp..C.)
 
@@ -114,7 +114,7 @@ colnames(streamTempRename)
 
 # TASK: Run the following line of code to select our columns of interest.
 calispellTemp <- select(.data=streamTempRename,
-                        calispell_temp, Date, Time)
+                        Calispell_temp, Date, Time)
 
 
 # QUESTION: Take a look at the column names for our new dataframe (calispellTemp),
@@ -144,7 +144,7 @@ calispellTemp <- select(.data=streamTempRename,
 # HINT: Replace the code where each column was listed out with a sequence of column
 # names. Be sure they are listed in the order they exist in the original dataframe.
 calispellTemp2 <- select(.data = calispellTemp,
-                         Date, Time, calispell_temp)
+                         Calispell_temp, Date, Time)
 
 # TASK: Write code to check your column names again to see what happened in your
 # new dataframe.
@@ -193,7 +193,7 @@ identical(calispellTemp4, calispellTemp5)
 
 # TASK: Run the following code to only keep the values greater than or equal to 15C.
 calispellHighTemp <- filter(.data=calispellTemp,
-                            calispell_temp >= 15)
+                            Calispell_temp >= 15)
 
 # How do you know if it worked??
 # TASK: Check the number of observations in your dataframe! You can either do 
@@ -227,7 +227,7 @@ highTempTributaries <- filter(.data=streamTempRename,
 # We can also filter based on "or" - if any condition is true. For example, was
 # water temp >=15 at any site?
 highTempTributaries <- filter(.data=streamTempRename,
-                              calispell_temp >= 15 | smalle_temp >= 15 | winchester_temp >= 15)
+                              Calispell_temp >= 15 | Smalle_temp >= 15 | Winchester_temp >= 15)
 
 
 # Finally, we might want to only get the rows which do not have missing data. We can
@@ -242,13 +242,13 @@ is.na(c(3, 5, NA, 6))
 # Time to put this all together! We can filter all of the rows of wtemp for which
 # the value of calispell_temp is NOT NA.
 calispellData <- filter(.data=calispellTemp,
-                        !is.na(calispell_temp))
+                        !is.na(Calispell_temp))
 
 # QUESTION: How many observations are in the datafile calispellData? Write code to
 # determine how many values of calispell_temp were NA.
 # ANSWER: 52330
 calispellData_na <- filter(.data=calispellTemp,
-                        is.na(calispell_temp))
+                        is.na(Calispell_temp))
 
 # ---------------------------------------------------------- #
 ### PART 1.4: CREATING COLUMNS                            ####
@@ -262,7 +262,7 @@ calispellData_na <- filter(.data=calispellTemp,
 # it to a Fahrenheit column. Let's create a Fahrenheit column by running the
 # following code:
 calispellTempF <- mutate(.data=calispellTemp,
-                         calispell_temp_F = calispell_temp*9/5 + 32)
+                         Calispell_temp_F = Calispell_temp*9/5 + 32)
 
 
 # Take a look at the new dataframeto see if it worked by either opening 
@@ -275,10 +275,10 @@ head(calispellTempF)
 # TASK: Run the following code to create a new column that sums our two existing
 # temperature columns.
 calispellTempSum <- mutate(.data=calispellTempF,
-                           sum=calispell_temp + calispell_temp_F)
+                           sum=Calispell_temp + Calispell_temp_F)
 
 # Check the dataframe to see if it worked.
-
+view(calispellTempSum)
 
 # TASK: The column we just created makes no sense. Write code below to remove it
 # from the dataframe.
@@ -326,7 +326,7 @@ calispellTempF5 <- separate(data=calispellTempF4,
                             sep='::')
 
 # QUESTION: Why isn't the column name in quotes this time?
-# ANSWER: It is that way because type_ecosystem is already the name of the column that is being seperated.
+# ANSWER: It is that way because type_ecosystem is already the name of the column that is being separated.
 
 # QUESTION: Describe in your own words what the code above does.
 # ANSWER: it separates the column type_ecosystem into 2 columns, type and ecosystem.
@@ -411,3 +411,4 @@ cdr <- read.csv("e001_Plant aboveground biomass carbon and nitrogen.csv") %>%
   
 
 # REMEMBER: Save and push your script when you're done with this assignment!
+
