@@ -590,11 +590,14 @@ ggplot(redband, aes(x = Length)) +
 ggsave("Redband_histogram_facet.png")
 
 # QUESTION: Where did this file show up? And what was the graph?
+#The file shows up as a .png in our Git and working directory
 
 
 # TASK: Investigate the ggsave() function through the help files. Then write
 # code to save the file at 600 dpi, 10 inch width and 8 inch height.
+?ggsave()
 
+ggsave("Redband_histogram_facet.png", width = 10, height = 8, units = c("in"), dpi = 600)
 
 # NOTE: You can also save the graphics you make by exporting them from the plots
 # tab in RStudio. However, this can be less precise than specifying the graphic
@@ -609,7 +612,9 @@ ggsave("Redband_histogram_facet.png")
 # graph, and a dot plot with a trend line. Which of these figures was an example
 # of a correlation? Which showed deviations from a benchmark or baseline? And which
 # was an example of a distribution?
-
+#correlation- dot plot w/ trend line
+#Deviation- histogram, bar graph, boxplot
+#distribution- histogram, boxplot
 
 
 # TASK: Import the full SpokaneFish dataset, keeping all observations (i.e., 
@@ -620,6 +625,13 @@ ggsave("Redband_histogram_facet.png")
 # Then save your file as a .png with an informative figure name at a width of 9
 # inches and a height of 7 inches and 450 dpi.
 
+fishies <- read.csv(file = "LowerSpokaneFish.csv")
+
+ggplot(fishies, aes(x = as.factor(ScaleAge), y=Length)) + geom_point(shape=24, aes(fill = as.factor(Species))) +
+  facet_wrap(~Species, scales="free_y") +
+  scale_y_log10() +
+  xlab('Scale Age (years)') + 
+  ylab('Length (mm)')
 
 # QUESTION: Why do you think we focused on Redband Trout for most of this assignment?
 
