@@ -313,7 +313,7 @@ willowFill
 # In this case, the columns w1 through wC are individual willow seedlings that were sampled repeatedly.
 
 # TASK: Write code to indicate the sequence of columns from w1 through wC. 
-
+w_cols <- sort(grep("^w_[0-9]|^w_[A-C]$", colnames(willowFill), value = TRUE))
 
 # We can fix this problem using the pivot_longer() function. pivot_longer() takes multiple columns
 # and condenses them into just two columns, one that indicates what column the data came from and the other
@@ -321,14 +321,21 @@ willowFill
 # And while we're at it, let's get rid of the 'w' in front of each willow individual number.
 # Run the following code:
 willowClean <- willowFill %>%
+  #New name for the dataframe but cleans up the data a bit.
   pivot_longer(cols = w_1:w_C,
+               #This determines the colomns that will be pivoted.
                names_to = "willow_id",
+               #Names the column willow_id
                values_to = "value") %>%
+  #Only the columns with value will be named.
   separate(col = willow_id,
+           #This separates the column willow_id from the rest.
            into = c("remove", "willow_ID"),
+           #The willow_id column gets split up.
            sep = "_") %>%
+  #The _ separates or used as a divider.
   select(-remove)
-
+#This removes the first column created.
 
 # TASK: Annotate (add comments) the code above to indicate what each line does.
 
