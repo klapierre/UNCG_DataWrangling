@@ -690,14 +690,32 @@ ggsave("Redband_histogram_facet2.png",
 
 # TASK: Import the full SpokaneFish dataset, keeping all observations (i.e., 
 # don't filter down to a single species or remove observations without scale age).
-# Then make a set of plots faceted by species, with each plot displaying fish 
-# age as a factor vs length, putting length on a log10 scale, points as filled 
+# Then make a set of plots faceted by species, with each plot displaying weight vs length, 
+# putting length on a log10 scale, points as filled 
 # triangles colored by species, informative x and y axes labels that include units.
 # Then save your file as a .png with an informative figure name at a width of 9
 # inches and a height of 7 inches and 450 dpi.
 
+SpokaneFish <- read.csv(file="C:\\Users\\leoiv\\Downloads\\LowerSpokaneFish.csv")
+ggplot(SpokaneFish, aes(x = Length, y = Weight, color = as.factor(Species))) + 
+  xlab("Whole body length (mm)") + 
+  ylab("Weight (g)") +
+  geom_point(shape=2) + 
+  scale_x_log10() +
+  facet_grid(~Species)
 
+ggsave("SpokaneFishWeightByLength.png",
+       width=9,
+       height=7,
+       units="in",
+       dpi=450)
+
+
+?geom_point
 # QUESTION: Why do you think we focused on Redband Trout for most of this assignment?
 
+## The majority of the Spokane fish dataset consists of redband trout - if this is
+## relatively unbiased sampling then they should be the dominate species in the
+## area and the most statistically relevant.
 
 # REMEMBER: Save and push your script when you're done with this assignment!
