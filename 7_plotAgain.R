@@ -543,6 +543,7 @@ ggplot(manufacturerFreq, aes(x="", y=frequency, fill=manufacturer)) +
 # ---------------------------------------------------------- #
 #### 6.0 CHANGE                                           ####
 # ---------------------------------------------------------- #
+
 # Time series are often best visualized with line graphs. Let's try this out
 # with some new data:
 data("economics")
@@ -551,6 +552,15 @@ data("economics")
 # over time (unemploy vs date). Make a scatterplot, then connect the points with 
 # lines using geom_line().
 # HINT: use ?economics to get more information about this dataset.
+
+
+
+
+# ---------------------------------------------------------- #
+#### GROUPS AND MAPS                                      ####
+# ---------------------------------------------------------- #
+
+# Let's save these for group project options, this assignment is really long!
 
 
 
