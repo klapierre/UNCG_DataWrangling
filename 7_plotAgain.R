@@ -451,6 +451,42 @@ ggplot(cityMPG, aes(x=reorder(class, city_mean), y=city_mean)) +
 # (6) no legend.
 
 
+# ---------------------------------------------------------- #
+#### 4.0 DISTRIBUTION                                     ####
+# ---------------------------------------------------------- #
+# When you have lots and lots of data points and want to study where and how the
+# data points are distributed.
+
+# Histograms can be accomplished with either geom_bar() or geom_histogram()
+ggplot(mpg, aes(hwy)) + 
+  geom_histogram()
+
+# TASK: Recreate the graph above, but using geom_bar() instead
+
+
+# TASK: Try making a histogram with the categorical variable 'manufacturer'.
+# What error message do you get?
+
+
+# QUESTION: What happens when you follow the advice of the error message and 
+# make stat='count'?
+ggplot(mpg, aes(manufacturer)) + 
+  geom_histogram(stat="count")
+
+
+# TASK: Make a boxplot comparing the distribution of cty (city mileage) for
+# each class of car.
+# HINT: Look back to last week if you forget how to make a boxplot.
+
+
+# We can also make a different type of distribution, a violin plot using the 
+# geom_violin statement as follows:
+ggplot(mpg, aes(x=class, y=cty)) + 
+  geom_violin()
+
+# QUESTION: What does a violin plot show? Check google if you're unsure.
+
+
 
 
 
