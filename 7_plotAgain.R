@@ -487,7 +487,70 @@ ggplot(mpg, aes(x=class, y=cty)) +
 # QUESTION: What does a violin plot show? Check google if you're unsure.
 
 
+# ---------------------------------------------------------- #
+#### 5.0 COMPOSITION                                      ####
+# ---------------------------------------------------------- #
+# Bar charts and pie charts are classic ways of showing composition of a dataset.
 
+# TASK: Let's get some data for this task by determining the number of cars from 
+# each car manufacturer in our mpg dataframe. We can do this as follows:
+manufacturerFreq <- mpg %>% 
+  group_by(manufacturer) %>% 
+  summarize(frequency=length(manufacturer)) %>% 
+  ungroup()
+
+# TASK: Make a bar graph of the number of cars (frequency) by manufacturer using
+# the dataframe we created above.
+
+
+# We can switch the bar chart you created above into a pie chart simply by changing
+# the coordinate system through a series of steps as follows:
+
+ggplot(manufacturerFreq, aes(x=manufacturer, y=frequency)) +
+  geom_bar(stat="identity") +
+  coord_polar()
+
+ggplot(manufacturerFreq, aes(x=manufacturer, y=frequency, fill=manufacturer)) +
+  geom_bar(stat="identity") +
+  coord_polar()
+
+ggplot(manufacturerFreq, aes(x="", y=frequency, fill=manufacturer)) +
+  geom_bar(stat="identity", width=1) +
+  coord_polar()
+
+ggplot(manufacturerFreq, aes(x="", y=frequency, fill=manufacturer)) +
+  geom_bar(stat="identity", width=1) +
+  coord_polar(theta="y")
+
+ggplot(manufacturerFreq, aes(x="", y=frequency, fill=manufacturer)) +
+  geom_bar(stat="identity", width=1) +
+  coord_polar(theta="y", start=0) +
+  theme_void() +
+  theme(legend.title = element_text(size = 12.5), 
+        legend.text  = element_text(size = 8.5),
+        legend.key.size = unit(.75, "lines"))
+
+# TASK: Annotate the code below to describe what each line does:
+ggplot(manufacturerFreq, aes(x="", y=frequency, fill=manufacturer)) +
+  geom_bar(stat="identity", width=1) +
+  coord_polar(theta="y", start=0) +
+  theme_void() +
+  theme(legend.title = element_text(size = 12.5), 
+        legend.text  = element_text(size = 8.5),
+        legend.key.size = unit(.75, "lines"))
+
+
+# ---------------------------------------------------------- #
+#### 6.0 CHANGE                                           ####
+# ---------------------------------------------------------- #
+# Time series are often best visualized with line graphs. Let's try this out
+# with some new data:
+data("economics")
+
+# TASK: Use the economics dataset to plot the number of people who are unemployed
+# over time (unemploy vs date). Make a scatterplot, then connect the points with 
+# lines using geom_line().
+# HINT: use ?economics to get more information about this dataset.
 
 
 
