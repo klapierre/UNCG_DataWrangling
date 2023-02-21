@@ -93,38 +93,132 @@ ggplot(data=mpg, aes(x=cty, y=hwy)) +
 
 
 # ---------------------------------------------------------- #
-#### 2.0 DEVIATION                                        ####
+#### 1.1 DETOUR! COLORS, COLORS, COLORS                   ####
 # ---------------------------------------------------------- #
 
-# Deviations are used to compare variation in values between small number of 
-# items (or categories) with respect to a fixed reference.
+# Our world is so colorful, and our graphs can be too! But we want to be mindful
+# of our color choices to not only be beautiful, but also informative and accessible.
 
-# Whether the graphical type is a deviation graph or a composition graph (or a 
-# ranking graph) may depend on the underlying data structure.
-
-# We used geom_bar() last week with factor data to create a bar graph. But
-# geom_bar() is a bit tricky because it can make EITHER a bar graph or a histogram
-# depending on the data you give it. The default of geom_bar() is to set stat to 
-# count so if you give it just a continuous x value, it will make a histogram. Try
-# it with the following code:
-ggplot(data=mpg, aes(x=hwy)) + 
-  geom_bar()
-
-# In order to have the geom create bars and not a histogram, you must:
-# 1) Set stat = identity
-# 2) Provide both an x and a y inside the aes(), where x is either a character 
-# or factor and y is numeric.
-
-# TASK: Create a dataframe of summary statistics for the mpg data, calculating the
-# mean, standard deviation, and standard error for highway mpg grouping by class.
-# HINT: Look back at the Transform assignment if you forget how to summarize the
-# data. Also, standard error = 1.96*standard deviation.
+# TASK: Create a new dataframe that filters our mpg data down to only information
+# for car classes compact, midsize, and suv using an %in% statement. Name your 
+# new dataframe mpgSubset.
+# HINT: Refer back to the Transform assignment if you want help with %in% (or 
+# try googling!)
 
 
-# TASK: Create a bar graph showing the average highway MPG on the y-axis and 
-# car class on the x-axis. Fill the bars by class. Add in error bar caps that are 20%
-# the width pf the bars. Rename the x and y axes to be more meaningful.
-# HINT: Don't forget to change stat from the default in your geom_bar() statement!
+# ggplot has lots of nice (and some not so nice) built-in color palettes that we 
+# can use to fill our bars with color. Try running the following code:
+ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
+  geom_jitter()
+
+# The code above supplies us with ggplot's default color palette, which I find not
+# so pleasing. Let's try to change this!
+
+# We can add a statement specifying the scale of colors we would prefer. One way
+# to do this is to use other pre-set palettes from ggplot. Run the code below to 
+# ask ggplot to use the color brewer's palette called Set 1.
+ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
+  geom_jitter() +
+  scale_color_brewer(palette="Set1")
+
+# Alternatively, we could use the "RdBu" palette:
+ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
+  geom_jitter() +
+  scale_color_brewer(palette="RdBu")
+
+# QUESTION: Investigate the color brewer's range of palettes at this website: 
+# https://r-graph-gallery.com/38-rcolorbrewers-palettes.html
+# What do you notice about the colors chosen from each of the palettes that we
+# used above? (i.e., does it use the first three colors in the palette? The last
+# three? Some other combination?)
+
+
+# We could also pick out EXACTLY which colors we want for our figure. 
+# There are 4 main ways to specify colors in R:
+### by name
+### by number
+### by Hex code
+### with the rgb() function
+
+# By Name: R allows you to call more than 600 colors by name! Run the following
+# code to see a list:
+colors()
+
+# We can put in the colors we chose for each variable by adding the 
+# scale_color_manual() function to our plot. Try it out by running the following
+# code:
+ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
+  geom_jitter() +
+  scale_color_manual(values=c('midnightblue', 'cornflowerblue', 'tomato3'))
+
+
+# You can also chose colors by number, which are assigned in R.
+
+# TASK: Copy and paste the code to make our scatterplot and replace the color names
+# with three numbers of your choice (between 1 and 657). How does your new figure look?
+# HINT: remember to remove the quotation marks when calling numbers.
+
+
+# QUESTION: How do you think you could figure out which color name belongs to
+# each color number?
+# HINT: Try creating a dataframe from color() by passing it into the
+# as.data.frame() function.
+
+
+# You can also chose colors by Hex code. A Hex color code is a 6-symbol code made
+# of up to three 2-symbol elements (6 symbols in length all together). Each of 
+# the 2-symbol elements represents a color value in the Red-Green-Blue (RGB) color
+# scale from 0 to 255. Hex codes are written with a # in front of them. Let's try
+# out calling our colors using hex code.
+ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
+  geom_jitter() +
+  scale_color_manual(values=c('#191970', '#6495ED', '#FF6347'))
+
+# There are two great things about hex codes. First, you can call ANY color you 
+# want with a hex code. That is, you're not limited to the 657 colors that are
+# in ggplot. By specifying the color by hex code, you can pick literally anything!
+
+# TASK: Google the search term "color picker". This should bring up google's color
+# picker (in addition to a billion other color picking websites). Use this color
+# picker to generate the hex codes for three new colors of your choice. Then copy
+# and paste the above code, replacing the hex codes with your color choices.
+
+
+# The second great thing about hex codes is that you can control the transparency
+# of your colors. Transparency is set in a hex code by adding two extra symbols
+# to the end, which together make up the "alpha" element. Adding 00 to the end 
+# of your hex code will make your color completely transparent, while adding FF 
+# to the end will make it completely opaque. Any number/letters in-between will 
+# result in partial transparency. You can find a complete list of transparencies
+# between 0-100% here: https://gist.github.com/lopspower/03fb1cc0ac9f32ef38f4
+
+# TASK: Try out transparency by copying and pasting your graph code below and
+# adding the alpha element to the end of each of your hex codes to make your
+# first color 0% transparent, your second color 50% transparent, and your third
+# color 100% transparent.
+
+
+# QUESTION: What happened to the point that you set to 100% transparent?
+
+
+# Finally, we can set our colors using the rgb() function. This operates very
+# similarly to the hex code, where you can pick exactly the color and transparency
+# you want. Try it out by running the following code:
+ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
+  geom_jitter() +
+  scale_color_manual(values=c(rgb(.10, .10, .44, 1), rgb(.39, .58, .93, 1), rgb(1.0, .39, .28, 1)))
+
+# TASK: Modify the above code to make all of your points 50% transparent.
+
+# There are so many inventive and artistic people in the world who have expanded
+# the offerings for colors in ggplot. Check out some notable ones listed below
+# when choosing colors for this assignment.
+### Color-blind friendly palettes: https://github.com/JLSteenwyk/ggpubfigs
+### Color palettes from vintage National Parks posters: https://github.com/katiejolly/nationalparkcolors
+### Color palettes based on Wes Anderson movies: https://github.com/karthik/wesanderson
+### Color palettes from famous Dutch paintings: https://github.com/EdwinTh/dutchmasters
+
+
 
 
 # REMEMBER: Save and push your script when you're done with this assignment!
