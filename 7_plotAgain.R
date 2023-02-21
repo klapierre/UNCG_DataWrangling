@@ -78,6 +78,14 @@ data(mpg, package = "ggplot2")
 ggplot(data=mpg, aes(x=cty, y=hwy)) + 
   geom_jitter()
 
+
+# QUESTION: What happened when you created the plot with geom_jitter?
+
+
+# QUESTION: Run the code to create a plot using geom_jitter a second time. Then run it
+# again and again. What happens each time? Why is this happening?
+
+
 # TASK: The default in geom_jitter is to jitter (or slightly move) the points away
 # from each other in both the x and y directions. Check the help file for geom_jitter
 # and write code below to make a graph where you jitter points in only the x-dimension
