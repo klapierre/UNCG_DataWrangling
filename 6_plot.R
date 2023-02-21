@@ -627,13 +627,15 @@ ggsave("Redband_histogram_facet.png", width = 10, height = 8, units = c("in"), d
 
 fishies <- read.csv(file = "LowerSpokaneFish.csv")
 
-ggplot(fishies, aes(x = as.factor(ScaleAge), y=Length)) + geom_point(shape=24, aes(fill = as.factor(Species))) +
+ggplot(fishies, aes(x = as.factor(Weight), y=Length)) + geom_point(shape=24, aes(fill = as.factor(Species))) +
   facet_wrap(~Species, scales="free_y") +
   scale_y_log10() +
-  xlab('Scale Age (years)') + 
+  xlab('Weight (g)') + 
   ylab('Length (mm)')
 
+ggsave("fishies.png", width = 9, height = 7, units = "in", dpi = 450)
+
 # QUESTION: Why do you think we focused on Redband Trout for most of this assignment?
-#Because there are a lot of measurements in that species
+#Because there are a lot of observations for that species. If we used a different species, we would've had a smaller sample size.
 
 # REMEMBER: Save and push your script when you're done with this assignment!
