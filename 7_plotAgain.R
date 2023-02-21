@@ -343,7 +343,7 @@ ggplot(data=mpg, aes(x=hwy)) +
 
 
 # ---------------------------------------------------------- #
-#### 2.2 DETOUR! COLORS AND LEGENDS, AGAIN                ####
+#### 2.1 DETOUR! COLORS AND LEGENDS, AGAIN                ####
 # ---------------------------------------------------------- #
 
 # Recall that some geometric elements require fills instead of (or sometimes in
@@ -360,6 +360,64 @@ ggplot(data=mpg, aes(x=hwy)) +
 # statement, the scale_fill_manual or scale_color_manual statements, or neither.
 # If in doubt, try a bunch of ways until it looks how we want it. And consult 
 # your helpful ggplot resources on the web.
+
+
+# ---------------------------------------------------------- #
+#### 2.2 DETOUR! AXIS MODIFICATIONS                       ####
+# ---------------------------------------------------------- #
+
+# Run the following code, feeling free to modify colors as you prefer:
+ggplot(data=mpgSummary, aes(x=class, y=hwy_mean, fill=class)) +
+  geom_bar(stat='identity') 
+
+# QUESTION: Where is ggplot getting the x-axis tick labels from?
+
+
+# Often our tick labels are not the best. We can modify them to be more informative
+# or visually appealing by directly modifying the dataframe, but again this feels
+# a bit extreme. Instead, we can directly modify the scale of the axis. For axes
+# that deal with categories, we are setting the discrete scale. Try it out by
+# running the following code:
+ggplot(data=mpgSummary, aes(x=class, y=hwy_mean, fill=class)) +
+  geom_bar(stat='identity') +
+  scale_x_discrete(labels=c('sport', 'compact', 'midsize', 'minivan', 'pickup', 'subcompact', 'SUV'))
+
+# We can also change the scale of the continuous axes, including how large they are
+# and where the tick marks fall as follows:
+ggplot(data=mpgSummary, aes(x=class, y=hwy_mean, fill=class)) +
+  geom_bar(stat='identity') +
+  scale_y_continuous(breaks=seq(0, 50, 10)) +
+  coord_cartesian(ylim=c(0,50))
+
+# QUESTION: Try running the code above without the coord_cartesian() statement. 
+# What is surprising about the resulting graph? Based on this result, what do you
+# think the coord_cartesian() statement does?
+
+
+# We can also add a statement into the scale discrete or continuous statements
+# to name our axes, rather than putting in a whole separate step of xlab() or ylab().
+# Try it out with the following code:
+ggplot(data=mpgSummary, aes(x=class, y=hwy_mean, fill=class)) +
+  geom_bar(stat='identity') +
+  scale_x_discrete(name='Class of Car') +
+  scale_y_continuous(name='Mean Highway MPG')
+
+
+# Finally, we can flip our axes easily in ggplot as follows:
+ggplot(data=mpgSummary, aes(x=class, y=hwy_mean, fill=class)) +
+  geom_bar(stat='identity') +
+  coord_flip()
+
+
+# TASK: Let's put it all together. Make a graph of the mpg summary stats with the
+# following specifications:
+# (1) color by class of car using a color scheme of your choice (not the default)
+# (2) plot the class of car on the x-axis and the highway MPG on the y axis
+# (3) include better names for the x- and y-axis titles
+# (4) include better names for the car classes
+# (5) set the scale of the highway mpg to run from 0 to 30 with breaks every 5 
+# (6) flip your axes
+# (7) remove the legend
 
 
 
