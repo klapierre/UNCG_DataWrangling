@@ -719,11 +719,11 @@ ggsave("Redband_histogram_facet.png",plot = last_plot(), dpi = 600, width = 10, 
 fish <- read.csv("LowerSpokaneFish.csv")
 
 
-ggplot(fish, aes(x = as.factor(ScaleAge), y = Length)) + 
+ggplot(fish, aes(x = as.factor(Weight), y = Length)) + 
   geom_point(shape = 24, aes(fill = as.factor(Species))) +
   facet_wrap(~Species, scales = "free_y") +
   scale_y_log10() +
-  xlab("Scale Age (year)") + 
+  xlab("Weight (g)") + 
   ylab("Length (mm)") 
   
 
