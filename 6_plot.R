@@ -628,11 +628,11 @@ ggsave("Redband_histogram_facet01.png", dpi = 600, width = 10, height = 8, units
 # inches and a height of 7 inches and 450 dpi.
 redband_full <- read.csv(file = "LowerSpokaneFish.csv")
 
-ggplot(redband_full, aes(x = as.factor(ScaleAge), y = Length))+
-  geom_point(shape="triangle", aes(color = as.factor(Species)))+
+ggplot(redband_full, aes(x = Weight, y = Length))+
+  geom_point(shape="triangle", aes(color = Species))+
   facet_wrap(~Species)+
   scale_y_log10()+
-  xlab("Scale Age (year)")+
+  xlab("Weight (g)")+
   ylab("Length (mm)")
   
 ggsave("LowerSpokaneFish_dotPlot.png", width = 9, height = 7, units = "in", dpi = 450)
