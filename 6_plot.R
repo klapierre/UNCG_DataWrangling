@@ -679,15 +679,18 @@ ggsave("Redband_histogram_facet.png", dpi = 600, width = 10, height = 8)
 
 SpokeaneFish <- read.csv("LowerSpokaneFish.csv")
 
-ggplot(SpokeaneFish, aes(x = Length, y = ScaleAge)) + 
-  geom_point(size=1, color= as.factor(Species), shape=2) +
+ggplot(SpokeaneFish, aes(x = Length, y = Weight, color = as.factor(Species))) + 
+  geom_point(size=1, shape=17) +
   scale_x_log10() +
   xlab("Redband trout length (mm)") + 
-  ylab("Age (years)") +
+  ylab("Weight (lb)") +
   facet_wrap(~Species, scales="free")
+
+ggsave("SpokeaneFish.png", width = 9, height = 7, dpi = 450)
 
 
 # QUESTION: Why do you think we focused on Redband Trout for most of this assignment?
 
+#Natural species which will make a good dataset for  plotting different trends. 
 
 # REMEMBER: Save and push your script when you're done with this assignment!
