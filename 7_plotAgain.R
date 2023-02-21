@@ -219,6 +219,154 @@ ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
 ### Color palettes from famous Dutch paintings: https://github.com/EdwinTh/dutchmasters
 
 
+# ---------------------------------------------------------- #
+#### 1.2 DETOUR! LEGENDS                                  ####
+# ---------------------------------------------------------- #
+
+# When you specify colors in your ggplot code, R throws in a bonus legend for free!
+# However, this legend is often not as clear or visually appealing as we might 
+# prefer. But as with all geometric objects in ggplot, legends can be easily altered.
+
+# Run the following code to create a scatter plot. Feel free to modify the colors
+# as you prefer!
+ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
+  geom_jitter()
+
+# QUESTION: Where did ggplot get the legend title and values from?
+
+
+# We could change the title and values in our legend by altering the dataframe
+# we are passing into ggplot. But that seems a bit drastic. Instead, we can 
+# lean on the same code that specifies our color picks to alter the legend text.
+# Try it out by running the following code:
+ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) + 
+  geom_jitter() + 
+  scale_color_manual(values=c('#FCBA03', '#380754', '#496916'),
+                     name='Class of Car', 
+                     breaks=c('suv', 'midsize', 'compact'), 
+                     labels=c('SUV', 'Midsize', 'Compact'))
+
+
+# TASK: Label each line of the code above with what it is doing.
+# HINT: Check the scale_color_manual help file or ggplot Cookbook for more info.
+
+
+# IMPORTANT: It is important to pay attention to the order you provide ggplot with 
+# your color choices and legend labels! Try running the following code:
+ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) + 
+  geom_jitter() + 
+  scale_color_manual(values=c('#FCBA03', '#380754', '#496916'), 
+                     name='Class of Car', 
+                     breaks=c('suv', 'midsize', 'compact'), 
+                     labels=c('Compact', 'SUV', 'Midsize')) 
+
+
+# QUESTION: What is wrong with the code above? Why is it so important to be
+# careful with the order you pass information into ggplot?
+
+
+# While changing the legend text and factor order takes place in the scale_color_manual
+# step, moving the legend around on the graph page is part of the graph theme. We
+# can try this out using the code below:
+ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) + 
+  geom_jitter() + 
+  theme(legend.position='top')
+
+
+# TASK: Modify the code above to have the legend display along the bottom of
+# the figure.
+
+
+# We can also have the legend located within the area of the graph itself! We can 
+# do this by specifying the coordinates for where the legend should go within the
+# graph axes. First we set the legend position and then we set the anchoring 
+# position by justifying the legend.
+### bottom left: 0,0
+### bottom right: 1,0
+### top left: 0,1
+### top right: 1,1
+
+# Try it out by running the following code:
+ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) + 
+  geom_jitter() + 
+  theme(legend.position=c(1,0), legend.justification=c(1,0))
+
+# QUESTION: What happens if you don't include the code for legend justification
+# above?
+
+
+# TASK: Copy and paste the code from above. Modify it to place the legend in the
+# upper left part of the graph.
+
+
+# Finally, we might want to remove the legend altogether! We would do so by
+# modifying the theme as well. 
+
+# TASK: Check the ggplot cookbook to find the legends section. Read what it says 
+# about removing the legend. Then copy and paste the graph code from above. Modify
+# the code to remove the legend.
+
+
+# ---------------------------------------------------------- #
+#### 2.0 DEVIATION                                        ####
+# ---------------------------------------------------------- #
+
+# Used to compare variation in values between small number of items (or categories) 
+# with respect to a fixed reference.
+
+# Whether the graphical type is a deviation graph or a composition graph (or a 
+# ranking graph) may depend on the underlying data structure.
+
+# We used geom_bar() last week with factor data to create a bar graph. But
+# geom_bar() is a bit tricky because it can make EITHER a bar graph or a histogram
+# depending on the data you give it. The default of geom_bar() is to set stat to 
+# count so if you give it just a continuous x value, it will make a histogram. Try
+# it with the following code:
+ggplot(data=mpg, aes(x=hwy)) + 
+  geom_bar()
+
+# In order to have the geom create bars and not a histogram, you must:
+# 1) Set stat = identity
+# 2) Provide both an x and a y inside the aes(), where x is either a character 
+# or factor and y is numeric.
+
+# TASK: Create a dataframe of summary statistics for the mpg data, calculating the
+# mean, standard deviation, and standard error for highway mpg grouping by class.
+# HINT: Look back at the Transform assignment if you forget how to summarize the
+# data. Also recall, standard error = 1.96*standard deviation.
+
+
+# TASK: Create a bar graph showing the average highway MPG on the y-axis and 
+# car class on the x-axis. Fill the bars by class. Add in error bar caps that are 20%
+# the width pf the bars.
+# HINT: Don't forget to change stat from the default in your geom_bar() statement!
+
+
+# ---------------------------------------------------------- #
+#### 2.2 DETOUR! COLORS AND LEGENDS, AGAIN                ####
+# ---------------------------------------------------------- #
+
+# Recall that some geometric elements require fills instead of (or sometimes in
+# addition to) colors.
+
+# TASK: Create a bar graph with the mpg summary stats with the following parameters:
+# (1) Black bar outline
+# (2) Bars filled with the color brewer palette "Dark2" using the scale_fill_manual
+#     statement
+# (3) No legend
+# (4) Informative x- and y-axis labels. 
+
+# HINT: Carefully consider whether your color and/or fill should go within an aes() 
+# statement, the scale_fill_manual or scale_color_manual statements, or neither.
+# If in doubt, try a bunch of ways until it looks how we want it. And consult 
+# your helpful ggplot resources on the web.
+
+
+
+
+
+
+
 
 
 # REMEMBER: Save and push your script when you're done with this assignment!
