@@ -332,6 +332,8 @@ ggplot(data=mpg, aes(x=hwy)) +
 
 # TASK: Create a dataframe of summary statistics for the mpg data, calculating the
 # mean, standard deviation, and standard error for highway mpg grouping by class.
+# Name the resulting dataframe highwayMPG and your new variables hwy_mean, hwy_sd,
+# and hwy_se.
 # HINT: Look back at the Transform assignment if you forget how to summarize the
 # data. Also recall, standard error = 1.96*standard deviation.
 
@@ -367,7 +369,7 @@ ggplot(data=mpg, aes(x=hwy)) +
 # ---------------------------------------------------------- #
 
 # Run the following code, feeling free to modify colors as you prefer:
-ggplot(data=mpgSummary, aes(x=class, y=hwy_mean, fill=class)) +
+ggplot(data=highwayMPG, aes(x=class, y=hwy_mean, fill=class)) +
   geom_bar(stat='identity') 
 
 # QUESTION: Where is ggplot getting the x-axis tick labels from?
@@ -378,13 +380,13 @@ ggplot(data=mpgSummary, aes(x=class, y=hwy_mean, fill=class)) +
 # a bit extreme. Instead, we can directly modify the scale of the axis. For axes
 # that deal with categories, we are setting the discrete scale. Try it out by
 # running the following code:
-ggplot(data=mpgSummary, aes(x=class, y=hwy_mean, fill=class)) +
+ggplot(data=highwayMPG, aes(x=class, y=hwy_mean, fill=class)) +
   geom_bar(stat='identity') +
   scale_x_discrete(labels=c('sport', 'compact', 'midsize', 'minivan', 'pickup', 'subcompact', 'SUV'))
 
 # We can also change the scale of the continuous axes, including how large they are
 # and where the tick marks fall as follows:
-ggplot(data=mpgSummary, aes(x=class, y=hwy_mean, fill=class)) +
+ggplot(data=highwayMPG, aes(x=class, y=hwy_mean, fill=class)) +
   geom_bar(stat='identity') +
   scale_y_continuous(breaks=seq(0, 50, 10)) +
   coord_cartesian(ylim=c(0,50))
@@ -397,14 +399,14 @@ ggplot(data=mpgSummary, aes(x=class, y=hwy_mean, fill=class)) +
 # We can also add a statement into the scale discrete or continuous statements
 # to name our axes, rather than putting in a whole separate step of xlab() or ylab().
 # Try it out with the following code:
-ggplot(data=mpgSummary, aes(x=class, y=hwy_mean, fill=class)) +
+ggplot(data=highwayMPG, aes(x=class, y=hwy_mean, fill=class)) +
   geom_bar(stat='identity') +
   scale_x_discrete(name='Class of Car') +
   scale_y_continuous(name='Mean Highway MPG')
 
 
 # Finally, we can flip our axes easily in ggplot as follows:
-ggplot(data=mpgSummary, aes(x=class, y=hwy_mean, fill=class)) +
+ggplot(data=highwayMPG, aes(x=class, y=hwy_mean, fill=class)) +
   geom_bar(stat='identity') +
   coord_flip()
 
@@ -418,6 +420,38 @@ ggplot(data=mpgSummary, aes(x=class, y=hwy_mean, fill=class)) +
 # (5) set the scale of the highway mpg to run from 0 to 30 with breaks every 5 
 # (6) flip your axes
 # (7) remove the legend
+
+
+# ---------------------------------------------------------- #
+#### 3.0 RANKING                                          ####
+# ---------------------------------------------------------- #
+# Used to compare the position or performance of multiple items with respect to 
+# each other. Actual values matters somewhat less than the ranking.
+
+# TASK: Create a dataframe of summary statistics for the mpg data, calculating the
+# mean, standard deviation, and standard error for CITY mpg grouping by class.
+# Name the resulting dataframe cityMPG and your new variables city_mean, city_sd,
+# and city_se.
+# HINT: Look back at the Transform assignment if you forget how to summarize the
+# data. Also, standard error = 1.96*standard deviation.
+
+
+# Now we want to plot our data in order from smallest to largest city MPG to get
+# a ranking. To do so, we need to use the reorder() function to rearrange the data
+# going into our x-axis.
+ggplot(cityMPG, aes(x=reorder(class, city_mean), y=city_mean)) + 
+  geom_bar(stat="identity")
+
+# TASK: Recreate the above ranking figure to include the following:
+# (1) class of car on the x-axis with informative axis and tick labels
+# (2) MPG ordered from highest to lowest (hint: try google if you're unsure)
+# (3) bars with dary grey outlines and filled by class with your favorite color scheme
+# (4) error bars with end caps 30% the width of the bars
+# (5) y-axis from 0 to 30 with tick marks every 5
+# (6) no legend.
+
+
+
 
 
 
