@@ -353,11 +353,11 @@ willowClean <- willowFill %>%
 # Good news, we can fix this problem with the complementary function to pivot_longer().
 # This time we will use the pivot_wider() function to turn one column into multiple.
 willowCleaner  <- willowClean %>%
-  #This assigns the dataframe a new name
+  #This creates a new name for cleaner dataframe.
   pivot_wider(names_from = variable,
-              #The data is set in a wider position 
+              #Makes data more wide.
               values_from = value)
-#This sets a value column
+#New column named value and it is filled accordingly.
 
 
 # TASK: Take a look at our new dataframe. How does it differ from the previous?
@@ -375,39 +375,47 @@ willowCleaner
 # seedling was planted.
 
 # TASK: Verbally describe how you would want to change this problem (i.e., pseudocode).
-
+#I would want to change this by separating the types of data from different variables then sorting them into their own columns based on the varible they came from.
 
 # ifelse() is a very powerful function that helps us with this problem!
 
 # TASK: Look at the ifelse help file and describe in your own words the ordering of the syntax.
 # logical statement, if the statement is TRUE then use the yes value provides, otherwise use the no value.
-
+?ifelse
+#The ordering of the syntax occurs with first the object being tested, then yes if it is logical and no if it is not logical.
 # We can nest the ifelse() function within a mutate() function to create a new column that contains
 # one entry if the logical statement we provide is TRUE and another if the logical statement is FALSE.
 # Run the following code to try it out to help fix our first problem (ht1 column has information on 
 # both plant status and actual height values).
-willowClean3 <- willowClean2 %>%
-  mutate(status = ifelse(ht1 == 'dead', 'dead', 'alive')) %>% 
+willowClean3 <- willowCleaner %>%
+  #Assigns new dataframe.
+  mutate(status = ifelse(ht1 == 'dead', 'dead', 'alive')) %>%
+  #New column called status.
   mutate(ht1 = ifelse(status == 'dead', NA, ht1))
+#Instead of the values in the column saying dead, it says NA.
 
 # TASK: Annotate the previous lines of code to indicate what each is doing.
 
 
 # QUESTION: This is a good time to make sure the relevant columns are numeric. Run the str() function
+str(willowClean3)
+?str()
 # on this dataframe. What class is the ht1 column?
-
+#The class of the ht1 column seems to be characters because it has a lot of NULL values and chr.
 
 # Let's make the ht1 column numeric. And while we're at it, the columns ht2, cnpy1, and cnpy2 should also
 # be made numeric. We can do so by running the following code:
-willowClean4 <- willowClean3 %>% 
+willowClean4 <- willowClean3 %>%
   mutate(ht1 = as.numeric(ht1),
          ht2 = as.numeric(ht2),
          cnpy1 = as.numeric(cnpy1),
          cnpy2 = as.numeric(cnpy1))
 
+rlang::last_error()
+
 # TASK: Run the str() function again to view the classes for each column in willowClean4. Did we
 # succeed in making the columns we wanted into numeric classes?
-
+str(willowClean4)
 
 # %in% is another powerful function! With %in% we can use logical statements on a whole bunch of stuff at
 # once, instead of making a billion ifelse statements. Let's try it out to fix our second problem,
