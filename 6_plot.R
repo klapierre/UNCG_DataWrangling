@@ -716,6 +716,8 @@ ggsave("Redband_histogram_facet.png",plot = last_plot(), dpi = 600, width = 10, 
 
 ?scale_fill_manual
 
+library(tidyverse)
+
 fish <- read.csv("LowerSpokaneFish.csv")
 
 
@@ -734,6 +736,6 @@ ggsave("ScaleAgeVsLengthBySpecies.png",plot = last_plot(), dpi = 450, width = 9,
 
 # QUESTION: Why do you think we focused on Redband Trout for most of this assignment?
 
-# It's the only data set with recorded scale ages.
+# It's the dataset with the greatest amount of weight measurements.
 
 # REMEMBER: Save and push your script when you're done with this assignment!
