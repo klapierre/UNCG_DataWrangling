@@ -279,7 +279,7 @@ bad_month_airport
 # Let's start by clearing our R environmnet and then bringing the Willow Seedling Survey data into R 
 # by running the following line of code:
 rm(list = ls())
-willow <- read.csv('Niwot_Salix_2014_WillowSeedlingSurvey (1).csv', skip = 10)
+willow <- read.csv('Niwot_Salix_2014_WillowSeedlingSurvey (1).csv', skip = 10, na.strings=c("","NA"), header=T)
 
 # QUESTION: What do you think the statement 'skip = 10' means in the code above?
 # HINT: Compare the csv file on your computer and the dataframe that you loaded into R.
