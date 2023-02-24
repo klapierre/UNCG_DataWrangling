@@ -439,7 +439,8 @@ willowClean5
 # We can call one plotInfo and the other willowData.
 
 # QUESTION: What columns would go in each of our two relational databases?
-
+#In the plotInfo database, it would be block, plot, code, snow, n, and temp.
+#In willowData database, it would be block, plot, and willow_ID.
 # Let's do it! Run the following code:
 plotInfo <- willowClean5 %>%
   select(block:temp) %>%
@@ -453,7 +454,7 @@ willowData <- willowClean5 %>%
 
 # TASK: Write code to join these two dataframes back together into a new dataframe called willowDataTrt
 # using the left_join() function.
-
+willowDataTrt <- left_join(willowData, plotInfo, by = "plot")
 
 # ON YOUR OWN: There are so many ways to join databases! Think through when you might want to use each type.
 # We will practice more with joining data in the coming weeks.
