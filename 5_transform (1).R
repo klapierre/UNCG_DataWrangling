@@ -411,12 +411,10 @@ willowClean4 <- willowClean3 %>%
          cnpy1 = as.numeric(cnpy1),
          cnpy2 = as.numeric(cnpy1))
 
-rlang::last_error()
-
 # TASK: Run the str() function again to view the classes for each column in willowClean4. Did we
 # succeed in making the columns we wanted into numeric classes?
 str(willowClean4)
-
+#Yes we succeded in making the columns numeric.
 # %in% is another powerful function! With %in% we can use logical statements on a whole bunch of stuff at
 # once, instead of making a billion ifelse statements. Let's try it out to fix our second problem,
 # where willow_ID also contains info about when the seedling was planted. Run the following lines of code:
@@ -424,9 +422,13 @@ willowClean5 <- willowClean4 %>%
   mutate(year = ifelse(willow_ID %in% c("A", "B", "C"), 2006, 2007))
 
 # QUESTION: Based on the lines of code above, what can you conclude about willow seedlings with identifiers
-# that were letters versus numbers? That is, what year were willow seedlings that were identified with letters
-# planted? What year were willow seedlings that were identified with numbers planted?
-
+# that were letters versus numbers? In 2006 and 2007 are letters versus numbers based on the code.
+#That is, what year were willow seedlings that were identified with letters
+# planted? 
+#2006
+#What year were willow seedlings that were identified with numbers planted?
+#2007
+willowClean5
 
 # ---------------------------------------------------------- #
 ### PART 2.5: RELATIONAL DATA                             ####
