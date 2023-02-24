@@ -157,7 +157,7 @@ ggplot(redband, aes(x = Weight)) +
 # QUESTION: What warning message is generated in the console when you create the 
 # weight histogram? What does this warning message mean? Do you think it is ok 
 # to proceed or should you alter your code to get rid of this warning?
-#I do not see a warning message so it must mean that all the data is correct.
+#The warning message says that 88 rows of data were removed and removing the data that is not numerical would get rid of the warning message.
 
 # ---------------------------------------------------------- #
 #### PART 1.3 GEOMETRIC OBJECT: POINTS                    ####
@@ -184,6 +184,11 @@ ggplot(redband, aes(x=ScaleAge, y=Length)) +
 ggplot(redband, aes(x = Weight, y = Length)) +
   geom_point()
 
+redband %>%
+  drop_na(Weight, Length) %>%
+  ggplot(aes(x=Weight, y=Length)) + 
+  geom_point()
+
 # ---------------------------------------------------------- #
 #### PART 1.4 ADDING AESTHETICS TO GEOMETRIC OBJECTS      ####
 # ---------------------------------------------------------- #
@@ -198,11 +203,12 @@ ggplot(redband, aes(x=Length, y=Weight)) +
 
 # TASK: Copy and paste the code above to make the same graph, but this time remove
 # as.factor() from the part where we color by ScaleAge.
-
+ggplot(redband, aes(x=Length, y=Weight)) + 
+  geom_point(aes(color=ScaleAge))
 
 # QUESTION: What differs between the graph where ScaleAge was wrapped in the
 # as.factor() statement and the graph where you removed as.factor()? Why?
-
+#The graph is black instead of color and removing 'as.factor' allowed there to be no color assignment.
 
 # TASK: Visit the ggplot Cookbook webpage at http://www.cookbook-r.com/Graphs/
 # This website is a great go-to place to find how to change all kinds of things
@@ -211,11 +217,13 @@ ggplot(redband, aes(x=Length, y=Weight)) +
 # TASK: Copy and paste the code for our previous graph below. Then modify the
 # aesthetics of the geometric object so that the size of the points varies with 
 # as.factor(ScaleAge).
-
+ggplot(redband, aes(x=Length, y=Weight)) + 
+  geom_point(aes(size=as.factor(ScaleAge)))
 
 # TASK: Modify the aesthetics of the geometric object from the previous graph
 # so that the size AND color of the points varies with ScaleAge.
-
+ggplot(redband, aes(x=Length, y=Weight)) + 
+  geom_point(aes(color=as.factor(ScaleAge),size=as.factor(ScaleAge)))
 
 # It is important to note that different kinds of geometric objects have different
 # types of associated aesthetics. Points and lines have colors, while bars and
@@ -224,12 +232,13 @@ ggplot(redband, aes(x = as.factor(ScaleAge), y = Weight)) +
   geom_boxplot(color = 'purple', fill = 'green')
 
 # QUESTION: What does color mean for boxplots? What does fill mean for boxplots?
-
+#Color represents the color of the line in the box and points on the graph.
+#Fill represents the color within the box excluding the line inside.
 
 # QUESTION: Why did we have to specify as.factor() for ScaleAge in the initial
 # aes() statement? 
 # HINT: Try running the code without that statement, what happens?
-
+#Based on the codes above, as.factor is used for non numerical values.
 
 # ---------------------------------------------------------- #
 #### PART 1.5 ADDING A LAYER: STATISTICAL TRANSFORMATIONS #### 
