@@ -177,11 +177,12 @@ ggplot(redband, aes(x=ScaleAge, y=Length)) +
 
 # QUESTION: Based on the figure that was generated from the code above, 
 # what would you conclude about the relationship between fish age and length?
-
+#The fish age and the length are correlated based on the graph from the code.
 
 # TASK: Write your own code to visualize the relationship between Redband 
 # length and weight.
-
+ggplot(redband, aes(x = Weight, y = Length)) +
+  geom_point()
 
 # ---------------------------------------------------------- #
 #### PART 1.4 ADDING AESTHETICS TO GEOMETRIC OBJECTS      ####
