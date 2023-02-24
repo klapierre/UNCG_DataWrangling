@@ -568,14 +568,18 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 # We could also make a grid by faceting one variable by another.
 ggplot(redband, aes(x = Length, y = Weight)) + 
   geom_point() + 
-  facet_grid(Year~ScaleAge) 
+  facet_grid(Year~ScaleAge)
 
 # TASK: Make a histogram of length faceted by scale age.
 # Keep the x-axis consistent across all subpanels, but allow the y-axis to be 
 # specified uniquely for each subpanel.
 # HINT: Check the help file for facet_wrap if you're unsure. Look under the 
 # Arguments section for scales.
-
+ggplot(redband, aes(x = Length)) + 
+  geom_histogram(binwidth = 10) + 
+  facet_wrap(~ ScaleAge, scales = "free_y") +
+  scale_x_continuous(limits = c(0, max(redband$Length)), expand = c(0, 0)) +
+  labs(x = "Length (mm)", y = "Count")
 
 # ---------------------------------------------------------- #
 #### PART 1.11: SAVING YOUR GRAPHICS                      ####
@@ -592,11 +596,11 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 ggsave("Redband_histogram_facet.png")
 
 # QUESTION: Where did this file show up? And what was the graph?
-
+#The file showed up in the git tab on the upper right.The graph is a histogram.
 
 # TASK: Investigate the ggsave() function through the help files. Then write
 # code to save the file at 600 dpi, 10 inch width and 8 inch height.
-
+ggsave("Redband_histogram_facet.png", dpi=600, width=10, height=8)
 
 # NOTE: You can also save the graphics you make by exporting them from the plots
 # tab in RStudio. However, this can be less precise than specifying the graphic
@@ -611,19 +615,28 @@ ggsave("Redband_histogram_facet.png")
 # graph, and a dot plot with a trend line. Which of these figures was an example
 # of a correlation? Which showed deviations from a benchmark or baseline? And which
 # was an example of a distribution?
-
+#An example of a correlation is a dot plot with a trend line
+#The example of deviations from a benchmark or baseline is a boxplot
+#Lastly, an example of a distribution is a histogram.
 
 
 # TASK: Import the full SpokaneFish dataset, keeping all observations (i.e., 
 # don't filter down to a single species or remove observations without scale age).
 # Then make a set of plots faceted by species, with each plot displaying fish 
 # age as a factor vs length, putting length on a log10 scale, points as filled 
+SpokaneFish <- read.csv("LowerSpokaneFish.csv")
+plots <- ggplot(SpokaneFish, aes(x = Length, y = Weight, fill = Species)) +
+  geom_point(shape = 17, size = 3) +
+  scale_x_log10() +
+  labs(x = "Length (mm)", y = "Weight (g)", fill = "Species") +
+  facet_wrap(~ Species, scales = "free") +
+  theme_bw()
 # triangles colored by species, informative x and y axes labels that include units.
 # Then save your file as a .png with an informative figure name at a width of 9
 # inches and a height of 7 inches and 450 dpi.
-
+ggsave("SpokaneFish_weight_length.png", plots, width = 9, height = 7, dpi = 450)
 
 # QUESTION: Why do you think we focused on Redband Trout for most of this assignment?
-
+#I think we focused on Redband Trout for most of the assignment because majority of the data came from RedbandTrout so it makes to most sense to analyze that data.
 
 # REMEMBER: Save and push your script when you're done with this assignment!
