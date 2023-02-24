@@ -470,16 +470,23 @@ willowDataTrt <- left_join(willowData, plotInfo, by = "plot")
 # TASK: Perform the following steps in one workflow (i.e., using pipes):
 # (1) Create a dataframe called cdr and load the .csv file 
 # 'e001_Plant aboveground biomass carbon and nitrogen.csv' into it.
+cdr <- read.csv("e001_Plant aboveground biomass carbon and nitrogen.csv") %>%
 # (2) Rename our last two columns that were originally '% Carbon' and '% Nitrogen' in
 # our csv file. Make the new names 'C' and 'N', respectively.
+  rename(C = '% Carbon', N = '% Nitrogen') %>%
 # (3) Remove any observations that were not obtained from Strips 1 or 2 using an %in% statement.
+  filter(Field %in% c("Strip 1", "Strip 2")) %>%
 # (4) pivot_longer the C and N data so that there is one column called element that contains C or N
+  pivot_longer(cols = c(C, N), names_to = "element", values_to = "percentage") %>%
 #     and another column called percentage that contains the values of either %C or %N.
 # (5) group_by() Date, Plot, NTrt, Species, Field, and Strip and then use the summarize() function
+  group_by(Date, Plot, NTrt, Species, Field, Strip) %>%
 #     to calculate the mean value of the percentage column for each group. Store the mean values
 #     in a column called 'percentage_mean'. Don't forget to ungroup at the end!
 # (6) pivot_wider so that the values of percentage_mean are contained in different columns
-
+  summarize(percentage_mean = mean(percentage)) %>%
+  ungroup() %>%
+  pivot_wider(names_from = Field, values_from = percentage_mean)
 
 # ---------------------------------------------------------- #
 ### PART 3.0: SUBMIT YOUR WORK                            ####
