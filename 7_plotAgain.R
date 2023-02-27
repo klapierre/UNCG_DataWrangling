@@ -357,13 +357,19 @@ ggplot(data=mpg, aes(x=hwy)) +
 # and hwy_se.
 # HINT: Look back at the Transform assignment if you forget how to summarize the
 # data. Also recall, standard error = 1.96*standard deviation.
-
+highwayMPG <- mpg %>% 
+  group_by(class) %>% 
+  summarise(across(.cols="hwy",
+                 .fns=list(mean=mean, sd=sd))) %>% 
+  mutate(hwy_se=hwy_sd*1.96)
 
 # TASK: Create a bar graph showing the average highway MPG on the y-axis and 
 # car class on the x-axis. Fill the bars by class. Add in error bar caps that are 20%
 # the width pf the bars.
 # HINT: Don't forget to change stat from the default in your geom_bar() statement!
-
+ggplot(data=highwayMPG, aes(x=class, y=hwy_mean))+
+  geom_bar(aes(fill=as.factor(class)), stat="identity")+
+  geom_errorbar(width=.2, aes(ymin=hwy_mean-hwy_se, ymax=hwy_mean+hwy_se))
 
 # ---------------------------------------------------------- #
 #### 2.1 DETOUR! COLORS AND LEGENDS, AGAIN                ####
@@ -383,7 +389,13 @@ ggplot(data=mpg, aes(x=hwy)) +
 # statement, the scale_fill_manual or scale_color_manual statements, or neither.
 # If in doubt, try a bunch of ways until it looks how we want it. And consult 
 # your helpful ggplot resources on the web.
-
+ggplot(data=highwayMPG, aes(x=class, y=hwy_mean))+
+  geom_bar(aes(fill=as.factor(class)),stat="identity", color="black")+
+  scale_fill_brewer(palette="Dark2")+
+  geom_errorbar(width=.2, aes(ymin=hwy_mean-hwy_se, ymax=hwy_mean+hwy_se))+
+  theme(legend.position="none")+
+  xlab("Vehicle Class")+
+  ylab("Average Highway Mileage (mpg)")
 
 # ---------------------------------------------------------- #
 #### 2.2 DETOUR! AXIS MODIFICATIONS                       ####
