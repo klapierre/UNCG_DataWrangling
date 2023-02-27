@@ -41,12 +41,14 @@
 # Start by writing code to load the tidyverse library.
 # HINT: see the end of assignment #1 if you forgot how to load a package.
 
+library(tidyverse)
 
 # TASK: Write code below to set your theme to black and white and both your major
 # AND minor gridlines to element_blank for all plots you'll be making today.
 # HINT: Check back to last week's assignment section 1.9 for setting themes for
 # all plots.
 
+theme_set(theme_bw())
 
 # ---------------------------------------------------------- #
 #### 1.0 CORRELATION                                      ####
@@ -64,14 +66,21 @@ data(mpg, package = "ggplot2")
 # HINT: Refer back to last week's assignment or the ggplot help resources if you 
 # forget how to make a scatterplot.
 
+ggplot(data=mpg, aes(x = cty, y = hwy)) +
+  geom_point(aes(color = as.factor(class))) +
+  xlab("City Mileage (MPG)") +
+  ylab("Highway Mileage (MPG)")
 
 # Looks alright, but the graph may be hiding some information...
 # QUESTION: How many data points are in the mpg dataframe?
 
+## 234 observations.
 
 # QUESTION: Approximately how many dots are in the graph you just made? How does
 # that compare to the number of observations in the dataframe?
 
+## ~80. This is significantly lower, probably because some of these most likely 
+## overlap with each other, making it "look" like there is only one point.
 
 # Try another correlation-focused geom that addresses this problem by running
 # the following code:
@@ -81,15 +90,27 @@ ggplot(data=mpg, aes(x=cty, y=hwy)) +
 
 # QUESTION: What happened when you created the plot with geom_jitter?
 
+## There were significantly more points on the new graph.
 
 # QUESTION: Run the code to create a plot using geom_jitter a second time. Then run it
 # again and again. What happens each time? Why is this happening?
+
+## The points change slightly, because jitter moves points that overlap slightly
+## from their original points to visualize how many points are actually present.
 
 
 # TASK: The default in geom_jitter is to jitter (or slightly move) the points away
 # from each other in both the x and y directions. Check the help file for geom_jitter
 # and write code below to make a graph where you jitter points in only the x-dimension
 # by 0.5.
+
+?geom_jitter
+
+ggplot(data=mpg, aes(x = cty, y = hwy)) +
+  geom_point(aes(color = as.factor(class))) +
+  geom_jitter(width = 0.5, height = 0) +
+  xlab("City Mileage (MPG)") +
+  ylab("Highway Mileage (MPG)")
 
 
 # ---------------------------------------------------------- #
@@ -105,6 +126,8 @@ ggplot(data=mpg, aes(x=cty, y=hwy)) +
 # HINT: Refer back to the Transform assignment if you want help with %in% (or 
 # try googling!)
 
+mpgSubset <- mpg %>% 
+  filter(class %in% c("compact","midsize","suv"))
 
 # ggplot has lots of nice (and some not so nice) built-in color palettes that we 
 # can use to fill our bars with color. Try running the following code:
@@ -132,6 +155,10 @@ ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
 # used above? (i.e., does it use the first three colors in the palette? The last
 # three? Some other combination?)
 
+## For Set1, it uses the first three colors, but for RdBu it splits the colors,
+## using the middle value color for the second datapoints, and finds colors
+## between this middle color (grey) and the max colors (dark red/dark blue).
+
 
 # We could also pick out EXACTLY which colors we want for our figure. 
 # There are 4 main ways to specify colors in R:
@@ -158,12 +185,18 @@ ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
 # with three numbers of your choice (between 1 and 657). How does your new figure look?
 # HINT: remember to remove the quotation marks when calling numbers.
 
+ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
+  geom_jitter() +
+  scale_color_manual(values=c(5, 54, 554))
 
 # QUESTION: How do you think you could figure out which color name belongs to
 # each color number?
 # HINT: Try creating a dataframe from color() by passing it into the
 # as.data.frame() function.
 
+colorsVisualized <- as.data.frame(colors())
+
+colorsVisualized[c(5,54,554),]
 
 # You can also chose colors by Hex code. A Hex color code is a 6-symbol code made
 # of up to three 2-symbol elements (6 symbols in length all together). Each of 
@@ -183,6 +216,9 @@ ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
 # picker to generate the hex codes for three new colors of your choice. Then copy
 # and paste the above code, replacing the hex codes with your color choices.
 
+ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
+  geom_jitter() +
+  scale_color_manual(values=c('#db7e40', '#60519e', '#d494c4'))
 
 # The second great thing about hex codes is that you can control the transparency
 # of your colors. Transparency is set in a hex code by adding two extra symbols
@@ -197,9 +233,13 @@ ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
 # first color 0% transparent, your second color 50% transparent, and your third
 # color 100% transparent.
 
+ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
+  geom_jitter() +
+  scale_color_manual(values=c('#db7e4000', '#60519e80', '#d494c4FF'))
 
 # QUESTION: What happened to the point that you set to 100% transparent?
 
+## She disappeared. :(
 
 # Finally, we can set our colors using the rgb() function. This operates very
 # similarly to the hex code, where you can pick exactly the color and transparency
@@ -209,6 +249,11 @@ ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
   scale_color_manual(values=c(rgb(.10, .10, .44, 1), rgb(.39, .58, .93, 1), rgb(1.0, .39, .28, 1)))
 
 # TASK: Modify the above code to make all of your points 50% transparent.
+
+ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
+  geom_jitter() +
+  scale_color_manual(values=c(rgb(.10, .10, .44, 0.5), rgb(.39, .58, .93, 0.5), rgb(1.0, .39, .28, 0.5)))
+
 
 # There are so many inventive and artistic people in the world who have expanded
 # the offerings for colors in ggplot. Check out some notable ones listed below
@@ -234,17 +279,25 @@ ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
 
 # QUESTION: Where did ggplot get the legend title and values from?
 
+## The title came from the column name, the values come from the different 
+## variables within the column (compact, midsize, suv).
 
 # We could change the title and values in our legend by altering the dataframe
 # we are passing into ggplot. But that seems a bit drastic. Instead, we can 
 # lean on the same code that specifies our color picks to alter the legend text.
 # Try it out by running the following code:
 ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) + 
+  ## Selects the dataset and plot (scatter), as well as the columns for the x-axis, y-axis, and color.
   geom_jitter() + 
+  ## Jitters the values in no particular direction.
   scale_color_manual(values=c('#FCBA03', '#380754', '#496916'),
+                     ## Sets the color values for each type (class) of car.
                      name='Class of Car', 
+                     ## Sets the legend name.
                      breaks=c('suv', 'midsize', 'compact'), 
+                     ## Identifies the original names we want to change.
                      labels=c('SUV', 'Midsize', 'Compact'))
+                     ## Creates the new names for the labels.
 
 
 # TASK: Label each line of the code above with what it is doing.
@@ -264,6 +317,8 @@ ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
 # QUESTION: What is wrong with the code above? Why is it so important to be
 # careful with the order you pass information into ggplot?
 
+## The SUV data is now being represented by the 'Compact' label, making it seem
+## like this is the Compact data in yellow, when Compact is actually green.
 
 # While changing the legend text and factor order takes place in the scale_color_manual
 # step, moving the legend around on the graph page is part of the graph theme. We
@@ -276,6 +331,9 @@ ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
 # TASK: Modify the code above to have the legend display along the bottom of
 # the figure.
 
+ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) + 
+  geom_jitter() + 
+  theme(legend.position='bottom')
 
 # We can also have the legend located within the area of the graph itself! We can 
 # do this by specifying the coordinates for where the legend should go within the
@@ -294,9 +352,18 @@ ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
 # QUESTION: What happens if you don't include the code for legend justification
 # above?
 
+ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) + 
+  geom_jitter() + 
+  theme(legend.position=c(1,0))
+
+## It falls off the screen, haha. 
 
 # TASK: Copy and paste the code from above. Modify it to place the legend in the
 # upper left part of the graph.
+
+ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) + 
+  geom_jitter() + 
+  theme(legend.position=c(0,1), legend.justification=c(0,1))
 
 
 # Finally, we might want to remove the legend altogether! We would do so by
@@ -306,6 +373,9 @@ ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
 # about removing the legend. Then copy and paste the graph code from above. Modify
 # the code to remove the legend.
 
+ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) + 
+  geom_jitter() + 
+  theme(legend.position="none")
 
 # ---------------------------------------------------------- #
 #### 2.0 DEVIATION                                        ####
@@ -337,12 +407,27 @@ ggplot(data=mpg, aes(x=hwy)) +
 # HINT: Look back at the Transform assignment if you forget how to summarize the
 # data. Also recall, standard error = 1.96*standard deviation.
 
+highwayMPG <- mpg %>%
+  group_by(class) %>%
+  summarise(across(hwy,
+            .fns=list(mean=mean, sd=sd))) %>%
+  ungroup() %>%
+  mutate(hwy_se = hwy_sd*1.96)
+
+?sd
+?mutate
 
 # TASK: Create a bar graph showing the average highway MPG on the y-axis and 
 # car class on the x-axis. Fill the bars by class. Add in error bar caps that are 20%
-# the width pf the bars.
+# the width of the bars.
 # HINT: Don't forget to change stat from the default in your geom_bar() statement!
 
+ggplot(data=highwayMPG, aes(x=class, y=hwy_mean)) + 
+  geom_bar(stat='identity',
+           aes(fill=as.factor(class))) +
+  geom_errorbar(aes(ymin=hwy_mean-hwy_se,
+                    ymax=hwy_mean+hwy_se,
+                    width=0.2))
 
 # ---------------------------------------------------------- #
 #### 2.1 DETOUR! COLORS AND LEGENDS, AGAIN                ####
@@ -358,6 +443,22 @@ ggplot(data=mpg, aes(x=hwy)) +
 # (3) No legend
 # (4) Informative x- and y-axis labels. 
 
+ggplot(data=highwayMPG, 
+       aes(x=class, y=hwy_mean)) + 
+  xlab("Vehicle Class") +
+  ylab("Average Highway Mileage (MPG") +
+  geom_bar(stat='identity',
+           aes(fill=as.factor(class)),
+           color='black') +
+  scale_fill_brewer(palette="Dark2") +
+  geom_errorbar(aes(ymin=hwy_mean-hwy_se,
+                    ymax=hwy_mean+hwy_se,
+                    width=0.2)) +
+  theme(legend.position="none")
+
+  
+
+?scale_fill_manual
 # HINT: Carefully consider whether your color and/or fill should go within an aes() 
 # statement, the scale_fill_manual or scale_color_manual statements, or neither.
 # If in doubt, try a bunch of ways until it looks how we want it. And consult 
@@ -374,6 +475,8 @@ ggplot(data=highwayMPG, aes(x=class, y=hwy_mean, fill=class)) +
 
 # QUESTION: Where is ggplot getting the x-axis tick labels from?
 
+## From the x-axis being class, it's using the variables present in class to 
+## label the ticks.
 
 # Often our tick labels are not the best. We can modify them to be more informative
 # or visually appealing by directly modifying the dataframe, but again this feels
@@ -395,6 +498,11 @@ ggplot(data=highwayMPG, aes(x=class, y=hwy_mean, fill=class)) +
 # What is surprising about the resulting graph? Based on this result, what do you
 # think the coord_cartesian() statement does?
 
+ggplot(data=highwayMPG, aes(x=class, y=hwy_mean, fill=class)) +
+  geom_bar(stat='identity') +
+  scale_y_continuous(breaks=seq(0, 50, 10))
+
+## It provides the start and end values for an axis to show, in this case 0 to 50.
 
 # We can also add a statement into the scale discrete or continuous statements
 # to name our axes, rather than putting in a whole separate step of xlab() or ylab().
@@ -421,6 +529,19 @@ ggplot(data=highwayMPG, aes(x=class, y=hwy_mean, fill=class)) +
 # (6) flip your axes
 # (7) remove the legend
 
+
+ggplot(data=highwayMPG, 
+       aes(x=class, y=hwy_mean)) + 
+  xlab("Vehicle Class") +
+  ylab("Average Highway Mileage (MPG)") +
+  geom_bar(stat='identity',
+           aes(fill=as.factor(class)),
+           color='black') +
+  scale_x_discrete(labels=c('sport', 'compact', 'midsize', 'minivan', 'pickup', 'subcompact', 'SUV')) +
+  scale_y_continuous(breaks=seq(0, 30, 5)) +
+  coord_cartesian(ylim=c(0,30)) +
+  scale_fill_brewer(palette="Spectral") +
+  theme(legend.position="none")
 
 # ---------------------------------------------------------- #
 #### 3.0 RANKING                                          ####
