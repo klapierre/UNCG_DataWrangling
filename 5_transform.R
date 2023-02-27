@@ -132,14 +132,22 @@ streamTempSummary <- streamTemp %>%
 # (3) Call your new dataframe streamTempMDY.
 # HINT: Check the help documentation for the separate(), mutate(), and paste() functions.
 
+streamTempMDY <- streamTemp %>% 
+  separate("Date", c("Month", "Day", "Year"), sep = "/") %>%
+  mutate(Year = paste(20,Year, sep= ""))
+
 
 # TASK: Write code to create a new dataframe called streamTempJan that filters only
 # rows where the month column is equal to 1 from the streamTempMDY dataframe.
+streamTempJan <- filter(streamTempMDY, Month == 1)
 
 
 # TASK: Write code that uses the summarize function to find the mean temperature for Calispell,
 # Smalle, and Winchester streams in only January.
-
+streamTempJan %>% 
+summarize (across(.cols=c('calispell','smalle','winchester'),
+                  .fns=mean,
+                  na.rm=T))
 
 # Now imagine you had to repeat this set of steps (creating new filtered dataframes) for all 12 months!
 # That would not only be tedious, but would also clutter up our R environment.
@@ -147,7 +155,7 @@ streamTempSummary <- streamTemp %>%
 # R that we want to get the summary stats for each of the groups we specify.
 # Try running the following code:
 streamTempMonthlyMean <- streamTempMDY %>% 
-  group_by(month) %>% 
+  group_by(Month) %>% 
   summarize(across(.cols=c('calispell', 'smalle', 'winchester'), 
                    .fns=mean,
                    na.rm=T)) %>% 
