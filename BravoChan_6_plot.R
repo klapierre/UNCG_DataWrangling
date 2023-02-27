@@ -290,7 +290,7 @@ ggplot(redband, aes(x = as.factor(ScaleAge), y=Weight)) +
   geom_boxplot()
 
 # QUESTION: Name another statistical transformation we have already used in this
-# assignment. Histogram?
+# assignment. Histogram.
 # HINT: It was in the very first part of the assignment.
 
 
@@ -628,12 +628,15 @@ ggsave("Redband_histogram_facet.png", dpi=600, width=10, height=8)
 # weight vs length, putting length on a log10 scale, points as filled 
 # triangles colored by species, informative x and y axes labels that include unit.
 SpokaneFish <- read.csv("LowerSpokaneFish.csv")
-plots <- ggplot(SpokaneFish, aes(x = Length, y = Weight, fill = Species)) +
-  geom_point(shape = 17, size = 3) +
-  scale_x_log10() +
-  labs(x = "Length (mm)", y = "Weight (g)", fill = "Species") +
-  facet_wrap(~ Species, scales = "free") +
-  theme_bw()
+ggplot(SpokaneFish, aes(x=as.factor(ScaleAge),y=Length))+
+  geom_point(size=1,shape=17,aes(color=Species))+
+  scale_y_log10()+
+  xlab("Scale Age (years)")+
+  ylab("Length (mm)")+
+  facet_wrap(facets=~Species)
+
+ggsave("spokanefish_plottri.png",dpi=450,units=c("in"),width=9,height=7)
+
 # Then save your file as a .png with an informative figure name at a width of 9
 # inches and a height of 7 inches and 450 dpi.
 ggsave("SpokaneFish_weight_length.png", plots, width = 9, height = 7, dpi = 450)
