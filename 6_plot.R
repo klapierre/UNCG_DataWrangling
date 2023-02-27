@@ -456,11 +456,17 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 # Or the void theme?
 ggplot(redband, aes(x = Length, y = Weight)) + 
   geom_point() +
-  theme_void()
+  theme_void() #best theme name
 
 # TASK: Check out the section on complete themes in the ggplot2 book here:
 # https://ggplot2-book.org/polishing.html#themes.  Try out two more themes below.
+ggplot(redband, aes(x = Length, y = Weight)) + 
+  geom_point() +
+  theme_linedraw()
 
+ggplot(redband, aes(x = Length, y = Weight)) + 
+  geom_point() +
+  theme_dark()
 
 # Rather than using the pre-set themes, we can also create our own! 
 # The theme can be set to modify the text of plot titles, axis titles, axis labels,
@@ -480,7 +486,7 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 ggplot(redband, aes(x = Length, y = Weight)) + 
   geom_point() +
   theme(panel.background = element_blank())
-
+#there are panels in the background or not
 
 # Try running the following code to alter text size:
 ggplot(redband, aes(x = Length, y = Weight)) + 
@@ -488,12 +494,14 @@ ggplot(redband, aes(x = Length, y = Weight)) +
   theme(axis.title.y=element_text(size=100))
 
 # QUESTION: What does element_text() refer to in the code above?
-
+#size=100
 
 # TASK: Write your own code below to change the size of the x-axis labels
 # (i.e., the numbers along the x-axis) to 50. 
 # HINT: Check out the ggplot cookbook or ggplot2 themes websites for help.
-
+ggplot(redband, aes(x = Length, y = Weight)) + 
+  geom_point() +
+  theme(axis.title.x=element_text(size=50))
 
 # We can set the theme to include all kinds of variations by adding them all to
 # the theme statement for an individual ggplot.
@@ -563,7 +571,10 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 # specified uniquely for each subpanel.
 # HINT: Check the help file for facet_wrap if you're unsure. Look under the 
 # Arguments section for scales.
-
+ggplot(redband, aes(x = Length)) + 
+  geom_histogram() + 
+  facet_wrap(~ScaleAge, scales="free_y")
+#I am so confused here
 
 # ---------------------------------------------------------- #
 #### PART 1.11: SAVING YOUR GRAPHICS                      ####
@@ -580,11 +591,12 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 ggsave("Redband_histogram_facet.png")
 
 # QUESTION: Where did this file show up? And what was the graph?
-
+#it went to my working directory
+#it was the last graph that I ran
 
 # TASK: Investigate the ggsave() function through the help files. Then write
 # code to save the file at 600 dpi, 10 inch width and 8 inch height.
-
+ggsave("Rdband_histogram_facet.png", height = 8, dpi = 600)
 
 # NOTE: You can also save the graphics you make by exporting them from the plots
 # tab in RStudio. However, this can be less precise than specifying the graphic
@@ -599,7 +611,9 @@ ggsave("Redband_histogram_facet.png")
 # graph, and a dot plot with a trend line. Which of these figures was an example
 # of a correlation? Which showed deviations from a benchmark or baseline? And which
 # was an example of a distribution?
-
+#dot plot with line was correlation
+#histogram was distribution
+#boxplot was deviations from a benchmark
 
 
 # TASK: Import the full SpokaneFish dataset, keeping all observations (i.e., 
@@ -609,9 +623,18 @@ ggsave("Redband_histogram_facet.png")
 # triangles colored by species, informative x and y axes labels that include units.
 # Then save your file as a .png with an informative figure name at a width of 9
 # inches and a height of 7 inches and 450 dpi.
+redbandfull <- read.csv(file = "LowerSpokaneFish.csv")
+
+ggplot(redbandfull, aes(x = Length, y = Weight, color=as.factor(Species))) + 
+  geom_point(size=1, shape=17) + 
+  facet_wrap(~Species, scales = "free") + 
+  scale_x_log10() + 
+  xlab("Redband trout weight (g)") + 
+  ylab("Redband trout length (mm)")
 
 
 # QUESTION: Why do you think we focused on Redband Trout for most of this assignment?
-
+#trout are cool
+#also, it's a large dataset that probably reflects what we would find in our own experiments
 
 # REMEMBER: Save and push your script when you're done with this assignment!
