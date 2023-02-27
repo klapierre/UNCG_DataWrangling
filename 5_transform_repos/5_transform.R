@@ -234,6 +234,7 @@ timeDelaySummary <- flightData %>% filter(dest == "RDU") %>% group_by(hour) %>% 
 
 # QUESTION: Which month and airport has the longest mean delay?
  
+# March at EWR  
 
 # ---------------------------------------------------------- #
 ### PART 2.0: INTRO TO TIDY DATA                          ####
