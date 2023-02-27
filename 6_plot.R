@@ -469,7 +469,13 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 
 # TASK: Check out the section on complete themes in the ggplot2 book here:
 # https://ggplot2-book.org/polishing.html#themes.  Try out two more themes below.
+ggplot(redband, aes(x = Length, y = Weight)) + 
+  geom_point() +
+  theme_light()
 
+ggplot(redband, aes(x = Length, y = Weight)) + 
+  geom_point() +
+  theme_dark()
 
 # Rather than using the pre-set themes, we can also create our own! 
 # The theme can be set to modify the text of plot titles, axis titles, axis labels,
@@ -482,6 +488,8 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 # QUESTION: Compare the output for each of the following figures.
 # Based on the output, what do you think panel.grid.minor vs panel.background 
 # refer to? What does the aesthetic element_blank() do?
+# ANSWER: panel.grid.minor changes the theme of the minor grids and panel.background changes the theme of the entire background. element_blank removes all color and lines.
+
 ggplot(redband, aes(x = Length, y = Weight)) + 
   geom_point() +
   theme(panel.grid.minor = element_blank())
@@ -497,12 +505,14 @@ ggplot(redband, aes(x = Length, y = Weight)) +
   theme(axis.title.y=element_text(size=100))
 
 # QUESTION: What does element_text() refer to in the code above?
-
+#ANSWER: the look of the text, in this case, on the y axis.
 
 # TASK: Write your own code below to change the size of the x-axis labels
 # (i.e., the numbers along the x-axis) to 50. 
 # HINT: Check out the ggplot cookbook or ggplot2 themes websites for help.
-
+ggplot(redband, aes(x = Length, y = Weight)) + 
+  geom_point() +
+  theme(axis.text.x=element_text(size=50))
 
 # We can set the theme to include all kinds of variations by adding them all to
 # the theme statement for an individual ggplot.
@@ -530,7 +540,7 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 # Another great thing is that we can set the theme without specifying a graph.
 # That way the theme is set for all graphics we make throughout the code (unless
 # we later specify a theme update for any given figure). This is handy to unify
-# the overall look of our garphics without having to type it all out every time.
+# the overall look of our graphics without having to type it all out every time.
 # Run the following code to set our theme for the rest of the assignment.
 theme_set(theme_bw())
 theme_update(axis.title.x = element_text(size = 20, vjust = -0.35, margin = margin(t = 15)),
@@ -573,6 +583,10 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 # HINT: Check the help file for facet_wrap if you're unsure. Look under the 
 # Arguments section for scales.
 
+ggplot(redband, aes(x = Length)) +
+  geom_histogram()+
+  facet_wrap(facets = ~ScaleAge)
+
 
 # ---------------------------------------------------------- #
 #### PART 1.11: SAVING YOUR GRAPHICS                      ####
@@ -589,11 +603,11 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 ggsave("Redband_histogram_facet.png")
 
 # QUESTION: Where did this file show up? And what was the graph?
-
+# ANSWER: In the UNCG_DataWrangling folder. The graph is now a png.
 
 # TASK: Investigate the ggsave() function through the help files. Then write
 # code to save the file at 600 dpi, 10 inch width and 8 inch height.
-
+ggsave("Redband_histogram_facet.png", dpi = 600, units = ("in"), width = 10, height = 8)
 
 # NOTE: You can also save the graphics you make by exporting them from the plots
 # tab in RStudio. However, this can be less precise than specifying the graphic
