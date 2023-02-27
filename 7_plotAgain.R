@@ -399,7 +399,12 @@ ggplot(highwayMPG, aes(x = class, y = hwy_mean, fill=class)) +
 # statement, the scale_fill_manual or scale_color_manual statements, or neither.
 # If in doubt, try a bunch of ways until it looks how we want it. And consult 
 # your helpful ggplot resources on the web.
-
+ggplot(highwayMPG, aes(x = class, y = hwy_mean, fill=class)) + 
+  geom_bar(stat='identity',color='black') +
+  scale_fill_brewer(palette = "Dark2") +
+  theme(legend.position=c('none')) +
+  xlab("Class of Car") + 
+  ylab("Average Highway Mileage (MPG)") 
 
 # ---------------------------------------------------------- #
 #### 2.2 DETOUR! AXIS MODIFICATIONS                       ####
