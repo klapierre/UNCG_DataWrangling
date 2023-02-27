@@ -47,6 +47,7 @@
 # HINT: Check back to last week's assignment section 1.9 for setting themes for
 # all plots.
 
+#ggplot(data, aes(x, y)) + geom_point() + theme_bw(panel.grid.minor = element_blank)
 
 # ---------------------------------------------------------- #
 #### 1.0 CORRELATION                                      ####
@@ -63,15 +64,18 @@ data(mpg, package = "ggplot2")
 # to be more informative (City Mileage (MPG) vs Highway Mileage (MPG)).
 # HINT: Refer back to last week's assignment or the ggplot help resources if you 
 # forget how to make a scatterplot.
-
+ggplot(mpg, aes(x = cty, y = hwy)) + 
+  geom_point(aes(color=as.factor(class))) +
+  xlab("City Mileage (MPG)") + 
+  ylab("Highway Mileage (MPG)") 
 
 # Looks alright, but the graph may be hiding some information...
 # QUESTION: How many data points are in the mpg dataframe?
-
+#234
 
 # QUESTION: Approximately how many dots are in the graph you just made? How does
 # that compare to the number of observations in the dataframe?
-
+#looks like about 100
 
 # Try another correlation-focused geom that addresses this problem by running
 # the following code:
@@ -80,16 +84,18 @@ ggplot(data=mpg, aes(x=cty, y=hwy)) +
 
 
 # QUESTION: What happened when you created the plot with geom_jitter?
-
+#It created another scatterplot
 
 # QUESTION: Run the code to create a plot using geom_jitter a second time. Then run it
 # again and again. What happens each time? Why is this happening?
-
+#It wiggles the dots so you can see where each of them are
 
 # TASK: The default in geom_jitter is to jitter (or slightly move) the points away
 # from each other in both the x and y directions. Check the help file for geom_jitter
 # and write code below to make a graph where you jitter points in only the x-dimension
 # by 0.5.
+ggplot(data=mpg, aes(x=cty, y=hwy)) + 
+  geom_jitter(width = 0.5)
 
 
 # ---------------------------------------------------------- #
@@ -104,7 +110,8 @@ ggplot(data=mpg, aes(x=cty, y=hwy)) +
 # new dataframe mpgSubset.
 # HINT: Refer back to the Transform assignment if you want help with %in% (or 
 # try googling!)
-
+mpgSubset <- mpg %>% 
+  mutate(class = ifelse(class %in% c("compact", "midsize", "suv"), class, NA)) %>%  drop_na(class)
 
 # ggplot has lots of nice (and some not so nice) built-in color palettes that we 
 # can use to fill our bars with color. Try running the following code:
