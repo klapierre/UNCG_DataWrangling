@@ -433,7 +433,11 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 # scale (i.e., with scale age on a linear x axis and length on a log y axis).
 # Fill in your boxplots with your favorite color and make the outline your least
 # favorite color. Label the x-axis Scale Age (years) and the y-axis Length (mm).
-
+ggplot(redband, aes(x = as.factor(ScaleAge), y = Length)) + 
+  geom_boxplot(color="red", fill="white") +
+  scale_y_log10() +
+  xlab("Scale Age (years)") + 
+  ylab("Length (mm)")
 
 # ---------------------------------------------------------- #
 #### PART 1.9: SETTING THEMES                             ####
