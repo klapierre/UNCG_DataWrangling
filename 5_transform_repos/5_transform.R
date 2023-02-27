@@ -349,7 +349,7 @@ willowCleaner  <- willowClean %>%
 # seedling was planted.
 
 # TASK: Verbally describe how you would want to change this problem (i.e., pseudocode).
-
+# I want to make new columns indicating which plants were dead at h1, and in turn dead for all other heights. I also want to make separate columns for the willow IDs based on if they are numbers or letters 
 
 # ifelse() is a very powerful function that helps us with this problem!
 
@@ -361,8 +361,8 @@ willowCleaner  <- willowClean %>%
 # Run the following code to try it out to help fix our first problem (ht1 column has information on 
 # both plant status and actual height values).
 willowClean3 <- willowClean2 %>%
-  mutate(status = ifelse(ht1 == 'dead', 'dead', 'alive')) %>% 
-  mutate(ht1 = ifelse(status == 'dead', NA, ht1))
+  mutate(status = ifelse(ht1 == 'dead', 'dead', 'alive')) # this creates a new column "status" where the variables in ht1 that are "dead" are tested using ifelse. %>% 
+  mutate(ht1 = ifelse(status == 'dead', NA, ht1)) # this makes the column ht1 turn "dead" variables into NA
 
 # TASK: Annotate the previous lines of code to indicate what each is doing.
 
@@ -370,6 +370,7 @@ willowClean3 <- willowClean2 %>%
 # QUESTION: This is a good time to make sure the relevant columns are numeric. Run the str() function
 # on this dataframe. What class is the ht1 column?
 
+  # It is character
 
 # Let's make the ht1 column numeric. And while we're at it, the columns ht2, cnpy1, and cnpy2 should also
 # be made numeric. We can do so by running the following code:
@@ -382,6 +383,7 @@ willowClean4 <- willowClean3 %>%
 # TASK: Run the str() function again to view the classes for each column in willowClean4. Did we
 # succeed in making the columns we wanted into numeric classes?
 
+# Yes
 
 # %in% is another powerful function! With %in% we can use logical statements on a whole bunch of stuff at
 # once, instead of making a billion ifelse statements. Let's try it out to fix our second problem,
@@ -393,6 +395,7 @@ willowClean5 <- willowClean4 %>%
 # that were letters versus numbers? That is, what year were willow seedlings that were identified with letters
 # planted? What year were willow seedlings that were identified with numbers planted?
 
+# Seedlings identified with numbers were planted in 2007, and letters were planted in 2006
 
 # ---------------------------------------------------------- #
 ### PART 2.5: RELATIONAL DATA                             ####
