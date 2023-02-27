@@ -2,6 +2,9 @@
 #### MODULE 3: Plot even more data!                       ####               
 # ---------------------------------------------------------- #
 
+library(ggplot2)
+library(tidyverse)
+
 ## OBJECTIVE:
 # 1. To develop a "grammar of graphics".
 # 2. To become comfortable using ggplot2 for exploratory data visualization.
@@ -47,6 +50,9 @@
 # HINT: Check back to last week's assignment section 1.9 for setting themes for
 # all plots.
 
+theme_set(theme_bw())
+theme_update(panel.grid.major = element_blank(),
+             panel.grid.minor = element_blank())
 
 # ---------------------------------------------------------- #
 #### 1.0 CORRELATION                                      ####
@@ -64,14 +70,20 @@ data(mpg, package = "ggplot2")
 # HINT: Refer back to last week's assignment or the ggplot help resources if you 
 # forget how to make a scatterplot.
 
+ggplot(mpg, aes(x = cty, y = hwy)) +
+  geom_point(aes(color=as.factor(class))) +
+  xlab("City Mileage (MPG)") +
+  ylab("Highway Mileage (MPG)")
 
 # Looks alright, but the graph may be hiding some information...
 # QUESTION: How many data points are in the mpg dataframe?
 
+    # 234 objects
 
 # QUESTION: Approximately how many dots are in the graph you just made? How does
 # that compare to the number of observations in the dataframe?
 
+    # about 78 points on the plot, which is much much smaller
 
 # Try another correlation-focused geom that addresses this problem by running
 # the following code:
@@ -81,16 +93,20 @@ ggplot(data=mpg, aes(x=cty, y=hwy)) +
 
 # QUESTION: What happened when you created the plot with geom_jitter?
 
+    # it plotted the data but added some noise to the point positions
 
 # QUESTION: Run the code to create a plot using geom_jitter a second time. Then run it
 # again and again. What happens each time? Why is this happening?
 
+    # each time its very slightly different, probably because thhe jitter moves the points randomly by a small amount, rather than by a set amount for each point
 
 # TASK: The default in geom_jitter is to jitter (or slightly move) the points away
 # from each other in both the x and y directions. Check the help file for geom_jitter
 # and write code below to make a graph where you jitter points in only the x-dimension
 # by 0.5.
 
+ggplot(mpg, aes(x=cty, y=hwy)) +
+  geom_jitter(width = .5, height = 0)
 
 # ---------------------------------------------------------- #
 #### 1.1 DETOUR! COLORS, COLORS, COLORS                   ####
@@ -105,6 +121,9 @@ ggplot(data=mpg, aes(x=cty, y=hwy)) +
 # HINT: Refer back to the Transform assignment if you want help with %in% (or 
 # try googling!)
 
+mpgSubset <- mpg %>% 
+  mutate(class = ifelse(class %in% c("compact", "midsize", "suv"), class, NA)) %>% 
+  drop_na(class)
 
 # ggplot has lots of nice (and some not so nice) built-in color palettes that we 
 # can use to fill our bars with color. Try running the following code:
@@ -132,6 +151,7 @@ ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
 # used above? (i.e., does it use the first three colors in the palette? The last
 # three? Some other combination?)
 
+    # for set 1 it just used the first 3 colors, but for RdBu it used the middle three
 
 # We could also pick out EXACTLY which colors we want for our figure. 
 # There are 4 main ways to specify colors in R:
@@ -157,13 +177,17 @@ ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
 # TASK: Copy and paste the code to make our scatterplot and replace the color names
 # with three numbers of your choice (between 1 and 657). How does your new figure look?
 # HINT: remember to remove the quotation marks when calling numbers.
-
+ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
+  geom_jitter() +
+  scale_color_manual(values=c(48, 579, 333))
 
 # QUESTION: How do you think you could figure out which color name belongs to
 # each color number?
 # HINT: Try creating a dataframe from color() by passing it into the
 # as.data.frame() function.
 
+colorFrame <- as.data.frame(colors())
+    # you can get the number by just seeing the position of the color's name in the colors() list
 
 # You can also chose colors by Hex code. A Hex color code is a 6-symbol code made
 # of up to three 2-symbol elements (6 symbols in length all together). Each of 
@@ -182,7 +206,9 @@ ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
 # picker (in addition to a billion other color picking websites). Use this color
 # picker to generate the hex codes for three new colors of your choice. Then copy
 # and paste the above code, replacing the hex codes with your color choices.
-
+ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
+  geom_jitter() +
+  scale_color_manual(values=c('#4fb1db', '#4fd9db', '#4fdbb1'))
 
 # The second great thing about hex codes is that you can control the transparency
 # of your colors. Transparency is set in a hex code by adding two extra symbols
@@ -196,17 +222,20 @@ ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
 # adding the alpha element to the end of each of your hex codes to make your
 # first color 0% transparent, your second color 50% transparent, and your third
 # color 100% transparent.
-
+ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
+  geom_jitter() +
+  scale_color_manual(values=c('#4fb1db00', '#4fd9db80', '#4fdbb1ff'))
 
 # QUESTION: What happened to the point that you set to 100% transparent?
 
+    # it disappears because its fully transparent
 
 # Finally, we can set our colors using the rgb() function. This operates very
 # similarly to the hex code, where you can pick exactly the color and transparency
 # you want. Try it out by running the following code:
 ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
   geom_jitter() +
-  scale_color_manual(values=c(rgb(.10, .10, .44, 1), rgb(.39, .58, .93, 1), rgb(1.0, .39, .28, 1)))
+  scale_color_manual(values=c(rgb(.10, .10, .44, .5), rgb(.39, .58, .93, .5), rgb(1.0, .39, .28, .5)))
 
 # TASK: Modify the above code to make all of your points 50% transparent.
 
