@@ -406,7 +406,7 @@ ggplot(data=highwayMPG, aes(x=class, y=hwy_mean, fill=class)) +
   geom_bar(stat='identity') 
 
 # QUESTION: Where is ggplot getting the x-axis tick labels from?
-
+## the different values in the class column
 
 # Often our tick labels are not the best. We can modify them to be more informative
 # or visually appealing by directly modifying the dataframe, but again this feels
@@ -427,7 +427,7 @@ ggplot(data=highwayMPG, aes(x=class, y=hwy_mean, fill=class)) +
 # QUESTION: Try running the code above without the coord_cartesian() statement. 
 # What is surprising about the resulting graph? Based on this result, what do you
 # think the coord_cartesian() statement does?
-
+## it fits the graph to the tallest bars. the coord_cartesian() statement fixes the size of the y-axis scale
 
 # We can also add a statement into the scale discrete or continuous statements
 # to name our axes, rather than putting in a whole separate step of xlab() or ylab().
@@ -453,7 +453,16 @@ ggplot(data=highwayMPG, aes(x=class, y=hwy_mean, fill=class)) +
 # (5) set the scale of the highway mpg to run from 0 to 30 with breaks every 5 
 # (6) flip your axes
 # (7) remove the legend
-
+ggplot(data=highwayMPG, aes(x=class, y=hwy_mean, fill=class))+
+  geom_bar(stat="identity")+
+  scale_fill_brewer(palette="Set2")+
+  scale_x_discrete(labels=c("2 Seater", "Compact", "Midsize", "Minivan", "Pickup", "Subcompact", "SUV"),
+                   name = "Car Class")+
+  scale_y_continuous(breaks=seq(0, 30, 5),
+                     name = "Average Highway Mileage (mpg)") +
+  coord_cartesian(ylim=c(0,30))+
+  coord_flip()+
+  theme(legend.position = "none")
 
 # ---------------------------------------------------------- #
 #### 3.0 RANKING                                          ####
