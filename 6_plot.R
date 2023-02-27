@@ -635,8 +635,7 @@ ggsave("Redband_histogram_facet.png", dpi = 600, units = ("in"), width = 10, hei
 
 df_spokanefish <- read.csv(file = "LowerSpokaneFish.csv")
 ggplot(df_spokanefish, aes(x = as.factor(ScaleAge), y = Length)) +
-  geom_point(size=1, shape=2,
-             aes(color=Species))+
+  geom_point(size=1, shape=17,aes(color = Species))+
   scale_y_log10()+
   xlab("Scale Age (years)") + 
   ylab("Length (mm)")+
