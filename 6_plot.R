@@ -683,7 +683,7 @@ ggsave("Redband_histogram_facet.png", dpi=600)
 # graph, and a dot plot with a trend line. Which of these figures was an example
 # of a correlation? Which showed deviations from a benchmark or baseline? And which
 # was an example of a distribution?
-
+## correlation will be a dot plot with  trend line. Deviation will use a boxplot. Distribution will be could be either a bar of histogram.  
 
 
 # TASK: Import the full SpokaneFish dataset, keeping all observations (i.e., 
@@ -693,9 +693,12 @@ ggsave("Redband_histogram_facet.png", dpi=600)
 # triangles colored by species, informative x and y axes labels that include units.
 # Then save your file as a .png with an informative figure name at a width of 9
 # inches and a height of 7 inches and 450 dpi.
-
-
+ggplot(redband, aes(x = Length, y = ScaleAge)) + 
+  geom_point(size=7, color="darkblue", shape=1) +
+  scale_x_log10() + 
+  scale_y_log10() +
+  ggsave("Redband_histogram_facet.png", dpi=450)
 # QUESTION: Why do you think we focused on Redband Trout for most of this assignment?
-
+## Redband had a lot of data and was easy to manipulate how and what data was being represented. 
 
 # REMEMBER: Save and push your script when you're done with this assignment!
