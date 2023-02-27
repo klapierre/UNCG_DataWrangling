@@ -248,10 +248,11 @@ ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
 # Run the following code to create a scatter plot. Feel free to modify the colors
 # as you prefer!
 ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
-  geom_jitter()
+  geom_jitter() +
+  scale_color_manual(values=c('#00563fbf', '#ebd009bf', '#9231b0bf'))
 
 # QUESTION: Where did ggplot get the legend title and values from?
-
+ggplot gets them from the city and hwy titles and values
 
 # We could change the title and values in our legend by altering the dataframe
 # we are passing into ggplot. But that seems a bit drastic. Instead, we can 
@@ -260,9 +261,9 @@ ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
 ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) + 
   geom_jitter() + 
   scale_color_manual(values=c('#FCBA03', '#380754', '#496916'),
-                     name='Class of Car', 
-                     breaks=c('suv', 'midsize', 'compact'), 
-                     labels=c('SUV', 'Midsize', 'Compact'))
+                     name='Class of Car', #This is the legend title
+                     breaks=c('suv', 'midsize', 'compact'), #These titles are being replaced with new ones from the labels line
+                     labels=c('SUV', 'Midsize', 'Compact')) #These titles are replacing the original names of the car classes
 
 
 # TASK: Label each line of the code above with what it is doing.
