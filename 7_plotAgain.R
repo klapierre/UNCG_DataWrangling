@@ -40,13 +40,15 @@
 # is nested within the tidyverse package (along with many others).
 # Start by writing code to load the tidyverse library.
 # HINT: see the end of assignment #1 if you forgot how to load a package.
-
+library(tidyverse)
 
 # TASK: Write code below to set your theme to black and white and both your major
 # AND minor gridlines to element_blank for all plots you'll be making today.
 # HINT: Check back to last week's assignment section 1.9 for setting themes for
 # all plots.
-
+theme_set(theme_bw())
+theme_update(panel.grid.major = element_blank(),
+             panel.grid.minor = element_blank())
 
 # ---------------------------------------------------------- #
 #### 1.0 CORRELATION                                      ####
@@ -64,13 +66,19 @@ data(mpg, package = "ggplot2")
 # HINT: Refer back to last week's assignment or the ggplot help resources if you 
 # forget how to make a scatterplot.
 
+ggplot(mpg, aes(x= cty, y=hwy))+
+       geom_point(aes(color = class))+
+  xlab("City Mileage (MPG)") + 
+  ylab("Highway Mileage (MPG)")
+
 
 # Looks alright, but the graph may be hiding some information...
 # QUESTION: How many data points are in the mpg dataframe?
-
+# ANSWER: There are 234 observations of 11 variables
 
 # QUESTION: Approximately how many dots are in the graph you just made? How does
 # that compare to the number of observations in the dataframe?
+# ANSWER: 78, it is one third of the number of observations in the data frame.
 
 
 # Try another correlation-focused geom that addresses this problem by running
@@ -80,17 +88,21 @@ ggplot(data=mpg, aes(x=cty, y=hwy)) +
 
 
 # QUESTION: What happened when you created the plot with geom_jitter?
-
+# ANSWER: More data points popped up on the graph
 
 # QUESTION: Run the code to create a plot using geom_jitter a second time. Then run it
 # again and again. What happens each time? Why is this happening?
-
+# ANSWER: A new graph is produced that looks similar, but slightly different from the previous graph. This is happening because the points are randomly spaced out in a small amount to prevent overlapping of data points.
+ggplot(data=mpg, aes(x=cty, y=hwy)) + 
+  geom_jitter()
 
 # TASK: The default in geom_jitter is to jitter (or slightly move) the points away
 # from each other in both the x and y directions. Check the help file for geom_jitter
 # and write code below to make a graph where you jitter points in only the x-dimension
 # by 0.5.
 
+ggplot(data=mpg, aes(x=cty, y=hwy)) + 
+  geom_jitter(width = .5)
 
 # ---------------------------------------------------------- #
 #### 1.1 DETOUR! COLORS, COLORS, COLORS                   ####
