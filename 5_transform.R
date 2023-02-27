@@ -167,22 +167,26 @@ streamTempMonthlyMean <- streamTempMDY %>%
 
 # QUESTION: When you look at the streamTempMonthlyMean dataframe, how many means do you see for 
 # each stream?
+View(streamTempMonthlyMean)
+# numbers for each of the months they were measured in
 
 
 # QUESTION: In your own words, what do you think the group_by() function does when used
 # before the summarize() function?
+# it groups the data by the months, that way we have means by the month rather than the day or by the minute
 
 
 # We can also group by multiple columns. Try running the following code:
 streamTempMeans <- streamTempMDY %>% 
-  group_by(month, year) %>% 
+  group_by(Month, Year) %>% 
   summarize(across(.cols=c('calispell', 'smalle', 'winchester'), 
                    .fns=mean,
                    na.rm=T)) %>% 
   ungroup()
 
 # QUESTION: What columns did we group by to get our new means? What does the new dataframe show?
-
+View(streamTempMeans)
+# grouped by the month then by the year. The new dataframe shows the means based on the month and year the steam was measured in.
 
 # ---------------------------------------------------------- #
 ### PART 1.3: PRACTICING THESE SKILLS                     ####
