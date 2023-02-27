@@ -303,7 +303,7 @@ willow <- read.csv("Niwot_Salix_2014_WillowSeedlingSurvey.csv", skip = 10)
 
 # QUESTION: What do you think the statement 'skip = 10' means in the code above?
 # HINT: Compare the csv file on your computer and the dataframe that you loaded into R.
-# skip 10 told R to skip the first 10 rows of the csv file
+# skip 10 told R to skip the first 10 rows of the csv file.
 
 # ---------------------------------------------------------- #
 ### PART 2.1: FILL MISSING DATA                           ####
