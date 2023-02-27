@@ -242,6 +242,7 @@ timeDelaySummary <- flightData %>% filter(dest == "RDU") %>% group_by(hour) %>% 
 
 # QUESTION: What are three characteristics of tidy data?
 
+#Every column is a variable, every row is an observation, every cell is a single value
 
 # There are five common problems associated with messy data:
 # 1. Column headers are values, not variable names
@@ -259,6 +260,7 @@ willow <- read_csv("Niwot_Salix_2014_WillowSeedlingSurvey.csv", skip = 10)
 # QUESTION: What do you think the statement 'skip = 10' means in the code above?
 # HINT: Compare the csv file on your computer and the dataframe that you loaded into R.
 
+# I'm not sure... does it skip row 10?
 
 # ---------------------------------------------------------- #
 ### PART 2.1: FILL MISSING DATA                           ####
@@ -270,6 +272,7 @@ willow <- read_csv("Niwot_Salix_2014_WillowSeedlingSurvey.csv", skip = 10)
 # QUESTION: To clean up the willow dataframe, where do we want to fill in values? That is, which columns
 # have lots of NAs.
 
+# Pretty much every column but variable
 
 # We can fix our missing value problem using the fill() function (try it by running the following code):
 willowFill <- willow %>%
@@ -277,9 +280,11 @@ willowFill <- willow %>%
 
 # QUESTION: What does the code 'block:temp' mean when passed to the fill() function above?
 
+# It applies the function to all columns starting at block and ending at temp
 
 # QUESTION: Looking at the dataframe willowFill, describe what happened compared to our initial dataframe.
 
+# It filled the NAs in with what ever variable was last available until it reaches a new available variable 
 
 # ---------------------------------------------------------- #
 ### PART 2.2: PIVOT LONGER                                ####
@@ -290,6 +295,7 @@ willowFill <- willow %>%
 
 # TASK: Write code to indicate the sequence of columns from w1 through wC. 
 
+# ??
 
 # We can fix this problem using the pivot_longer() function. pivot_longer() takes multiple columns
 # and condenses them into just two columns, one that indicates what column the data came from and the other
@@ -298,12 +304,12 @@ willowFill <- willow %>%
 # Run the following code:
 willowClean <- willowFill %>%
   pivot_longer(cols = w_1:w_C,
-               names_to = "willow_id",
+               names_to = "willow_id" # This combined the columns w_1 to w_C then renamed them to willow_id , 
                values_to = "value") %>%
   separate(col = willow_id,
            into = c("remove", "willow_ID"),
            sep = "_") %>%
-  select(-remove)
+  select(-remove) # This indicates and removes the underscores from the previous column names 
 
 
 # TASK: Annotate (add comments) the code above to indicate what each line does.
@@ -317,16 +323,18 @@ willowClean <- willowFill %>%
 
 # QUESTION: What column contains the labels that tell us there are multiple variables stored
 # in one column? What column contains the corresponding date for these variables?
-
+# variable; Value
 
 # Good news, we can fix this problem with the complementary function to pivot_longer().
 # This time we will use the pivot_wider() function to turn one column into multiple.
 willowCleaner  <- willowClean %>%
-  pivot_wider(names_from = variable,
-              values_from = value)
+  pivot_wider(names_from = variable, # this takes the variables from the variable column and separates them into their own columns 
+              values_from = value) #This indicates that the values should be filled in below the columns from the value column 
 
 
 # TASK: Take a look at our new dataframe. How does it differ from the previous?
+# The columns are separated by what was in the previous "variable" column, and below that is the coresponding values 
+
 # Annotate (add comments) the code above to indicate what each line does.
 
 
