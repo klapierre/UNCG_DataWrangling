@@ -259,10 +259,12 @@ ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
 # Run the following code to create a scatter plot. Feel free to modify the colors
 # as you prefer!
 ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
-  geom_jitter()
+  geom_jitter() +
+  scale_color_manual(values=c('#4fb1db', '#4fd9db', '#4fdbb1'))
 
 # QUESTION: Where did ggplot get the legend title and values from?
 
+    # it pulled the title from the "class" column's name and the values from the values of that column
 
 # We could change the title and values in our legend by altering the dataframe
 # we are passing into ggplot. But that seems a bit drastic. Instead, we can 
@@ -270,10 +272,14 @@ ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
 # Try it out by running the following code:
 ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) + 
   geom_jitter() + 
-  scale_color_manual(values=c('#FCBA03', '#380754', '#496916'),
+  scale_color_manual(values=c('#4fb1db', '#4fd9db', '#4ff5b1'),
+                     # setting the colors for the legend and points
                      name='Class of Car', 
+                     # setting the title of the legend
                      breaks=c('suv', 'midsize', 'compact'), 
+                     # setting what values from the data frame are being used
                      labels=c('SUV', 'Midsize', 'Compact'))
+                     # renaming the labels on the legend for those values
 
 
 # TASK: Label each line of the code above with what it is doing.
@@ -284,7 +290,7 @@ ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
 # your color choices and legend labels! Try running the following code:
 ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) + 
   geom_jitter() + 
-  scale_color_manual(values=c('#FCBA03', '#380754', '#496916'), 
+  scale_color_manual(values=c('#4fb1db', '#4fd9db', '#4ff5b1'), 
                      name='Class of Car', 
                      breaks=c('suv', 'midsize', 'compact'), 
                      labels=c('Compact', 'SUV', 'Midsize')) 
@@ -293,13 +299,14 @@ ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
 # QUESTION: What is wrong with the code above? Why is it so important to be
 # careful with the order you pass information into ggplot?
 
+    # while the points are colored the same as they were before, the labels have been arranged incorrectly so that the legend misrepresents the class of the points
 
 # While changing the legend text and factor order takes place in the scale_color_manual
 # step, moving the legend around on the graph page is part of the graph theme. We
 # can try this out using the code below:
 ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) + 
   geom_jitter() + 
-  theme(legend.position='top')
+  theme(legend.position='bottom')
 
 
 # TASK: Modify the code above to have the legend display along the bottom of
@@ -322,11 +329,16 @@ ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
 
 # QUESTION: What happens if you don't include the code for legend justification
 # above?
-
+ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) + 
+  geom_jitter() + 
+  theme(legend.position=c(1,0))
+    # the legend goes off the screed
 
 # TASK: Copy and paste the code from above. Modify it to place the legend in the
 # upper left part of the graph.
-
+ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) + 
+  geom_jitter() + 
+  theme(legend.position=c(0,1), legend.justification=c(0,1))
 
 # Finally, we might want to remove the legend altogether! We would do so by
 # modifying the theme as well. 
@@ -334,7 +346,9 @@ ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
 # TASK: Check the ggplot cookbook to find the legends section. Read what it says 
 # about removing the legend. Then copy and paste the graph code from above. Modify
 # the code to remove the legend.
-
+ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) + 
+  geom_jitter() + 
+  theme(legend.position="none")
 
 # ---------------------------------------------------------- #
 #### 2.0 DEVIATION                                        ####
