@@ -320,6 +320,8 @@ willowFill <- willow %>%
 # In this case, the columns w1 through wC are individual willow seedlings that were sampled repeatedly.
 
 # TASK: Write code to indicate the sequence of columns from w1 through wC. 
+select(.data= willowFill,
+       w_1:w_C)
 
 
 # We can fix this problem using the pivot_longer() function. pivot_longer() takes multiple columns
@@ -338,7 +340,12 @@ willowClean <- willowFill %>%
 
 
 # TASK: Annotate (add comments) the code above to indicate what each line does.
-
+# In pivot_longer, we are lengthening the data by decreasing the columns and converting them into rows
+# Within pivot_longer, cols is used to select the columns we are interested in changing.
+# The names_to indicates the new column that the original columns are placed into
+# The values_to tells a new column to include the values of the original columns.
+# The separate function selects the new "willow_id" column into "remove" and "willow_ID",
+# And finally the select function removes the "remove" column so that the values and the willow_ID columns are seperated
 
 # ---------------------------------------------------------- #
 ### PART 2.3: PIVOT WIDER                                 ####
