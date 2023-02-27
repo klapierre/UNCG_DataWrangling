@@ -392,8 +392,10 @@ ggplot(redband, aes(x = Length, y = Weight, color = as.factor(ScaleAge))) +
   geom_point() + 
   geom_smooth(method='lm', se=F)
 
-# QUESTION: What is different about this graph from before?
 
+
+# QUESTION: What is different about this graph from before?
+# ANSWER: The aesthetic is affecting both the line and the points, causing different colored linear lines and dots instead of just one being affected.
 
 # ---------------------------------------------------------- #
 #### PART 1.8: ALTERING SCALES                            ####
