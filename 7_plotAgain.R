@@ -480,7 +480,8 @@ cityMPG <- mpg %>%
   group_by(class) %>% 
   summarise(across(.cols="cty",
                    .fns=list(mean=mean, sd=sd))) %>% 
-  mutate(cty_se=cty_sd*1.96)
+  mutate(cty_se=cty_sd*1.96)+
+  ungroup()
 
 # Now we want to plot our data in order from smallest to largest city MPG to get
 # a ranking. To do so, we need to use the reorder() function to rearrange the data
@@ -562,6 +563,8 @@ manufacturerFreq <- mpg %>%
 
 # TASK: Make a bar graph of the number of cars (frequency) by manufacturer using
 # the dataframe we created above.
+ggplot(data=manufacturerFreq, aes(x=manufacturer, y=frequency))+
+  geom_bar(stat="identity")
 
 
 # We can switch the bar chart you created above into a pie chart simply by changing
@@ -584,21 +587,21 @@ ggplot(manufacturerFreq, aes(x="", y=frequency, fill=manufacturer)) +
   coord_polar(theta="y")
 
 ggplot(manufacturerFreq, aes(x="", y=frequency, fill=manufacturer)) +
-  geom_bar(stat="identity", width=1) +
-  coord_polar(theta="y", start=0) +
-  theme_void() +
+  geom_bar(stat="identity", width=1) + 
+  coord_polar(theta="y", start=0) +  
+  theme_void() + 
   theme(legend.title = element_text(size = 12.5), 
-        legend.text  = element_text(size = 8.5),
-        legend.key.size = unit(.75, "lines"))
+        legend.text  = element_text(size = 8.5), 
+        legend.key.size = unit(.75, "lines")) 
 
 # TASK: Annotate the code below to describe what each line does:
 ggplot(manufacturerFreq, aes(x="", y=frequency, fill=manufacturer)) +
-  geom_bar(stat="identity", width=1) +
-  coord_polar(theta="y", start=0) +
-  theme_void() +
-  theme(legend.title = element_text(size = 12.5), 
-        legend.text  = element_text(size = 8.5),
-        legend.key.size = unit(.75, "lines"))
+  geom_bar(stat="identity", width=1) + # width turned it into a ring like chart
+  coord_polar(theta="y", start=0) + # theta y turned it into pie slices
+  theme_void() + # took away the graph lines and axis labels
+  theme(legend.title = element_text(size = 12.5), # editing the legend title size
+        legend.text  = element_text(size = 8.5), # editing the legend text size
+        legend.key.size = unit(.75, "lines")) # changing the legend size
 
 
 # ---------------------------------------------------------- #
@@ -613,7 +616,9 @@ data("economics")
 # over time (unemploy vs date). Make a scatterplot, then connect the points with 
 # lines using geom_line().
 # HINT: use ?economics to get more information about this dataset.
-
+ggplot(data=economics, aes(x=date, y=unemploy))+
+  geom_point()+
+  geom_line()
 
 
 
