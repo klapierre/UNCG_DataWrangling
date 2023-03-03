@@ -644,7 +644,9 @@ data("economics")
 # over time (unemploy vs date). Make a scatterplot, then connect the points with 
 # lines using geom_line().
 # HINT: use ?economics to get more information about this dataset.
-
+ggplot(economics, aes(x = date, y = unemploy)) +
+  geom_point() +
+  geom_line()
 
 
 
