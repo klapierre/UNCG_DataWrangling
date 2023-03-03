@@ -491,7 +491,11 @@ ggplot(data = mpg_summary, aes(x=fct_reorder(class, hwy_mean), y=hwy_mean, fill=
 # and city_se.
 # HINT: Look back at the Transform assignment if you forget how to summarize the
 # data. Also, standard error = 1.96*standard deviation.
-
+cityMPG <- mpg %>% 
+  group_by(class) %>% 
+  summarise(city_mean = mean(cty),
+            city_sd = sd(cty),
+            city_se = 1.96 * (city_sd / sqrt(n())))
 
 # Now we want to plot our data in order from smallest to largest city MPG to get
 # a ranking. To do so, we need to use the reorder() function to rearrange the data
@@ -506,7 +510,24 @@ ggplot(cityMPG, aes(x=reorder(class, city_mean), y=city_mean)) +
 # (4) error bars with end caps 30% the width of the bars
 # (5) y-axis from 0 to 30 with tick marks every 5
 # (6) no legend.
+cityMPG <- mpg %>%
+  group_by(class) %>%
+  summarize(city_mean = mean(cty),
+            city_sd = sd(cty),
+            city_se = 1.96 * city_sd / sqrt(n()))
+cityMPG$class <- factor(cityMPG$class, levels = cityMPG$class[order(cityMPG$city_mean, decreasing = TRUE)])
 
+my_palette <- c("#34ebeb", "#6134eb", "#ebe134", "#eb347a", "#346beb", "#eb3464","#f7f71b")
+
+ggplot(cityMPG, aes(x = class, y = city_mean, fill = class)) +
+  geom_bar(stat = "identity", color = "darkgray") +
+  geom_errorbar(aes(ymin = city_mean - 1.96 * city_sd, ymax = city_mean + 1.96 * city_sd),
+                width = 0.3, size = 0.5, color = "darkgray") +
+  scale_y_continuous(limits = c(0, 30), breaks = seq(0, 30, 5)) +
+  scale_fill_manual(values = my_palette) +
+  labs(x = "Class of Car", y = "City MPG") +
+  theme_classic() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
 # ---------------------------------------------------------- #
 #### 4.0 DISTRIBUTION                                     ####
@@ -519,22 +540,34 @@ ggplot(mpg, aes(hwy)) +
   geom_histogram()
 
 # TASK: Recreate the graph above, but using geom_bar() instead
-
+ggplot(cityMPG, aes(x = class, y = city_mean, fill = class)) + 
+  geom_bar(stat='identity') + 
+  labs(x='Highway MPG', y='Count')
 
 # TASK: Try making a histogram with the categorical variable 'manufacturer'.
 # What error message do you get?
-
-
+ggplot(mpg, aes(manufacturer)) +
+  geom_histogram()
+#The error message that I got was:
+#Error in `geom_histogram()`:
+! Problem while computing stat.
+ℹ Error occurred in the 1st layer.
+Caused by error in `setup_params()`:
+  ! `stat_bin()` requires a continuous x aesthetic
+✖ the x aesthetic is discrete.
 # QUESTION: What happens when you follow the advice of the error message and 
 # make stat='count'?
-ggplot(mpg, aes(manufacturer)) + 
-  geom_histogram(stat="count")
 
+  ggplot(mpg, aes(manufacturer)) + 
+  geom_histogram(stat="count")
+#The codes forms a histogram however it says 'ignoring unknown parameters: 'binwidth, bins, and pad''.
 
 # TASK: Make a boxplot comparing the distribution of cty (city mileage) for
 # each class of car.
 # HINT: Look back to last week if you forget how to make a boxplot.
-
+  ggplot(mpg, aes(x=class, y=cty, fill=class)) + 
+    geom_boxplot() +
+    labs(x="Car Class", y="City Mileage")
 
 # We can also make a different type of distribution, a violin plot using the 
 # geom_violin statement as follows:
@@ -542,7 +575,7 @@ ggplot(mpg, aes(x=class, y=cty)) +
   geom_violin()
 
 # QUESTION: What does a violin plot show? Check google if you're unsure.
-
+#The violin plot shows the box plots on the graph as different shapes. There are different box plots and then there are also density plots as well.
 
 # ---------------------------------------------------------- #
 #### 5.0 COMPOSITION                                      ####
