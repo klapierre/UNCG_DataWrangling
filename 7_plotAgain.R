@@ -397,7 +397,16 @@ ggplot(data = highwayMPG, aes(x = class, y = hwy_mean, fill = class)) +
 # statement, the scale_fill_manual or scale_color_manual statements, or neither.
 # If in doubt, try a bunch of ways until it looks how we want it. And consult 
 # your helpful ggplot resources on the web.
+library(RColorBrewer)
+colors <- brewer.pal(7, "Dark2")
 
+ggplot(highwayMPG, aes(x=class, y=hwy_mean, fill=class)) +
+  geom_bar(stat="identity", color="black") +
+  scale_fill_manual(values=colors) +
+  labs(x="Car class", y="Average highway MPG") +
+  theme_classic() +
+  theme(axis.text.x = element_text(angle=45, vjust=0.5, hjust=1),
+        legend.position = "none")
 
 # ---------------------------------------------------------- #
 #### 2.2 DETOUR! AXIS MODIFICATIONS                       ####
@@ -405,10 +414,10 @@ ggplot(data = highwayMPG, aes(x = class, y = hwy_mean, fill = class)) +
 
 # Run the following code, feeling free to modify colors as you prefer:
 ggplot(data=highwayMPG, aes(x=class, y=hwy_mean, fill=class)) +
-  geom_bar(stat='identity') 
+  geom_bar(stat='identity')
 
 # QUESTION: Where is ggplot getting the x-axis tick labels from?
-
+#The ggplot is getting the x-axis labels from the legend where it lists out the labels.
 
 # Often our tick labels are not the best. We can modify them to be more informative
 # or visually appealing by directly modifying the dataframe, but again this feels
@@ -429,7 +438,7 @@ ggplot(data=highwayMPG, aes(x=class, y=hwy_mean, fill=class)) +
 # QUESTION: Try running the code above without the coord_cartesian() statement. 
 # What is surprising about the resulting graph? Based on this result, what do you
 # think the coord_cartesian() statement does?
-
+#Without the coord_cartesian function the bars on the bar graph became taller. I believe the coord_cartesian function sets limits for the y-axis because it changed the height of the bars.
 
 # We can also add a statement into the scale discrete or continuous statements
 # to name our axes, rather than putting in a whole separate step of xlab() or ylab().
@@ -455,7 +464,20 @@ ggplot(data=highwayMPG, aes(x=class, y=hwy_mean, fill=class)) +
 # (5) set the scale of the highway mpg to run from 0 to 30 with breaks every 5 
 # (6) flip your axes
 # (7) remove the legend
+mpg_summary <- mpg %>% 
+  group_by(class) %>% 
+  summarise(hwy_mean = mean(hwy),
+            hwy_sd = sd(hwy),
+            hwy_se = hwy_sd / sqrt(n()))
 
+ggplot(data = mpg_summary, aes(x=fct_reorder(class, hwy_mean), y=hwy_mean, fill=class)) +
+  geom_bar(stat = "identity", color = "black") +
+  scale_fill_brewer(palette = "Paired") +
+  labs(x = "Car Class", y = "Highway MPG") +
+  scale_y_continuous(limits = c(0, 30), breaks = seq(0, 30, 5)) +
+  coord_flip() +
+  theme(legend.position = "none") +
+  scale_x_discrete(labels = c("Subcompact", "Compact", "Midsize", "Large", "SUV", "Truck"))
 
 # ---------------------------------------------------------- #
 #### 3.0 RANKING                                          ####
