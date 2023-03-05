@@ -584,21 +584,35 @@ ggplot(mpg, aes(hwy)) +
 
 # TASK: Recreate the graph above, but using geom_bar() instead
 
+ggplot(mpg, aes(hwy)) + 
+  geom_bar()
+
 
 # TASK: Try making a histogram with the categorical variable 'manufacturer'.
 # What error message do you get?
 
+
+ggplot(mpg, aes(manufacturer)) + 
+  geom_histogram()
+
+#Error in `f()`:
+# ! StatBin requires a continuous x variable: the x variable is discrete.Perhaps you want stat="count"?
+#  Run `rlang::last_error()` to see where the error occurred.
 
 # QUESTION: What happens when you follow the advice of the error message and 
 # make stat='count'?
 ggplot(mpg, aes(manufacturer)) + 
   geom_histogram(stat="count")
 
+#A histogram appears, likely showing the count of the total occurrence of each given
+#manufacturer in the manufacturer column. 
 
 # TASK: Make a boxplot comparing the distribution of cty (city mileage) for
 # each class of car.
 # HINT: Look back to last week if you forget how to make a boxplot.
 
+ggplot(mpg, aes(x = class, y = cty)) +
+  geom_boxplot()
 
 # We can also make a different type of distribution, a violin plot using the 
 # geom_violin statement as follows:
@@ -607,6 +621,8 @@ ggplot(mpg, aes(x=class, y=cty)) +
 
 # QUESTION: What does a violin plot show? Check google if you're unsure.
 
+#A violin plot shows the distribution of data. While it is somewhat similar to a
+#boxplot, it shows more detail in regards to the way in which data is distributed. 
 
 # ---------------------------------------------------------- #
 #### 5.0 COMPOSITION                                      ####
@@ -623,6 +639,8 @@ manufacturerFreq <- mpg %>%
 # TASK: Make a bar graph of the number of cars (frequency) by manufacturer using
 # the dataframe we created above.
 
+ggplot(manufacturerFreq, aes(x = manufacturer, y = frequency)) +
+  geom_bar(stat = "identity")
 
 # We can switch the bar chart you created above into a pie chart simply by changing
 # the coordinate system through a series of steps as follows:
@@ -653,12 +671,18 @@ ggplot(manufacturerFreq, aes(x="", y=frequency, fill=manufacturer)) +
 
 # TASK: Annotate the code below to describe what each line does:
 ggplot(manufacturerFreq, aes(x="", y=frequency, fill=manufacturer)) +
+#Creates a pie chart using y to divide the slices and the fill being set to
+#manufacturer. 
   geom_bar(stat="identity", width=1) +
+#Sets with of bars and uses the real values of frequency. 
   coord_polar(theta="y", start=0) +
+#Establishes a polar coordinate system. Makes the chart round.
   theme_void() +
+#Sets theme to void.
   theme(legend.title = element_text(size = 12.5), 
         legend.text  = element_text(size = 8.5),
         legend.key.size = unit(.75, "lines"))
+#Customizes the legend by changing various text and legend sizes. 
 
 
 # ---------------------------------------------------------- #
