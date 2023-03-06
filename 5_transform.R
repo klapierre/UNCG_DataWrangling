@@ -156,11 +156,11 @@ streamTempMonthlyMean <- streamTempMDY %>%
 
 # QUESTION: When you look at the streamTempMonthlyMean dataframe, how many means do you see for 
 # each stream?
-
+## 12 means for the streams
 
 # QUESTION: In your own words, what do you think the group_by() function does when used
 # before the summarize() function?
-
+##group_by() allows us to filter using a specific column 
 
 # We can also group by multiple columns. Try running the following code:
 streamTempMeans <- streamTempMDY %>% 
@@ -171,11 +171,12 @@ streamTempMeans <- streamTempMDY %>%
   ungroup()
 
 # QUESTION: What columns did we group by to get our new means? What does the new dataframe show?
-
+## Month and Year, and it shows the averages of the months.
 
 # ---------------------------------------------------------- #
 ### PART 1.3: PRACTICING THESE SKILLS                     ####
 # ---------------------------------------------------------- #
+
 
 # Let's return to our flight delays question from last week. Recall that we are interested 
 # in avoiding flights with long delays. Load the data for New York City flights by running 
@@ -190,9 +191,17 @@ flightData <- nycflights13::flights
 # (4) ungroup the dataframe;
 # (5) assign the output to a dataframe named airportDelaySummary.
 
+airportDelaySummary<-flightData %>%
+  filter(dest== "RDU") %>% 
+  group_by(origin) %>% 
+  summarise((across(.cols=c('arr_delay'), 
+                    .fns=mean,
+                    na.rm=T))) %>% 
+  ungroup()
+
 
 # QUESTION: Which airport should you avoid if you want the shortest delays?
-
+## EWR
 
 # TASK: Write a pipeline to figure out which month of the year to avoid when flying to Raleigh 
 # by taking the original flight dataframe (flightData) and performing the following tasks:
@@ -203,12 +212,36 @@ flightData <- nycflights13::flights
 # (4) ungroup the dataframe;
 # (5) assign the output to a dataframe named timeDelaySummary
 
+timeDelaySummary<-flightData %>%
+  filter(dest== "RDU") %>% 
+  group_by(hour) %>% 
+  summarise((across(.cols=c('arr_delay'), 
+                    .fns=list(mean, maximum=max),
+                    na.rm=T))) %>%
+  ungroup()
+
+
 
 # QUESTION: What is the earliest hour of the day that flights leave New York for Raleigh?
+6:00
 
+timeDelaySumYork<-flightData %>%
+  filter(dest== "RDU", origin=="EWR") %>% 
+  group_by(hour) %>% 
+  summarise((across(.cols=c('minute'), 
+                    .fns=min,
+                    na.rm=T))) %>%
+  ungroup()
 
 # QUESTION: Which hour of the day has the longest mean delay? What about the longest maximum delay?
-
+## Hour 22; Hour 12
+timeDelayhour<-flightData %>%
+  filter(dest== "RDU") %>% 
+  group_by(hour) %>% 
+  summarise((across(.cols=c('arr_delay'), 
+                    .fns=list(mean, maximum=max),
+                    na.rm=T))) %>%
+  ungroup()
 
 # TASK: Write a pipeline to figure out which month of the year and airport to avoid when flying
 # to Raleigh by taking the original flight dataframe (flightData) and performing the following tasks:
@@ -218,16 +251,22 @@ flightData <- nycflights13::flights
 # (4) ungroup the dataframe;
 # (5) assign the output to a dataframe named monthlyDelaySummary
 
+monthlyDelaySummary<-flightData %>%
+  filter(dest== "RDU") %>% 
+  group_by(month, origin) %>% 
+  summarise((across(.cols=c('arr_delay'), 
+                    .fns=mean,
+                    na.rm=T))) %>%
+  ungroup()
+
 
 # QUESTION: Which month and airport has the longest mean delay?
-
-
+## Month 3 and EWR
 # ---------------------------------------------------------- #
 ### PART 2.0: INTRO TO TIDY DATA                          ####
 # ---------------------------------------------------------- #
-
 # QUESTION: What are three characteristics of tidy data?
-
+##An observation per row, A variable per column, Variables can be vectors
 
 # There are five common problems associated with messy data:
 # 1. Column headers are values, not variable names
@@ -244,6 +283,7 @@ willow <- read_csv("Niwot_Salix_2014_WillowSeedlingSurvey.csv", skip = 10)
 
 # QUESTION: What do you think the statement 'skip = 10' means in the code above?
 # HINT: Compare the csv file on your computer and the dataframe that you loaded into R.
+## It is telling R to skip 10 rows.
 
 
 # ---------------------------------------------------------- #
@@ -255,17 +295,17 @@ willow <- read_csv("Niwot_Salix_2014_WillowSeedlingSurvey.csv", skip = 10)
 
 # QUESTION: To clean up the willow dataframe, where do we want to fill in values? That is, which columns
 # have lots of NAs.
-
+## All blank spots will be fileld with data.
 
 # We can fix our missing value problem using the fill() function (try it by running the following code):
 willowFill <- willow %>%
   fill(block:temp)
 
 # QUESTION: What does the code 'block:temp' mean when passed to the fill() function above?
-
+## the data from temp should be filled with availible data.
 
 # QUESTION: Looking at the dataframe willowFill, describe what happened compared to our initial dataframe.
-
+## It is syaing to move the data in temp to occupy the NA.
 
 # ---------------------------------------------------------- #
 ### PART 2.2: PIVOT LONGER                                ####
@@ -275,7 +315,7 @@ willowFill <- willow %>%
 # In this case, the columns w1 through wC are individual willow seedlings that were sampled repeatedly.
 
 # TASK: Write code to indicate the sequence of columns from w1 through wC. 
-
+w_1:w_C
 
 # We can fix this problem using the pivot_longer() function. pivot_longer() takes multiple columns
 # and condenses them into just two columns, one that indicates what column the data came from and the other
@@ -303,7 +343,7 @@ willowClean <- willowFill %>%
 
 # QUESTION: What column contains the labels that tell us there are multiple variables stored
 # in one column? What column contains the corresponding date for these variables?
-
+## Variable & value
 
 # Good news, we can fix this problem with the complementary function to pivot_longer().
 # This time we will use the pivot_wider() function to turn one column into multiple.
@@ -327,13 +367,13 @@ willowCleaner  <- willowClean %>%
 # seedling was planted.
 
 # TASK: Verbally describe how you would want to change this problem (i.e., pseudocode).
-
+## I would separate the ht1 values and create a new alive/dead column
 
 # ifelse() is a very powerful function that helps us with this problem!
 
 # TASK: Look at the ifelse help file and describe in your own words the ordering of the syntax.
 # logical statement, if the statement is TRUE then use the yes value provides, otherwise use the no value.
-
+Ifelse(ht1=="dead", "dead", "alive")
 # We can nest the ifelse() function within a mutate() function to create a new column that contains
 # one entry if the logical statement we provide is TRUE and another if the logical statement is FALSE.
 # Run the following code to try it out to help fix our first problem (ht1 column has information on 
@@ -348,6 +388,7 @@ willowClean3 <- willowClean2 %>%
 # QUESTION: This is a good time to make sure the relevant columns are numeric. Run the str() function
 # on this dataframe. What class is the ht1 column?
 
+## str(willowClean3), character
 
 # Let's make the ht1 column numeric. And while we're at it, the columns ht2, cnpy1, and cnpy2 should also
 # be made numeric. We can do so by running the following code:
@@ -359,7 +400,7 @@ willowClean4 <- willowClean3 %>%
 
 # TASK: Run the str() function again to view the classes for each column in willowClean4. Did we
 # succeed in making the columns we wanted into numeric classes?
-
+str(willowClean4)
 
 # %in% is another powerful function! With %in% we can use logical statements on a whole bunch of stuff at
 # once, instead of making a billion ifelse statements. Let's try it out to fix our second problem,
@@ -370,6 +411,7 @@ willowClean5 <- willowClean4 %>%
 # QUESTION: Based on the lines of code above, what can you conclude about willow seedlings with identifiers
 # that were letters versus numbers? That is, what year were willow seedlings that were identified with letters
 # planted? What year were willow seedlings that were identified with numbers planted?
+## Three time points in 2006 where the seeds were planted. The seedlings identified by number indicate they were all planted at once.
 
 
 # ---------------------------------------------------------- #
@@ -381,7 +423,7 @@ willowClean5 <- willowClean4 %>%
 # We can call one plotInfo and the other willowData.
 
 # QUESTION: What columns would go in each of our two relational databases?
-
+## plotinfo- block:temp    willowdata- block, plot, willow_ID:year
 # Let's do it! Run the following code:
 plotInfo <- willowClean5 %>%
   select(block:temp) %>%
@@ -396,7 +438,7 @@ willowData <- willowClean5 %>%
 # TASK: Write code to join these two dataframes back together into a new dataframe called willowDataTrt
 # using the left_join() function.
 
-
+willowDataTrt<-left_join(plotInfo, willowData)
 # ON YOUR OWN: There are so many ways to join databases! Think through when you might want to use each type.
 # We will practice more with joining data in the coming weeks.
 
@@ -420,7 +462,25 @@ willowData <- willowClean5 %>%
 #     to calculate the mean value of the percentage column for each group. Store the mean values
 #     in a column called 'percentage_mean'. Don't forget to ungroup at the end!
 # (6) pivot_wider so that the values of percentage_mean are contained in different columns
+cdr2<-read_csv("e001_Plant aboveground biomass carbon and nitrogen.csv") %>% 
+  rename(C='% Carbon', N= '% Nitrogen') %>% 
+  mutate(Strip = ifelse(Strip %in% c(1,2), Strip, NA)) %>%
+  pivot_longer(cols = C:N,
+               names_to = "element",
+               values_to = "percentage") %>% 
+  group_by(Date, Plot, NTrt, Species, Field, Strip, element) %>%
+  summarize(across(.cols=c('percentage'), .fns = list(mean=mean), na.rm = T)) %>%
+  pivot_wider(names_from = element, values_from = percentage_mean) %>%
+  ungroup()
 
+cdr2 <- read.csv("e001_Plant aboveground biomass carbon and nitrogen.csv") %>%
+  rename(C = X..Carbon, N = X..Nitrogen) %>%
+  mutate(Strip = ifelse(Strip %in% c(1,2), Strip, NA)) %>%
+  pivot_longer(cols = C:N, names_to = "element", values_to = "percentage") %>%
+  group_by(Date, Plot, NTrt, Species, Field, Strip, element) %>%
+  summarize(across(.cols=c('percentage'), .fns = list(mean=mean), na.rm = T)) %>%
+  pivot_wider(names_from = element, values_from = percentage_mean) %>%
+  ungroup()
 
 # ---------------------------------------------------------- #
 ### PART 3.0: SUBMIT YOUR WORK                            ####
