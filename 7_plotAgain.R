@@ -400,7 +400,15 @@ ggplot(data=highwayMPG, aes(x=class, y=hwy_mean)) +
 #     statement
 # (3) No legend
 # (4) Informative x- and y-axis labels. 
+ggplot(data=highwayMPG, aes(x=class, y=hwy_mean)) + 
+  geom_bar(stat = 'identity', aes(fill = class), color = 'black') +
+  scale_color_brewer(palette="Dark2") +
+  theme(legend.position = "none") +
+  xlab("Vehicle Class") +
+  ylab("Highway Average Mileage")
 
+#geom_boxplot(color = 'purple', fill = 'green')
+#scale_color_brewer(palette="RdBu")
 # HINT: Carefully consider whether your color and/or fill should go within an aes() 
 # statement, the scale_fill_manual or scale_color_manual statements, or neither.
 # If in doubt, try a bunch of ways until it looks how we want it. And consult 
@@ -416,7 +424,7 @@ ggplot(data=highwayMPG, aes(x=class, y=hwy_mean, fill=class)) +
   geom_bar(stat='identity') 
 
 # QUESTION: Where is ggplot getting the x-axis tick labels from?
-
+#from the class column
 
 # Often our tick labels are not the best. We can modify them to be more informative
 # or visually appealing by directly modifying the dataframe, but again this feels
@@ -437,7 +445,8 @@ ggplot(data=highwayMPG, aes(x=class, y=hwy_mean, fill=class)) +
 # QUESTION: Try running the code above without the coord_cartesian() statement. 
 # What is surprising about the resulting graph? Based on this result, what do you
 # think the coord_cartesian() statement does?
-
+#it changes the scaling of the y-axis - c(0,50) makes a vector that the 
+#graph will follow I suppose - was a little surpised it went up by tens though
 
 # We can also add a statement into the scale discrete or continuous statements
 # to name our axes, rather than putting in a whole separate step of xlab() or ylab().
@@ -463,7 +472,14 @@ ggplot(data=highwayMPG, aes(x=class, y=hwy_mean, fill=class)) +
 # (5) set the scale of the highway mpg to run from 0 to 30 with breaks every 5 
 # (6) flip your axes
 # (7) remove the legend
-
+ggplot(data=highwayMPG, aes(x=class, y=hwy_mean, fill=class)) +
+  geom_bar(stat='identity') +
+  theme(legend.position = "none") +
+  xlab("Car Class") +
+  ylab("Highway MPG") +
+  scale_x_discrete(labels=c('sport', 'compact', 'midsize', 'minivan', 'pickup', 'subcompact', 'SUV')) +
+  scale_color_brewer(palette="Set1") +
+  coord_flip()
 
 # ---------------------------------------------------------- #
 #### 3.0 RANKING                                          ####
