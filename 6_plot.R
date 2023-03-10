@@ -264,6 +264,8 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 # in the above graph for our statistical transformation fit?
 # HINT: What is the default model type for a dataframe of our size?
 
+# Through calculations used by the predictdf() function, a line is fit to the graph
+# To allow our eyes to smoothly follow complex trends.
 
 # We also can specify a specific model to fit. Try running the following code to
 # specify a linear model:
@@ -275,6 +277,9 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 # task. Using the geom_smooth help page, write code below to specify a linear
 # model using a method= statement instead of the formula= statement.
 
+ggplot(redband, aes(x=Length, y=Weight)) +
+  geom_point() +
+  geom_smooth(method= lm)
 
 # A linear model does not seem like a good fit to our data. Try running the
 # following code to generate a quadratic model.
@@ -295,6 +300,8 @@ ggplot(redband, aes(x = as.factor(ScaleAge), y=Weight)) +
 # assignment.
 # HINT: It was in the very first part of the assignment.
 
+# In the earlier aspects of this assignment, we created a histogram.
+
 
 # TASK: Let's put this all together! Create a graph with the following:
 # (1) redband dataframe,
@@ -303,6 +310,9 @@ ggplot(redband, aes(x = as.factor(ScaleAge), y=Weight)) +
 # (4) quadratic line that is black in color and size=2 (HINT: check ggplot
 #     cookbook to help figure out how to change line color and size).
 
+ggplot(redband, aes(x=Length, y=Weight)) +
+  geom_point(aes(color=as.factor(ScaleAge))) +
+  geom_smooth(color="black", linewidth=2)
 
 # ---------------------------------------------------------- #
 #### PART 1.6 DATA IN VS DATA OUT                         #### 
