@@ -411,6 +411,8 @@ ggplot(redband, aes(x = Length, y = Weight, color = as.factor(ScaleAge))) +
 
 # QUESTION: What is different about this graph from before?
 
+# Each factor of ScaleAge is used to create a best fit line along the scatterplot.
+
 
 # ---------------------------------------------------------- #
 #### PART 1.8: ALTERING SCALES                            ####
