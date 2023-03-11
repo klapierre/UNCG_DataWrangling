@@ -617,10 +617,16 @@ ggplot(redband, aes(x = Length)) +
 ggsave("Redband_histogram_facet.png")
 
 # QUESTION: Where did this file show up? And what was the graph?
-
+# This showed up in the UNCG_DataWrangling folder on my computer. 
+#It was a picture of the plot I created
 
 # TASK: Investigate the ggsave() function through the help files. Then write
 # code to save the file at 600 dpi, 10 inch width and 8 inch height.
+
+ggsave("Redband_histogram_facet.png", plot=last_plot(),
+       dpi=600,
+       width=10,
+       height=8)
 
 
 # NOTE: You can also save the graphics you make by exporting them from the plots
@@ -637,6 +643,9 @@ ggsave("Redband_histogram_facet.png")
 # of a correlation? Which showed deviations from a benchmark or baseline? And which
 # was an example of a distribution?
 
+# Correlation: Dot plot with trend line
+# Deviation: Box plot (Could also make an argument for bar graph with error bars)
+# Distribution: Bar graph and histogram
 
 
 # TASK: Import the full SpokaneFish dataset, keeping all observations (i.e., 
@@ -647,8 +656,22 @@ ggsave("Redband_histogram_facet.png")
 # Then save your file as a .png with an informative figure name at a width of 9
 # inches and a height of 7 inches and 450 dpi.
 
+SomethingFishy <- read.csv("LowerSpokaneFish.csv")
+
+ggplot(SomethingFishy, aes(x=as.factor(Weight),y=Length))+
+  geom_point(size=2,shape=17,aes(color=Species))+
+  scale_y_log10()+
+  xlab("Weight (g)")+
+  ylab("Length (mm)")+
+  facet_wrap(facets=~Species)
+
+ggsave("Spokane_Fish facets.png",plot=last_plot(),
+       dpi=450,
+       width=9,
+       height=7)
 
 # QUESTION: Why do you think we focused on Redband Trout for most of this assignment?
 
+#This dataset had the most information, and it was easier to focus on just one species.
 
 # REMEMBER: Save and push your script when you're done with this assignment!
