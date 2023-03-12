@@ -93,7 +93,7 @@ streamTempSummary <- streamTemp %>%
 colnames(streamTempSummary)
 
 # QUESTION: How does R know what to name each column when we use the summarize function above?
-# Because we specify each column with the .cols function.
+# Because we specify each column with the c() function
 
 # QUESTION: What values do you see for the columns when you open up the dataframe streamTempSummary?
 # Why do you think this is?
@@ -225,7 +225,7 @@ airportDelaySummary <- flightData%>%
 # (4) ungroup the dataframe;
 # (5) assign the output to a dataframe named timeDelaySummary
 timeDelaySummary <- flightData%>%
-  group_by(month) %>%  
+  group_by(hour) %>%  
   filter(dest == "RDU") %>%
   summarize(across(.col=c("arr_delay"),
                    .fns=list(mean=mean, max=max),
