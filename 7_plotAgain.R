@@ -191,7 +191,7 @@ ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
 # HINT: Try creating a dataframe from color() by passing it into the
 # as.data.frame() function.
 
-as.data.frame(colors())
+palette <- as.data.frame(colors())
 
 # You can also chose colors by Hex code. A Hex color code is a 6-symbol code made
 # of up to three 2-symbol elements (6 symbols in length all together). Each of 
