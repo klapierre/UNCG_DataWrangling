@@ -123,6 +123,8 @@ ggplot(data=mpg, aes(x=cty, y=hwy)) +
 # HINT: Refer back to the Transform assignment if you want help with %in% (or 
 # try googling!)
 
+mpgSubset <- mpg%>%
+  filter(mpg$class%in%c('compact','midsize','suv'))
 
 # ggplot has lots of nice (and some not so nice) built-in color palettes that we 
 # can use to fill our bars with color. Try running the following code:
@@ -149,6 +151,9 @@ ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
 # What do you notice about the colors chosen from each of the palettes that we
 # used above? (i.e., does it use the first three colors in the palette? The last
 # three? Some other combination?)
+
+# For Set1, the first three colors are assigned to the three variables.
+# For RdBu, the extremes and a middle ground color were assigned to the variables.
 
 
 # We could also pick out EXACTLY which colors we want for our figure. 
@@ -177,11 +182,16 @@ ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
 # HINT: remember to remove the quotation marks when calling numbers.
 
 
+ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
+  geom_jitter() +
+  scale_color_manual(values=c('388', '213', '515'))
+
 # QUESTION: How do you think you could figure out which color name belongs to
 # each color number?
 # HINT: Try creating a dataframe from color() by passing it into the
 # as.data.frame() function.
 
+as.data.frame(colors())
 
 # You can also chose colors by Hex code. A Hex color code is a 6-symbol code made
 # of up to three 2-symbol elements (6 symbols in length all together). Each of 
@@ -201,6 +211,11 @@ ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
 # picker to generate the hex codes for three new colors of your choice. Then copy
 # and paste the above code, replacing the hex codes with your color choices.
 
+ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
+  geom_jitter() +
+  scale_color_manual(values=c('#40db42', '#000000', '#cc5e1f'))
+
+#I call it "Spooktacular"
 
 # The second great thing about hex codes is that you can control the transparency
 # of your colors. Transparency is set in a hex code by adding two extra symbols
@@ -216,15 +231,20 @@ ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
 # color 100% transparent.
 
 
+ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
+  geom_jitter() +
+  scale_color_manual(values=c('#40db42ff', '#00000080', '#cc5e1f00'))
+
 # QUESTION: What happened to the point that you set to 100% transparent?
 
+# Those points are completely transparent
 
 # Finally, we can set our colors using the rgb() function. This operates very
 # similarly to the hex code, where you can pick exactly the color and transparency
 # you want. Try it out by running the following code:
 ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
   geom_jitter() +
-  scale_color_manual(values=c(rgb(.10, .10, .44, 1), rgb(.39, .58, .93, 1), rgb(1.0, .39, .28, 1)))
+  scale_color_manual(values=c(rgb(.10, .10, .44, .5), rgb(.39, .58, .93, .5), rgb(1.0, .39, .28, .5)))
 
 # TASK: Modify the above code to make all of your points 50% transparent.
 
