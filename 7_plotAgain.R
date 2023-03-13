@@ -706,7 +706,9 @@ data("economics")
 
 ggplot(economics, aes(x = date, y = unemploy)) + 
   geom_point(shape = 1) +
-  geom_line() 
+  geom_line() +
+  xlab("Date") + 
+  ylab("Number of unemployed individuals") 
 
 # ---------------------------------------------------------- #
 #### GROUPS AND MAPS                                      ####
