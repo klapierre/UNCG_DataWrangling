@@ -2,7 +2,7 @@
 title: "MODULE 4: Communicating your data using Rmarkdown!"
 author: "Author: Kimberly Komatsu"
 subtitle: Partial Answer Key for Comparison to R Script
-output:
+output: html_document
   pdf_document: default
   html_document:
     df_print: paged
@@ -68,6 +68,8 @@ Each type of geometric object (geom) accepts only a subset of all aesthetics. Re
 \
 **TASK:** We will be using the ggplot2 package for graphing. Fortunately, ggplot2 is nested within the tidyverse package (along with many others). Start by writing code to load the tidyverse library.
 *HINT:* see the end of assignment #1 if you forgot how to load a package.
+
+
 
 **In the code below, note the use of ``` to start and end the code chunk. A common mistake is forgetting to end your code chunk! So if you're getting error messages when knitting, that might be the first thing to check for.**
 
