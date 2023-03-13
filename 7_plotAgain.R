@@ -586,7 +586,8 @@ manufacturerFreq <- mpg %>%
 
 # TASK: Make a bar graph of the number of cars (frequency) by manufacturer using
 # the dataframe we created above.
-
+ggplot(data=manufacturerFreq, aes(x=manufacturer, y=frequency)) +
+  geom_bar(stat = "identity")
 
 # We can switch the bar chart you created above into a pie chart simply by changing
 # the coordinate system through a series of steps as follows:
@@ -616,13 +617,13 @@ ggplot(manufacturerFreq, aes(x="", y=frequency, fill=manufacturer)) +
         legend.key.size = unit(.75, "lines"))
 
 # TASK: Annotate the code below to describe what each line does:
-ggplot(manufacturerFreq, aes(x="", y=frequency, fill=manufacturer)) +
-  geom_bar(stat="identity", width=1) +
-  coord_polar(theta="y", start=0) +
-  theme_void() +
-  theme(legend.title = element_text(size = 12.5), 
-        legend.text  = element_text(size = 8.5),
-        legend.key.size = unit(.75, "lines"))
+ggplot(manufacturerFreq, aes(x="", y=frequency, fill=manufacturer)) + #use data from manufacturerFreq data set, with no x value, and frequency for the y value, fill the color by manufacturer
+  geom_bar(stat="identity", width=1) + #create a bar chart
+  coord_polar(theta="y", start=0) + #convert bar chart to pie chart
+  theme_void() + # get rid of extra text on chart
+  theme(legend.title = element_text(size = 12.5), #change size of text of legend title
+        legend.text  = element_text(size = 8.5),#change size of text of legend text
+        legend.key.size = unit(.75, "lines"))#change size of legend
 
 
 # ---------------------------------------------------------- #
@@ -637,8 +638,9 @@ data("economics")
 # over time (unemploy vs date). Make a scatterplot, then connect the points with 
 # lines using geom_line().
 # HINT: use ?economics to get more information about this dataset.
-
-
+ggplot(economics, aes(x=unemploy, y=date)) + 
+  geom_point()+
+  geom_line()
 
 
 # ---------------------------------------------------------- #
