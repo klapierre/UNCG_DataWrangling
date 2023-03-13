@@ -4,9 +4,11 @@ author: "William Eichhorn"
 date: "2023-03-13"
 output: pdf_document
 ---
-
-
-*BACKGROUND*
+```{r, setup, include=FALSE}
+knitr::opts_knit$set(root.dir = '~/UNCG_DataWrangling')
+```
+---
+#BACKGROUND
 
 ### Annual burning and grazing
 
@@ -20,6 +22,46 @@ PBG has many benefits for biodiversity, ecosystem function and function, and agr
 ### Experimental design
 
 Several resin bags were buried across an agricultural landscape to document the found effects of ABG vs. PBG on the soiul nitrate (NO3), ammonium (NH4), and phosphorus (P) depositon from May-August 2021. KCl was used to extrat the NO3 and NH4, HCl was used to extract P. The resin extracts were analyzed to determine the total composition of each variable within samples. 
+
+-------------
+-------------
+
+# TASK 1
+### Let's get this party started
+
+
+In this first task, I am going to load in the tidyverse library. This allows me to play with the data and tidy it up, because researchers get messy with data collection!
+
+```{r, library, message=FALSE, warning=FALSE}
+library(tidyverse)
+```
+
+-------------
+-------------
+
+# Task 2
+### Bring in the DATA! *triumphant fan fare*
+
+I'm going to load in our data sets
+```{r, read.csv}
+PBG_N <- read.csv('PBG_N_compiled_raw_2021.csv')
+PBG_P <- read.csv('PBG_P_compiled_raw_2021.csv')
+```
+
+-------------
+-------------
+
+# Task 3
+### In a bind
+
+For this task, we are going to combine the rows from both of our dataframes, and filter down to only keep the 
+'sample' and 'Sample' column datasets.
+
+```{r, rbind, filter}
+PBG_NP_Combine <- rbind(PBG_N,PBG_P)%>%
+  filter(grepl("U|C", sample))
+```
+
 
 
 
