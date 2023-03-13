@@ -321,10 +321,10 @@ willowFill <- willow %>%
   fill(block:temp)
 
 # QUESTION: What does the code 'block:temp' mean when passed to the fill() function above?
-
+# "fills" in everything from "block" to "temp"
 
 # QUESTION: Looking at the dataframe willowFill, describe what happened compared to our initial dataframe.
-
+# the cells that said "NA" now have a "1" placed in them
 
 # ---------------------------------------------------------- #
 ### PART 2.2: PIVOT LONGER                                ####
@@ -334,7 +334,7 @@ willowFill <- willow %>%
 # In this case, the columns w1 through wC are individual willow seedlings that were sampled repeatedly.
 
 # TASK: Write code to indicate the sequence of columns from w1 through wC. 
-
+w_1:w_C
 
 # We can fix this problem using the pivot_longer() function. pivot_longer() takes multiple columns
 # and condenses them into just two columns, one that indicates what column the data came from and the other
@@ -342,13 +342,13 @@ willowFill <- willow %>%
 # And while we're at it, let's get rid of the 'w' in front of each willow individual number.
 # Run the following code:
 willowClean <- willowFill %>%
-  pivot_longer(cols = w_1:w_C,
-               names_to = "willow_id",
-               values_to = "value") %>%
+  pivot_longer(cols = w_1:w_C, # condenses w_1:w_C into a column
+               names_to = "willow_id", # names the column "willow_id"
+               values_to = "value") %>% # averages out the willow values into a single column
   separate(col = willow_id,
            into = c("remove", "willow_ID"),
-           sep = "_") %>%
-  select(-remove)
+           sep = "_") %>% # separate into "remove" and "willow_id"
+  select(-remove) #removes remove column, leaves us with just the plot number
 
 
 # TASK: Annotate (add comments) the code above to indicate what each line does.
@@ -362,16 +362,19 @@ willowClean <- willowFill %>%
 
 # QUESTION: What column contains the labels that tell us there are multiple variables stored
 # in one column? What column contains the corresponding date for these variables?
+# multiple variables in variable column
+# all the data is in the same column, it's just verbatim
 
 
 # Good news, we can fix this problem with the complementary function to pivot_longer().
 # This time we will use the pivot_wider() function to turn one column into multiple.
-willowCleaner  <- willowClean %>%
+willowClean2  <- willowClean %>% 
   pivot_wider(names_from = variable,
-              values_from = value)
+              values_from = value) # transposing the variables column
 
 
 # TASK: Take a look at our new dataframe. How does it differ from the previous?
+# there sure are a lot of null values in this chart. THe variables became the column titles
 # Annotate (add comments) the code above to indicate what each line does.
 
 
@@ -386,26 +389,30 @@ willowCleaner  <- willowClean %>%
 # seedling was planted.
 
 # TASK: Verbally describe how you would want to change this problem (i.e., pseudocode).
-
+# separate the alive from the dead and place them in their own columns
 
 # ifelse() is a very powerful function that helps us with this problem!
 
 # TASK: Look at the ifelse help file and describe in your own words the ordering of the syntax.
 # logical statement, if the statement is TRUE then use the yes value provides, otherwise use the no value.
+# 1) test an object, 2) recieve a yes or a no, 3) proceed accordingly
 
 # We can nest the ifelse() function within a mutate() function to create a new column that contains
 # one entry if the logical statement we provide is TRUE and another if the logical statement is FALSE.
 # Run the following code to try it out to help fix our first problem (ht1 column has information on 
 # both plant status and actual height values).
 willowClean3 <- willowClean2 %>%
-  mutate(status = ifelse(ht1 == 'dead', 'dead', 'alive')) %>% 
-  mutate(ht1 = ifelse(status == 'dead', NA, ht1))
+  mutate(status = ifelse(ht1 == 'dead', 'dead', 'alive')) %>% # create column for the "alive" and "dead" status of the plant
+  mutate(ht1 = ifelse(status == 'dead', NA, ht1)) 
+# if == dead, then dead ; if not == dead, then set ht1 value to N/A or keep value which it already has
 
 # TASK: Annotate the previous lines of code to indicate what each is doing.
 
 
 # QUESTION: This is a good time to make sure the relevant columns are numeric. Run the str() function
 # on this dataframe. What class is the ht1 column?
+str(willowClean3)
+# it's a character
 
 
 # Let's make the ht1 column numeric. And while we're at it, the columns ht2, cnpy1, and cnpy2 should also
