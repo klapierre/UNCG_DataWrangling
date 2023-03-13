@@ -59,10 +59,11 @@ For this task, we are going to combine the rows from both of our dataframes, and
 
 ```{r, rbind, filter}
 PBG_NP_Combine <- rbind(PBG_N,PBG_P)%>%
-  filter(grepl("U|C", sample))
+  filter(grepl("U", sample))
 ```
 
-
+# Task 4 
+### 
 
 
 
