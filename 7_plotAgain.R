@@ -506,20 +506,35 @@ ggplot(data=highwayMPG, aes(x=class, y=hwy_mean, fill=class))+
 # HINT: Look back at the Transform assignment if you forget how to summarize the
 # data. Also, standard error = 1.96*standard deviation.
 
+cityMPG <- mpg%>%
+  group_by(class) %>%  
+  summarize(across(.col="cty", .fns=list(mean=mean, sd=sd),na.rm=T)) %>% 
+  mutate(cty_se=1.96*cty_sd)
+
 
 # Now we want to plot our data in order from smallest to largest city MPG to get
 # a ranking. To do so, we need to use the reorder() function to rearrange the data
 # going into our x-axis.
-ggplot(cityMPG, aes(x=reorder(class, city_mean), y=city_mean)) + 
+ggplot(cityMPG, aes(x=reorder(class, cty_mean), y=cty_mean)) + 
   geom_bar(stat="identity")
 
 # TASK: Recreate the above ranking figure to include the following:
 # (1) class of car on the x-axis with informative axis and tick labels
 # (2) MPG ordered from highest to lowest (hint: try google if you're unsure)
-# (3) bars with dary grey outlines and filled by class with your favorite color scheme
+# (3) bars with dark grey outlines and filled by class with your favorite color scheme
 # (4) error bars with end caps 30% the width of the bars
 # (5) y-axis from 0 to 30 with tick marks every 5
 # (6) no legend.
+ggplot(cityMPG, aes(x=reorder(class, cty_mean, decreasing = T), y=cty_mean, fill=class)) + 
+  geom_bar(color="darkgrey", stat="identity")+
+  scale_fill_brewer(palette="Spectral")+
+  scale_x_discrete(name = "Class of Vehicles",
+                   labels = c("Pickup", "SUV", "2 Seater", "Minivan", "Mid-size", "Compact", "Sub-compact"))+
+  geom_errorbar(aes(ymin=cty_mean-cty_se, ymax=cty_mean+cty_se), width=.3)+
+  scale_y_continuous(breaks=seq(0, 30, 5),
+                     name = "City Mean (MPG)") +
+  coord_cartesian(ylim=c(0,30))+
+  theme(legend.position = "none")
 
 
 # ---------------------------------------------------------- #
