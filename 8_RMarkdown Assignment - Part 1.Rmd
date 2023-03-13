@@ -1,5 +1,5 @@
 ---
-title: "8_RMarkdown Assignment - Part 1"
+title: "Comparing soil nutrients between an annual burned and patch burn grazing system"
 author: "Noah Holland"
 date: "2023-03-13"
 output: pdf_document
@@ -9,22 +9,60 @@ output: pdf_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
+```{r, setup, include=FALSE}
+knitr::opts_knit$set(root.dir = '/UNCG_DataWrangling')
 ```
 
-## Including Plots
+## Background
 
-You can also embed plots, for example:
+text here
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+## Data Tidying
+
+```{r, load_package, message=FALSE, warning=FALSE}
+library(tidyverse)
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+```{r getting data}
+rawPBGN <- read.csv("PBG_N_compiled_raw_2021.csv")
+rawPBGP <- read.csv("PBG_P_compiled_raw_2021.csv")
+rawPBGtrts <- read.csv("PBG_trts.csv")
+```
+
+```{r combining P and N datasets}
+pbgPN <- rbind(rawPBGP, rawPBGN)
+```
+
+```{r filtering data for U# by 'sample'}
+FilteredUpgbPN <- pbgPN %>% 
+  filter(grepl('U', sample))
+```
+
+```{r testing for and removing duplicates}
+dim(FilteredUpgbPN)
+dim(unique(FilteredUpgbPN))
+```
+
+```{r Filtering for max dilution by 'Sample'}
+maxDilutionPBG <- FilteredUpgbPN %>% 
+  group_by(Sample) %>% 
+  filter(dilution == max(dilution, na.rm = TRUE)) %>% 
+  ungroup()
+```
+
+```{r joining PBG data to treatment data}
+PNTreatment <- maxDilutionPBG %>% 
+  separate(col = Sample, into = c('watershed', 'transect', 'plot', 'elm'), sep = '-') %>% 
+  select(-c(elm)) %>% 
+  merge(rawPBGtrts) %>% 
+  select(c(treatment, watershed, transect, plot, concentration, units, test)) %>% 
+  rename(temp = test) %>% 
+  mutate(test = ifelse(temp=="HCl PO4_1",
+    "Phosphate",ifelse(temp=="KCL NO3_NO2 2", "Nitrate", "Ammonia"
+  )))
+```
+
+## Graphs
+
+
+
