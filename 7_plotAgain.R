@@ -493,7 +493,12 @@ ggplot(data=highwayMPG, aes(x=class, y=hwy_mean, fill=class)) +
 # and city_se.
 # HINT: Look back at the Transform assignment if you forget how to summarize the
 # data. Also, standard error = 1.96*standard deviation.
-
+cityMPG <- mpg %>% 
+  group_by(class) %>% 
+  summarize(city_mean = mean(cty), 
+            city_sd = sd(cty), 
+            city_se = 1.96*sd(cty)) %>% 
+  ungroup()
 
 # Now we want to plot our data in order from smallest to largest city MPG to get
 # a ranking. To do so, we need to use the reorder() function to rearrange the data
@@ -508,7 +513,13 @@ ggplot(cityMPG, aes(x=reorder(class, city_mean), y=city_mean)) +
 # (4) error bars with end caps 30% the width of the bars
 # (5) y-axis from 0 to 30 with tick marks every 5
 # (6) no legend.
-
+ggplot(cityMPG, aes(x=reorder(class, city_mean), y=city_mean), fill=class) + 
+  geom_bar(stat="identity") +
+  theme(legend.position = "none") +
+  xlab("Car Class") +
+  ylab("City MPG") +
+  scale_x_discrete(labels=c('Pickup', 'SUV', 'Two Seater', 'Minivan', 'Midsize', 'Compact', 'Subcompact')) +
+  scale_color_brewer(palette="Set1")
 
 # ---------------------------------------------------------- #
 #### 4.0 DISTRIBUTION                                     ####
@@ -521,22 +532,26 @@ ggplot(mpg, aes(hwy)) +
   geom_histogram()
 
 # TASK: Recreate the graph above, but using geom_bar() instead
-
+ggplot(mpg, aes(hwy)) + 
+  geom_bar()
 
 # TASK: Try making a histogram with the categorical variable 'manufacturer'.
 # What error message do you get?
-
+ggplot(mpg, aes(manufacturer)) + 
+  geom_histogram()
+#says it requires a continuous x variable
 
 # QUESTION: What happens when you follow the advice of the error message and 
 # make stat='count'?
 ggplot(mpg, aes(manufacturer)) + 
   geom_histogram(stat="count")
-
+#it does freak out about unknown parameters, but also produces a graph with count on the y and manufacturer on the x
 
 # TASK: Make a boxplot comparing the distribution of cty (city mileage) for
 # each class of car.
 # HINT: Look back to last week if you forget how to make a boxplot.
-
+ggplot(mpg, aes(x = as.factor(class), y=cty)) + 
+  geom_boxplot()
 
 # We can also make a different type of distribution, a violin plot using the 
 # geom_violin statement as follows:
@@ -544,7 +559,7 @@ ggplot(mpg, aes(x=class, y=cty)) +
   geom_violin()
 
 # QUESTION: What does a violin plot show? Check google if you're unsure.
-
+#is shows the peaks - the summary statistic and density of the data
 
 # ---------------------------------------------------------- #
 #### 5.0 COMPOSITION                                      ####
@@ -560,7 +575,8 @@ manufacturerFreq <- mpg %>%
 
 # TASK: Make a bar graph of the number of cars (frequency) by manufacturer using
 # the dataframe we created above.
-
+ggplot(manufacturerFreq, aes(frequency)) + 
+  geom_bar()
 
 # We can switch the bar chart you created above into a pie chart simply by changing
 # the coordinate system through a series of steps as follows:
@@ -590,13 +606,13 @@ ggplot(manufacturerFreq, aes(x="", y=frequency, fill=manufacturer)) +
         legend.key.size = unit(.75, "lines"))
 
 # TASK: Annotate the code below to describe what each line does:
-ggplot(manufacturerFreq, aes(x="", y=frequency, fill=manufacturer)) +
-  geom_bar(stat="identity", width=1) +
-  coord_polar(theta="y", start=0) +
-  theme_void() +
-  theme(legend.title = element_text(size = 12.5), 
-        legend.text  = element_text(size = 8.5),
-        legend.key.size = unit(.75, "lines"))
+ggplot(manufacturerFreq, aes(x="", y=frequency, fill=manufacturer)) + #select data and what data we want it to be colored by
+  geom_bar(stat="identity", width=1) + #want to create bars and not a histogram so we set the stat with identity and select width for disply
+  coord_polar(theta="y", start=0) + #sets the coordinate system for the pie chart
+  theme_void() + #our theme selection for how we want the graph to look
+  theme(legend.title = element_text(size = 12.5), #editing the legend title size
+        legend.text  = element_text(size = 8.5), #editing the legend text size
+        legend.key.size = unit(.75, "lines")) #editing the legend key size
 
 
 # ---------------------------------------------------------- #
@@ -611,9 +627,9 @@ data("economics")
 # over time (unemploy vs date). Make a scatterplot, then connect the points with 
 # lines using geom_line().
 # HINT: use ?economics to get more information about this dataset.
-
-
-
+ggplot(economics, aes(x = date, y = unemploy)) +
+  geom_point() +
+  geom_line()
 
 # ---------------------------------------------------------- #
 #### GROUPS AND MAPS                                      ####
