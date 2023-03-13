@@ -1,7 +1,7 @@
 # ---------------------------------------------------------- #
 #### MODULE 3: Plot even more data!                       ####               
 # ---------------------------------------------------------- #
-
+# ctrl + f "@@@" to find where you left off last
 library(ggplot2)
 library(tidyverse)
 
@@ -452,6 +452,7 @@ ggplot(data=highwayMPG, aes(x=class, y=hwy_mean, fill=class)) +
 # What is surprising about the resulting graph? Based on this result, what do you
 # think the coord_cartesian() statement does?
 
+# left off here last time @@@
 
 # We can also add a statement into the scale discrete or continuous statements
 # to name our axes, rather than putting in a whole separate step of xlab() or ylab().
