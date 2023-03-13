@@ -1,0 +1,43 @@
+---
+title: "Comparing soil nutrients between an annual burned and patch burn grazing system"
+author: "Lowie Vandeplancke"
+date: "2023-03-13"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Background
+
+Annual burning and grazing **(ABG)** has been used for cattle production to increase plant biomass for grazing but at the cost of decreasing biodiversity. Recently, patch burning and grazing **(PBG)** has become a new management method, that helps increase heterogeneity of the landscape, helping diversity, ecosystem connectivity, and stability of ecosystem function and sevices.
+
+
+```{r, setup, include=FALSE}
+knitr::opts_knit$set(root.dir = 'C:\\Users\\louis\\OneDrive\\Documents\\UNCG\\Ecological Research')
+library(tidyverse)
+theme_set(theme_light())
+```
+Not to be included in the knit; setting working directory, loading tidyverse, and setting a light theme for graphs.
+
+```{r, setup, include=FALSE}
+PBG_n <- read.csv('PBG_N_raw_2021.csv')
+PBG_p <- read.csv('PBG_P_raw_2021.csv')
+PBG_treatment <- read.csv('PBG_trts.csv')
+```
+Info for nitrogen and phosporous samples along with the treatments.
+
+
+
+
+sample data set starting with u, and dashes for Sample
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
