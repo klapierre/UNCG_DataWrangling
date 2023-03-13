@@ -206,7 +206,7 @@ ggplot(redband, aes(x=Length, y=Weight)) +
 # TASK: Copy and paste the code above to make the same graph, but this time remove
 # as.factor() from the part where we color by ScaleAge.
 ggplot(redband, aes(x=Length, y=Weight)) + 
-  geom_point(aes(color=))
+  geom_point(aes(color=as.factor(ScaleAge)))
 
 # QUESTION: What differs between the graph where ScaleAge was wrapped in the
 # as.factor() statement and the graph where you removed as.factor()? Why?
