@@ -407,7 +407,14 @@ ggplot(data=highwayMPG, aes(x=class, y=hwy_mean))+
 # (2) Bars filled with the color brewer palette "Dark2" using the scale_fill_manual
 #     statement
 # (3) No legend
-# (4) Informative x- and y-axis labels. 
+# (4) Informative x- and y-axis labels.
+
+ggplot(data=highwayMPG, aes(x=class, y=hwy_mean))+
+  geom_bar(aes(fill=as.factor(class)),stat="identity", color="black")+
+  scale_fill_brewer(palette="Dark2")+
+  theme(legend.position="none")+
+  xlab("Class of Vehicle")+
+  ylab("Highway Mean (MPG)")
 
 # HINT: Carefully consider whether your color and/or fill should go within an aes() 
 # statement, the scale_fill_manual or scale_color_manual statements, or neither.
@@ -421,10 +428,12 @@ ggplot(data=highwayMPG, aes(x=class, y=hwy_mean))+
 
 # Run the following code, feeling free to modify colors as you prefer:
 ggplot(data=highwayMPG, aes(x=class, y=hwy_mean, fill=class)) +
-  geom_bar(stat='identity') 
+  geom_bar(stat='identity') +
+  
 
 # QUESTION: Where is ggplot getting the x-axis tick labels from?
 
+# From the fill=class argument.
 
 # Often our tick labels are not the best. We can modify them to be more informative
 # or visually appealing by directly modifying the dataframe, but again this feels
@@ -446,6 +455,7 @@ ggplot(data=highwayMPG, aes(x=class, y=hwy_mean, fill=class)) +
 # What is surprising about the resulting graph? Based on this result, what do you
 # think the coord_cartesian() statement does?
 
+# It gives y values from 0-50, without it the graph fits to the longest bar.
 
 # We can also add a statement into the scale discrete or continuous statements
 # to name our axes, rather than putting in a whole separate step of xlab() or ylab().
@@ -472,6 +482,16 @@ ggplot(data=highwayMPG, aes(x=class, y=hwy_mean, fill=class)) +
 # (6) flip your axes
 # (7) remove the legend
 
+ggplot(data=highwayMPG, aes(x=class, y=hwy_mean, fill=class))+
+  geom_bar(stat="identity")+
+  scale_fill_brewer(palette="Spectral")+
+  scale_x_discrete(labels=c("2 Seater", "Compact", "Mid-size", "Minivan", "Pickup", "Sub-compact", "SUV"),
+                   name = "Vehicle Class")+
+  scale_y_continuous(breaks=seq(0, 30, 5),
+                     name = "Highway Mean (MPG)") +
+  coord_cartesian(ylim=c(0,30))+
+  theme(legend.position = "none")+
+  coord_flip()
 
 # ---------------------------------------------------------- #
 #### 3.0 RANKING                                          ####
