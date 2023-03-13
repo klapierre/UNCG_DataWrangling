@@ -536,6 +536,7 @@ ggplot(cityMPG, aes(x=reorder(class, cty_mean, decreasing = T), y=cty_mean, fill
   coord_cartesian(ylim=c(0,30))+
   theme(legend.position = "none")
 
+# Insert Elmo on fire gif here
 
 # ---------------------------------------------------------- #
 #### 4.0 DISTRIBUTION                                     ####
@@ -550,8 +551,18 @@ ggplot(mpg, aes(hwy)) +
 # TASK: Recreate the graph above, but using geom_bar() instead
 
 
+ggplot(mpg, aes(hwy)) + 
+  geom_bar()
+
 # TASK: Try making a histogram with the categorical variable 'manufacturer'.
 # What error message do you get?
+
+# Crying emoji ;-;
+
+ggplot(mpg, aes(manufacturer)) + 
+  geom_histogram()
+
+# ! Problem while computing stat. Requires a continuous x aesthetic
 
 
 # QUESTION: What happens when you follow the advice of the error message and 
@@ -564,6 +575,9 @@ ggplot(mpg, aes(manufacturer)) +
 # each class of car.
 # HINT: Look back to last week if you forget how to make a boxplot.
 
+ggplot(mpg, aes(x=cty, y=class, fill=class)) + 
+  geom_boxplot()+
+  scale_fill_brewer(palette="Spectral")
 
 # We can also make a different type of distribution, a violin plot using the 
 # geom_violin statement as follows:
@@ -571,6 +585,11 @@ ggplot(mpg, aes(x=class, y=cty)) +
   geom_violin()
 
 # QUESTION: What does a violin plot show? Check google if you're unsure.
+
+# These are super cool! I've never seen a violin plot before.
+# From what I can tell, they are similar to boxplots in that they show distribution
+# But, violin plots go a step further and show which variables have the highest density for each class distribution.
+# HECK YEAH, STATISTICS!
 
 
 # ---------------------------------------------------------- #
