@@ -30,10 +30,11 @@ Several resin bags were buried across an agricultural landscape to document the 
 ### Let's get this party started
 
 
-In this first task, I am going to load in the tidyverse library. This allows me to play with the data and tidy it up, because researchers get messy with data collection!
+In this first task, I am going to load in the tidyverse library and set up the theme. This allows me to play with the data and tidy it up, because researchers get messy with data collection!
 
 ```{r, library, message=FALSE, warning=FALSE}
 library(tidyverse)
+theme_set(theme_dark())
 ```
 
 -------------
@@ -54,17 +55,35 @@ PBG_P <- read.csv('PBG_P_compiled_raw_2021.csv')
 # Task 3
 ### In a bind
 
-For this task, we are going to combine the rows from both of our dataframes, and filter down to only keep the 
-'sample' and 'Sample' column datasets.
+For this task, we are going to combine the rows from both of our dataframes, and filter down to only keep the data in the "sample"
+column which contains any data which begins with "U" using the grepl() function in dplyr.
 
 ```{r, rbind, filter}
-PBG_NP_Combine <- rbind(PBG_N,PBG_P)%>%
+PBG_Combine <-rbind(PBG_N,PBG_P)%>%
   filter(grepl("U", sample))
 ```
 
+
+-------------
+-------------
+
 # Task 4 
-### 
+### Out of the pan and into the R Markdown fire
+
+Now things are going to get a little dicey. I need to join the data sets of the sample and Sample columns. 
+But, before I can get there, I need to modify our two columns and create 
 
 
+```{r, group_by, filter}
+PBG_Filter<- PBG_Combine %>% 
+  group_by(Sample) %>% 
+  filter(dilution == max(dilution, na.rm = TRUE)) %>% 
+  ungroup()
 
+```
 
+```{r, warning=FALSE}
+PBG_Join <- PBG_Filter%>% 
+separate(col = Sample, into = c('watershed', 'treatment', 'plot', 'element'), sep = '-')
+  
+```
