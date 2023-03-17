@@ -40,14 +40,24 @@ NP_datasplit <- separate(NP_data, Sample, into = c("watershed", "transect", "plo
 
 #Join NP_datasplit & PBG_trts
 PBG_trts <- read.csv("PBG_trts.csv")
+
 #Clean PBG_trts data, split columns
 PBG_combined <- merge(NP_datasplit,PBG_trts, by = c("watershed", "transect","plot"), all.x = TRUE) %>% 
         group_by(treatment) %>% 
 mutate(test=ifelse(test=="HCl PO4_1",
     "Phosphate",ifelse(test=="KCL NO3_NO2 2", "Nitrate", "Ammonia"
   )))
-###Create boxplot graph by Tx 
 
+###Create boxplot graph by Tx 
+#library(metR)
+#pal <- brewer_pal(type = "div", palette = "Hokusai1")(3) #create a vector composed of 3 colors from Hokusai1 palette
+
+my_pal <- c("#b75347","#224b5e","#94b594")
+ggplot(PBG_combined,aes(x=treatment,y=as.numeric(concentration),color=treatment))+
+  geom_boxplot()+
+  facet_wrap(~test,scales="free_y")+
+  labs(x="Treatment",y="Concentration(mg N/L)")
+  scale_fill_manual(values=my_pal) 
 ```
 This file is an [R Markdown](http://rmarkdown.rstudio.com) Notebook. The script contains the same information as the first two sections of the 7_plotAgain R script answer key. Refer back to the .R file (on canvas) to compare and contrast the two versions.
 
