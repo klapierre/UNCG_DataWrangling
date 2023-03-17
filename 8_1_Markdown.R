@@ -51,7 +51,7 @@ ggplot(CLEAN, aes(x = test, y= as.numeric(concentration), fill = as.factor(test)
   geom_boxplot() +
   facet_wrap(~treatment, scales = "free") +
   scale_fill_manual(values = c("green","blue", "yellow")) +
-  xlab("Treatment") + ylab("Concentration") +
+  xlab("Nutrient") + ylab("Concentration") +
   labs(fill = "Legend")
   
 #calc cv
@@ -69,7 +69,7 @@ ggplot(cvframe, aes(x=test, y= as.numeric(cv), fill = as.factor(test))) +
   geom_bar(stat = "identity") +
   facet_wrap(~treatment, scales = "free") +
   scale_fill_manual(values = c("green","blue", "yellow")) +
-  xlab("Treatment") + ylab("CV of Concentration") +
+  xlab("Nutrient") + ylab("CV of Concentration") +
   labs(fill = "Legend")
 
 #All that is left to do is r markdown the whole thing   _(´ཀ`」 ∠)_
