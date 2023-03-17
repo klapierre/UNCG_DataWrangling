@@ -47,4 +47,29 @@ CLEAN <- finalrename %>% select(-Process, -Number, -run, -abs, -h, -number, -j, 
 
 # Lord have mercy
 
+ggplot(CLEAN, aes(x = test, y= as.numeric(concentration), fill = as.factor(test))) +
+  geom_boxplot() +
+  facet_wrap(~treatment, scales = "free") +
+  scale_fill_manual(values = c("green","blue", "yellow")) +
+  xlab("Treatment") + ylab("Concentration") +
+  labs(fill = "Legend")
+  
+#calc cv
+#make a lazy function to calc cv
 
+cv <- function(x) 100*( sd(x, na.rm = TRUE)/mean(x, na.rm = TRUE))
+
+#make a df with the CVs
+
+cvframe <- CLEAN %>% group_by(treatment, test) %>% summarize(cv = cv(as.numeric(concentration))) %>% ungroup()
+
+#make a bargraph of that bad boy
+
+ggplot(cvframe, aes(x=test, y= as.numeric(cv), fill = as.factor(test))) +
+  geom_bar(stat = "identity") +
+  facet_wrap(~treatment, scales = "free") +
+  scale_fill_manual(values = c("green","blue", "yellow")) +
+  xlab("Treatment") + ylab("CV of Concentration") +
+  labs(fill = "Legend")
+
+#All that is left to do is r markdown the whole thing   _(´ཀ`」 ∠)_
