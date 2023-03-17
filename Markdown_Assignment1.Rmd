@@ -7,8 +7,8 @@ output: pdf_document
 ```{r, setup, include=FALSE}
 knitr::opts_knit$set(root.dir = '~/UNCG_DataWrangling')
 ```
----
-#BACKGROUND
+
+# BACKGROUND
 
 ### Annual burning and grazing
 
@@ -47,6 +47,7 @@ I'm going to load in our data sets
 ```{r, read.csv}
 PBG_N <- read.csv('PBG_N_compiled_raw_2021.csv')
 PBG_P <- read.csv('PBG_P_compiled_raw_2021.csv')
+PBG_trts <- read.csv('PBG_trts.csv')
 ```
 
 -------------
@@ -70,20 +71,27 @@ PBG_Combine <-rbind(PBG_N,PBG_P)%>%
 # Task 4 
 ### Out of the pan and into the R Markdown fire
 
-Now things are going to get a little dicey. I need to join the data sets of the sample and Sample columns. 
-But, before I can get there, I need to modify our two columns and create 
-
+Now things are going to get a little dicey. I need to join the data sets with our transect data. 
+To do this, we first need to filter the maximum dilution of our Sample column. Then we will parse our
+Sample column into four new columns, one of which we will no longer need (element)
 
 ```{r, group_by, filter}
 PBG_Filter<- PBG_Combine %>% 
   group_by(Sample) %>% 
   filter(dilution == max(dilution, na.rm = TRUE)) %>% 
+  separate(col = Sample, into = c('watershed', 'transect', 'plot', 'element'), sep = '-')%>%
+  select(-element)%>%
   ungroup()
 
 ```
+Then we will bring in the data from our transects by the new columns we created in our previous chunk.
+We will also clean up and rename the tests used to make them more accessible to read.
 
-```{r, warning=FALSE}
-PBG_Join <- PBG_Filter%>% 
-separate(col = Sample, into = c('watershed', 'treatment', 'plot', 'element'), sep = '-')
-  
+```{r}
+PBG_Merge <- merge(PBG_Filter,PBG_trts, by=c("watershed","transect","plot"),all.x=T)%>%
+  mutate(test = ifelse(test=="HCl PO4_1",
+    "Phosphate",ifelse(test=="KCL NO3_NO2 2", "Nitrate", "Ammonia")))
 ```
+
+
+
