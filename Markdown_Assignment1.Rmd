@@ -75,7 +75,7 @@ Now things are going to get a little dicey. I need to join the data sets with ou
 To do this, we first need to filter the maximum dilution of our Sample column. Then we will parse our
 Sample column into four new columns, one of which we will no longer need (element)
 
-```{r, group_by, filter}
+```{r, group_by, filter, warning=FALSE}
 PBG_Filter<- PBG_Combine %>% 
   group_by(Sample) %>% 
   filter(dilution == max(dilution, na.rm = TRUE)) %>% 
@@ -94,4 +94,19 @@ PBG_Merge <- merge(PBG_Filter,PBG_trts, by=c("watershed","transect","plot"),all.
 ```
 
 
+
+# Task 5
+
+Here we have to create a boxplot to contrast and compare the concentration of Ammonia, Nitrate, and Phosphate per treatement across the study
+
+```{r}
+ggplot(PBG_Merge, aes(x=as.factor(treatment),y=as.numeric(concentration), fill=as.factor(treatment)))+
+  geom_boxplot()+
+ facet_wrap(facets=~test,scales="free_y")+
+  xlab("Treatment")+
+  ylab("Concentration")+
+  scale_fill_manual(values=c("#84c0c8","#8584c8","#47214f"))
+ 
+
+```
 
