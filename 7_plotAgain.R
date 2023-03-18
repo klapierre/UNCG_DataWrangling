@@ -64,9 +64,10 @@ data(mpg,package="ggplot2")
 # to be more informative (City Mileage (MPG) vs Highway Mileage (MPG)).
 # HINT: Refer back to last week's assignment or the ggplot help resources if you 
 # forget how to make a scatterplot.
-mpg<- mpg
-data.frame(mpg)
-ggplot(mpg, aes(x=cty, y=hwy)) + 
+
+ggplot(mpg, aes(x = cty, y = hwy, color=as.factor(class))) +
+  ylab("Highway Mileage (MPG)") +
+  xlab("City Mileage (MPG)") +
   geom_point()
 
 # Looks alright, but the graph may be hiding some information...
@@ -85,6 +86,7 @@ ggplot(data=mpg, aes(x=cty, y=hwy)) +
 
 # QUESTION: What happened when you created the plot with geom_jitter?
 ## Looks like the data has been zoomed up on the 0-30 cty and 0-40 hwy to show more data poins in that range.
+## a different graph was produced, more data points that were clustered together.
 
 # QUESTION: Run the code to create a plot using geom_jitter a second time. Then run it
 # again and again. What happens each time? Why is this happening?
@@ -110,8 +112,9 @@ ggplot(data=mpg, aes(x=cty, y=hwy)) +
 # HINT: Refer back to the Transform assignment if you want help with %in% (or 
 # try googling!)
 
-mpgSubset<- mpg %>%
-  filter(class %in% c('compac', 'midsize', 'suv'))
+mpgSubset <- mpg %>% 
+  mutate(class = ifelse(class %in% c("compact", "midsize", "suv"), class, NA)) %>% 
+  na.omit(class)
 
 # ggplot has lots of nice (and some not so nice) built-in color palettes that we 
 # can use to fill our bars with color. Try running the following code:
@@ -139,6 +142,7 @@ ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
 # used above? (i.e., does it use the first three colors in the palette? The last
 # three? Some other combination?)
 ## The colors were very easily defined.
+
 ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
   geom_jitter() +
   scale_color_brewer(palette="PuBuGn")
@@ -325,7 +329,7 @@ ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
   theme(legend.position=c(1,0), legend.justification=c(1,0))
 
 # QUESTION: What happens if you don't include the code for legend justification
-# above?
+## it is translated into a graph in the scale.
 ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) + 
   geom_jitter() + 
   theme(legend.position=c, legend.justification=c(1,0))
@@ -375,18 +379,20 @@ ggplot(data=mpg, aes(x=hwy)) +
 # and hwy_se.
 # HINT: Look back at the Transform assignment if you forget how to summarize the
 # data. Also recall, standard error = 1.96*standard deviation.
-highwayMPG<- mpg %>%
+highwayMPG <- mpg %>% 
   group_by(class) %>% 
-  summarise(hwy_mean = mean(hwy),
-     n=length(hwy),       
-            hwy_sd = sd(hwy)) %>%
-           mutate(hwy_se = 1.96 * (hwy_sd / sqrt(n)))
+  summarize(hwy_mean = mean(hwy), 
+            hwy_sd = sd(hwy), 
+            hwy_se = 1.96*sd(hwy)) %>% 
+  ungroup()
 
 # TASK: Create a bar graph showing the average highway MPG on the y-axis and 
 # car class on the x-axis. Fill the bars by class. Add in error bar caps that are 20%
 # the width pf the bars.
 # HINT: Don't forget to change stat from the default in your geom_bar() statement!
-
+ggplot(data=highwayMPG, aes(x=class, y=hwy_mean)) + 
+  geom_bar(stat = 'identity', aes(fill = class)) +
+  geom_errorbar(aes(ymax=hwy_mean+hwy_se, ymin=hwy_mean-hwy_se, width=.2))
 
 # ---------------------------------------------------------- #
 #### 2.1 DETOUR! COLORS AND LEGENDS, AGAIN                ####
@@ -401,6 +407,12 @@ highwayMPG<- mpg %>%
 #     statement
 # (3) No legend
 # (4) Informative x- and y-axis labels. 
+ggplot(data=highwayMPG, aes(x=class, y=hwy_mean)) + 
+  geom_bar(stat = 'identity', aes(fill = class), color = 'black') +
+  scale_color_brewer(palette="Dark2") +
+  theme(legend.position = "none") +
+  xlab("Vehicle Class") +
+  ylab("Highway Average Mileage")
 
 # HINT: Carefully consider whether your color and/or fill should go within an aes() 
 # statement, the scale_fill_manual or scale_color_manual statements, or neither.
@@ -417,6 +429,7 @@ ggplot(data=highwayMPG, aes(x=class, y=hwy_mean, fill=class)) +
   geom_bar(stat='identity') 
 
 # QUESTION: Where is ggplot getting the x-axis tick labels from?
+## from the class column.
 
 
 # Often our tick labels are not the best. We can modify them to be more informative
@@ -438,7 +451,7 @@ ggplot(data=highwayMPG, aes(x=class, y=hwy_mean, fill=class)) +
 # QUESTION: Try running the code above without the coord_cartesian() statement. 
 # What is surprising about the resulting graph? Based on this result, what do you
 # think the coord_cartesian() statement does?
-
+## the graph should follow as well.
 
 # We can also add a statement into the scale discrete or continuous statements
 # to name our axes, rather than putting in a whole separate step of xlab() or ylab().
@@ -464,7 +477,14 @@ ggplot(data=highwayMPG, aes(x=class, y=hwy_mean, fill=class)) +
 # (5) set the scale of the highway mpg to run from 0 to 30 with breaks every 5 
 # (6) flip your axes
 # (7) remove the legend
-
+ggplot(data=highwayMPG, aes(x=class, y=hwy_mean, fill=class)) +
+  geom_bar(stat='identity') +
+  theme(legend.position = "none") +
+  xlab("Car Class") +
+  ylab("Highway MPG") +
+  scale_x_discrete(labels=c('sport', 'compact', 'midsize', 'minivan', 'pickup', 'subcompact', 'SUV')) +
+  scale_color_brewer(palette="Set1") +
+  coord_flip()
 
 # ---------------------------------------------------------- #
 #### 3.0 RANKING                                          ####
@@ -478,7 +498,12 @@ ggplot(data=highwayMPG, aes(x=class, y=hwy_mean, fill=class)) +
 # and city_se.
 # HINT: Look back at the Transform assignment if you forget how to summarize the
 # data. Also, standard error = 1.96*standard deviation.
-
+cityMPG <- mpg %>% 
+  group_by(class) %>% 
+  summarize(city_mean = mean(cty), 
+            city_sd = sd(cty), 
+            city_se = 1.96*sd(cty)) %>% 
+  ungroup()
 
 # Now we want to plot our data in order from smallest to largest city MPG to get
 # a ranking. To do so, we need to use the reorder() function to rearrange the data
@@ -493,7 +518,13 @@ ggplot(cityMPG, aes(x=reorder(class, city_mean), y=city_mean)) +
 # (4) error bars with end caps 30% the width of the bars
 # (5) y-axis from 0 to 30 with tick marks every 5
 # (6) no legend.
-
+ggplot(cityMPG, aes(x=reorder(class, city_mean), y=city_mean), fill=class) + 
+  geom_bar(stat="identity") +
+  theme(legend.position = "none") +
+  xlab("Car Class") +
+  ylab("City MPG") +
+  scale_x_discrete(labels=c('Pickup', 'SUV', 'Two Seater', 'Minivan', 'Midsize', 'Compact', 'Subcompact')) +
+  scale_color_brewer(palette="Set1")
 
 # ---------------------------------------------------------- #
 #### 4.0 DISTRIBUTION                                     ####
@@ -506,22 +537,26 @@ ggplot(mpg, aes(hwy)) +
   geom_histogram()
 
 # TASK: Recreate the graph above, but using geom_bar() instead
+ggplot(mpg, aes(hwy)) + 
+  geom_bar()
 
 
 # TASK: Try making a histogram with the categorical variable 'manufacturer'.
 # What error message do you get?
-
-
+ggplot(mpg, aes(manufacturer)) + 
+  geom_histogram()
+## it needs a continuous x.
 # QUESTION: What happens when you follow the advice of the error message and 
 # make stat='count'?
 ggplot(mpg, aes(manufacturer)) + 
   geom_histogram(stat="count")
-
+## it doesnt like the unnkown parameters but still produces a graph.
 
 # TASK: Make a boxplot comparing the distribution of cty (city mileage) for
 # each class of car.
 # HINT: Look back to last week if you forget how to make a boxplot.
-
+ggplot(mpg, aes(x = as.factor(class), y=cty)) + 
+  geom_boxplot()
 
 # We can also make a different type of distribution, a violin plot using the 
 # geom_violin statement as follows:
@@ -529,7 +564,7 @@ ggplot(mpg, aes(x=class, y=cty)) +
   geom_violin()
 
 # QUESTION: What does a violin plot show? Check google if you're unsure.
-
+## it gives the peaks and the summary statistic and density of the data set.
 
 # ---------------------------------------------------------- #
 #### 5.0 COMPOSITION                                      ####
