@@ -97,6 +97,8 @@ PBG_Merge <- merge(PBG_Filter,PBG_trts, by=c("watershed","transect","plot"),all.
 
 # Task 5
 
+### Graphic design is my passion
+
 Here we have to create a boxplot to contrast and compare the concentration of Ammonia, Nitrate, and Phosphate per treatement across the study
 
 ```{r}
@@ -105,8 +107,44 @@ ggplot(PBG_Merge, aes(x=as.factor(treatment),y=as.numeric(concentration), fill=a
  facet_wrap(facets=~test,scales="free_y")+
   xlab("Treatment")+
   ylab("Concentration")+
-  scale_fill_manual(values=c("#84c0c8","#8584c8","#47214f"))
+  scale_fill_manual(values=c("#1AFF1A","#006CD1"))
  
 
 ```
 
+
+# Task 6
+
+### This totally didn't take me a full day to figure out
+
+Now we have to calculate the concentration coefficient for each nutrient type by test.
+To do this, we will first find the mean and standard deviation, then create a new column containing the end product of mean/sd
+
+
+```{r, message=FALSE}
+PBG_Variation <- PBG_Merge %>%
+  group_by(treatment,test) %>%
+  summarise(conc_mean=mean(as.numeric(concentration)),conc_sd=sd(concentration))%>%
+  mutate(conc_coeff=conc_mean/conc_sd)
+```
+
+# Task 7
+### THE FINAL TASK!
+#### .... for now
+
+
+Finally, we just need to plot the concentration coefficient by the tests for each nutrient to see which treatment plan yielded the best results.
+
+```{r}
+
+ggplot(PBG_Variation, aes(x=test,y=as.numeric(conc_coeff), fill=as.factor(treatment)))+
+  geom_bar(stat="identity", position="dodge", )+
+  xlab("Nutrients")+
+  ylab("Concentration Coefficient")+
+  scale_fill_manual(values=c("#1AFF1A","#006CD1"))
+```
+
+
+# Conclusion
+
+Based upon the results generated, overall it appears that the PBG treatment plan yields a higher amount of nutrients within the soil. Although the difference in Nitrate yield seems to be negligible. 
