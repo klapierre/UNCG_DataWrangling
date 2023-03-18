@@ -16,8 +16,8 @@ Homogeneity of the environment due to the production and management of cattle ca
 Annual burning and grazing (AGB) is a management system frequently employed to boost productivity in cattle, but this comes with severe deficits to the environment via the removal of necessary detritus and flora biodiversity. 
 
 ### Patch burn grazing
-An alternative management strategy known at Patch burn grazing (PBG) which strikes a balance between a robust, healthy, and diverse ecosystem while allowing cattle farmers to maintain their herds' diets and well-being. PBG creates a flowing, heterogeneous landscape by shifting herds from unburned patches to recently burned areas to forage. These areas change and shift throughout the year to produce a fluid mosaic of ecosystems.
-PBG has many benefits for biodiversity, ecosystem function and function, and agricultural sustainability. However, the effects on belowground processes is largely undocumented.
+An alternative management strategy known at Patch burn grazing (PBG) strikes a balance between a robust, healthy, and diverse ecosystem and allowing cattle farmers to maintain their herds' diets and well-being. PBG creates a flowing, heterogeneous landscape by shifting herds from unburned patches to recently burned areas to forage. These areas change and shift throughout the year to produce a fluid mosaic of ecosystems.
+PBG has many benefits for biodiversity, ecosystem function, and agricultural sustainability. However, the effects on belowground processes is largely undocumented.
 
 ### Experimental design
 
