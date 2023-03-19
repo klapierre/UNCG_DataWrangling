@@ -1,0 +1,97 @@
+---
+title: "Comparing soil nutrients between an annual burned and patch burn grazing system"
+author: "Kaysa Vaarre-Lamoureux"
+date: "2023-03-13"
+output: pdf_document
+---
+
+## Background:
+Cattle production and management often comes at the expense of plant and wildlife biodiversity, environmental health, and conservation. **Annual burning and grazing (ABG)** is a common management technique used in mesic grasslands to increase forage production for cattle. However it also homogenizes vegetation and removes cover of dead plant material. As a result, habitat quality is reduced for native flora and fauna. **Patch burn grazing (PBG)** allows the maintanance of cattle weight gain while promoting conservation and sustainability practices. PBG creates a "shifting mosaic" of forage across a landscape through time using fire and grazing interactions. Fire lures grazing animals to a recently burned patch and unburned patches experience reduced grazing levels. Patchiness of the landscape creates heterogeneity which promotes ecosystem health through greater diversity, ecosystem connectivity, and stability of ecosystem function and services. PBG still provides equivalent cattle production. Evidence for many potential benefits of PBG is limited and PBG's belowground effects are completely unexplored.
+
+Resin bags were buried in the soil at several points across this landscape to examine the effects of ABG and PBG on soil nitrate (NO3), ammonium (NH4), and phosphorous (P) from May-August 2021.NO3 and NH4 were extracted from the resin bags by KCl extractions and P was extracted from the resin bags using HCl extractions, following standard protocols. Resin extracts were then analyzed to determine total NO3, NH4, and P in each sample. Where concentrations were too high, samples were diluted and re-measured.
+
+## R environment setup:
+1. set working directory - *not seen in code*
+2. load tidyverse library
+3. set themes
+
+```{r environment setup, setup, message=FALSE, warning=FALSE}
+library(tidyverse)
+theme_set(theme_bw())
+theme_update(panel.grid.major=element_blank(), panel.grid.minor=element_blank())
+```
+
+## Import datafiles:
+Import the three data files
+
+1. Nitrate and Ammonium measurements
+2. Phosphorous measurements
+3. Treatments
+
+```{r import datafiles, warning=FALSE}
+PBG_N <- read.csv("PBG_N_compiled_raw_2021.csv")
+PBG_P <- read.csv("PBG_P_compiled_raw_2021.csv")
+PBG_trts <- read.csv("PBG_trts.csv")
+```
+
+## Tidy data:
+Tidying the data to only include the information we are interested in.
+
+```{r tidy data, warning=FALSE}
+PBG_NP <- rbind(PBG_N, PBG_P) %>% 
+  filter(substr(sample, 1, 1) == "U") %>% 
+  mutate_all(~gsub("-P|-N", "", .))
+
+PBG_NP$dilution <- as.numeric(PBG_NP$dilution)
+
+PBG_NP <- group_by(PBG_NP, Sample, test) %>% 
+  filter(dilution == max(dilution)) %>% 
+  ungroup()
+
+PBG_trts_comb <- unite(PBG_trts, Sample, c(watershed, transect, plot), sep = "-")
+
+PBG_NP_trts <- merge(x=PBG_NP, y=PBG_trts_comb, by="Sample", all.x=TRUE) %>% 
+  mutate(testCorrect = ifelse(test=="KCl Ammonia 10", "Ammonia", ifelse(test==
+         "KCL NO3_NO2 2", "Nitrate", ifelse(test=="HCl PO4_1", "Phosphorous", test)))) %>% 
+  select(Sample, treatment, concentration, units, testCorrect)
+
+PBG_NP_trts$concentration <- as.numeric(PBG_NP_trts$concentration)
+```
+
+## Making boxplot:
+A boxplot showing the concentration of each nutrient by treatment.
+
+``` {r boxplot}
+ggplot(PBG_NP_trts, aes(treatment, concentration, color=treatment))+
+  geom_boxplot()+
+  facet_wrap(~testCorrect, scales="free_y")+
+  scale_color_manual(labels=c("ABG", "PBG"), values=c("#817FCF", "#D8958B"))+
+  ylab("Concentration (mg N/L or mg/L")+
+  xlab("Treatment")
+```
+
+## Coefficient of variation
+Calculating the coeffiient of variation for each treatment and nutrient type.
+
+```{r calculate CV, message=FALSE, warning=FALSE}
+PBG_NP_coef <- PBG_NP_trts %>% 
+  group_by(treatment, testCorrect) %>% 
+  summarise(conc_mean=mean(concentration), conc_sd=sd(concentration), 
+            conc_coef=conc_mean/conc_sd) %>% 
+  ungroup()
+```
+
+## Coefficient of variation bar graph
+Making a bar graph of coefficient of variation for each treatment and nutrient type.
+
+``` {r CV bar graph}
+ggplot(PBG_NP_coef, aes(treatment, conc_coef, fill=treatment))+
+  geom_bar(stat="identity")+
+  facet_wrap(~testCorrect, scales="free_y")+
+  scale_fill_manual(labels=c("ABG", "PBG"), values=c("#817FCF", "#D8958B"))+
+  ylab("Coefficient of Variation")+
+  xlab("Treatment")
+```
+
+## Summary
+Results at this study site indicate that nutrient concentrations are not significantly affected by different burn and grazing treatments.When looking at the coefficient of variation between ABG and PBG, Ammonia and Nitrate have greater variation in ABG treatments than PBG treatments. However, Phosphorous has greater variation in PBG treatments than ABG treatments.
