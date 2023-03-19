@@ -1,0 +1,122 @@
+---
+title: "Comparing soil nutrients between an annual burned and patch burn grazing system"
+author: "Zachary Bunch"
+date: "3/13/2023"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(root.dir= '/tmp')
+library(tidyverse)
+
+```
+
+##Background
+
+Many land management techniques designed to promote productivity have devestating environmental consequences. One such technique is Annual Burn Grazing (ABG). ABG grazing is used to boost cattle production but is documented as having devasting effects on an grassland ecosystems due to its promotion of homogeneity. Patch Burn Grazing (PBG) promotes heterogeneity across a landscape leading to long term ecosystem health and species preservation. Notably, this burning technique does not negatively impact cattle production meaning it is just as effective as traditional techniques in generating revenue while also preserving vital ecosystem elements. 
+
+In this experiment we wanted to test the impact of ABG and PBG on nitrate, ammonium and phosphate. KCL was used to extract nitrate and ammonium from buried resin bags whereas HCL was used to extract phosphorous. Extract quantity was then determined. Some samples were remeasured or subjected to additional dilutions if their concentrations were deemed too high. 
+
+
+```
+N <- read.csv("PBG_N_compiled_raw_2021.csv")
+
+P <- read.csv("PBG_P_compiled_raw_2021.csv")
+
+
+BindedNP <- rbind(N, P)
+
+BindedNP_New <- BindedNP %>% filter(str_detect(sample, "U"))
+
+Test <- BindedNP_New %>% select(Sample, dilution)
+
+unique(Test)
+
+```
+#Code Chunk 1.1
+Binds N and P CSV files together. Creates a new variable that removes can entry in the sample column that contains "U". Stores in a Test variable which is then test for unique values. Because the unique values in our Test variable are equal that those in our BindedNP_New variable we can conclude there are no duplicates in the Sample column. 
+
+
+```
+library(dplyr)
+library(tidyr)
+
+
+
+Trts <- read.csv("PBG_trts.csv") %>% mutate_all(as.character)
+
+
+
+MoreColumns <- BindedNP_New %>%  separate(Sample, c('watershed', 'transect', 'plot', 'P/N'), sep = '-')
+
+NP_Data <- left_join(MoreColumns, Trts) %>% separate(test, c('Acid','Species','d'),sep = ' ') %>% 
+select(-d) %>% subset(select = -Acid) %>% 
+mutate(Species = ifelse(Species == "NO3_NO2", "Nitrate or Nitrogen Dioxide", ifelse(Species == "PO4_1", "Phosphate", "Ammonia"))) %>% rename(nutrient = `P/N`)
+
+```
+
+#Code Chunk 1.2
+
+Loads approprite libraries and then stores the PBG treatment in the Trts variable. Then, a new variable is created which stores the BindedNP_New data frame with the Sample column split into several new, more descriptive columns. Unmeaningful columns are deleted. Nested ifelse statements are used to provide more meaningful descriptions to variables with the Species column. 
+
+```
+library(ggplot2)
+
+my_colors <- c("Orange", "Blue")
+
+NP_Data$concentration <- as.numeric(NP_Data$concentration)
+
+
+
+ggplot(NP_Data, aes(x = nutrient, y = concentration, fill = treatment)) +
+  geom_boxplot() +
+  scale_fill_manual(values = my_colors) +
+  facet_wrap(~plot, scales = "free_y") +
+  xlab("Chemical Species") +
+  ylab("Concentration") +
+  ggtitle("Concentration of Nutrients by Treatment") +
+  theme_bw() +
+  scale_y_continuous(breaks = seq(-1, 25, 1.5))
+
+
+```
+
+#Code Chunk 1.3
+
+The above codes first loads the ggplot2 library and then stores colors in a variable called my_colors. Line 67 converts the concentration column to numeric values. Then, we create our ggplot. Nutrient is placed on the x axis and concentration on the y. The fill is set by treatment. We then faceted by plot. The x and y axis were then appropriately labeled. We then set a descriptive title, set a theme and provided a meaningful scale. 
+
+
+```
+library(dplyr)
+
+
+
+CV_NP_Data <- NP_Data %>%
+  group_by(treatment, nutrient) %>% 
+   summarise(cv = mean(concentration) / sd(concentration))
+
+
+
+
+```
+#Code Chunk 1.4
+
+Calculates the coefficient of variation for treatment and nutrient and saves them in a new variable called CV_NP_Data
+
+```
+ggplot(CV_NP_Data, aes(x = nutrient, y = cv, fill = treatment)) +
+  geom_bar(stat = "identity", position = "dodge") +
+  scale_fill_manual(values = my_colors) +
+  labs(x = "Nutrient", y = "CV") +
+  theme_bw()
+
+
+```
+
+#Code Chunk 1.5 
+
+Creates a bar graph from the CV_NP_Data dataframe. The x axis is nutrient, the y axis is cv and the fill is set to treatment. Within geom_bar, we've awdded position = dodge to create two bars side by side rather than a stacked formation. We used our previously created my_colors variable to fill our colors. We labeled the x axis with descriptive labels and set a theme.
+
+#Summary
+
+Overall, we had more variable concentrations in PBG phosphorous plots when compared to ABG phosphorous plots. Inversely, we have more variable concentrations in ABG plots when compared to PBG plots for responses to Nitrogen treatment. When interpreting our box plots we can see that while the medians are relatively close for most plots, PBG has a larger spread relative to ABG. 
