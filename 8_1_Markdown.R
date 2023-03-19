@@ -31,19 +31,35 @@ cleanNandP <- Sampleseparated %>% select(-NorP)
 
 combinedNPnadT <- merge(cleanNandP,pbg_t)
 
+#all this in one line
+
+oneliner <- rbind(pbg_n,pbg_p) %>% filter(grepl("U", sample)) %>% group_by(Sample) %>% filter(dilution == max(dilution)) %>% ungroup() %>% 
+  separate(col = Sample, into = c("watershed","transect","plot","NorP"), sep = "-") %>% 
+  select(-NorP) %>% 
+  merge(pbg_t)
+
+
 #rename test column entries 
 
 unique(combinedNPnadT$test) 
 
-renamed <- combinedNPnadT %>% mutate(test = ifelse(test %in% "HCl PO4_1", "Phosphorous ", test))
+renamed <- combinedNPnadT %>% mutate(test = ifelse(test %in% "HCl PO4_1", "Phosphorous", test))
 
 renamedagain <- renamed %>% mutate(test = ifelse(test %in% "KCl Ammonia 10", "Ammonia", test))
 
 finalrename <- renamedagain %>% mutate(test = ifelse(test %in% "KCL NO3_NO2 2", "Nitrate", test))
 
+#rename in one line so fresh so clean
+
+renamedset <- combinedNPnadT %>% mutate(test = ifelse(test %in% c("HCl PO4_1","KCl Ammonia 10","KCL NO3_NO2 2"), 
+                                                      c("Phosphorous","Ammonia","Nitrate"), test))
+
+
+
+
 #get rid of all the shit we dont need
 
-CLEAN <- finalrename %>% select(-Process, -Number, -run, -abs, -h, -number, -j, -k, -Notes, -run_time, -Site, -dilution)
+CLEAN <- renamedset %>% select(-Process, -Number, -run, -abs, -h, -number, -j, -k, -Notes, -run_time, -Site, -dilution)
 
 # Lord have mercy
 
