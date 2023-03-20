@@ -17,6 +17,12 @@ https://r4ds.had.co.nz/dates-and-times.html
 https://www.r-bloggers.com/2020/04/a-comprehensive-introduction-to-handling-date-time-in-r/
   https://www.stat.berkeley.edu/~s133/dates.html#:~:text=Dates%20and%20Times%20in%20R%20R%20provides%20several,dates%20and%20times%20with%20control%20for%20time%20zones.
 
+###Untidy INTL Data###
+
 date_time_untidy <-read.csv("date_times_very_untidy.csv")
+
+#SA and NZ: Day/Month/Year
+#USA: Month/Day/Year
+
 
 
