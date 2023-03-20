@@ -4,10 +4,11 @@
 setwd("/Users/rachaelbrenneman/Desktop/data_wrangle/UNCG_DataWrangling")
 setwd("D:/School Stuff/Graduate Studd/Graduate Classes/Spring 2023/UNCG_DataWrangling")
 ##############################Tentative Outline################################
-#moving from 12hr to 24hr back and forth
-#moving from month,day,year to day,month,year
-#tidy data with dates (people write them completely differently)
-#plotting with dates
+#intro to dates and times - R
+#moving from 12hr to 24hr back and forth - W
+#moving from month,day,year to day,month,year -W
+#timezones -E
+#plotting with dates R
 
 
 ########################Possible Resources#####################################
