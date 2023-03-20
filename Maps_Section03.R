@@ -9,14 +9,11 @@ library(ggmap)
 library(maps)
 library(mapdata)
 
-chatgpt
-
 install.packages('tidygeocoder')
 devtools::install_github("jessecambon/tidygeocoder")
 
-# here is the data set we are going to use
-# we only want the starbucks in NY 
-# and we only want the columns "latitude" and "longitude"
+# Read in the data set we are going to use (starbucks_2018_11_12.csv)
+# We only want the Starbucks in NY and we only want the columns "name", "latitude", and "longitude"
 # tidy it up!
 
 starb <- read.csv("starbucks_2018_11_12.csv", stringsAsFactors = TRUE) %>% 
