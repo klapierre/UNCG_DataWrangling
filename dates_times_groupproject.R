@@ -6,6 +6,7 @@ setwd("/Users/rachaelbrenneman/Desktop/data_wrangle/UNCG_DataWrangling")
 ##############################Tentative Outline################################
 #moving from 12hr to 24hr back and forth
 #moving from month,day,year to day,month,year
+#timezones
 #tidy data with dates (people write them completely differently)
 #plotting with dates
 
