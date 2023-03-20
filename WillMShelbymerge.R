@@ -1,6 +1,6 @@
 
 
-
+#Breaking this thing together <3
 
 
 
@@ -10,7 +10,9 @@
 #we are testing breaking R! Let's start!
 
 
-
+buzz buzz
+ggplot(c(1,2,3,4), 2023) +
+  geom_point()
 
 
 
