@@ -11,6 +11,13 @@
 #assignment, we will cover three major types of loops in R: "For Loops", "While
 #Loops" and "Repeat Loops". 
 
+#For Loops: A for loop repeats a given task for defined number of times.
+
+#While Loops: A while loop keeps repeating a block of code until a certain
+#logical parameter is met. Example: While x is less than 3, perform action y.
+
+#Repeat Loops: Similar to while loop but requires a break, or stop to prevent
+#the loop from running forever. Example: Until 10 iterations, perform action y. 
 
 #For Loops 
 #Description (Lowie)
