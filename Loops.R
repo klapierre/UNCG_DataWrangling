@@ -1,7 +1,15 @@
-# This is the file for the loops exercises and explanations
+#Loops, quite simply, loop! When a loop is run in R (or even other programmming
+#languages!) a block of code is run again and again, often until a prespecified 
+#condition is met. Each time the code witin a loop is run, it is refered to as 
+#an iteration.
 
+#Loops are useful for quickly performing mundane tasks that would otherwise 
+#require manual completion. 
 
-#What are loops (Zachary)
+#Different loops are useful for different scanarios. Using loops succesfuly 
+#requires recognizing when to use different loops types. Throughout this
+#assignment, we will cover three major types of loops in R: "For Loops", "While
+#Loops" and "Repeat Loops". 
 
 
 #For Loops 
