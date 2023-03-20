@@ -192,6 +192,7 @@ ggplot(redband, aes(x=ScaleAge, y=Length))
 ggplot(redband, aes(x=ScaleAge, y=Length)) + 
   geom_point()
 
+
 # QUESTION: Based on the figure that was generated from the code above, 
 # what would you conclude about the relationship between fish age and length?
 

@@ -556,11 +556,18 @@ ggplot(data=highwayMPG,
 # HINT: Look back at the Transform assignment if you forget how to summarize the
 # data. Also, standard error = 1.96*standard deviation.
 
+cityMPG <- mpg %>%
+  group_by(class) %>%
+  summarise(across(cty,
+                   .fns=list(mean=mean, sd=sd))) %>%
+  ungroup() %>%
+  mutate(cty_se = cty_sd*1.96)
+
 
 # Now we want to plot our data in order from smallest to largest city MPG to get
 # a ranking. To do so, we need to use the reorder() function to rearrange the data
 # going into our x-axis.
-ggplot(cityMPG, aes(x=reorder(class, city_mean), y=city_mean)) + 
+ggplot(cityMPG, aes(x=reorder(class, cty_mean), y=cty_mean)) + 
   geom_bar(stat="identity")
 
 # TASK: Recreate the above ranking figure to include the following:
