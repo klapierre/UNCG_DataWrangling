@@ -1,34 +1,34 @@
-<<<<<<< HEAD
+l
+
+
+l
+
+l
+
+#Lets break R together!l
+
+#we are testing breaking R! Let's start!l
 
 
 
 
 
 
-#Lets break R together!
-
-#we are testing breaking R! Let's start!
+#kekekekekekekekekekkekekekekekekekkekekekkekekeeee
 
 
 
+l
 
-
-
+h
 
 
 
 
 
+l
 
-
-
-
-
-
-
-
-
-
+b
 #Mwah ahhahahahahahahahahahaaaaa!!!!!
 #It is I! The secret line of Code!!!!
 # Mweheheheheheheeee!
@@ -36,16 +36,15 @@
 
 
 
-
+b
 #i win
 
-=======
 #i win
 #
-#
-#
-#
-#
+#b
+#o
+#z
+#o
 #
 #
 #
@@ -61,4 +60,27 @@
 #
 #
 # Jordan wuz here
->>>>>>> 23596a37299c2e047f6038212711b7330faf929d
+#
+#
+#
+#
+#
+#
+#
+# ヽ༼ຈل͜ຈ༽ﾉ
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+#
+# ヽ༼ຈل͜ຈ༽ﾉ ヽ༼ຈل͜ຈ༽ﾉ ヽ༼ຈل͜ຈ༽ﾉ ヽ༼ຈل͜ຈ༽ﾉ ヽ༼ຈل͜ຈ༽ﾉ ヽ༼ຈل͜ຈ༽ﾉ 
+# go home bozo
+
