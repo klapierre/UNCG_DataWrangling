@@ -1,0 +1,61 @@
+---
+title: "Comparing Nitrogen and Phosphrous Levels Between Annually Burned and Patch Burned Grazing (PBG) Systems"
+author: "Author: Kimberly Komatsu"
+subtitle: **Background**: Biodiversity has paid a price due to livestock agriculture. However, new management techniques like PBG have been developed and are currently being evaluated for its effectiveness. This technique is an attempt to conserve native wildlife. PBG ustilizes fire and grazing tactics. The fire is used to lure grazers to a recently burned plot, while unburned patches have a reduction of grazing. This technique leads to greater heterogenity and increases ecosystem health, while still producing the same amount of cattle. 
+output:
+  pdf_document: default
+  word_document: default
+  html_document:
+    df_print: paged
+    theme: paper
+urlcolor: red
+date: "2023-03-13"
+---
+
+```{r, load_package, message=FALSE, warning=FALSE}
+library(tidyverse)
+pbg_n <- read.csv("PBG_N_compiled_raw_2021.csv")
+pbg_p <- read.csv("PBG_P_compiled_raw_2021.csv")
+pbg_t <- read.csv("PBG_trts.csv")
+bind <- rbind(pbg_n,pbg_p)
+bound_onlyU <- bind %>% filter(grepl("U", sample))
+```
+
+## R Markdown
+
+
+```{r boxplot_resultsconcentration}
+bound_maxdil <- bound_onlyU %>% group_by(Sample) %>% filter(dilution == max(dilution)) %>% ungroup()
+  Sampleseparated <- bound_maxdil %>% separate(col = Sample, into = c("watershed","transect","plot","NorP"), sep = "-")
+  cleanNandP <- Sampleseparated %>% select(-NorP)
+  combinedNPnadT <- merge(cleanNandP,pbg_t)
+  renamed <- combinedNPnadT %>% mutate(test = ifelse(test %in% "HCl PO4_1", "Phosphorous ", test))
+
+renamedagain <- renamed %>% mutate(test = ifelse(test %in% "KCl Ammonia 10", "Ammonia", test))
+
+finalrename <- renamedagain %>% mutate(test = ifelse(test %in% "KCL NO3_NO2 2", "Nitrate", test))
+CLEAN <- finalrename %>% select(-Process, -Number, -run, -abs, -h, -number, -j, -k, -Notes, -run_time, -Site, -dilution)
+ggplot(CLEAN, aes(x = test, y= as.numeric(concentration), fill = as.factor(test))) +
+  geom_boxplot() +
+  facet_wrap(~treatment, scales = "free") +
+  scale_fill_manual(values = c("green","blue", "yellow")) +
+  xlab("Nutrient") + ylab("Concentration") +
+  labs(fill = "Legend")
+cv <- function(x) 100*( sd(x, na.rm = TRUE)/mean(x, na.rm = TRUE))
+cvframe <- CLEAN %>% group_by(treatment, test) %>% summarize(cv = cv(as.numeric(concentration))) %>% ungroup()
+ggplot(cvframe, aes(x=test, y= as.numeric(cv), fill = as.factor(test))) +
+  geom_bar(stat = "identity") +
+  facet_wrap(~treatment, scales = "free") +
+  scale_fill_manual(values = c("green","blue", "yellow")) +
+  xlab("Nutrient") + ylab("CV of Concentration") +
+  labs(fill = "Legend")
+```
+
+## Including Plots
+
+
+
+
+
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
