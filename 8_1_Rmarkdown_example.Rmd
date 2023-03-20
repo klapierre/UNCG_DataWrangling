@@ -1,5 +1,5 @@
 ---
-title: "MODULE 4: Communicating your data using Rmarkdown!"
+title: "**MODULE 4: Communicating your data using Rmarkdown!**"
 author: "Author: Kimberly Komatsu"
 subtitle: Partial Answer Key for Comparison to R Script
 output:
@@ -79,7 +79,6 @@ Each type of geometric object (geom) accepts only a subset of all aesthetics. Re
 library(tidyverse)
 ```
 \
-
 **TASK:** Write code below to set your theme to black and white and both your major AND minor gridlines to element_blank for all plots you'll be making today.  
 *HINT:* Check back to last week's assignment section 1.9 for setting themes for all plots.
 
