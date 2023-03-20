@@ -7,7 +7,7 @@
 #For Loops 
 #Description (Lowie)
 #Example (Mason)
-#Do it yourself (William)
+#Do it yourself 
 
 #DUE: MARCH 26TH
 
@@ -17,7 +17,7 @@
 #Example (Zachary)
 #Do it yourself (Lowie)
 
-#DUE: MARCH 24TH
+#DUE: MARCH 30TH
 
 #Repeat Loops
 #Description (William)
