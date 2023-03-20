@@ -1,0 +1,6 @@
+Manifest file for knb-lter-knz.148.3-4c9184f37cff01bcdc32dc486ec36961.zip created on Mon Jan 16 13:16:55 MST 2023
+CME011.csv (459075 bytes)
+CME012.csv (18365 bytes)
+knb-lter-knz.148.3.xml (34546 bytes)
+knb-lter-knz.148.3.txt (7790 bytes)
+knb-lter-knz.148.3.report.xml (49064 bytes)

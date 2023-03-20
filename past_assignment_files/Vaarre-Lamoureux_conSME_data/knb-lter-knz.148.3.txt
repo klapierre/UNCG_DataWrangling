@@ -1,0 +1,392 @@
+Dataset title:  CME01 The Consumer Size Manipulation Experiment (ConSME) at Konza Prairie
+
+Dataset ID:  doi:10.6073/pasta/582d2d04d70921a55357e55f201fe7d1
+Dataset Creator
+
+	Name:		Kimberly Komatsu
+	
+	Address:
+			Smithsonian Environmental Research Center (SERC)
+			Edgewater, MD 21037  US
+	
+	Email:		lapierrek@si.edu
+
+	Name:		Meghan Avolio
+	
+	Address:
+			Morton K. Blaustein Department of Earth and Planetary Sciences, Johns Hopkins University
+			Baltimore, MD 21218  US
+	
+	Phone:		410-516-2719
+	Email:		meghan.avolio@jhu.edu
+
+	Name:		Andrew Hope
+	
+	Address:
+			110 Bushnell Hall, Division of Biology, Kansas State University
+			Manhattan, KS 66506  US
+	
+	Phone:		785-532-0155
+	Email:		ahope@ksu.edu
+
+	Name:		Sally Koerner
+	
+	Address:
+			The University of North Carolina at Greensboro
+			Greensboro, NC 27402-6170  US
+	
+	Phone:		336-334-5393
+	Email:		sekoerne@uncg.edu
+
+	Name:		Allison Louthan
+	
+	Address:
+			Bushnell Hall, Division of Biology, Kansas State University
+			Manhattan, KS 66506  US
+	
+	Phone:		785-532-5925
+	Email:		amlouthan@ksu.edu
+	URL:		http://www.louthanlab.com/
+
+	Name:		Kevin Wilcox
+	
+	Address:
+			University of Wyoming, 1000 E University Ave
+			Laramie, WY 82071  US
+	
+	Email:		kevin.wilcox@uwyo.edu
+
+
+Metadata Provider
+
+	Name:		Konza LTER
+	
+	Address:
+			Division of Biology
+			Manhattan, KS 66506  US
+	
+	Phone:		785-532-6729
+	Email:		knzlter@ksu.edu
+	URL:		http://lter.konza.ksu.edu
+
+
+Dataset Abstract
+
+
+
+Dataset Keywords
+
+	Primary Production
+	Disturbance
+	Populations
+	Others
+	aboveground biomass
+	insects
+	LTER-KNZ
+	Konza Prairie
+	Konza Prairie Biological Station
+	plant biomass
+	plant communities
+	plant cover
+
+
+Intellectual Rights
+
+
+
+Distribution
+
+	Online distribution:  http://lter.konza.ksu.edu/content/cme01-consumer-size-manipulation-experiment-consme-konza-prairie
+
+
+Geographic Coverage
+
+
+	Bounding Coordinates
+
+		Geographic description:	N1A: Year-long grazing by bison and scheduled prescribed burned annually in the spring.
+		West bounding coordinate:	-96.5969
+		East bounding coordinate:	-96.5834
+		North bounding coordinate:	39.0993
+		South bounding coordinate:	39.0879
+	
+		Geographic description:	N4B : Year-long grazing by bison and scheduled prescribed burned every 4 years in the spring.
+		West bounding coordinate:	-96.5869
+		East bounding coordinate:	-96.5738
+		North bounding coordinate:	39.096
+		South bounding coordinate:	39.0891
+	
+
+
+
+Temporal Coverage
+
+	Start Date:  2019-01-01
+	End Date:  2021-12-31
+
+Maintenance
+
+	
+          ongoing
+        
+
+
+Dataset Contact
+
+
+
+Methods
+
+
+
+	Method Step 
+
+		Description 
+
+
+
+Data Table
+
+	Entity Name:  CME011
+	Entity Description:  Plant cover data.
+	Object Name:  CME011.csv
+
+
+
+Data Format
+
+	Number of Header Lines:  1
+	Attribute Orientation:  column
+	Field Delimiter:  ,
+	Number of Records:  7239
+
+
+
+Attributes
+
+	Attribute Name:  DataCode
+	Attribute Label:  DataCode
+	Attribute Definition:  Dataset code
+	Storage Type:  string
+	Measurement Scale: 
+		Dataset code
+	Missing Value Code: 
+
+
+	Attribute Name:  RecType
+	Attribute Label:  RecType
+	Attribute Definition:  Record type
+	Storage Type:  string
+	Measurement Scale: 
+		Record type
+	Missing Value Code: 
+
+
+	Attribute Name:  RecYear
+	Attribute Label:  RecYear
+	Attribute Definition:  Year of record
+	Storage Type:  
+	Measurement Scale: 
+		Units:		Year (YYYY)
+		Number Type:  real
+	Missing Value Code: 
+
+
+	Attribute Name:  Season
+	Attribute Label:  RecSeason
+	Attribute Definition:  Season of record
+	Storage Type:  string
+	Measurement Scale: 
+		Season of record
+	Missing Value Code: 
+
+
+	Attribute Name:  RecDate
+	Attribute Label:  RecDate
+	Attribute Definition:  Date that data was collected
+	Storage Type:  date
+	Measurement Scale: 
+	Missing Value Code: 
+
+
+	Attribute Name:  Watershed
+	Attribute Label:  Watershed
+	Attribute Definition:  watershed
+	Storage Type:  string
+	Measurement Scale: 
+		watershed
+	Missing Value Code: 
+
+
+	Attribute Name:  Block
+	Attribute Label:  Block
+	Attribute Definition:  Block (A- R)
+	Storage Type:  string
+	Measurement Scale: 
+		Block (A- R)
+	Missing Value Code: 
+
+
+	Attribute Name:  Plot
+	Attribute Label:  Plot
+	Attribute Definition:  Plot Number (1- 6)
+	Storage Type:  
+	Measurement Scale: 
+		Units:  number
+		Number Type:  real
+	Missing Value Code: 
+
+
+	Attribute Name:  Sppnum
+	Attribute Label:  Sppnum
+	Attribute Definition:  Species number
+	Storage Type:  
+	Measurement Scale: 
+		Units:  dimensionless
+		Number Type:  real
+	Missing Value Code: 
+
+
+	Attribute Name:  Taxa
+	Attribute Label:  Taxa
+	Attribute Definition:  Taxa associated with cover value
+	Storage Type:  string
+	Measurement Scale: 
+		Taxa associated with cover value
+	Missing Value Code: 
+
+
+	Attribute Name:  Cover
+	Attribute Label:  Cover
+	Attribute Definition:  Plant Cover
+	Storage Type:  
+	Measurement Scale: 
+		Units:		percent
+		Number Type:  real
+	Missing Value Code: 
+
+
+	Attribute Name:  Comments
+	Attribute Label:  Comments
+	Attribute Definition:  Comments
+	Storage Type:  string
+	Measurement Scale: 
+		Comments
+	Missing Value Code: 
+
+
+	Attribute Name:  DataCode
+	Attribute Label:  DataCode
+	Attribute Definition:  Dataset code
+	Storage Type:  string
+	Measurement Scale: 
+		Dataset code
+	Missing Value Code: 
+
+
+	Attribute Name:  RecType
+	Attribute Label:  RecType
+	Attribute Definition:  Record type
+	Storage Type:  string
+	Measurement Scale: 
+		Record type
+	Missing Value Code: 
+
+
+	Attribute Name:  RecYear
+	Attribute Label:  RecYear
+	Attribute Definition:  Year of record
+	Storage Type:  
+	Measurement Scale: 
+		Units:		Year (YYYY)
+		Number Type:  real
+	Missing Value Code: 
+
+
+	Attribute Name:  Watershed
+	Attribute Label:  Watershed
+	Attribute Definition:  watershed
+	Storage Type:  string
+	Measurement Scale: 
+		watershed
+	Missing Value Code: 
+
+
+	Attribute Name:  Block
+	Attribute Label:  Block
+	Attribute Definition:  Block (A- R)
+	Storage Type:  string
+	Measurement Scale: 
+		Block (A- R)
+	Missing Value Code: 
+
+
+	Attribute Name:  Plot
+	Attribute Label:  Plot
+	Attribute Definition:  Plot Number (1- 6)
+	Storage Type:  
+	Measurement Scale: 
+		Units:  dimensionless
+		Number Type:  real
+	Missing Value Code: 
+
+
+	Attribute Name:  Strip
+	Attribute Label:  Strip
+	Attribute Definition:  Strip number (1, 2)
+	Storage Type:  
+	Measurement Scale: 
+		Units:  dimensionless
+		Number Type:  real
+	Missing Value Code: 
+
+
+	Attribute Name:  Lvgrass
+	Attribute Label:  Lvgrass
+	Attribute Definition:  Dried lvgrass biomass of taxa in grams per m2
+	Storage Type:  
+	Measurement Scale: 
+		Units:  gramsPerSquareMeter
+		Number Type:  real
+	Missing Value Code: .  (Missing or Not Measured)
+
+
+	Attribute Name:  Forb
+	Attribute Label:  Forb
+	Attribute Definition:  dried mass of forb taxa in grams per 1m2
+	Storage Type:  
+	Measurement Scale: 
+		Units:  gramsPerSquareMeter
+		Number Type:  real
+	Missing Value Code: 
+
+
+	Attribute Name:  Woody
+	Attribute Label:  Woody
+	Attribute Definition:  Dried woody biomass of taxa in grams per m2
+	Storage Type:  
+	Measurement Scale: 
+		Units:  gramsPerSquareMeter
+		Number Type:  real
+	Missing Value Code: 
+
+
+	Attribute Name:  Pdead
+	Attribute Label:  Pdead
+	Attribute Definition:  Dried pryrdead biomass of taxa in grams per m2
+	Storage Type:  
+	Measurement Scale: 
+		Units:  gramsPerSquareMeter
+		Number Type:  real
+	Missing Value Code: 
+
+
+	Attribute Name:  Comments
+	Attribute Label:  Comments
+	Attribute Definition:  Comments for the data
+	Storage Type:  string
+	Measurement Scale: 
+		Comments for the data
+	Missing Value Code: 
+
+

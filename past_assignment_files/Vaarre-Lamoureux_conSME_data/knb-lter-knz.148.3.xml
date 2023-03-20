@@ -1,0 +1,726 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<eml:eml packageId="knb-lter-knz.148.3"
+  system="https://pasta.edirepository.org"
+  xmlns:ds="eml://ecoinformatics.org/dataset-2.1.0"
+  xmlns:eml="eml://ecoinformatics.org/eml-2.1.0"
+  xmlns:stmml="http://www.xml-cml.org/schema/stmml-1.1"
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="eml://ecoinformatics.org/eml-2.1.0 http://nis.lternet.edu/schemas/EML/eml-2.1.0/eml.xsd">
+  <access
+    authSystem="https://pasta.edirepository.org/authentication"
+    order="allowFirst" scope="document"
+      system="https://pasta.edirepository.org">
+    <allow>
+      <principal>uid=KNZ,o=LTER,dc=ecoinformatics,dc=org</principal>
+      <permission>all</permission>
+    </allow>
+    <allow>
+      <principal>public</principal>
+      <permission>read</permission>
+    </allow>
+  </access>
+  <dataset>
+    <alternateIdentifier
+        system="https://doi.org">doi:10.6073/pasta/582d2d04d70921a55357e55f201fe7d1</alternateIdentifier><shortName>CME01</shortName>
+    <title>CME01 The Consumer Size Manipulation Experiment (ConSME) at Konza Prairie</title>
+    <creator>
+      <individualName>
+        <givenName>Kimberly</givenName>
+        <surName>Komatsu</surName>
+      </individualName>
+      <address>
+        <deliveryPoint>Smithsonian Environmental Research Center (SERC)</deliveryPoint>
+        <city>Edgewater</city>
+        <administrativeArea>MD</administrativeArea>
+        <postalCode>21037</postalCode>
+        <country>US</country>
+      </address>
+      <electronicMailAddress>lapierrek@si.edu</electronicMailAddress>
+      <userId
+        directory="http://orcid.org">http://orcid.org/0000-0001-7056-4547</userId>
+    </creator>
+    <creator>
+      <individualName>
+        <givenName>Meghan</givenName>
+        <surName>Avolio</surName>
+      </individualName>
+      <address>
+        <deliveryPoint>Morton K. Blaustein Department of Earth and Planetary Sciences, Johns Hopkins University</deliveryPoint>
+        <city>Baltimore</city>
+        <administrativeArea>MD</administrativeArea>
+        <postalCode>21218</postalCode>
+        <country>US</country>
+      </address>
+      <phone
+        phonetype="voice">410-516-2719</phone>
+      <electronicMailAddress>meghan.avolio@jhu.edu</electronicMailAddress>
+      <userId
+        directory="http://orcid.org">http://orcid.org/0000-0002-2649-9159</userId>
+    </creator>
+    <creator>
+      <individualName>
+        <givenName>Andrew</givenName>
+        <surName>Hope</surName>
+      </individualName>
+      <address>
+        <deliveryPoint>110 Bushnell Hall, Division of Biology, Kansas State University</deliveryPoint>
+        <city>Manhattan</city>
+        <administrativeArea>KS</administrativeArea>
+        <postalCode>66506</postalCode>
+        <country>US</country>
+      </address>
+      <phone
+        phonetype="voice">785-532-0155</phone>
+      <electronicMailAddress>ahope@ksu.edu</electronicMailAddress>
+      <userId
+        directory="http://orcid.org">http://orcid.org/0000-0003-3814-2891</userId>
+    </creator>
+    <creator>
+      <individualName>
+        <givenName>Sally</givenName>
+        <surName>Koerner</surName>
+      </individualName>
+      <address>
+        <deliveryPoint>The University of North Carolina at Greensboro</deliveryPoint>
+        <city>Greensboro</city>
+        <administrativeArea>NC</administrativeArea>
+        <postalCode>27402-6170</postalCode>
+        <country>US</country>
+      </address>
+      <phone
+        phonetype="voice">336-334-5393</phone>
+      <electronicMailAddress>sekoerne@uncg.edu</electronicMailAddress>
+      <userId
+        directory="http://orcid.org">http://orcid.org/0000-0001-6403-7513</userId>
+    </creator>
+    <creator>
+      <individualName>
+        <givenName>Allison</givenName>
+        <surName>Louthan</surName>
+      </individualName>
+      <address>
+        <deliveryPoint>Bushnell Hall, Division of Biology, Kansas State University</deliveryPoint>
+        <city>Manhattan</city>
+        <administrativeArea>KS</administrativeArea>
+        <postalCode>66506</postalCode>
+        <country>US</country>
+      </address>
+      <phone
+        phonetype="voice">785-532-5925</phone>
+      <electronicMailAddress>amlouthan@ksu.edu</electronicMailAddress>
+      <onlineUrl>http://www.louthanlab.com/</onlineUrl>
+    </creator>
+    <creator>
+      <individualName>
+        <givenName>Kevin</givenName>
+        <surName>Wilcox</surName>
+      </individualName>
+      <address>
+        <deliveryPoint>University of Wyoming, 1000 E University Ave</deliveryPoint>
+        <city>Laramie</city>
+        <administrativeArea>WY</administrativeArea>
+        <postalCode>82071</postalCode>
+        <country>US</country>
+      </address>
+      <electronicMailAddress>kevin.wilcox@uwyo.edu</electronicMailAddress>
+    </creator>
+    <metadataProvider>
+      <individualName>
+        <givenName>Konza</givenName>
+        <surName>LTER</surName>
+      </individualName>
+      <address>
+        <deliveryPoint>Division of Biology</deliveryPoint>
+        <city>Manhattan</city>
+        <administrativeArea>KS</administrativeArea>
+        <postalCode>66506</postalCode>
+        <country>US</country>
+      </address>
+      <phone
+          phonetype="voice">785-532-6729</phone>
+      <electronicMailAddress>knzlter@ksu.edu</electronicMailAddress>
+      <onlineUrl>http://lter.konza.ksu.edu</onlineUrl>
+    </metadataProvider>
+    <pubDate>2022-05-29</pubDate>
+    <language>English</language>
+    <abstract>
+      <section>
+        <para>
+          <literalLayout>Herbivores of varying size classes exist with the grassland biome (large mammals, small mammals, insects), however their independent and interactive effects on grassland plant species composition and function are understudied. Here we aim to tease apart the effects of three size classes of herbivores within the Konza Prairie system, and whether these effects vary across fire regimes.</literalLayout>
+        </para>
+      </section>
+    </abstract>
+    <keywordSet>
+      <keyword>Primary Production</keyword>
+      <keyword>Disturbance</keyword>
+      <keyword>Populations</keyword>
+      <keywordThesaurus>Core Areas</keywordThesaurus>
+    </keywordSet>
+    <keywordSet>
+      <keyword>Others</keyword>
+      <keywordThesaurus>Section</keywordThesaurus>
+    </keywordSet>
+    <keywordSet>
+      <keyword>aboveground biomass</keyword>
+      <keyword>insects</keyword>
+      <keyword>LTER-KNZ</keyword>
+      <keyword>Konza Prairie</keyword>
+      <keyword>Konza Prairie Biological Station</keyword>
+      <keyword>plant biomass</keyword>
+      <keyword>plant communities</keyword>
+      <keyword>plant cover</keyword>
+      <keywordThesaurus>Station Keywords</keywordThesaurus>
+    </keywordSet>
+    <intellectualRights>
+      <section>
+        <title>Data Policies</title>
+        <para>
+          <literalLayout>Data Use Agreements: The Intellectual Rights within the metadata associated with each KNZ data set determines the exact data and metadata use agreement between the data user and the KNZ LTER site. KNZ LTER data and metadata may be released under the license: CC BY - Attribution (https://creativecommons.org/licenses/by/4.0/). This license lets others distribute, remix, tweak, and build upon KNZ work (even commercially), as long as the KNZ program is credited for the original creation. Alternatively, some KNZ LTER data and metadata may be released into the public domain: CC0 - No Rights Reserved (https://creativecommons.org/share-your-work/public-domain/cc0/). CC0 states that data are placed in the public domain, so that others may freely build upon, enhance and reuse the works for any purposes without restriction under copyright or database law. In either case, users of KNZ data are referred to the following guidelines: "The consumer of these data ("Data User" herein) has an ethical obligation to cite it appropriately in any publication that results from its use. The Data User should realize that these data may be actively used by others for ongoing research and that coordination may be necessary to prevent duplicate publication. The Data User is urged to contact the authors of these data if any questions about methodology or results occur. Where appropriate, the Data User is encouraged to consider collaboration or coauthorship with the authors. The Data User should realize that misinterpretation of data may occur if used out of context of the original study. While substantial efforts are made to ensure the accuracy of data and associated documentation, complete accuracy of data sets cannot be guaranteed. All data are made available "as is." The Data User should be aware, however, that data are updated periodically and it is the responsibility of the Data User to check for new versions of the data. The data authors and the repository where these data were obtained shall not be liable for damages resulting from any use or misinterpretation of the data. Thank you".</literalLayout>
+        </para>
+      </section>
+    </intellectualRights>
+    <distribution>
+      <online>
+        <url
+      function="information">http://lter.konza.ksu.edu/content/cme01-consumer-size-manipulation-experiment-consme-konza-prairie</url>
+      </online>
+    </distribution>
+    <distribution
+      id="10.6073/pasta/582d2d04d70921a55357e55f201fe7d1" scope="system"
+          system="https://pasta.edirepository.org"><online><url
+        function="information">https://doi.org/10.6073/pasta/582d2d04d70921a55357e55f201fe7d1</url></online></distribution><coverage>
+      <geographicCoverage>
+        <geographicDescription>N1A: Year-long grazing by bison and scheduled prescribed burned annually in the spring.</geographicDescription>
+        <boundingCoordinates>
+          <westBoundingCoordinate>-96.5969</westBoundingCoordinate>
+          <eastBoundingCoordinate>-96.5834</eastBoundingCoordinate>
+          <northBoundingCoordinate>39.0993</northBoundingCoordinate>
+          <southBoundingCoordinate>39.0879</southBoundingCoordinate>
+        </boundingCoordinates>
+      </geographicCoverage>
+      <geographicCoverage>
+        <geographicDescription>N4B : Year-long grazing by bison and scheduled prescribed burned every 4 years in the spring.</geographicDescription>
+        <boundingCoordinates>
+          <westBoundingCoordinate>-96.5869</westBoundingCoordinate>
+          <eastBoundingCoordinate>-96.5738</eastBoundingCoordinate>
+          <northBoundingCoordinate>39.096</northBoundingCoordinate>
+          <southBoundingCoordinate>39.0891</southBoundingCoordinate>
+        </boundingCoordinates>
+      </geographicCoverage>
+      <temporalCoverage>
+        <rangeOfDates>
+          <beginDate>
+            <calendarDate>2019-01-01</calendarDate>
+          </beginDate>
+          <endDate>
+            <calendarDate>2021-12-31</calendarDate>
+          </endDate>
+        </rangeOfDates>
+      </temporalCoverage>
+    </coverage>
+    <purpose>
+      <para>
+        <literalLayout>Invertebrate (Coupe &amp;amp; Cahill 2003, Schadler et al. 2008, Blue et al. 2011, Allan &amp;amp; Crawley 2011) and non-ungulate vertebrate herbivores (Edwards &amp;amp; Crawley 1999, Howe et al. 2002, Bakker et al. 2006) can have strong effects in grasslands, with insect herbivore outbreaks capable of causing state-dependent shifts in plant communities (Karlsen et al. 2013). However, feedbacks from small herbivores on plant community composition and ANPP are poorly understood. We will examine the relative impacts of different herbivore groups to assess the importance of these groups in top-down control of grassland structure and function. In the ongoing Vertebrate-Invertebrate Plot experiment in 2C at Konza, we found that insects increase forb diversity, but depress forb biomass and responses to nutrient addition (La Pierre 2016). However, the responses and relative strengths of different herbivore groups at KNZ remain largely uncharacterized with respect to fire-grazing interactions, topography or climate. Nutrient availability alters plant quality and species composition, and can affect invertebrate herbivore abundances, trophic structure, and behavior (Joern &amp;amp; Mole 2005, Cleland et al. 2004, Hartley &amp;amp; Jones 2004, Jonas &amp;amp; Joern 2008, Blue et al. 2011). Manipulating plant stoichiometry increased grasshopper herbivory on plots fertilized with N, but not P (Loaiza et al. 2011), consistent with predictions based on grasshopper feeding trials (Jonas &amp;amp; Joern 2008, 2013, Joern et al. 2012). Here, we aim to build upon this previous work to assess the effects of invertebrate and vertebrate herbivores and their interactions with fire frequency on grassland plant community composition and aboveground biomass.</literalLayout>
+      </para>
+    </purpose>
+    <maintenance>
+      <description>
+        <para>
+          <literalLayout>ongoing</literalLayout>
+        </para>
+      </description>
+    </maintenance>
+    <contact>
+      <individualName>
+        <givenName>Konza</givenName>
+        <surName>LTER</surName>
+      </individualName>
+      <address>
+        <deliveryPoint>Division of Biology</deliveryPoint>
+        <city>Manhattan</city>
+        <administrativeArea>KS</administrativeArea>
+        <postalCode>66506</postalCode>
+        <country>US</country>
+      </address>
+      <phone
+        phonetype="voice">785-532-6729</phone>
+      <electronicMailAddress>knzlter@ksu.edu</electronicMailAddress>
+      <onlineUrl>http://lter.konza.ksu.edu</onlineUrl>
+    </contact>
+    
+    <publisher><organizationName>Environmental Data Initiative</organizationName><electronicMailAddress>info@edirepository.org</electronicMailAddress><onlineUrl>https://edirepository.org</onlineUrl><userId
+      directory="https://ror.org">0330j0z60</userId></publisher><pubPlace>Environmental Data Initiative</pubPlace>
+    <methods>
+      <methodStep>
+        <description>
+          <section>
+            <para>
+              <literalLayout>We are examining the effects of herbivores of varying size classes on grassland plant community composition and aboveground biomass in the lowlands of Konza Prairie watersheds N1B and N4D. To address the interactive effects of top-down control over grassland communities and fire, the experiment was set up in two adjacent watersheds, one burned annually (N1B) and one burned once every four years (N4D). Plots are 5 x 5 m in area and treatment replicates (N=9) are arrayed in nine blocks within each watershed. Plots within each block are separated by 3 m aisles (with the exception of control plots, which are located 8 m from the fenced plots to prevent trampling effects of bison as they rub on the cattle panels and t-posts), and blocks are located haphazardly throughout the watershed. All plots are permanently marked with conduit. Three herbivore removal treatments are applied within the conSME experiment: (1) bison removal; (2) small mammal removal; and (3) insect removal. The small mammal removal treatment is nested within the bison removal treatment, while the insect removal treatment is crossed with all other treatments. Thus, a total of six treatments are applied within each block: (1) control (all herbivores have access), (2) insect removal, (3) bison removal, (4) bison and insect removal, (5) bison and small mammal removal, (6) bison, small mammal, and insect removal. The bison removal treatment consists of cattle panels surrounding the plots to prevent access by bison, but allowing access by small mammals and insects. The small mammal removal treatment involves surrounding the entire plot with a ¼” hardware cloth fence. This fence consists of a 1 m high fine mesh, which is buried to a depth of 5” to discourage burrowing under fences. An 8” strip of metal flashing is affixed to the top of the hardware cloth to prevent herbivores from climbing over the fence and into the plots. The small mammal removal treatment excludes all vertebrate herbivores from the plots, but does not prevent access by invertebrate herbivores. The insect removal treatment is applied by spraying Spectrum triazicide insecticide once every two weeks throughout the growing season on a windless day. In a similar experiment (VIR01), this treatment removes roughly 70% of insects from the plots. An equal quantity of water is added to the insect control plots. To determine the effects of various herbivore removals on grassland productivity and diversity, plant species composition and end-of-season above-ground biomass are sampled yearly. Pre-treatment data was collected in 2018, and treatments were initiated in 2019. Plant species composition is measured in a permanent 1m2 subunit within each of the experimental plots twice per growing season, once in spring (mid-May to early-June) to determine the abundance of early season forbs and C3 grasses, and once in fall (August) to determine the abundance of late season forbs and C4 grasses. Percent cover is determined for each species to the nearest 1% using a modified Daubenmire method. Two permanent 1m2 subunits within each experimental plot are dedicated to destructive biomass sampling. The aboveground standing crop is sampled once per growing season, at peak biomass (late-August to early-September. One 0.1m2 strip is clipped in each of the two destructive sampling subunit in each plot and the location of strips is moved each year to prevent resampling. Biomass is separated by functional group (graminoid, forb, woody), dried at 60 °C, and weighed. For additional metadata information see: http://lter.konza.ksu.edu/sites/default/files/DC.pdfFor additional methods information see: http://lter.konza.ksu.edu/sites/default/files/MM.pdf</literalLayout>
+            </para>
+          </section>
+        </description>
+      </methodStep>
+    </methods>
+    <dataTable
+      id="5716ee946efd717292fa3da9241cda7c" scope="document"
+          system="https://pasta.edirepository.org">
+      <entityName>CME011</entityName>
+      <entityDescription>Plant cover data.</entityDescription>
+      <physical>
+        <objectName>CME011.csv</objectName>
+        <size>459075</size>
+        <authentication
+          method="MD5">0ba66c75161fecce6246eabe368aeac7</authentication>
+        <authentication
+              method="SHA-1">31a85ca405387c438479e695705910365c4945d2</authentication>
+        <dataFormat>
+          <textFormat>
+            <numHeaderLines>1</numHeaderLines>
+            <recordDelimiter>\r\n</recordDelimiter>
+            <attributeOrientation>column</attributeOrientation>
+            <simpleDelimited>
+              <fieldDelimiter>,</fieldDelimiter>
+              <quoteCharacter>"</quoteCharacter>
+            </simpleDelimited>
+          </textFormat>
+        </dataFormat>
+        <distribution>
+          <online>
+            <url
+      function="download">https://pasta.lternet.edu/package/data/eml/knb-lter-knz/148/3/5716ee946efd717292fa3da9241cda7c</url>
+          </online>
+        </distribution>
+      </physical>
+      <coverage>
+        <temporalCoverage>
+          <rangeOfDates>
+            <beginDate>
+              <calendarDate>2009-01-01</calendarDate>
+            </beginDate>
+            <endDate>
+              <calendarDate>2018-12-31</calendarDate>
+            </endDate>
+          </rangeOfDates>
+        </temporalCoverage>
+      </coverage>
+      <attributeList>
+        <attribute>
+          <attributeName>DataCode</attributeName>
+          <attributeLabel>DataCode</attributeLabel>
+          <attributeDefinition>Dataset code</attributeDefinition>
+          <storageType>string</storageType>
+          <measurementScale>
+            <nominal>
+              <nonNumericDomain>
+                <textDomain>
+                  <definition>Dataset code</definition>
+                </textDomain>
+              </nonNumericDomain>
+            </nominal>
+          </measurementScale>
+        </attribute>
+        <attribute>
+          <attributeName>RecType</attributeName>
+          <attributeLabel>RecType</attributeLabel>
+          <attributeDefinition>Record type</attributeDefinition>
+          <storageType>string</storageType>
+          <measurementScale>
+            <nominal>
+              <nonNumericDomain>
+                <textDomain>
+                  <definition>Record type</definition>
+                </textDomain>
+              </nonNumericDomain>
+            </nominal>
+          </measurementScale>
+        </attribute>
+        <attribute>
+          <attributeName>RecYear</attributeName>
+          <attributeLabel>RecYear</attributeLabel>
+          <attributeDefinition>Year of record</attributeDefinition>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <customUnit>Year (YYYY)</customUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+        </attribute>
+        <attribute>
+          <attributeName>Season</attributeName>
+          <attributeLabel>RecSeason</attributeLabel>
+          <attributeDefinition>Season of record</attributeDefinition>
+          <storageType>string</storageType>
+          <measurementScale>
+            <nominal>
+              <nonNumericDomain>
+                <textDomain>
+                  <definition>Season of record</definition>
+                </textDomain>
+              </nonNumericDomain>
+            </nominal>
+          </measurementScale>
+        </attribute>
+        <attribute>
+          <attributeName>RecDate</attributeName>
+          <attributeLabel>RecDate</attributeLabel>
+          <attributeDefinition>Date that data was collected</attributeDefinition>
+          <storageType>date</storageType>
+          <measurementScale>
+            <dateTime>
+              <formatString>YYYY-MM-DD</formatString>
+            </dateTime>
+          </measurementScale>
+        </attribute>
+        <attribute>
+          <attributeName>Watershed</attributeName>
+          <attributeLabel>Watershed</attributeLabel>
+          <attributeDefinition>watershed</attributeDefinition>
+          <storageType>string</storageType>
+          <measurementScale>
+            <nominal>
+              <nonNumericDomain>
+                <textDomain>
+                  <definition>watershed</definition>
+                </textDomain>
+              </nonNumericDomain>
+            </nominal>
+          </measurementScale>
+        </attribute>
+        <attribute>
+          <attributeName>Block</attributeName>
+          <attributeLabel>Block</attributeLabel>
+          <attributeDefinition>Block (A- R)</attributeDefinition>
+          <storageType>string</storageType>
+          <measurementScale>
+            <nominal>
+              <nonNumericDomain>
+                <textDomain>
+                  <definition>Block (A- R)</definition>
+                </textDomain>
+              </nonNumericDomain>
+            </nominal>
+          </measurementScale>
+        </attribute>
+        <attribute>
+          <attributeName>Plot</attributeName>
+          <attributeLabel>Plot</attributeLabel>
+          <attributeDefinition>Plot Number (1- 6)</attributeDefinition>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>number</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+        </attribute>
+        <attribute>
+          <attributeName>Sppnum</attributeName>
+          <attributeLabel>Sppnum</attributeLabel>
+          <attributeDefinition>Species number</attributeDefinition>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+        </attribute>
+        <attribute>
+          <attributeName>Taxa</attributeName>
+          <attributeLabel>Taxa</attributeLabel>
+          <attributeDefinition>Taxa associated with cover value</attributeDefinition>
+          <storageType>string</storageType>
+          <measurementScale>
+            <nominal>
+              <nonNumericDomain>
+                <textDomain>
+                  <definition>Taxa associated with cover value</definition>
+                </textDomain>
+              </nonNumericDomain>
+            </nominal>
+          </measurementScale>
+        </attribute>
+        <attribute>
+          <attributeName>Cover</attributeName>
+          <attributeLabel>Cover</attributeLabel>
+          <attributeDefinition>Plant Cover</attributeDefinition>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <customUnit>percent</customUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+        </attribute>
+        <attribute>
+          <attributeName>Comments</attributeName>
+          <attributeLabel>Comments</attributeLabel>
+          <attributeDefinition>Comments</attributeDefinition>
+          <storageType>string</storageType>
+          <measurementScale>
+            <nominal>
+              <nonNumericDomain>
+                <textDomain>
+                  <definition>Comments</definition>
+                </textDomain>
+              </nonNumericDomain>
+            </nominal>
+          </measurementScale>
+        </attribute>
+      </attributeList>
+      <numberOfRecords>7239</numberOfRecords>
+    </dataTable>
+    <dataTable
+      id="4bb4268e68888d08943c6e76ce7614b0" scope="document"
+          system="https://pasta.edirepository.org">
+      <entityName>CME012</entityName>
+      <entityDescription>Above-ground Biomass data.</entityDescription>
+      <physical>
+        <objectName>CME012.csv</objectName>
+        <size>18365</size>
+        <authentication
+          method="MD5">8d47de2490db3efeca1d4fa8da51316b</authentication>
+        <authentication
+              method="SHA-1">5f61c0893a1ea1f37a37c2dd857cff7171b73516</authentication>
+        <dataFormat>
+          <textFormat>
+            <numHeaderLines>1</numHeaderLines>
+            <recordDelimiter>\r\n</recordDelimiter>
+            <attributeOrientation>column</attributeOrientation>
+            <simpleDelimited>
+              <fieldDelimiter>,</fieldDelimiter>
+              <quoteCharacter>"</quoteCharacter>
+            </simpleDelimited>
+          </textFormat>
+        </dataFormat>
+        <distribution>
+          <online>
+            <url
+        function="download">https://pasta.lternet.edu/package/data/eml/knb-lter-knz/148/3/4bb4268e68888d08943c6e76ce7614b0</url>
+          </online>
+        </distribution>
+      </physical>
+      <attributeList>
+        <attribute>
+          <attributeName>DataCode</attributeName>
+          <attributeLabel>DataCode</attributeLabel>
+          <attributeDefinition>Dataset code</attributeDefinition>
+          <storageType>string</storageType>
+          <measurementScale>
+            <nominal>
+              <nonNumericDomain>
+                <textDomain>
+                  <definition>Dataset code</definition>
+                </textDomain>
+              </nonNumericDomain>
+            </nominal>
+          </measurementScale>
+        </attribute>
+        <attribute>
+          <attributeName>RecType</attributeName>
+          <attributeLabel>RecType</attributeLabel>
+          <attributeDefinition>Record type</attributeDefinition>
+          <storageType>string</storageType>
+          <measurementScale>
+            <nominal>
+              <nonNumericDomain>
+                <textDomain>
+                  <definition>Record type</definition>
+                </textDomain>
+              </nonNumericDomain>
+            </nominal>
+          </measurementScale>
+        </attribute>
+        <attribute>
+          <attributeName>RecYear</attributeName>
+          <attributeLabel>RecYear</attributeLabel>
+          <attributeDefinition>Year of record</attributeDefinition>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <customUnit>Year (YYYY)</customUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+        </attribute>
+        <attribute>
+          <attributeName>Watershed</attributeName>
+          <attributeLabel>Watershed</attributeLabel>
+          <attributeDefinition>watershed</attributeDefinition>
+          <storageType>string</storageType>
+          <measurementScale>
+            <nominal>
+              <nonNumericDomain>
+                <textDomain>
+                  <definition>watershed</definition>
+                </textDomain>
+              </nonNumericDomain>
+            </nominal>
+          </measurementScale>
+        </attribute>
+        <attribute>
+          <attributeName>Block</attributeName>
+          <attributeLabel>Block</attributeLabel>
+          <attributeDefinition>Block (A- R)</attributeDefinition>
+          <storageType>string</storageType>
+          <measurementScale>
+            <nominal>
+              <nonNumericDomain>
+                <textDomain>
+                  <definition>Block (A- R)</definition>
+                </textDomain>
+              </nonNumericDomain>
+            </nominal>
+          </measurementScale>
+        </attribute>
+        <attribute>
+          <attributeName>Plot</attributeName>
+          <attributeLabel>Plot</attributeLabel>
+          <attributeDefinition>Plot Number (1- 6)</attributeDefinition>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+        </attribute>
+        <attribute>
+          <attributeName>Strip</attributeName>
+          <attributeLabel>Strip</attributeLabel>
+          <attributeDefinition>Strip number (1, 2)</attributeDefinition>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>dimensionless</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+        </attribute>
+        <attribute>
+          <attributeName>Lvgrass</attributeName>
+          <attributeLabel>Lvgrass</attributeLabel>
+          <attributeDefinition>Dried lvgrass biomass of taxa in grams per m2</attributeDefinition>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>gramsPerSquareMeter</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+          <missingValueCode>
+            <code>.</code>
+            <codeExplanation>Missing or Not Measured</codeExplanation>
+          </missingValueCode>
+        </attribute>
+        <attribute>
+          <attributeName>Forb</attributeName>
+          <attributeLabel>Forb</attributeLabel>
+          <attributeDefinition>dried mass of forb taxa in grams per 1m2</attributeDefinition>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>gramsPerSquareMeter</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+        </attribute>
+        <attribute>
+          <attributeName>Woody</attributeName>
+          <attributeLabel>Woody</attributeLabel>
+          <attributeDefinition>Dried woody biomass of taxa in grams per m2</attributeDefinition>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>gramsPerSquareMeter</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+        </attribute>
+        <attribute>
+          <attributeName>Pdead</attributeName>
+          <attributeLabel>Pdead</attributeLabel>
+          <attributeDefinition>Dried pryrdead biomass of taxa in grams per m2</attributeDefinition>
+          <measurementScale>
+            <ratio>
+              <unit>
+                <standardUnit>gramsPerSquareMeter</standardUnit>
+              </unit>
+              <numericDomain>
+                <numberType>real</numberType>
+              </numericDomain>
+            </ratio>
+          </measurementScale>
+        </attribute>
+        <attribute>
+          <attributeName>Comments</attributeName>
+          <attributeLabel>Comments</attributeLabel>
+          <attributeDefinition>Comments for the data</attributeDefinition>
+          <storageType>string</storageType>
+          <measurementScale>
+            <nominal>
+              <nonNumericDomain>
+                <textDomain>
+                  <definition>Comments for the data</definition>
+                </textDomain>
+              </nonNumericDomain>
+            </nominal>
+          </measurementScale>
+        </attribute>
+      </attributeList>
+      <numberOfRecords>432</numberOfRecords>
+    </dataTable>
+  </dataset>
+  <additionalMetadata>
+    <metadata>
+      <stmml:unitList
+        xmlns="http://www.xml-cml.org/schema/stmml"
+        xmlns:sch="http://www.ascc.net/xml/schematron"
+        xmlns:stmml="http://www.xml-cml.org/schema/stmml-1.1"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://www.xml-cml.org/schema/stmml-1.1 http://nis.lternet.edu/schemas/EML/eml-2.1.0/stmml.xsd">
+        <stmml:unit
+          id="Year (YYYY)">
+          <stmml:description/>
+        </stmml:unit>
+        <stmml:unit
+          abbreviation="%" constantToSI="0" id="percent"
+          multiplierToSI="100" name="percent" parentSI="numberPerNumber" unitType="dimensionless">
+          <stmml:description>ratio of two quantities as percent composition (1:100)</stmml:description>
+        </stmml:unit>
+      </stmml:unitList>
+    </metadata>
+  </additionalMetadata>
+</eml:eml>
