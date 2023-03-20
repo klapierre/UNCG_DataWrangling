@@ -1,14 +1,14 @@
 ---
-title: "MODULE 4: Communicating your data using Rmarkdown!"
+title: "Comparing Nitrogen and Phosphrous Levels Between Annually Burned and Patch Burned Grazing (PBG) Systems"
 author: "Author: Kimberly Komatsu"
 subtitle: Partial Answer Key for Comparison to R Script
 output:
   pdf_document: default
+  word_document: default
   html_document:
     df_print: paged
     theme: paper
-  word_document: default
-urlcolor: blue
+urlcolor: red
 ---
 
 ## Goal:
