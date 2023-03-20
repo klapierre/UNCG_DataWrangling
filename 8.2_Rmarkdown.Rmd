@@ -1,0 +1,165 @@
+---
+title: 'TEMPEST: Understory plant community responses to costal flooding'
+author: "Lowie Vandeplancke"
+date: "2023-03-18"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r, setup1, include=FALSE} 
+knitr::opts_knit$set(root.dir = 'C:\\Users\\louis\\OneDrive\\Documents\\UNCG\\Ecological Research') #setting working directory for all chunks
+library(tidyverse) #loading tidyverse
+theme_set(theme_light()) #setting a light theme for graphs
+```
+
+```{r, import, include=FALSE}
+# import the data file
+DF <- read.csv('TEMPEST_SERC_understory sppcomp_2021.csv')
+
+Species <- DF %>% 
+  distinct(species, .keep_all = FALSE)    # filter all unique species and delete everything else
+
+Species2 <- Species[grepl("^[A-Z][a-z]+ [a-z][a-z]+", Species$species), ]
+# ^[A-Z][a-z]+ matches the first word that starts with an upper case letter, and [a-z][a-z]+ matches the second word that starts with a lower case letter. The + indicates that the pattern should match one or more characters. The ^ and $ indicate the start and end of the string, respectively, ensuring that the pattern matches the entire string. The grepl() function returns a logical vector indicating which elements in the column match the pattern, and we use this to subset the original dataframe to keep only the desired rows.
+
+DF2 <- DF %>% 
+  mutate(workCol = paste(plot, subplot, sep= "-"))    # add a column with plot and subplot separated by '-'
+
+DF2$plot <- ifelse(DF2$plot =="C", "control", ifelse(DF2$plot == "F", "freshwater inundation", "saltwater inundation"))         # change col plot to make them legible
+
+TrtmtInfo <- select(DF2, plot, workCol)      # create new DF with cols plot and workCol
+TrtmtInfo <- TrtmtInfo %>% 
+  distinct()
+```
+
+```{r, herbcover, include=FALSE}
+
+DF3 <- DF %>% 
+  distinct()            #Remove duplicates in a subplot
+DF4 <-DF3               # take a copy of the dataframe with all duplicates removed
+
+#remove rows where species does not start with a capital letter
+DF3$Cap <- grepl("^[A-Z]", DF3$species)
+DF3 <- DF3[DF3$Cap, ]
+
+#remove rows of which the 2nd word of species does not start with a lower case
+sec_word <- gsub("^\\w+\\s(\\w+).*$", "\\1", DF3$species)  # extract second word
+stWLower <- grepl("^[a-z]", sec_word)   # check if second word starts with lowercase
+DF3$SecLow <- stWLower       #add result as column to data frame
+DF3 <- DF3[DF3$SecLow, ]    # remove rows where 2nd word of Species does not start with lower case
+DF3 <- DF3 %>% 
+  select(-Cap, -SecLow)
+
+#calc total cover per subplot, calc rel. cover per species per subplot
+CoverCalc <- DF3 %>% 
+  group_by(plot, subplot) %>% 
+  summarise(totCov_subplot = sum(cover, na.rm=TRUE),
+            totCov_subplot_mean = mean(cover, na.rm = TRUE),
+            totCov_subplot_sd = sd(cover, na.rm = TRUE)) %>%
+  ungroup() %>% 
+  mutate(totCov_subplot_se = 1.96*totCov_subplot_sd) %>%
+  group_by(plot) %>%
+  mutate(relCover_pct = totCov_subplot / sum(totCov_subplot) * 100) %>%
+  ungroup()
+
+SpecRich_plot <- DF4 %>%                              #starting from the dataframe with the duplicates removed, SpecRich_plot calculates the richness at plot level ((including the additional species not found in the subplot data).)
+  group_by(plot) %>% 
+  summarise(SpecRich_plot_tot = sum(cover, na.rm=TRUE),
+            SpecRich_plot_mean = mean(cover, na.rm = TRUE),
+            SpecRich_plot_sd = sd(cover, na.rm = TRUE)) %>%
+  ungroup() %>% 
+  mutate(SpecRich_plot_se = 1.96*SpecRich_plot_sd)
+
+
+# write.csv(DF4,file='DF4.csv')
+```
+
+```{r 2bargraphs, echo=FALSE}
+ggplot(data=CoverCalc, aes(x= plot, y=relCover_pct, fill=subplot)) +
+  geom_bar(stat = 'identity')
+```
+
+```{r, 2nd bargraph,echo=FALSE}
+ggplot(SpecRich_plot, aes(x=plot,  y=SpecRich_plot_mean)) + 
+  geom_bar(stat = 'identity')
+
+#•	Make two figures, giving each one a title to distinguish the two in your
+# output and intelligibly labeling axes:
+#   o	Bar graph of richness per plot (plot on x-axis) showing the mean and standard error across subplots.
+#   o	Another bar graph showing the richness at the plot level (plot on x-axis).
+
+```
+
+``` {r,rank_ab_curve, echo = FALSE}
+#instructions to see to conflict with the expected outcome. (1DF with 2 cols) 
+# - avg.rel.cov/spec per plot. (I.e a DF with the species per plot and their rel. coverage) = 3 cols (species, plot, avg rel.cover per plot)
+# - avg. rel.cov/spec across all lots. (i.e. a DF will species and avg. rel.cover)
+
+RelCovr_plot <-DF3 %>%   # calc average relative coverage per species per plot 
+  group_by(plot, species) %>% 
+  summarise(totCov_species = sum(cover, na.rm=TRUE)) %>%
+  ungroup() %>% 
+  group_by(plot) %>%
+  mutate(relCover_species_pct = totCov_species / sum(totCov_species) * 100) %>%
+  ungroup()
+# must still remove col totCov_species
+
+RelCovr <- DF3 %>%  # calc average relative coverage per species across all plots 
+  group_by(treatment_year, species) %>% 
+  summarise(totCov_species = sum(cover, na.rm=TRUE)) %>%  #calculate the total cover per species accross all plots (use treatment_year as a dummy - can maybe be deleted)
+  ungroup() %>% 
+  mutate(relCover_species_pct = totCov_species / sum(totCov_species) * 100) %>%   #calculate the % cover per species across all plots
+  arrange(-relCover_species_pct) %>%   #order from high to low
+  mutate(rank = row_number())  #add a column to rank:numbers 1 to ... 
+
+ggplot(RelCovr, aes(x = rank, y = relCover_species_pct)) + 
+  geom_point()+
+  geom_line()
+
+# must still remove cols treatment_year, totCov_species in the DF
+#write.csv(RelCovr_plot,file='RelCovr_plot.csv')
+#write.csv(RelCovr,file='RelCovr.csv')
+
+#Calculate the average relative cover for each species across all subplots within each plot. Then calculate the average relative cover for each species across all plots. In the end you should have a data frame with two columns: species and average relative cover.
+
+
+#•	Create a rank abundance curve for the average understory plant community composition across all plots by following these steps:
+#o	Calculate the average relative cover for each species across all subplots within each plot. Then calculate the average relative cover for each species across all plots. In the end you should have a data frame with two columns: species and average relative cover.
+#o	Sort the data frame you created from highest to lowest relative cover. Hint: use code to do this otherwise it won't stick! Look into the arrange() function if you're unsure.
+#o	Create a new column in your data frame that gives each species a rank (number from 1 to X) based on their abundance where 1=most abundant.
+#o	Make a figure with points connected by lines of the rank on the x-axis and the relative cover on the y-axis. Use geom_text to label your points with the species names and be sure to give your axes intelligible labels.
+
+```
+
+
+```{r, last, echo=FALSE}
+RelCovr_plot2 <-DF3 %>%   # calc average relative coverage per species per plot 
+  group_by(plot, species) %>% 
+  summarise(totCov_species = sum(cover, na.rm=TRUE),
+            totCov_species_mean = mean(cover, na.rm = TRUE),
+            totCov_species_sd = sd(cover, na.rm = TRUE)) %>%
+  ungroup() %>% 
+  mutate(totCov_species_se = 1.96*totCov_species_sd) 
+
+#prepare a data frame to plot only the species requested
+RelCovr_plot3 <- subset(RelCovr_plot2, species %in% c("Berberis thunbergii", "Botrychium dissectum", "Carex sp", "Elaeagnus umbellata", "Epifagus virginiana", "Gallium circaezans", "Ilex opaca", "Lindera benzoin", "Lonicera japonica", "Mitchella repens", "Parthenocissus quinquefolia", "Polygonum virginianum", "Rhus radicans", "Rubus phoenicolasius", "Sceptridium biternatum", "Symphotrichium lateriflorum"))
+
+ggplot(RelCovr_plot3, aes(x=plot, y = totCov_species_mean)) +
+  geom_bar(stat = 'identity') +
+  geom_errorbar(aes(ymin=totCov_species_mean - totCov_species_se,
+                  ymax=totCov_species_mean + totCov_species_se,
+                  width=0.3))+
+  facet_wrap(~species, scales = "free_y")
+
+#•	Calculate the mean and standard error for each species relative cover by plot. Make a bar graph of these means and standard errors, with plot on the x-axis and faceted by species, for the following species: Berberis thunbergii, Botrychium dissectum, Carex sp, Elaeagnus umbellata, Epifagus virginiana, Gallium circaezans, Ilex opaca, Lindera benzoin, Lonicera japonica, Mitchella repens, Parthenocissus quinquefolia, Polygonum virginianum, Rhus radicans, Rubus phoenicolasius, Sceptridium biternatum, Symphotrichium lateriflorum. Be sure to allow y-axis scale to vary in your facet statement.
+
+```
