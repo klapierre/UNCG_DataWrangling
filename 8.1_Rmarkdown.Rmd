@@ -2,10 +2,12 @@
 title: "Comparing soil nutrients between an annual burned and patch burn grazing system"
 author: "Lowie Vandeplancke"
 date: "2023-03-13"
-output: html_document
+output: 
+  html_document: default
+  pdf_document: default
 ---
 
-```{r setup, include=FALSE}
+```{r, setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
@@ -14,30 +16,73 @@ knitr::opts_chunk$set(echo = TRUE)
 Annual burning and grazing **(ABG)** has been used for cattle production to increase plant biomass for grazing but at the cost of decreasing biodiversity. Recently, patch burning and grazing **(PBG)** has become a new management method, that helps increase heterogeneity of the landscape, helping diversity, ecosystem connectivity, and stability of ecosystem function and sevices.
 
 
-```{r, setup, include=FALSE}
-knitr::opts_knit$set(root.dir = 'C:\\Users\\louis\\OneDrive\\Documents\\UNCG\\Ecological Research')
-library(tidyverse)
-theme_set(theme_light())
+```{r, setup1, include=FALSE} 
+knitr::opts_knit$set(root.dir = 'C:\\Users\\louis\\OneDrive\\Documents\\UNCG\\Ecological Research') #setting working directory for all chunks
+library(tidyverse) #loading tidyverse
+theme_set(theme_light()) #setting a light theme for graphs
 ```
-Not to be included in the knit; setting working directory, loading tidyverse, and setting a light theme for graphs.
 
-```{r, setup, include=FALSE}
+
+```{r, setup2, include=FALSE}
 PBG_n <- read.csv('PBG_N_raw_2021.csv')
 PBG_p <- read.csv('PBG_P_raw_2021.csv')
 PBG_treatment <- read.csv('PBG_trts.csv')
-```
-Info for nitrogen and phosporous samples along with the treatments.
-
-
-
-
-sample data set starting with u, and dashes for Sample
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
+#Files containing data for nitrogen and phosphorous samples along with the treatments.
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+```{r, bindNandP, include=FALSE}
+PBG_n_clean <- PBG_n %>% filter(str_detect(sample, "^U")) %>%   # filter rows where col sample starts with "U"
+  mutate(workCol = paste(sample, Sample, test, sep= "_")) %>%     #add a working column with sample,Sample and test cols to create a unique identifier
+  group_by(workCol) %>%                                          #group by col workCol
+    filter(dilution == max(dilution)) %>%                       # keep the row with the highest value in column dilution
+  ungroup()                                                     # remove grouping
+
+PBG_p_clean <- PBG_p %>% filter(str_detect(sample, "^U")) %>% # filter rows where col sample starts with "U"
+   mutate(workCol = paste(sample, Sample, test, sep= "_")) %>% #add a working column with sample,Sample and test cols to create a unique identifier
+  group_by(workCol) %>%                        # group by column sample
+  filter(dilution == max(dilution)) %>%       # keep the row with the highest value in column dilution
+  ungroup()                                  # remove grouping
+
+PBG_np_sample <- rbind(PBG_n_clean, PBG_p_clean)  #bind the 2 df's together (both have same no of cols, one df will be below the other)
+```
+
+```{r, joinwtrtmnt, include=FALSE}
+new_df <- PBG_np_sample %>% 
+  mutate(ident = str_extract(Sample, "^[^-]+-[^-]+-[^-]+")) %>%    #add a col 'ident' that includes everything of the column 'Sample' upto the 1st character after the 2nd '-'
+  select(concentration, units, test, ident) # only select the 4 cols. listed 
+new_df2 <- PBG_treatment %>%
+  mutate(ident = paste(watershed, transect, plot, sep= "-")) #add a col ident to the PBG_treatment DF composed of watershed, transect and plot separated by "-"
+
+merged_df <- merge(new_df, new_df2, by = "ident", all.x = TRUE) #merge new_df and new_df2 into merged for merged_df 
+
+merged_df$test <- ifelse(merged_df$test =="KCl Ammonia 10", "NH4", ifelse(merged_df$test == "KCL NO3_NO2 2", "NO3", "P"))
+merged_df$concentration <- as.numeric(merged_df$concentration) #convert col concentration into a numeric GODVER!!
+```  
+  
+```{r, boxplot, echo=FALSE}
+ggplot(merged_df, aes(x=test, y = concentration)) +
+  geom_boxplot() +
+  facet_wrap(~test) 
+#not complete and not working yet
+```
+
+``` {r, CV by treatment}
+treatmentCV <- merged_df %>% 
+  group_by(treatment,test) %>% 
+    summarise(concentration_mean = mean(concentration, na.rm = TRUE),
+            concentration_sd = sd(concentration, na.rm = TRUE)) %>%
+  ungroup() %>% 
+  mutate(concentration_cv = (concentration_sd/concentration_mean)) 
+```
+
+```{r, bargraph}
+ggplot(data=treatmentCV, aes(x=test, y=concentration_cv, fill=treatment)) +
+  geom_bar(stat = 'identity') +
+  xlab('Nutrient') +
+  ylab('Coefficient of Variation')
+#still to do set colors like previous chart and label axes intelligently
+```
+
+This is the summmary statement [TO BE COMPLETED]
+
