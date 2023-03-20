@@ -14,7 +14,7 @@
 
 
 
-
+# I AM THE DREAD LORD, HERE FOR YOUR CORN
 
 
 
@@ -60,5 +60,9 @@
 #
 #
 # Jordan wuz here
+
+# Me 2
+
 # go home bozo
 
+# <(^-^)>
