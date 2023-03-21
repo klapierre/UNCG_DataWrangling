@@ -12,6 +12,13 @@ library(mapdata)
 install.packages('tidygeocoder')
 devtools::install_github("jessecambon/tidygeocoder")
 
+#In progress:
+usa <- map_data("usa") %>% 
+  ggplot() + geom_polygon(data = usa, aes(x=long, y = lat, group = group)) + 
+  coord_fixed(1.3)
+
+
+
 # Read in the data set we are going to use (starbucks_2018_11_12.csv)
 # We only want the Starbucks in NY and we only want the columns "name", "latitude", and "longitude"
 # tidy it up!
