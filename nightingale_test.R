@@ -1,5 +1,7 @@
 library(tidyverse)
-library(histData)
+library(HistData)
+library(gganimate)
+library(gifski)
 
 Nightingale %>% 
   select(Date, Month, Year, contains("rate")) %>% 
@@ -20,4 +22,9 @@ Nightingale %>%
         plot.background = element_rect(fill = alpha("cornsilk", 0.5)),
         plot.margin = unit(c(10, 10, 10, 10), "pt"),
         plot.title = element_text(vjust = 5)) +
-  ggtitle("Diagram of the Causes of Mortality in the Army in the East")
+  ggtitle("Diagram of the Causes of Mortality")
+
+
+
+
+
