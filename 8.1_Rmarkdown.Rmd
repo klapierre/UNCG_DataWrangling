@@ -3,8 +3,8 @@ title: "Comparing soil nutrients between an annual burned and patch burn grazing
 author: "Lowie Vandeplancke"
 date: "2023-03-13"
 output: 
-  html_document: default
   pdf_document: default
+  html_document: default
 ---
 
 ```{r, setup, include=FALSE}
@@ -17,7 +17,7 @@ Annual burning and grazing **(ABG)** has been used for cattle production to incr
 
 
 ```{r, setup1, include=FALSE} 
-knitr::opts_knit$set(root.dir = 'C:\\Users\\louis\\OneDrive\\Documents\\UNCG\\Ecological Research') #setting working directory for all chunks
+knitr::opts_knit$set(root.dir = 'C:\\Users\\louis\\OneDrive\\Documents\\UNCG\\Ecological Research\\UNCG_DataWrangling') #setting working directory for all chunks
 library(tidyverse) #loading tidyverse
 theme_set(theme_light()) #setting a light theme for graphs
 ```
@@ -61,10 +61,12 @@ merged_df$concentration <- as.numeric(merged_df$concentration) #convert col conc
 ```  
   
 ```{r, boxplot, echo=FALSE}
-ggplot(merged_df, aes(x=test, y = concentration)) +
+ggplot(merged_df, aes(x=test, y = concentration, fill=treatment)) +
   geom_boxplot() +
-  facet_wrap(~test) 
-#not complete and not working yet
+  facet_wrap(~test) +
+  xlab('Nutrient') +
+  ylab('Concentration (%)') +
+  scale_fill_brewer(palette="Spectral")
 ```
 
 ``` {r, CV by treatment}
@@ -80,9 +82,8 @@ treatmentCV <- merged_df %>%
 ggplot(data=treatmentCV, aes(x=test, y=concentration_cv, fill=treatment)) +
   geom_bar(stat = 'identity') +
   xlab('Nutrient') +
-  ylab('Coefficient of Variation')
-#still to do set colors like previous chart and label axes intelligently
+  ylab('Coefficient of Variation') +
+  scale_fill_brewer(palette="Spectral")
 ```
 
-This is the summmary statement [TO BE COMPLETED]
-
+There is no significant difference between the effects of ABG vs PBG on mean and variability of each nutrientin the soil at this site.
