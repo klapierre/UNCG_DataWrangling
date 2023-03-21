@@ -69,7 +69,7 @@ ggplot(merged_df, aes(x=test, y = concentration, fill=treatment)) +
   scale_fill_brewer(palette="Spectral")
 ```
 
-``` {r, CV by treatment}
+``` {r, CV by treatment, echo=FALSE}
 treatmentCV <- merged_df %>% 
   group_by(treatment,test) %>% 
     summarise(concentration_mean = mean(concentration, na.rm = TRUE),
@@ -78,7 +78,7 @@ treatmentCV <- merged_df %>%
   mutate(concentration_cv = (concentration_sd/concentration_mean)) 
 ```
 
-```{r, bargraph}
+```{r, bargraph, echo=FALSE}
 ggplot(data=treatmentCV, aes(x=test, y=concentration_cv, fill=treatment)) +
   geom_bar(stat = 'identity') +
   xlab('Nutrient') +
