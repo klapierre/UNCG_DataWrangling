@@ -1,4 +1,7 @@
-# MAP GROUP
+## MAP GROUP
+#Meeting 03/30 - 4pm
+###make sure to have a list of the errors you encounter while working on your code
+
 
 #Section 1 (Carina)
 #Libraries to be downloaded
