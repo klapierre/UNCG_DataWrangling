@@ -21,3 +21,7 @@ BravoC_conSME_data
 Bottomley_conSME_data
 Niwot_Saliz_2014_WillowSeedlingSurvey.csv
 .gitignore
+PBG_N_compiled_raw_2021.csv
+PBG_P_compiled_raw_2021.csv
+PBG_trts.csv
+TEMPEST_SERC_understory sppcomp_2021.csv
