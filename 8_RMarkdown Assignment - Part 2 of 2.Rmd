@@ -1,0 +1,216 @@
+---
+title: 'TEMPEST: Understory plant community responses to coastal flooding.'
+author: "Kaysa Vaarre-Lamoureux"
+date: "2023-03-19"
+output: pdf_document
+---
+
+## Background
+Heavy rainfall and storm surges are common natural-weather events that occur in the United States. These events are happening more frequently and at a greater intensity with intensifying climate change. There are large consequences for people's wellbeing, the economy, and the environemnt.In a forest at the [Smithsonian Environmental Research Center](https://serc.si.edu/), scientists aim to study how sudden deluges impact forests. They have established an experiment called [TEMPEST(Terrestrial Ecosystem Manipulation to Probe the Effects of Storm Treatments)](https://sercblog.si.edu/tempest-experiment-mimics-future-storms-inside-forests/) which will mimc intense freshwater rainstorms and saltwater storm surges by inundating parts of the forest.
+
+Forest understory comunities were studied in three large plots. Species cover within each plot was estimated prior to the initiation of the inundation experiment to determine whether there were natural pre-existing differences among plots. Observations are the estimated percent cover of each plant species within one of 16 5x5 m subplots located within three 40x50 m plots. Additional species located in the larger plots that were not sampled in the subplots are listed as additional with 0 percent cover.
+
+## Set up R environment 
+
+```{r R environment, setup, message=FALSE, warning=FALSE}
+library(tidyverse)
+theme_set(theme_bw())
+theme_update(panel.grid.major=element_blank(), panel.grid.minor=element_blank())
+```
+
+## Import data and create data frames
+
+```{r data, message=FALSE, warning=FALSE}
+Tempest <- read.csv("TEMPEST_SERC_understory sppcomp_2021.csv")
+
+Species <- Tempest %>% 
+  select(species) %>% 
+  mutate(species = ifelse(species=="infrastructure cover", NA, ifelse(species==
+         "canopy tree basal cover", NA, ifelse(species=="bare ground", NA, species)))) %>% 
+  filter(!is.na(species)) %>% 
+  distinct(.keep_all = TRUE)
+
+Treatment <- Tempest %>% 
+  select(plot, subplot) %>% 
+  unite(col="replicate",
+         c("plot", "subplot"), 
+         sep="-",
+        remove = FALSE) %>% 
+  mutate(type=plot) %>% 
+  mutate(type = ifelse(type=="C", "control", ifelse(type == "F", "freshwater inundation", 
+                      ifelse(type == "S", "saltwater inundation", type))))
+```
+
+## Calculations
+Calculate total herbaceous plant cover and relative cover for each species
+
+``` {r total and relative cover, message=FALSE, warning=FALSE}
+total_cover <- Tempest %>% 
+  mutate(species = ifelse(species=="infrastructure cover", NA, ifelse(species==
+         "canopy tree basal cover", NA, ifelse(species=="bare ground", NA, species)))) %>% 
+  filter(!is.na(species)) %>% 
+  mutate(subplot = ifelse(subplot=="additional", NA, subplot)) %>% 
+  filter(!is.na(subplot)) %>% 
+  group_by(subplot) %>% 
+  summarise(totalPlantCover = sum(cover)) %>% 
+  ungroup()
+
+Tempest <- merge(x=Tempest, y=total_cover, by="subplot", all.x=T) %>% 
+  mutate(.data=Tempest, relativePlantCover = 100*(cover/totalPlantCover))
+
+```
+
+## Calculate plant species richness
+
+The dataframe "plantSpeciesRichness_calc" has calculations for plant species richness for each subplot, and the mean and standard error of subplot species richness for each plot.
+
+The dataframe "plantSRplot" has calculations for plant species richness at the plot level.
+
+```{r plant species richness, message=FALSE, warning=FALSE}
+plantSpeciesRichness <- Tempest %>% 
+  group_by(plot, subplot) %>% 
+  distinct(across(contains("species")),(.keep_all = TRUE)) %>% 
+  summarise(speciesRichness = length(species)) %>% 
+  ungroup()
+
+plantSRcalc <- plantSpeciesRichness %>% 
+  group_by(plot) %>% 
+  summarise(speciesRichness_mean = mean(speciesRichness), 
+            speciesRichness_sd = sd(speciesRichness), 
+            speciesRichness_n = length(speciesRichness)) %>% 
+  mutate(speciesRichness_se=speciesRichness_sd/sqrt(speciesRichness_n)) %>% 
+  ungroup()
+
+plantSpeciesRichness_calc <- merge(x=plantSpeciesRichness, 
+                                   y=plantSRcalc, 
+                                   by="plot", all.x=T)
+  
+plantSRplot <- Tempest %>% 
+  select(plot, subplot, species) %>% 
+  group_by(plot) %>% 
+  distinct(across(contains("species")), .keep_all = TRUE) %>% 
+  summarise(speciesRichness = length(species)) %>% 
+  ungroup()
+
+```
+
+## Species Richness Figures
+
+Make two figures to visualize species richness calculations.
+1. Bar graph of average species richness of subplots for each plot type.
+2. Bar graph showing the species richness at the plot level.
+
+```{r species richness figures, message=FALSE, warning=FALSE}
+ggplot(data=plantSRcalc, aes(x=plot, y=speciesRichness_mean, fill=plot))+
+  geom_bar(stat="identity")+
+  xlab("Plot")+
+  ylab("Average Subplot Species Richness")+
+  scale_x_discrete(labels=c("C"="Control", "F"="Freshwater Inundation", 
+                            "S"="Saltwater Inundation"), limits=c("C", "F", "S"))+
+  scale_fill_manual(labels=c("Control", "Freshwater Inundation", "Saltwater Inundation"), 
+                    values=c("violetred1", "darkgoldenrod1", "deepskyblue"))+
+  theme(legend.position="none")+
+  geom_errorbar(aes(ymin=speciesRichness_mean-speciesRichness_se, 
+                    ymax=speciesRichness_mean+speciesRichness_se), 
+                    position=position_dodge(), width=.3, size=1)+
+  expand_limits(y=30)+
+  scale_y_continuous(breaks=seq(0, 30, by=5))
+
+ggplot(data=plantSRplot, aes(x=plot, y=speciesRichness, fill=plot))+
+  geom_bar(stat="identity")+
+  xlab("Plot")+
+  ylab("Plot Species Richness")+
+  scale_x_discrete(labels=c("C"="Control", "F"="Freshwater Inundation", 
+                            "S"="Saltwater Inundation"), limits=c("C", "F", "S"))+
+  scale_fill_manual(labels=c("Control", "Freshwater Inundation", "Saltwater Inundation"), 
+                    values=c("violetred1", "darkgoldenrod1", "deepskyblue"))+
+  theme(legend.position="none")+
+  expand_limits(y=80)+
+  scale_y_continuous(breaks=seq(0, 80, by=10))
+```
+
+## Rank abundance curve for understory plant commnity composition 
+
+Calculate the average relative cover for each species across all subplots within each plot then the average relative cover for each species across all plots. Then create rank abundance curve.
+
+Note:
+On the assignment, you said you wanted each species to be labeled on the figure. However, when doing this they all overlap and the graph is unreadable. I put the line of code here.
+*geom_text(aes(label=species))*
+
+``` {r rank abundance curve, message=FALSE, warning=FALSE}
+averageRelativeCover <- Tempest %>% 
+  mutate(species = ifelse(species=="infrastructure cover", NA, ifelse(species==
+         "canopy tree basal cover", NA, ifelse(species=="bare ground", NA, species)))) %>% 
+  filter(!is.na(species)) %>% 
+  select(plot, subplot, species, cover, relativePlantCover) %>% 
+  group_by(plot, subplot, species) %>% 
+  summarise(averageRelativeCover = mean(relativePlantCover)) %>%
+  ungroup() %>% 
+  group_by(species) %>% 
+  summarise(meanRelativeCover = mean(averageRelativeCover)) %>% 
+  arrange(desc(meanRelativeCover)) %>% 
+  filter(!is.na(meanRelativeCover))
+
+averageRelativeCover$rank <- 1:nrow(averageRelativeCover)
+  
+ggplot(data=averageRelativeCover, aes(x=rank, y=meanRelativeCover))+
+  geom_line()+
+  geom_point()+
+  xlab("Species from most to least relative cover")+
+  ylab("Average Relative Cover")+
+  scale_x_continuous(breaks=seq(0, 100, by=5))
+```
+
+## Bar graph for average species relative cover by plot
+
+```{r average species relative cover by plot, message=FALSE, warning=FALSE, fig.align='center', fig.width=14, fig.height=14}
+plotRelativeCover <- Tempest %>% 
+  select(plot, species, cover, relativePlantCover) %>% 
+  filter(species %in% c("Berberis thunbergii", "Botrychium dissectum", "Carex sp", 
+                        "Elaeagnus umbellata", "Epifagus virginiana", "Gallium circaezans", 
+                        "Ilex opaca", "Lindera benzoin", "Lonicera japonica", "Mitchella repens", 
+                        "Parthenocissus quinquefolia", "Polygonum virginianum", "Rhus radicans", 
+                        "Rubus phoenicolasius", "Sceptridium biternatum", 
+                        "Symphotrichium lateriflorum")) %>% 
+  group_by(plot, species) %>% 
+  filter(!is.na(relativePlantCover)) %>% 
+  summarise(averageRC = mean(relativePlantCover), 
+            sdRC = sd(relativePlantCover), 
+            nRC = length(relativePlantCover)) %>% 
+  mutate(seRC=sdRC/sqrt(nRC)) %>% 
+  ungroup()
+  
+
+ggplot(plotRelativeCover, aes(x=plot, y=averageRC, fill=plot))+
+  geom_bar(stat="identity")+
+  facet_wrap(~species, scales="free_y")+
+  scale_fill_manual(labels=c("C", "F", "S"), 
+                    values=c("violetred1", "darkgoldenrod1", "deepskyblue"))+
+  geom_errorbar(aes(ymin=averageRC-seRC, ymax=averageRC+seRC), 
+                position=position_dodge(), width=.3, size=.9)+
+  ylab("Average Relative Cover")+
+  xlab("Plot")+
+  theme(text = element_text(size = 19))
+```
+
+## Summary
+**Species Richness Figures:**
+Both average subplot species richness and plot species richness differed very little from each other when comparing control and freshwater inundation plots. Saltwater inundation plots seemed to have the largest difference and had noticeably lower species richness in both bar graphs.
+
+**Rank Abundance Curve:**
+*Mitchella repens* had largest average relative cover by a wide margin, followed by *Amphicarpaea bracteata*, *Microstegium vimineum*, *Fagus grandifolia*, *Rubus phoenicolasius*, and *Rosa multiflora*. Past theses six species, average relative cover was very similar between the remaining 73 plant species.
+
+**Average species relative cover by plot:**
+Average relative cover by plot varied greatly across different species, however there were some trends that stood out.
+
+Two species whose average relative cover did not differ very much between plots. They were *rhus radicans* and *Sceptridium biternatum*. 
+
+Three species had values that were clearly higher in the control plots compared to the other two treatments. These were *Carex sp*, *Epifagus virginiana*, and *Ilex opaca*.
+
+Four species had values that were clearly higher in the freshwater inundation plots compared to the other two treatments. These were *Elaegnus umbellata*, *Lindera benzoin*, *Mitchella repens*, and *Rubus phoenicolasius*.
+
+Three species had values that were clearly higher in the saltwater inundation plots compared to the other two treatments. These were *Berberis thunbergii*, *Lonicera japonica*, and *Parthenocissus quinquefolia*.
+
+*Berberis thunbergii* did not have any cover in the freshwater inundation plots and *Polygornum virginianum* did not have any cover in control plots.
+
+ 
