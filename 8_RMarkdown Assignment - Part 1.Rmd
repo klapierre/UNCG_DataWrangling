@@ -15,7 +15,9 @@ knitr::opts_knit$set(root.dir = '/UNCG_DataWrangling')
 
 ## Background
 
-text here
+The common technique grazing land management in mesic grassland used for cattle, annual burning and grazing (ABG), increases forage production for cattle at the expense of reducing habitat quality for native animals and plants by homogenizing vegetation and removing ground cover of dead plants. However, patch burn grazing (PBG), is a newer land management strategy that focuses on burning shifting patches of land. This leaves unaffected land while still providing recently burned areas that are beneficial for cattle foraging. PBG has been shown to still be just as beneficial for cattle as ABG, while promising to also be better for native wildlife, but evidence is limited for potential benefit of PBG to small animals, microbes, and plantlife. As well, PBG's effect on the soil itself is largely unexplored. 
+
+To explore the effects pf PBG on soil, researchers buried resin bags in various locations in landscapes undergoing ABG and PBG management strategies in order to examine the effects of these strategies on nitrate, ammonium, and phosphorus in the soil between May and August of 2021. 
 
 ## Data Tidying
 
