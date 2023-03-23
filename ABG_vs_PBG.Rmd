@@ -1,0 +1,104 @@
+---
+title: "Comparing soil nutrients between an annual burned and patch burn grazing system"
+author: "Will Mann"
+date: "2023-03-13"
+output: pdf_document
+---
+### Cattle Production and Management
+
+Cattle production has an incredibly detrimental impact on the surrounding wildlife. Management of cattle often *diametrically opposes* health of an environment. It is increasingly difficult to justify environmental concerns to a cattle rancher against forage for their herds.
+
+### Annual Burning and Grazing (ABG)
+
+ABG is commonly used by management to stimulate growth of vegetation in grazed areas. While this technique does *increase forage production*, it comes ***at the cost of habitat quality***. To move away from this management strategy, PBG has been created.
+
+### Patch Burn Grazing (PBG)
+
+This new burning strategy is much more localized, while still instigating growth from vegetation. This **hybrid practice allows for a mixing of values, both of conservation and business practicality**. It has been described as a *"shifting mosaic"* of vegetation, supporting environmental heterogeneity and stability. This practice is just as effective in producing forage as ABG is, with more environmental consideration.
+
+### Soil Nutrients and Fire
+**Evidence of the pros** of PBG still needs to be provided for multiple biota, as well as effects on *soil quality*.
+Resin bags were placed across the landscape to discover how *ABG* and *PBG* alternatively affect soil nutrient levels of: nitrate (NO3), ammonium (NH4) and phosphorous (P). Standard HCl and KCl extraction was used for P and NO3/NH4, respectively.
+
+```{r, setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_knit$set("D:/School Stuff/Graduate Stuff/Graduate Classes/Spring 2023/UNCG_DataWrangling" = '/tmp')
+
+setwd("D:/School Stuff/Graduate Stuff/Graduate Classes/Spring 2023/UNCG_DataWrangling")
+library(tidyverse)
+N21<-read.csv("PBG_N_compiled_raw_2021.csv")
+P21<-read.csv("PBG_P_compiled_raw_2021.csv")
+transect21<-read.csv("PBG_trts.csv") %>%
+  select(-plot)
+```
+
+```{r bind, message=FALSE, warning=FALSE}
+#Bind N and P together
+Soil21<-rbind(N21, P21)
+Samplesoil21<- Soil21 %>%
+  filter(str_detect(sample, "^U")) %>%
+  group_by(sample) %>%
+  summarise(max = max(concentration, na.rm=TRUE)) %>%
+  ungroup()
+```
+
+```{r bind, treatment and sample, warning=FALSE}
+#Bind N+P to treatment
+SSS<-Soil21 %>%
+  select(concentration, units, test, Sample, sample) %>%
+  filter(na.rm=TRUE)%>%
+  filter(str_detect(sample, "^U"))
+
+big21<-left_join(SSS,Samplesoil21)
+
+big21[c('watershed','transect', 'plot', 'misc')]<-str_split_fixed(big21$Sample, '-', 4)
+T21<-big21%>%
+  select(max, concentration, sample, units, test, watershed)
+
+
+STSoil21<-full_join(transect21, T21, by=c("watershed"), na.rm)
+ 
+```
+
+```{r treatment plot, message=FALSE, warning=FALSE}
+treat<-unique(STSoil21$test)
+
+
+uniquename <- STSoil21 %>% mutate(test = ifelse(test %in% c("HCl PO4_1","KCl Ammonia 10","KCL NO3_NO2 2"), c("Phosphorous","Ammonia","Nitrate"), test))
+
+
+
+#Boxplot of concentration by treatment, colored by treatment and data
+ggplot(uniquename, aes(x = test, y= as.numeric(concentration), fill = as.factor(test))) +
+  geom_boxplot() +
+  facet_wrap(~treatment, scales = "free") +
+  scale_fill_manual(values = c("purple","red", "yellow")) +
+  xlab("Nutrient") + ylab("Concentration") +
+  labs(fill = "Legend")
+
+```
+
+
+```{r cv}
+cv <- function(x) 100*( sd(x, na.rm = TRUE)/mean(x, na.rm = TRUE))
+
+cvframe <- uniquename %>%
+  group_by(treatment, test) %>%
+  summarize(cv = cv(as.numeric(concentration))) %>%
+  ungroup()
+
+ggplot(cvframe, aes(x=test, y= as.numeric(cv), fill = as.factor(test))) +
+  geom_bar(stat = "identity") +
+  facet_wrap(~treatment, scales = "free") +
+  scale_fill_manual(values = c("pink","orange", "green4")) +
+  xlab("Nutrient") + ylab("CV of Concentration") +
+  labs(fill = "Legend")
+
+```
+### ABG vs PBG
+
+ABG *increases forage production*, it comes ***at the cost of habitat quality***. PBG is much more localized, while still instigating growth from vegetation. This **hybrid practice allows for a mixing of values, both of conservation and business practicality**. It has been described as a *"shifting mosaic"* of vegetation, supporting environmental heterogeneity and stability.
+
+Under these considerations, with provided data, it can be said that PBG leads to less abundantly available nutrients with a lower degree of variability. To me, this seems to be taking the landscape simultaneously through multiple succession timelines all at once. Lower nutrient availability allows for slower-growing species to compete with fast growing gasses and forbs, who will likely take over the ABG plots, due to higher nutrient availability.
+
+
