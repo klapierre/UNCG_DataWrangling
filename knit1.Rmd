@@ -1,0 +1,68 @@
+---
+title: "Comparing soil nutrients between an annual burned and patch burn grazing system"
+author: "Shelby Williford"
+date: "2023-03-24"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Background
+
+Cattle production can be taxing on the landscapes they take place on and cattle management often supersedes environmental health and conservation. *Annual burning and grazing (ABG)* is a common management practice to increase vegetation for cattle. However, ABG homogenizes vegetation and removes dead plant material. A newer management strategy is known as **patch burn grazing (PBG)**. This strategy uses fire and management to shift the foraging patterns of cattle over time. The ehterogeneity from theses shifts leads to greater landscape helath over time. This new method benefits both the land and the cattle. However, the underground impacts of PBG are unexplored. 
+
+This studies looked at the effects of ABG and PBG on soil nitrate, ammonium, and phosphourus levels from May-August 2021. NO3 and NH4 were extracted from the resin bags by KCl extractions and P was extracted from the resin bags using HCl extractions. These extracts were analyzed to determine nitrate, ammonium, and phosphourus in each sample. Samples with too high of concentrations were diluted and re-measured.    
+
+## Load libraries and datasets
+
+```{r libraries}
+library(tidyverse)
+PBG_N <- read.csv('PBG_N_compiled_raw_2021.csv')
+PBG_P <- read.csv('PBG_P_compiled_raw_2021.csv')
+PBG_trts <- read.csv('PBG_trts.csv')
+```
+
+## Tidy up data
+
+```{r tidy}
+PBG_bind <- rbind(PBG_N, PBG_P) %>% 
+  filter(grepl('U', sample)) %>% 
+  group_by(Sample) %>% 
+  filter(dilution==max(dilution)) %>% 
+  ungroup() %>% 
+  separate(col=Sample, into=c('watershed', 'transect', 'plot', 'N_P'), sep='-') %>% 
+  merge(PBG_trts) %>% 
+  select(watershed, plot, concentration, units, test, treatment) %>% 
+  mutate(test=ifelse(test %in% c('HCl PO4_1','KCl Ammonia 10','KCL NO3_NO2 2'),c('Phosphorous','Ammonia', 'Nitrate'),test))
+```
+
+## Boxplot
+
+``` {r boxplot}
+ggplot(PBG_bind, aes(test, as.numeric(concentration), fill=as.factor(test))) + geom_boxplot() + facet_wrap(~treatment, scales='free') +scale_fill_manual(values=c('purple', 'light blue', 'green')) + xlab('Treatment') + ylab('Concentration')
+```
+
+## Creating CV function and dataframe
+
+``` {r cv}
+cv <- function(x) 100* (sd(x, na.rm =TRUE)/mean(x, na.rm=TRUE))
+
+cv_frame <- PBG_bind %>% 
+  group_by(treatment, test) %>% 
+  summarize(cv=cv(as.numeric(concentration))) %>% 
+  ungroup()
+```
+
+## Barplot
+
+``` {r barplot}
+ggplot(cv_frame, aes(x=test, y=as.numeric(cv), fill=as.factor(test))) + 
+  geom_bar(stat='identity') +
+  facet_wrap(~treatment, scales='free') +scale_fill_manual(values=c('purple', 'light blue', 'green')) + xlab('Treatment') + ylab('CV of Concentration')
+```
+
+## Summary
+
+Overall, patch burn grazing had higher variation in the nutrients measured in each sample. This variation could be either beneficial or harmful to the grasslands, but more research would need to be performed. 
