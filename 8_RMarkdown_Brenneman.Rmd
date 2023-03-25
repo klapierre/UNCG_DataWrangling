@@ -1,0 +1,105 @@
+---
+title: "Comparing soil nutrients between an annual burned and patch burn grazing system"
+author: "Rachael Brenneman"
+date: "`r Sys.Date()`"
+output:
+  word_document: default
+  html_document: default
+  pdf_document: default
+editor_options:
+  markdown:
+    wrap: sentence
+---
+
+
+This is an R Markdown document.
+Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents.
+For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document.
+You can embed an R code chunk like this:
+
+Background:
+
+Cattle production and management on grasslands is of incredible economic importance. However, cattle management often comes at the expense of plant and wildlife biodiversity and the additional cost of environmental health and conservation. Burning is often used as a management technique to increase forage production for cattle. This experiment will look at two types of grazing. 
+
+**Annual burning and grazing (ABG)**: burning an entire area all at once each year
+
+**Patch burn grazing (PBG)**: uses fire to make a "shifting mosaic" of forage across a landscape through time
+
+When using PBG, it can lure grazing animals to *patches* of the land that has been recently burned, leaving unburned patches to experience lowered levels of grazing. This is an important process to promote *heterogeneity*, which is critical for ecosystem connectivity, stability, and greater diversity. 
+
+There are still many parts of PBG that are still unexplored about how this method effects the environment, such as small mammal, insect, microbial, and other below ground effects. This experiment examines how PBG and ABG affect soil nitrate (NO3), ammonium (NH4), and phosphorous using resin bags. 
+
+```{r, setup, include=FALSE}
+knitr::opts_knit$set(root.dir = "/Users/rachaelbrenneman/Desktop/data_wrangle/UNCG_DataWrangling")
+library(tidyverse)
+library(dplyr)
+library(ggplot2)
+```
+
+After setting our working directory and creating out library, we need to run all of our datafiles. 
+```{r}
+raw_N <- read.csv(file = "PBG_N_compiled_raw_2021.csv", stringsAsFactors = F)
+raw_P <- read.csv(file = "PBG_P_compiled_raw_2021.csv", stringsAsFactors = F)
+PBG_trts <- read.csv(file = "PBG_trts.csv", stringsAsFactors = F)
+```
+
+Next we want to spend some time making our data tidy. 
+```{r, results = 'hide'}
+PN_together <- rbind(raw_N, raw_P) %>% 
+  dplyr::filter(grepl('U', sample)) %>% 
+  group_by(Sample) %>% 
+  filter(dilution == max(dilution)) %>% 
+  ungroup() %>% 
+  separate(col=Sample,
+           into=c('watershed', 'transect', 'plot', 'treatment'),
+           sep='-') %>% 
+  select(-treatment)
+
+together_trts <- merge(PN_together, PBG_trts)
+
+select_together <- together_trts %>%
+  select(transect, treatment, watershed, plot, concentration, units, test)
+select_together$concentration=as.numeric(select_together$concentration)
+
+rename_together <- select_together %>% 
+  mutate(Test = ifelse(test == "HCl PO4_1", "Phosphate", ifelse(test == "KCl Ammonia 10", "Ammonia", "Nitrate"))) %>% 
+  select(-test) %>% 
+  na.omit(transect:Test)
+```
+
+Making boxplot showing concentration of each nutrient by treatment. 
+
+```{r}
+ggplot(rename_together, aes(x = treatment, y = concentration,fill=Test)) +
+  geom_boxplot() + 
+  facet_wrap(~plot) +
+  scale_fill_manual(values=c('blue', 'purple', 'dark green')) +
+  ylab("Concentration mg/L") +
+  xlab("Treatment")
+```
+
+Writing a function to calculate the coefficient of variation for each treatment and nutrient type.
+
+```{r}
+cv <- function(x) 100*(sd(x,na.rm = TRUE)/mean(x, na.rm=TRUE))
+
+CV_nutrient <- rename_together %>% 
+  group_by(treatment, Test) %>% 
+  summarize(cv=cv(as.numeric(concentration))) %>% 
+  ungroup()
+```
+
+Making a new bar graph of the coefficient of variation of nutrient and treatment. 
+
+``` {r}
+ggplot(CV_nutrient, aes(x=Test, y=as.numeric(cv), fill = as.factor(Test))) +
+  geom_bar(stat = 'identity') +
+  facet_wrap(~treatment, scales = 'free') +
+  scale_fill_manual(values=c('blue', 'purple', 'dark green')) +
+  xlab('Treatment') +
+  ylab('CV of Concentration')
+```
+
+Looking at our initial boxplot, nitrate has the higest concentration across all plots and both treatments, with both phosphate and ammonia having relatively low concentration in the either treatment. For our bar graph, the CV shows that the does appear to be a difference between phosphate across the treatments. Phosphate is much higher in ABG treatment than PBG. Additionally, in the PBG treatment, nitrate has a much higher concentration than either ammonia or phosphate. While in the ABG treatment, nitrate is, while high, not the highest concentration of the nutrients. 
