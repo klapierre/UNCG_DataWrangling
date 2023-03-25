@@ -6,13 +6,54 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
+knitr::opts_chunk$set(root.dir= '/tmp')
+library(tidyverse)
 
+```
+## Set up
+Load tidyverse and setup R.
 
 ## Background
 
 Destructive weather phenomenons are becoming more commonplace as global climate change intensifies. Researchers at the Smithsonian designed an experiment to investigates how heavy flooding or rapid downpours impact forest ecosystems. The experiment will emulate forest flooding from both fresh and salt water disruptions. 
+
+Three plots were used to explore the impact of flooding on the under story community. Prior to experimentation, the species cover for each plot was determined, allowing for a point of caparison. Experimental observations were taken as approximate percent cover within a small subplot. The three large plots were 40 x 50 m (C, F and S) with each containing 16 subplots. A special "additional" subplot was created for species found but not sampled.  
+
+```
+TEMPEST <- read.csv("TEMPEST_SERC_understory sppcomp_2021.csv")
+
+
+# Select only rows of the data frame that correspond to plant species
+is_plant <- !grepl("infrastructure|cover", TEMPEST$species)
+
+# Subset the data frame using the is_plant vector
+plant_species <- TEMPEST[is_plant, "species", drop = FALSE]
+
+# Remove duplicate species names
+plant_species <- unique(plant_species)
+
+# Subset the TEMPEST data frame to only include treatment columns
+treatment_info <- TEMPEST[, c("project_name", "calendar_year", "treatment_year", "season", "plot", "subplot")]
+
+# Create a new column for replicate
+treatment_info$replicate <- paste(treatment_info$plot, treatment_info$subplot, sep = "_")
+
+# Create a new column for verbalized plot treatment
+treatment_info$treatment <- ifelse(TEMPEST$plot == "C", "C", 
+                                    ifelse(TEMPEST$plot == "S", "S",
+                                           ifelse(TEMPEST$plot == "F", "F", NA)))
+
+# Remove the plot and subplot columns
+treatment_info$plot <- treatment_info$subplot <- NULL
+
+
+```
+#Code Chunk 1.1
+Reads in the TEMPEST_SERC_understory sppcomp_2021.csv file into the variable TEMPEST. !Grepl select the correct data frames and those dataframes are then subsetted from the TEMPEST dataframe. We than utilize the unique functiont to ensure that we only have unique values. The paste fucnction is utilized to combine plot and subset into a new column called replicate. Additionally, a new column also created called treatment that utilizs a ifelse statement to extract treatment information from the appropritely labeled column in TEMPEST. Finally, the plot and subplot column are removed for simplicity. 
+
+```
+
+```
 
 
 ## R Markdown
