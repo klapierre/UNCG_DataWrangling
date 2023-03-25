@@ -1,0 +1,52 @@
+---
+title: "Effects of manmade wetlands on Birdbox Success"
+author: "William Eichhorn"
+date: "2023-03-25"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Background
+
+During the peak of mating and young rearing, many backyard bird species, especially bluebirds, depend upon aquatic invertebrate species to feed their young. The PhD student I am working under for this data, Melanie Stadler, is researching the impacts that manmade wetlands have on the success of bird fledging. She is particularly interested in the effects on bluebird species success, however she collects data on a number of other species. The working hypothesis, so far as I understand, is that there should be a positive correlation between spatial proximity to wetlands and the success of fledging. There are a total of 72 bluebird boxes across 4 parks within the Greensboro area: Peabody Park, Price Park, Gateway Park, and Country Park. The nesting and data collection season runs from late March-August. The data collected are the number of eggs, young, and those that are able to fledge. Extranneous data includes bird behavior and other notes that field researchers so choose to add.
+
+For my final project in class, I will be working with five .csv files. Four from the field data collected at each park, and one file which contains landcover type percentages for each of the 72 boxes. I have already gone back into these datasets and manually entered a "nest_success" column which assigns a numerical value to whether or not a nest produced fledglings. Here is my proposed workflow that will be repeated on each file:
+
+```{r}
+
+#read.csv()#Load in .csv file for park and the landcover# %>%
+  #merge(x=,y=
+         # by="Box_ID",all.x=TRUE)
+# The landcover and park datasets all share one similar column, Box ID#.
+# Each park is assigned its own unique Box ID# Prefix: "CP, PP, PB, & GW" 
+# along with a number for each box. I want to join each of the parks with their
+# specific land cover percentages based upon Box ID# %>%
+
+  #DF_Clean = subset(mydata, select = -c()#All columns but "species",
+# "nest_success", "Box_ID", and the landcover percentage categories)) %>%
+
+# There is a lot of extra data within the park datasets which are not useful for
+# my particular interests, so with this cut out some of that extra noise and 
+# allow me to just play with the data I want# %>%
+ 
+# ggplot() %>%
+
+# Although there are statistical analyses I will be doing, 
+# I will not be doing them in this class, so now I just want to include some
+# basic graphs comparing species, nest_success, and landcover type percentages.
+ # ggplot(DF_Clean, aes(x =, y=)) +
+
+# This is going to take some more work shopping, but I would essentially like 
+# to create a few plots for each park which compares nest success for each box
+# relative to its landcover type.
+
+ # geom_point() + 
+ # facet_wrap(~)  
+
+#I assume because there are so many boxes, trying to do one at a time will be
+# incredibly tedious, so a facet wrap would expedite this process
+
+```
