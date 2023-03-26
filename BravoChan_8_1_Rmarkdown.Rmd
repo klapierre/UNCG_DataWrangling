@@ -4,15 +4,16 @@ author: "Author: Carina Bravo-Chan"
 subtitle: First RMarkdown
 output:
   pdf_document: default
-  html_document:
+  html_document: 
     df_print: paged
     theme: paper
   word_document: default
 urlcolor: blue
+knitr: rmarkdown::render
 ---
 
-```{r setup,include=FALSE}
-    knitr::opts_knit$set(root.dir='~/Desktop/BIO_400X_R/UNCG_DataWrangling')
+```{r setup,warning=FALSE,include=FALSE}
+    knitr::opts_knit$set(root.dir='~/Desktop/BIO_400X_R/UNCG_DataWrangling_Old')
 ```
 
 
@@ -21,12 +22,17 @@ Cattle production often conflicts with environmental conservation and biodiversi
 Resin bags were buried in the soil in this area from May to August 2021 to study the effects of ABG and PBG on soil nitrate **(NO3)**, ammonium **(NH4)**, and phosphorous **(P)**. Resin extracts measured each sample's NO3, NH4, and P levels. Overconcentrations were diluted and remeasured.
 
 ### **Data:**
-```{r pressure,include=FALSE}
-    knitr::opts_chunk$set(echo=TRUE)
+```{r,include=FALSE}
+knitr::opts_chunk$set(echo=TRUE)
+```
 
+```{r, include=FALSE ,message=FALSE, warning=FALSE}
 library(tidyverse)
 library(dplyr)
+library(latexpdf)
+```
 
+```{r, clean data, include=FALSE}
 # Read in the CSV files
 N_data <- read.csv("PBG_N_compiled_raw_2021.csv")
 P_data <- read.csv("PBG_P_compiled_raw_2021.csv")
@@ -48,31 +54,39 @@ PBG_trts <- read.csv("PBG_trts.csv")
 
 #Clean PBG_trts data, split columns
 PBG_combined <- merge(NP_datasplit,PBG_trts, by = c("watershed", "transect","plot"), all.x = TRUE) %>% 
-        group_by(treatment) %>% 
-mutate(test=ifelse(test=="HCl PO4_1",
+  group_by(treatment) %>% 
+  mutate(test=ifelse(test=="HCl PO4_1",
     "Phosphate",ifelse(test=="KCL NO3_NO2 2", "Nitrate", "Ammonia")))
+```
 
+```{r boxplot, warning=FALSE, message=FALSE, echo=FALSE}
 #Create boxplot graph by Tx 
 my_pal <- c("#224b5e","#94b594")
-print(ggplot(PBG_combined,aes(x=treatment,y=as.numeric(concentration),fill=treatment))+
+boxplot <- (ggplot(PBG_combined,aes(x=treatment,y=as.numeric(concentration),fill=treatment))+
   geom_boxplot()+
   facet_wrap(~test,scales="free_y")+
   labs(x="Treatment",y="Concentration(mg N/L)",fill="Treatment")+
-  scale_fill_manual(values=my_pal))
+  scale_fill_manual(values=my_pal)+
+  ggtitle("Nutrient Concentration by Treatment Type",subtitle=waiver()))
+print(boxplot)
+```
 
+
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
 #Coefficient of variation
 PBG_coeff <- PBG_combined %>% 
   group_by(treatment,test) %>% 
   summarise(conc_mean=mean(as.numeric(concentration)), conc_sd=sd(concentration), conc_coeff=conc_mean/conc_sd) %>%
   ungroup()
-
 #Coefficient of variation - bar graph
 ggplot(PBG_coeff, aes(x = test, y = conc_coeff, fill = treatment)) +
-  geom_bar(stat = "identity", position = "dodge") +
-  scale_fill_manual(values = my_pal) +
+  geom_bar(stat = "identity",position="dodge") +
   labs(x = "Nutrient", y = "Concentration Coefficient") +
+  scale_fill_manual(values=c("#224b5e","#94b594"))+
   ggtitle("Concentration Coefficient by Nutrient and Treatment")
 ```
 
 ### **Summary:**
-Looking at the graphs 
+The difference in ABG and PBG effects on soil nutrient accumulation could be attributed to the different management approaches used in each system. *ABG* involves annual burning and grazing, which can result in a more homogenized landscape and increased nitrate and ammonia accumulation in the soil. *PBG*, on the other hand, involves patch burning and grazing, resulting in a mosaic of vegetation and disturbance patterns that leads to increased phosphate accumulation in the soil. Furthermore, the belowground effects of PBG on soil health and microbial populations may contribute to nutrient accumulation differences.
+
+Future research could look into the long-term effects of ABG and PBG on soil health and fertility, as well as their impact on aboveground biodiversity and ecosystem services, to better understand the effects of ABG and PBG on soil nutrient accumulation. Furthermore, studies could look into the possibility of combining ABG and PBG approaches in a way that balances the benefits of both systems while minimizing their negative environmental impacts. Finally, efforts could be made to disseminate the findings of these studies to cattle producers and land managers in order to encourage the adoption of more environmentally friendly and sustainable management practices.
