@@ -97,3 +97,9 @@ ggplot(data = CV, aes(x=nutrient, y=cv, fill=treatment)) +
   ) +
   scale_fill_brewer(palette = "Dark2")
 ```
+
+
+## Summary
+
+Based on the graphs above, PBG does not have a large impact on the median soil nutrient concentration compared to ABG, with the median concentration only different in soil ammonia where PBG had a lower median concentration. However, PBG sites did show a higher amount of variation in nutrient concentrations for both ammonia and phosphate. This greater variation may also be explained by the known higher plant biodiversity in PBG sites compared to ABG sites, so more study needs to be done. Either way, PBG does not seem to have an overall negative or positive impact on soil nutrient concentration.
+
