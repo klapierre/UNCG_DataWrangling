@@ -10,7 +10,7 @@ setwd("D:/School Stuff/Graduate Studd/Graduate Classes/Spring 2023/UNCG_DataWran
 ##############################Time-zones################################ -E
 
 #Time-zones: Are invisible boundaries created to differentiate time between geographical regions. Timezone Greenwich Mean Time (GMT) is also known as Zulu time. This is where the rest of the time-zones moving east and west are based off of. Moving Westward moves time in the negative direction from -1 to -12, and oppositely eastward time moves in the positive direction from +1 to +12. 
-
+# tzdir
 # Sys.timezone is a function that shows time-zones of your dates and time. This is important because researchers across the world fall under time-zones. For our data set we have research points from four different time-zones. date_time_untidy has four different time-zones. 
 # Now lets try out the function!
 
