@@ -227,25 +227,32 @@ ggplot(redband, aes(x=Length, y=Weight)) +
 # TASK: Copy and paste the code for our previous graph below. Then modify the
 # aesthetics of the geometric object so that the size of the points varies with 
 # as.factor(ScaleAge).
+ggplot(redband, aes(x=Length, y=Weight)) + 
+  geom_point(aes(size=as.factor(ScaleAge)))
 
 
 # TASK: Modify the aesthetics of the geometric object from the previous graph
 # so that the size AND color of the points varies with ScaleAge.
+ggplot(redband, aes(x=Length, y=Weight)) + 
+  geom_point(aes(size=as.factor(ScaleAge),color=(ScaleAge)))
 
 
 # It is important to note that different kinds of geometric objects have different
 # types of associated aesthetics. Points and lines have colors, while bars and
 # boxplots have fills and colors. Try running the following lines of code:
-ggplot(redband, aes(x = as.factor(ScaleAge), y = Weight)) + 
+ggplot(redband, aes(x = as.factor(ScaleAge),y = Weight)) + 
   geom_boxplot(color = 'purple', fill = 'green')
 
 # QUESTION: What does color mean for boxplots? What does fill mean for boxplots?
-
+# the color means the outline of the boxplot while fill means the inside color of the box plots
 
 # QUESTION: Why did we have to specify as.factor() for ScaleAge in the initial
 # aes() statement? 
 # HINT: Try running the code without that statement, what happens?
-
+ggplot(redband, aes(x = ScaleAge,y = Weight)) + 
+  geom_boxplot(color = 'purple', fill = 'green')
+# without the specification, it makes a single box and whisker plot
+# this most likely is because R took the average of all the scale ages and put them into a single plot
 
 # ---------------------------------------------------------- #
 #### PART 1.5 ADDING A LAYER: STATISTICAL TRANSFORMATIONS #### 
