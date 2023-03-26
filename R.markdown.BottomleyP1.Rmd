@@ -1,0 +1,65 @@
+---
+title: "Comparing soil nutrients between an annual burned and patch burned grazing system"
+author: "Jalyn Bottomley"
+date: "2023-03-23"
+output: html_document
+---
+```{r setup,include=FALSE}
+    knitr::opts_knit$set(root.dir='C:/Users/jhope/OneDrive/Documents/400X coding/UNCG_DataWrangling')
+```
+Background:
+"Annual burning and grazing (ABG) is a method used for increasing grass for cattle. While ABG is good for animals, it has a negative effect on plant species in the area. A new process called patch burning grazing(PBG) is more effective for the animal and plant species because it allows for specific patches of ferns and flora to thrive while other patches are less abundant in grass. This allows the animal species to consume more on the grassy patches while the others have a chance to grow. Based on research, we know the positive impacts PBG has on animals and plants but we have yet to find out the effects underground with the soil. 
+This data set came from an experiment that tests the soil nitrate, ammonium, and phosphorus levels in the soil. This was tested by placing resin bags under ground and testing them to see the concentration of each mineral."
+
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(dbplyr)
+
+#Read the CSV files
+N_data <- read.csv("PBG_N_compiled_raw_2021.csv")
+P_data <- read.csv("PBG_P_compiled_raw_2021.csv")
+
+#Binding the 2 data files together
+NP_data <- rbind(N_data,P_data)%>%
+  filter(grepl("U",sample))%>%
+  group_by(Sample,test)%>%
+  filter(dilution==max(dilution))
+#Separate column Sample into four separate columns
+NP_datasplit <- separate(NP_data, Sample, into = c("watershed", "transect", "plot", "col4"), sep = "-") %>% 
+#Remove the 4th column created by the split above
+        select(-col4)
+#Join NP_datasplit & PBG_trts
+PBG_trts <- read.csv("PBG_trts.csv")
+#Clean PBG_trts data, split columns
+PBG_combined <- merge(NP_datasplit,PBG_trts, by = c("watershed", "transect","plot"), all.x = TRUE) %>% 
+        group_by(treatment) %>% 
+mutate(test=ifelse(test=="HCl PO4_1",
+    "Phosphate",ifelse(test=="KCL NO3_NO2 2", "Nitrate", "Ammonia")))
+#Create boxplot graph by Tx 
+my_pal <- c("#ffb3b3","#ffccec")
+print(ggplot(PBG_combined,aes(x=treatment,y=as.numeric(concentration),fill=treatment))+
+  geom_boxplot()+
+  facet_wrap(~test,scales="free_y")+
+  labs(x="Treatment",y="Concentration(mg N/L)",fill="Treatment")+
+  scale_fill_manual(values=my_pal))
+#Coefficient of variation
+PBG_coeff <- PBG_combined %>% 
+  group_by(treatment,test) %>% 
+  summarise(conc_mean=mean(as.numeric(concentration)), conc_sd=sd(concentration), conc_coeff=conc_mean/conc_sd) %>%
+  ungroup()
+#Coefficient of variation - bar graph
+ggplot(PBG_coeff, aes(x = test, y = conc_coeff, fill = treatment)) +
+  geom_bar(stat = "identity",position="dodge") +
+  labs(x = "Nutrient", y = "Concentration Coefficient") +
+  scale_fill_manual(values=c("#33ebc4","#46fc6e"))+
+  ggtitle("Concentration Coefficient by Nutrient and Treatment")
+```
+
+Summary: 
+Based on the results from the concentrations of soil nitrate, ammonium, and phosphorus as an effect of PBG, the soil seemed to have more soil nitrate than phosphorus. There was a large amount of data and it started out very messy however with the boxplot and creating graphs it helps visualze the results. 
+
+
