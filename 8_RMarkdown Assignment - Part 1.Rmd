@@ -9,9 +9,6 @@ output: pdf_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-```{r, setup, include=FALSE}
-knitr::opts_knit$set(root.dir = '/UNCG_DataWrangling')
-```
 
 ## Background
 
@@ -26,16 +23,16 @@ library(tidyverse)
 ```
 
 ```{r getting data}
-rawPBGN <- read.csv("PBG_N_compiled_raw_2021.csv")
-rawPBGP <- read.csv("PBG_P_compiled_raw_2021.csv")
-rawPBGtrts <- read.csv("PBG_trts.csv")
+rawPBGN <- read.csv("PBG_N_compiled_raw_2021.csv", stringsAsFactors = TRUE)
+rawPBGP <- read.csv("PBG_P_compiled_raw_2021.csv", stringsAsFactors = TRUE)
+rawPBGtrts <- read.csv("PBG_trts.csv", stringsAsFactors = TRUE)
 ```
 
 ```{r combining P and N datasets}
 pbgPN <- rbind(rawPBGP, rawPBGN)
 ```
 
-```{r filtering data for U# by 'sample'}
+```{r filtering data for U# by sample}
 FilteredUpgbPN <- pbgPN %>% 
   filter(grepl('U', sample))
 ```
@@ -45,7 +42,7 @@ dim(FilteredUpgbPN)
 dim(unique(FilteredUpgbPN))
 ```
 
-```{r Filtering for max dilution by 'Sample'}
+```{r Filtering for max dilution by Sample}
 maxDilutionPBG <- FilteredUpgbPN %>% 
   group_by(Sample) %>% 
   filter(dilution == max(dilution, na.rm = TRUE)) %>% 
@@ -62,11 +59,24 @@ PNTreatment <- maxDilutionPBG %>%
   mutate(test = ifelse(temp=="HCl PO4_1",
     "Phosphate",ifelse(temp=="KCL NO3_NO2 2", "Nitrate", "Ammonia"
   )))
+
+PNTreatment <- PNTreatment %>% 
+  select(-c(temp)) %>% 
+  transform(concentration = as.numeric(concentration), plot = as.factor(plot), test = as.factor(test), treatment = as.factor(treatment)) 
+  
 ```
 
 ## Graphs
 
 ```{r Box Plot}
+ggplot(PNTreatment, aes(x=treatment, y=concentration, fill=test), dpi = 500) +
+  geom_boxplot(lwd = .5) +
+  facet_wrap("plot", scales = "free") +
+  labs(
+    subtitle = "Plot Number",
+    y = "Nutrient Concentration (mg/L, mgN/L)",
+    x = "Treatment"
+  ) 
 
 ```
 
