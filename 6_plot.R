@@ -269,6 +269,8 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 # QUESTION: Using the geom_smooth help page, what type of function is being used 
 # in the above graph for our statistical transformation fit?
 # HINT: What is the default model type for a dataframe of our size?
+?geom_smooth
+# mgcv::gam() is used with formula = y ~ s(x, bs = "cs") with method = "REML"
 
 
 # We also can specify a specific model to fit. Try running the following code to
@@ -280,6 +282,10 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 # TASK: As with most things in R, there are multiple ways to accomplish the same
 # task. Using the geom_smooth help page, write code below to specify a linear
 # model using a method= statement instead of the formula= statement.
+ggplot(redband, aes(x = Length, y = Weight)) + 
+  geom_point() + 
+  geom_smooth(method = lm, se = FALSE)
+ # did that ALL on my own B3
 
 
 # A linear model does not seem like a good fit to our data. Try running the
@@ -300,14 +306,22 @@ ggplot(redband, aes(x = as.factor(ScaleAge), y=Weight)) +
 # QUESTION: Name another statistical transformation we have already used in this
 # assignment.
 # HINT: It was in the very first part of the assignment.
-
+# histogram
 
 # TASK: Let's put this all together! Create a graph with the following:
 # (1) redband dataframe,
+# ✓
 # (2) x-axis = Length, y-axis = Weight
+# ✓
 # (3) points colored by ScaleAge as a factor
+# ✓
 # (4) quadratic line that is black in color and size=2 (HINT: check ggplot
 #     cookbook to help figure out how to change line color and size).
+# ✓
+
+  ggplot(redband,aes(x=Length, y=Weight)) + 
+  geom_point(aes(color=as.factor(ScaleAge))) +
+  geom_smooth(formula = y ~ poly(x,2), color = "black", size = 2)
 
 
 # ---------------------------------------------------------- #
