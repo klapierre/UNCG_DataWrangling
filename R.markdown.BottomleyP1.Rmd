@@ -1,8 +1,11 @@
 ---
-title: "Comparing soil nutrients between an annual burned and patch burned grazing system"
+title: Comparing soil nutrients between an annual burned and patch burned grazing
+  system
 author: "Jalyn Bottomley"
 date: "2023-03-23"
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 ---
 ```{r setup,include=FALSE}
     knitr::opts_knit$set(root.dir='C:/Users/jhope/OneDrive/Documents/400X coding/UNCG_DataWrangling')
@@ -13,7 +16,7 @@ This data set came from an experiment that tests the soil nitrate, ammonium, and
 
 
 
-```{r setup, include=FALSE}
+```{r, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 
 library(tidyverse)
@@ -29,7 +32,7 @@ NP_data <- rbind(N_data,P_data)%>%
   group_by(Sample,test)%>%
   filter(dilution==max(dilution))
 #Separate column Sample into four separate columns
-NP_datasplit <- separate(NP_data, Sample, into = c("watershed", "transect", "plot", "col4"), sep = "-") %>% 
+NP_split <- separate(NP_data, Sample, into = c("watershed", "transect", "plot", "col4"), sep = "-") %>% 
 #Remove the 4th column created by the split above
         select(-col4)
 #Join NP_datasplit & PBG_trts
@@ -40,18 +43,18 @@ PBG_combined <- merge(NP_datasplit,PBG_trts, by = c("watershed", "transect","plo
 mutate(test=ifelse(test=="HCl PO4_1",
     "Phosphate",ifelse(test=="KCL NO3_NO2 2", "Nitrate", "Ammonia")))
 #Create boxplot graph by Tx 
-my_pal <- c("#ffb3b3","#ffccec")
+rboxplot <- c("#ffb3b3","#ffccec")
 print(ggplot(PBG_combined,aes(x=treatment,y=as.numeric(concentration),fill=treatment))+
   geom_boxplot()+
   facet_wrap(~test,scales="free_y")+
   labs(x="Treatment",y="Concentration(mg N/L)",fill="Treatment")+
   scale_fill_manual(values=my_pal))
 #Coefficient of variation
-PBG_coeff <- PBG_combined %>% 
+PBG_co <- PBG_combined %>% 
   group_by(treatment,test) %>% 
   summarise(conc_mean=mean(as.numeric(concentration)), conc_sd=sd(concentration), conc_coeff=conc_mean/conc_sd) %>%
   ungroup()
-#Coefficient of variation - bar graph
+#Coefficient of variation: bar graph
 ggplot(PBG_coeff, aes(x = test, y = conc_coeff, fill = treatment)) +
   geom_bar(stat = "identity",position="dodge") +
   labs(x = "Nutrient", y = "Concentration Coefficient") +
