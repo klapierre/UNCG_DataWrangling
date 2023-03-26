@@ -1,0 +1,96 @@
+install.packages('tidyverse')
+library(tidyverse)
+
+understory <- read.csv('TEMPEST_SERC_understory sppcomp_2021.csv')
+
+theme_minimal()
+
+unique(understory$species)
+
+plants <- understory %>% 
+  filter(!str_detect(species, c('infrastructure'))) %>% 
+  filter(!str_detect(species, c('bare'))) %>% 
+  filter(!str_detect(species, c('basal'))) %>% 
+  filter(!str_detect(subplot, c('additional')))
+
+species_list <- as.data.frame(unique(plants$species)) %>%
+  rename('species'='unique(plants$species)')                              
+treatments <- plants %>% 
+  mutate(replicate=paste(plot, subplot, sep="")) %>% 
+  mutate(plottype = ifelse(plot %in% "C", "Control", plot)) %>% 
+  mutate(plottype = ifelse(plot %in% "F", "Freshwater Inundation", plottype)) %>% 
+  mutate(plottype = ifelse(plot %in% "S", "Saltwater Inundation", plottype)) %>% 
+  select(-c('project_name':'season')) %>% 
+  select(-sampler, -notes, -species, -cover) 
+
+herb_cover <- plants %>% 
+  group_by(subplot) %>% 
+  mutate(totalcover=sum(cover)) %>% 
+  mutate(relativecover=100*(cover/totalcover)) %>% 
+  ungroup()
+
+sub_species_richness <- herb_cover %>%
+  group_by(subplot) %>%
+  mutate(subplotrichness=n_distinct(species)) %>% 
+  ungroup()
+             
+plot_species_richness <- sub_species_richness %>%
+  group_by(plot) %>%
+  mutate(plotrichness=n_distinct(species)) %>% 
+  ungroup()                   
+
+std.error = function(x) sd(x)/sqrt(length(x))
+
+mean_rich_plot <- plot_species_richness %>% 
+  group_by(plot) %>% 
+  mutate(mean_rich = mean(subplotrichness)) %>% 
+  mutate(sd_rich =std.error(subplotrichness))
+
+species_rich <- mean_rich_plot %>% 
+  group_by(plot) %>% 
+  summarise(speciesrich=n_distinct(species)) %>% 
+  ungroup()
+
+ggplot(mean_rich_plot, aes(x=plot, y= as.numeric(mean_rich))) +
+  geom_bar(stat="identity") +
+  geom_errorbar(aes(ymin=mean_rich - sd_rich, ymax=mean_rich + sd_rich)) + ylim(0,50) + xlab('Plot') + ylab('Mean Species Richness')
+
+ggplot(species_rich, aes(x= plot, y= speciesrich)) +
+  geom_bar(stat='identity') +
+  xlab("Plot") + ylab('Species Richness')
+
+relative_cover <- plants %>% 
+  group_by(species, plot) %>% 
+  summarise(ave_rel_cover=mean(cover))
+
+species_cover <- relative_cover %>% 
+  group_by(species) %>% 
+  summarise(ave_rel_cover = mean(ave_rel_cover))
+
+sc_cov_ranked <- species_cover %>% 
+  arrange(desc(ave_rel_cover))
+
+sc_cov_ranked <- so_cov_ranked %>% 
+  mutate(number = 1:91)
+
+ggplot(sc_cov_ranked, aes(x= number, y= ave_rel_cover)) +
+  geom_point() +
+  geom_line() +
+  geom_text(aes(label = species)) +
+  xlab("Rank") + 
+  ylab("Avg Relative Cover")
+
+all_species_cover <- plants %>% 
+  group_by(species) %>% 
+  mutate(ave_rel_cover = mean(cover)) %>% 
+  mutate(stderror=std.error(cover)) %>% 
+  ungroup()  
+  
+subset<- all_species_cover %>% 
+  filter(str_detect(species, c('Berberis thunbergii', 'Botrychium dissectum', 'Carex sp', 'Elaeagnus umbellata', 'Epifagus virginiana', 'Gallium circaezans', 'Ilex opaca', 'Lindera benzoin', 'Lonicera japonica', 'Mitchella repens', 'Parthenocissus quinquefolia', 'Polygonum virginianum', 'Rhus radicans', 'Rubus phoenicolasius', 'Sceptridium biternatum', 'Symphotrichium lateriflorum')))
+
+ggplot(all_species_cover, aes(x= plot, y= ave_rel_cover)) +
+  geom_bar(stat='identity') +
+  xlab("Species") + ylab('Cover') +
+  geom_errorbar(aes(ymin=ave_rel_cover - stderror, ymax=ave_rel_cover + stderror)) +
+  facet_wrap(~species, scales="free")
