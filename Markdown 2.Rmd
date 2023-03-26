@@ -109,6 +109,12 @@ plot_species_richness_all <- TEMPEST_plants %>%
 
 ##Code Chunk 1.3
 
+subplot_species_richness is created by calling TEMPEST_plants, grouping by subplot and utilizing the summarize function to store n_distict (number of unique species) in a column called species_richness. 
+
+plot_species_richness calls the subplot_species_richness variable and groups by plot. Then, we use the summarize function to calculate the mean of species_richness as well as the standrd error. 
+
+Lastly, we create plot_species_richness_all by calling the TEMPEST_plants variable, grouping by plot, using summarize to determine n_distinct for the number of species (species richness). 
+
 ## R Markdown
 
 This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
