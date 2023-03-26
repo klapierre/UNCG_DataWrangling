@@ -19,7 +19,7 @@ Load tidyverse and setup R.
 
 Destructive weather phenomenons are becoming more commonplace as global climate change intensifies. Researchers at the Smithsonian designed an experiment to investigates how heavy flooding or rapid downpours impact forest ecosystems. The experiment will emulate forest flooding from both fresh and salt water disruptions. 
 
-Three plots were used to explore the impact of flooding on the under story community. Prior to experimentation, the species cover for each plot was determined, allowing for a point of caparison. Experimental observations were taken as approximate percent cover within a small subplot. The three large plots were 40 x 50 m (C, F and S) with each containing 16 subplots. A special "additional" subplot was created for species found but not sampled.  
+Three plots were used to explore the impact of flooding on the under story community. Prior to experimentation, the species cover for each plot was determined, allowing for a point of comparison. Experimental observations were taken as approximate percent cover within a small subplot. The three large plots were 40 x 50 m (C, F and S) with each containing 16 subplots. A special "additional" subplot was created for species found but not sampled.  
 
 ```
 TEMPEST <- read.csv("TEMPEST_SERC_understory sppcomp_2021.csv")
@@ -51,7 +51,7 @@ treatment_info$plot <- treatment_info$subplot <- NULL
 
 ```
 # Code Chunk 1.1
-Reads in the TEMPEST_SERC_understory sppcomp_2021.csv file into the variable TEMPEST. !Grepl select the correct data frames and those dataframes are then subsetted from the TEMPEST dataframe. We than utilize the unique functiont to ensure that we only have unique values. The paste fucnction is utilized to combine plot and subset into a new column called replicate. Additionally, a new column also created called treatment that utilizs a ifelse statement to extract treatment information from the appropritely labeled column in TEMPEST. Finally, the plot and subplot column are removed for simplicity. 
+We first read in the TEMPEST_SERC_understory sppcomp_2021.csv file into the variable TEMPEST. !Grepl selects the correct data frames and those data frames are then taken as a subset from the TEMPEST data frame. We than utilize the unique function to ensure that we only have unique values. The paste function is utilized to combine plot and subset into a new column called replicate. Additionally, a new column also created called treatment that utilizes a ifelse statement to extract treatment information from the appropriately labeled column in TEMPEST. Finally, the plot and subplot column are removed for simplicity. 
 
 
 
@@ -84,7 +84,7 @@ TEMPEST_cover <- TEMPEST_cover %>%
 
 ## Code Chunk 1.2
 
-We are once again using our is_plant variable to get only plant values (not infrastructure or cover). We then use the is_plant variable to select only the rows of data containing real plants. We then utilize grelph to remove the "additional" subplot from the subplot column. We than use a group_by statement to group by subplot and sum the cover data for each subplot. Then, we join the total_cover back to TEMPEST_plants are store in it TEMPEST_cover. Finally, we clean a column storing calculating and storing the relative cover in the TEMPEST_cover variable. 
+We are once again using our is_plant variable to get only plant values (not infrastructure or cover). We then use the is_plant variable to select only the rows of data containing real plants. We then utilize grepl to remove the "additional" subplot from the subplot column. We than use a group_by statement to group by subplot and sum the cover data for each subplot. Then, we join the total_cover back to TEMPEST_plants are store in it TEMPEST_cover. Finally, we create a column storing calculating and storing the relative cover in the TEMPEST_cover variable. 
 
 ```
 #Richness 
@@ -113,7 +113,7 @@ plot_species_richness_all <- TEMPEST_plants %>%
 
 subplot_species_richness is created by calling TEMPEST_plants, grouping by subplot and utilizing the summarize function to store n_distict (number of unique species) in a column called species_richness. 
 
-plot_species_richness calls the subplot_species_richness variable and groups by plot. Then, we use the summarize function to calculate the mean of species_richness as well as the standrd error. 
+plot_species_richness calls the subplot_species_richness variable and groups by plot. Then, we use the summarize function to calculate the mean of species_richness as well as the standard error. 
 
 Lastly, we create plot_species_richness_all by calling the TEMPEST_plants variable, grouping by plot, using summarize to determine n_distinct for the number of species (species richness).
 
@@ -139,24 +139,81 @@ plot(plot_richness_plot)
 ```
 ## Code Chunk 1.4
 
-First graph displays richness per plot using mean of subplots. Made using a ggplot function and stored in subplot_plot_richness. Second graph displays richness at the plot level. Also uses ggplot funciton and stores output in the varible plot_richness_plot. 
+First graph displays richness per plot using mean of subplots. Made using a ggplot function and stored in subplot_plot_richness. Second graph displays richness at the plot level. Also uses ggplot function and stores output in the varible plot_richness_plot. 
 
-## R Markdown
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
 ```
+#Average Relative cover for each species
 
-## Including Plots
+plot_species_cover <- TEMPEST %>%
+  filter(!grepl("infrastructure|cover", species)) %>%
+  group_by(plot, species) %>%
+  summarize(total_cover = sum(cover)) %>%
+  mutate(relative_cover = 100 * total_cover / sum(total_cover)) %>%
+  ungroup()
 
-You can also embed plots, for example:
+avg_species_cover <- plot_species_cover %>%
+  group_by(species) %>%
+  summarize(avg_relative_cover = mean(relative_cover))
 
-```{r pressure, echo=FALSE}
-plot(pressure)
+plot_species_cover2 <- avg_species_cover %>%
+  arrange(desc(avg_relative_cover))
+  
+plot_species_cover3 <- plot_species_cover2 %>%
+  arrange(desc(avg_relative_cover)) %>%
+  mutate(rank = rank(-avg_relative_cover, ties.method = "min"))  
+
+ggplot(plot_species_cover3, aes(x = rank, y = avg_relative_cover, group = 1)) +
+  geom_line() +
+  geom_point() +
+  geom_text(aes(label = species), size = 2, angle = 330, vjust = -0.5, hjust = 1) +
+  scale_x_reverse() +
+  xlab("Rank") +
+  ylab("Average Relative Cover (%)") +
+  ggtitle("Rank Abundance Curve for Understory Plant Community") +
+  ylim(0, 55)
+
+
+
 ```
+## Code Chunk 1.5
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+We calculated the average relative cover for each species in their subplots. Then, we calculated the average cover for species across plots. Then, we placed them in descending order and added a column providing each species with a rank. Then we created a plot that displayed the ranked abundance. Hence, a ranked abundance curve. 
+
+```
+species_we_need <- c("Berberis thunbergii", "Botrychium dissectum", "Carex sp", "Elaeagnus umbellata", 
+                         "Epifagus virginiana", "Gallium circaezans", "Ilex opaca", "Lindera benzoin",
+                         "Lonicera japonica", "Mitchella repens", "Parthenocissus quinquefolia", 
+                         "Polygonum virginianum", "Rhus radicans", "Rubus phoenicolasius", 
+                         "Sceptridium biternatum", "Symphotrichium lateriflorum")
+                         
+species_mean_se <- TEMPEST %>%
+  filter(species %in% species_we_need) %>%
+  group_by(plot, species) %>%
+  summarize(avg_species_cover = mean(relative_cover),
+            se_relative_cover = sd(relative_cover) / sqrt(n())) %>%
+  ungroup()
+
+
+ggplot(species_mean_se, aes(x = plot, y = avg_species_cover, fill = species)) +
+  geom_bar(stat = "identity", position = position_dodge()) +
+  geom_errorbar(aes(ymin = avg_species_cover - se_relative_cover, 
+                    ymax = avg_species_cover + se_relative_cover), 
+                position = position_dodge(width = 0.9), width = 0.2) +
+  facet_wrap(~ species, scales = "free_y") +
+  labs(x = "Plot", y = "Mean Relative Cover (%)", fill = "Species") +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust=1))
+
+```
+## Code Chunk 1.6 ####
+
+species_we_need holds a vector contain the species we want to target. species_mean_se pulls TEMPEST data to calculate average species coverage and standard error. We then use ggplot to create a meaningful graphic displaying this data.
+
+## Summary ####
+
+In lieu of any statistical modeling, we can view our rank abundance curve to understand which plant dominates our understory. The clear winner is Mitchella repens, with over 48% relative cover, indicating that it is dominating the understory. 
+
+In our plot from Code Chunk 1.6 we can see that there is SIGNIFICANT variation across the performance of species based on which treatment they are a part of. Broadly, this gives us insight into the effects of saltwater and freshwater flooding. If species are responding differently, which they are, this indicates that both saltwater and freshwater flooding/downpour would have the potential to significantly alter and potentially devastate these ecological communities. 
+
+In terms of richness, our freshwater treatment appears to be the highest. However, it is closely matched with our control and may not be significantly different. Additionally, saltwater flooding seemed to have a meaningful impact on richness. Lastly, is important to remember that equal richness does not necessarily indicate that no community restructing has occurred. Are the species present in similar abundance as they were previously? Are they even the same species?
+
+Broadly, these data highlight the dangers of flooding brought on by global change. It appears that continuous research to identify future and current risks is needed. Furthermore, research targeting full or partial solutions may be a route to consider. 
