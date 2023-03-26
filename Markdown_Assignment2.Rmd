@@ -1,0 +1,55 @@
+---
+title: "TEMPEST: Understory plant community responses to coastal flooding"
+author: "William Eichhorn"
+date: "2023-03-20"
+output: pdf_document
+---
+```{r, setup, include=FALSE}
+knitr::opts_knit$set(root.dir = '~/UNCG_DataWrangling')
+```
+
+# Background
+
+As climate change continues, the frequency and intensity of thunderstorms and 
+heavy rainfall will continue to rise. The point of this experiment is to study
+the effects of sudden heavy rain on the under story of forests. 
+
+
+First, let's set up R, our tidyverse library, and the theme we want to use 
+across all of our coding chunks
+```{r, library, message=FALSE, warning=FALSE}
+library(tidyverse)
+theme_set(theme_dark())
+```
+
+
+Great! Now lets load in the dataset
+```{r,read.csv}
+tempest <- read.csv("TEMPEST_SERC_understory sppcomp_2021.csv")
+
+```
+
+
+Next, we are going to create a dataframe which only pertains to species info
+```{r}
+
+temp_species <- tempest %>% 
+  select(species) %>% 
+  distinct(.keep_all = TRUE) %>%
+  mutate(species = ifelse(species=="canopy tree basal cover", NA, ifelse(species==
+         "infrastructure cover",NA, ifelse(species=="bare ground", NA, species))))%>%
+  filter(!is.na(species))
+```
+
+
+Next, we will create a dataframe which only contains treatment information
+and combines the plots and subplots into a new column termed "replicate"
+```{r}
+temp_treatment <- tempest %>% 
+  mutate(replicate = paste(plot, subplot, sep="_")) %>%
+  mutate(treatment = ifelse(plot %in% "C", "Control",plot)) %>% 
+  mutate(treatment = ifelse(plot %in% "F", "Freshwater inundation",treatment)) %>% 
+  mutate(treatment = ifelse(plot %in% "S", "Saltwater inundation", treatment)) %>% 
+  select(-c("project_name", "sampler","notes","species","plot","subplot")) 
+
+```
