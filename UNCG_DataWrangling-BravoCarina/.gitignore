@@ -1,0 +1,44 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+knb-lter-knz.148.3/**
+CalispellCreekandTributaryTemperatures.csv
+e001_Plant aboveground biomass carbon and nitrogen.csv
+e001_Plant aboveground biomass data.csv
+e001_exptInfo.csv
+Niwot_Salix_2014_WillowSeedlingSurvey.csv
+iveyWeek3_openScience.R
+Eichhorn_conSME_data
+Winter_conSME_data/
+Williford_conSME_data
+Vandeplancke_conSME_data/**
+Vaarre-Lamoureux_conSME_data/**
+Mann_conSME_data
+Levi_conSME_data
+Holland_conSME_data/**
+Brenneman_conSME_data/**
+BravoC_conSME_data
+Bottomley_conSME_data
+LowerSpokaneFish.csv
+PBG_N_compiled_raw_2021.csv
+PBG_P_compiled_raw_2021.csv
+PBG_trts.csv
+Redband_histogram_facet.png
+TEMPEST_SERC_understorysppcomp_2021.csv
+spokanefish_plottri.png
+test_file.Rmd
+test_file.html
+test_file.pdf
+testdir/
+.DS_Store
+Some R Resources.csv
+SpokaneFish_weight_length.png
+TEMPEST_SERC_understorysppcomp_2021.csv
+TEMPEST_SERC_understory sppcomp_2021.csv
+barplot.jpg
+test_file.docx
+boxplot.pdf
+barplot.pdf
+boxplot.jpg
+git_config.R
