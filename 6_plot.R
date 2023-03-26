@@ -402,10 +402,10 @@ ggplot(redbandSummary, aes(x = as.factor(ScaleAge), y = Weight_mean)) +
 # TASK: Modify the code below to make the bar fill light green, the bar outline 
 # dark green, and the error bars dark orange with end caps 40% the bar width.
 ggplot(redbandSummary, aes(x = as.factor(ScaleAge), y = Weight_mean)) + 
-  geom_bar(stat='identity', color = "dark green", fill = "light green") +
+  geom_bar(stat='identity', color = "darkgreen", fill = "lightgreen") +
   geom_errorbar(aes(ymin=Weight_mean-Weight_se,
                     ymax=Weight_mean+Weight_se,
-                    width=0.4), color = "dark orange")
+                    width=0.4), color = "darkorange")
 
 # ---------------------------------------------------------- #
 #### PART 1.7 AESTHETICS PLACEMENT MATTERS!               #### 
@@ -458,7 +458,12 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 # scale (i.e., with scale age on a linear x axis and length on a log y axis).
 # Fill in your boxplots with your favorite color and make the outline your least
 # favorite color. Label the x-axis Scale Age (years) and the y-axis Length (mm).
-
+ggplot(redband, aes(x = as.factor(ScaleAge), y = Length)) + 
+  geom_boxplot (color = 'brown', fill = 'pink') +
+  scale_y_log10() +
+  xlab("Scale Age (years)") + 
+  ylab("Length (mm)")
+# did that ALL on my own!!!
 
 # ---------------------------------------------------------- #
 #### PART 1.9: SETTING THEMES                             ####
