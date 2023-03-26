@@ -51,10 +51,63 @@ treatment_info$plot <- treatment_info$subplot <- NULL
 #Code Chunk 1.1
 Reads in the TEMPEST_SERC_understory sppcomp_2021.csv file into the variable TEMPEST. !Grepl select the correct data frames and those dataframes are then subsetted from the TEMPEST dataframe. We than utilize the unique functiont to ensure that we only have unique values. The paste fucnction is utilized to combine plot and subset into a new column called replicate. Additionally, a new column also created called treatment that utilizs a ifelse statement to extract treatment information from the appropritely labeled column in TEMPEST. Finally, the plot and subplot column are removed for simplicity. 
 
+
+
 ```
+library(dplyr)
+
+# Select only rows of the data frame that correspond to plant species
+is_plant <- !grepl("infrastructure|cover", TEMPEST$species)
+
+# Subset the data frame using the is_plant vector
+TEMPEST_plants <- TEMPEST[is_plant, ]
+
+# Remove rows with "additional" in subplot column
+TEMPEST_plants <- TEMPEST_plants %>% filter(!grepl("additional", subplot))
+
+# Calculate total herbaceous plant cover for each subplot
+total_cover <- TEMPEST_plants %>%
+  group_by(subplot) %>%
+  summarize(total_cover = sum(cover))
+
+# Join total_cover data frame back to the original data frame
+TEMPEST_cover <- TEMPEST_plants %>% left_join(total_cover, by = "subplot")
+
+# Calculate relative cover for each species
+TEMPEST_cover <- TEMPEST_cover %>%
+  mutate(relative_cover = 100 * cover / total_cover)
+
 
 ```
 
+## Code Chunk 1.2
+
+We are once again using our is_plant variable to get only plant values (not infrastructure or cover). We then use the is_plant variable to select only the rows of data containing real plants. We then utilize grelph to remove the "additional" subplot from the subplot column. We than use a group_by statement to group by subplot and sum the cover data for each subplot. Then, we join the total_cover back to TEMPEST_plants are store in it TEMPEST_cover. Finally, we clean a column storing calculating and storing the relative cover in the TEMPEST_cover variable. 
+
+```
+#Richness 
+
+subplot_species_richness <- TEMPEST_plants %>%
+  group_by(subplot) %>%
+  summarize(species_richness = n_distinct(species))
+
+
+#Richness mean and standrad error
+
+plot_species_richness <- subplot_species_richness %>%
+  group_by(plot) %>%
+  summarize(mean_species_richness = mean(species_richness),
+            se_species_richness = sd(species_richness) / sqrt(n()))
+            
+            
+plot_species_richness_all <- TEMPEST_plants %>%
+  group_by(plot) %>%
+  summarize(species_richness = n_distinct(species, na.rm = TRUE))            
+  
+  
+```
+
+##Code Chunk 1.3
 
 ## R Markdown
 
