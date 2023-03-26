@@ -71,13 +71,29 @@ PNTreatment <- PNTreatment %>%
 ```{r Box Plot}
 ggplot(PNTreatment, aes(x=treatment, y=concentration, fill=test), dpi = 500) +
   geom_boxplot(lwd = .5) +
-  facet_wrap("plot", scales = "free") +
+  facet_wrap("test", scales = "free") +
   labs(
-    subtitle = "Plot Number",
-    y = "Nutrient Concentration (mg/L, mgN/L)",
+    y = "Nutrient Concentration (mgN/L, mg/L)",
     x = "Treatment"
   ) +
-  scale_fill_brewer(palette = 4)
+  scale_fill_brewer(palette = "Dark2")
 
 ```
+```{R, Coeficient of Variation}
+CV <- PNTreatment %>% 
+  group_by(treatment, test) %>% 
+  summarise(cv=mean(concentration)/sd(concentration)) %>% 
+  ungroup() %>% 
+  mutate(nutrient = test) %>% 
+  select(-c(test))
 
+
+ggplot(data = CV, aes(x=nutrient, y=cv, fill=treatment)) +
+  geom_col(position = "dodge") +
+  labs(
+    y="Coefficient of Variation for Concentration 
+    (mean/standard deviation)",
+    x="Nutrient"
+  ) +
+  scale_fill_brewer(palette = "Dark2")
+```
