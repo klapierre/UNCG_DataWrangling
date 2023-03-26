@@ -51,7 +51,6 @@ DF4 <-DF3               # take a copy of the dataframe with all duplicates remov
 DF3$Cap <- grepl("^[A-Z]", DF3$species)
 DF3 <- DF3[DF3$Cap, ]
 
-#remove rows of which the 2nd word of species does not start with a lower case
 sec_word <- gsub("^\\w+\\s(\\w+).*$", "\\1", DF3$species)  # extract second word
 stWLower <- grepl("^[a-z]", sec_word)   # check if second word starts with lowercase
 DF3$SecLow <- stWLower       #add result as column to data frame
@@ -59,7 +58,6 @@ DF3 <- DF3[DF3$SecLow, ]    # remove rows where 2nd word of Species does not sta
 DF3 <- DF3 %>% 
   select(-Cap, -SecLow)
 
-#calc total cover per subplot, calc rel. cover per species per subplot
 CoverCalc <- DF3 %>% 
   group_by(plot, subplot) %>% 
   summarise(totCov_subplot = sum(cover, na.rm=TRUE),
@@ -78,9 +76,6 @@ SpecRich_plot <- DF4 %>%                              #starting from the datafra
             SpecRich_plot_sd = sd(cover, na.rm = TRUE)) %>%
   ungroup() %>% 
   mutate(SpecRich_plot_se = 1.96*SpecRich_plot_sd)
-
-
-# write.csv(DF4,file='DF4.csv')
 ```
 
 ```{r 2bargraphs, echo=FALSE}
@@ -91,31 +86,13 @@ ggplot(data=CoverCalc, aes(x= plot, y=relCover_pct, fill=subplot)) +
 ```{r, 2nd bargraph,echo=FALSE}
 ggplot(SpecRich_plot, aes(x=plot,  y=SpecRich_plot_mean)) + 
   geom_bar(stat = 'identity')
-
-#•	Make two figures, giving each one a title to distinguish the two in your
-# output and intelligibly labeling axes:
-#   o	Bar graph of richness per plot (plot on x-axis) showing the mean and standard error across subplots.
-#   o	Another bar graph showing the richness at the plot level (plot on x-axis).
-
 ```
 
 ``` {r,rank_ab_curve, echo = FALSE}
-#instructions to see to conflict with the expected outcome. (1DF with 2 cols) 
-# - avg.rel.cov/spec per plot. (I.e a DF with the species per plot and their rel. coverage) = 3 cols (species, plot, avg rel.cover per plot)
-# - avg. rel.cov/spec across all lots. (i.e. a DF will species and avg. rel.cover)
-
-RelCovr_plot <-DF3 %>%   # calc average relative coverage per species per plot 
-  group_by(plot, species) %>% 
-  summarise(totCov_species = sum(cover, na.rm=TRUE)) %>%
-  ungroup() %>% 
-  group_by(plot) %>%
-  mutate(relCover_species_pct = totCov_species / sum(totCov_species) * 100) %>%
-  ungroup()
-# must still remove col totCov_species
 
 RelCovr <- DF3 %>%  # calc average relative coverage per species across all plots 
-  group_by(treatment_year, species) %>% 
-  summarise(totCov_species = sum(cover, na.rm=TRUE)) %>%  #calculate the total cover per species accross all plots (use treatment_year as a dummy - can maybe be deleted)
+  group_by(species) %>% 
+  summarise(totCov_species = sum(cover, na.rm=TRUE)) %>%  
   ungroup() %>% 
   mutate(relCover_species_pct = totCov_species / sum(totCov_species) * 100) %>%   #calculate the % cover per species across all plots
   arrange(-relCover_species_pct) %>%   #order from high to low
@@ -124,20 +101,6 @@ RelCovr <- DF3 %>%  # calc average relative coverage per species across all plot
 ggplot(RelCovr, aes(x = rank, y = relCover_species_pct)) + 
   geom_point()+
   geom_line()
-
-# must still remove cols treatment_year, totCov_species in the DF
-#write.csv(RelCovr_plot,file='RelCovr_plot.csv')
-#write.csv(RelCovr,file='RelCovr.csv')
-
-#Calculate the average relative cover for each species across all subplots within each plot. Then calculate the average relative cover for each species across all plots. In the end you should have a data frame with two columns: species and average relative cover.
-
-
-#•	Create a rank abundance curve for the average understory plant community composition across all plots by following these steps:
-#o	Calculate the average relative cover for each species across all subplots within each plot. Then calculate the average relative cover for each species across all plots. In the end you should have a data frame with two columns: species and average relative cover.
-#o	Sort the data frame you created from highest to lowest relative cover. Hint: use code to do this otherwise it won't stick! Look into the arrange() function if you're unsure.
-#o	Create a new column in your data frame that gives each species a rank (number from 1 to X) based on their abundance where 1=most abundant.
-#o	Make a figure with points connected by lines of the rank on the x-axis and the relative cover on the y-axis. Use geom_text to label your points with the species names and be sure to give your axes intelligible labels.
-
 ```
 
 
@@ -159,7 +122,4 @@ ggplot(RelCovr_plot3, aes(x=plot, y = totCov_species_mean)) +
                   ymax=totCov_species_mean + totCov_species_se,
                   width=0.3))+
   facet_wrap(~species, scales = "free_y")
-
-#•	Calculate the mean and standard error for each species relative cover by plot. Make a bar graph of these means and standard errors, with plot on the x-axis and faceted by species, for the following species: Berberis thunbergii, Botrychium dissectum, Carex sp, Elaeagnus umbellata, Epifagus virginiana, Gallium circaezans, Ilex opaca, Lindera benzoin, Lonicera japonica, Mitchella repens, Parthenocissus quinquefolia, Polygonum virginianum, Rhus radicans, Rubus phoenicolasius, Sceptridium biternatum, Symphotrichium lateriflorum. Be sure to allow y-axis scale to vary in your facet statement.
-
 ```
