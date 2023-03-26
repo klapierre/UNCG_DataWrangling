@@ -38,13 +38,32 @@ https://www.r-bloggers.com/2020/04/a-comprehensive-introduction-to-handling-date
   https://www.stat.berkeley.edu/~s133/dates.html#:~:text=Dates%20and%20Times%20in%20R%20R%20provides%20several,dates%20and%20times%20with%20control%20for%20time%20zones.
 
 
-###Untidy INTL Data###
-
+########## Untidy ITNL Data ##########
 
 date_time_untidy <-read.csv("date_times_very_untidy.csv")
 
 #SA and NZ: Day/Month/Year
 #USA: Month/Day/Year
+
+USA_untidy<- date_time_very_untidy %>%
+  filter(Location=="USA")
+
+NZ_untidy<- date_time_very_untidy %>%
+  filter(Location== "New Zealand")
+
+SA_untidy<- date_time_very_untidy %>%
+  filter(Location== "South Africa")
+
+ITNL_untidy<- full_join(SA_untidy, NZ_untidy)
+ITNL_untidy[c('Day','Month', 'Year')]<-str_split_fixed(ITNL_untidy$Date, '/', 3)
+
+
+
+
+
+
+##
+
 
 
 
