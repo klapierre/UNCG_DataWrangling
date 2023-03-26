@@ -1,8 +1,10 @@
 ---
-title: "TEMPEST: Understory plant community responses to coastal flooding"
+title: 'TEMPEST: Understory plant community responses to coastal flooding'
 author: "Zachary Bunch"
 date: "3/19/2023"
-output: html_document
+output:
+  pdf_document: default
+  html_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -48,7 +50,7 @@ treatment_info$plot <- treatment_info$subplot <- NULL
 
 
 ```
-#Code Chunk 1.1
+# Code Chunk 1.1
 Reads in the TEMPEST_SERC_understory sppcomp_2021.csv file into the variable TEMPEST. !Grepl select the correct data frames and those dataframes are then subsetted from the TEMPEST dataframe. We than utilize the unique functiont to ensure that we only have unique values. The paste fucnction is utilized to combine plot and subset into a new column called replicate. Additionally, a new column also created called treatment that utilizs a ifelse statement to extract treatment information from the appropritely labeled column in TEMPEST. Finally, the plot and subplot column are removed for simplicity. 
 
 
@@ -107,13 +109,37 @@ plot_species_richness_all <- TEMPEST_plants %>%
   
 ```
 
-##Code Chunk 1.3
+## Code Chunk 1.3
 
 subplot_species_richness is created by calling TEMPEST_plants, grouping by subplot and utilizing the summarize function to store n_distict (number of unique species) in a column called species_richness. 
 
 plot_species_richness calls the subplot_species_richness variable and groups by plot. Then, we use the summarize function to calculate the mean of species_richness as well as the standrd error. 
 
-Lastly, we create plot_species_richness_all by calling the TEMPEST_plants variable, grouping by plot, using summarize to determine n_distinct for the number of species (species richness). 
+Lastly, we create plot_species_richness_all by calling the TEMPEST_plants variable, grouping by plot, using summarize to determine n_distinct for the number of species (species richness).
+
+```
+#Bar graph
+
+subplot_plot_richness <- plot_species_richness %>%
+  ggplot(aes(x = plot, y = mean_species_richness)) +
+  geom_bar(stat = "identity", fill = "lightblue") +
+  geom_errorbar(aes(ymin = mean_species_richness - se_species_richness, ymax = mean_species_richness +     se_species_richness), width = 0.4) +
+  ggtitle("Mean subplot species richness per plot") +
+  xlab("Plot") + ylab("Mean species richness")
+  
+plot(subplot_plot_richness)
+
+  
+plot_richness_plot <- ggplot(plot_species_richness_all, aes(x = plot, y = species_richness)) +
+  geom_bar(stat = "identity", fill = "steelblue", alpha = 0.8) +
+  labs(title = "Richness at the plot level", x = "Plot", y = "Richness")
+
+plot(plot_richness_plot)
+  
+```
+## Code Chunk 1.4
+
+First graph displays richness per plot using mean of subplots. Made using a ggplot function and stored in subplot_plot_richness. Second graph displays richness at the plot level. Also uses ggplot funciton and stores output in the varible plot_richness_plot. 
 
 ## R Markdown
 
