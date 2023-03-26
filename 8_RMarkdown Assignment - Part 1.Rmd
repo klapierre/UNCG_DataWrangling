@@ -76,7 +76,8 @@ ggplot(PNTreatment, aes(x=treatment, y=concentration, fill=test), dpi = 500) +
     subtitle = "Plot Number",
     y = "Nutrient Concentration (mg/L, mgN/L)",
     x = "Treatment"
-  ) 
+  ) +
+  scale_fill_brewer(palette = 4)
 
 ```
 
