@@ -108,6 +108,9 @@ Samples_With_Label <- cbind(SampleID, Samples_Without_ID1)
 
 
 #Do it yourself (Lowie)
+##Create a while loop which pastes whole numbers from 1 to 10 but exclude printing 3 using the next function.
+## output should look like: 1, 2, 4, 5, 6, 7, 8, 9, 10
+
 
 #DUE: MARCH 30TH
 
