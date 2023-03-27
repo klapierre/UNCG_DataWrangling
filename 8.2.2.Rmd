@@ -1,0 +1,140 @@
+---
+title: '''TEMPEST: Understory plant community responses to coastal flooding'' 2'
+author: "Shelby Williford"
+date: "2023-03-27"
+output:
+  word_document: default
+  html_document:
+    df_print: paged
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Background
+
+With a changing climate worldwide, extreme weather events, *such as heavy rainfall and storm surges,* are occuring more frequently. The **Smothsonian Environmental Research Center** created an experiment called *TEMPEST (Terrestrial Ecosystem Manipulation to Probe the Effects of Storm Treatments* to study the impacts of these weather events on forests. 
+
+This data contains species cover per plot from 2020, prior to inundation. Estimated percent cover of each species were species found within one of 16 5x5 meter subplots located within the 3 large plots (C, F, and S).
+
+## Load Data 
+
+```{r load data}
+library(tidyverse)
+
+understory <- read.csv('TEMPEST_SERC_understory sppcomp_2021.csv')
+
+theme_minimal()
+```
+
+## Species List
+
+```{r species list}
+unique(understory$species)
+
+plants <- understory %>% 
+  filter(!str_detect(species, c('infrastructure'))) %>% 
+  filter(!str_detect(species, c('bare'))) %>% 
+  filter(!str_detect(species, c('basal'))) %>% 
+  filter(!str_detect(subplot, c('additional')))
+
+species_list <- as.data.frame(unique(plants$species)) %>%
+  rename('species'='unique(plants$species)')                              
+treatments <- plants %>% 
+  mutate(replicate=paste(plot, subplot, sep="")) %>% 
+  mutate(plottype = ifelse(plot %in% "C", "Control", plot)) %>% 
+  mutate(plottype = ifelse(plot %in% "F", "Freshwater Inundation", plottype)) %>% 
+  mutate(plottype = ifelse(plot %in% "S", "Saltwater Inundation", plottype)) %>% 
+  select(-c('project_name':'season')) %>% 
+  select(-sampler, -notes, -species, -cover) 
+```
+
+## Total Herbaceous Plant Cover
+
+``` {r herbaceous cover}
+herb_cover <- plants %>% 
+  group_by(subplot) %>% 
+  mutate(totalcover=sum(cover)) %>% 
+  mutate(relativecover=100*(cover/totalcover)) %>% 
+  ungroup()
+```
+
+## Species Richness
+
+``` {r species richness}
+sub_species_richness <- herb_cover %>%
+  group_by(subplot) %>%
+  mutate(subplotrichness=n_distinct(species)) %>% 
+  ungroup()
+             
+plot_species_richness <- sub_species_richness %>%
+  group_by(plot) %>%
+  mutate(plotrichness=n_distinct(species)) %>% 
+  ungroup()      
+
+std.error = function(x) sd(x)/sqrt(length(x))
+
+mean_rich_plot <- plot_species_richness %>% 
+  group_by(plot) %>% 
+  mutate(mean_rich = mean(subplotrichness)) %>% 
+  mutate(sd_rich =std.error(subplotrichness))
+
+species_rich <- mean_rich_plot %>% 
+  group_by(plot) %>% 
+  summarise(speciesrich=n_distinct(species)) %>% 
+  ungroup()
+
+ggplot(mean_rich_plot, aes(x=plot, y= as.numeric(mean_rich))) +
+  geom_bar(stat="identity") +
+  geom_errorbar(aes(ymin=mean_rich - sd_rich, ymax=mean_rich + sd_rich)) + ylim(0,50) + xlab('Plot') + ylab('Mean Species Richness')
+
+ggplot(species_rich, aes(x= plot, y= speciesrich)) +
+  geom_bar(stat='identity') +
+  xlab("Plot") + ylab('Species Richness')
+
+relative_cover <- plants %>% 
+  group_by(species, plot) %>% 
+  summarise(ave_rel_cover=mean(cover))
+
+species_cover <- relative_cover %>% 
+  group_by(species) %>% 
+  summarise(ave_rel_cover = mean(ave_rel_cover))
+
+sc_cov_ranked <- species_cover %>% 
+  arrange(desc(ave_rel_cover))
+
+sc_cov_ranked <- sc_cov_ranked %>% 
+  mutate(number = 1:91)
+
+ggplot(sc_cov_ranked, aes(x= number, y= ave_rel_cover)) +
+  geom_point() +
+  geom_line() +
+  geom_text(aes(label = species)) +
+  xlab("Rank") + 
+  ylab("Avg Relative Cover")
+
+all_species_cover <- plants %>% 
+  group_by(species) %>% 
+  mutate(ave_rel_cover = mean(cover)) %>% 
+  mutate(stderror=std.error(cover)) %>% 
+  ungroup()  
+
+subset_species <- all_species_cover %>% 
+  filter(str_detect(species, c("Berberis thunbergii", "Botrychium dissectum", "Carex sp", "Elaeagnus umbellata", "Epifagus virginiana", 
+"Gallium circaezans", "Ilex opaca", "Lindera benzoin", "Lonicera japonica", "Mitchella repens", "Parthenocissus 
+quinquefolia", "Polygonum virginianum", "Rhus radicans", "Rubus phoenicolasius", "Sceptridium biternatum", 
+"Symphotrichium lateriflorum")))
+
+ggplot(subset_species, aes(x= plot, y= ave_rel_cover)) +
+  geom_bar(stat='identity') +
+  xlab("Species") + ylab('Cover') +
+  geom_errorbar(aes(ymin=ave_rel_cover - stderror, ymax=ave_rel_cover + stderror)) +
+  facet_wrap(~species, scales="free")
+```
+
+## Summary
+
+
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
