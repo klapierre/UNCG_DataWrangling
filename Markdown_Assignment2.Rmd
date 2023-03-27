@@ -126,3 +126,13 @@ ggplot(data=subplot_rich, aes(x=subplot, y=species_richness_mean, fill=plot))+
                     ymax=species_richness_mean+richness_se), 
                     position=position_dodge(), linewidth=.2, size=1)
 ```
+
+
+```{r,ggplot}
+
+ggplot(data=plot_rich, aes(x=plot, y=species_richness, fill=plot))+
+  geom_bar(stat="identity")+
+  scale_fill_manual(values=c("blue4", "purple3", "deeppink3"))+
+  xlab("Plot")+
+  ylab("Species Richness")
+```
