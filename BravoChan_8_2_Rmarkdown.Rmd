@@ -1,0 +1,193 @@
+---
+title: '**TEMPEST: Understory plant community responses to coastal flooding**'
+author: "Author: Carina Bravo-Chan"
+date: "2023-03-21"
+output: pdf_document
+urlcolor: blue
+knitr: rmarkdown::render
+---
+
+```{r setup,warning=FALSE,include=FALSE}
+    knitr::opts_knit$set(root.dir='~/Desktop/BIO_400X_R/UNCG_DataWrangling_Old')
+```
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+\##**Background** The frequency and intensity of weather events such as heavy rainfall and storm surges are increasing as a result of climate change. The Smithsonian Environmental Research Center is conducting the *TEMPEST* experiment to study how sudden deluges can impact forests by inundating the low-lying areas. This study's dataset looks at the forest understory communities in three large plots, as well as the estimated percent cover of each plant species in 16 subplots. The data was collected in 2020, prior to the start of the inundation experiment, to identify natural pre-existing differences among the plots, which will aid in the statistical interpretation of results after the flooding treatments. Additional species found within the three large plots but *not sampled* in the subplots are included in the data and have a percent cover of 0.
+
+```{r load_package, include=FALSE}
+library(tidyverse)
+library(dplyr)
+library(latexpdf)
+library(ggplot2)
+library(ggpubr)
+```
+
+```{r, warning=FALSE, message=FALSE, include=FALSE}
+data <- read.csv("TEMPEST_SERC_understory sppcomp_2021.csv")
+
+# DF of unique species
+species_list <- data %>% 
+  filter(!is.na(species)) %>% 
+# Remove rows without species information
+  select(species) %>% 
+  distinct()
+
+# Create a data frame of treatment information
+treatment_info <- data %>% 
+  mutate(replicate = paste(plot, subplot, sep = "-")) %>% 
+# Create replicate column
+  select(-species) %>% 
+# Remove species column
+  mutate(plot_type = case_when(
+    treatment_year == "2016" & season == "Dry" ~ "C",
+    treatment_year == "2016" & season == "Wet" & project_name == "Freshwater inundation" ~ "F",
+    treatment_year == "2016" & season == "Wet" & project_name == "Saltwater inundation" ~ "S",
+    TRUE ~ NA_character_)) %>% 
+# Create plot_type column
+  select(-c(project_name, calendar_year, treatment_year, season)) %>% 
+# Remove columns not being used
+  distinct()
+```
+
+```{r, warning=FALSE,message=FALSE,echo=FALSE}
+# filter out non-plant species
+plant_data <- data %>%
+  filter(!grepl("non-plant", species, ignore.case = TRUE))
+
+# calculate total_cover for each subplot
+total_cover <- plant_data %>%
+  filter(!grepl("additional", species, ignore.case = TRUE)) %>%
+  group_by(plot, subplot) %>%
+  summarize(total_cover = sum(cover))
+
+# join total_cover data with original data
+cover_data <- left_join(plant_data, total_cover, by = c("plot", "subplot"))
+
+# rel_cover for each species
+rel_cover <- cover_data %>%
+  mutate(rel_cover = 100*(cover/total_cover))
+
+# species richness for each subplot
+subplot_richness <- plant_data %>%
+  filter(!grepl("additional", species, ignore.case = TRUE)) %>%
+  group_by(plot, subplot) %>%
+  summarize(subplot_species_richness = n_distinct(species))
+
+# mean and SE of species richness for each plot
+plot_richness <- subplot_richness %>%
+  group_by(plot) %>%
+  summarize(mean_subplot_species_richness = mean(subplot_species_richness),
+            se_subplot_species_richness = sd(subplot_species_richness)/sqrt(n()))
+
+# species richness at plot level
+plot_species_richness <- plant_data %>%
+  group_by(plot) %>%
+  summarize(plot_species_richness = n_distinct(species))
+
+# view the results (table)
+rel_cover
+subplot_richness
+plot_richness
+plot_species_richness
+```
+
+```{r, warning=FALSE,message=FALSE,echo=FALSE}
+# species richness at subplot level
+subplot_richness <- cover_data %>% 
+  filter(species != "non-plant") %>% 
+  group_by(as.factor(plot), subplot)  %>% 
+  summarize(richness = n_distinct(species))  %>% 
+  ungroup()
+
+# mean and SE subplot richness for each plot
+plot_richness <- subplot_richness  %>% 
+  group_by(plot)  %>% 
+  summarize(mean_richness = mean(richness),
+            se_richness = sd(richness) / sqrt(n()))
+
+# bar graph of richness per plot
+plot_richness_plot <- ggplot(plot_richness, aes(x = plot, y = mean_richness))  %>% 
+  geom_bar(stat = "identity", fill = "#224b5e")  %>% 
+  geom_errorbar(aes(ymin = mean_richness - se_richness, ymax = mean_richness + se_richness),
+                width = 0.4, size = 1.2)  %>% 
+  labs(title = "Richness per Plot (Subplot Level)", x = "Plot", y = "Mean Subplot Richness")  %>% 
+theme_pubclean()
+
+# species richness at plot level
+plot_level_richness <- cover_data %>%
+  filter(species != "non-plant") %>%
+  group_by(plot) %>%
+  summarize(richness = n_distinct(species))
+
+# bar graph of richness at plot level
+plot_level_richness_plot <- ggplot(plot_level_richness, aes(x = plot, y = richness)) %>% 
+  geom_bar(stat = "identity", fill = "#94b594") %>% 
+  labs(title = "Richness at the Plot Level", x = "Plot", y = "Plot Level Richness") %>% 
+  labs(fill = "Subplot richness") %>% 
+  labs(fill = "Plot-level richness") %>% 
+  theme_bw()
+
+# Combined plots into one
+subplot_richness_plot <- ggarrange(plot_richness_plot, plot_level_richness_plot,
+                                   nrow = 2, common.legend = TRUE, legend = "bottom") %>% 
+subplot_richness_plot
+
+# Calculate average rel_cover for each species within each plot
+plot_avg <- data %>%
+  group_by(plot, species) %>%
+  summarise(rel_cov = mean(rel_cov)) %>%
+  ungroup()
+
+# Calculate average rel_cover for each species across all plots
+species_avg <- plot_avg %>%
+  group_by(species) %>%
+  summarise(rel_cov = mean(rel_cov)) %>%
+  ungroup()
+
+# Sort DF from high to low rel_cover
+species_avg_sorted <- species_avg %>%
+  arrange(desc(rel_cov))
+
+# Add new column with species rank
+species_avg_sorted$rank <- rank(-species_avg_sorted$rel_cov)
+
+# Create rank abundance curve plot
+ggplot(species_avg_sorted, aes(rank, rel_cov)) +
+  geom_line() +
+  geom_point() +
+  geom_text(aes(label = species), hjust = 1, vjust = -0.5) +
+  labs(x = "Rank", y = "Relative Cover") +
+  theme_dark()
+```
+
+```{r, warning=FALSE, message=FALSE, echo=FALSE}
+# Calculate average rel_cover for each species within each plot
+plot_avg <- data %>%
+  group_by(plot, species) %>%
+  summarise(rel_cov = mean(rel_cov)) %>%
+  ungroup()
+
+# Calculate average rel_cover for each species across all plots
+species_avg <- plot_avg %>%
+  group_by(species) %>%
+  summarise(rel_cov = mean(rel_cov)) %>%
+  ungroup()
+
+# Sort DF from high to low rel_cover
+species_avg_sorted <- species_avg %>%
+  arrange(desc(rel_cov))
+
+# Add new column with species rank
+species_avg_sorted$rank <- rank(-species_avg_sorted$rel_cov)
+
+# Create rank abundance curve plot
+ggplot(species_avg_sorted, aes(rank, rel_cov)) +
+  geom_line() +
+  geom_point() +
+  geom_text(aes(label = species), hjust = 1, vjust = -0.5) +
+  labs(x = "Rank", y = "Relative Cover") +
+  theme_dark()
+```
