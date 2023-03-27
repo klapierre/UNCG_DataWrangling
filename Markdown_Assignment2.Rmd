@@ -115,7 +115,7 @@ plot_rich <- tempest %>%
 
 
 Here we have a bargraph of the mean species richness by subplot
-```{r,ggplot}
+```{r}
 
 ggplot(data=subplot_rich, aes(x=subplot, y=species_richness_mean, fill=plot))+
   geom_bar(stat="identity")+
@@ -128,11 +128,12 @@ ggplot(data=subplot_rich, aes(x=subplot, y=species_richness_mean, fill=plot))+
 ```
 
 
-```{r,ggplot}
+```{r}
 
 ggplot(data=plot_rich, aes(x=plot, y=species_richness, fill=plot))+
   geom_bar(stat="identity")+
-  scale_fill_manual(values=c("blue4", "purple3", "deeppink3"))+
+  scale_fill_manual(values=c("lightgrey", "gold", "orange"))+
   xlab("Plot")+
   ylab("Species Richness")
 ```
+
