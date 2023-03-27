@@ -51,8 +51,47 @@ print(sum)
 
 #While Loops
 #Description (Mason)
+#A while loop is a control flow statement that allows you to repeatedly execute a block of code as long as a certain condition is met.
+#The condition is a logical expression that is evaluated before each iteration of the loop. If the condition is TRUE, the code inside the loop is executed, and then the condition is evaluated again. This process continues until the condition becomes FALSE, at which point the loop terminates and execution continues with the code following the loop.
+
 #Next  (William)
-#Example (Zachary)
+#Example 1 (Zachary)
+
+#Let's try an example with numbers!
+
+x <- 1 #Stores 1 in the x variable.
+while (x < 6) { #Start of the while loop. While x is less than 6, perform some action.
+  print(x) #In this case, our action is printing x
+  x = x+1 #Adds one to x each loop.
+}
+
+#Example 2
+
+#We can use this to label samples
+
+# Let's build a sample data frame.
+Samples_Without_ID <- c("Frog", "Cool Frog", "The Coolest Frog","Cute Frog", "Very Cute Frog", "Strong Frog", "Very Strong Frog")
+Samples_Without_ID1 <- data.frame(samples = Samples_Without_ID)  #Stores as a data frame.
+
+#Creates length 7 character vector. 
+SampleID <- character(7)
+
+x <- 0 #stores 0 into a variable called x.
+while (x < 7) { #Creates a while loop that is valid while x is less than 7.
+  x <- x + 1 #Adds 1 to the value of x for each iteration of the while loop.
+  SampleID[x] <- paste("Sample#", x, sep = "") #Pastes together the character "Sample#" with the variable x.
+                                     #This gives an outputs of "Sample1, Sample2, Sample3, etc.)
+}
+
+SampleID <- data.frame(SampleID) #Stores as a data frame.
+
+View(SampleID) #Let's check it out!
+
+#Great! Now we want to label our frogs in the Samples_Without_ID1 data frame.  
+
+Samples_With_Label <- cbind(SampleID, Samples_Without_ID1)
+
+
 #Do it yourself (Lowie)
 
 #DUE: MARCH 30TH
