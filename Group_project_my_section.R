@@ -35,3 +35,16 @@ tit1
   ease_aes('bounce-in')
 titanic_chart <- animate(tit1, renderer = gifski_renderer())
 anim_save('titanic1.gif', animation = last_animation(), path = NULL)
+
+titanic %>%
+  group_by(Pclass) %>%
+  ggplot(aes(x="", y= Age, 
+             fill=as.factor(Survived))) + geom_col() +
+  coord_polar(theta = "y", start=0)
+
+titanic_bar <- titanic %>% 
+  ggplot(aes(x = "", y = as.factor(Survived), fill= as.factor(Survived))) +
+   geom_col(position='identity') +
+  coord_polar("y", start=0) 
+
+titanic_bar
