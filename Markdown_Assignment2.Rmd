@@ -80,7 +80,25 @@ Finally, combine this back into the original dataframe and create a new column
 with the individual species cover divided by the total to find the relative
 percentage of plant cover for each subplot
 ```{r}
-tempest_relative <- merge(x=tempest, y=cover_combine, by="subplot", all.x=T) %>% 
+tempest <- merge(x=tempest, y=cover_combine, by="subplot", all.x=T) %>% 
   mutate(.data=tempest, plantcover_percent = 100*(cover/plantcover_total))
 
 ```
+
+Now we will need to find species richness, along with mean and standard error of
+each plot
+
+```{r,message=FALSE}
+
+tempest_rich <- tempest %>%
+  group_by(subplot,plot) %>% 
+  distinct(across(contains("species")),(.keep_all = TRUE)) %>% 
+  summarise(species_richness = length(species)) %>% 
+  ungroup()%>%
+  group_by(plot)%>%
+  mutate(across(.col="species_richness",.fns=list(mean=mean,sd=sd),na.rm=TRUE))%>%
+  mutate(richness_se=1.96*species_richness_sd)%>%
+  ungroup()
+
+```
+
