@@ -1,0 +1,28 @@
+---
+title: "Overview and Proposed Workflow"
+author: "Jordan Winter"
+date: "2023-03-27"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Overview
+
+The longleaf pine ecosystem, while once expansive throughout the Southeast United States, has been reduced to a small percentage of its pre-colonization range. While there has been an uptick in research concerning this ecosystem in the recent decades there are still many areas left unexplored. Additionally, resources for lay individuals for this ecosystem are sparse. 
+
+Through this project I hope to create a list of species, using the iNaturalist API/R package, that have been recorded within extant longleaf pine ecosystems. This is an early step in my eventual hope to create easily asccessbile resources for stakeholders concerning this ecosystem.
+
+
+## Pseudo-Code 
+
+1. Import shape files of extant longleaf ecosystems
+2. Load iNaturalist package 
+3. Pull observastions that fall within the limits of the shape file
+4. Filter so the observations are only "Research Grade"
+5. Sort df to create list of all species
+6. Sort in order of prevalence?
+7. Organize into native / non-native species?
+8. Make a distribution map of relevant species?

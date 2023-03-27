@@ -121,10 +121,10 @@ species_cover_plot_mean_se <- dfplants %>%
 
 #make subest idk
 
-subsetneeded <- species_cover_plot_mean_se %>% filter(str_detect(species,c("Berberis thunbergii", "Botrychium dissectum", "Carex sp", "Elaeagnus umbellata", "Epifagus virginiana", 
-"Gallium circaezans", "Ilex opaca", "Lindera benzoin", "Lonicera japonica", "Mitchella repens", "Parthenocissus 
-quinquefolia", "Polygonum virginianum", "Rhus radicans", "Rubus phoenicolasius", "Sceptridium biternatum", 
-"Symphotrichium lateriflorum")))
+subsetneeded <-
+  species_cover_plot_mean_se[species_cover_plot_mean_se$species %in% c("Berberis thunbergii", "Botrychium dissectum", "Carex sp", "Elaeagnus umbellata", "Epifagus virginiana", "Gallium circaezans", "Ilex opaca", "Lindera benzoin", "Lonicera japonica", "Mitchella repens", "Parthenocissus quinquefolia", "Polygonum virginianum", 
+                       "Rhus radicans", "Rubus phoenicolasius", "Sceptridium biternatum", "Symphotrichium lateriflorum"),]
+
 
 ggplot(subsetneeded, aes(x = plot, y = avg_rel_cover), fill = as.factor(plot)) +
   geom_bar(stat = "identity") +
