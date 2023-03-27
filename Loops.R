@@ -51,6 +51,9 @@ print(sum)
 
 #While Loops
 #Description (Mason)
+#A while loop is a control flow statement that allows you to repeatedly execute a block of code as long as a certain condition is met.
+#The condition is a logical expression that is evaluated before each iteration of the loop. If the condition is TRUE, the code inside the loop is executed, and then the condition is evaluated again. This process continues until the condition becomes FALSE, at which point the loop terminates and execution continues with the code following the loop.
+
 #Next  (William)
 #Example 1 (Zachary)
 
