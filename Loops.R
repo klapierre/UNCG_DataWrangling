@@ -22,7 +22,7 @@
 #For Loops 
 #Description (Lowie)
 
-# A for loop applies a set of operations over a collection of objects, such as a list, vector, matrix, or data frame, repeated a defined number of times. 
+# A for loop applies a set of operations over a collection of objects (list, vector, matrix, or data frame) repeated a defined number of times. 
 # The number of iterations are known in advance. 
 
 #Example (Mason)
