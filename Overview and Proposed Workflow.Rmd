@@ -1,0 +1,25 @@
+---
+title: "Overview and Proposed Workflow-Woody Recruitment after Drought in African Savannas"
+author: "Shelby Williford"
+date: "2023-03-26"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Background
+
+In 2016, a severe drought hit the Kruger National Park in South Africa. When the ecosystem began to recover from this drought, researchers noticed shifts in the community composition of the herbaceous cover. For this project, it's focusing on the recruitment of woody plants. Our expected results are that total number of individuals will decrease after 2016 due to the drought then will increase afterwards with varying rates related to each plot's burn treatment. We also expect to see an initial increase in mean diameter, as the larger trees could be better suited to survive the drough, followed by a decrease as tree saplings begin to regrow. 
+
+This data was collected from long term enclosures in the Satara and N'wanetsi regions of the Kruger National Park. These plots were established in 2005/2006 and were initially woody free. Once a year, woody individuals in these plots are measured to study woody recruitment. 
+
+## Pseudo-code
+
+1. Load data and packages (tidyverse)
+2. Tidy data (group by treatment, burn) 
+3. Mutate to create enclosure column that say full, partial, or open enclosure
+4. Mutate/summarise to create column of mean diameters and number of individuals by enclosure
+5. Use ggplot to create a plot w/ line of best fit showing individuals per enclosure by year, faceted by burn treatment 
+
