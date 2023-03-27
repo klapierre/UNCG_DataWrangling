@@ -21,7 +21,27 @@
 
 #For Loops 
 #Description (Lowie)
+
 #Example (Mason)
+
+#Create a vector of numbers 1 through 5, and then use a for loop to iterate through each number in the vector and print it to the console. The loop variable i takes on the values 1, 2, 3, 4, and 5, and the print() function is called with each value of i.
+
+# create a vector of numbers
+numbers <- c(1, 2, 3, 4, 5)
+
+# create a for loop that prints each number in the vector
+for (i in numbers) {
+  print(i)
+}
+
+# For loops can iterate over a sequence of numbers, in the following example, from 1 to 100 and calculates the sum of the numbers. The loop variable i takes on the values 1, 2, 3, ..., 100, and the sum variable is updated on each iteration.
+
+sum <- 0
+for (i in 1:100) {
+  sum <- sum + i
+}
+print(sum)
+
 #Do it yourself 
 
 #DUE: MARCH 26TH
