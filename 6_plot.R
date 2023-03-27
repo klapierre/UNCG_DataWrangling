@@ -660,18 +660,51 @@ ggsave("Redband_histogram_facet_01.png",
 # of a correlation? Which showed deviations from a benchmark or baseline? And which
 # was an example of a distribution?
 
+# Correlation = Dot plot with trend line
+# Deviation = Box plot
+# Distribution = Bar graph and histogram
 
 
 # TASK: Import the full SpokaneFish dataset, keeping all observations (i.e., 
 # don't filter down to a single species or remove observations without scale age).
-# Then make a set of plots faceted by species, with each plot displaying fish 
-# age as a factor vs length, putting length on a log10 scale, points as filled 
-# triangles colored by species, informative x and y axes labels that include units.
+# ✓
+# Then make a set of plots faceted by species, 
+# with each plot displaying fish age as a factor vs length, 
+# ✓
+# putting length on a log10 scale, 
+# ✓
+# points as filled triangles colored by species, 
+# ✓
+# informative x and y axes labels that include units.
+# ✓
 # Then save your file as a .png with an informative figure name at a width of 9
 # inches and a height of 7 inches and 450 dpi.
+# ✓
+
+SpokaneFish <- read.csv("LowerSpokaneFish.csv")
+
+ggplot(SpokaneFish, aes(x = as.factor(ScaleAge), y = Length)) +
+  geom_point(aes(color=as.factor(Species)), shape="triangle") +
+  scale_y_log10() +
+  facet_wrap(~Species) +
+  xlab("Age of Trout (years)") + 
+  ylab("Trout Length (mm)") +
+  theme (axis.text.x = element_text(size = 15),
+        axis.text.y = element_text(size = 15),
+        axis.title.x = element_text(size = 20),
+        axis.title.y = element_text(size = 20),
+        legend.title = element_blank(),
+        legend.text = element_text(size = 15))
+
+ggsave("SpokaneFish_Lengths_Comparison.png",
+       plot = last_plot(), 
+       width = 9, 
+       height = 7, 
+       units = "in", 
+       dpi = 450)
 
 
 # QUESTION: Why do you think we focused on Redband Trout for most of this assignment?
-
+# because they are the only ones that showed up for data collection
 
 # REMEMBER: Save and push your script when you're done with this assignment!
