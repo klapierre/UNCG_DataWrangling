@@ -1,0 +1,66 @@
+---
+title: "Overview and Poposed Workflow Draft"
+author: "Stephanie Mota"
+date: "2023-03-27"
+output: pdf_document
+---
+
+## Overview
+The data set I am working on is a mass spectrometry analysis of the different compounds found in the plant extracts I am working with. We call this, metabolomics data. I want to know which compound in my extracts is responsible for the antimicrobial activity it shows when tested in an antimicrobial bioassay. But mass spectrometry is not limited to the world biochemistry. Mass spectrometry is a tool used to help identify different compounds in a sample. This sample can range from plant extracts, water samples, soil samples, and more. To figure out what compound is responsible, first I need to sort through which molecules are from the solvent the sample was dissolved in and which molecules are just noise/insignificant/not real.
+\
+\
+There are 2 main parts to how the lab has devised how to filter through the data: There is the metabolomics analysis and then there is the modeling in Sirius. The metabolomics analysis has 4 parts to it: 1) Features, 2) Blank Filter, 3) RSD Filter, and 4) Metabolomics analysis. The modeling in Sirius is what helps generate the figures we need. In this workflow, I will be focusing on the first part which is the bulk of the work and analyzing. If there is time, I will also include the part that generates the figures but that is done using a different program.
+
+## Proposed Workflow
+
+### Features
+
+*	Merge positive and negative features into one file
+*	Create columns
+    + m/z 4 – rounds the m/z values to 4 decimal places
+    + RT,2 – rounds the retention times to 2 values
+*	Merge those two columns so that you have “m/z-RT”
+*	Rename that newly formed column to “Features”
+*	Remove columns:
+    + Row ID
+    + Row m/z
+    + Row retention time
+*	Save as new workbook called “Features”
+
+### Blank Filter
+
+*	Load “Features” and store it into a new workbook called “Blank Filter”
+*	Create columns:
+    +	Mean ALL – average of all the samples in a given feature
+    + SD ALL – standard deviation of all the samples in a given feature
+    + RSD ALL – (SD/Mean) * 100
+*	Sort by the RSD ALL
+    + Delete everything <30%
+* New columns: 
+    + Mean Samples – takes the mean of just the samples and not the blanks (per feature)
+    + Mean of Blanks – takes the mean of just the blanks (per feature)
+    + Mean of Processed Blanks – yea
+    + Ratio PBlank/Sample – (Mean of PPBlank/Mean of Samples) * 100 , filter out everything >80%
+    + Ratio WBlank/Sample, filter everything >80%
+*	Keep everything except for the blanks and the means columns
+
+### RSD Filtered
+
+*	Load RSDHelp file. Will be used later
+*	Sort features from A-Z
+*	Take average of each sample per feature
+    + If the average of the three replicates of the sample equals >35%, then replace all replicates of the sample with 0
+*	Take the sum of all the samples in the feature
+    + Delete all the features which have a sum of 0
+*	
+*	Save separately: Take the remaining features and average out the samples
+
+
+### Metabolomics Analysis
+
+*	Take the one save separately from the RSD Filtered section and load it
+*	Tidy the features list so that it’s in numeric order
+* Transpose the chart
+*	Export file and load it into Sirius
+
+
