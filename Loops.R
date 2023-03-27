@@ -53,6 +53,9 @@ print(sum)
 #Description (Mason)
 #Next  (William)
 #Example 1 (Zachary)
+
+#Let's try an example with numbers!
+
 x <- 1 #Stores 1 in the x variable.
 while (x < 6) { #Start of the while loop. While x is less than 6, perform some action.
   print(x) #In this case, our action is printing x
