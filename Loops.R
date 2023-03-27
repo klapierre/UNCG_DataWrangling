@@ -46,6 +46,21 @@ for (i in 1:100) {
 print(sum)
 
 #Do it yourself 
+# 1) Load in the "iris" dataset built into R. 
+# Name the dataframe "iris_loop"
+# 2) Set up your for loop with the parameters to
+# use any interger from 1 through the number of columns
+# within the dataframe (Look into ncol functions if unsure)
+# 3) Within curly brackets, set the following logical if-conditions:
+#    a) Make it so the function returns a "TRUE" statement if certain
+# conditions are met (Look into grepl())
+# b) Select the columns within the "iris_loop" dataframe and all integers 
+# (Remember your brackets!)
+# c) Subset another curly bracket pair within the if condition.
+# Inside this curly bracket subset, set up a logical condition: 
+#  1000+seperated integers (Commas will be your friend). Make sure this condition is
+# saved back into the "iris_loop" dataframe.
+# 4) Make sure to close out all curly brackets to complete the loop.
 
 #DUE: MARCH 26TH
 
