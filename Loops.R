@@ -108,9 +108,6 @@ Samples_With_Label <- cbind(SampleID, Samples_Without_ID1)
 
 
 #Do it yourself (Lowie)
-##Create a while loop which pastes whole numbers from 1 to 10 but exclude printing 3 using the next function.
-## output should look like: 1, 2, 4, 5, 6, 7, 8, 9, 10
-
 
 #DUE: MARCH 30TH
 
@@ -119,6 +116,18 @@ Samples_With_Label <- cbind(SampleID, Samples_Without_ID1)
 #Break (Mason)
 #Example (Lowie)
 #Do it yourself (Zachary)
+
+#Let's try it on your own!
+
+#Create a repeat loop that does the following: 
+#1) Stores 1 in the variable y.
+#2) prints y for iteration of the loop. 
+#3) Increase y by .7 each iteration. 
+#4) Set a break to terminate the loop when y is greater than 14
+#5) Print "Y is big now!" when Y is greater than 14. 
+
+
+
 
 #DUE: APRIL 5TH
 
