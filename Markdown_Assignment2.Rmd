@@ -85,12 +85,12 @@ tempest <- merge(x=tempest, y=cover_combine, by="subplot", all.x=T) %>%
 
 ```
 
-Now we will need to find species richness, along with mean and standard error of
+Now we will need to find species richness at the subplot level, along with mean and standard error of
 each plot
 
 ```{r,message=FALSE}
 
-tempest_rich <- tempest %>%
+subplot_rich <- tempest %>%
   group_by(subplot,plot) %>% 
   distinct(across(contains("species")),(.keep_all = TRUE)) %>% 
   summarise(species_richness = length(species)) %>% 
@@ -102,3 +102,27 @@ tempest_rich <- tempest %>%
 
 ```
 
+Next, we find just the species richness at the plot level
+
+```{r}
+plot_rich <- tempest %>%
+  group_by(plot) %>% 
+  distinct(across(contains("species")),(.keep_all = TRUE)) %>% 
+  summarise(species_richness = length(species)) %>% 
+  ungroup()
+
+```
+
+
+Here we have a bargraph of the mean species richness by subplot
+```{r,ggplot}
+
+ggplot(data=subplot_rich, aes(x=subplot, y=species_richness_mean, fill=plot))+
+  geom_bar(stat="identity")+
+  scale_fill_manual(values=c("lightgrey", "gold", "orange"))+
+  xlab("Sublot")+
+  ylab("Species Richness")+
+  geom_errorbar(aes(ymin=species_richness_mean-species_richness_sd, 
+                    ymax=species_richness_mean+species_richness_sd), 
+                    position=position_dodge(), linewidth=.2, size=1)
+```
