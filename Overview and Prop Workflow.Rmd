@@ -1,0 +1,41 @@
+---
+title: "International partners with different time and date formats"
+author: "Will Mann"
+date: "2023-03-27"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+########## Untidy ITNL Data ##########
+
+date_time_untidy <-read.csv("date_times_very_untidy.csv")
+
+#SA and NZ: Day/Month/Year
+#USA: Month/Day/Year
+
+USA_untidy<- date_time_very_untidy %>%
+  filter(Location=="USA")
+
+NZ_untidy<- date_time_very_untidy %>%
+  filter(Location== "New Zealand")
+
+SA_untidy<- date_time_very_untidy %>%
+  filter(Location== "South Africa")
+
+ITNL_untidy<- full_join(SA_untidy, NZ_untidy)
+ITNL_untidy[c('Day','Month', 'Year')]<-str_split_fixed(ITNL_untidy$Date, '/', 3)
+
+```
+
+My section of the workflow will contain the following things:
+
+  12-hour to 24-hour conversion
+    -In different parts of the world, time is measured and displayed differently. The time that a data point is collected is often important. When working across time zones and nations, it is important to be able to standardize or convert these times so that data is consistent across continents and time zones.
+ 
+  Date format revisions
+    -Dates are just as important as times are when tracking data across years. However, the date 11/12/13 will read very differently in different areas of the world. In the USA, this may be read as: November 12th, 2013. However, in places like South Africa and New Zealand, it would read as: December 11th, 2013. There is also the popular year, month day format. This would read 11/12/13 as: December 13th, 2011. It is important to know who you are working with and how they may format times in their regions for effective cooperation.
+
+I will use two dateframes to teach the class about this section of dates and times. The first will be the nyc flights dataset. I will use this to teach everyone about timezones and moving from a 12-hour format to a 24-hour format and back again.
+
+The second dataframe I will use is one that I have created myself. This dataframe will be a very untidy mess. It will simulate a collaboration of researchers centered on lux values. These values are contingent on times of day, so time is critical to consider in this dataset. This dataset will help, both with date conversion, but also time conversion. It will have intentional errors that will need to be corrected, and will help us convert to our local format, whatever that may be.
