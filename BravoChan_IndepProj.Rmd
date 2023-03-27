@@ -1,0 +1,41 @@
+---
+title: "Independent Project - Trend Analysis"
+author: "Carina Bravo-Chan"
+date: "2023-03-26"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+**Proposed work-flow for independent project:**
+
+I am working with the data set used on the ongoing research project in the lab I work at. The data consists of phenotype records of traits from F2 individuals, accompanied by the genotype of QTL regions. The hypothesis is that the resulting F2 phenotype depends on the type of allele inherited.
+Individuals were classified according to the number of copies of MA alleles present in a QTL region. Individuals with no MA alleles, were classified as 0, and should be more perennial-like; while heterozygotes, are classified as 1, and should have intermediary phenotype; finally homozygote MA individuals were recorded as 2 and should be more annual-like. 
+I want to analyze the trends within this data set to find if there is any correlation between perennial traits and the underlying alleles. For example, lower number of inflorescences would suggest a more perennial phenotype, I am interested in finding out if the genotypes making up the largest number of this trait would corroborate our hypothesis.
+
+-   
+**Pseudo-code:**
+
+1. Read the csv file
+
+2. Create a data frame with F2 individuals only
+
+3. Subset PIN_combined genotype into additive and dominance components
+
+4. Create new variables for the difference in trait value across time points
+
+5. Create new variables for additive and dominance components
+
+6. Group them by PIN_combined genotype
+
+7. Calculate the mean number of inflorescence branches
+
+8. Make single-trait regressions for individuals of PIN_combined genotype
+
+9. Summarize and plot significant data
+
+10. Print summary statistics for each regression model
+
+11. Print a summary table with all traits being analyzed and their mean values
