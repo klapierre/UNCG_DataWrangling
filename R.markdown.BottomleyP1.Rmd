@@ -63,6 +63,6 @@ ggplot(PBG_coeff, aes(x = test, y = conc_coeff, fill = treatment)) +
 ```
 
 Summary: 
-Based on the results from the concentrations of soil nitrate, ammonium, and phosphorus as an effect of PBG, the soil seemed to have more soil nitrate than phosphorus. There was a large amount of data and it started out very messy however with the boxplot and creating graphs it helps visualze the results. 
+Based on the results from the concentrations of soil nitrate, ammonium, and phosphorus as an effect of PBG, the soil seemed to have more soil nitrate than phosphorus. There was a large amount of data and it started out very messy however with the boxplot and creating graphs it helps visualze the results.
 
 
