@@ -1,0 +1,177 @@
+---
+title: 'TEMPEST: Understory plant community responses to coastal flooding'
+author: "Will Mann"
+date: "2023-03-24"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_knit$set("D:/School Stuff/Graduate Stuff/Graduate Classes/Spring 2023/UNCG_DataWrangling" = '/tmp')
+library(tidyverse)
+theme_bw()
+stormbase<-read.csv("TEMPEST_SERC_understory sppcomp_2021.csv")
+```
+
+### Forests and Rainfall
+
+Heavy rainfall and storm surges are some of the **most common** natural-weather events in the United States. Climate change brings these events *more frequently* and at **greater intensity**. At the *Smithsonian Environmental Research CenterLinks (SERC)*, scientists study how intensified rainfall may affect forests and people.
+
+These scientists have established an experiment called ***TEMPEST (Terrestrial Ecosystem Manipulation to Probe the Effects of Storm Treatments)***. This experiment inundate parts of the forest with *freshwater* and *saltwater* to mimic storms.
+
+This data recorded forest understory communities in three large plots at SERC in Maryland using species cover. *In 2020, prior to inundation*, species cover was estimated within each plot to determine plot differences. This was done to assist interpretation of results following flooding.
+
+Observations in this dataset are the ***estimated percent cover of each plant species or structure that covers the ground*** found within one of 16 5x5 m subplots that were located within three 40 by 50 m plots (C, F, and S). Any additional species are listed as having a percent cover of 0.
+
+```{r unique}
+
+#Plant data
+plantdet= stormbase%>%
+  filter(!str_detect(species, c("infrastructure"))) %>%
+  filter(!str_detect(species, c("bare"))) %>%
+  filter(!str_detect(species, c("basal"))) %>%
+  filter(!str_detect(subplot, c('additional')))
+
+plantspec<-as.data.frame(unique(plantdet$species))
+
+#Treatment data
+stormtreat<-stormbase %>%
+  select(plot, subplot)%>%
+  mutate(treatment = ifelse(plot %in% "C", "Control", plot)) %>%
+  mutate(treatment=ifelse(plot %in% "S","Saltwater inundation", treatment)) %>%
+ mutate(treatment=ifelse(plot %in% "F","Freshwater inundation", treatment))
+
+```
+
+```{r calculate}
+#Calculate total plant cover (no non-plants) for each subplot in a new dataframe, removing additional (0 cover) species. Join these dataframes back into original cover data, and calculate cover as 100*(species_cover/total_cover)
+
+
+#divide by subplot and cover
+subcover<-plantdet %>%
+  filter(!str_detect(subplot,c("additonal"))) %>%
+  group_by(subplot) %>%
+  summarise(totalcover=sum(cover))%>%
+  ungroup()
+
+bigdata<-left_join(plantdet,subcover) %>%
+  group_by(subplot) %>%
+  mutate(relative_cover=100*(cover/totalcover)) %>%
+  select(-notes)
+
+```
+
+```{r suffer}
+#Make 2 new dataframes
+
+#one with plant species richness by subplot, with mean and st.error of subplot species richness
+
+sprichness <- bigdata %>% 
+  group_by(subplot) %>% 
+  mutate(splotrichness = n_distinct(species)) %>% 
+  ungroup()
+
+
+#The other with plant species richness by plot, including additional species
+
+plotrichness <- sprichness %>% 
+  group_by(plot) %>% 
+  mutate(plotrichness = n_distinct(species)) %>% 
+  ungroup()
+
+```
+
+```{r bargraphs}
+#Now, we need to make our figures. To make them, we need to find mean and st.error
+
+std.error <- function(x) sd(x)/sqrt(length(x))
+   
+meanrich <- plotrichness %>% group_by(plot) %>% 
+  mutate(meansprichness = mean(splotrichness)) %>% 
+  mutate(st.errsprichness = std.error(splotrichness))
+
+plotsprich <- meanrich %>% 
+  group_by(plot) %>% 
+  summarize(plotrichness = n_distinct(species)) %>%
+  ungroup()
+
+#One should be a bar graph showing richness by plot, with mean and st.error by subplot
+ggplot(meanrich, aes(x=plot, y=meansprichness)) +
+  geom_bar(stat= "identity") +
+  geom_errorbar(aes(ymin = meansprichness - st.errsprichness,
+                    ymax = meansprichness + st.errsprichness)) +ylim(0,50) +
+  xlab("Plot") +
+  ylab("Mean Species Richness")
+
+
+#The other should be a bar graph showing richness at the plot level
+ggplot(plotsprich, aes(x=plot, y=plotrichness)) +
+  geom_bar(stat= "identity") +
+  xlab("Plot") +
+  ylab("Plot Richness")
+
+
+```
+
+```{r cover}
+#Make a rank-abundance curve for avg understory plant community composition
+
+#Calculate relative cover for all species across subplots, in each plot
+relcover <- plantdet %>%
+  group_by(plot, species) %>% 
+  summarize(average_rel_cov = mean(cover)) %>% 
+  ungroup()
+
+#Calculate relative cover of species across plots
+species_cover <- relcover %>% 
+  group_by(species) %>% 
+  summarize(average_rel_cov = mean(average_rel_cov))
+
+#Sort dataframe by highest to lowest cover
+cover_ranked <- species_cover %>% 
+  arrange(desc(average_rel_cov))
+
+#Rank species by relative cover
+cover_ranked <- cover_ranked %>% 
+  mutate(number = 1:91)
+
+
+#Graph species by relative cover and rank
+ggplot(cover_ranked, aes(x=number, y=average_rel_cov)) +
+  geom_point() +
+  geom_line() +
+  geom_text(aes(label = species)) +
+  xlab("Rank") +
+  ylab("Avg Relative Cover")
+```
+
+```{r cover 2}
+#Calc mean/st. error by plot
+relcover_mean <- plantdet %>%
+  group_by(plot, species) %>% 
+  mutate(average_rel_cov = mean(cover)) %>% 
+  mutate(stderror = std.error(cover)) %>% 
+  select(plot, species, cover, average_rel_cov, stderror) %>%
+  ungroup()
+
+#Select specific species to study on figure
+
+spsubset <- relcover_mean %>%
+  filter(species %in% c("Berberis thunbergii", "Botrychium dissectum", "Carex sp", "Elaeagnus umbellata", "Epifagus virginiana", "Gallium circaezans", "Ilex opaca", "Lindera benzoin", "Lonicera japonica", "Mitchella repens", "Parthenocissus quinquefolia", "Polygonum virginianum", "Rhus radicans", "Rubus phoenicolasius", "Sceptridium biternatum", "Symphotrichium lateriflorum"))
+
+    
+specieslist<-c("Berberis thunbergii", "Botrychium dissectum","Carex sp", "Elaeagnus umbellata", "Epifagus virginiana","Gallium circaezans", "Ilex opaca", "Lindera benzoin", "Lonicera japonica", "Mitchella repens", "Parthenocissus quinquefolia", "Polygonum virginianum", "Rhus radicans", "Rubus phoenicolasius", "Sceptridium biternatum", "Symphotrichium lateriflorum")
+
+ggplot(spsubset, aes(x= plot, y=average_rel_cov)) +
+  geom_bar(stat="identity") +
+  geom_errorbar(aes(ymin = average_rel_cov - stderror,
+                    ymax = average_rel_cov + stderror)) +
+  facet_wrap(~species, scales = 'free') +
+  ylab("Average Relative Cover") +
+  xlab("Plot")
+
+```
+
+There is relatively little difference between treatment plots or for mean species richness. However, in plot richness, it appears that saltwater inundation lowered richness. M. repens appears to make up the most plot cover, with freshwater inundation greatly increasing its relative cover.
+
+Rubus, Lindera, and Elaeganus seem to respond best to freshwater inundation at the species level, while Berberis performed best under saltwater inundation.
