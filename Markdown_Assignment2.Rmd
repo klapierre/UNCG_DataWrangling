@@ -122,7 +122,7 @@ ggplot(data=subplot_rich, aes(x=subplot, y=species_richness_mean, fill=plot))+
   scale_fill_manual(values=c("lightgrey", "gold", "orange"))+
   xlab("Sublot")+
   ylab("Species Richness")+
-  geom_errorbar(aes(ymin=species_richness_mean-species_richness_sd, 
-                    ymax=species_richness_mean+species_richness_sd), 
+  geom_errorbar(aes(ymin=species_richness_mean-richness_se, 
+                    ymax=species_richness_mean+richness_se), 
                     position=position_dodge(), linewidth=.2, size=1)
 ```
