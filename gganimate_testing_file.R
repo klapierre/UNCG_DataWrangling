@@ -1,4 +1,5 @@
 install.packages("gganimate")
+install.packages("gifski")
 library(ggplot2)
 library(gganimate)
 library(tidyverse)
