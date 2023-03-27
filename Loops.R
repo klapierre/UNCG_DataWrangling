@@ -22,6 +22,9 @@
 #For Loops 
 #Description (Lowie)
 
+# A for loop applies a set of operations over a collection of objects, such as a list, vector, matrix, or data frame, repeated a defined number of times. 
+# The number of iterations are known in advance. 
+
 #Example (Mason)
 
 #Create a vector of numbers 1 through 5, and then use a for loop to iterate through each number in the vector and print it to the console. The loop variable i takes on the values 1, 2, 3, 4, and 5, and the print() function is called with each value of i.
