@@ -16,14 +16,13 @@ This is an R Markdown document. Markdown is a simple formatting syntax for autho
 When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
 
 ```{r, setup1, include=FALSE} 
-knitr::opts_knit$set(root.dir = 'C:\\Users\\louis\\OneDrive\\Documents\\UNCG\\Ecological Research') #setting working directory for all chunks
+knitr::opts_knit$set(root.dir = 'C:\\Users\\louis\\OneDrive\\Documents\\UNCG\\Ecological Research\\UNCG_DataWrangling') #setting working directory for all chunks
 library(tidyverse) #loading tidyverse
 theme_set(theme_light()) #setting a light theme for graphs
 ```
 
-```{r, import, include=FALSE}
-# import the data file
-DF <- read.csv('TEMPEST_SERC_understory sppcomp_2021.csv')
+```{r import, include=FALSE}
+DF <- read.csv('TEMPEST_SERC_understory sppcomp_2021.csv') # import the data file
 
 Species <- DF %>% 
   distinct(species, .keep_all = FALSE)    # filter all unique species and delete everything else
