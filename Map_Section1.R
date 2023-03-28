@@ -1,5 +1,6 @@
-# MAP GROUP   
-##make sure to have a list of the errors you encounter while working on your code
+############ 
+#   MAPS   #
+############
 
 #Section 1 (Carina) 
 #ggmap, mapdata, maps, ggplot2, dplyr, stringr, maptools
@@ -10,7 +11,6 @@
 #let's try it
 
 #The RStudio "maps" package is useful for creating maps and visualizing geographic data. It gives you access to a wide range of map data, such as political boundaries, topography, and even satellite imagery, which you can use to create custom maps based on your specific needs. 
-
 #To use the "maps" package in RStudio, first install it in the R console by typing 
 install.packages('maps')
 install.packages('mapproj')
@@ -19,10 +19,10 @@ install.packages('mapproj')
 library(maps)
 library(mapproj)
 
-#For example, you could use the following code to generate a basic map of the world using the "Mercator" projection:
+#Now lets use some of the functions included in this package. For example, you could use the following code to generate a basic map of the world using the "Mercator" projection:
 map("world", projection = "mercator")
 
-#In addition to basic map creation, the "maps" package includes functions for adding points, lines, and text to maps, as well as custom legends and color scales.
+#In addition to basic map creation, the "maps" package includes functions for adding points, lines, and text to maps, as well as custom legends and color scales. 
 
 
 #Overall, the RStudio "maps" package is a powerful tool for creating maps and visualizing geographic data that can be used in a variety of applications ranging from data analysis and visualization to education and research.
@@ -38,7 +38,7 @@ data("state")
 #This will load a dataframe called state that contains the polygon data for each state in the US.
 #Create a basic plot of the US map using ggplot2 by typing the following command into the 
 ggplot() + 
-  geom_polygon(data = state, aes(x = long, y = lat, group = group), fill = "white", color = "black")
+  geom_polygon(data = state, aes(x = long, y = lat, group = group), fill = "#03e8fc", color = "black")
 
 #This will create a plot with white polygons representing each state, outlined in black.
 
@@ -52,8 +52,8 @@ cities <- map_data("world.cities") %>%
 
 # Plot the US map with cities overlaid
 ggplot() + 
-geom_polygon(data = state, aes(x = long, y = lat, group = group), fill = "white", color = "black") +
-geom_point(data = cities, aes(x = long, y = lat), size = 1, color = "red") +
+geom_polygon(data = state, aes(x = long, y = lat, group = group), fill = "#03e8fc", color = "black") +
+geom_point(data = cities, aes(x = long, y = lat), size = 2, color = "red") +
 labs(title = "US Map with Major Cities")
 
 
