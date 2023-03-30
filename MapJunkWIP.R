@@ -1,4 +1,7 @@
+# Tidyverse does not play well with the "map" package
 library(tidyverse)
+
+
 library(ggplot2)
 library(ggmap)
 library(maps)
@@ -16,13 +19,11 @@ world <- map_data("world")
 
 ggplot() + geom_polygon(data = world, aes(x=long, y = lat, group = group)) + 
   coord_fixed(1.3) 
-worldmap <-map(database = "world")
 
 ggplot() + geom_polygon(data = world, aes(x=long, y = lat, group = group), fill = "blue", col = "black") + 
-  coord_fixed(1.3) + geom_point(data = caps, aes(x = Longitude, y = Latitude), color = "yellow", size = 1)
+  coord_fixed(1.5) + geom_point(data = pines, aes(x = Longitude, y = Latitude), color = "yellow", size = 1)
 
-abline(x=1)
-# Nice what was your output?
+]# Nice what was your output?
 
 # Answer: It better be a map
 
