@@ -683,11 +683,11 @@ ggsave("Redband_histogram_facet_01.png",
 
 SpokaneFish <- read.csv("LowerSpokaneFish.csv")
 
-ggplot(SpokaneFish, aes(x = as.factor(ScaleAge), y = Length)) +
+ggplot(SpokaneFish, aes(x = as.factor(Weight), y = Length)) +
   geom_point(aes(color=as.factor(Species)), shape="triangle") +
   scale_y_log10() +
   facet_wrap(~Species) +
-  xlab("Age of Trout (years)") + 
+  xlab("Weight (g))") + 
   ylab("Trout Length (mm)") +
   theme (axis.text.x = element_text(size = 15),
         axis.text.y = element_text(size = 15),
