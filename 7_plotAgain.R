@@ -5,7 +5,7 @@
 ## OBJECTIVE:
 # 1. To develop a "grammar of graphics".
 # 2. To become comfortable using ggplot2 for exploratory data visualization.
-
+library(tidyr)
 
 # ---------------------------------------------------------- #
 #### SET UP:                                              ####
@@ -182,6 +182,7 @@ ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
 # each color number?
 # HINT: Try creating a dataframe from color() by passing it into the
 # as.data.frame() function.
+colors <- as.data.frame(colors())
 
 
 # You can also chose colors by Hex code. A Hex color code is a 6-symbol code made
@@ -201,6 +202,10 @@ ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
 # picker (in addition to a billion other color picking websites). Use this color
 # picker to generate the hex codes for three new colors of your choice. Then copy
 # and paste the above code, replacing the hex codes with your color choices.
+
+ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
+  geom_jitter() +
+  scale_color_manual(values=c('#00cc96', '#cc0036', '#c900cc'))
 
 
 # The second great thing about hex codes is that you can control the transparency
