@@ -3,39 +3,64 @@
 ############
 
 #Section 1 (Carina) 
-#ggmap, mapdata, maps, ggplot2, dplyr, stringr, maptools
-#Libraries to be downloaded
-#data set -> country, states and county
-#Description of each library
-#Description of how to render the US map
-#let's try it
-
-#The RStudio "maps" package is useful for creating maps and visualizing geographic data. It gives you access to a wide range of map data, such as political boundaries, topography, and even satellite imagery, which you can use to create custom maps based on your specific needs. 
-#To use the "maps" package in RStudio, first install it in the R console by typing 
-install.packages('maps')
-install.packages('mapproj')
-
-#Once installed, use the command to load the package into your workspace.
-library(maps)
-library(mapproj)
-
-#Now lets use some of the functions included in this package. For example, you could use the following code to generate a basic map of the world using the "Mercator" projection:
-map("world", projection = "mercator")
-
+#Rstudio can be used for more than tidying and transforming data.
+#The RStudio "maps" package is useful for creating maps and visualizing geographic data. It #gives you access to a wide range of map data, such as political boundaries, topography, and #even satellite imagery, which you can use to create custom maps based on your specific needs.
 #In addition to basic map creation, the "maps" package includes functions for adding points, lines, and text to maps, as well as custom legends and color scales. 
 
+###########
+#Activity:# 
+###########
 
-#Overall, the RStudio "maps" package is a powerful tool for creating maps and visualizing geographic data that can be used in a variety of applications ranging from data analysis and visualization to education and research.
+    #Generating US Maps using RStudio
+#Objective:
+    #To teach students how to generate US maps using RStudio and related packages.
+#Necessary R packages: "ggplot2", "maps", "ggthemes"
 
-#Rstudio can be used for more than tidying and transforming data. Lets try create a map of the United States ggplot2 and other packages. First, install or load the following libraries:
+#Step 1: Lets use some of the functions included in this package. For example, you could use the following code to generate a basic map of the world using the "Mercator" projection:
+map("world", projection = "mercator")
 
-#
+
+#Step 2: Install and Load the Required R Packages
+    #ggplot2, maps, and ggthemes.
+
+#If you don't have these libraries installed
+install.packages("ggplot2")
+install.packages("maps")
+install.packages("ggthemes")
+
+#or, if you already installed the packages
+library(ggplot2)
+library(maps)
+library(ggthemes)
 
 
-#Load the map data for the United States by typing the following command into the R console:
+#Step 3: Load the US Maps Dataset
+    #Load the US maps dataset using the following command:
+data("usa")
 
-data("state")
+
+#Step 4: Generate a Map of the United States
+    #Generate a map of the United States using the following command:
+map_data <- map_data("usa")
+ggplot() +
+  geom_map(data = map_data, map = map_data,
+           aes(x = long, y = lat, map_id = region),
+           fill = "#03adfc", color = "black", size = 0.2) +
+  ggtitle("Map of the United States") +
+  theme_map()
+
+
+#Step 5: Customize the Map
+    #Customize the map by adding various features such as a title, changing the fill color      #of states, and adjusting the plot theme.
+
+
+#Step 6: Do it yourself. Now using the dataset "state" generate a map using syntax similar to the one used in Step 4.
+
+
 #This will load a dataframe called state that contains the polygon data for each state in the US.
+data("state")
+
+
 #Create a basic plot of the US map using ggplot2 by typing the following command into the 
 ggplot() + 
   geom_polygon(data = state, aes(x = long, y = lat, group = group), fill = "#03e8fc", color = "black")
@@ -51,24 +76,15 @@ cities <- map_data("world.cities") %>%
           select(long, lat, city)
 
 # Plot the US map with cities overlaid
+#This will plot the US map with red dots representing the location of major cities.
 ggplot() + 
 geom_polygon(data = state, aes(x = long, y = lat, group = group), fill = "#03e8fc", color = "black") +
 geom_point(data = cities, aes(x = long, y = lat), size = 2, color = "red") +
 labs(title = "US Map with Major Cities")
 
 
-#This will plot the US map with red dots representing the location of major cities.
-#Conclusion (Group)
-#global distribution of something, heat map
-#bigger problem where all skills listed above will be used
-#library(ggplot2)
-#library(tidyverse)
-#library(ggmap)
-#library(mapdata)
-#library(maps)
-#library(maptools)
-#library(stringr)
-#library(dplyr)
+
+
 
 
 
