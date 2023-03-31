@@ -45,22 +45,22 @@ age_pop_states <- inner_join(states, age_pop_tidy, by = "region")
 # First, you create a basic map of the outline of the USA. Then put the state borders
 # on the map, and finally make it a heat map using our population data!
 
-# Here we break it down step by step with an example
+# Here we break it down step by step with example code
 
-# 1) First we make the basic outline of the US map and use coord_fixed() to maintain
-# the correct aspect ratio. For the US it is recommended to use 1.3
+# 1) First we make the basic outline of the US map using the usa data frame and use 
+# coord_fixed() to maintain the correct aspect ratio. For the US it is recommended to use 1.3
 ggplot()+
   geom_polygon(data=usa, aes(x=long, y=lat, group=group), color = "black", fill=NA)+
   coord_fixed(1.3)
 
-# 2) Next we add the state borders to the map. We want say fill=NA since we just want the
-#    border lines.
+# 2) Next we add the state borders to the map using the states data frame. We use fill=NA 
+# since we just want the border lines
 geom_polygon(data=states, 
              aes(x=long, y=lat, group=group), 
              fill=NA, color="white")
 
-# 3) Then we add the population data to the map and fill the states according
-#    to it's numeric value by using fill = Adults.26.34 in the aesthetic statement
+# 3) Then we add the population data to the map using our combined data frame and fill the 
+# states according to it's numeric value by using fill = Adults.26.34 in the aesthetic statement
 geom_polygon(data=age_pop_states, 
              aes(x=long, y=lat, group=group, fill = Adults.26.34), 
              color = "white")
@@ -69,9 +69,9 @@ geom_polygon(data=age_pop_states,
 geom_polygon(data=usa, aes(x=long, y=lat, group=group), color="black", fill = NA)
 
 # 5) The last line transforms the scale of the population to a log-base-10 scale which
-#    better differentiates the states on the color gradient and applies a color palette
-#    from the brewer package. The number 9 before the specified palette tells ggplot how
-#    many colors from the palette we want to use.
+# better differentiates the states on the color gradient. Then it applies a color palette
+# from the brewer package. The number 9 before the specified palette tells ggplot how
+# many colors from the palette we want to use.
 scale_fill_gradientn(trans = "log10", colors=rev(brewer.pal(9, "YlGnBu")))
 
 # Here is all of that put together:
