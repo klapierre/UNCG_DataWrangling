@@ -6,7 +6,7 @@
 #Rstudio can be used for more than tidying and transforming data it can also helps us visualize #our data in the form of heat maps, or maps. One of the packages used for data visualization is #"tidyverse". It comes with a number of packages, including "ggplot2" for high-quality #graphics, "dplyr" for data manipulation, and "tidyr" for data tidying. 
 #The RStudio "maps" package is useful for creating maps and visualizing geographic data. It #gives you access to a wide range of map data, such as political boundaries, topography, and #even satellite imagery, which you can use to create custom maps based on your specific needs.
 #In addition to basic map creation, the "maps" package includes functions for adding points, #lines, and text to maps, as well as custom legends and color scales. 
-#The "mapproj" package contains tools for working with map projections, which are mathematical #transformations used to convert a curved, 3D surface, such as the earth, to a flat, 2D #surface, such as a map. It includes functions for converting latitude/longitude coordinates to #projected coordinates and working with different map projections.
+#The "usmap" package contains tools for working with map projections, which are mathematical #transformations used to convert a curved, 3D surface, such as the earth, to a flat, 2D #surface, such as a map. It includes functions for converting latitude/longitude coordinates to #projected coordinates and working with different map projections.
 #When these packages are loaded, the R environment is loaded with various functions, data sets, #and objects that can be used to create maps, work with map projections, and manipulate and #visualize data. The type of objects generated will be determined by the functions used and the #data being manipulated.
 
 ###########
@@ -99,6 +99,3 @@ plot_usmap(data = countypop, values = "pop_2015", include = c("TX", "CO", "AZ", 
 #RStudio comes with a number of different packages that can be used to map and visualize spatial data. Some of these packages are ggplot2, plotly, mapview, leaflet, and tmap, among #others. When it comes to plotting maps, these packages provide a number of benefits, including #the ability to alter the look of the maps, combine them with other plots, and carry out advanced geospatial studies. 
 #RStudio can import and handle numerous kinds of spatial data, including GPS data, shapefiles, and geotiff files, amongst others. However, it has a few drawbacks, such as a higher learning curve when compared to other GIS tools, limited support for 3D visualization, and slower rendering times for large datasets. 
 #Still, RStudio is a useful tool for plotting maps and it offers a robust and adaptable framework for the creation of high-quality and #informative maps that may be used in a wide variety of applications.
-
-
-
