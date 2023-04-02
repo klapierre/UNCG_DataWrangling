@@ -334,6 +334,7 @@ pines <- read.csv("observations-309667.csv")
 # because bigger is better for the coolest species of pine.
 # Then plot all European pine and make those points yellow.
 # This is a huge dataset so go ahead and plot another species your choice, just make it clear which one you choose
+# What can you say about the global distribution of the species you chose in comparison to the other species?
 
 #I assume this can be done several ways but here is how I did it.
 
@@ -344,7 +345,6 @@ pinedates <- pines %>% filter(observed_on > "2021-01-01")
 llpsubset <- subset(pinedates, scientific_name == "Pinus palustris")
 eupinesubset <- subset(pinedates, scientific_name == "Pinus sylvestris")
 pinasteresubset <- subset(pinedates, scientific_name == "Pinus pinaster")
-
 
 
 ggplot()+ 
