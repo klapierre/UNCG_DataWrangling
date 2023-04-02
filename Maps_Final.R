@@ -231,11 +231,112 @@ starb <- read.csv("starbucks_2018_11_12.csv", stringsAsFactors = TRUE) %>%
 # Section 4 (Jordan)
 #--------------------------------#
 
+# Alright y'all, for the last part of this assignment we are tying it all together and going global.
+# We are going to be using the packages below, so go ahead and load those up if you don't
+# already have them loaded.
+
+library(tidyverse)
+library(ggplot2)
+library(ggmap)
+library(maps)
+library(mapdata)
+library(RColorBrewer)
+
+# Let's all start by brushing up on our geography.
+# Using the mapdata() package go ahead and create a base map of the whole world.
+# Refer to your work above to help, but if you're feeling stuck be sure to reference the help function!
+# (Don't forget the coor_fixed arguement! :^) )
+
+world <- map_data("world")
+
+ggplot() + geom_polygon(data = world, aes(x=long, y = lat, group = group)) + 
+  coord_fixed(1.3) 
+
+# Hopefully you've got yourself a nice map, don't be afraid to give it some personality and
+# change around the colors and labels.
+
+# Once you have your map ready to go lets load up the the "country-capital-lat-long-population.csv" file
+
+caps <- read.csv("country-capital-lat-long-population.csv")
+
+# Give this data frame a look over. What does it contain?
+
+###
+# ANSWER
+###
+
+# Let's start by adding the capitals to the map as points. 
+
+### Answer here
+
+ggplot() + geom_polygon(data = world, aes(x=long, y = lat, group = group), color = "black", fill="gray") + 
+  coord_fixed(1.3) + geom_point(data = caps, aes(x = Longitude, y = Latitude), color = "yellow", size = 0.1) 
+
+# Nice! Be sure to change to color of the points and the size to something of your liking.
+
+# We can actually label all those points using the geom_text function! Give that package a look over and then
+# Add the labels to the countries to your map (If it looks like a garbled mess change the "size" of the text)
+
+### Answer here
+
+ggplot() + geom_polygon(data = world, aes(x=long, y = lat, group = group), color = "black", fill="gray")+ 
+  coord_fixed(1.3) + geom_point(data = caps, aes(x = Longitude, y = Latitude), color = "yellow", size = 0.1)+
+  geom_text(data = caps, aes(x = Longitude, y = Latitude,label = Capital.City), size = 1.3)
+
+# Alright now that you are comfy with the map making tools we have shown now it's time to set you free.
+# Load up the "observations-309667.csv" and keep your capitals dataset loaded. We will be incorporating it into
+# our final product
+
+pines <- read.csv("observations-309667.csv")
+
+# What does this data frame look like? How many observations are there?
+
+###
+#ANSWER
+###
+
+# This is a data set containing all research grade observations from the Pinus genus from iNaturalist.
+# There's actually way more data than this, but this range goes from 1/1/2020 - 3/24/2023
+# There are quite a few observations in our data set and wouldn't look too hot if we plotted all those points.
+# You didn't think you were going to do a whole lesson without some data manipulation did you? (◕‿↼)
+# Make a global map (with some color options other than default) that has the following capital cities 
+#listed for the following countries: 
+# USA, Australia, France, and Italy. These points should be orange and labels should be red.
+# Next whittle down the pine data set so that we only have observations from after 1/1/2021.
+# Next plot all "Pinus palustris" species and make the points green change the size to be larger
+# because bigger is better for the coolest species of pine.
+# Then plot all European pine and make those points yellow.
+# This is a huge dataset so go ahead and plot another species your choice, just make it clear which one you choose
+
+#I assume this can be done several ways but here is how I did it.
+
+capitalsubset <- filter(caps, Country %in% c("United States of America", "Italy", "Australia", "France"))
+
+pinedates <- pines %>% filter(observed_on > "2021-01-01")
+
+llpsubset <- subset(pinedates, scientific_name == "Pinus palustris")
+eupinesubset <- subset(pinedates, scientific_name == "Pinus sylvestris")
+pinasteresubset <- subset(pinedates, scientific_name == "Pinus pinaster")
+
+
+ggplot()+ 
+  geom_polygon(data = world, aes(x=long, y = lat, group = group), color = "black", fill="gray")+
+  coord_fixed(1.3)+
+  geom_point(data = capitalsubset, aes(x = Longitude, y = Latitude), color = "orange", size = 0.5)+
+  geom_text(data = capitalsubset, aes(x = Longitude, y = Latitude,label = Capital.City), size = 1.3, col = "red")+
+  geom_point(data = llpsubset, aes(x = longitude, y = latitude), color = "green", size = 1)+
+  geom_point(data = eupinesubset, aes(x = longitude, y = latitude), color = "yellow", size = .1)+
+  geom_point(data = pinasteresubset, aes(x = longitude, y = latitude), color = "blue", size = .1)
 
 
 ##############
 # Conclusion #
 ##############
-#RStudio is a powerful open source tool for data analysis and visualization. Its various free packages that can be used for mapping and data visualization, making it an ideal choice for researchers and data analysts. The benefits of using Rstudio for data visualization are a vast range of options for customizing colors, size, and style. With RStudio, users can create informative and visually appealing maps that can communicate their data insights effectively.
-#The most common difficulty that first-time users encounter when using RStudio range from installing packages to understanding the syntax of the programming language. Thankfully, you can always find help from online communities, youtube tutorials or virtual courses in R programming.
+#RStudio is a powerful open source tool for data analysis and visualization. Its various free packages 
+#that can be used for mapping and data visualization, making it an ideal choice for researchers and data analysts. 
+#The benefits of using Rstudio for data visualization are a vast range of options for customizing colors, size, and style. 
+#With RStudio, users can create informative and visually appealing maps that can communicate their data insights effectively.
+#The most common difficulty that first-time users encounter when using RStudio range from installing packages to 
+#understanding the syntax of the programming language. Thankfully, you can always find help from online communities, 
+#youtube tutorials or virtual courses in R programming.
 #Overall, the benefits of using RStudio for data visualization and mapping far outweigh the challenges. 
