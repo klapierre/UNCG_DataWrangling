@@ -68,6 +68,8 @@ print(sum)
 # saved back into the "iris_loop" data frame.
 # 4) Make sure to close out all curly brackets to complete the loop.
 
+#Question: What happens if you change the "1000+" to "50+"?
+
 
 #While Loops
 #Description (Mason)
@@ -85,8 +87,13 @@ while (x) {x <- x - 1 # We set our conditions in which x will be equal to x-1
     next #This tells the while loop to skip any numbers after our conditions set above
   print(x)} # This prints x after it has gone through the loop
 
-#QUESTION: What happens to the printed data if you change !=0 to !=1?
-
+#QUESTION: Why do we have the argument !=0? What would occur if we changed it to !=1? 
+# Go ahead and give it a try:
+x<-20  
+while (x) {x <- x - 1 
+if (x%%2 != 0) 
+  next 
+print(x)}
 
 
 #Example 1 of While Loops:
@@ -162,7 +169,21 @@ Samples_With_Label <- cbind(SampleID, Samples_Without_ID1)
 #Final 
 #Nested loops within For Loops 
 #Description of nested loops  (Zachary)
-#Example (William)
+
+
+#Example of Nested loops:
+# Let's look at using a for loop within a for loop. 
+# To do this, we will be looking at manipulating a numerical values
+
+for (a in 0:10){  # Here we set up our values "a" as any variable between 0-10
+  for (b in 1:2) # Now we add in a nested logical condition, which creates a second value "b"
+                # This value is set between 1:2
+  {print(paste("(This is the combo of a =", a, "and b =", b, ")"))} # Now we want to print our variables, but paste them together when printed
+} # Close the loops
+
+
+
+
 #Do it yourself with a dataset (Mason)
 
 
