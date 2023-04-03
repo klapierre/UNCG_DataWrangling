@@ -1,13 +1,11 @@
 library(tidyverse)
 library(gganimate)
-install.packages('gifski')
 library(gifski)
 titanic <- read.csv("titanic.csv")
 
 mtcars
-p <- ggplot(mtcars, aes(factor(hp), mpg)) + 
-  geom_bar(width = 1, stat = "identity") + 
-  coord_polar("y", start=0) +
+p <- ggplot(mtcars, aes(factor(cyl), mpg)) + 
+  geom_boxplot() + 
   transition_states(
     gear,
     transition_length = 2,
@@ -15,16 +13,12 @@ p <- ggplot(mtcars, aes(factor(hp), mpg)) +
   ) +
   enter_fade() + 
   exit_shrink() +
-  ease_aes('bounce-in')
+  ease_aes('sine-in-out')
 pq <- animate(p, renderer = gifski_renderer())
-anim_save('filename2.gif', animation = last_animation(), path = NULL)
+anim_save('filename.gif', animation = last_animation(), path = NULL) 
 
-tit1 <- titanic %>% 
-  ggplot(x="", y= Age)) + 
-  geom_bar(width = 1, stat = "identity") + 
-  coord_polar("y", start=0) 
-tit1
-  
+tic <- ggplot(titanic, aes(factor(Pclass), Survived)) + 
+  geom_boxplot() + 
   transition_states(
     gear,
     transition_length = 2,
@@ -32,19 +26,6 @@ tit1
   ) +
   enter_fade() + 
   exit_shrink() +
-  ease_aes('bounce-in')
-titanic_chart <- animate(tit1, renderer = gifski_renderer())
-anim_save('titanic1.gif', animation = last_animation(), path = NULL)
-
-titanic %>%
-  group_by(Pclass) %>%
-  ggplot(aes(x="", y= Age, 
-             fill=as.factor(Survived))) + geom_col() +
-  coord_polar(theta = "y", start=0)
-
-titanic_bar <- titanic %>% 
-  ggplot(aes(x = "", y = as.factor(Survived), fill= as.factor(Survived))) +
-   geom_col(position='identity') +
-  coord_polar("y", start=0) 
-
-titanic_bar
+  ease_aes('sine-in-out')
+tic1 <- animate(tic, renderer = gifski_renderer())
+anim_save('tic.gif', animation = last_animation(), path = NULL)
