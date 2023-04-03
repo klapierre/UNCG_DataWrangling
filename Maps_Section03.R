@@ -23,8 +23,6 @@ state <- map_data("state")
 NY <- state %>% 
   filter(region == "new york")
 
-LongIsland <- state %>% 
-  filter(group == 37)
 
 # Task 2:
 # Read in the data set we are going to use (starbucks_2018_11_12.csv)
@@ -45,12 +43,10 @@ ggplot() +
   geom_point(data = starb, aes(x = longitude, y = latitude, color = "red"), size = 0.05, shape = ".")
 
 
-
-ggplot() +
-  geom_polygon(data = LongIsland, aes(x=long, y=lat, group=group), fill = "lightblue", col = "black") +   
-  coord_fixed(1.5) +
-  geom_point(data = starb, aes(x=longitude, y=latitude, color = "red"), size = 1, shape = ".")
-
+# Final task
+# Map out the Starbucks in Canada
+# Hint 1: Canada is abbreviated as "CA" under "country" in the Starbucks csv
+# Hint 2: Canada is listed as "Canada" under "region" in the world data
 
 
 
