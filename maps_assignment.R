@@ -343,6 +343,11 @@ library(RColorBrewer)
 # TASK: Using the mapdata() package go ahead and create a base map of the whole world.
 # Refer to your work above to help, but if you're feeling stuck be sure to reference the help function!
 # (Don't forget the coor_fixed argument! :^) )
+globe <- map_data("world") 
+
+ggplot()+
+  geom_polygon(data=globe, aes(x=long, y=lat, group=group), color = "darkblue", fill=NA)+
+  coord_fixed(1.5)
 
 
 # Hopefully you've got yourself a nice map, don't be afraid to give it some personality and
@@ -353,9 +358,15 @@ library(RColorBrewer)
 caps <- read.csv("country-capital-lat-long-population.csv")
 
 # Give this data frame a look over. What does it contain?
-
+# The geographical information for all of the capitals of the world
 
 # Let's start by adding the capitals to the map as points. 
+
+
+ggplot()+
+  geom_polygon(data=globe, aes(x=long, y=lat, group=group), color = "darkblue", fill="white")+
+  coord_fixed(1.5)+
+  geom_point(data = caps, aes(x = Longitude, y = Latitude), color="red", size = 2, shape= 10)
 
 
 # Nice! Be sure to change to color of the points and the size to something of your liking.
