@@ -19,13 +19,15 @@
 #Repeat Loops: Similar to while loop but requires a break, or stop to prevent
 #the loop from running forever. Example: Until 10 iterations, perform action y. 
 
+
 #For Loops 
-#Description (Lowie)
+
+#Description:
 
 # A for loop applies a set of operations over a collection of objects (list, vector, matrix, or data frame)
 # repeated a defined number of times. The number of iterations are known in advance. 
 
-#Example (Mason)
+#Example
 
 #Create a vector of numbers 1 through 5, and
 # then use a for loop to iterate through each number in the vector and print it to the console. 
@@ -74,21 +76,20 @@ print(sum)
 # the code inside the loop is executed, and then the condition is evaluated again. This process continues until the condition becomes FALSE, 
 # at which point the loop terminates and execution continues with the code following the loop.
 
-#Next
-# Within While Loops, if you wish to skip a current loop and go onto the next
-# iteration, you can use the "next" argument within the function. Consider the 
-# following example:
+#Next within Loops
+# Within loops, especially While Loops, if you wish to skip a current variable and go onto the next
+# iteration, you can use the "next" argument within the function. Consider the following example:
 x<-20     # Here we set the length of our variable. 
 while (x) {x <- x - 1 # We set our conditions in which x will be equal to x-1
   if (x%%2 != 0) # A further condition is set in which x is divided by 2 if not equal to 0
-    next #This tells the while loop to skip any odd numbers
+    next #This tells the while loop to skip any numbers after our conditions set above
   print(x)} # This prints x after it has gone through the loop
 
-#QUESTION: What happens if you change !=0 to !=1?
+#QUESTION: What happens to the printed data if you change !=0 to !=1?
 
 
 
-#Example 1 (Zachary)
+#Example 1 of While Loops:
 
 #Let's try an example with numbers!
 
@@ -98,7 +99,7 @@ while (x < 6) { #Start of the while loop. While x is less than 6, perform some a
   x = x+1 #Adds one to x each loop.
 }
 
-#Example 2
+#Example 2 of While Loops:
 
 #We can use this to label samples
 
@@ -131,10 +132,18 @@ Samples_With_Label <- cbind(SampleID, Samples_Without_ID1)
 
 
 #Repeat Loops
-#Description (William)
+
+#Description: 
+# A repeat loop will repeat a block of code over a logical condition. So long as
+# The condition returns "FALSE", the block of code will continue to be repeated until
+# A "TRUE" condition is met. A repeat loop will not end until it is given a BREAK condition.
+
+
 #Break (Mason)
 #Example (Lowie)
-#Do it yourself (Zachary)
+
+
+#Do it yourself:
 
 #Let's try it on your own!
 
