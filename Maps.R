@@ -39,6 +39,10 @@ ggplot(world, aes(long, lat, group = group)) +
 
 #Step 3: TASK: Let's make this map your own, play with fill and border colors. Add a title and change the labels on the x and y axis. 
 
+ggplot(world, aes(long, lat, group = group)) +
+  geom_polygon(fill = "black", color = "yellow") +
+  coord_fixed(1.3) +
+  labs(title = "U.S. States", ylab = "latitude", xlab= "longitude")
 
 #Step 4: Let's generate a blank map of the United States and add county boundaries using the function plot usmap(). We will also add a title and subtitle to the map.
 #US states
@@ -50,6 +54,11 @@ plot_usmap(regions = "states") +
 
 #TASK: US counties
 
+plot_usmap(regions = "counties") + 
+  labs(title = "U.S. States",
+       subtitle = "This is a blank map of the United States.") + 
+  theme(panel.background=element_blank()) +
+  coord_fixed(1.3)
 
 #Step 5: Let's get fancy! Using the map data() function that is included in the ggplot2 package, we will make a colorful US map. Use the guides() function to remove all labels for #state abbreviations. The map produced should have each state filled in with fun colors.
 state <- map_data("state")
@@ -77,6 +86,10 @@ plot_usmap(data = countypov, values = "pct_pov_2014", include = c("TX", "CO", "A
 
 
 #Step 8: TASK: Try it yourself. Create a map similar to the one above using the information #for the 2015 population estimates you can pick a particular state, or a region. Use the values "pop_2015" from the #dataset "countypop", pick the colors of your preference for the gradient fill and edit the #title and labels accordingly.  
+plot_usmap(data = countypop, values = "pop_2015", include = c("TX"), color = "black") + 
+  scale_fill_continuous(low = "white", high = "#810aff", name = "Poverty Percentage Estimates", label = scales::comma) + 
+  labs(title = "Texas Counties", subtitle = "Poverty Percentage Estimates for Counties in Texas 2014") +
+  theme(legend.position = "right")
 
 
 #RStudio comes with a number of different packages that can be used to map and visualize spatial data. Some of these packages are ggplot2, plotly, mapview, leaflet, and tmap, among #others. When it comes to plotting maps, these packages provide a number of benefits, including #the ability to alter the look of the maps, combine them with other plots, and carry out advanced geospatial studies. 
