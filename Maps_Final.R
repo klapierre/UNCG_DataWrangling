@@ -294,8 +294,8 @@ ggplot() +
 
 
 # Congratulations!
-# We can adjust the color, size, and shape of our data points too to make it look
-# here is a line of code which you can play around with
+# We can adjust the color, size, and shape of our data points too
+# here is a line of code which you can play around with!
 # change the size, the color, and the shape until the map looks how you want it to
 # You can Google the different shapes you can have for your points (there are 25 shapes)
 
