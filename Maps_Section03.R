@@ -7,14 +7,34 @@ install.packages(c("ggplot2", "devtools", "dplyr", "stringr"))
 install.packages(c("maps", "mapdata"))
 devtools::install_github("dkahle/ggmap")
 
+library(tidyr)
+library(dplyr)
 library(ggplot2)
+
 library(ggmap)
 library(maps)
 library(mapdata)
-library(tidyr)
-library(dplyr)
+library(usmap)
 
-# Task 1:
+# We are going to be learning how to plot different points on a map
+# let's test out plotting a point on the map of the US
+# run this line of code to get a data point
+testData <- data.frame(LATITUDE = 20.31557, LONGITUDE = -102.42547)
+
+# Notice how we need to have longitude and latitude in order to make this data point
+
+# Load the US Map
+p <- plot_usmap(regions = "state") 
+# and then plot the data point!
+p + 
+  geom_point(data = testData, aes(x = LONGITUDE, y = LATITUDE), color = "red")
+
+#Notice that the longitude and latitude are operating as the x and y coordinates for the map!
+# pretty cool, right?
+# let's try stepping it up a little
+
+
+# Task:
 # We are going to plot out the different Starbucks found in New York.
 # We need a map to plot our information on.
 # To load a map of New York, run the following codes:
@@ -24,7 +44,7 @@ NY <- state %>%
   filter(region == "new york")
 
 
-# Task 2:
+# Task:
 # Read in the data set we are going to use (starbucks_2018_11_12.csv)
 # We only want the Starbucks in NY and we only want the columns "name", "latitude", and "longitude"
 # tidy it up!
@@ -47,6 +67,7 @@ ggplot() +
 # Map out the Starbucks in Canada
 # Hint 1: Canada is abbreviated as "CA" under "country" in the Starbucks csv
 # Hint 2: Canada is listed as "Canada" under "region" in the world data
+# Hint 3: You would have to load the data sets and give them a unique name
 
 
 
@@ -54,13 +75,22 @@ ggplot() +
 ############
 #Answer Key#
 ############
-# Task 1:
+# Task:
 starb <- read.csv("starbucks_2018_11_12.csv", stringsAsFactors = TRUE) %>% 
   subset(city == "New York") %>% 
   select(state, name, latitude, longitude)
 
 
-  
+# Final Task:
+starb_CA <- read.csv("starbucks_2018_11_12.csv", stringsAsFactors = TRUE) %>% 
+  subset(city == "New York") %>% 
+  select(state, name, latitude, longitude)
+
+ggplot() +
+  geom_polygon(data = NY, aes(x=long, y=lat, group=group), fill = "lightblue", col = "black") +
+  coord_fixed(1.5) +
+  geom_point(data = starb, aes(x = longitude, y = latitude, color = "red"), size = 0.05, shape = ".")
+
 
 
 # Notes (ignore for final project)
@@ -102,3 +132,11 @@ usa <- map_data("usa") %>%
 
 ggplot() + geom_polygon(data = world, aes(x=long, y = lat, group = group), color = "black", fill="gray") +
   coord_fixed(1.3) + geom_point(data = starb, aes(x = longitude, y = latitude), color = "yellow", size = 0.1) 
+
+
+
+# starbucks of the us
+
+starb_US <- read.csv("starbucks_2018_11_12.csv", stringsAsFactors = TRUE) %>% 
+  subset(country == "US") %>% 
+  select(state, name, latitude, longitude)
