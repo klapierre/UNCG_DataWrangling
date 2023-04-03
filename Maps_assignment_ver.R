@@ -48,12 +48,7 @@ plot_usmap(regions = "states") +
   theme(panel.background=element_blank()) +
   coord_fixed(1.3)
 
-#US counties
-plot_usmap(regions = "counties") + 
-  labs(title = "U.S. counties",
-       subtitle = "This is a blank map of the United States.") + 
-  theme(panel.background=element_blank()) +
-  coord_fixed(1.3)
+#TASK: US counties
 
 
 #Step 5: Let's get fancy! Using the map data() function that is included in the ggplot2 package, we will make a colorful US map. Use the guides() function to remove all labels for #state abbreviations. The map produced should have each state filled in with fun colors.
