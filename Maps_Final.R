@@ -104,7 +104,7 @@ plot_usmap(data = countypop, values = "pop_2015", include = c("TX", "CO", "AZ", 
 #--------------------------------#
 #Section 2 (Kaysa)
 #--------------------------------#
-## Before jumping in, make sure to load the following packages. For the ones you don't have installed, go ahead and install them and then load them.
+## Before jumping in, make sure the following packages are loaded. For the ones you don't have installed, go ahead and install them and then load them.
 library(tidyverse)
 library(ggplot2)
 library(ggmap)
