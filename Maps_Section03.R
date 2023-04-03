@@ -33,8 +33,6 @@ p +
 # pretty cool, right?
 # let's try stepping it up a little
 
-#######################################################
-
 # Task:
 # We are going to plot out the different Starbucks found in New York.
 # We need a map to plot our information on.
@@ -77,13 +75,23 @@ ggplot() +
 #   specify that: x=longitude & y=latitude
 
 
-# wow doesn't that look like something!
-# we can adjust the color, size, and shape of our data points too to make it look pretty
+
+# Congratulations!
+# We can adjust the color, size, and shape of our data points too to make it look
+?geom_point
+# here is a line of code which you can play around with
+# change the size, the color, and the shape until the map looks how you want it to
+# You can Google the different shapes you can have for your points (there are 25 shapes)
+
+ggplot() +
+  geom_polygon(data = NY, aes(x=long, y=lat, group=group), fill = "lightblue", col = "black") +
+  coord_fixed(1.5) +
+  geom_point(data = starb_NY, aes(x=longitude, y=latitude), color = "#Fe019a" , size = 5, shape = 25)
+
 
 # Final task
 # Map out the Starbucks in California
-# 
-
+# Be sure to personalize it!
 
 
 
@@ -99,22 +107,31 @@ starb_NY <- starb %>%
 ggplot() +
   geom_polygon(data = NY, aes(x=long, y=lat, group=group), fill = "lightblue", col = "black") +
   coord_fixed(1.5) +
-  geom_point(data = starb_NY, aes(x=longitude, y=latitude), color = "red", size = 1, shape = ".")
+  geom_point(data = starb_NY, aes(x=longitude, y=latitude))
+
+
+ggplot() +
+  geom_polygon(data = NY, aes(x=long, y=lat, group=group), fill = "lightblue", col = "black") +
+  coord_fixed(1.5) +
+  geom_point(data = starb_NY, aes(x=longitude, y=latitude), color = "red", size = 1, shape = 21)
 
 
 # Final Task:
 starb_CA <- starb %>% 
-  subset(city == "California") %>% 
-  select(state, name, latitude, longitude)
+  subset(state == "CA")
 
 CA <- state %>% 
   filter(region == "california")
 
+ggplot() +
+  geom_polygon(data = CA, aes(x=long, y=lat, group=group), fill = "lightblue", col = "black") +
+  coord_fixed(1.5) +
+  geom_point(data = starb_CA, aes(x = longitude, y = latitude))
 
 ggplot() +
   geom_polygon(data = CA, aes(x=long, y=lat, group=group), fill = "lightblue", col = "black") +
   coord_fixed(1.5) +
-  geom_point(data = starb_CA, aes(x = longitude, y = latitude, color = "red"), size = 5, shape = ".")
+  geom_point(data = starb_CA, aes(x = longitude, y = latitude, color = "red"), size = 1, shape = 7)
 
 
 
