@@ -222,6 +222,7 @@ ggplot()+
 install.packages(c("ggplot2", "devtools", "dplyr", "stringr"))
 install.packages(c("maps", "mapdata"))
 devtools::install_github("dkahle/ggmap")
+# also download the starbucks csv file
 
 library(tidyr)
 library(dplyr)
@@ -248,6 +249,47 @@ p +
 #Notice that the longitude and latitude are operating as the x and y coordinates for the map!
 # pretty cool, right?
 # let's try stepping it up a little
+
+# Task:
+# We are going to plot out the different Starbucks found in New York.
+# We need a map to plot our information on.
+# To load a map of New York, run the following codes:
+state <- map_data("state") 
+
+NY <- state %>% 
+  filter(region == "new york")
+
+
+# Read in the data set we are going to use (starbucks_2018_11_12.csv)
+# We only want the Starbucks in US and we only want the columns "name", "latitude", and "longitude"
+starb <- read.csv("starbucks_2018_11_12.csv", stringsAsFactors = TRUE) %>% 
+  subset(country == "US") %>% 
+  select(state, name, latitude, longitude)
+
+# Task:
+# Now tidy up the data so that we are working with only the Starbucks found in New York!
+# Be sure to name the data set "starb_NY"
+
+
+# We do this because to plot points on a map, we need to know the latitude and longitude.
+# Sometimes we have to figure this out by hand or by using packages to figure this out for us.
+# In this case, the csv file came with the latitude and longitude already included!
+
+
+# Now we will learn how to plot points onto our graphs
+# first we will load our map as we learnt in the previous sections
+# feel free to customize the map and make it your own!
+
+ggplot() +
+  geom_polygon(data = NY, aes(x=long, y=lat, group=group), fill = "lightblue", col = "black") +
+  coord_fixed(1.5)
+
+# Task:
+# Now we are going to add our coordinates from the starb_NY
+# to do this we are going to use "geom_point", just like from the example part 1
+# Be sure to:
+#   include the data set we are inserting (starb_NY)
+#   specify that: x=longitude & y=latitude
 
 
 #--------------------------------#
