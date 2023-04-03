@@ -22,12 +22,14 @@
 #For Loops 
 #Description (Lowie)
 
-# A for loop applies a set of operations over a collection of objects (list, vector, matrix, or data frame) repeated a defined number of times. 
-# The number of iterations are known in advance. 
+# A for loop applies a set of operations over a collection of objects (list, vector, matrix, or data frame)
+# repeated a defined number of times. The number of iterations are known in advance. 
 
 #Example (Mason)
 
-#Create a vector of numbers 1 through 5, and then use a for loop to iterate through each number in the vector and print it to the console. The loop variable i takes on the values 1, 2, 3, 4, and 5, and the print() function is called with each value of i.
+#Create a vector of numbers 1 through 5, and
+# then use a for loop to iterate through each number in the vector and print it to the console. 
+# The loop variable i takes on the values 1, 2, 3, 4, and 5, and the print() function is called with each value of i.
 
 # create a vector of numbers
 numbers <- c(1, 2, 3, 4, 5)
@@ -37,7 +39,9 @@ for (i in numbers) {
   print(i)
 }
 
-# For loops can iterate over a sequence of numbers, in the following example, from 1 to 100 and calculates the sum of the numbers. The loop variable i takes on the values 1, 2, 3, ..., 100, and the sum variable is updated on each iteration.
+# For loops can iterate over a sequence of numbers, in the following example,
+# from 1 to 100 and calculates the sum of the numbers. 
+# The loop variable i takes on the values 1, 2, 3, ..., 100, and the sum variable is updated on each iteration.
 
 sum <- 0
 for (i in 1:100) {
@@ -46,30 +50,44 @@ for (i in 1:100) {
 print(sum)
 
 #Do it yourself 
-# 1) Load in the "iris" dataset built into R. 
-# Name the dataframe "iris_loop"
+# 1) Load in the "iris" data set built into R. 
+# Name the data frame "iris_loop"
 # 2) Set up your for loop with the parameters to
-# use any interger from 1 through the number of columns
-# within the dataframe (Look into ncol functions if unsure)
+# use any integer from 1 through the number of columns
+# within the data frame (Look into ncol functions if unsure)
 # 3) Within curly brackets, set the following logical if-conditions:
 #    a) Make it so the function returns a "TRUE" statement if certain
 # conditions are met (Look into grepl())
-# b) Select the columns within the "iris_loop" dataframe and all integers 
+# b) Select the columns within the "iris_loop" data frame and all integers 
 # (Remember your brackets!)
 # c) Subset another curly bracket pair within the if condition.
 # Inside this curly bracket subset, set up a logical condition: 
-#  1000+seperated integers (Commas will be your friend). Make sure this condition is
-# saved back into the "iris_loop" dataframe.
+#  1000+separated integers (Commas will be your friend). Make sure this condition is
+# saved back into the "iris_loop" data frame.
 # 4) Make sure to close out all curly brackets to complete the loop.
 
-#DUE: MARCH 26TH
 
 #While Loops
 #Description (Mason)
 #A while loop is a control flow statement that allows you to repeatedly execute a block of code as long as a certain condition is met.
-#The condition is a logical expression that is evaluated before each iteration of the loop. If the condition is TRUE, the code inside the loop is executed, and then the condition is evaluated again. This process continues until the condition becomes FALSE, at which point the loop terminates and execution continues with the code following the loop.
+#The condition is a logical expression that is evaluated before each iteration of the loop. If the condition is TRUE, 
+# the code inside the loop is executed, and then the condition is evaluated again. This process continues until the condition becomes FALSE, 
+# at which point the loop terminates and execution continues with the code following the loop.
 
-#Next  (William)
+#Next
+# Within While Loops, if you wish to skip a current loop and go onto the next
+# iteration, you can use the "next" argument within the function. Consider the 
+# following example:
+x<-20     # Here we set the length of our variable. 
+while (x) {x <- x - 1 # We set our conditions in which x will be equal to x-1
+  if (x%%2 != 0) # A further condition is set in which x is divided by 2 if not equal to 0
+    next #This tells the while loop to skip any odd numbers
+  print(x)} # This prints x after it has gone through the loop
+
+#QUESTION: What happens if you change !=0 to !=1?
+
+
+
 #Example 1 (Zachary)
 
 #Let's try an example with numbers!
@@ -109,7 +127,8 @@ Samples_With_Label <- cbind(SampleID, Samples_Without_ID1)
 
 #Do it yourself (Lowie)
 
-#DUE: MARCH 30TH
+
+
 
 #Repeat Loops
 #Description (William)
