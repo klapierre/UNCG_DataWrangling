@@ -325,6 +325,7 @@ ggplot() +
 # We are going to be using the packages below, so go ahead and load those up if you don't
 # already have them loaded.
 
+install.packages(map_data)
 library(tidyverse)
 library(ggplot2)
 library(ggmap)
@@ -337,6 +338,10 @@ library(RColorBrewer)
 # Refer to your work above to help, but if you're feeling stuck be sure to reference the help function!
 # (Don't forget the coor_fixed argument! :^) )
 
+world <- map_data("world")
+ggplot(world, aes(long, lat, group = group)) +
+  geom_polygon(fill = "#429ef5", color = "black") +
+  coord_fixed(1.3)
 
 # Hopefully you've got yourself a nice map, don't be afraid to give it some personality and
 # change around the colors and labels.
@@ -346,16 +351,28 @@ library(RColorBrewer)
 caps <- read.csv("country-capital-lat-long-population.csv")
 
 # Give this data frame a look over. What does it contain?
-
+#Capitals of each country
 
 # Let's start by adding the capitals to the map as points. 
 
+ggplot() +
+  geom_polygon(data = world, aes(x=long, y=lat, group=group), fill = "light blue", col = "black") +
+  coord_fixed(1.5) +
+  geom_point(data = caps, aes(x=Longitude, y=Latitude), color = "red" , size = 0.25, shape = 9) +
+  xlab("Longitude") +
+  ylab("Latitude")
 
 # Nice! Be sure to change to color of the points and the size to something of your liking.
 
 # We can actually label all those points using the geom_text function! Give that package a look over and then
 # Add the labels to the countries to your map (If it looks like a garbled mess change the "size" of the text)
 
+ggplot() +
+  geom_polygon(data = world, aes(x=long, y=lat, group=group), fill = "light blue", col = "black") +
+  coord_fixed(1.5) +
+  geom_point(data = caps, aes(x=Longitude, y=Latitude), color = "red" , size = 0.25, shape = 9) +
+  xlab("Longitude") +
+  ylab("Latitude") + geom_text(data=caps, aes(x=Longitude, y=Latitude, label = Capital.City), size=1.5)
 
 # Alright now that you are comfy with the map making tools we have shown now it's time to set you free.
 # Load up the "observations-309667.csv" and keep your capitals dataset loaded. We will be incorporating it into
@@ -364,7 +381,7 @@ caps <- read.csv("country-capital-lat-long-population.csv")
 pines <- read.csv("observations-309667.csv")
 
 # What does this data frame look like? How many observations are there?
-
+#there are 153439 observations and 39 elements
 
 # This is a data set containing all research grade observations from the Pinus genus from iNaturalist.
 # There's actually way more data than this, but this range goes from 1/1/2020 - 3/24/2023
@@ -379,7 +396,32 @@ pines <- read.csv("observations-309667.csv")
 # Then plot all European pine and make those points yellow.
 # This is a huge dataset so go ahead and plot another species your choice, just make it clear which one you choose
 
+caps_filtered <- filter(caps, Country %in% c("United States of America", "Australia", "France", "Italy"))
 
+pines_filtered <- pines %>% 
+  filter(observed_on > "2021-1-1")
+
+European <- pines_filtered %>% 
+  filter(scientific_name=="Pinus sylvestris")
+
+palustris <- pines_filtered %>% 
+  filter(scientific_name=="Pinus palustris")
+
+
+nigra <- pines_filtered %>% 
+  filter(scientific_name=="Pinus nigra")
+
+ggplot() +
+  geom_polygon(data = world, aes(x=long, y=lat, group=group), fill = "light blue", col = "black") +
+  coord_fixed(1.5) +
+  geom_point(data= palustris, aes(x=longitude, y=latitude), color = "green", size =3, shape = 16) +
+    geom_point(data = European, aes(x=longitude, y=latitude), color = "yellow" , size = 2, shape = 9) +
+  geom_point(data = nigra, aes(x=longitude, y=latitude), color = "purple" , size = 2, shape = 12) +
+  xlab("Longitude") +
+  ylab("Latitude") +
+  geom_point(data = caps_filtered, aes(x=Longitude, y=Latitude), color = "orange", size = 5, shape = 16) +
+  geom_text(data=caps_filtered, aes(x=Longitude, y=Latitude, label = Capital.City), size=3, color="red")
+  
 
 ##############
 # Conclusion #
