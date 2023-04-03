@@ -273,7 +273,7 @@ library(RColorBrewer)
 # Let's all start by brushing up on our geography.
 # TASK: Using the mapdata() package go ahead and create a base map of the whole world.
 # Refer to your work above to help, but if you're feeling stuck be sure to reference the help function!
-# (Don't forget the coor_fixed arguement! :^) )
+# (Don't forget the coor_fixed argument! :^) )
 
 
 # Hopefully you've got yourself a nice map, don't be afraid to give it some personality and
