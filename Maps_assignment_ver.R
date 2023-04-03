@@ -144,6 +144,7 @@ age_pop_tidy$Adults.26.34 <- as.numeric(age_pop$Adults.26.34)
 # TASK: Now that our population data frame only has the data we need and has a matching 
 # column with the states data frame, we can combine them using inner_join(), using region 
 # as the common column in the "by =" statement
+betterAP <- inner_join(age_pop_tidy, state, by="region")
 
 # Now that we have a data frame ggplot can use, it's time to start making the heat map!
 # First, you create a basic map of the outline of the USA. Then put the state borders
@@ -192,7 +193,19 @@ ggplot()+
 # to re-tidy the age_pop data frame so it uses this column instead and assign it to a data frame
 # called age_pop_tidier. Then follow all the steps we took above and make your own map! Make sure to 
 # choose a different color palette and feel free to choose your own theme as well!
+age_pop_tidier <- age_pop %>% 
+  rename(region = Location) %>% 
+  mutate(region = tolower(region)) %>% 
+  select(region, Adults.55.64) %>% 
+  inner_join(states, by="region")
 
+ggplot()+
+  geom_polygon(data=usa, aes(x=long, y=lat, group=group), color = "black", fill=NA)+
+  coord_fixed(1.3)+
+  geom_polygon(data=states, aes(x=long, y=lat, group=group), fill=NA, color="white")+
+  geom_polygon(data=age_pop_tidier, aes(x=long, y=lat, group=group, fill = Adults.55.64), color = "white")+
+  geom_polygon(data=usa, aes(x=long, y=lat, group=group), color="black", fill = NA)+
+  scale_fill_gradientn(trans = "log10", colors=brewer.pal(11, "Purples"))
 
 #--------------------------------#
 #Section 3: Plotting Points on a Map
