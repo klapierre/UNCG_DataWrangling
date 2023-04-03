@@ -11,6 +11,8 @@ library(ggplot2)
 library(ggmap)
 library(maps)
 library(mapdata)
+library(tidyr)
+library(dplyr)
 
 # Task 1:
 # We are going to plot out the different Starbucks found in New York.
@@ -19,8 +21,10 @@ library(mapdata)
 state <- map_data("state") 
 
 NY <- state %>% 
-  filter(group == 37)
+  filter(region == "new york")
 
+LongIsland <- state %>% 
+  filter(group == 37)
 
 # Task 2:
 # Read in the data set we are going to use (starbucks_2018_11_12.csv)
@@ -32,14 +36,20 @@ NY <- state %>%
 # Sometimes we have to figure this out by hand or by using packages to figure this out for us.
 # In this case, the csv file came with the latitude and longitude already included!
 
-world <- map_data("world")
+
+# Now we will learn how to plot points onto our graphs
+
+ggplot() +
+  geom_polygon(data = NY, aes(x=long, y=lat, group=group), fill = "lightblue", col = "black") +
+  coord_fixed(1.5) +
+  geom_point(data = starb, aes(x = longitude, y = latitude, color = "red"), size = 0.05, shape = ".")
+
 
 
 ggplot() +
-  geom_polygon(data = state, aes(x=long, y = lat), fill = "blue", col = "black") +
-  coord_fixed(1.5) 
-  geom_point(data = starb, aes(x = longitude, y = latitude), color = "yellow", size = 0.1)
-
+  geom_polygon(data = LongIsland, aes(x=long, y=lat, group=group), fill = "lightblue", col = "black") +   
+  coord_fixed(1.5) +
+  geom_point(data = starb, aes(x=longitude, y=latitude, color = "red"), size = 1, shape = ".")
 
 
 
@@ -54,11 +64,39 @@ starb <- read.csv("starbucks_2018_11_12.csv", stringsAsFactors = TRUE) %>%
   select(state, name, latitude, longitude)
 
 
+  
 
-# Notes
 
-install.packages('tidygeocoder')
-devtools::install_github("jessecambon/tidygeocoder")
+# Notes (ignore for final project)
+library(ggplot2)
+library(usmap)
+testData <- data.frame(LATITUDE = 20.31557, LONGITUDE = -102.42547)
+p <- plot_usmap( regions = "state") 
+p + geom_point(data = testData, aes(x = LONGITUDE, y = LATITUDE), color = "red")
+  
+library(albersusa) # https://gitlab.com/hrbrmstr/albersusa / https://github.com/hrbrmstr/albersusa
+library(ggplot2)
+library(sp)
+
+us <- usa_composite(proj = "aeqd")
+
+states_centers <- as.data.frame(state.center)
+states_centers$name <- state.name
+
+states_centers <- states_centers[!(states_centers$name %in% c("Alaska", "Hawaii")),]
+
+coordinates(states_centers) <- ~x+y
+proj4string(states_centers) <- CRS(us_longlat_proj)
+states_centers <- spTransform(states_centers, CRSobj = CRS(us_aeqd_proj))
+states_centers <- as.data.frame(coordinates(states_centers))
+
+us_map <- fortify(us, region="name")
+
+ggplot() +
+  geom_map(data = us_map, map = us_map, aes(x = long, y = lat, map_id = id), color = "#2b2b2b", size = 0.1, fill = NA) +
+  geom_point(data = states_centers, aes(x, y), size = 4, color = "steelblue") +
+  coord_equal() + # the points are pre-projected
+  ggthemes::theme_map()
 
 #In progress:
 usa <- map_data("usa") %>% 
