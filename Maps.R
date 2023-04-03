@@ -260,7 +260,8 @@ starb <- read.csv("starbucks_2018_11_12.csv", stringsAsFactors = TRUE) %>%
 # TASK:
 # Now tidy up the data so that we are working with only the Starbucks found in New York!
 # Be sure to name the data set "starb_NY"
-
+ starb_NY <- starb %>% 
+   filter(state== "NY")
 
 # We do this because to plot points on a map, we need to know the latitude and longitude.
 # Sometimes we have to figure this out by hand or by using packages to figure this out for us.
@@ -282,6 +283,11 @@ ggplot() +
 #   include the data set we are inserting (starb_NY)
 #   specify that: x=longitude & y=latitude
 
+ggplot() +
+  geom_polygon(data = NY, aes(x=long, y=lat, group=group), fill = "lightblue", col = "black") +
+  coord_fixed(1.5) +
+  geom_point(data = starb_NY, aes(x = longitude, y = latitude), color = "red", size=0.5)
+
 # Congratulations!
 # We can adjust the color, size, and shape of our data points too
 # here is a line of code which you can play around with!
@@ -298,6 +304,18 @@ ggplot() +
 # Map out the Starbucks in California
 # Be sure to personalize it!
 
+CA <- state %>% 
+  filter(region == "california")
+
+starb_CA <- starb %>% 
+  filter(state== "CA")
+
+ggplot() +
+  geom_polygon(data = CA, aes(x=long, y=lat, group=group), fill = "dark green", col = "black") +
+  coord_fixed(1.5) +
+  geom_point(data = starb_CA, aes(x=longitude, y=latitude), color = "light blue" , size = 0.1, shape = 7) +
+  xlab("Longitude") +
+  ylab("Latitude")
 
 #--------------------------------#
 # Bring it all together.
