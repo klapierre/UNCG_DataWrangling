@@ -192,10 +192,27 @@ ggplot()+
   scale_fill_gradientn(trans = "log10", colors=rev(brewer.pal(9, "YlGnBu")))
 
 # Time to put it to the test!
-# TASK: You will be using the Adults age 55-64 column for your heat map so you will first have
+# You will be using the Adults age 55-64 column for your heat map so you will first have
 # to re-tidy the age_pop data frame so it uses this column instead and assign it to a data frame
-# called age_pop_tidier. Then follow the steps we took above and make your own map! Make sure to 
+# called age_pop_tidier. Then follow all the steps we took above and make your own map! Make sure to 
 # choose a different color palette and feel free to choose your own theme as well!
+### Answer: can be done in many ways but here is how I did it
+age_pop_tidier <- age_pop %>% 
+  rename(region = Location) %>% 
+  mutate(region = tolower(region)) %>% 
+  select(region, Adults.55.64)
+
+age_pop_tidier$Adults.55.64 <- as.numeric(age_pop$Adults.55.64)
+
+age_pop_states2 <- inner_join(states, age_pop_tidier, by = "region")
+
+ggplot()+
+  geom_polygon(data=usa, aes(x=long, y=lat, group=group), color = "black", fill=NA)+
+  coord_fixed(1.3)+
+  geom_polygon(data=states, aes(x=long, y=lat, group=group), fill=NA, color="white")+
+  geom_polygon(data=age_pop_states2, aes(x=long, y=lat, group=group, fill = Adults.55.64), color = "white")+
+  geom_polygon(data=usa, aes(x=long, y=lat, group=group), color="black", fill = NA)+
+  scale_fill_gradientn(trans = "log10", colors=rev(brewer.pal(9, "Purples")))
 
 #--------------------------------#
 #Section 3 (Stephanie)
