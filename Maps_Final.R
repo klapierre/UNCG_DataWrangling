@@ -215,35 +215,39 @@ ggplot()+
   scale_fill_gradientn(trans = "log10", colors=rev(brewer.pal(9, "Purples")))
 
 #--------------------------------#
-#Section 3 (Stephanie)
+#Section 3: Plotting Points on a Map
 #--------------------------------#
+
+# Prep by instaling these packages and loading these libraries if you haven't already
 install.packages(c("ggplot2", "devtools", "dplyr", "stringr"))
-
 install.packages(c("maps", "mapdata"))
-
 devtools::install_github("dkahle/ggmap")
 
+library(tidyr)
+library(dplyr)
 library(ggplot2)
+
 library(ggmap)
 library(maps)
 library(mapdata)
+library(usmap)
 
-install.packages('tidygeocoder')
-devtools::install_github("jessecambon/tidygeocoder")
+# We are going to be learning how to plot different points on a map
+# let's test out plotting a point on the map of the US
+# run this line of code to get a data point
+testData <- data.frame(LATITUDE = 20.31557, LONGITUDE = -102.42547)
 
-#In progress:
-usa <- map_data("usa") %>% 
-  ggplot() + geom_polygon(data = usa, aes(x=long, y = lat, group = group)) + 
-  coord_fixed(1.3)
+# Notice how we need to have longitude and latitude in order to make this data point
 
+# Load the US Map
+p <- plot_usmap(regions = "state") 
+# and then plot the data point!
+p + 
+  geom_point(data = testData, aes(x = LONGITUDE, y = LATITUDE), color = "red")
 
-# Read in the data set we are going to use (starbucks_2018_11_12.csv)
-# We only want the Starbucks in NY and we only want the columns "name", "latitude", and "longitude"
-# tidy it up!
-
-starb <- read.csv("starbucks_2018_11_12.csv", stringsAsFactors = TRUE) %>% 
-  subset(city == "New York") %>% 
-  select(state, name, latitude, longitude)
+#Notice that the longitude and latitude are operating as the x and y coordinates for the map!
+# pretty cool, right?
+# let's try stepping it up a little
 
 
 #--------------------------------#
