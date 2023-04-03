@@ -104,6 +104,7 @@ plot_usmap(data = countypop, values = "pop_2015", include = c("TX", "CO", "AZ", 
 #--------------------------------#
 #Section 2 (Kaysa)
 #--------------------------------#
+## Before jumping in, make sure to load the following packages. For the ones you don't have installed, go ahead and install them and then load them.
 library(tidyverse)
 library(ggplot2)
 library(ggmap)
@@ -145,13 +146,14 @@ age_pop_tidy$Adults.26.34 <- as.numeric(age_pop$Adults.26.34)
 # TASK: Now that our population data frame only has the data we need and has a matching 
 # column with the states data frame, we can combine them using inner_join(), using region 
 # as the common column in the "by =" statement
+### Answer
 age_pop_states <- inner_join(states, age_pop_tidy, by = "region")
 
 # Now that we have a data frame ggplot can use, it's time to start making the heat map!
 # First, you create a basic map of the outline of the USA. Then put the state borders
 # on the map, and finally make it a heat map using our population data!
 
-# Here we break it down step by step with example code
+# Here we break it down step by step with example code, do not run the code until we combine it all
 
 # 1) First we make the basic outline of the US map using the usa data frame and use 
 # coord_fixed() to maintain the correct aspect ratio. For the US it is recommended to use 1.3
@@ -160,7 +162,7 @@ ggplot()+
   coord_fixed(1.3)
 
 # 2) Next we add the state borders to the map using the states data frame. We use fill=NA 
-# since we just want the border lines
+# since we just want the border lines (color=)
 geom_polygon(data=states, 
              aes(x=long, y=lat, group=group), 
              fill=NA, color="white")
@@ -190,7 +192,7 @@ ggplot()+
   scale_fill_gradientn(trans = "log10", colors=rev(brewer.pal(9, "YlGnBu")))
 
 # Time to put it to the test!
-# You will be using the Adults age 55-64 column for your heat map so you will first have
+# TASK: You will be using the Adults age 55-64 column for your heat map so you will first have
 # to re-tidy the age_pop data frame so it uses this column instead and assign it to a data frame
 # called age_pop_tidier. Then follow the steps we took above and make your own map! Make sure to 
 # choose a different color palette and feel free to choose your own theme as well!
