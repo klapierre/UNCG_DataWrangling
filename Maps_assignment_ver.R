@@ -254,6 +254,22 @@ ggplot() +
 #   include the data set we are inserting (starb_NY)
 #   specify that: x=longitude & y=latitude
 
+# Congratulations!
+# We can adjust the color, size, and shape of our data points too
+# here is a line of code which you can play around with!
+# change the size, the color, and the shape until the map looks how you want it to
+# You can Google the different shapes you can have for your points (there are 25 shapes)
+
+ggplot() +
+  geom_polygon(data = NY, aes(x=long, y=lat, group=group), fill = "lightblue", col = "black") +
+  coord_fixed(1.5) +
+  geom_point(data = starb_NY, aes(x=longitude, y=latitude), color = "#Fe019a" , size = 5, shape = 25)
+
+
+# Final task
+# Map out the Starbucks in California
+# Be sure to personalize it!
+
 
 #--------------------------------#
 # Section 4 (Jordan)
