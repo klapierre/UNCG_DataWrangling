@@ -165,9 +165,6 @@ Samples_With_Label <- cbind(SampleID, Samples_Without_ID1)
 
 
 
-
-#DUE: APRIL 5TH
-
 #Final 
 #Nested loops within For Loops 
 #Description of nested loops  (Zachary)
