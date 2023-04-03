@@ -132,15 +132,20 @@ age_pop <- read.csv("age_population_USstates.csv")
 #   2) Select for the relevant columns: region and population of adults age 26-34
 #   4) Change the population data to be numeric (heat maps need numeric values)
 age_pop_tidy <- age_pop %>% 
-  rename(region = Location) %>% 
+  rename(region =  ï..Location) %>% 
   mutate(region = tolower(region)) %>% 
   select(region, Adults.26.34)
+
+head(age_pop)
 
 age_pop_tidy$Adults.26.34 <- as.numeric(age_pop$Adults.26.34)
 
 # TASK: Now that our population data frame only has the data we need and has a matching 
 # column with the states data frame, we can combine them using inner_join(), using region 
 # as the common column in the "by =" statement
+
+age_pop_states <- inner_join(age_pop_tidy, state, by = "region")
+
 
 # Now that we have a data frame ggplot can use, it's time to start making the heat map!
 # First, you create a basic map of the outline of the USA. Then put the state borders
@@ -190,7 +195,23 @@ ggplot()+
 # called age_pop_tidier. Then follow all the steps we took above and make your own map! Make sure to 
 # choose a different color palette and feel free to choose your own theme as well!
 
+age_pop_tidier <- age_pop %>% 
+  rename(region =  ï..Location) %>% 
+  mutate(region = tolower(region)) %>% 
+  select(region, Adults.55.64)
 
+age_pop_tidier$Adults.55.64 <- as.numeric(age_pop$Adults.55.64)
+
+age_pop_tidier <- inner_join(age_pop_tidier, states)
+
+
+ggplot()+
+  geom_polygon(data=usa, aes(x=long, y=lat, group=group), color = "black", fill=NA)+
+  coord_fixed(1.3)+
+  geom_polygon(data=states, aes(x=long, y=lat, group=group), fill=NA, color="black")+
+  geom_polygon(data=age_pop_tidier, aes(x=long, y=lat, group=group, fill = Adults.55.64), color = "red")+
+  geom_polygon(data=usa, aes(x=long, y=lat, group=group), color="black", fill = NA)+
+  scale_fill_gradientn(trans = "log10", colors=rev(brewer.pal(9, "Set3")))
 #--------------------------------#
 #Section 3: Plotting Points on a Map
 #--------------------------------#
@@ -246,6 +267,7 @@ starb <- read.csv("starbucks_2018_11_12.csv", stringsAsFactors = TRUE) %>%
 # Now tidy up the data so that we are working with only the Starbucks found in New York!
 # Be sure to name the data set "starb_NY"
 
+starb_NY <- starb %>% filter(state == 'NY')
 
 # We do this because to plot points on a map, we need to know the latitude and longitude.
 # Sometimes we have to figure this out by hand or by using packages to figure this out for us.
@@ -267,6 +289,11 @@ ggplot() +
 #   include the data set we are inserting (starb_NY)
 #   specify that: x=longitude & y=latitude
 
+ggplot() +
+  geom_polygon(data = NY, aes(x=long, y=lat, group=group), fill = "lightblue", col = "black") +
+  coord_fixed(1.5) + geom_point(data = starb_NY, aes(x = longitude, y = latitude), color = "red")
+
+
 # Congratulations!
 # We can adjust the color, size, and shape of our data points too
 # here is a line of code which you can play around with!
@@ -282,6 +309,16 @@ ggplot() +
 # Final task
 # Map out the Starbucks in California
 # Be sure to personalize it!
+CA <- state %>% 
+  filter(region == "california")
+
+starb_CA <- starb %>% filter(state == 'CA')
+
+
+ggplot() +
+  geom_polygon(data = CA, aes(x=long, y=lat, group=group), fill = "purple", col = "black") +
+  coord_fixed(1.5) + geom_point(data = starb_CA, aes(x = longitude, y = latitude), color = "black")
+
 
 
 #--------------------------------#
@@ -304,6 +341,11 @@ library(RColorBrewer)
 # Refer to your work above to help, but if you're feeling stuck be sure to reference the help function!
 # (Don't forget the coor_fixed argument! :^) )
 
+WorldMap <- map_data("world")
+
+ggplot() +
+  geom_polygon(data = WorldMap, aes(x=long, y=lat, group=group), fill = "purple", col = "black") +
+  coord_fixed(1.5)
 
 # Hopefully you've got yourself a nice map, don't be afraid to give it some personality and
 # change around the colors and labels.
@@ -314,14 +356,23 @@ caps <- read.csv("country-capital-lat-long-population.csv")
 
 # Give this data frame a look over. What does it contain?
 
+#Country capital city, latitude, longitude, population and capital type.
 
 # Let's start by adding the capitals to the map as points. 
+ggplot() +
+  geom_polygon(data = WorldMap, aes(x=long, y=lat, group=group), fill = "purple", col = "black") +
+  coord_fixed(1.5) + geom_point(data = caps, aes(x = Longitude, y = Latitude), color = "black")
 
 
 # Nice! Be sure to change to color of the points and the size to something of your liking.
 
 # We can actually label all those points using the geom_text function! Give that package a look over and then
 # Add the labels to the countries to your map (If it looks like a garbled mess change the "size" of the text)
+ggplot() +
+  geom_polygon(data = WorldMap, aes(x=long, y=lat, group=group), fill = "white", col = "black") +
+  coord_fixed(1.5) + geom_point(data = caps, aes(x = Longitude, y = Latitude), color = "black") +
+  geom_text(data = caps, aes(x = Longitude, y = Latitude, label = Capital.City), color = "black", size = 1)
+
 
 
 # Alright now that you are comfy with the map making tools we have shown now it's time to set you free.
@@ -332,6 +383,7 @@ pines <- read.csv("observations-309667.csv")
 
 # What does this data frame look like? How many observations are there?
 
+#lots of observation columns. 153,439 observations. 
 
 # This is a data set containing all research grade observations from the Pinus genus from iNaturalist.
 # There's actually way more data than this, but this range goes from 1/1/2020 - 3/24/2023
@@ -339,6 +391,7 @@ pines <- read.csv("observations-309667.csv")
 # You didn't think you were going to do a whole lesson without some data manipulation did you? (◕‿↼)
 # Make a global map (with some color options other than default) that has the following capital cities 
 #listed for the following countries: 
+
 # USA, Australia, France, and Italy. These points should be orange and labels should be red.
 # Next whittle down the pine data set so that we only have observations from after 1/1/2021.
 # Next plot all "Pinus palustris" species and make the points green change the size to be larger
@@ -346,7 +399,7 @@ pines <- read.csv("observations-309667.csv")
 # Then plot all European pine and make those points yellow.
 # This is a huge dataset so go ahead and plot another species your choice, just make it clear which one you choose
 
-
+New_Caps <- caps %>% select(Country)
 
 ##############
 # Conclusion #
