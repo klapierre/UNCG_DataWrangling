@@ -27,12 +27,13 @@ testData <- data.frame(LATITUDE = 20.31557, LONGITUDE = -102.42547)
 p <- plot_usmap(regions = "state") 
 # and then plot the data point!
 p + 
-  geom_point(data = testData, aes(x = LONGITUDE, y = LATITUDE), color = "red")
+  geom_point(data = testData, aes(x = LONGITUDE, y = LATITUDE))
 
 #Notice that the longitude and latitude are operating as the x and y coordinates for the map!
 # pretty cool, right?
 # let's try stepping it up a little
 
+#######################################################
 
 # Task:
 # We are going to plot out the different Starbucks found in New York.
@@ -44,10 +45,15 @@ NY <- state %>%
   filter(region == "new york")
 
 
-# Task:
 # Read in the data set we are going to use (starbucks_2018_11_12.csv)
-# We only want the Starbucks in NY and we only want the columns "name", "latitude", and "longitude"
-# tidy it up!
+# We only want the Starbucks in US and we only want the columns "name", "latitude", and "longitude"
+starb <- read.csv("starbucks_2018_11_12.csv", stringsAsFactors = TRUE) %>% 
+  subset(country == "US") %>% 
+  select(state, name, latitude, longitude)
+
+# Task:
+# Now tidy up the data so that we are working with only the Starbucks found in New York!
+# Be sure to name the data set "starb_NY"
 
 
 # We do this because to plot points on a map, we need to know the latitude and longitude.
@@ -56,18 +62,27 @@ NY <- state %>%
 
 
 # Now we will learn how to plot points onto our graphs
+# first we will load our map as we learnt in the previous sections
+# feel free to customize the map and make it your own!
 
 ggplot() +
   geom_polygon(data = NY, aes(x=long, y=lat, group=group), fill = "lightblue", col = "black") +
-  coord_fixed(1.5) +
-  geom_point(data = starb, aes(x = longitude, y = latitude, color = "red"), size = 0.05, shape = ".")
+  coord_fixed(1.5)
 
+# Task:
+# Now we are going to add our coordinates from the starb_NY
+# to do this we are going to use "geom_point", just like from the example part 1
+# Be sure to:
+#   include the data set we are inserting (starb_NY)
+#   specify that: x=longitude & y=latitude
+
+
+# wow doesn't that look like something!
+# we can adjust the color, size, and shape of our data points too to make it look pretty
 
 # Final task
-# Map out the Starbucks in Canada
-# Hint 1: Canada is abbreviated as "CA" under "country" in the Starbucks csv
-# Hint 2: Canada is listed as "Canada" under "region" in the world data
-# Hint 3: You would have to load the data sets and give them a unique name
+# Map out the Starbucks in California
+# 
 
 
 
@@ -76,30 +91,35 @@ ggplot() +
 #Answer Key#
 ############
 # Task:
-starb <- read.csv("starbucks_2018_11_12.csv", stringsAsFactors = TRUE) %>% 
-  subset(city == "New York") %>% 
-  select(state, name, latitude, longitude)
+starb_NY <- starb %>% 
+  subset(state == "NY")
 
 
-# Final Task:
-starb_CA <- read.csv("starbucks_2018_11_12.csv", stringsAsFactors = TRUE) %>% 
-  subset(city == "New York") %>% 
-  select(state, name, latitude, longitude)
-
+# Task
 ggplot() +
   geom_polygon(data = NY, aes(x=long, y=lat, group=group), fill = "lightblue", col = "black") +
   coord_fixed(1.5) +
-  geom_point(data = starb, aes(x = longitude, y = latitude, color = "red"), size = 0.05, shape = ".")
+  geom_point(data = starb_NY, aes(x=longitude, y=latitude), color = "red", size = 1, shape = ".")
+
+
+# Final Task:
+starb_CA <- starb %>% 
+  subset(city == "California") %>% 
+  select(state, name, latitude, longitude)
+
+CA <- state %>% 
+  filter(region == "california")
+
+
+ggplot() +
+  geom_polygon(data = CA, aes(x=long, y=lat, group=group), fill = "lightblue", col = "black") +
+  coord_fixed(1.5) +
+  geom_point(data = starb_CA, aes(x = longitude, y = latitude, color = "red"), size = 5, shape = ".")
 
 
 
 # Notes (ignore for final project)
-library(ggplot2)
-library(usmap)
-testData <- data.frame(LATITUDE = 20.31557, LONGITUDE = -102.42547)
-p <- plot_usmap( regions = "state") 
-p + geom_point(data = testData, aes(x = LONGITUDE, y = LATITUDE), color = "red")
-  
+
 library(albersusa) # https://gitlab.com/hrbrmstr/albersusa / https://github.com/hrbrmstr/albersusa
 library(ggplot2)
 library(sp)
@@ -132,11 +152,3 @@ usa <- map_data("usa") %>%
 
 ggplot() + geom_polygon(data = world, aes(x=long, y = lat, group = group), color = "black", fill="gray") +
   coord_fixed(1.3) + geom_point(data = starb, aes(x = longitude, y = latitude), color = "yellow", size = 0.1) 
-
-
-
-# starbucks of the us
-
-starb_US <- read.csv("starbucks_2018_11_12.csv", stringsAsFactors = TRUE) %>% 
-  subset(country == "US") %>% 
-  select(state, name, latitude, longitude)
