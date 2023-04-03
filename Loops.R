@@ -145,7 +145,12 @@ Samples_With_Label <- cbind(SampleID, Samples_Without_ID1)
 #Description: 
 # A repeat loop will repeat a block of code over a logical condition. So long as
 # The condition returns "FALSE", the block of code will continue to be repeated until
-# A "TRUE" condition is met. A repeat loop will not end until it is given a BREAK condition.
+# A "TRUE" condition is met. At this point, an output will be given
+# However, even if a "TRUE" condition is met, the repeat loop will not end
+# until it is given a BREAK condition. 
+
+#Question: Based on the description above and the description of While loops. 
+# How do Repeat and While loops differ? When might it be best to use one rather than the other?
 
 
 #Break (Mason)
