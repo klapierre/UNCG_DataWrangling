@@ -153,7 +153,7 @@ age_pop_states <- inner_join(states, age_pop_tidy, by = "region")
 # First, you create a basic map of the outline of the USA. Then put the state borders
 # on the map, and finally make it a heat map using our population data!
 
-# Here we break it down step by step with example code, do not run the code until we combine it all
+# Here we break it down step by step with example code, don't run the code until we combine it all
 
 # 1) First we make the basic outline of the US map using the usa data frame and use 
 # coord_fixed() to maintain the correct aspect ratio. For the US it is recommended to use 1.3
