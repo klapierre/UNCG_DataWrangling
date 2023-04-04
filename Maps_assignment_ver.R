@@ -385,17 +385,23 @@ pines <- read.csv("observations-309667.csv")
 # because bigger is better for the coolest species of pine.
 # Then plot all European pine and make those points yellow.
 # This is a huge dataset so go ahead and plot another species your choice, just make it clear which one you choose
-caps2 <- caps %>% 
-  filter()
-  df[c(12,77,107,223,)]
-pines2<- pine %>% 
-  mutate()
-  
+caps2 <- caps[c(12,77,107,223),]
+
+pines$observed_on <-as.Date(pines$observed_on, format = "%m/%d/%Y")
+pines2021<- subset(pines, observed_on >= as.Date("2021-1-1"))
+
+pinesLL <- pines2021 %>% 
+  filter(scientific_name == "Pinus palustris")
+pinesE <- pines2021 %>% 
+  filter(scientific_name == "Pinus sylvestris")
 
 ggplot() +
   geom_polygon(data = global, aes(x=long, y=lat, group=group), fill = "antiquewhite", col = "black") +
   coord_fixed(1.3) +
-  geom_point(data = caps, aes(x=Longitude, y=Latitude), color = "orange" , size = .5)
+  geom_point(data = pinesLL, aes(x=longitude, y=latitude), color = "green", size = 5) +
+  geom_point(data = pinesE, aes(x=longitude, y=latitude), color = "yellow") +
+  geom_point(data = caps2, aes(x=Longitude, y=Latitude), color = "orange" , size = 3) +
+  geom_text(data = caps2, aes(x=Longitude, y=Latitude, label = Capital.City), size = 2)
 
 
 ##############
