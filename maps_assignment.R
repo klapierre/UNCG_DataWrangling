@@ -389,7 +389,7 @@ ggplot()+
 pines <- read.csv("observations-309667.csv")
 
 # What does this data frame look like? How many observations are there?
-
+# This is a large dataset with 39 variables and 153439 observations.
 
 # This is a data set containing all research grade observations from the Pinus genus from iNaturalist.
 # There's actually way more data than this, but this range goes from 1/1/2020 - 3/24/2023
@@ -403,6 +403,25 @@ pines <- read.csv("observations-309667.csv")
 # because bigger is better for the coolest species of pine.
 # Then plot all European pine and make those points yellow.
 # This is a huge dataset so go ahead and plot another species your choice, just make it clear which one you choose
+
+
+capsfilter <- filter(caps, Country %in% c("Australia", "France", "Italy", "United States of America"))
+
+pines2021 <- subset(pines, observed_on > "2021-01-01")
+
+palustris_sub <- subset(pines2021, scientific_name == "Pinus palustris")
+euro_sub <- subset(pines2021, scientific_name == "Pinus sylvestris")
+NC_sub <- subset(pines2021, scientific_name == "Pinus echinata")
+
+
+ggplot()+ 
+  geom_polygon(data = globe, aes(x=long, y = lat, group = group), color = "darkblue", fill="white")+
+  coord_fixed(1.5)+
+  geom_point(data = capsfilter, aes(x = Longitude, y = Latitude), color = "orange", size = 0.5)+
+  geom_text(data = capsfilter, aes(x = Longitude, y = Latitude,label = Capital.City), size = 1.5, col = "red")+
+  geom_point(data = palustris_sub, aes(x = longitude, y = latitude), color = "green", size = 1, shape = 3)+
+  geom_point(data = euro_sub, aes(x = longitude, y = latitude), color = "yellow", size = .2, shape = 5)+
+  geom_point(data = NC_sub, aes(x = longitude, y = latitude), color = "brown", size = .2, shape = 7)
 
 
 
