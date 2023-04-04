@@ -374,6 +374,13 @@ ggplot()+
 # We can actually label all those points using the geom_text function! Give that package a look over and then
 # Add the labels to the countries to your map (If it looks like a garbled mess change the "size" of the text)
 
+ggplot()+
+  geom_polygon(data=globe, aes(x=long, y=lat, group=group), color = "darkblue", fill="white")+
+  coord_fixed(1.5)+
+  geom_point(data = caps, aes(x = Longitude, y = Latitude), color="red", size = 2, shape= 10)+
+  geom_text(data=caps,aes(x=Longitude, y= Latitude, label=Capital.City),size=1.5)
+  
+
 
 # Alright now that you are comfy with the map making tools we have shown now it's time to set you free.
 # Load up the "observations-309667.csv" and keep your capitals dataset loaded. We will be incorporating it into
