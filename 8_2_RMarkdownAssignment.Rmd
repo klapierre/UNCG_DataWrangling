@@ -41,3 +41,25 @@ TEMP_species <- TEMP_raw %>%
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+```{r}
+TEMP_treat <- TEMP_raw %>% 
+  mutate(replicate = paste(plot, subplot, sep="_")) %>%
+  mutate(treatment = ifelse(plot %in% "C", "Control",plot)) %>% 
+  mutate(treatment = ifelse(plot %in% "F", "Freshwater inundation",treatment)) %>% 
+  mutate(treatment = ifelse(plot %in% "S", "Saltwater inundation", treatment)) %>% 
+  select(-c("project_name", "sampler","notes","species","plot","subplot")) 
+
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Calculate the total herbaceous plant cover (remove non-plants) for each subplot in a new data frame, removing any "additional" species. The join that data frame back onto the original cover data. Calculate the relative cover for each species as 100*(species cover/total cover).
+
+
+Make two new data frames:
+1) In one dataframe, calculate plant species richness (the total number of plant species) for each subplot. Then find the mean and standard error of subplot species richness for each plot.
+2) In another dataframe, calculate plant species richness at the plot level (including the additional species not found in the subplot data).
+
+
+Make two figures, giving each one a title to distinguish the two in your output and intelligibly labeling axes:
+1) Bar graph of richness per plot (plot on x-axis) showing the mean and standard error across subplots.
+2) Another bar graph showing the richness at the plot level (plot on x-axis).
