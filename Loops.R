@@ -195,7 +195,14 @@ Samples_With_Label <- cbind(SampleID, Samples_Without_ID1)
 #===============================================================================
 
  
-# Description of nested loops:  (Zachary)
+# Description of nested loops
+# Earlier in the course, we used nested ifelse functions. A nested ifeelse function is just
+#an ifelse function INSIDE another ifelse function. The same goes for nested loops!
+
+#In a nested loop, we have a loop INSIDE another loop! 
+
+#Nested loops are often used for multideminsion data and allow for more precise
+#control of your data. 
 
 
 ### Example of Nested loops:
