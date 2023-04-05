@@ -28,7 +28,7 @@
 # A for loop applies a set of operations over a collection of objects (list, vector, matrix, or data frame)
 # repeated a defined number of times. The number of iterations are known in advance. 
 
-###Example
+###Example:
 #Create a vector of numbers 1 through 5, and
 # then use a for loop to iterate through each number in the vector and print it to the console. 
 # The loop variable i takes on the values 1, 2, 3, 4, and 5, and the print() function is called with each value of i.
@@ -80,15 +80,16 @@ print(sum)
 #===============================================================================
 
 
-###Description (Mason)
+###Description :
 #A while loop is a control flow statement that allows you to repeatedly execute a block of code as long as a certain condition is met.
 #The condition is a logical expression that is evaluated before each iteration of the loop. If the condition is TRUE, 
 # the code inside the loop is executed, and then the condition is evaluated again. This process continues until the condition becomes FALSE, 
 # at which point the loop terminates and execution continues with the code following the loop.
 
-###Next within Loops
+###Next within Loops:
 # Within loops, especially While Loops, if you wish to skip a current variable and go onto the next
-# iteration, you can use the "next" argument within the function. Consider the following example:
+# iteration, you can use the "next" argument within the function. This can be helpful in ignoring variables that would be messy, useless, and overall just unwanted (:,( poor variable)) 
+# Consider the following example:
 x<-20     # Here we set the length of our variable. 
 while (x) {x <- x - 1 # We set our conditions in which x will be equal to x-1
   if (x%%2 != 0) # A further condition is set in which x is divided by 2 if not equal to 0
@@ -161,8 +162,8 @@ Samples_With_Label <- cbind(SampleID, Samples_Without_ID1)
 # How do Repeat and While loops differ? When might it be best to use one rather than the other?
 
 
-###Break (Mason)
-###Example (Lowie)
+###Break: (Mason)
+###Example: (Lowie)
 
 
 ### TASK:
@@ -179,26 +180,26 @@ Samples_With_Label <- cbind(SampleID, Samples_Without_ID1)
 
 
 #===============================================================================
-#Final: Nested Loops
+#Final: Nested Loops within For Loops
 #===============================================================================
 
-
-###Nested loops within For Loops 
-#Description of nested loops  (Zachary)
+ 
+#Description of nested loops:  (Zachary)
 
 
 ###Example of Nested loops:
-# Let's look at using a for loop within a for loop. 
-# To do this, we will be looking at manipulating a numerical values
+# While any kind of loop can be nested within other loops, it will be easiest to look at the same two loops nested within each other. Nested loops allow us to look at multidimensional information. A visualization of a real life nested loop would be an analogue clock. # In this analogy, while visually it may not make the most sense, our outer loop of the clock would be the short hand, which tells the hour on the clock.
+# Nested within this outer loop is our inner loop, the long hand of the clock, which tells the minute.
+# Let's take a look at how we would created this within R and tell the time! 
 
-for (a in 0:10){  # Here we set up our values "a" as any variable between 0-10
-  for (b in 1:2) # Now we add in a nested logical condition, which creates a second value "b"
-                # This value is set between 1:2
-  {print(paste("(This is the combo of a =", a, "and b =", b, ")"))} # Now we want to print our variables, but paste them together when printed
+
+for (s in 1:12){  # Here we set up our outer loop as "s" to represent our short hand, so this will contain any variable between 1-12 since most analogue clocks use standard time.
+  for (l in 01:59) # Now we add in a nested, inner logical condition, which creates a second value "l" for the long hand. This hand will represent our minutes
+  {print(paste("The short hand is",s,"And the long hand", l))} # Now we want to print our variables, but paste them together when printed
 } # Close the loops
 
 
 
 
-###Do it yourself with a dataset (Mason)
+###TASK: (Mason)
 
