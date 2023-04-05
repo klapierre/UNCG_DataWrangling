@@ -19,8 +19,9 @@
 #Repeat Loops: Similar to while loop but requires a break, or stop to prevent
 #the loop from running forever. Example: Until 10 iterations, perform action y. 
 
-
+#===============================================================================
 #For Loops 
+#===============================================================================
 
 #Description:
 
@@ -71,7 +72,11 @@ print(sum)
 #Question: What happens if you change the "1000+" to "50+"?
 
 
-#While Loops
+#===============================================================================
+# While Loops
+#===============================================================================
+
+
 #Description (Mason)
 #A while loop is a control flow statement that allows you to repeatedly execute a block of code as long as a certain condition is met.
 #The condition is a logical expression that is evaluated before each iteration of the loop. If the condition is TRUE, 
@@ -138,9 +143,9 @@ Samples_With_Label <- cbind(SampleID, Samples_Without_ID1)
 ## output should look like this: 1, 2, 4, 5, 6, 7, 8, 9, 10
 
 
-
-
+#===============================================================================
 #Repeat Loops
+#===============================================================================
 
 #Description: 
 # A repeat loop will repeat a block of code over a logical condition. So long as
@@ -170,7 +175,11 @@ Samples_With_Label <- cbind(SampleID, Samples_Without_ID1)
 
 
 
-#Final 
+#===============================================================================
+#Final: Nested Loops
+#===============================================================================
+
+
 #Nested loops within For Loops 
 #Description of nested loops  (Zachary)
 
