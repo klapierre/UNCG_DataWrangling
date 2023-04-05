@@ -1,0 +1,43 @@
+---
+title: "TEMPEST: Understory Plant Community Responses to Coastal Flooding"
+author: "Stephanie Mota"
+date: "2023-04-05"
+output: pdf_document
+---
+
+```{r, setup, include=FALSE}
+library(tidyr)
+library(dplyr)
+```
+
+
+## Background
+
+When it rains it pours. With global warming in the mix, the weather we receive is increasing in intensity. To figure out how badly our ecosystems will be affected, scientists ran an experiment called [TEMPEST](https://sercblog.si.edu/tempest-experiment-mimics-future-storms-inside-forests/).
+
+This experiment mimics the growing intensity which global warming brings to our weather. They studied how weather would affect the forests as time goes on.
+
+## Code
+
+First you want to load in your file.
+
+Then you want to create your two data frames:
+1) A plants species list
+2) Treatment information (Control, Freshwater, Saltwater)
+
+```{r}
+TEMP_raw <- read.csv("TEMPEST_SERC_understory sppcomp_2021.csv")
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+TEMP_species <- TEMP_raw %>% 
+  select(species, cover) %>% 
+  distinct(.keep_all = TRUE) %>%
+  mutate(species = ifelse(species=="canopy tree basal cover", NA, ifelse(species==
+         "infrastructure cover",NA, ifelse(species=="bare ground", NA, species))))%>%
+  filter(!is.na(species))
+
+knitr::opts_chunk$set(echo = TRUE)
+```
+
