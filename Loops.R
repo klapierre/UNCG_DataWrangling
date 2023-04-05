@@ -23,13 +23,12 @@
 #For Loops 
 #===============================================================================
 
-#Description:
+###Description:
 
 # A for loop applies a set of operations over a collection of objects (list, vector, matrix, or data frame)
 # repeated a defined number of times. The number of iterations are known in advance. 
 
-#Example
-
+###Example
 #Create a vector of numbers 1 through 5, and
 # then use a for loop to iterate through each number in the vector and print it to the console. 
 # The loop variable i takes on the values 1, 2, 3, 4, and 5, and the print() function is called with each value of i.
@@ -52,12 +51,15 @@ for (i in 1:100) {
 }
 print(sum)
 
-#Do it yourself 
+
+###TASK: 
 # 1) Load in the "iris" data set built into R. 
 # Name the data frame "iris_loop"
+
 # 2) Set up your for loop with the parameters to
 # use any integer from 1 through the number of columns
 # within the data frame (Look into ncol functions if unsure)
+
 # 3) Within curly brackets, set the following logical if-conditions:
 #    a) Make it so the function returns a "TRUE" statement if certain
 # conditions are met (Look into grepl())
@@ -67,6 +69,7 @@ print(sum)
 # Inside this curly bracket subset, set up a logical condition: 
 #  1000+separated integers (Commas will be your friend). Make sure this condition is
 # saved back into the "iris_loop" data frame.
+
 # 4) Make sure to close out all curly brackets to complete the loop.
 
 #Question: What happens if you change the "1000+" to "50+"?
@@ -77,13 +80,13 @@ print(sum)
 #===============================================================================
 
 
-#Description (Mason)
+###Description (Mason)
 #A while loop is a control flow statement that allows you to repeatedly execute a block of code as long as a certain condition is met.
 #The condition is a logical expression that is evaluated before each iteration of the loop. If the condition is TRUE, 
 # the code inside the loop is executed, and then the condition is evaluated again. This process continues until the condition becomes FALSE, 
 # at which point the loop terminates and execution continues with the code following the loop.
 
-#Next within Loops
+###Next within Loops
 # Within loops, especially While Loops, if you wish to skip a current variable and go onto the next
 # iteration, you can use the "next" argument within the function. Consider the following example:
 x<-20     # Here we set the length of our variable. 
@@ -92,7 +95,7 @@ while (x) {x <- x - 1 # We set our conditions in which x will be equal to x-1
     next #This tells the while loop to skip any numbers after our conditions set above
   print(x)} # This prints x after it has gone through the loop
 
-#QUESTION: Why do we have the argument !=0? What would occur if we changed it to !=1? 
+###QUESTION: Why do we have the argument !=0? What would occur if we changed it to !=1? 
 # Go ahead and give it a try:
 x<-20  
 while (x) {x <- x - 1 
@@ -101,7 +104,7 @@ if (x%%2 != 0)
 print(x)}
 
 
-#Example 1 of While Loops:
+###Example 1 of While Loops:
 
 #Let's try an example with numbers!
 
@@ -111,7 +114,7 @@ while (x < 6) { #Start of the while loop. While x is less than 6, perform some a
   x = x+1 #Adds one to x each loop.
 }
 
-#Example 2 of While Loops:
+###Example 2 of While Loops:
 
 #We can use this to label samples
 
@@ -138,31 +141,31 @@ View(SampleID) #Let's check it out!
 Samples_With_Label <- cbind(SampleID, Samples_Without_ID1)
 
 
-#Do it yourself (Lowie)
-##Create a while loop which pastes whole numbers from 1 to 10, but exclude printing 3 using the next function.
-## output should look like this: 1, 2, 4, 5, 6, 7, 8, 9, 10
+###TASK:
+#Create a while loop which pastes whole numbers from 1 to 10, but exclude printing 3 using the next function.
+# output should look like this: 1, 2, 4, 5, 6, 7, 8, 9, 10
 
 
 #===============================================================================
 #Repeat Loops
 #===============================================================================
 
-#Description: 
+###Description: 
 # A repeat loop will repeat a block of code over a logical condition. So long as
 # The condition returns "FALSE", the block of code will continue to be repeated until
 # A "TRUE" condition is met. At this point, an output will be given
 # However, even if a "TRUE" condition is met, the repeat loop will not end
 # until it is given a BREAK condition. 
 
-#Question: Based on the description above and the description of While loops. 
+###Question: Based on the description above and the description of While loops. 
 # How do Repeat and While loops differ? When might it be best to use one rather than the other?
 
 
-#Break (Mason)
-#Example (Lowie)
+###Break (Mason)
+###Example (Lowie)
 
 
-#Do it yourself:
+### TASK:
 
 #Let's try it on your own!
 
@@ -180,11 +183,11 @@ Samples_With_Label <- cbind(SampleID, Samples_Without_ID1)
 #===============================================================================
 
 
-#Nested loops within For Loops 
+###Nested loops within For Loops 
 #Description of nested loops  (Zachary)
 
 
-#Example of Nested loops:
+###Example of Nested loops:
 # Let's look at using a for loop within a for loop. 
 # To do this, we will be looking at manipulating a numerical values
 
@@ -197,7 +200,5 @@ for (a in 0:10){  # Here we set up our values "a" as any variable between 0-10
 
 
 
-#Do it yourself with a dataset (Mason)
+###Do it yourself with a dataset (Mason)
 
-
-#DUE: APRIL 8TH
