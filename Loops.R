@@ -58,22 +58,28 @@ print(sum)
 
 
 ### TASK: 
+# Let's look at some flowers!
+
+# ✿¸.•´*¨`*•✿✿•*`¨*`•.¸✿
+
 # 1) Load in the "iris" data set built into R. 
 # Name the data frame "iris_loop"
 
-# 2) Set up your for loop with the parameters to
+# 2) Set up your For Loop with the parameters to
 # use any integer from 1 through the number of columns
-# within the data frame (Look into ncol functions if unsure)
+# within the data frame (ncol function may be of some assistance)
 
-# 3) Within curly brackets, set the following logical if-conditions:
+# 3) Within curly brackets, set the following logical conditions under an "if" function:
+#     
 #     a) Make it so the function returns a "TRUE" statement if certain
-# conditions are met (Look into grepl())
-#     b) Select the columns within the "iris_loop" data frame and all integers 
-# (Remember your brackets!)
+# conditions which we will later establish are met (Grapple with the grepl() function)
+
+#     b) Select the columns within the "iris_loop" data frame and all integers separated by a comma 
+# (HINT: [,i] will be the best way to do this)
+
 #     c) Subset another curly bracket pair within the if condition.
-# Inside this curly bracket subset, set up a logical condition: 
-#  1000+separated integers (Commas will be your friend). Make sure this condition is
-# saved back into the "iris_loop" data frame.
+#  Inside this secondary curly bracket, set up a logical condition: 
+#  1000+separated integers. Make sure this condition is saved back into the "iris_loop" data frame with a "<-"
 
 # 4) Make sure to close out all curly brackets to complete the loop.
 
