@@ -58,9 +58,8 @@ print(sum)
 
 
 ### TASK: 
-# Let's look at some flowers!
 
-# ✿¸.•´*¨`*•✿✿•*`¨*`•.¸✿
+# ✿¸.•´*¨`*•✿ Let's look at some flowers! ✿•*`¨*`•.¸✿
 
 # 1) Load in the "iris" data set built into R. 
 # Name the data frame "iris_loop"
@@ -214,9 +213,9 @@ Samples_With_Label <- cbind(SampleID, Samples_Without_ID1)
 ### Example of Nested loops:
 # While any kind of loop can be nested within other loops, it will be easiest to look at the same two loops nested within each other. Nested loops allow us to look at multidimensional information. 
 # A visualization of a real life nested loop would be an analogue clock.
-# In this analogy, while visually it may not make the most sense, our outer loop of the clock would be the short hand, which tells the hour on the clock.
+# In this analogy, our outer loop of the clock would be the short hand, which tells the hour on the clock.
 # Nested within this outer loop is the inner loop, the long hand of the clock, which tells the minute.
-# So hop in your nearest Police Call Box, and let's travel time a bit: 
+# Here's how we would accomplish this in R:
 
 
 for (s in 1:12){  # Here we set up our outer loop as "s" to represent our short hand, so this will contain any variable between 1-12 since most analogue clocks use standard time.
