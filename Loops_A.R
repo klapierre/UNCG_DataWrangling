@@ -172,7 +172,14 @@ Samples_With_Label <- cbind(SampleID, Samples_Without_ID1)
 ### TASK:
 # Create a while loop which pastes whole numbers from 1 to 10, but exclude printing 3 using the next function.
 # output should look like this: 1, 2, 4, 5, 6, 7, 8, 9, 10
-
+i <- 0
+while (i < 10) {
+  i <- i + 1
+  if (i == 3) {
+    next
+  }
+  print(i)
+}
 
 #===============================================================================
 #Repeat Loops
