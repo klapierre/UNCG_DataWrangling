@@ -217,6 +217,36 @@ while (i < 10) {
 #4) Set a break to terminate the loop when y is greater than 14
 #5) Print "Y is big now!" when Y is greater than 14. 
 
+#Let's try it on your own!
+
+#Create a repeat loop that does the following: 
+#1) Stores 1 in the variable y.
+#2) prints y for iteration of the loop. 
+#3) Increase y by .7 each iteration. 
+#4) Set a break to terminate the loop when y is greater than 14
+#5) Print "Y is big now!" when Y is greater than 14. 
+
+y = 1
+
+# Repeat loop
+repeat {
+  
+  print(y)
+  
+  ifelse(y > 14, print("Y is big now!"), NA)
+  
+  
+  # Break statement to terminate if y > 14
+  if (y > 14) {
+    break
+  } 
+  
+  # Increment y by 1
+  y = y + .7
+  
+  
+}
+
 
 
 #===============================================================================
