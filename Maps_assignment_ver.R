@@ -272,7 +272,7 @@ ggplot() +
 
 
 #--------------------------------#
-# Section 4 (Jordan)
+# Bring it all together.
 #--------------------------------#
 
 # Alright y'all, for the last part of this assignment we are tying it all together and going global.
