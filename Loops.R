@@ -5,7 +5,7 @@
 
 # Loops, quite simply, loop! When a loop is run in R (or even other programming
 # languages!) a block of code is run again and again, often until a specified 
-# condition is met. Each time the code within a loop is run, it is refereed to as 
+# condition is met. Each time the code within a loop is run, it is referred to as 
 # an iteration.
 
 # Loops are useful for quickly performing mundane tasks that would otherwise 
