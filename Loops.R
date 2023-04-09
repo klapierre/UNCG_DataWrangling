@@ -273,5 +273,17 @@ for (s in 1:12){  # Here we set up our outer loop as "s" to represent our short 
 
 
 
-### TASK: (Mason)
+### TASK:
+# Now that we know how nested loops work, lets use our knowledge to create a graph that utilizes this new skill.
+#We are going to create a scatterplot using the iris dataset, of sepal length vs. sepal width, with each point colored according to its species (setosa in red, versicolor in blue, and virginica in green). The nested loops are going to be used to loop over each species in the dataset, and then over each observation within that species to plot the points with the appropriate color.
 
+#1. Load the iris dataset using the command data(iris).
+#2. Create an empty scatterplot with the plot() function. Set the x-axis to Sepal.Length, y-axis to Sepal.Width, and add labels and a title.
+#3. Create a loop to iterate over each unique species in the iris dataset using the for() function.
+#4. Within the loop, subset the iris dataset to only include the current species using the subset() function.
+#5. Assign a color to the current species using an if statement and a variable to hold the color.
+#6. Create another loop to iterate over each observation within the current species using the for() function.
+#7. Within the nested loop, extract the current observation's sepal length and width using the $ operator.
+#8. Use the points() function to plot the current observation as a point on the scatterplot, using the assigned color.
+#9. After the nested loop, use the legend() function to create a legend for the plot. Set the position to "topright", the legend argument to the unique species in the dataset, the col argument to a vector of colors matching the species, the pch argument to 1 to use solid point markers, and the title argument to "Species".
+#10. Run the code and check that the resulting scatterplot has a legend.
