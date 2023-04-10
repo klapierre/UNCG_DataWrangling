@@ -2,7 +2,7 @@
 #   MAPS   #
 ############
 
-#Section 1 (Carina) 
+#Section 1 (Carina)
 #Introduction to maps in Rstudio
 
 #Rstudio can be used for more than tidying and transforming data it can also helps us visualize #our data in the form of heat maps, or maps. One of the packages used for data visualization is #"tidyverse". It comes with a number of packages, including "ggplot2" for high-quality #graphics, "dplyr" for data manipulation, and "tidyr" for data tidying. 
