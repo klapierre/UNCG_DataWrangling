@@ -2,7 +2,7 @@
 
 #Add working directory
 setwd("/Users/rachaelbrenneman/Desktop/data_wrangle/UNCG_DataWrangling")
-setwd("D:/School Stuff/Graduate Studd/Graduate Classes/Spring 2023/UNCG_DataWrangling")
+setwd("D:/School Stuff/Graduate Stuff/Graduate Classes/Spring 2023/UNCG_DataWrangling")
 ##############################Tentative Outline################################
 #intro to dates and times - R
 #moving from 12hr to 24hr back and forth - W
@@ -40,18 +40,19 @@ https://www.r-bloggers.com/2020/04/a-comprehensive-introduction-to-handling-date
 
 ########## Untidy ITNL Data ##########
 
-date_time_untidy <-read.csv("date_times_very_untidy.csv")
+library(tidyverse)
+date_time_untidy <-read.csv("date_time_very_untidy.csv")
 
 #SA and NZ: Day/Month/Year
 #USA: Month/Day/Year
 
-USA_untidy<- date_time_very_untidy %>%
+USA_untidy<- date_time_untidy %>%
   filter(Location=="USA")
 
-NZ_untidy<- date_time_very_untidy %>%
+NZ_untidy<- date_time_untidy %>%
   filter(Location== "New Zealand")
 
-SA_untidy<- date_time_very_untidy %>%
+SA_untidy<- date_time_untidy %>%
   filter(Location== "South Africa")
 
 ITNL_untidy<- full_join(SA_untidy, NZ_untidy)
