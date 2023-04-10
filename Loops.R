@@ -260,7 +260,7 @@ repeat {
 ### Example of Nested loops:
 # While any kind of loop can be nested within other loops, it will be easiest to look at the same two loops nested within each other. Nested loops allow us to look at multidimensional information. 
 # A visualization of a real life nested loop would be an analogue clock.
-# In this analogy, our outer loop of the clock would be the short hand, which tells the hour on the clock.
+# In this analogy, our outer loop of the clock would be the short hand, which tells the hour..
 # Nested within this outer loop is the inner loop, the long hand of the clock, which tells the minute.
 # Here's how we would accomplish this in R:
 
