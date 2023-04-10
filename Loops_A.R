@@ -346,23 +346,30 @@ for(species in unique(iris$Species)) {
   # Subset the data to only include the current species
   species_data <- subset(iris, Species == species)
   
-  # Assign a color based on the species
-  if(species == "setosa") {
-    col <- "red"
-  } else if(species == "versicolor") {
-    col <- "blue"
-  } else {
-    col <- "green"
-  }
-  
-  # Plot the observations for the current species as points with the assigned color
-  points(species_data$Sepal.Length, species_data$Sepal.Width, col = col)
-  
-}
-
-# Create a legend
-legend("topright", 
-       legend = unique(iris$Species),
-       col = c("red", "blue", "green"),
-       pch = 1,
-       title = "Species")
+  # Loop over each observation in the subsetted data
+  for(i in 1:nrow(species_data)) {
+    
+    # Get the current observation's sepal length and width
+    x <- species_data$Sepal.Length[i]
+    y <- species_data$Sepal.Width[i]
+    
+    # Assign a color based on the species
+    if(species == "setosa") {
+      col <- "red"
+    } else if(species == "versicolor") {
+      col <- "blue"
+    } else {
+      col <- "green"
+    }
+    
+    # Plot the observation as a point with the assigned color
+    points(x, y, col = col)
+    
+    # Create a legend
+    legend("topright", 
+           legend = unique(iris$Species),
+           col = c("red", "blue", "green"),
+           pch = 1,
+           title = "Species")
+    
+  }}
