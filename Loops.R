@@ -191,7 +191,7 @@ while (x<10){
 
 ### Question: Based on the description above and the description of While loops. 
 # How do Repeat and While loops differ? When might it be best to use one rather than the other?
-
+## While loops end when it a FALSE condition is met, Repeat loops just keep going. A repeat loop would be better for a dataset that you want to run the loop for entirely and you don't care about FALSE conditions. A while loop might be better if you know when you want it to stop and you can assign that to a FALSE condition.
 
 ### Breaks:
 #The Break statement is a way to stop a loop from running before it has finished all its iterations. When the break statement is encountered within a repeat loop, the loop stops running immediately, and the program moves on to the next line of code after the loop. This can be useful if you want to stop a loop based on a certain condition, without having to wait for it to finish all its iterations.
@@ -254,7 +254,15 @@ repeat {
 #3) Increase y by .7 each iteration. 
 #4) Set a break to terminate the loop when y is greater than 14
 #5) Print "Y is big now!" when Y is greater than 14. 
-
+y <- 1
+repeat{
+  print(y)
+  if(y>14)
+    print("Y is big now!")
+  if(y>14){
+    break}
+  y=y*1.7
+}
 
 
 #===============================================================================
@@ -263,7 +271,7 @@ repeat {
 
 
 # Description of nested loops
-# Earlier in the course, we used nested ifelse functions. A nested ifeelse function is just
+# Earlier in the course, we used nested ifelse functions. A nested ifelse function is just
 #an ifelse function INSIDE another ifelse function. The same goes for nested loops!
 
 #In a nested loop, we have a loop INSIDE another loop! 
@@ -299,9 +307,36 @@ for (s in 1:12){  # Here we set up our outer loop as "s" to represent our short 
 #2. Create an empty scatterplot with the plot() function. Set the x-axis to Sepal.Length, y-axis to Sepal.Width, and add labels and a title.
 #3. Create a loop to iterate over each unique species in the iris dataset using the for() function.
 #4. Within the loop, subset the iris dataset to only include the current species using the subset() function.
-#5. Assign a color to the current species using an if statement and a variable to hold the color.
+#5. Assign a color to t  he current species using an if statement and a variable to hold the color.
 #6. Create another loop to iterate over each observation within the current species using the for() function.
 #7. Within the nested loop, extract the current observation's sepal length and width using the $ operator.
 #8. Use the points() function to plot the current observation as a point on the scatterplot, using the assigned color.
 #9. After the nested loop, use the legend() function to create a legend for the plot. Set the position to "topright", the legend argument to the unique species in the dataset, the col argument to a vector of colors matching the species, the pch argument to 1 to use solid point markers, and the title argument to "Species".
 #10. Run the code and check that the resulting scatterplot has a legend.
+
+data(iris)
+
+plot(x=iris$Sepal.Length, y=iris$Sepal.Width,
+     xlab="sepal length",
+     ylab="sepal width",
+     main="sepal length vs. width")
+
+for(species in unique(iris$Species)){
+  species_current <- subset(iris, Species == species)
+  for(i in 1:nrow(species_current)) {
+    x <- species_current$Sepal.Length[i]
+    y <- species_current$Sepal.Width[i]
+    if(species == "setosa") {
+      col <- "red"
+    } else if(species == "versicolor") {
+      col <- "blue"
+    } else {
+      col <- "green"
+    }
+    points(x, y, col = col)
+    legend("topright", 
+           legend = unique(iris$Species),
+           col = c("red", "blue", "green"),
+           pch = 1,
+           title = "species")
+  }}
