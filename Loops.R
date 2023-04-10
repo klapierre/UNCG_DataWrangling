@@ -274,6 +274,9 @@ for (s in 1:12){  # Here we set up our outer loop as "s" to represent our short 
 
 
 ### TASK:
+
+# ✿¸.•´*¨`*•✿ More Flowers!✿•*`¨*`•.¸✿
+
 # Now that we know how nested loops work, lets use our knowledge to create a graph that utilizes this new skill.
 #We are going to create a scatterplot using the iris dataset, of sepal length vs. sepal width, with each point colored according to its species (setosa in red, versicolor in blue, and virginica in green). The nested loops are going to be used to loop over each species in the dataset, and then over each observation within that species to plot the points with the appropriate color.
 
