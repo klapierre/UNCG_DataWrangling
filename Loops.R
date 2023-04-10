@@ -201,7 +201,7 @@ while(x<10){
 
 ### Question: Based on the description above and the description of While loops. 
 # How do Repeat and While loops differ? When might it be best to use one rather than the other?
-#Repeat loops go even if there is a false return. While go until a certain perameter
+#Repeat loops go even if there is a false return. While go until a certain perimeter. Kim said repeat is most useful for data sets sso you can skip any groupings you don't need and can set the break as the end of the dataframe
 
 ### Breaks:
 #The Break statement is a way to stop a loop from running before it has finished all its iterations. When the break statement is encountered within a repeat loop, the loop stops running immediately, and the program moves on to the next line of code after the loop. This can be useful if you want to stop a loop based on a certain condition, without having to wait for it to finish all its iterations.
@@ -323,3 +323,24 @@ for (s in 1:12){  # Here we set up our outer loop as "s" to represent our short 
 #8. Use the points() function to plot the current observation as a point on the scatterplot, using the assigned color.
 #9. After the nested loop, use the legend() function to create a legend for the plot. Set the position to "topright", the legend argument to the unique species in the dataset, the col argument to a vector of colors matching the species, the pch argument to 1 to use solid point markers, and the title argument to "Species".
 #10. Run the code and check that the resulting scatterplot has a legend.
+
+iris_data <- iris
+
+plot(x = iris_data$Sepal.Length, y = iris_data$Sepal.Width, xlab ="Sepal Length", ylab = "Sepal Width", main = "Sepal Length vs Sepal Width") 
+
+for(species in unique(iris$Species)) {
+  spdata <- subset(iris, Species == species)
+  for(i in 1:nrow(spdata)) {
+    splength <- spdata$Sepal.Length[i]
+    swidthp<- spdata$Sepal.Width[i]
+    
+    if(species == "setosa") {col <- "red"} 
+    else if(species == "versicolor") {col <- "blue"} 
+    else {col <- "black"}
+    
+    points(splength, swidthp, col = col, pch = 16)
+    
+    legend("topright", legend = c("Setosa", "Versicolor","Virginica"), col = c("red", "blue", "black"), pch = 13, title = "Species")
+    
+  }}
+
