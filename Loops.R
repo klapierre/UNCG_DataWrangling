@@ -338,9 +338,9 @@ for(species in unique(iris$Species)) {
     else if(species == "versicolor") {col <- "blue"} 
     else {col <- "black"}
     
-    points(splength, swidthp, col = col, pch = 16)
+    points(splength, swidthp, col = col, pch = 15)
     
-    legend("topright", legend = c("Setosa", "Versicolor","Virginica"), col = c("red", "blue", "black"), pch = 13, title = "Species")
+    legend("topright", legend = c("Setosa", "Versicolor","Virginica"), col = c("red", "blue", "black"), pch = 15, title = "Species")
     
   }}
 
