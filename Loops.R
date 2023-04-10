@@ -173,12 +173,15 @@ Samples_With_Label <- cbind(SampleID, Samples_Without_ID1)
 ### TASK:
 # Create a while loop which pastes whole numbers from 1 to 10, but exclude printing 3 using the next function.
 # output should look like this: 1, 2, 4, 5, 6, 7, 8, 9, 10
-x <- 1:10
-for(i in x){
-  if(i ==3)
+x <- 0
+while(x<10){
+  x <- x+1
+  if(x == 3){
     next
-  print(i)
+  }
+  print(x)
 }
+
 
 
 #===============================================================================
@@ -198,7 +201,7 @@ for(i in x){
 
 ### Question: Based on the description above and the description of While loops. 
 # How do Repeat and While loops differ? When might it be best to use one rather than the other?
-
+#Repeat loops go even if there is a false return. While go until a certain perameter
 
 ### Breaks:
 #The Break statement is a way to stop a loop from running before it has finished all its iterations. When the break statement is encountered within a repeat loop, the loop stops running immediately, and the program moves on to the next line of code after the loop. This can be useful if you want to stop a loop based on a certain condition, without having to wait for it to finish all its iterations.
@@ -262,7 +265,15 @@ repeat {
 #4) Set a break to terminate the loop when y is greater than 14
 #5) Print "Y is big now!" when Y is greater than 14. 
 
-
+y <- 1
+repeat {
+  print(y)
+  ifelse(y > 14, print("Y is big now!"), NA)
+  if(y > 14) {
+    break
+  }
+  y=y+0.7
+  }
 
 #===============================================================================
 #Final: Nested Loops within For Loops
