@@ -181,7 +181,7 @@ Samples_With_Label <- cbind(SampleID, Samples_Without_ID1)
 ### Breaks:
 #The Break statement is a way to stop a loop from running before it has finished all its iterations. When the break statement is encountered within a repeat loop, the loop stops running immediately, and the program moves on to the next line of code after the loop. This can be useful if you want to stop a loop based on a certain condition, without having to wait for it to finish all its iterations.
 
-### Example of Repeat Loops: (Lowie)
+### Example of Repeat Loops: 
 
 # Basic example of Repeat Loop with a conditional break. 
 # Without the break statement, repeat loops would continue indefinitely.

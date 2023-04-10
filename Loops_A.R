@@ -202,8 +202,56 @@ while (i < 10) {
 # The repeat loop depends upon the continuous return of FALSE information, and only gives outputs that are TRUE
 
 
-### Break: (Mason)
-### Example: (Lowie)
+### Breaks:
+#The Break statement is a way to stop a loop from running before it has finished all its iterations. When the break statement is encountered within a repeat loop, the loop stops running immediately, and the program moves on to the next line of code after the loop. This can be useful if you want to stop a loop based on a certain condition, without having to wait for it to finish all its iterations.
+
+### Example of Repeat Loops: 
+
+# Basic example of Repeat Loop with a conditional break. 
+# Without the break statement, repeat loops would continue indefinitely.
+i <- 1
+repeat {
+  print(paste("Loop", i))
+  if (i == 3) {
+    break
+  }
+  i <- i + 1
+}
+
+
+# Example of using a repeat loop for 'data processing' and conditional break.
+# In this example we will increase the salary of each individual in the dataset
+# and store the processed data in a new dataset.
+
+# First let's create a data frame with columns 'ID', 'Name', 'Age', 'Gender', and 'Salary'
+my_data <- data.frame(
+  ID = c(1, 2, 3, 4, 5),
+  Name = c("John", "Alice", "Bob", "Eve", "Charlie"),
+  Age = c(25, 32, 28, 40, 36),
+  Gender = c("M", "F", "M", "F", "M"),
+  Salary = c(50000, 60000, 55000, 70000, 65000)
+)
+
+# Create a counter to keep track of iterations
+i <- 1
+# Create a blank dataframe. This allows us to reset the dataframe everytime the loop is ran.
+processed_data <- data.frame()
+
+# Repeat loop for processing each row of the dataset
+repeat {
+  row <- my_data[i, ] # Get the row at the current iteration
+  processed_row <- list(  # Perform some data processing on the row
+    ID = row$ID,
+    Name = paste("Processed:", row$Name),
+    Age = row$Age,
+    Gender = ifelse(row$Gender == "M", "Male", "Female"),
+    Salary = row$Salary * 1.1 # Add a 10% salary increase
+  )
+  processed_data <- rbind(processed_data, processed_row) # Append the processed row to the processed_data  data frame
+  i <- i + 1 # Increase the counter
+  if (i > nrow(my_data) || processed_row$Salary > 100000) { 
+    break  # Exit the loop when all rows have been processed or when the salary exceeds 100,000 (arbitrary)
+  }}
 
 
 ### TASK:
