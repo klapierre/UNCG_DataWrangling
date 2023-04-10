@@ -1,7 +1,7 @@
 #===============================================================================
 # ◯。°。°。°。°。°。°。°。°。°。°。° LOOPS 。°。°。°。°。°。°。°。°。°。°。°◯
 #===============================================================================
-hi
+
 
 # Loops, quite simply, loop! When a loop is run in R (or even other programming
 # languages!) a block of code is run again and again, often until a specified 
@@ -63,10 +63,12 @@ print(sum)
 
 # 1) Load in the "iris" data set built into R. 
 # Name the data frame "iris_loop"
+iris_loop <- data.frame(iris)
 
 # 2) Set up your For Loop with the parameters to
 # use any integer from 1 through the number of columns
 # within the data frame (ncol function may be of some assistance)
+for (i in 1:ncol(iris_loop)) 
 
 # 3) Within curly brackets, set the following logical conditions under an "if" function:
 #     
@@ -81,9 +83,23 @@ print(sum)
 #  1000+separated integers. Make sure this condition is saved back into the "iris_loop" data frame with a "<-"
 
 # 4) Make sure to close out all curly brackets to complete the loop.
+  
+for(i in 1:ncol(iris_loop)) {                              
+  if(grepl("Length", colnames(iris_loop)[i])) {             
+    iris_loop[ , i] <- iris_loop[ ,i]+1000
+  }
+}
+
+print(iris_loop[ , 1])
 
 # Question: What happens if you change the "1000+" to "50+"?
+for(i in 1:ncol(iris_loop)) {                              
+  if(grepl("Length", colnames(iris_loop)[i])) {             
+    iris_loop[ , i] <- iris_loop[ ,i]+50
+  }
+}
 
+print(iris_loop[ , 1])
 
 #===============================================================================
 # While Loops
