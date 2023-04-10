@@ -128,10 +128,10 @@ while (x) {x <- x - 1 # We set our conditions in which x will be equal to x-1
 # Go ahead and give it a try:
 x<-20  
 while (x) {x <- x - 1 
-if (x%%2 != 0) 
+if (x%%2 != 1) 
   next 
 print(x)}
-
+#each variable has gone down by 1
 
 ### Example 1 of While Loops:
 
@@ -173,6 +173,12 @@ Samples_With_Label <- cbind(SampleID, Samples_Without_ID1)
 ### TASK:
 # Create a while loop which pastes whole numbers from 1 to 10, but exclude printing 3 using the next function.
 # output should look like this: 1, 2, 4, 5, 6, 7, 8, 9, 10
+x <- 1:10
+for(i in x){
+  if(i ==3)
+    next
+  print(i)
+}
 
 
 #===============================================================================
