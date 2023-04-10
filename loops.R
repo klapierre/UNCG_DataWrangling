@@ -325,3 +325,28 @@ for (s in 1:12){  # Here we set up our outer loop as "s" to represent our short 
 #8. Use the points() function to plot the current observation as a point on the scatterplot, using the assigned color.
 #9. After the nested loop, use the legend() function to create a legend for the plot. Set the position to "topright", the legend argument to the unique species in the dataset, the col argument to a vector of colors matching the species, the pch argument to 1 to use solid point markers, and the title argument to "Species".
 #10. Run the code and check that the resulting scatterplot has a legend.
+
+data("iris")
+plot( x=iris$Sepal.Length, y=iris$Sepal.Width, 
+      xlab = "Sepal Length", ylab= "Sepal Width",
+      main="Scatterplot of Length vs Width")
+for(species in unique(iris$species)) {
+  spcies_data<-subset(iris,Species==species)
+  if(species=="setosa") {
+    col<-"#b103fc"
+      }else if(species== "versicolot") {
+        col<-"#007ae6"
+      }else{
+        col<-"#e69200"
+      }
+points(species_data$Sepal.Length,species_data$Sepal.Width, col =col)
+  
+}
+par(xpd=TRUE)
+legend("topright",
+       legend=unique(iris$Species),
+       col=c("b103fc", "#007ae6","#e69200", "#b103fc"),
+       pch=1,
+       title="species",
+       cex=0.8,
+       inset=c(0.01,0.1))
