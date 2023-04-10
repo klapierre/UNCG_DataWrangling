@@ -208,8 +208,11 @@ for(i in x){
 ###
 # While tests a condition to determine when to finish looping, but repeat requires you to 
 # explicitly break the loop on your own and can be at any point in the body of the loop.
+<<<<<<< HEAD
 # I truly don't know when I would use a While over a Repeat? Maybe if you're looking for the first occurrence 
 # of an observation in a data set that has time as a measurement?
+=======
+>>>>>>> bfcfc3de719eeaedb7751f0a521265fe45d5f06b
 ###
 
 ### Breaks:
