@@ -23,7 +23,7 @@ ggplot() + geom_polygon(data = world, aes(x=long, y = lat, group = group)) +
 ggplot() + geom_polygon(data = world, aes(x=long, y = lat, group = group), fill = "blue", col = "black") + 
   coord_fixed(1.5) + geom_point(data = pines, aes(x = Longitude, y = Latitude), color = "yellow", size = 1)
 
-]# Nice what was your output?
+# Nice what was your output?
 
 # Answer: It better be a map
 
