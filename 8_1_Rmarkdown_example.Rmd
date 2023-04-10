@@ -1,62 +1,41 @@
 ---
-title: "Soil nutrient comparison between an annual burned (ABG) and patch burn grazing (PBG) system"
-author: "Ethan Isaac"
-date: "2023-03-26"
-output: Html
+title: 'TEMPEST: Understory plant community responses to coastal flooding'
+author: "Ethan ISaac"
+date: "4/03/2023"
+output:
+  word_document: default
+  html_document: default
+  pdf_document: default
 ---
+
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
-## Load libraries and datasets
-
-```{r libraries}
+knitr::opts_chunk$set(root.dir= '/tmp')
 library(tidyverse)
-PBG_N <- read.csv('PBG_N_compiled_raw_2021 (1).csv')
-PBG_P <- read.csv('PBG_P_compiled_raw_2021 (1).csv')
-PBG_trts <- read.csv('PBG_trts (1).csv')
 ```
+## Set up
+Load tidyverse 
+
+## Background
+Weather phenomenons are much more frequent in recent history due to climate change. STorms and other weather systems are intensifying and destructive weather systems are much more frequent. 
+Three graphs are ued the measure the effects this change is having on ecosystems particularly the understory.
 
 
-## Tidy up data
-
-```{r tidy}
-PBG_bind <- rbind(PBG_N, PBG_P) %>% 
-  filter(grepl('U', sample)) %>% 
-  group_by(Sample) %>% 
-  filter(dilution==max(dilution)) %>% 
-  ungroup() %>% 
-  separate(col=Sample, into=c('watershed', 'transect', 'plot', 'N_P'), sep='-') %>% 
-  merge(PBG_trts) %>% 
-  select(watershed, plot, concentration, units, test, treatment) %>% 
-  mutate(test=ifelse(test %in% c('HCl PO4_1','KCl Ammonia 10','KCL NO3_NO2 2'),c('Phosphorous','Ammonia', 'Nitrate'),test))
 ```
-
-## Boxplot of the data set
-
-``` {r boxplot}
-ggplot(PBG_bind, aes(test, as.numeric(concentration), fill=as.factor(test))) + geom_boxplot() + facet_wrap(~treatment, scales='free') +scale_fill_manual(values=c('purple', 'light blue', 'green')) + xlab('Treatment') + ylab('Concentration')
+TEMPEST <- read.csv("TEMPEST_SERC_understory sppcomp_2021.csv")
+# Select only rows of the data frame that correspond to plant species
+is_plant <- !grepl("infrastructure|cover", TEMPEST$species)
+# Subset the data frame using the is_plant vector
+plant_species <- TEMPEST[is_plant, "species", drop = FALSE]
+# Remove duplicate species names
+plant_species <- unique(plant_species)
+# Subset the TEMPEST data frame to only include treatment columns
+treatment_info <- TEMPEST[, c("project_name", "calendar_year", "treatment_year", "season", "plot", "subplot")]
+# Create a new column for replicate
+treatment_info$replicate <- paste(treatment_info$plot, treatment_info$subplot, sep = "_")
+# Create a new column for verbalized plot treatment
+treatment_info$treatment <- ifelse(TEMPEST$plot == "C", "C", 
+                                    ifelse(TEMPEST$plot == "S", "S",
+                                           ifelse(TEMPEST$plot == "F", "F", NA)))
+# Remove the plot and subplot columns
+treatment_info$plot <- treatment_info$subplot <- NULL
 ```
-
-
-## Creating CV function and dataframe
-
-``` {r cv}
-cv <- function(x) 100* (sd(x, na.rm =TRUE)/mean(x, na.rm=TRUE))
-cv_frame <- PBG_bind %>% 
-  group_by(treatment, test) %>% 
-  summarize(cv=cv(as.numeric(concentration))) %>% 
-  ungroup()
-```
-
-## Barplot
-
-``` {r barplot}
-ggplot(cv_frame, aes(x=test, y=as.numeric(cv), fill=as.factor(test))) + 
-  geom_bar(stat='identity') +
-  facet_wrap(~treatment, scales='free') +scale_fill_manual(values=c('blue', 'light blue', 'red')) + xlab('Treatment') + ylab('CV of Concentration')
-```
-## Summary
-
-Referencing the bar graphs we can see the PBG had more variation in soil nutrients. However, effects of the nutrient variatoion was not measured meaning further research is reuired to find the effect on the biodiversity. 
- 
