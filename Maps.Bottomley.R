@@ -82,19 +82,13 @@ plot_usmap(data = countypov, values = "pct_pov_2014", include = c("TX", "CO", "A
 
 
 #Step 8: Try it yourself. Create a map similar to the one above using the information #for the 2015 population estimates you can pick a particular state, or a region. Use the values "pop_2015" from the #dataset "countypop", pick the colors of your preference for the gradient fill and edit the #title and labels accordingly.  
-############
-#Answer Key#
-############
+
 plot_usmap(data = countypop, values = "pop_2015", include = .new_england, color = "black") + 
   scale_fill_continuous(low = "white", high = "#0467c9", name = "Population", label = scales::comma) + 
   labs(title = "New England Region", subtitle = "Population in New England Counties in 2015") +
   theme(legend.position = "right")
 
-#or
-plot_usmap(data = countypop, values = "pop_2015", include = c("TX", "CO", "AZ", "NM", "CA"), color = "black") + 
-  scale_fill_continuous(low = "white", high = "#0467c9", name = "Population", label = scales::comma) + 
-  labs(title = "New England Region", subtitle = "Population in New England Counties in 2015") +
-  theme(legend.position = "right")
+
 
 
 #RStudio comes with a number of different packages that can be used to map and visualize spatial data. Some of these packages are ggplot2, plotly, mapview, leaflet, and tmap, among #others. When it comes to plotting maps, these packages provide a number of benefits, including #the ability to alter the look of the maps, combine them with other plots, and carry out advanced geospatial studies. 
@@ -196,7 +190,7 @@ ggplot()+
 # to re-tidy the age_pop data frame so it uses this column instead and assign it to a data frame
 # called age_pop_tidier. Then follow all the steps we took above and make your own map! Make sure to 
 # choose a different color palette and feel free to choose your own theme as well!
-### Answer: can be done in many ways but here is how I did it
+
 age_pop_tidier <- age_pop %>% 
   rename(region = Location) %>% 
   mutate(region = tolower(region)) %>% 
@@ -311,9 +305,6 @@ ggplot() +
 
 
 
-############
-#Answer Key#
-############
 # Task:
 starb_NY <- starb %>% 
   subset(state == "NY")
@@ -385,13 +376,10 @@ caps <- read.csv("country-capital-lat-long-population.csv")
 
 # Give this data frame a look over. What does it contain?
 
-###
-# ANSWER
-###
+
 
 # Let's start by adding the capitals to the map as points. 
 
-### Answer here
 
 ggplot() + geom_polygon(data = world, aes(x=long, y = lat, group = group), color = "black", fill="gray") + 
   coord_fixed(1.3) + geom_point(data = caps, aes(x = Longitude, y = Latitude), color = "yellow", size = 0.1) 
@@ -401,7 +389,6 @@ ggplot() + geom_polygon(data = world, aes(x=long, y = lat, group = group), color
 # We can actually label all those points using the geom_text function! Give that package a look over and then
 # Add the labels to the countries to your map (If it looks like a garbled mess change the "size" of the text)
 
-### Answer here
 
 ggplot() + geom_polygon(data = world, aes(x=long, y = lat, group = group), color = "black", fill="gray")+ 
   coord_fixed(1.3) + geom_point(data = caps, aes(x = Longitude, y = Latitude), color = "yellow", size = 0.1)+
@@ -415,9 +402,6 @@ pines <- read.csv("observations-309667.csv")
 
 # What does this data frame look like? How many observations are there?
 
-###
-#ANSWER
-###
 
 # This is a data set containing all research grade observations from the Pinus genus from iNaturalist.
 # There's actually way more data than this, but this range goes from 1/1/2020 - 3/24/2023
@@ -432,7 +416,7 @@ pines <- read.csv("observations-309667.csv")
 # Then plot all European pine and make those points yellow.
 # This is a huge dataset so go ahead and plot another species your choice, just make it clear which one you choose
 
-#I assume this can be done several ways but here is how I did it.
+
 
 capitalsubset <- filter(caps, Country %in% c("United States of America", "Italy", "Australia", "France"))
 
