@@ -1,0 +1,41 @@
+---
+title: 'TEMPEST: Understory plant community responses to coastal flooding'
+author: "Ethan Isaac"
+date: "04/01.2023`"
+output:
+  word_document: default
+ 
+---
+
+```{r, setup, include=FALSE}
+knitr::opts_knit$set(root.dir = "/Users/rachaelbrenneman/Desktop/data_wrangle/UNCG_DataWrangling")
+library(tidyverse)
+
+library(ggplot2)
+```
+
+**Background**:
+
+As climate change continues to intensity, so to do extreme weather events. Heavy rainfall and storm sturges are common and widestream natural weather events to come of this. This leads to many questions, but one major one is: how will sudden deluges impact forests? 
+
+**TEMPEST (Terrestrial Ecosystem Manipulation to Probe the Effects of Storm Treatments)** was designed to investigate this question. Located in the forest at the Smithsonian Environmental Research Center, this experiment mimics intesnse freshwater rainstorms and saltwater storm surges by inundating parts of the forst. 
+
+This data set in particular examines the forest understory communities after these deluge treatments were conducted. Species cover was estimated in 2020 prior to the treatments, to determine whether there were any pre-existing differences between plot. 
+
+To examine this data, first we need to load in the datasheet. 
+```{r}
+tempest <- read.csv(file = "TEMPEST_SERC_understory sppcomp_2021.csv", stringsAsFactors = F)
+```
+
+Now we want to pull out the data that is actually needed for us. 
+```{r, results='hide'}
+theme_minimal() 
+unique(tempest$species) 
+only_plant <- tempest %>% 
+  filter(!str_detect(species, c('infrastructure'))) %>% 
+           filter(!str_detect(species, c('basal'))) %>% 
+                    filter(!str_detect(species, c('bare'))) %>% 
+  filter(!str_detect(subplot, c('additional')))
+  
+plant_species <- as.data.frame(unique(only_plant$species)) %>% rename("species" = "unique(only_plant$species)")
+```
