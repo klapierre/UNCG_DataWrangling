@@ -757,6 +757,38 @@ pines
 # This is a huge dataset so go ahead and plot another species your choice, just make it clear which one you choose 
 
 
+selectcaps<-caps %>%
+  group_by(Capital.City, Country, Population, Latitude, Longitude) %>%
+  filter(Country %in% c("United States of America", "France", "Australia", "Italy"))
+
+
+ggplot() +
+  geom_polygon(data=earth, aes(x=long, y=lat, group=group), fill = "darkgreen", color = "lightblue") +
+  coord_fixed(1.3)+ geom_point(data = selectcaps, aes(x= Longitude, y= Latitude), color="orange") + geom_text(data=selectcaps, aes(x=Longitude, y=Latitude, label=Capital.City) , color= "red", size=3)
+
+
+
+# Next whittle down the pine data set so that we only have observations from after 1/1/2021.
+futurepines<- pines %>%
+  filter(observed_on > "2021-01-01")
+
+
+# Next plot all "Pinus palustris" species and make the points green change the size to be larger
+# because bigger is better for the coolest species of pine.
+
+palustris<- futurepines %>%
+  filter(scientific_name=="Pinus palustris")
+sylv<- futurepines %>%
+  filter(scientific_name=="Pinus sylvestris")
+mychoice<-futurepines %>%
+  filter(scientific_name=="Pinus pinaster")
+
+ggplot() +
+  geom_polygon(data=earth, aes(x=long, y=lat, group=group), fill = "darkgreen", color = "lightblue") +
+  coord_fixed(1.3)+ geom_point(data = selectcaps, aes(x= Longitude, y= Latitude), color="orange") + geom_text(data=selectcaps, aes(x=Longitude, y=Latitude, label=Capital.City) , color= "red", size=3) +
+  geom_point(data=palustris, aes(x=longitude, y=latitude), color="pink", size=2) +
+  geom_point(data=sylv, aes(x=longitude, y= latitude), color="yellow", size=1) +
+  geom_point(data=mychoice, aes(x=longitude, y=latitude), color="red", size=1)
 
 ##############
 # Conclusion #
