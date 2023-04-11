@@ -341,12 +341,6 @@ plot(y=iris$Sepal.Width, x=iris$Sepal.Length, xlab="Length", ylab="Width", main=
       }}
 
 
-subset(df, subset=rownames(df) == 'r1') 
-for (s in 1:12){  # Here we set up our outer loop as "s" to represent our short hand, so this will contain any variable between 1-12 since most analogue clocks use standard time.
-  for (l in 01:59) # Now we add in a nested, inner logical condition, which creates a second value "l" for the long hand. This hand will represent our minutes
-  {print(paste("The short hand is",s,"And the long hand", l))} # Now we want to print our variables, but paste them together when printed
-} # Close the loops
-
 #3. Create a loop to iterate over each unique species in the iris dataset using the for() function.
 #4. Within the loop, subset the iris dataset to only include the current species using the subset() function.
 #5. Assign a color to the current species using an if statement and a variable to hold the color.
