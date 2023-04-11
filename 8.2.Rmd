@@ -16,13 +16,8 @@ library(ggplot2)
 
 **Background**:
 
-As climate change continues to intensity, so to do extreme weather events. Heavy rainfall and storm sturges are common and widestream natural weather events to come of this. This leads to many questions, but one major one is: how will sudden deluges impact forests? 
+As climate change rises the extreme weather events follow with. How is this effecting the terrestrial ecosystems?
 
-**TEMPEST (Terrestrial Ecosystem Manipulation to Probe the Effects of Storm Treatments)** was designed to investigate this question. Located in the forest at the Smithsonian Environmental Research Center, this experiment mimics intesnse freshwater rainstorms and saltwater storm surges by inundating parts of the forst. 
-
-This data set in particular examines the forest understory communities after these deluge treatments were conducted. Species cover was estimated in 2020 prior to the treatments, to determine whether there were any pre-existing differences between plot. 
-
-To examine this data, first we need to load in the datasheet. 
 ```{r}
 tempest <- read.csv(file = "TEMPEST_SERC_understory sppcomp_2021.csv", stringsAsFactors = F)
 ```
