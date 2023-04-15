@@ -1,0 +1,36 @@
+---
+title: 'TEMPEST: Understory plant community responses to coastal flooding'
+author: "Ethan Isaac"
+date: "04/01.2023`"
+output:
+  word_document: default
+ 
+---
+
+```{r, setup, include=FALSE}
+knitr::opts_knit$set(root.dir = "/Users/rachaelbrenneman/Desktop/data_wrangle/UNCG_DataWrangling")
+library(tidyverse)
+
+library(ggplot2)
+```
+
+**Background**:
+
+As climate change rises the extreme weather events follow with. How is this effecting the terrestrial ecosystems?
+
+```{r}
+tempest <- read.csv(file = "TEMPEST_SERC_understory sppcomp_2021.csv", stringsAsFactors = F)
+```
+
+Now we want to pull out the data that is actually needed for us. 
+```{r, results='hide'}
+theme_minimal() 
+unique(tempest$species) 
+only_plant <- tempest %>% 
+  filter(!str_detect(species, c('infrastructure'))) %>% 
+           filter(!str_detect(species, c('basal'))) %>% 
+                    filter(!str_detect(species, c('bare'))) %>% 
+  filter(!str_detect(subplot, c('additional')))
+  
+plant_species <- as.data.frame(unique(only_plant$species)) %>% rename("species" = "unique(only_plant$species)")
+```

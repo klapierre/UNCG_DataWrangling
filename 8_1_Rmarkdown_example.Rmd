@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ---
 title: 'TEMPEST: Understory plant community responses to coastal flooding'
 author: "Ethan ISaac"
@@ -39,3 +40,46 @@ treatment_info$treatment <- ifelse(TEMPEST$plot == "C", "C",
 # Remove the plot and subplot columns
 treatment_info$plot <- treatment_info$subplot <- NULL
 ```
+=======
+---
+title: 'TEMPEST: Understory plant community responses to coastal flooding'
+author: "Ethan ISaac"
+date: "4/03/2023"
+output:
+  word_document: default
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(root.dir= '/tmp')
+library(tidyverse)
+```
+## Set up
+Load tidyverse 
+
+## Background
+Weather phenomenons are much more frequent in recent history due to climate change. STorms and other weather systems are intensifying and destructive weather systems are much more frequent. 
+Three graphs are ued the measure the effects this change is having on ecosystems particularly the understory.
+
+
+```
+TEMPEST <- read.csv("TEMPEST_SERC_understory sppcomp_2021.csv")
+# Select only rows of the data frame that correspond to plant species
+is_plant <- !grepl("infrastructure|cover", TEMPEST$species)
+# Subset the data frame using the is_plant vector
+plant_species <- TEMPEST[is_plant, "species", drop = FALSE]
+# Remove duplicate species names
+plant_species <- unique(plant_species)
+# Subset the TEMPEST data frame to only include treatment columns
+treatment_info <- TEMPEST[, c("project_name", "calendar_year", "treatment_year", "season", "plot", "subplot")]
+# Create a new column for replicate
+treatment_info$replicate <- paste(treatment_info$plot, treatment_info$subplot, sep = "_")
+# Create a new column for verbalized plot treatment
+treatment_info$treatment <- ifelse(TEMPEST$plot == "C", "C", 
+                                    ifelse(TEMPEST$plot == "S", "S",
+                                           ifelse(TEMPEST$plot == "F", "F", NA)))
+# Remove the plot and subplot columns
+treatment_info$plot <- treatment_info$subplot <- NULL
+```
+>>>>>>> 8c461e7755e33379d4d22e326992e94c9404dea7
