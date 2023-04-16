@@ -43,6 +43,9 @@ https://www.r-bloggers.com/2020/04/a-comprehensive-introduction-to-handling-date
 library(tidyverse)
 date_time_untidy <-read.csv("date_time_very_untidy.csv")
 
+
+
+
 #SA and NZ: Day/Month/Year
 #USA: Month/Day/Year
 
@@ -55,12 +58,42 @@ NZ_untidy<- date_time_untidy %>%
 SA_untidy<- date_time_untidy %>%
   filter(Location== "South Africa")
 
-ITNL_untidy<- full_join(SA_untidy, NZ_untidy)
+ITNL_untidy<- full_join(SA_untidy, NZ_untidy) %>%
+  mutate(Time24=format(strptime(ITNL_untidy$Time.Recorded, "%H_%M"), format="%H:%M:%S"))
+
 ITNL_untidy[c('Day','Month', 'Year')]<-str_split_fixed(ITNL_untidy$Date, '/', 3)
+ITNL_untidy[c('Hour','Minute')]<-str_split_fixed(ITNL_untidy$Time.Recorded, '_', 2)
 
 
 
 
+
+USA_tidy<- USA_untidy %>%
+  mutate(Time24=format(strptime(USA_tidy$Time.Recorded, "%I_%M %p"), format="%H:%M:%S"))
+
+USA_tidy[c('Month','Day', 'Year')]<-str_split_fixed(USA_untidy$Date, '/', 3)
+USA_tidy[c('Hour','Minute')]<-str_split_fixed(USA_tidy$Time.Recorded, '_', 2)
+USA_tidy[c('Min','Meridian')]<-str_split_fixed(USA_tidy$Minute, ' ', 2)
+mutate(Time24=format(strptime(USA_tidy$Time.Recorded, "%I_%M %p"), format="%H:%M:%S"))
+
+USA_tidy2<- USA_tidy%>%
+  select(Site, Location, Luz.Values, Month, Day, Year, Hour, Min, Meridian) %>%
+  filter(Meridian=='PM')
+USA_tidy2$Hour + 12
+
+USA_tidy3<- USA_tidy%>%
+  select(Site, Location, Luz.Values, Month, Day, Year, Hour, Min, Meridian) %>%
+  filter(Meridian=='AM')
+
+
+
+
+Combined_tidy<-full_join(USA_tidy, ITNL_untidy) %>%
+  select(Site, Location, Luz.Values, Date, Time24)
+
+
+
+ggplot
 
 
 ##
