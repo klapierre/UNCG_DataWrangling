@@ -82,7 +82,7 @@ month(semester_start, label = TRUE) #Jan
 
 #Let's go back to our invoice data. Let's say we're trying to know a bit more about our data. 
 
-#TASK: Extract the day, month, and year from the Due column. Make a new data from called invoice_due with your extracted dates.  
+#TASK: Extract the day, month, and year from the Due column. Make a new data frame called invoice_due with your extracted dates.  
 invoice_due <- invoice %>% 
   mutate(due_date = day(Due), 
          due_month = month(Due), 
