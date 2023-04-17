@@ -61,7 +61,7 @@ event_start + years(1)
 invoice <- readr::read_csv('https://raw.githubusercontent.com/rsquaredacademy/datasets/master/transact.csv')
 
 #Task: How many invoices were settled post the due date? 
-invoice %>% 
+invoice_delay <- invoice %>% 
   mutate(Delay = Payment - Due) %>% 
   filter(Delay > 0) %>%
   count(Delay)
