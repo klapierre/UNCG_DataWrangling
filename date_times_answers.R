@@ -98,7 +98,7 @@ invoice_leap <- invoice %>%
     due_month = month(Due),
     due_year  = year(Due),
     is_leap   = leap_year(due_year)
-  ) #%>%
+  ) %>%
 filter(due_month == 2 & due_day == 29) %>%
   select(Due, is_leap) 
 
