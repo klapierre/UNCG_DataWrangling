@@ -64,9 +64,13 @@ print(sum)
 # 1) Load in the "iris" data set built into R. 
 # Name the data frame "iris_loop"
 
+iris_loop <- iris
+
 # 2) Set up your For Loop with the parameters to
 # use any integer from 1 through the number of columns
 # within the data frame (ncol function may be of some assistance)
+
+##done all together below 4)
 
 # 3) Within curly brackets, set the following logical conditions under an "if" function:
 #     
@@ -82,8 +86,20 @@ print(sum)
 
 # 4) Make sure to close out all curly brackets to complete the loop.
 
-# Question: What happens if you change the "1000+" to "50+"?
+## I have no idea what this is asking me to do
 
+iris_loop <- iris
+for(i in 1:5) {
+  if(grepl("[[:digit:]],[[:digit:]]", iris_loop[i])) {
+    iris_loop <- 1000+iris_loop
+  }
+}
+## /I have no idea what this is asking me to do/
+
+# Question: What happens if you change the "1000+" to "50+"?
+# I can't quite figure out how this works and need to ask because the first time I did it it added 1000 to the number before the decimal, but then when i tried to change it to 50 nothing happened so I reset it to equal the base iris file again and tried 1000+ and now it doesn't work so I'm incredibly confused
+
+#-------------------------------------------------------------------------------
 
 #===============================================================================
 # While Loops
