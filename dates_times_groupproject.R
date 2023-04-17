@@ -58,7 +58,7 @@ event_start + years(1)
 #Now that we know the basics, let's look at this with a bit more context. Take note of what order the dates are listed. The following csv is a record of payments. 
 invoice <- readr::read_csv('https://raw.githubusercontent.com/rsquaredacademy/datasets/master/transact.csv')
 
-#Task: How many invoices were settled post the due date? 
+#Task: Make a new data frame titled invoice_delay. How many invoices were settled post the due date? 
 
 
 #Great, now that we're got some of the basics for dates, lets detour to look at the basics of time. Below are some basic commands for times and a short example. Annotate by each what they do on each line. 
@@ -71,6 +71,7 @@ ymd_hms()
 hour() 
 second() 
 
+#Run this code and observe the results
 semester_start <- ymd_hms("2023-01-08 08:00:00") 
 year(semester_start) 
 month(semester_start, label = TRUE) 
