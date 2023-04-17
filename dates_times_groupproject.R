@@ -41,10 +41,60 @@ https://www.r-bloggers.com/2020/04/a-comprehensive-introduction-to-handling-date
 ########## Untidy ITNL Data ##########
 
 library(tidyverse)
+
+#For large-scale projects like multi-continental or global experiments, they ften involve working with scientists internationally to collect data. This is especially true if the research requires sampling many times a year.
+
+#In these cases, it is often vital to understand how time plays a role in these interactions. When
+
+
+#Load the 'date_time_very_untidy.csv'
 date_time_untidy <-read.csv("date_time_very_untidy.csv")
 
+#Different places around the world will have different ways of portraying times and dates. Let's take a look at the date_times dataset.
+
+FortK<- Combined_tidy %>%
+  filter(Site=="Fort Keogh")
+
+Lincoln<- Combined_tidy %>%
+  filter(Site=="Lincoln National Research Station")
+
+Krueger<- Combined_tidy %>%
+  filter(Site=="Kreuger National Park")
+
+NewZ<- Combined_tidy %>%
+  filter(Site=="New Zealand Research Federation")
 
 
+
+
+ggplot(Combined_tidy, aes(x = Time24, y = Luz.Values)) + 
+  geom_point(aes(color= as.factor(Site))) +
+  xlab("Time") + 
+  ylab("Luz Values")
+
+
+ggplot(FortK, aes(x = Time24, y = Luz.Values)) + 
+  geom_point(aes(color= as.factor(Site))) +
+  xlab("Time") + 
+  ylab("Luz Values")
+
+
+ggplot(Lincoln, aes(x = Time24, y = Luz.Values)) + 
+  geom_point(aes(color= as.factor(Site))) +
+  xlab("Time") + 
+  ylab("Luz Values")
+
+
+ggplot(Krueger, aes(x = Time24, y = Luz.Values)) + 
+  geom_point(aes(color= as.factor(Site))) +
+  xlab("Time") + 
+  ylab("Luz Values")
+
+
+ggplot(NewZ, aes(x = Time24, y = Luz.Values)) + 
+  geom_point(aes(color= as.factor(Site))) +
+  xlab("Time") + 
+  ylab("Luz Values")
 
 #SA and NZ: Day/Month/Year
 #USA: Month/Day/Year
@@ -61,29 +111,10 @@ SA_untidy<- date_time_untidy %>%
 ITNL_untidy<- full_join(SA_untidy, NZ_untidy) %>%
   mutate(Time24=format(strptime(ITNL_untidy$Time.Recorded, "%H_%M"), format="%H:%M:%S"))
 
-ITNL_untidy[c('Day','Month', 'Year')]<-str_split_fixed(ITNL_untidy$Date, '/', 3)
-ITNL_untidy[c('Hour','Minute')]<-str_split_fixed(ITNL_untidy$Time.Recorded, '_', 2)
-
-
-
 
 
 USA_tidy<- USA_untidy %>%
   mutate(Time24=format(strptime(USA_tidy$Time.Recorded, "%I_%M %p"), format="%H:%M:%S"))
-
-USA_tidy[c('Month','Day', 'Year')]<-str_split_fixed(USA_untidy$Date, '/', 3)
-USA_tidy[c('Hour','Minute')]<-str_split_fixed(USA_tidy$Time.Recorded, '_', 2)
-USA_tidy[c('Min','Meridian')]<-str_split_fixed(USA_tidy$Minute, ' ', 2)
-mutate(Time24=format(strptime(USA_tidy$Time.Recorded, "%I_%M %p"), format="%H:%M:%S"))
-
-USA_tidy2<- USA_tidy%>%
-  select(Site, Location, Luz.Values, Month, Day, Year, Hour, Min, Meridian) %>%
-  filter(Meridian=='PM')
-USA_tidy2$Hour + 12
-
-USA_tidy3<- USA_tidy%>%
-  select(Site, Location, Luz.Values, Month, Day, Year, Hour, Min, Meridian) %>%
-  filter(Meridian=='AM')
 
 
 
@@ -91,9 +122,49 @@ USA_tidy3<- USA_tidy%>%
 Combined_tidy<-full_join(USA_tidy, ITNL_untidy) %>%
   select(Site, Location, Luz.Values, Date, Time24)
 
+FortK<- Combined_tidy %>%
+  filter(Site=="Fort Keogh")
+
+Lincoln<- Combined_tidy %>%
+  filter(Site=="Lincoln National Research Station")
+
+Krueger<- Combined_tidy %>%
+  filter(Site=="Kreuger National Park")
+
+NewZ<- Combined_tidy %>%
+  filter(Site=="New Zealand Research Federation")
 
 
-ggplot
+
+
+ggplot(Combined_tidy, aes(x = Time24, y = Luz.Values)) + 
+  geom_point(aes(color= as.factor(Site))) +
+  xlab("Time") + 
+  ylab("Luz Values")
+
+
+ggplot(FortK, aes(x = Time24, y = Luz.Values)) + 
+  geom_point(aes(color= as.factor(Site))) +
+  xlab("Time") + 
+  ylab("Luz Values")
+
+
+ggplot(Lincoln, aes(x = Time24, y = Luz.Values)) + 
+  geom_point(aes(color= as.factor(Site))) +
+  xlab("Time") + 
+  ylab("Luz Values")
+
+
+ggplot(Krueger, aes(x = Time24, y = Luz.Values)) + 
+  geom_point(aes(color= as.factor(Site))) +
+  xlab("Time") + 
+  ylab("Luz Values")
+
+
+ggplot(NewZ, aes(x = Time24, y = Luz.Values)) + 
+  geom_point(aes(color= as.factor(Site))) +
+  xlab("Time") + 
+  ylab("Luz Values")
 
 
 ##
