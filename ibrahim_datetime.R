@@ -222,60 +222,81 @@ ggplot(date_time_untidy, aes(x = Time.Recorded, y = Luz.Values)) +
 #Take a close look
 #Lets try and run these individually. Maybe its our formatting?
 
+FK <- date_time_untidy %>% 
+  filter(Site == "Fort Keogh")
 
-
+KR <- date_time_untidy %>% 
+  filter(Site == "Kreuger National Park")
 
 #Seems like its confusing am and pm. I don't think we can combine everything yet.
 #Let's try and break this down
 
 #Task: Research the popular date/time formats for all our locations
-
+# US does month day year, and other countries do day month year
 
 
 
 #So it seems that Fort Keogh and Lincoln share a format, and so do Krueger and New Zealand
 #Lets divide them up so we can put them back together
 
+US <- date_time_untidy %>% 
+  filter(Location == "USA")
+SA <- date_time_untidy %>% 
+  filter(Location == "South Africa")
+KR <- date_time_untidy %>% 
+  filter(Site == "Kreuger National Park")
 
 
-
-
+non_us <- full_join(SA, KR)
 
 #Now, let's recombine our dates. First, you need to split the dates apart
 #One way to do this is to use the function str_split_fixed. For example:
 
-USA_untidy[c('Month','Day', 'Year')]<-str_split_fixed(USA_untidy$Date, '/', 3)
-
 #Task: Create the correct function to split the dates of the international data
 
-
+non_us[c('Month','Day', 'Year')]<-str_split_fixed(non_us$Date, '/', 3)
 
 
 #Question: Why does this even matter?
-
+# To make the data uniform, so you can read it no matter where you are
 
 
 #Task: Decide what format you want to put the dates into. Hint:The paste() function may be useful here
 
 
+US_date <- US %>% 
+  mutate(US_DATE=paste(US$Day, US$Month, US$Year, sep = '/')) %>% 
+  mutate(US_DATE2=paste(US$Month, US$Day, US$Year, sep = '/'))
+
+
 
 #Great! Now, we need to format our times. Let's start with the 12-hour format. We can use this formula to change the 12-hour format to the 24-hour. Now from 24 hours to 12-hour format
 
-mutate(Time24=format(strptime(USA_tidy$Time.Recorded, "%I_%M %p"), format="%H:%M:%S"))
-
+US_date <- US_date %>% 
+mutate(Time24=format(strptime(US_date$Time.Recorded, "%I_%M %p"), format="%H:%M:%S")) %>%   
+mutate(Time12=format(strptime(US_date$Time24, "%H:%M:%S"),format = "%I:%M %p")) %>% 
+mutate(format24=paste(US_date=paste(US$Month, US$Day, US$Year, sep = '/')))
 #Task: Do the same for the International data
 
+non_us <- non_us %>% 
+  mutate(format12=paste(non_us=paste(non_us$Month, non_us$Day, non_us$Year, sep = '/'))) %>% 
+  mutate(format24=paste(non_us=paste(non_us$Month, non_us$Day, non_us$Year, sep = '/'))) %>%  
+  mutate(Time12=format(strptime(non_us$Time.Recorded, "%H_%M"),format = "%I:%M %p")) %>% 
+  mutate(Time24=format(strptime(non_us$Time12, "%I:%M %p"), format="%H:%M:%S"))
 
 
 
 #Now, let's put it all together in your chosen formats!
 
-
+join <- full_join(non_us, US_date)
 
 
 #Lets plot them all using ggplot!
 
-
+ggplot(join, aes(x = Time24, y = Luz.Values))+
+  geom_point(aes(color = as.factor(Site))) +
+  xlab("Time")+
+  ylab("Luz Values")
 
 
 
