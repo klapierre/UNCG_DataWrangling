@@ -62,18 +62,18 @@ invoice <- readr::read_csv('https://raw.githubusercontent.com/rsquaredacademy/da
 
 
 #Great, now that we're got some of the basics for dates, lets detour to look at the basics of time. Below are some basic commands for times and a short example. Annotate by each what they do on each line. 
-day() #extract day
-year() #extracts year
-month() #extracts month
-leap_year() #extracts if leap year
-month(12, label = TRUE) #give what month 12 is
-ymd_hms() #will parse date-times and second components
-hour() #gives hour
-second() #extracts second
+day() 
+year() 
+month() 
+leap_year() 
+month(12, label = TRUE) #
+ymd_hms() 
+hour() 
+second() 
 
-semester_start <- ymd_hms("2023-01-08 08:00:00") #set date and parse times
-year(semester_start) #2023
-month(semester_start, label = TRUE) #Jan
+semester_start <- ymd_hms("2023-01-08 08:00:00") 
+year(semester_start) 
+month(semester_start, label = TRUE) 
 
 #Let's go back to our invoice data. Let's say we're trying to know a bit more about our data. 
 
