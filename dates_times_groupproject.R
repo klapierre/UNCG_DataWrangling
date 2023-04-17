@@ -163,69 +163,49 @@ cbind(US=format(time_1),UK=format(t1,tz="Europe/London"))
 
 ###################################################################################
 ##################################### Converting Dates ############################
-####################################################################################
+################################################################################
 
-########## Untidy ITNL Data ##########
 
 library(tidyverse)
 
 #For large-scale projects like multi-continental or global experiments, they ften involve working with scientists internationally to collect data. This is especially true if the research requires sampling many times a year.
 
-#In these cases, it is often vital to understand how time plays a role in these interactions. When
+#In these cases, it is often vital to understand how time plays a role in these interactions.
+
+#Different places around the world will have different ways of portraying times and dates. Let's take a look at the date_times dataset.
 
 
 #Load the 'date_time_very_untidy.csv'
 date_time_untidy <-read.csv("date_time_very_untidy.csv")
 
-#Different places around the world will have different ways of portraying times and dates. Let's take a look at the date_times dataset.
 
-FortK<- Combined_tidy %>%
+#Let's run this data!
+ggplot(date_time_untidy, aes(x = Time.Recorded, y = Luz.Values)) + 
+  geom_point(aes(color= as.factor(Site))) +
+  xlab("Time") + 
+  ylab("Luz Values")
+
+#Hmmm...It runs, but its understanding of times are misconstrued
+#Take a close look
+#Lets try and run these individually. Maybe its our formatting?
+
+FK<- date_time_untidy %>%
   filter(Site=="Fort Keogh")
 
-Lincoln<- Combined_tidy %>%
-  filter(Site=="Lincoln National Research Station")
-
-Krueger<- Combined_tidy %>%
+Kru<- date_time_untidy %>%
   filter(Site=="Kreuger National Park")
 
-NewZ<- Combined_tidy %>%
-  filter(Site=="New Zealand Research Federation")
 
+#Seems like its confusing am and pm. I don't think we can combine everything yet.
+#Let's try and break this down
 
-
-
-ggplot(Combined_tidy, aes(x = Time24, y = Luz.Values)) + 
-  geom_point(aes(color= as.factor(Site))) +
-  xlab("Time") + 
-  ylab("Luz Values")
-
-
-ggplot(FortK, aes(x = Time24, y = Luz.Values)) + 
-  geom_point(aes(color= as.factor(Site))) +
-  xlab("Time") + 
-  ylab("Luz Values")
-
-
-ggplot(Lincoln, aes(x = Time24, y = Luz.Values)) + 
-  geom_point(aes(color= as.factor(Site))) +
-  xlab("Time") + 
-  ylab("Luz Values")
-
-
-ggplot(Krueger, aes(x = Time24, y = Luz.Values)) + 
-  geom_point(aes(color= as.factor(Site))) +
-  xlab("Time") + 
-  ylab("Luz Values")
-
-
-ggplot(NewZ, aes(x = Time24, y = Luz.Values)) + 
-  geom_point(aes(color= as.factor(Site))) +
-  xlab("Time") + 
-  ylab("Luz Values")
+#Task: Research the popular date/time formats for all our locations
 
 #SA and NZ: Day/Month/Year
 #USA: Month/Day/Year
 
+#So it seems that Fort Keogh and Lincoln share a format, and so do Krueger and New Zealand
+#Lets divide them up so we can put them back together
 USA_untidy<- date_time_untidy %>%
   filter(Location=="USA")
 
@@ -235,9 +215,12 @@ NZ_untidy<- date_time_untidy %>%
 SA_untidy<- date_time_untidy %>%
   filter(Location== "South Africa")
 
+ITNL_untidy<- full_join(SA_untidy, NZ_untidy)
+
+#Great! Now, we need to format our times
+
 ITNL_untidy<- full_join(SA_untidy, NZ_untidy) %>%
   mutate(Time24=format(strptime(ITNL_untidy$Time.Recorded, "%H_%M"), format="%H:%M:%S"))
-
 
 
 USA_tidy<- USA_untidy %>%
