@@ -76,8 +76,8 @@ month() #Set the amount of months or set the amount of months.
 leap_year() #Ask R if the given year is a leap year. 
 month(12, label = TRUE) #Sets a 12 month year with labels. 
 ?ymd_hms() #add year, month, day, minute and seconds to dates.
-hour() 
-second() 
+?hour() #Set or get the hours competent of a date
+second() #Get or set the seconds competent of a date. 
 
 #Run this code and observe the results
 semester_start <- ymd_hms("2023-01-08 08:00:00") 
@@ -88,12 +88,17 @@ month(semester_start, label = TRUE)
 
 #TASK: Extract the day, month, and year from the Due column. Make a new data from called invoice_due with your extracted dates.  
 
+invoice_due <- invoice %>%  mutate(Day = day(invoice$Due)) %>%  
+  mutate(Month = month(invoice$Due)) %>% 
+  mutate(Year = year(invoice$Due))
 
 #This new knowledge still isn't enough. We now want to know if a particular year is a leap year. 
 
 #TASK: Make another new data frame called invoice_leap with the information you find out. Once you have extracted your dates, filter down and find out how many payments were conducted on February 29th? *Hint: the first part of this task is almost identical to what we did in the previous. 
 
+invoice_leap <- invoice_due %>% mutate(LeapYear = leap_year(invoice$Due))
 
+invoice_leap2 <- invoice_leap %>% as.data.frame(invoice_leap) %>% filter(Day == 29) %>%  filter(LeapYear = TRUE)
 
 ################################################################################
 ###############################Time Zones#######################################
@@ -133,11 +138,13 @@ ymd(20230417, tz= "GMT")
 
 # Question: Why would we want to have a standardized/coordinated time?
 
-
+#Working with international groups of researchers would make an advantageous to work with
+#a singular, standard time.
 
 
 # Task! So for the first task lets get you populating some time-zones. First copy the code above and add in your own time-zone code of choice! ie. gmt, roc, ect.
 
+ymd(20230417, tz= "EST")
 
 
 
@@ -165,10 +172,17 @@ cbind(US=format(time_1),UK=format(t1,tz="Europe/London"))
 
 # Question: What would be useful about being able to convert time-zones?
 
+#If you have datasets collected in different timezones it may be advantagous to standardize them
+#in order for your data to be more easily plotted and interpreted. 
+
 # Task Time:)
 # Create and name some dates and times named happy_time it should look similar to the E<- that is above!
 # Once that is done pick some dates and times of your choice ex. US/Alaska time, GMT, PRC, ect. If you need help just remember we have a code that will pull-up all the time-zones:) OlsonNames(tzdir = NULL).
 # This should look very similar to the second code named time_1
+
+happy_time <- c("2007-03-03 12:00", "2007-03-04 12:00", "2007-03-28 12:00", "2007-03-23 12:00", "2007-9-23 12:00", "2007-10-25 12:00", "2007-10-31 12:00", "2007-11-01 12:00")
+time_1 <- as.POSIXct(happy_time,"EST")
+
 
 ###################################################################################
 ##################################### Converting Dates ############################
