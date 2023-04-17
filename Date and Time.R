@@ -9,14 +9,14 @@ library(tidyverse)
 #Let's start slow by generating some dates and learning what the lubridate package can do for you. There are several useful base commands in Lubridate. 
 
 #TASK: comment beside the code what these commands do
-lubridate::today() 
-Sys.time() 
-lubridate::now() 
-lubridate::now(tzone = "UTC") 
-lubridate::leap_year(today()) 
+lubridate::today() #Prints today's date in the console
+Sys.time() #prints system date and time including timezone 
+lubridate::now() #Prints current time and date including timezone
+lubridate::now(tzone = "UTC") #Same as above, but converts the time provided to the UTC timezone
+lubridate::leap_year(today()) #Checks if the current year is a leap yea
 
 #Make an object containing today's date called today_date in year-month-day format. Use the exact same format R printed in the console when you used lubridate::today()
-
+today_date <- lubridate::today()
 
 #Call today_date and write what happened. Is it what we wanted? 
 today_date
@@ -26,13 +26,14 @@ today_date
 class(today_date)
 
 #Our date was saved as a numeral, so R went through operations and gave us 2002. This is, to say the least, not ideal for our purposes of storing a date. Let's try writing the date we want in quotes. 
+today_date <- "2023-04-17"
 
 #Question: What is the class of the data now? Is this what we want?
-
+# its class character
 
 #Storing our date as a character will still not give us what we want because R processes dates differently. Check the class of Sys.Date() and now(). Write what each of the classes print as. 
-class(Sys.Date())
-class(lubridate::now())
+class(Sys.Date()) #Date
+class(lubridate::now()) #"POSIXct" "POSIXt"
 
 #There are three different classes that R stores dates in. 
 #Date: represents calendar dates - use when there is no time component
@@ -59,17 +60,22 @@ event_start + years(1)
 invoice <- readr::read_csv('https://raw.githubusercontent.com/rsquaredacademy/datasets/master/transact.csv')
 
 #Task: Make a new data frame titled invoice_delay. How many invoices were settled post the due date? 
+invoice_delay <- invoice %>% 
+  mutate(Delay=as_date(Payment)-as_date(Due)) %>% 
+  mutate(Late=ifelse(Delay>0, TRUE, FALSE))
+length(invoice_delay$Late[invoice_delay$Late==TRUE])
+# 877
 
 
 #Great, now that we're got some of the basics for dates, lets detour to look at the basics of time. Below are some basic commands for times and a short example. Annotate by each what they do on each line. 
-day() 
-year() 
-month() 
-leap_year() 
-month(12, label = TRUE) #
-ymd_hms() 
-hour() 
-second() 
+?day() #Gets or sets just the day component of date-time
+?year() #Gets or sets just the year component of date-time
+?month() #Gets or sets the month component of date-time
+?leap_year() #Logical argument checking if the input date is a leap year on the gregorian calendar
+month(12, label = TRUE) #Prints the 12th month, and a 'label = TRUE' causes it to return the month as a character string for the month's abbreviation "Dec"
+?ymd_hms() #Converts a date stored as character/numeric vectors into POSIXct objects in year-month-day hour:minute:second
+hour() #Gets/sets the hour component of date-time
+second() #Gets/sets the second componenet of date-time
 
 #Run this code and observe the results
 semester_start <- ymd_hms("2023-01-08 08:00:00") 
@@ -79,13 +85,17 @@ month(semester_start, label = TRUE)
 #Let's go back to our invoice data. Let's say we're trying to know a bit more about our data. 
 
 #TASK: Extract the day, month, and year from the Due column. Make a new data from called invoice_due with your extracted dates.  
-
+invoice_due <- invoice %>% 
+  mutate(Day=day(Due), Month=month(Due), Year=year(Due)) %>% 
+  select(c(Day,Month,Year))
 
 #This new knowledge still isn't enough. We now want to know if a particular year is a leap year. 
 
 #TASK: Make another new data frame called invoice_leap with the information you find out. Once you have extracted your dates, filter down and find out how many payments were conducted on February 29th? *Hint: the first part of this task is almost identical to what we did in the previous. 
-
-
+invoice_leap <- invoice %>% 
+  filter(leap_year(Due)==TRUE) %>% 
+  filter(day(Payment)==29)
+##39 payments were made on Feb 29
 
 ################################################################################
 ###############################Time Zones#######################################
@@ -125,11 +135,13 @@ ymd(20230417, tz= "GMT")
 
 # Question: Why would we want to have a standardized/coordinated time?
 
-
+## a coordinated time allows time and date measurements to be recorded relative to the same clock, regardless of where on earth the measurement was recorded/taken
 
 
 # Task! So for the first task lets get you populating some time-zones. First copy the code above and add in your own time-zone code of choice! ie. gmt, roc, ect.
+ymd(20170131, tz = "EST")
 
+ymd(20230417, tz= "EST")
 
 
 
@@ -153,14 +165,20 @@ format(Important_stuff, tz="America/Los_Angeles",usetz=TRUE)
 E <- c("2009-03-07 12:00", "2009-03-08 12:00", "2009-03-28 12:00", "2009-03-29 12:00", "2009-10-24 12:00", "2009-10-25 12:00", "2009-10-31 12:00", "2009-11-01 12:00")
 
 time_1 <- as.POSIXct(E,"America/Los_Angeles")
-cbind(US=format(time_1),UK=format(t1,tz="Europe/London"))
+cbind(US=format(time_1),UK=format(time_1,tz="Europe/London"))
 
 # Question: What would be useful about being able to convert time-zones?
+  # batch converting time zones allows you to easily adjust times recorded in different time zones from each other
+
 
 # Task Time:)
 # Create and name some dates and times named happy_time it should look similar to the E<- that is above!
 # Once that is done pick some dates and times of your choice ex. US/Alaska time, GMT, PRC, ect. If you need help just remember we have a code that will pull-up all the time-zones:) OlsonNames(tzdir = NULL).
 # This should look very similar to the second code named time_1
+
+happy_time <- c(20220303123100, 20090430230015, 19991231130000, 188502113256, 20230417171330) 
+time2 <- data.frame(happy_time) %>% 
+  mutate(UCT=ymd_hms(happy_time, tz="UCT"), )
 
 ###################################################################################
 ##################################### Converting Dates ############################
