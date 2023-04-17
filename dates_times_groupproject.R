@@ -19,7 +19,7 @@ lubridate::leap_year(today())
 
 
 #Call today_date and write what happened. Is it what we wanted? 
-today_date
+today_date<-lubridate::today()
  
 
 #Check the class of today_date
@@ -62,16 +62,16 @@ invoice <- readr::read_csv('https://raw.githubusercontent.com/rsquaredacademy/da
 
 
 #Great, now that we're got some of the basics for dates, lets detour to look at the basics of time. Below are some basic commands for times and a short example. Annotate by each what they do on each line. 
-day() 
-year() 
+day(today_date)
+year(today_date) 
 month() 
-leap_year() 
+leap_year(today_date) 
 month(12, label = TRUE) #
 ymd_hms() 
 hour() 
-second() 
+second(today_date) 
 
-semester_start <- ymd_hms("2023-01-08 08:00:00") 
+semester_start <- ymd_hms("2023-01-08 08:00:00")
 year(semester_start) 
 month(semester_start, label = TRUE) 
 
@@ -151,7 +151,7 @@ format(Important_stuff, tz="America/Los_Angeles",usetz=TRUE)
 
 E <- c("2009-03-07 12:00", "2009-03-08 12:00", "2009-03-28 12:00", "2009-03-29 12:00", "2009-10-24 12:00", "2009-10-25 12:00", "2009-10-31 12:00", "2009-11-01 12:00")
 
-time_1 <- as.POSIXct(E,"America/Los_Angeles")
+t1 <- as.POSIXct(E,"America/Los_Angeles")
 cbind(US=format(time_1),UK=format(t1,tz="Europe/London"))
 
 # Question: What would be useful about being able to convert time-zones?
@@ -206,16 +206,7 @@ Kru<- date_time_untidy %>%
 
 #So it seems that Fort Keogh and Lincoln share a format, and so do Krueger and New Zealand
 #Lets divide them up so we can put them back together
-USA_untidy<- date_time_untidy %>%
-  filter(Location=="USA")
 
-NZ_untidy<- date_time_untidy %>%
-  filter(Location== "New Zealand")
-
-SA_untidy<- date_time_untidy %>%
-  filter(Location== "South Africa")
-
-ITNL_untidy<- full_join(SA_untidy, NZ_untidy)
 
 #Now, let's recombine our dates. First, you need to split the dates apart
 #One way to do this is to use the function str_split_fixed. For example:
@@ -224,7 +215,7 @@ USA_untidy[c('Month','Day', 'Year')]<-str_split_fixed(USA_untidy$Date, '/', 3)
 
 #Task: Create the correct function to split the dates of the international data
 
-ITNL_untidy[c('Day','Month', 'Year')]<-str_split_fixed(ITNL_untidy$Date, '/', 3)
+
 
 
 #Question: Why does this even matter?
@@ -245,61 +236,16 @@ USA_tidy<- USA_untidy %>%
 
 #Task: Do the same for the 24-hour format
 
-ITNL_untidy<- full_join(SA_untidy, NZ_untidy) %>%
-  mutate(format12=paste(ITNL_untidy$Month, ITNL_untidy$Day, ITNL_untidy$Year, sep='/')) %>%
-  mutate(format24=paste(ITNL_untidy$Day, ITNL_untidy$Month, ITNL_untidy$Year, sep='/')) %>%
-  mutate(Time24=format(strptime(ITNL_untidy$Time.Recorded, "%H_%M"), format="%H:%M:%S"))
 
 
 
 #Now, let's put it all together in your chosen formats!
 
-Combined_tidy<-full_join(USA_tidy, ITNL_untidy) %>%
-  select(Site, Location, Luz.Values, format24, Time24)
 
-FortK<- Combined_tidy %>%
-  filter(Site=="Fort Keogh")
-
-Lincoln<- Combined_tidy %>%
-  filter(Site=="Lincoln National Research Station")
-
-Krueger<- Combined_tidy %>%
-  filter(Site=="Kreuger National Park")
-
-NewZ<- Combined_tidy %>%
-  filter(Site=="New Zealand Research Federation")
 
 
 #Lets plot them all using ggplot!
 
-ggplot(Combined_tidy, aes(x = Time24, y = Luz.Values)) + 
-  geom_point(aes(color= as.factor(Site))) +
-  xlab("Time") + 
-  ylab("Luz Values")
-
-
-ggplot(FortK, aes(x = Time24, y = Luz.Values)) + 
-  geom_point(aes(color= as.factor(Site))) +
-  xlab("Time") + 
-  ylab("Luz Values")
-
-
-ggplot(Lincoln, aes(x = Time24, y = Luz.Values)) + 
-  geom_point(aes(color= as.factor(Site))) +
-  xlab("Time") + 
-  ylab("Luz Values")
-
-
-ggplot(Krueger, aes(x = Time24, y = Luz.Values)) + 
-  geom_point(aes(color= as.factor(Site))) +
-  xlab("Time") + 
-  ylab("Luz Values")
-
-
-ggplot(NewZ, aes(x = Time24, y = Luz.Values)) + 
-  geom_point(aes(color= as.factor(Site))) +
-  xlab("Time") + 
-  ylab("Luz Values")
 
 
 ##
