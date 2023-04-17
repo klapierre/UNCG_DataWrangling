@@ -66,11 +66,11 @@ due <- as_date(invoice$Due)
 payment <- as_date(invoice$Payment)
 
 invoice_delay <- invoice %>% 
-  mutate("Payment Time"= due - payment) %>% 
-  mutate("On time?"= ifelse(as.numeric(due - payment) >= 0,"Yes", "No"))
-
-
-#877, I scrolled down the dataframe, I gave up
+  mutate(Delay= Payment - Due) %>% 
+  mutate(Delay= ifelse(as.numeric(Payment - Due) > 0,"Yes", "No")) %>% 
+  filter(Delay == "Yes")
+ 
+#877
 
 #Great, now that we're got some of the basics for dates, lets detour to look at the basics of time. Below are some basic commands for times and a short example. Annotate by each what they do on each line. 
 day(today_date) #Today's date
@@ -210,7 +210,7 @@ date_time_untidy <-read.csv("date_time_very_untidy.csv")
 
 
 #Let's run this data!
-ggplot(date_time_untidy, aes(x = Time.Recorded, y = Luz.Values)) + 
+ggplot(date_time_very_untidy, aes(x =`Time Recorded`, y =`Luz Values`)) + 
   geom_point(aes(color= as.factor(Site))) +
   xlab("Time") + 
   ylab("Luz Values")
@@ -233,10 +233,11 @@ ggplot(date_time_untidy, aes(x = Time.Recorded, y = Luz.Values)) +
 #So it seems that Fort Keogh and Lincoln share a format, and so do Krueger and New Zealand
 #Lets divide them up so we can put them back together
 
+USA_untidy <- date_time_very_untidy %>% 
+  filter(Location == "USA") 
 
-
-
-
+Other_untidy <- date_time_very_untidy %>% 
+  filter(Location != "USA") 
 
 #Now, let's recombine our dates. First, you need to split the dates apart
 #One way to do this is to use the function str_split_fixed. For example:
@@ -245,34 +246,42 @@ USA_untidy[c('Month','Day', 'Year')]<-str_split_fixed(USA_untidy$Date, '/', 3)
 
 #Task: Create the correct function to split the dates of the international data
 
-
+Other_untidy[c('Day','Month', 'Year')]<-str_split_fixed(Other_untidy$Date, '/', 3)
 
 
 #Question: Why does this even matter?
-
+#it is important to know that some countries format dates differently so you need to know who does what and what time zone they're in to make sure you're comparing dates correctly
 
 
 #Task: Decide what format you want to put the dates into. Hint:The paste() function may be useful here
-
+?paste()
 
 
 #Great! Now, we need to format our times. Let's start with the 12-hour format. We can use this formula to change the 12-hour format to the 24-hour. Now from 24 hours to 12-hour format
 
-  mutate(Time24=format(strptime(USA_tidy$Time.Recorded, "%I_%M %p"), format="%H:%M:%S"))
+USA_tidy <- USA_untidy %>% 
+  mutate(Time24=format(strptime(USA_untidy$`Time Recorded`, "%I_%M %p"), format="%H:%M:%S"))
 
 #Task: Do the same for the International data
 
+Other_tidy <- Other_untidy %>% 
+  mutate(Time24=format(strptime(Other_untidy$`Time Recorded`, "%H_%M"), format="%H:%M:%S"))
 
 
 
 #Now, let's put it all together in your chosen formats!
 
+tidy_data <-rbind(USA_tidy, Other_tidy)
 
   
 
 #Lets plot them all using ggplot!
 
-  
+ggplot(tidy_data, aes(x =Time24, y =`Luz Values`)) + 
+  geom_point(aes(color= as.factor(Site))) +
+  xlab("Time") + 
+  ylab("Luz Values") +
+  ggtitle("Tidy Data")
   
   
   
