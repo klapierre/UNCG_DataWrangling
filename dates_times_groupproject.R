@@ -145,13 +145,13 @@ ymd(20230417, tz= "GMT")
 # For this code we added a date and the time-zone which is UTC which is our referenced Zulu time!
 
 # Question: Why would we want to have a standardized/coordinated time?
-
+#To make sure all of our dates and times line up with those working in other countries
 
 
 
 # Task! So for the first task lets get you populating some time-zones. First copy the code above and add in your own time-zone code of choice! ie. gmt, roc, ect.
 
-
+ymd(20230417, tz= "ROC")
 
 
 # Next we are going to cover converting time-zones.
@@ -174,14 +174,22 @@ format(Important_stuff, tz="America/Los_Angeles",usetz=TRUE)
 E <- c("2009-03-07 12:00", "2009-03-08 12:00", "2009-03-28 12:00", "2009-03-29 12:00", "2009-10-24 12:00", "2009-10-25 12:00", "2009-10-31 12:00", "2009-11-01 12:00")
 
 time_1 <- as.POSIXct(E,"America/Los_Angeles")
-cbind(US=format(time_1),UK=format(t1,tz="Europe/London"))
+cbind(US=format(time_1),UK=format(time_1,tz="Europe/London"))
 
 # Question: What would be useful about being able to convert time-zones?
+#Data can easily be adjusted to different time zones to present to different groups
 
 # Task Time:)
 # Create and name some dates and times named happy_time it should look similar to the E<- that is above!
 # Once that is done pick some dates and times of your choice ex. US/Alaska time, GMT, PRC, ect. If you need help just remember we have a code that will pull-up all the time-zones:) OlsonNames(tzdir = NULL).
-# This should look very similar to the second code named time_1
+# This should look very similar to the second code named time_1 
+
+OlsonNames(tzdir = NULL)
+
+happy_time <- c("2009-08-07 12:00", "2019-03-08 12:00", "2009-03-28 12:00", "2009-03-29 12:00", "2009-11-24 12:00", "2009-12-25 12:00", "2009-10-31 12:00", "2009-11-21 12:00")
+
+Happier_time <- as.POSIXct(happy_time,"Pacific/Fiji")
+cbind(US=format(Happier_time),AB=format(Happier_time,tz="Atlantic/Bermuda"))
 
 ###################################################################################
 ##################################### Converting Dates ############################
