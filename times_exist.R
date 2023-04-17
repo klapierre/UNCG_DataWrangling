@@ -258,42 +258,53 @@ SA<- date_time_untidy %>%
 
 USA_untidy[c('Month','Day', 'Year')]<-str_split_fixed(USA_untidy$Date, '/', 3)
 
+USA_untidy <- USA_untidy %>% 
+  separate("Date", c("Month", "Day", "Year"), sep = "/")
+
 #Task: Create the correct function to split the dates of the international data
 
-SA[c('Month','Day', 'Year')]<-str_split_fixed(USA_untidy$Date, '/', 3)
-NZ[c('Month','Day', 'Year')]<-str_split_fixed(USA_untidy$Date, '/', 3)
+SA_untidy <- SA %>% 
+  separate("Date", c("Day", "Month", "Year"), sep = "/")
+
+NZ_untidy <- NZ %>% 
+  separate("Date", c("Day", "Month", "Year"), sep = "/")
 
 
 #Question: Why does this even matter?
 # so that we can recombine the data in a way which matches across formats
 
 #Task: Decide what format you want to put the dates into. Hint:The paste() function may be useful here
-
+?paste
+USA_tidy <- USA_untidy %>% 
+  unite(Date, Day, Month, Year, sep="/")
 
 
 #Great! Now, we need to format our times. Let's start with the 12-hour format. We can use this formula to change the 12-hour format to the 24-hour. Now from 24 hours to 12-hour format
 
-mutate(Time24=format(strptime(USA_tidy$Time.Recorded, "%I_%M %p"), format="%H:%M:%S"))
+USA_tidy <- USA_tidy %>% 
+  mutate(Time24=format(strptime(USA_tidy$Time.Recorded, "%I_%M %p"), format="%H:%M:%S"))
 
 #Task: Do the same for the International data
 
+NZ_tidy <- NZ_untidy %>% 
+  unite(Date, Day, Month, Year, sep="/") %>% 
+  mutate(Time24=format(strptime(NZ_tidy$Time.Recorded, "%H_%M"), format="%H:%M:%S"))
 
-
+SA_tidy <- SA_untidy %>% 
+  unite(Date, Day, Month, Year, sep="/") %>% 
+  mutate(Time24=format(strptime(SA_tidy$Time.Recorded, "%H_%M"), format="%H:%M:%S"))
 
 #Now, let's put it all together in your chosen formats!
 
 
-
+Combined_tidy<-full_join(USA_tidy, SA_tidy)
+CombinedX2 <- full_join(Combined_tidy, NZ_tidy)
 
 #Lets plot them all using ggplot!
 
-
-
-
-
-##
-
-
-
+ggplot(CombinedX2, aes(x = Time24, y = Luz.Values)) + 
+  geom_point(aes(color= as.factor(Site))) +
+  xlab("Time24") + 
+  ylab("Luz Values")
 
 
