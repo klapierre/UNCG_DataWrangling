@@ -103,3 +103,88 @@ filter(due_month == 2 & due_day == 29) %>%
   select(Due, is_leap) 
 
 #ANSWER: four
+
+##############################Time-zones################################ -E
+
+#Time-zones: Are invisible boundaries created to differentiate time between geographical regions. Timezone Greenwich Mean Time (GMT) is also known as Zulu time, or the Coordinated Universal Time (UTC). This is where the rest of the time-zones moving east and west are based off of. Moving Westward moves time in the negative direction from -1 to -12, and oppositely eastward time moves in the positive direction from +1 to +12. 
+# tzdir
+# Sys.timezone is a function that shows time-zones of your dates and time. This is important because researchers across the world fall under time-zones. For our data set we have research points from four different time-zones. date_time_untidy has four different time-zones. 
+# Now lets try out the function!
+
+# First step load these packages up!
+
+
+library(ggplot2)
+library(tidyverse)
+library(lubridate)
+library(nycflights13)
+
+# R can predict the time-zone you are in right now! How cool. Now run the following code and lets see if R.studio is right.
+
+Sys.timezone()
+# Another way to do the same thing is with using this code.
+
+Sys.timezone(location = TRUE)
+
+# Just incase you need informatio regarding time-zones lets give you a helpful code that will populate all the time-zone codes and the regions they are associated with!
+
+OlsonNames(tzdir = NULL)
+
+# To add a time-zone is pretty simple:') so lets give it a try!
+
+ymd(20170131, tz = "UTC")
+
+ymd(20230417, tz= "GMT")
+
+# For this code we added a date and the time-zone which is UTC which is our referenced Zulu time!
+
+# Question: Why would we want to have a standardized/coordinated time?
+#The reason to have a standard/ coordinated time is so people who are working with international partners can have a standard time-zone.
+
+
+
+
+# Task! So for the first task lets get you populating some time-zones. First copy the code above and add in your own time-zone code of choice! ie. gmt, roc, ect.
+
+ymd(20230417, tz= "XXX") 
+
+
+
+
+# Next we are going to cover converting time-zones.
+
+# First lets create a time 
+Important_stuff <- "2009-06-03 19:30"
+
+# convert it to R object for London time zone.
+
+Important_stuff <- as.POSIXct(Important_stuff, tz="Europe/London")
+
+# Now lets convert it to PDT time zone.
+
+format(Important_stuff, tz="America/Los_Angeles",usetz=TRUE)
+
+
+# This process can also be done for many date at once! 
+
+
+E <- c("2009-03-07 12:00", "2009-03-08 12:00", "2009-03-28 12:00", "2009-03-29 12:00", "2009-10-24 12:00", "2009-10-25 12:00", "2009-10-31 12:00", "2009-11-01 12:00")
+
+time_1 <- as.POSIXct(E,"America/Los_Angeles")
+cbind(US=format(time_1),UK=format(t1,tz="Europe/London"))
+
+# Question: What would be useful about being able to convert time-zones?
+#Being able to convert time-zones helps with creating a better understanding of data being collected across the globe.
+# Task Time:)
+# Create and name some dates and times named happy_time it should look similar to the E<- that is above!
+# Once that is done pick some dates and times of your choice ex. US/Alaska time, GMT, PRC, ect. If you need help just remember we have a code that will pull-up all the time-zones:) OlsonNames(tzdir = NULL).
+# This should look very similar to the second code named time_1
+
+xxx <- "2009-06-03 19:30"
+format(Important_stuff, tz="xxx/xxx ",usetz=TRUE)
+
+xxx <- c("2009-03-07 12:00", "2009-03-08 12:00", "2009-03-28 12:00", "2009-03-29 12:00", "2009-10-24 12:00", "2009-10-25 12:00", "2009-10-31 12:00", "2009-11-01 12:00")
+
+xxx <- as.POSIXct(E,"America/Los_Angeles")
+cbind(US=format(time_1),UK=format(t1,tz="Europe/London"))
+
