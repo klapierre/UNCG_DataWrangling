@@ -44,7 +44,7 @@ class(lubridate::now())
 today_date <- as.Date("2023-04-17")
 class(today_date)
 
-#Say you're planning an event, but need to change the dates. We want to be able to shift those dates around. We can do thake with some simple commands.
+#Say you're planning an event, but need to change the dates. We want to be able to shift those dates around. We can do that with some simple commands.
 event_start <- as_date('2022-05-12')
 event_end <- as_date('2022-05-21')
 event_duration <- event_end - event_start
