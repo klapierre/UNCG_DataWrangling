@@ -189,11 +189,7 @@ ggplot(date_time_untidy, aes(x = Time.Recorded, y = Luz.Values)) +
 #Take a close look
 #Lets try and run these individually. Maybe its our formatting?
 
-FK<- date_time_untidy %>%
-  filter(Site=="Fort Keogh")
 
-Kru<- date_time_untidy %>%
-  filter(Site=="Kreuger National Park")
 
 
 #Seems like its confusing am and pm. I don't think we can combine everything yet.
@@ -201,89 +197,56 @@ Kru<- date_time_untidy %>%
 
 #Task: Research the popular date/time formats for all our locations
 
-#SA and NZ: Day/Month/Year
-#USA: Month/Day/Year
+
+
 
 #So it seems that Fort Keogh and Lincoln share a format, and so do Krueger and New Zealand
 #Lets divide them up so we can put them back together
-USA_untidy<- date_time_untidy %>%
-  filter(Location=="USA")
-
-NZ_untidy<- date_time_untidy %>%
-  filter(Location== "New Zealand")
-
-SA_untidy<- date_time_untidy %>%
-  filter(Location== "South Africa")
-
-ITNL_untidy<- full_join(SA_untidy, NZ_untidy)
-
-#Great! Now, we need to format our times
-
-ITNL_untidy<- full_join(SA_untidy, NZ_untidy) %>%
-  mutate(Time24=format(strptime(ITNL_untidy$Time.Recorded, "%H_%M"), format="%H:%M:%S"))
 
 
-USA_tidy<- USA_untidy %>%
+
+
+
+
+#Now, let's recombine our dates. First, you need to split the dates apart
+#One way to do this is to use the function str_split_fixed. For example:
+
+USA_untidy[c('Month','Day', 'Year')]<-str_split_fixed(USA_untidy$Date, '/', 3)
+
+#Task: Create the correct function to split the dates of the international data
+
+
+
+
+#Question: Why does this even matter?
+
+
+
+#Task: Decide what format you want to put the dates into. Hint:The paste() function may be useful here
+
+
+
+#Great! Now, we need to format our times. Let's start with the 12-hour format. We can use this formula to change the 12-hour format to the 24-hour. Now from 24 hours to 12-hour format
+
   mutate(Time24=format(strptime(USA_tidy$Time.Recorded, "%I_%M %p"), format="%H:%M:%S"))
 
-
-
-
-Combined_tidy<-full_join(USA_tidy, ITNL_untidy) %>%
-  select(Site, Location, Luz.Values, Date, Time24)
-
-FortK<- Combined_tidy %>%
-  filter(Site=="Fort Keogh")
-
-Lincoln<- Combined_tidy %>%
-  filter(Site=="Lincoln National Research Station")
-
-Krueger<- Combined_tidy %>%
-  filter(Site=="Kreuger National Park")
-
-NewZ<- Combined_tidy %>%
-  filter(Site=="New Zealand Research Federation")
+#Task: Do the same for the International data
 
 
 
 
-ggplot(Combined_tidy, aes(x = Time24, y = Luz.Values)) + 
-  geom_point(aes(color= as.factor(Site))) +
-  xlab("Time") + 
-  ylab("Luz Values")
+#Now, let's put it all together in your chosen formats!
 
 
-ggplot(FortK, aes(x = Time24, y = Luz.Values)) + 
-  geom_point(aes(color= as.factor(Site))) +
-  xlab("Time") + 
-  ylab("Luz Values")
+  
 
+#Lets plot them all using ggplot!
 
-ggplot(Lincoln, aes(x = Time24, y = Luz.Values)) + 
-  geom_point(aes(color= as.factor(Site))) +
-  xlab("Time") + 
-  ylab("Luz Values")
-
-
-ggplot(Krueger, aes(x = Time24, y = Luz.Values)) + 
-  geom_point(aes(color= as.factor(Site))) +
-  xlab("Time") + 
-  ylab("Luz Values")
-
-
-ggplot(NewZ, aes(x = Time24, y = Luz.Values)) + 
-  geom_point(aes(color= as.factor(Site))) +
-  xlab("Time") + 
-  ylab("Luz Values")
-
-
+  
+  
+  
+  
 ##
-
-
-
-
-
-
 
 
 

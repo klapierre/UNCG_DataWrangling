@@ -188,3 +188,147 @@ xxx <- c("2009-03-07 12:00", "2009-03-08 12:00", "2009-03-28 12:00", "2009-03-29
 xxx <- as.POSIXct(E,"America/Los_Angeles")
 cbind(US=format(time_1),UK=format(t1,tz="Europe/London"))
 
+
+###################################################################################
+##################################### Converting Dates ############################
+################################################################################
+
+
+library(tidyverse)
+
+#For large-scale projects like multi-continental or global experiments, they ften involve working with scientists internationally to collect data. This is especially true if the research requires sampling many times a year.
+
+#In these cases, it is often vital to understand how time plays a role in these interactions.
+
+#Different places around the world will have different ways of portraying times and dates. Let's take a look at the date_times dataset.
+
+
+#Load the 'date_time_very_untidy.csv'
+date_time_untidy <-read.csv("date_time_very_untidy.csv")
+
+
+#Let's run this data!
+ggplot(date_time_untidy, aes(x = Time.Recorded, y = Luz.Values)) + 
+  geom_point(aes(color= as.factor(Site))) +
+  xlab("Time") + 
+  ylab("Luz Values")
+
+#Hmmm...It runs, but its understanding of times are misconstrued
+#Take a close look
+#Lets try and run these individually. Maybe its our formatting?
+
+FK<- date_time_untidy %>%
+  filter(Site=="Fort Keogh")
+
+Kru<- date_time_untidy %>%
+  filter(Site=="Kreuger National Park")
+
+
+#Seems like its confusing am and pm. I don't think we can combine everything yet.
+#Let's try and break this down
+
+#Task: Research the popular date/time formats for all our locations
+
+#SA and NZ: Day/Month/Year
+#USA: Month/Day/Year
+
+#So it seems that Fort Keogh and Lincoln share a format, and so do Krueger and New Zealand
+#Lets divide them up so we can put them back together
+USA_untidy<- date_time_untidy %>%
+  filter(Location=="USA")
+
+NZ_untidy<- date_time_untidy %>%
+  filter(Location== "New Zealand")
+
+SA_untidy<- date_time_untidy %>%
+  filter(Location== "South Africa")
+
+ITNL_untidy<- full_join(SA_untidy, NZ_untidy)
+
+#Now, let's recombine our dates. First, you need to split the dates apart
+#One way to do this is to use the function str_split_fixed. For example:
+
+USA_untidy[c('Month','Day', 'Year')]<-str_split_fixed(USA_untidy$Date, '/', 3)
+
+#Task: Create the correct function to split the dates of the international data
+
+ITNL_untidy[c('Day','Month', 'Year')]<-str_split_fixed(ITNL_untidy$Date, '/', 3)
+
+
+#Question: Why does this even matter?
+
+
+#Task: Decide what format you want to put the dates into. Hint:The paste() function may be useful here
+
+USA_untidy<-USA_untidy %>%
+  mutate(format12=paste(USA_untidy$Month, USA_untidy$Day, USA_untidy$Year, sep='/')) %>%
+  mutate(format24=paste(USA_untidy$Day, USA_untidy$Month, USA_untidy$Year, sep='/'))
+
+#Great! Now, we need to format our times. Let's start with the 12-hour format. We can use this format to change to our required format
+
+
+USA_tidy<- USA_untidy %>%
+  mutate(Time24=format(strptime(USA_tidy$Time.Recorded, "%I_%M %p"), format="%H:%M:%S")) %>%
+  mutate(Time12=format(strptime(USA_tidy$Time24, "%H:%M:%S"), format="%I:%M %p")) %>%
+  mutate(format24=paste(USA_untidy$Day, USA_untidy$Month, USA_untidy$Year, sep='/'))
+
+#Task: Do the same for the 24-hour format
+
+ITNL_untidy<- full_join(SA_untidy, NZ_untidy) %>%
+  mutate(format12=paste(ITNL_untidy$Month, ITNL_untidy$Day, ITNL_untidy$Year, sep='/')) %>%
+  mutate(format24=paste(ITNL_untidy$Day, ITNL_untidy$Month, ITNL_untidy$Year, sep='/')) %>%
+  mutate(Time24=format(strptime(ITNL_untidy$Time.Recorded, "%H_%M"), format="%H:%M:%S"))
+
+
+
+#Now, let's put it all together in your chosen formats!
+
+Combined_tidy<-full_join(USA_tidy, ITNL_untidy) %>%
+  select(Site, Location, Luz.Values, format24, Time24)
+
+FortK<- Combined_tidy %>%
+  filter(Site=="Fort Keogh")
+
+Lincoln<- Combined_tidy %>%
+  filter(Site=="Lincoln National Research Station")
+
+Krueger<- Combined_tidy %>%
+  filter(Site=="Kreuger National Park")
+
+NewZ<- Combined_tidy %>%
+  filter(Site=="New Zealand Research Federation")
+
+
+#Lets plot them all using ggplot!
+
+ggplot(Combined_tidy, aes(x = Time24, y = Luz.Values)) + 
+  geom_point(aes(color= as.factor(Site))) +
+  xlab("Time") + 
+  ylab("Luz Values")
+
+
+ggplot(FortK, aes(x = Time24, y = Luz.Values)) + 
+  geom_point(aes(color= as.factor(Site))) +
+  xlab("Time") + 
+  ylab("Luz Values")
+
+
+ggplot(Lincoln, aes(x = Time24, y = Luz.Values)) + 
+  geom_point(aes(color= as.factor(Site))) +
+  xlab("Time") + 
+  ylab("Luz Values")
+
+
+ggplot(Krueger, aes(x = Time24, y = Luz.Values)) + 
+  geom_point(aes(color= as.factor(Site))) +
+  xlab("Time") + 
+  ylab("Luz Values")
+
+
+ggplot(NewZ, aes(x = Time24, y = Luz.Values)) + 
+  geom_point(aes(color= as.factor(Site))) +
+  xlab("Time") + 
+  ylab("Luz Values")
+
+
+##
