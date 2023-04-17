@@ -75,9 +75,9 @@ year() #Get the amount of years or set the amount of years.
 month() #Set the amount of months or set the amount of months. 
 leap_year() #Ask R if the given year is a leap year. 
 month(12, label = TRUE) #Sets a 12 month year with labels. 
-?ymd_hms() #add year, month, day, minute and seconds to dates.
-?hour() #Set or get the hours competent of a date
-second() #Get or set the seconds competent of a date. 
+ymd_hms() 
+hour() 
+second() 
 
 #Run this code and observe the results
 semester_start <- ymd_hms("2023-01-08 08:00:00") 
@@ -88,17 +88,12 @@ month(semester_start, label = TRUE)
 
 #TASK: Extract the day, month, and year from the Due column. Make a new data from called invoice_due with your extracted dates.  
 
-invoice_due <- invoice %>%  mutate(Day = day(invoice$Due)) %>%  
-  mutate(Month = month(invoice$Due)) %>% 
-  mutate(Year = year(invoice$Due))
 
 #This new knowledge still isn't enough. We now want to know if a particular year is a leap year. 
 
 #TASK: Make another new data frame called invoice_leap with the information you find out. Once you have extracted your dates, filter down and find out how many payments were conducted on February 29th? *Hint: the first part of this task is almost identical to what we did in the previous. 
 
-invoice_leap <- invoice_due %>% mutate(LeapYear = leap_year(invoice$Due))
 
-invoice_leap2 <- invoice_leap %>% as.data.frame(invoice_leap) %>% filter(Day == 29) %>%  filter(LeapYear = TRUE)
 
 ################################################################################
 ###############################Time Zones#######################################
@@ -138,13 +133,11 @@ ymd(20230417, tz= "GMT")
 
 # Question: Why would we want to have a standardized/coordinated time?
 
-#Working with international groups of researchers would make an advantageous to work with
-#a singular, standard time.
+
 
 
 # Task! So for the first task lets get you populating some time-zones. First copy the code above and add in your own time-zone code of choice! ie. gmt, roc, ect.
 
-ymd(20230417, tz= "EST")
 
 
 
@@ -172,17 +165,10 @@ cbind(US=format(time_1),UK=format(t1,tz="Europe/London"))
 
 # Question: What would be useful about being able to convert time-zones?
 
-#If you have datasets collected in different timezones it may be advantagous to standardize them
-#in order for your data to be more easily plotted and interpreted. 
-
 # Task Time:)
 # Create and name some dates and times named happy_time it should look similar to the E<- that is above!
 # Once that is done pick some dates and times of your choice ex. US/Alaska time, GMT, PRC, ect. If you need help just remember we have a code that will pull-up all the time-zones:) OlsonNames(tzdir = NULL).
 # This should look very similar to the second code named time_1
-
-happy_time <- c("2007-03-03 12:00", "2007-03-04 12:00", "2007-03-28 12:00", "2007-03-23 12:00", "2007-9-23 12:00", "2007-10-25 12:00", "2007-10-31 12:00", "2007-11-01 12:00")
-time_1 <- as.POSIXct(happy_time,"EST")
-
 
 ###################################################################################
 ##################################### Converting Dates ############################
@@ -212,7 +198,10 @@ ggplot(date_time_untidy, aes(x = Time.Recorded, y = Luz.Values)) +
 #Take a close look
 #Lets try and run these individually. Maybe its our formatting?
 
-
+ggplot(date_time_untidy, aes(x = Time.Recorded, y = Luz.Values)) + 
+  geom_point(aes(color= as.factor(Site))) +
+  xlab("Time") + 
+  ylab("Luz Values")
 
 
 #Seems like its confusing am and pm. I don't think we can combine everything yet.
@@ -220,16 +209,20 @@ ggplot(date_time_untidy, aes(x = Time.Recorded, y = Luz.Values)) +
 
 #Task: Research the popular date/time formats for all our locations
 
+# Fort Keogh and Lincoln in 12 hour format, mm.dd.yyyy.
 
+# Krueger and New Zealand are in 24 hour format, dd.mm.yyyy.
 
 
 #So it seems that Fort Keogh and Lincoln share a format, and so do Krueger and New Zealand
 #Lets divide them up so we can put them back together
 
 
+NWZ <- date_time_untidy %>% filter(Location == "New Zealand")
 
+USA <- date_time_untidy %>% filter(Location == "USA")
 
-
+Krueger <- date_time_untidy %>%  filter(Location == "South Africa")
 
 #Now, let's recombine our dates. First, you need to split the dates apart
 #One way to do this is to use the function str_split_fixed. For example:
@@ -238,16 +231,25 @@ USA_untidy[c('Month','Day', 'Year')]<-str_split_fixed(USA_untidy$Date, '/', 3)
 
 #Task: Create the correct function to split the dates of the international data
 
+NWZ[c('Month','Day', 'Year')]<-str_split_fixed(NWZ$Date, '/', 3)
+USA[c('Month','Day', 'Year')]<-str_split_fixed(USA$Date, '/', 3)
+Krueger[c('Month','Day', 'Year')]<-str_split_fixed(Krueger$Date, '/', 3)
 
 
 
 #Question: Why does this even matter?
 
-
+#We can recombined them into a unified format only if they are seperated. 
 
 #Task: Decide what format you want to put the dates into. Hint:The paste() function may be useful here
 
+NewDates <- full_join(USA, NWZ) 
 
+NewDates2 <- full_join(Krueger, NewDates)
+
+NewDates3 <- NewDates2
+NewDates3[c('Hour','Minute')]<-str_split_fixed(NewDates3$Time.Recorded, '_', 2)
+NewDates3[c('Min','Meridian')]<-str_split_fixed(NewDates3$Minute, ' ', 2)
 
 #Great! Now, we need to format our times. Let's start with the 12-hour format. We can use this formula to change the 12-hour format to the 24-hour. Now from 24 hours to 12-hour format
 
@@ -255,16 +257,32 @@ USA_untidy[c('Month','Day', 'Year')]<-str_split_fixed(USA_untidy$Date, '/', 3)
 
 #Task: Do the same for the International data
 
+Tidy_more <-NewDates3 %>% 
+  filter(Location == c("New Zealand", "South Africa"))
 
+Tidy_more<- Tidy_more %>%
+  mutate(Time24=format(strptime(Tidy_more$Time.Recorded, "%H_%M"), format="%H:%M:%S")) %>% 
+  mutate(Time12=format(strptime(Tidy_more$Time24, "%H:%M:%S"), format="%I:%M %p"))
+
+Tidy_more_USA <-NewDates3 %>% 
+  filter(Location == c("USA"))
+
+Tidy_more_USA <- Tidy_more_USA %>%
+  mutate(Time24=format(strptime(Tidy_more_USA$Time.Recorded, "%I_%M %p"), format="%H:%M:%S")) %>%
+  mutate(Time12=format(strptime(Tidy_more_USA$Time24, "%H:%M:%S"), format="%I:%M %p"))
 
 
 #Now, let's put it all together in your chosen formats!
 
-
+International <- rbind(Tidy_more_USA, Tidy_more)
   
 
 #Lets plot them all using ggplot!
 
+ggplot(International, aes(x = Time24, y = Luz.Values)) + 
+  geom_point(aes(color= as.factor(Site))) +
+  xlab("Time") + 
+  ylab("Luz Values")
   
   
   
