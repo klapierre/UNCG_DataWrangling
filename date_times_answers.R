@@ -1,3 +1,5 @@
+#Answer Key
+
 ################################################################################
 ################################# Introduction #################################
 ###############################################################################
@@ -9,18 +11,18 @@ library(tidyverse)
 #Let's start slow by generating some dates and learning what the lubridate package can do for you. There are several useful base commands in Lubridate. 
 
 #TASK: comment beside the code what these commands do
-lubridate::today() 
-Sys.time() 
-lubridate::now() 
-lubridate::now(tzone = "UTC") 
-lubridate::leap_year(today()) 
+lubridate::today() #today's date
+Sys.time() #system designated time
+lubridate::now() #date, time, and timezone
+lubridate::now(tzone = "UTC") #date, time in UTC timezone
+lubridate::leap_year(today()) #this year is not a leap year
 
-#Make an object containing today's date called today_date in year-month-day format. Use the exact same format R printed in the console when you used lubridate::today()
-
+#Make an object containing today's date called0 today_date. Use the exact same format R printed in the console when you used lubridate::today()
+today_date <- 2023-04-17
 
 #Call today_date and write what happened. Is it what we wanted? 
 today_date
- 
+#ANSWER: it gives us 2002. This is most definitely not what we want. 
 
 #Check the class of today_date
 class(today_date)
@@ -28,7 +30,7 @@ class(today_date)
 #Our date was saved as a numeral, so R went through operations and gave us 2002. This is, to say the least, not ideal for our purposes of storing a date. Let's try writing the date we want in quotes. 
 
 #Question: What is the class of the data now? Is this what we want?
-
+#ANSWER: Is now stored as a character - this is still not what we want
 
 #Storing our date as a character will still not give us what we want because R processes dates differently. Check the class of Sys.Date() and now(). Write what each of the classes print as. 
 class(Sys.Date())
@@ -44,7 +46,7 @@ class(lubridate::now())
 today_date <- as.Date("2023-04-17")
 class(today_date)
 
-#Say you're planning an event, but need to change the dates. We want to be able to shift those dates around. We can do that with some simple commands.
+#Say you're planning an event, but need to change the dates. We want to be able to shift those dates around. We can do thake with some simple commands.
 event_start <- as_date('2022-05-12')
 event_end <- as_date('2022-05-21')
 event_duration <- event_end - event_start
@@ -59,36 +61,50 @@ event_start + years(1)
 invoice <- readr::read_csv('https://raw.githubusercontent.com/rsquaredacademy/datasets/master/transact.csv')
 
 #Task: How many invoices were settled post the due date? 
-
+invoice %>% 
+  mutate(Delay = Payment - Due) %>% 
+  filter(Delay > 0) %>%
+  count(Delay)
 
 #Great, now that we're got some of the basics for dates, lets detour to look at the basics of time. Below are some basic commands for times and a short example. Annotate by each what they do on each line. 
-day() 
-year() 
-month() 
-leap_year() 
-month(12, label = TRUE) #
-ymd_hms() 
-hour() 
-second() 
+day() #extract day
+year() #extracts year
+month() #extracts month
+leap_year() #extracts if leap year
+month(12, label = TRUE) #give what month 12 is
+ymd_hms() #will parse date-times and second components
+hour() #gives hour
+second() #extracts second
 
-semester_start <- ymd_hms("2023-01-08 08:00:00") 
-year(semester_start) 
-month(semester_start, label = TRUE) 
+semester_start <- ymd_hms("2023-01-08 08:00:00") #set date and parse times
+year(semester_start) #2023
+month(semester_start, label = TRUE) #Jan
 
 #Let's go back to our invoice data. Let's say we're trying to know a bit more about our data. 
 
 #TASK: Extract the day, month, and year from the Due column. Make a new data from called invoice_due with your extracted dates.  
-
+invoice_due <- invoice %>% 
+  mutate(due_date = day(Due), 
+         due_month = month(Due), 
+         due_year = year(Due))
 
 #This new knowledge still isn't enough. We now want to know if a particular year is a leap year. 
 
 #TASK: Make another new data frame called invoice_leap with the information you find out. Once you have extracted your dates, filter down and find out how many payments were conducted on February 29th? *Hint: the first part of this task is almost identical to what we did in the previous. 
 
+invoice_leap <- invoice %>%
+  mutate(
+    due_day   = day(Due),
+    due_month = month(Due),
+    due_year  = year(Due),
+    is_leap   = leap_year(due_year)
+  ) #%>%
+filter(due_month == 2 & due_day == 29) %>%
+  select(Due, is_leap) 
 
+#ANSWER: four
 
-################################################################################
-###############################Time Zones#######################################
-################################################################################
+##############################Time-zones################################ -E
 
 #Time-zones: Are invisible boundaries created to differentiate time between geographical regions. Timezone Greenwich Mean Time (GMT) is also known as Zulu time, or the Coordinated Universal Time (UTC). This is where the rest of the time-zones moving east and west are based off of. Moving Westward moves time in the negative direction from -1 to -12, and oppositely eastward time moves in the positive direction from +1 to +12. 
 # tzdir
@@ -123,11 +139,14 @@ ymd(20230417, tz= "GMT")
 # For this code we added a date and the time-zone which is UTC which is our referenced Zulu time!
 
 # Question: Why would we want to have a standardized/coordinated time?
+#The reason to have a standard/ coordinated time is so people who are working with international partners can have a standard time-zone.
 
 
 
 
 # Task! So for the first task lets get you populating some time-zones. First copy the code above and add in your own time-zone code of choice! ie. gmt, roc, ect.
+
+ymd(20230417, tz= "XXX") 
 
 
 
@@ -155,155 +174,17 @@ time_1 <- as.POSIXct(E,"America/Los_Angeles")
 cbind(US=format(time_1),UK=format(t1,tz="Europe/London"))
 
 # Question: What would be useful about being able to convert time-zones?
-
+#Being able to convert time-zones helps with creating a better understanding of data being collected across the globe.
 # Task Time:)
 # Create and name some dates and times named happy_time it should look similar to the E<- that is above!
 # Once that is done pick some dates and times of your choice ex. US/Alaska time, GMT, PRC, ect. If you need help just remember we have a code that will pull-up all the time-zones:) OlsonNames(tzdir = NULL).
 # This should look very similar to the second code named time_1
 
-###################################################################################
-##################################### Converting Dates ############################
-####################################################################################
+xxx <- "2009-06-03 19:30"
+format(Important_stuff, tz="xxx/xxx ",usetz=TRUE)
 
-########## Untidy ITNL Data ##########
+xxx <- c("2009-03-07 12:00", "2009-03-08 12:00", "2009-03-28 12:00", "2009-03-29 12:00", "2009-10-24 12:00", "2009-10-25 12:00", "2009-10-31 12:00", "2009-11-01 12:00")
 
-library(tidyverse)
-
-#For large-scale projects like multi-continental or global experiments, they ften involve working with scientists internationally to collect data. This is especially true if the research requires sampling many times a year.
-
-#In these cases, it is often vital to understand how time plays a role in these interactions. When
-
-
-#Load the 'date_time_very_untidy.csv'
-date_time_untidy <-read.csv("date_time_very_untidy.csv")
-
-#Different places around the world will have different ways of portraying times and dates. Let's take a look at the date_times dataset.
-
-FortK<- Combined_tidy %>%
-  filter(Site=="Fort Keogh")
-
-Lincoln<- Combined_tidy %>%
-  filter(Site=="Lincoln National Research Station")
-
-Krueger<- Combined_tidy %>%
-  filter(Site=="Kreuger National Park")
-
-NewZ<- Combined_tidy %>%
-  filter(Site=="New Zealand Research Federation")
-
-
-
-
-ggplot(Combined_tidy, aes(x = Time24, y = Luz.Values)) + 
-  geom_point(aes(color= as.factor(Site))) +
-  xlab("Time") + 
-  ylab("Luz Values")
-
-
-ggplot(FortK, aes(x = Time24, y = Luz.Values)) + 
-  geom_point(aes(color= as.factor(Site))) +
-  xlab("Time") + 
-  ylab("Luz Values")
-
-
-ggplot(Lincoln, aes(x = Time24, y = Luz.Values)) + 
-  geom_point(aes(color= as.factor(Site))) +
-  xlab("Time") + 
-  ylab("Luz Values")
-
-
-ggplot(Krueger, aes(x = Time24, y = Luz.Values)) + 
-  geom_point(aes(color= as.factor(Site))) +
-  xlab("Time") + 
-  ylab("Luz Values")
-
-
-ggplot(NewZ, aes(x = Time24, y = Luz.Values)) + 
-  geom_point(aes(color= as.factor(Site))) +
-  xlab("Time") + 
-  ylab("Luz Values")
-
-#SA and NZ: Day/Month/Year
-#USA: Month/Day/Year
-
-USA_untidy<- date_time_untidy %>%
-  filter(Location=="USA")
-
-NZ_untidy<- date_time_untidy %>%
-  filter(Location== "New Zealand")
-
-SA_untidy<- date_time_untidy %>%
-  filter(Location== "South Africa")
-
-ITNL_untidy<- full_join(SA_untidy, NZ_untidy) %>%
-  mutate(Time24=format(strptime(ITNL_untidy$Time.Recorded, "%H_%M"), format="%H:%M:%S"))
-
-
-
-USA_tidy<- USA_untidy %>%
-  mutate(Time24=format(strptime(USA_tidy$Time.Recorded, "%I_%M %p"), format="%H:%M:%S"))
-
-
-
-
-Combined_tidy<-full_join(USA_tidy, ITNL_untidy) %>%
-  select(Site, Location, Luz.Values, Date, Time24)
-
-FortK<- Combined_tidy %>%
-  filter(Site=="Fort Keogh")
-
-Lincoln<- Combined_tidy %>%
-  filter(Site=="Lincoln National Research Station")
-
-Krueger<- Combined_tidy %>%
-  filter(Site=="Kreuger National Park")
-
-NewZ<- Combined_tidy %>%
-  filter(Site=="New Zealand Research Federation")
-
-
-
-
-ggplot(Combined_tidy, aes(x = Time24, y = Luz.Values)) + 
-  geom_point(aes(color= as.factor(Site))) +
-  xlab("Time") + 
-  ylab("Luz Values")
-
-
-ggplot(FortK, aes(x = Time24, y = Luz.Values)) + 
-  geom_point(aes(color= as.factor(Site))) +
-  xlab("Time") + 
-  ylab("Luz Values")
-
-
-ggplot(Lincoln, aes(x = Time24, y = Luz.Values)) + 
-  geom_point(aes(color= as.factor(Site))) +
-  xlab("Time") + 
-  ylab("Luz Values")
-
-
-ggplot(Krueger, aes(x = Time24, y = Luz.Values)) + 
-  geom_point(aes(color= as.factor(Site))) +
-  xlab("Time") + 
-  ylab("Luz Values")
-
-
-ggplot(NewZ, aes(x = Time24, y = Luz.Values)) + 
-  geom_point(aes(color= as.factor(Site))) +
-  xlab("Time") + 
-  ylab("Luz Values")
-
-
-##
-
-
-
-
-
-
-
-
-
-
-
+xxx <- as.POSIXct(E,"America/Los_Angeles")
+cbind(US=format(time_1),UK=format(t1,tz="Europe/London"))
 
