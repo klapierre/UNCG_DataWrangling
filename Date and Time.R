@@ -178,7 +178,10 @@ cbind(US=format(time_1),UK=format(time_1,tz="Europe/London"))
 
 happy_time <- c(20220303123100, 20090430230015, 19991231130000, 188502113256, 20230417171330) 
 time2 <- data.frame(happy_time) %>% 
-  mutate(UCT=ymd_hms(happy_time, tz="UCT"), )
+  mutate(UCT=ymd_hms(happy_time, tz="UCT")) %>% 
+  mutate(`Buenos Aires`=format(UCT, tz="Etc/GMT-3"), Oslo=format(UCT, tz="Etc/GMT+2"), `Amsterdam Island`=format(UCT, tz="Etc/GMT+5")) %>% 
+  select(-c("happy_time"))
+
 
 ###################################################################################
 ##################################### Converting Dates ############################
@@ -216,15 +219,38 @@ ggplot(date_time_untidy, aes(x = Time.Recorded, y = Luz.Values)) +
 
 #Task: Research the popular date/time formats for all our locations
 
-
+#new zealand and south africa use 24 hour time and usa uses 12 hour time
 
 
 #So it seems that Fort Keogh and Lincoln share a format, and so do Krueger and New Zealand
 #Lets divide them up so we can put them back together
 
 
+sepHourMin <- date_time_untidy %>% 
+  separate(Time.Recorded, into = c("Hour", "Minute"), sep = "_") %>% 
+  mutate(Hour=as.numeric(Hour))
+ampmfix <- sepHourMin %>% 
+  mutate(Hour=ifelse(grepl("PM", Minute), Hour+12, Hour)) %>% 
+  separate(Minute, into = c("Min", "AM/PM"), sep = " ") %>% 
+  mutate(Hour=as.character(Hour))
+
+daymonthfixUSA <- ampmfix %>% 
+  filter(Location == "USA") %>% 
+  separate(Date, into = c("Month", "Day", "Year"), sep = "/")
+
+tidy_date <- ampmfix %>% 
+  filter(Location!= "USA") %>% 
+  separate(Date, into = c("Day", "Month", "Year"), sep = "/") %>% 
+  rbind(daymonthfixUSA) %>% 
+  mutate(date.time=paste(Year,Month,Day,Hour,Min), sep="_") %>% 
+  mutate(Date.Time=ymd_hm(date.time)) %>% 
+  select(c(Site, Location, Luz.Values, Date.Time)) %>% 
+  separate(Date.Time, into = c("Date", "Time"), sep = " ")
+  
 
 
+
+  ####I fully tidied all the data in this one block, so I jumped to the graph from here####
 
 
 #Now, let's recombine our dates. First, you need to split the dates apart
@@ -234,15 +260,15 @@ USA_untidy[c('Month','Day', 'Year')]<-str_split_fixed(USA_untidy$Date, '/', 3)
 
 #Task: Create the correct function to split the dates of the international data
 
-
+International_untidy[c('Day','Month','Year')] <- str_split_fixed(date_time_untidy[which(Location!="USA")], '/', 3)
 
 
 #Question: Why does this even matter?
-
+  # the USA uses month/day/year format while the other two countries use day/month/year
 
 
 #Task: Decide what format you want to put the dates into. Hint:The paste() function may be useful here
-
+  # year/month/day
 
 
 #Great! Now, we need to format our times. Let's start with the 12-hour format. We can use this formula to change the 12-hour format to the 24-hour. Now from 24 hours to 12-hour format
@@ -262,7 +288,10 @@ mutate(Time24=format(strptime(USA_tidy$Time.Recorded, "%I_%M %p"), format="%H:%M
 #Lets plot them all using ggplot!
 
 
-
+ggplot(tidy_date, aes(x=Time, y=Luz.Values)) +
+  geom_point(aes(color= as.factor(Site))) +
+  xlab("Time") + 
+  ylab("Luz Values") 
 
 
 ##
