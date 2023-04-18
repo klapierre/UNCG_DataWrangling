@@ -1,0 +1,127 @@
+---
+title: "PCA_Analysis_lyrataData"
+author: "Carina Bravo-Chan"
+date: "2023-04-12"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+# Before reading CSV file into data frame,
+#  copy the most recent version from parent directory:
+
+library(tidyverse)
+
+# Read in the data
+mtDataAll <- read_csv("QTLStudyTraitAnalysis_survMarkers.csv")
+
+# Generate calculated fields:
+mtDataAll <- mtDataAll %>%
+  mutate(dDiam21 = Diam2 - Diam1,
+         dDiam32 = Diam3 - Diam2,
+         meanBLvs = rowMeans(select(., c(Diameter21, Diameter22, Diameter23)), na.rm = TRUE),
+         meanOrder = rowMeans(select(., c(Order1, Order2, Order3)), na.rm = TRUE),
+         meanBrNode = rowMeans(select(., c(BranchNode1, BranchNode2, BranchNode3)), na.rm = TRUE),
+         meanFlNode = rowMeans(select(., c(FlowerNode1, FlowerNode2, FlowerNode3)), na.rm = TRUE))
+
+# Check variable names
+names(mtDataAll)
+
+# Check variable classes
+mtDataAll %>%
+  select(Pop, Fam, PShootStatus0215, LShootStatus0215) %>%
+  map(class)
+
+# Convert variables to factors
+mtDataAll <- mtDataAll %>%
+  mutate(across(c(Pop, Fam, PShootStatus0215, LShootStatus0215), as.factor))
+
+# Create a new dataframe with just the F2 plants
+mtDataF2 <- mtDataAll %>%
+  filter(Pop == "F2")
+
+# Check variable names
+names(mtDataF2)
+
+
+# Decompose GI genotype into additive and dominance components
+mtDataF2 <- mtDataF2 %>% 
+  mutate(GIAdd = GI - 1,
+         GIDom = 1 - abs(1 - GI))
+
+# Calculate mean number of inflorescence branches
+mtDataF2 <- mtDataF2 %>% mutate(meanBrNumber = meanFlNode - meanBrNode)
+
+# Single-trait regressions on GI genotype
+single_trait_models <- c("Diam3", "dDiam32", "Infl", "Diam2", "Diam1", "dDiam21", 
+                         "meanBLvs", "meanOrder", "LatRating0215", "Rhiz0615", 
+                         "meanFlNode", "meanBrNode", "meanBrNumber")
+
+for (trait in single_trait_models) {
+  formula <- formula(paste(trait, "~ GI"))
+  model <- lm(formula, data = mtDataF2)
+  print(summary(model))
+  ggplot(mtDataF2, aes(x = GI, y = !!sym(trait))) +
+    geom_point() +
+    geom_smooth(method = "lm", se = FALSE, color = "blue") +
+    labs(x = "GI", y = trait)
+}
+
+# Regressions on GI additive and dominance components
+multi_trait_models <- c("Diam1", "Diam2")
+
+for (trait in multi_trait_models) {
+  formula <- formula(paste(trait, "~ GIAdd + GIDom"))
+  model <- lm(formula, data = mtDataF2)
+  print(summary(model))
+  ggplot(mtDataF2, aes(x = GIAdd, y = !!sym(trait), color = GIDom)) +
+    geom_point() +
+    geom_smooth(method = "lm", se = FALSE) +
+    labs(x = "GIAdd", y = trait, color = "GIDom")
+}
+
+# PC Analysis
+
+PCTraitsF2dExt <- mtDataF2[,c(5,27,31,32,24,41,30,39,40,37)]
+PCTraitsF2dExtTrim <- na.omit(PCTraitsF2dExt)
+PCTraitsF2dExtImputed <- impute(PCTraitsF2dExt) # created a new data frame, using the impute function to force PCA despite empty rows within data frame
+
+length(PCTraitsF2dExtImputed[,1])
+
+names(PCTraitsF2dExtImputed)
+#replace all is.na=0
+
+PCModelF2dExt <- prcomp(PCTraitsF2dExtImputed, scale.=TRUE)
+summary(PCModelF2dExt)
+PCModelF2dExt$rotation
+
+PCPredictF2 <- predict(PCModelF2dExt, newdata = mtDataF2)
+mtDataF2 <- cbind(mtDataF2, PCPredictF2)
+
+names(mtDataF2)
+
+PC1_PIN <- lm(PC1 ~ PIN_combined, data = mtDataF2)
+summary(PC1_PIN)
+
+PC1_SOC1 <- lm(PC1 ~ SOC1, data = mtDataF2)
+summary(PC1_SOC1)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
