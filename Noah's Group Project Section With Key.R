@@ -43,13 +43,17 @@ rawTitanic <- read.csv("titanic.csv")
 # PassengerId, Survived, Pclass, Name, Sex, and Age columns.
 # Filter out any N/A values in any of the cells. Try using the na.omit() function.
 # Then make a new column with the age as a 10 year range or age in decades
+# (Make sure the highest age is "60+")
 
 ####+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++####
 # Answer: 
 titanicTidyAge <- rawTitanic %>% 
   select(c(PassengerId, Survived, Pclass, Name, Sex, Age)) %>% 
   na.omit() %>% 
-  mutate(AgeDecade = floor(Age/10)*10)
+  mutate(AgeDecade = floor(Age/10)*10) %>% 
+  mutate(AgeDecade = ifelse(AgeDecade>=60,
+                "60+",
+                AgeDecade))
 
 ####+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++####
 
@@ -75,11 +79,21 @@ titanicTidyCabin <- rawTitanic %>%
 # Task: Make a bar plot using the titanicTidyAge data frame that:
 # 1) Plots Sex against number of survivors 
 # 2) Animate the length of the bars by decade age groups
-# 3) Be sure to add appropriate x- and y-axes labels and title
+# 3) Include a label for what age range is currently shown
+# 4) Be sure to add appropriate x- and y-axes labels and title
+# 5) Color the columns something other than the default
+# Reminder: You may need to further filter the data frame
 
 ####+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++####
 # Answer: 
+graphAge <- titanicTidyAge %>% 
+  filter(Survived==1)
 
+ggplot(graphAge, aes(x=Sex, fill = Sex)) +
+  geom_bar() +
+  transition_states(AgeDecade, state_length = 1, transition_length = 3) +
+  ease_aes("sine-in-out") +
+  labs(subtitle = "Passengers in their {closest_state}'s")
 
 ####+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++####
 
@@ -95,4 +109,5 @@ titanicTidyCabin <- rawTitanic %>%
 
 
 ####+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++####
+
 
