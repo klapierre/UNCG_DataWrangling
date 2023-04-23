@@ -99,14 +99,32 @@ ggplot(graphAge, aes(x=Sex, fill = Sex)) +
 
 
 # Task: Make a scatter plot using the titanicTidyCabin data frame:
-# 1) Plotting Percentage of female passengers that survived against percentage of
-# male passengers who survived
-# 2) Coloring points by Pclass
-# 3) Animating the point position by Deck, from highest deck to lowest
+# 1) Plotting age of passengers on the y-axes and deck level on the x-axes
+# 2) Coloring points by Survived, with point shape by Sex
+# 3) Animating the point position by Pclass
+# 4) Jitter the points so they don't all overlap
+# 5) Add code to display what Pclass you're currently showing
+# 6) Add appropriate x- and y-axes labels
+# 
+# Hint: Try aes(group = seq_along(...)) to get all your points to disappear 
+# between frames rather than some disappearing and some moving
+# see https://cran.r-project.org/web/packages/gganimate/vignettes/gganimate.html
+# for examples
 
 ####+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++####
 # Answer: 
 
+ggplot(titanicTidyCabin, aes(x=Deck, y=Age, fill=as.factor(Survived), shape=Sex)) +
+  geom_point(aes(group = seq_along(Pclass)), position = "jitter") +
+  scale_shape_manual(values = c(21, 24)) +
+  scale_fill_manual(
+    values = c("white", "black"),
+    guide = guide_legend(override.aes = list(shape = 21))
+  ) +
+  transition_states(Pclass, transition_length = 2, state_length = 1) +
+  enter_fade() +
+  exit_fade() +
+  labs(subtitle = "Currently showing Class {closest_state} passengers")
 
 ####+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++####
 
