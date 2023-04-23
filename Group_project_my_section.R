@@ -82,7 +82,7 @@ bar_graph +
 #4. Change the colors using scale_fill_brewer and Rcolorbrewer
 #5. Save as a gif!
 
-ggplot(orange, aes(x=age, y=circumference, fill=as.factor(Tree))) + 
+racing_bar_plot <- ggplot(orange, aes(x=age, y=circumference, fill=as.factor(Tree))) + 
   geom_bar(colour="black", stat="identity",
            position=position_dodge()) +
   scale_fill_brewer(palette = "Accent")+
@@ -92,6 +92,12 @@ ggplot(orange, aes(x=age, y=circumference, fill=as.factor(Tree))) +
   ease_aes('linear')+
   enter_fade()+
   exit_fade()
+
+racing_bar <- animate(racing_bar_plot, renderer = gifski_renderer())
+anim_save('racing_bar.gif', animation = last_animation(), path = NULL)
+  
+       
+
 
 #This is a true racing bar graph that I felt was too complicated to dump on y'all, but wanted to share anyways (because it took me forever to get it to work)! geom_tile allows for the bars to actually pass each other and race
 ggplot(orange, aes(circumference, group = Tree)) +  
