@@ -146,13 +146,13 @@ ymd(20230417, tz= "GMT")
 # For this code we added a date and the time-zone which is UTC which is our referenced Zulu time!
 
 # Question: Why would we want to have a standardized/coordinated time?
-
+# By having a standardized/coordinated time, folks from across the world can work together in a similar timeframe.
 
 
 
 # Task! So for the first task lets get you populating some time-zones. First copy the code above and add in your own time-zone code of choice! ie. gmt, roc, ect.
 
-
+ymd(20230423,tz="EST")
 
 
 # Next we are going to cover converting time-zones.
@@ -178,11 +178,21 @@ time_1 <- as.POSIXct(E,"America/Los_Angeles")
 cbind(US=format(time_1),UK=format(t1,tz="Europe/London"))
 
 # Question: What would be useful about being able to convert time-zones?
+# There are a lot of reasons, namely so that one can convert into a more familiar time zone to make data analysis easier to access.
 
 # Task Time:)
 # Create and name some dates and times named happy_time it should look similar to the E<- that is above!
 # Once that is done pick some dates and times of your choice ex. US/Alaska time, GMT, PRC, ect. If you need help just remember we have a code that will pull-up all the time-zones:) OlsonNames(tzdir = NULL).
 # This should look very similar to the second code named time_1
+
+happy_time <- "2001-02-13 14:12"%>%
+format(Important_stuff, tz="EST/EST ",usetz=TRUE)
+
+happy_time <- c("2001-02-13 15:00", "2001-02-14 15:00", "2001-02-15 15:00", "2001-02-16 15:00")
+
+happy_time <- as.POSIXct(E,"America/Los_Angeles")%>%
+cbind(US=format(time_1),UK=format(t1,tz="Europe/London"))
+
 
 ###################################################################################
 ##################################### Converting Dates ############################
