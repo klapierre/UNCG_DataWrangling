@@ -146,7 +146,7 @@ ymd(20230417, tz= "GMT")
 
 # Task! So for the first task lets get you populating some time-zones. First copy the code above and add in your own time-zone code of choice! ie. gmt, roc, ect.
 
-ymd(20230417, tz= "XXX") 
+ymd(20230417, tz= "EST")
 
 
 
@@ -180,7 +180,7 @@ cbind(US=format(time_1),UK=format(t1,tz="Europe/London"))
 # Once that is done pick some dates and times of your choice ex. US/Alaska time, GMT, PRC, ect. If you need help just remember we have a code that will pull-up all the time-zones:) OlsonNames(tzdir = NULL).
 # This should look very similar to the second code named time_1
 
-xxx <- "2009-06-03 19:30"
+happy_time <- "2009-06-03 19:30"
 format(Important_stuff, tz="xxx/xxx ",usetz=TRUE)
 
 xxx <- c("2009-03-07 12:00", "2009-03-08 12:00", "2009-03-28 12:00", "2009-03-29 12:00", "2009-10-24 12:00", "2009-10-25 12:00", "2009-10-31 12:00", "2009-11-01 12:00")
@@ -220,9 +220,20 @@ ggplot(date_time_untidy, aes(x = Time.Recorded, y = Luz.Values)) +
 FK<- date_time_untidy %>%
   filter(Site=="Fort Keogh")
 
+ggplot(FK, aes(x = Time.Recorded, y = Luz.Values)) + 
+  geom_point(aes(color= as.factor(Site))) +
+  xlab("Time") + 
+  ylab("Luz Values")
+
+
+
 Kru<- date_time_untidy %>%
   filter(Site=="Kreuger National Park")
 
+ggplot(Kru, aes(x = Time.Recorded, y = Luz.Values)) + 
+  geom_point(aes(color= as.factor(Site))) +
+  xlab("Time") + 
+  ylab("Luz Values")
 
 #Seems like its confusing am and pm. I don't think we can combine everything yet.
 #Let's try and break this down
