@@ -201,9 +201,11 @@ anim_save("Graph4_Animate.gif", animation = last_animation(), path = NULL)
 #Whoa! Good job - now the graph is moving!
 #Question: Why might it be important to use gganimate when tidying and working with datasets?
 
-
+#GGanimate does a great job of visualing changes in data overtime!
 
 #Question: What other graphs do you think would  be significant to use in gganimate when you are trying to #visulize datasets?
+
+#Might be able to graph changes in insect order or family abundances overtime!
 
 #Great job! Now let's go use more datasets!
 
