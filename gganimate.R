@@ -261,12 +261,13 @@ orange <- data.frame(Orange) %>%
 
 #Let's start with our first graph! We're going to create a simple line graph!
 
-line_graph <- ggplot(orange, aes(age, circumference, group = Tree, color = as.factor(Tree))) +
-  scale_colour_brewer(palette = "Dark2") +
-  geom_line() +
-  labs(title = 'Orange Tree Circumference by Age', x = 'Age in Days', y = 'Circumference in mm') +
-  theme(legend.position = "top") +
-  geom_point(aes(group = seq_along(age)), size=2) 
+line_graph <- ggplot(orange, aes(age, circumference, group = Tree, color = as.factor(Tree))) + #This sets our variables for the graph
+  theme_dark()+
+  scale_colour_brewer(palette = "Spectral") + #Sets the colors of the graph by variables
+  geom_line() + #Creates a line graph
+  labs(title = 'Orange Tree Circumference by Age', x = 'Age in Days', y = 'Circumference in mm') + #labels for the graph
+  theme(legend.position = "top") + #The legend is positioned above the graph
+  geom_point(aes(group = seq_along(age)), size=3, shape=19) #Resizes and reshapes the points on the graph
 line_graph
 
 #TASK: Annotate each line on what it does for the graph
@@ -280,12 +281,16 @@ line_graph +
 
 #Question: When would this type of graph and animation be an appropriate way to communicate your data?
 
+# It may be best to use this type of graph and animation when wanting to show change over time, perhaps in popularity, stocks, population size, etc.
+
 #Now for graph 2!We're going to do a bar graph!
 
 #Let's start by making a simple bar graph
 bar_graph <- ggplot(orange, aes(age, circumference, fill=as.factor(Tree))) +
   geom_bar(stat="identity", position=position_dodge()) + 
-  scale_fill_brewer(palette = "Accent") 
+  theme_dark()+
+  scale_fill_brewer(palette = "Spectral")+
+  ggtitle("Tree Circumference by Age")
 bar_graph
 
 #TASK: Annotate each line on what it does for the graph
@@ -301,6 +306,7 @@ bar_graph +
 
 #Question: When would this type of graph and animation be an appropriate way to communicate your data?
 
+# This would allow us to show vast differences and changes between parts of a data set. 
 
 #TASK: Create a "racing bar graph" that shows the change in circumference over time! What you'll need to do is:
 #1. Create a bar plot similar to the last example
