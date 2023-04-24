@@ -409,7 +409,9 @@ titanicTidyAge <- rawTitanic %>%
 # This letter is the deck the cabin was located, A was the topmost deck and B the
 # next, and so on
 
-titanicTidyCabin <- 
+titanicTidyCabin <- rawTitanic %>% select(PassengerId, Survived, Pclass, Sex, Age, Cabin) %>% 
+  mutate(CabinNew = str_extract(Cabin, "[aA-zZ]+")) %>% 
+  na.omit()
 
 
 # Next you'll be using each of those to make a graph.
@@ -422,6 +424,14 @@ titanicTidyCabin <-
 # 5) Color the columns something other than the default
 # Reminder: You may need to further filter the data frame
 
+New_graph <- ggplot(titanicTidyAge, aes(Sex, Survived)) + #Pulls data, sets aestheics
+  geom_col() + #Sets as bar graph and alters horizonal positions
+  transition_states(age_group,  transition_length = 1, #Sets transition length
+                    state_length = 1) + #Sets state length
+  labs(title = 'Survivers by Age: {closest_state}', x = 'Sex', y = 'Survived') + #Sets titles
+  scale_fill_brewer(palette = "Accent")
+
+New_graph
 
 # Task: Make a scatter plot using the titanicTidyCabin data frame:
 # 1) Plotting age of passengers on the y-axes and deck level on the x-axes
@@ -435,3 +445,11 @@ titanicTidyCabin <-
 # between frames rather than some disappearing and some moving
 # see https://cran.r-project.org/web/packages/gganimate/vignettes/gganimate.html
 # for examples
+New_graph1 <- ggplot(titanicTidyCabin, aes(CabinNew, Age, fill = as.factor(Survived), shape= Sex)) + #Pulls data, sets aestheics
+  geom_point(position = "jitter") + #Sets as bar graph and alters horizonal positions
+  transition_states(Pclass,  transition_length = 1, #Sets transition length
+                    state_length = 1) + #Sets state length
+  labs(title = 'Survivers by Age: {closest_state}', x = 'Sex', y = 'Survived') + #Sets titles
+  scale_fill_manual(values = c("red","blue"))
+New_graph1
+
