@@ -251,7 +251,7 @@ Not_USA_untidy[c('Month','Day', 'Year')]<-str_split_fixed(Not_USA_untidy$Date, '
 
 #Great! Now, we need to format our times. Let's start with the 12-hour format. We can use this formula to change the 12-hour format to the 24-hour. Now from 24 hours to 12-hour format
 
-mutate(Time24=format(strptime(USA_tidy$Time.Recorded, "%I_%M %p"), format="%H:%M:%S"))
+mutate(Time24=format(strptime(USA_untidy$Time.Recorded, "%I_%M %p"), format="%H:%M:%S"))
 
 #Task: Do the same for the International data
 
