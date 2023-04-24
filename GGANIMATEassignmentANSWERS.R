@@ -294,6 +294,7 @@ bar_graph +
 #5. Save as a gif!
 
 racing_bar_plot <- ggplot(orange, aes(x=age, y=circumference, fill=as.factor(Tree))) + 
+  labs(title = 'Circumference over 7 Sampling Points : {closest_state}') + 
   geom_bar(colour="black", stat="identity",
            position=position_dodge()) +
   scale_fill_brewer(palette = "Accent")+
@@ -303,6 +304,8 @@ racing_bar_plot <- ggplot(orange, aes(x=age, y=circumference, fill=as.factor(Tre
   ease_aes('linear')+
   enter_fade()+
   exit_fade()
+
+racing_bar_plot
 
 racing_bar <- animate(racing_bar_plot, renderer = gifski_renderer())
 anim_save('racing_bar.gif', animation = last_animation(), path = NULL)
