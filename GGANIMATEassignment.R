@@ -168,10 +168,10 @@ labs(title = 'Days: {frame_time}', x = 'Chick weight (grams)', y = 'Chick number
 
 #Great job! Now let's go use more datasets!
 
-# --------------------------------------------------------------------- #
+# ---------------------------------------------------------------------#
 #                     Section 3: More graphs! But now with              #
 #                                ~Orange trees~                         #
-# --------------------------------------------------------------------- #
+# ---------------------------------------------------------------------#
 
 #This section is just building off what you've already learned in 
 #sections 1 and 2, but with a new data set and new graphs!
@@ -209,6 +209,7 @@ line_graph <- ggplot(orange, aes(age, circumference, group = Tree, color = as.fa
   geom_point(aes(group = seq_along(age)), size=2) 
 line_graph
 
+#TASK: Annotate each line on what it does for the graph
 #TASK: play around with the colors, point shapes, and sizes!
 
 
@@ -226,6 +227,7 @@ bar_graph <- ggplot(orange, aes(age, circumference, fill=as.factor(Tree))) +
   scale_fill_brewer(palette = "Accent") 
 bar_graph
 
+#TASK: Annotate each line on what it does for the graph
 #TASK: Add titles! Change the width! Flip the axis! Cause chaos!!!
  
 
