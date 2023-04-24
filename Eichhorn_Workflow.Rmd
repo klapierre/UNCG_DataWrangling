@@ -7,13 +7,17 @@ output: pdf_document
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(ggplot2)
 ```
 
 # Background
 
 During the peak of mating and young rearing, many backyard bird species, especially bluebirds, depend upon aquatic invertebrate species to feed their young. The PhD student I am working under for this data, Melanie Stadler, is researching the impacts that manmade wetlands have on the success of bird fledging. She is particularly interested in the effects on bluebird species success, however she collects data on a number of other species. The working hypothesis, so far as I understand, is that there should be a positive correlation between spatial proximity to wetlands and the success of fledging. There are a total of 72 bluebird boxes across 4 parks within the Greensboro area: Peabody Park, Price Park, Gateway Park, and Country Park. The nesting and data collection season runs from late March-August. The data collected are the number of eggs, young, and those that are able to fledge. Extranneous data includes bird behavior and other notes that field researchers so choose to add.
 
-For my final project in class, I will be working with five .csv files. Four from the field data collected at each park, and one file which contains landcover type percentages for each of the 72 boxes. I have already gone back into these datasets and manually entered a "nest_success" column which assigns a numerical value to whether or not a nest produced fledglings. Here is my proposed workflow that will be repeated on each file:
+For my final project in class, I will be working with five .csv files. Four from the field data collected at each park, and one file which contains landcover type percentages for each of the 72 boxes. I have already gone back into these datasets and manually entered a "nest_success" column which assigns a numerical value to whether or not a nest produced fledglings.
+
+#Overview of Workflow
 
 ```{r}
 
@@ -48,5 +52,20 @@ For my final project in class, I will be working with five .csv files. Four from
 
 #I assume because there are so many boxes, trying to do one at a time will be
 # incredibly tedious, so a facet wrap would expedite this process
+
+```
+
+#Code
+
+## First, it's time to load in the csv files. For this project, I will just be working with one of the parks, Peabody Park. Plus the land_cover data that will be used across all of the parks.
+```{r,read.csv}
+pbp <- read.csv("peabodypark_success.csv")
+land_cover <- read.csv("landcover_allboxes_percent.csv")
+
+```
+
+```{r}
+pbp_cover <- land_cover %>%
+  filter(land_cover,box_id =="PB")
 
 ```
