@@ -238,14 +238,15 @@ orange <- data.frame(Orange) %>%
 
 #Let's start with our first graph! We're going to create a simple line graph!
 
-line_graph <- ggplot(orange, aes(age, circumference, group = Tree, color = as.factor(Tree))) +
-  scale_colour_brewer(palette = "Dark2") +
-  geom_line() +
-  labs(title = 'Orange Tree Circumference by Age', x = 'Age in Days', y = 'Circumference in mm') +
-  theme(legend.position = "top") +
-  geom_point(aes(group = seq_along(age)), size=2) 
+line_graph <- ggplot(orange, aes(age, circumference, group = Tree, color = as.factor(Tree))) + #create graph
+  scale_colour_brewer(palette = "Dark2") + #change color
+  geom_line() + #add line
+  labs(title = 'Orange Tree Circumference by Age', x = 'Age in Days', y = 'Circumference in mm') + #add titles to graph
+  theme(legend.position = "top") + #add theme and legend position
+  geom_point(aes(group = seq_along(age)), size=2) #add points to the graph
 line_graph
 
+#TASK: Annotate each line on what it does for the graph
 #TASK: play around with the colors, point shapes, and sizes!
 display.brewer.all()
 
@@ -260,11 +261,12 @@ line_graph +
 #Now for graph 2!We're going to do a bar graph!
 
 #Let's start by making a simple bar graph
-bar_graph <- ggplot(orange, aes(age, circumference, fill=as.factor(Tree))) +
-  geom_bar(stat="identity", position=position_dodge()) + 
-  scale_fill_brewer(palette = "Accent") 
+bar_graph <- ggplot(orange, aes(age, circumference, fill=as.factor(Tree))) + #create graph showing age vs circumference 
+  geom_bar(stat="identity", position=position_dodge()) + #add bar graph
+  scale_fill_brewer(palette = "Accent") #change color
 bar_graph
 
+#TASK: Annotate each line on what it does for the graph
 #TASK: Add titles! Change the width! Flip the axis! Cause chaos!!!
 bar_graph <- ggplot(orange, aes(age, circumference, fill=as.factor(Tree))) +
   geom_bar(stat="identity", position=position_dodge()) + 
