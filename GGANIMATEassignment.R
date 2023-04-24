@@ -119,7 +119,7 @@ library(gifski)
 
 
 #The next step is to load in the data set ChickWeight already embedded in R by running the following code:
-data(ChickWeight)
+as.data.frame(ChickWeight)
 
 #Take a moment to look at the data set. You'll see 4 columns: weight, time, chick, and diet.
 #The weight column is the mass of the chick
@@ -138,10 +138,12 @@ ggplot(ChickWeight, aes(weight, Chick)) +
 ##TASK##
 #For the following code annotate each line for what you think each function does.
 
-labs(title = 'Days: {frame_time}', x = 'Chick weight (grams)', y = 'Chick number') + 
+chickanigraph<- ggplot(ChickWeight, aes(weight, Chick)) + 
+  geom_point(aes(color=Diet)) +
+labs(title = 'Days: {frame_time}', x = 'Chick weight (grams)', y = 'Chick number') + #names different axis
   transition_states(Time,  transition_length = 1,
-                    state_length = 1) + 
-  ease_aes('linear')
+                    state_length = 1) + #Each transition state is contingent on the time variable, with a transition and state length of 1
+  ease_aes('linear') #keep the data advancing forward on its original line
 
 #In case you get stuck or need further information, don't be afraid to use the animate help page!
 ?animate
@@ -149,6 +151,11 @@ labs(title = 'Days: {frame_time}', x = 'Chick weight (grams)', y = 'Chick number
 ##Task##
 #Write code to save the animation and come up with whatever name you want to call that file.
 ##Hint: Look back at part 1 to see what function you use!##
+
+animate(chickanigraph, renderer = gifski_renderer())
+anim_save('chickanigraph.gif', animation = last_animation(), path = NULL)
+
+
 
 
 #Cool! So now we have one graph in motion and saved...let's do another!
