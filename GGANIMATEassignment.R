@@ -211,11 +211,12 @@ line_graph
 
 #TASK: Annotate each line on what it does for the graph
 #TASK: play around with the colors, point shapes, and sizes!
-
+display.brewer.all()
 
 #Looks awesome, right? Now, lets add the animation! We're going to have
 #it animate in by tree age
-
+line_graph +
+  transition_reveal(age)
 
 #Question: When would this type of graph and animation be an appropriate way to communicate your data?
 
