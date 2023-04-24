@@ -154,11 +154,12 @@ ggplot(ChickWeight, aes(weight, Chick)) +
 
 ##TASK##
 #For the following code annotate each line for what you think each function does.
-
-labs(title = 'Days: {frame_time}', x = 'Chick weight (grams)', y = 'Chick number') + 
-  transition_states(Time,  transition_length = 1,
+ggplot(ChickWeight, aes(weight, Chick)) + # Load in the data frame, use weight and chick number as variables
+  geom_point(aes(color=Diet))+ # Colors will be dictated by diet
+labs(title = 'Days: {frame_time}', x = 'Chick weight (grams)', y = 'Chick number') +  #Add labels to describe parts of the graph
+  transition_states(Time,  transition_length = 1, # Frames by Time variable, with transition and state lengths of 1 second
                     state_length = 1) + 
-  ease_aes('linear')
+  ease_aes('linear') #Linear progressions from one variable to the next.
 
 #In case you get stuck or need further information, don't be afraid to use the animate help page!
 ?animate
@@ -167,11 +168,26 @@ labs(title = 'Days: {frame_time}', x = 'Chick weight (grams)', y = 'Chick number
 #Write code to save the animation and come up with whatever name you want to call that file.
 ##Hint: Look back at part 1 to see what function you use!##
 
+chicks <- ggplot(ChickWeight, aes(weight, Chick)) + # Load in the data frame, use weight and chick number as variables
+  geom_point(aes(color=Diet))+ # Colors will be dictated by diet
+  labs(title = 'Days: {frame_time}', x = 'Chick weight (grams)', y = 'Chick number') +  #Add labels to describe parts of the graph
+  transition_states(Time,  transition_length = 1, # Frames by Time variable, with transition and state lengths of 1 second
+                    state_length = 1) + 
+  ease_aes('linear')
+
+chicks_save <- animate(chicks, renderer = gifski_renderer())
+anim_save('chicks.gif', animation = last_animation(), path = NULL)
 
 #Cool! So now we have one graph in motion and saved...let's do another!
 #Next we're going to create a bar graph
 #Task#
 #Assign your graph a name and write code to create a static bar graph where the time is on the y axis and the weight is on the x axis. 
+
+ggplot(ChickWeight, aes(x = weight, y = Time, fill=as.factor(Diet))) + 
+  geom_bar(stat="identity", width=1)+
+  ggtitle("Chick Weight Over Time")
+ 
+
 
 
 #That wasn't so bad :)
@@ -182,19 +198,33 @@ labs(title = 'Days: {frame_time}', x = 'Chick weight (grams)', y = 'Chick number
 #Write code to show the movement in the graph. 
 #Feel free to use the previous example as a reference
 
-
-
+ggplot(ChickWeight, aes(x = weight, y = Time, fill=as.factor(Diet))) + 
+  geom_bar(stat="identity", width=1)+
+  ggtitle("Chick Weight Over Time")+
+transition_states(Time,  transition_length = 1, 
+                  state_length = 1) 
+ 
 
 ##Task##
 #Write code to save the gif
 
+fatchickens <- ggplot(ChickWeight, aes(x = weight, y = Time, fill=as.factor(Diet))) + 
+  geom_bar(stat="identity", width=1)+
+  ggtitle("Chick Weight Over Time")+
+  transition_states(Time,  transition_length = 1, 
+                    state_length = 1)
+
+fatchickens_save <- animate(fatchickens, renderer = gifski_renderer())
+anim_save('fatchickens.gif', animation = last_animation(), path = NULL)
 
 #Whoa! Good job - now the graph is moving!
 #Question: Why might it be important to use gganimate when tidying and working with datasets?
 
+#gganimate allows us to visualize our data and ensure that variables are properly cleaned up, and that we are using the proper variables for any future statistical analyses within R. Plus it's pretty!
 
+#Question: What other graphs do you think would  be significant to use in gganimate when you are trying to visulize datasets?
 
-#Question: What other graphs do you think would  be significant to use in gganimate when you are trying to #visulize datasets?
+# I think looking at the change in a violin plot would be super useful. But, I could see most graphs that look at change over time being very useful in terms of gganimate.
 
 #Great job! Now let's go use more datasets!
 
