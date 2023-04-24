@@ -17,18 +17,23 @@ lubridate::leap_year(today())
 
 #Make an object containing today's date called today_date in year-month-day format. Use the exact same format R printed in the console when you used lubridate::today()
 
+today_date <- lubridate::today()
 
 #Call today_date and write what happened. Is it what we wanted? 
 today_date
  
+# Yes
 
 #Check the class of today_date
 class(today_date)
 
 #Our date was saved as a numeral, so R went through operations and gave us 2002. This is, to say the least, not ideal for our purposes of storing a date. Let's try writing the date we want in quotes. 
 
+class("today_date")
+
 #Question: What is the class of the data now? Is this what we want?
 
+#Character. Probably not. 
 
 #Storing our date as a character will still not give us what we want because R processes dates differently. Check the class of Sys.Date() and now(). Write what each of the classes print as. 
 class(Sys.Date())
@@ -58,19 +63,23 @@ event_start + years(1)
 #Now that we know the basics, let's look at this with a bit more context. Take note of what order the dates are listed. The following csv is a record of payments. 
 invoice <- readr::read_csv('https://raw.githubusercontent.com/rsquaredacademy/datasets/master/transact.csv')
 
-#Task: How many invoices were settled post the due date? 
+#Task: Make a new data frame titled invoice_delay. How many invoices were settled post the due date? 
 
+invoice_delay <- invoice$Due - invoice$Payment
+
+invoice_delay2 <- as.data.frame(invoice_delay)
 
 #Great, now that we're got some of the basics for dates, lets detour to look at the basics of time. Below are some basic commands for times and a short example. Annotate by each what they do on each line. 
-day() 
-year() 
-month() 
-leap_year() 
-month(12, label = TRUE) #
+day() #Get the amount of days or set the amount of days.  
+year() #Get the amount of years or set the amount of years.
+month() #Set the amount of months or set the amount of months. 
+leap_year() #Ask R if the given year is a leap year. 
+month(12, label = TRUE) #Sets a 12 month year with labels. 
 ymd_hms() 
 hour() 
 second() 
 
+#Run this code and observe the results
 semester_start <- ymd_hms("2023-01-08 08:00:00") 
 year(semester_start) 
 month(semester_start, label = TRUE) 
