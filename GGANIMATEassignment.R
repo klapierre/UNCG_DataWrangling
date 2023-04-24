@@ -156,14 +156,16 @@ animate(chickanigraph, renderer = gifski_renderer())
 anim_save('chickanigraph.gif', animation = last_animation(), path = NULL)
 
 
-
-
 #Cool! So now we have one graph in motion and saved...let's do another!
 #Next we're going to create a bar graph
 #Task#
-#Assign your graph a name and write code to create a static bar graph where the time is on the y axis and the weight is on the x axis. 
-
-
+#Assign your graph a name and write code to create a static bar graph where the time is on the y axis and the weight is on the x axis.
+chickbar<- ggplot(ChickWeight, aes(x=weight)) + 
+  geom_bar(aes(color=Diet)) +
+  transition_states(Time,  transition_length = 1, state_length = 1) +
+  ease_aes('linear')
+chickbar
+chickbarani
 #That wasn't so bad :)
 #Now here comes the motion!
 
@@ -173,18 +175,19 @@ anim_save('chickanigraph.gif', animation = last_animation(), path = NULL)
 #Feel free to use the previous example as a reference
 
 
-
-
 ##Task##
 #Write code to save the gif
+animate(chickbarani, renderer = gifski_renderer())
+anim_save('chickbarani.gif', animation = last_animation(), path = NULL)
 
 
 #Whoa! Good job - now the graph is moving!
 #Question: Why might it be important to use gganimate when tidying and working with datasets?
-
+It may be important to show how a dataframe changes over time. It may be more impactful to see through-time differences in a fluid medium
 
 
 #Question: What other graphs do you think would  be significant to use in gganimate when you are trying to #visulize datasets?
+possibly pie charts and changes in proportion over time
 
 #Great job! Now let's go use more datasets!
 
@@ -221,12 +224,12 @@ orange <- data.frame(Orange) %>%
 
 #Let's start with our first graph! We're going to create a simple line graph!
 
-line_graph <- ggplot(orange, aes(age, circumference, group = Tree, color = as.factor(Tree))) +
-  scale_colour_brewer(palette = "Dark2") +
-  geom_line() +
-  labs(title = 'Orange Tree Circumference by Age', x = 'Age in Days', y = 'Circumference in mm') +
-  theme(legend.position = "top") +
-  geom_point(aes(group = seq_along(age)), size=2) 
+line_graph <- ggplot(orange, aes(age, circumference, group = Tree, color = as.factor(Tree))) + #select the orange dataframe, tracking age and circumference across time, separating by individual
+  scale_colour_brewer(palette = "Set1") +
+  geom_line() + #Use a dark palate for the time graph, drawing lines between specific points
+  labs(title = 'Orange Tree Circumference by Age', x = 'Age in Days', y = 'Circumference in mm') + #Measure time in days and circumference in mm, and name the graph
+  theme(legend.position = "top") + #place the legend at the top of the figure
+  geom_point(aes(group = seq_along(age)), size=2) #these will be the fine points that he lines will draw to, with each dot representing a place in time
 line_graph
 
 #TASK: Annotate each line on what it does for the graph
@@ -239,14 +242,16 @@ line_graph +
   transition_reveal(age)
 
 #Question: When would this type of graph and animation be an appropriate way to communicate your data?
+This data is already over time, so this way of portraying information is still appropriate
 
 #Now for graph 2!We're going to do a bar graph!
 
 #Let's start by making a simple bar graph
-bar_graph <- ggplot(orange, aes(age, circumference, fill=as.factor(Tree))) +
-  geom_bar(stat="identity", position=position_dodge()) + 
-  scale_fill_brewer(palette = "Accent") 
-bar_graph
+bar_graph <- ggplot(orange, aes(age, circumference, fill=as.factor(Tree))) + #make and label graph
+  geom_bar(stat="identity", position=position_dodge()) +
+  labs(title = 'Orange Tree Circumference by Age', x = 'Age in Days', y = 'Circumference in mm') + #make bar graph
+  scale_fill_brewer(palette = "Accent") #use the accent palette to color graph
+bar_graph #display graph
 
 #TASK: Annotate each line on what it does for the graph
 #TASK: Add titles! Change the width! Flip the axis! Cause chaos!!!
@@ -260,7 +265,7 @@ bar_graph +
   enter_fade()
 
 #Question: When would this type of graph and animation be an appropriate way to communicate your data?
-
+This animation is appropriate with the same individuals over time
 
 #TASK: Create a "racing bar graph" that shows the change in circumference over time! What you'll need to do is:
 #1. Create a bar plot similar to the last example
@@ -269,9 +274,15 @@ bar_graph +
 #4. Change the colors using scale_fill_brewer and Rcolorbrewer
 #5. Save as a gif!
 
+racbar_graph <- ggplot(orange, aes(age, circumference, fill=as.factor(Tree))) +
+  geom_bar(stat="identity", position=position_dodge()) +
+  transition_states(age,  transition_length = 1, state_length = 1)+
+  labs(title = '{closest_state}', x = 'Age in Days', y = 'Circumference in mm') +
+  scale_fill_brewer(palette = "Set1")
+racbar_graph
 
-
-
+animate(racbar_graph, renderer = gifski_renderer())
+anim_save('racbar.gif', animation = last_animation(), path = NULL)
 
 #This is a true racing bar graph that I felt was too complicated to dump on y'all, but wanted to share anyways (because it took me forever to get it to work)! geom_tile allows for the bars to actually pass each other and race
 ggplot(orange, aes(circumference, group = Tree)) +  
@@ -317,9 +328,11 @@ ggplot(orange, aes(circumference, group = Tree)) +
 # But first, lets get some new data to mess around with.
 # Make sure you have the "titanic.csv" file downloaded from the github branch or Canvas.
 # Then load it into R as an object and name it "rawTitanic"
+titan<- read.csv("titanic.csv")
+rawTitanic<- as.data.frame(Titanic)
+as.data.frame(Titanic)
 
-
-
+rawTitanic<-titan
 # This data is a passenger list for the RMS Titanic, including information on the
 # different passengers' names, if they survived, sex, age, number of siblings/spouses aboard, number of parents/children aboard, ticket number, ticket fare,
 # cabin number, passenger class, and where they boarded the ship.
@@ -329,11 +342,11 @@ ggplot(orange, aes(circumference, group = Tree)) +
 
 # Question: What problems could the SibSp and Parch columns make for us due to 
 # how they are recorded?
-
+People with different relationships are counted the same. They could also be counted multiple times
 
 
 # Question: What columns seem to be missing information?
-
+Age
 
 # Now, as we can see, this data is pretty untidy with lots of empty cells and
 # columns that are tricky to work with. So lets trim it down to just what we want
@@ -343,6 +356,12 @@ ggplot(orange, aes(circumference, group = Tree)) +
 # Filter out any N/A values in any of the cells. Try using the na.omit() function.
 # Then make a new column with the age as a 10 year range or age in decades
 # (Make sure the highest age is "60+")
+titanicTidyAge<- rawTitanic %>%
+  select(PassengerId, Survived, Pclass, Name, Sex, Age) %>%
+  na.omit() %>%
+  mutate(ageclass = floor(Age/10)) %>%
+  mutate(ageclass=ifelse(ageclass>=6, "6+", ageclass)) %>%
+  filter(Survived=="1")
 
 
 
@@ -352,7 +371,10 @@ ggplot(orange, aes(circumference, group = Tree)) +
 # This letter is the deck the cabin was located, A was the topmost deck and B the
 # next, and so on
 
-
+titanicTidyCabin<- rawTitanic %>%
+  select(PassengerId, Survived, Pclass, Sex, Age, Cabin) %>%
+  mutate(Section=str_extract(Cabin, "[aA-zZ]")) %>%
+  na.omit()
 
 # Next you'll be using each of those to make a graph.
 
@@ -364,6 +386,12 @@ ggplot(orange, aes(circumference, group = Tree)) +
 # 5) Color the columns something other than the default
 # Reminder: You may need to further filter the data frame
 
+ggplot(titanicTidyAge, x=Sex, y=Survived)+
+  geom_bar(aes(x=Sex, fill= as.factor(Sex))) +
+  transition_states(ageclass,  transition_length = 1, state_length = 1)+
+  labs(title = '{closest_state}', x = 'Sex', y = 'Number Survived') +
+  scale_fill_brewer(palette = "Set1")
+
 
 # Task: Make a scatter plot using the titanicTidyCabin data frame:
 # 1) Plotting age of passengers on the y-axes and deck level on the x-axes
@@ -372,7 +400,16 @@ ggplot(orange, aes(circumference, group = Tree)) +
 # 4) Jitter the points so they don't all overlap
 # 5) Add code to display what Pclass you're currently showing
 # 6) Add appropriate x- and y-axes labels
-# 
+
+ggplot(titanicTidyCabin, x=Section, y=Age) +
+  geom_point(aes(x=Section, y=Age, color=as.factor(Survived), shape=Sex, group=seq_along(Pclass)), position = "jitter") +
+transition_states(Pclass,  transition_length = 1, state_length = 1)+
+  labs(title = '{closest_state}', x = 'Sex', y = 'Number Survived') +
+  scale_fill_brewer(palette = "Set1")
+
+
+
+
 # Hint: Try aes(group = seq_along(...)) to get all your points to disappear 
 # between frames rather than some disappearing and some moving
 # see https://cran.r-project.org/web/packages/gganimate/vignettes/gganimate.html
