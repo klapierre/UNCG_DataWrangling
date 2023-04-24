@@ -16,7 +16,7 @@ library(gifski)
 
 ## TASK: Go ahead and load 'iris' in!
 
-
+iris <- (iris)
 
 ## Graph time! Let's plot species by petal length - this dataset describes 3
 ## different species of iris by their petal and sepal lengths/widths, so we're 
@@ -24,7 +24,8 @@ library(gifski)
 
 ## TASK: Let's use a box and whisker plot for this, and color by species.
 
-
+ggplot(iris, aes(y=Petal.Length, x=Species, fill = Species)) +
+  geom_boxplot()
 
 ## If at anytime you want more info on GGanim, try this function to pull up the
 ## help page embedded in R: ?`gganimate-package`
@@ -35,11 +36,11 @@ library(gifski)
 ## Hint: Check the GGanimate help page, or the GGanimate website!
 ## (https://gganimate.com/articles/gganimate.html)
 
-ggplot(iris, aes(x = Species, y = Petal.Length)) +
-  geom_boxplot(aes(colour = Species)) +
+ggplot(iris, aes(x = Species, y = Petal.Length)) + #Pulls dataframe, set x and y
+  geom_boxplot(aes(colour = Species)) + #colors by species
   transition_states(Petal.Width,
-                    transition_length = 1,
-                    state_length = 1)
+                    transition_length = 1, #Length of transition
+                    state_length = 1) #Length in the post transition state.
 
 ## TASK: Play with the values for transition_length and state_length - what's 
 ## changing? Was this different from what you thought when you were annotating?
@@ -47,14 +48,24 @@ ggplot(iris, aes(x = Species, y = Petal.Length)) +
 ggplot(iris, aes(x = Species, y = Petal.Length)) + 
   geom_boxplot(aes(colour = Species)) +
   transition_states(Petal.Width,
-                    transition_length = 4,
-                    state_length = 2)
+                    transition_length = 1000,
+                    state_length = 99999)
 
+#Seems to affect how smooth the final animation is. 
 
 ## Hmm... This graph is interesting, but it doesn't really give us a ton of info
 ## at first glance. Why don't we try and add some labels for our x and y axis,
 ## and a title for our chart?
 
+Graph1 <- ggplot(iris, aes(x = Species, y = Petal.Length)) + 
+  labs(y="Petal Length", x = "Species") +
+  ggtitle("Petal Length by Species") +
+  geom_boxplot(aes(colour = Species)) +
+  transition_states(Petal.Width,
+                    transition_length = 1000,
+                    state_length = 99999) +
+  enter_fade() +
+  exit_fade()
 
 
 ## HINT: If you can't get your graph to look right at first, try just changing
@@ -64,7 +75,8 @@ ggplot(iris, aes(x = Species, y = Petal.Length)) +
 ## like in PowerPoint!) to get more familiar with the other functions of gganimate.
 
 ## HINT: Take a look at ?enter and ?exit
-
+?enter
+?exit
 
 
 ## So now we have a cute little graph, showing the relationship between petal
@@ -75,7 +87,7 @@ ggplot(iris, aes(x = Species, y = Petal.Length)) +
 
 ## First, assign your graph a name and save it into R.
 
-
+Graph1_Animate <- animate(Graph1, renderer = gifski_renderer())
 
 ## Now that it's saved, we can use the animate() function - using gifski as our
 ## renderer. Use ?animate to learn some of the other functions, but for our
@@ -85,12 +97,11 @@ ggplot(iris, aes(x = Species, y = Petal.Length)) +
 ## ?animate for more help with the package.
 
 
-
 ## Finally, we need to save the animation to our computer. Gganimate defaults to
 ## using the last animation, so we don't need to select it. Use anim_save() for
 ## this, and check out ?anim_save for more help. (Or, babytestfile.R!)
 
-
+anim_save("Graph1_Animate.gif", animation = last_animation(), path = NULL)
 
 ## Enjoy your little .gif! Now let's move onto something a little spicier...
 
@@ -117,7 +128,7 @@ data(ChickWeight)
 #As an example, run the following code to see the growth of the chicks by creating a scatterplot: 
 
 ggplot(ChickWeight, aes(weight, Chick)) + 
-  geom_point(aes(color=Diet))
+  geom_point(aes(color=Diet)) +
 
 #Next we need to get some gganimate code going!
 
@@ -125,10 +136,10 @@ ggplot(ChickWeight, aes(weight, Chick)) +
 ##TASK##
 #For the following code annotate each line for what you think each function does.
 
-labs(title = 'Days: {frame_time}', x = 'Chick weight (grams)', y = 'Chick number') + 
-  transition_states(Time,  transition_length = 1,
-                    state_length = 1) + 
-  ease_aes('linear')
+labs(title = 'Days: {frame_time}', x = 'Chick weight (grams)', y = 'Chick number') + #Sets title with a changing fariable for days times as well as providing axis labels
+  transition_states(Time,  transition_length = 1, #Sets transition length
+                    state_length = 1) +  #Sets state length
+  ease_aes('linear') #Sets a linear aesthetic? 
 
 #In case you get stuck or need further information, don't be afraid to use the animate help page!
 ?animate
@@ -137,12 +148,25 @@ labs(title = 'Days: {frame_time}', x = 'Chick weight (grams)', y = 'Chick number
 #Write code to save the animation and come up with whatever name you want to call that file.
 ##Hint: Look back at part 1 to see what function you use!##
 
+Graph2 <- ggplot(ChickWeight, aes(weight, Chick)) + 
+  geom_point(aes(color=Diet)) +
+  labs(title = 'Days: {frame_time}', x = 'Chick weight (grams)', y = 'Chick number') + #Sets title with a changing fariable for days times as well as providing axis labels
+  transition_states(Time,  transition_length = 1, #Sets transition length
+                    state_length = 1) +  #Sets state length
+  ease_aes('linear') #Sets a linear aesthetic? 
+
+Graph2_Animate <- animate(Graph2, renderer = gifski_renderer())
+
+anim_save("Graph2_Animate.gif", animation = last_animation(), path = NULL)
+
 
 #Cool! So now we have one graph in motion and saved...let's do another!
 #Next we're going to create a bar graph
 #Task#
 #Assign your graph a name and write code to create a static bar graph where the time is on the y axis and the weight is on the x axis. 
 
+Graph3 <- ggplot(ChickWeight, aes(x = weight,y = Time)) +
+  geom_bar(stat="identity")
 
 #That wasn't so bad :)
 #Now here comes the motion!
@@ -152,12 +176,27 @@ labs(title = 'Days: {frame_time}', x = 'Chick weight (grams)', y = 'Chick number
 #Write code to show the movement in the graph. 
 #Feel free to use the previous example as a reference
 
-
+ggplot(ChickWeight, aes(weight, Time)) + 
+  geom_bar(stat="identity") +
+  labs(title = 'Days: {frame_time}', x = 'Chick weight (grams)', y = 'Time') + #Sets title with a changing fariable for days times as well as providing axis labels
+  transition_states(Time,  transition_length = 1, #Sets transition length
+                    state_length = 1) +  #Sets state length
+  ease_aes('linear') #Sets a linear aesthetic? 
 
 
 ##Task##
 #Write code to save the gif
 
+Graph4 <- ggplot(ChickWeight, aes(weight, Time)) + 
+  geom_bar(stat="identity") +
+  labs(title = 'Days: {frame_time}', x = 'Chick weight (grams)', y = 'Time') + #Sets title with a changing fariable for days times as well as providing axis labels
+  transition_states(Time,  transition_length = 1, #Sets transition length
+                    state_length = 1) +  #Sets state length
+  ease_aes('linear') #Sets a linear aesthetic? 
+
+Graph4_Animate <- animate(Graph4, renderer = gifski_renderer())
+
+anim_save("Graph4_Animate.gif", animation = last_animation(), path = NULL)
 
 #Whoa! Good job - now the graph is moving!
 #Question: Why might it be important to use gganimate when tidying and working with datasets?
