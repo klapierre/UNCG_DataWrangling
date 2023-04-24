@@ -149,10 +149,12 @@ ggplot(ChickWeight, aes(weight, Chick)) +
 ##TASK##
 #For the following code annotate each line for what you think each function does.
 
-labs(title = 'Days: {frame_time}', x = 'Chick weight (grams)', y = 'Chick number') + 
-  transition_states(Time,  transition_length = 1,
-                    state_length = 1) + 
-  ease_aes('linear')
+chick_weights <- ggplot(ChickWeight, aes(weight, Chick)) + # telling ggplot what data set and aesthetics we need
+  geom_point(aes(color=Diet)) + # specifying a scatter plot and how it should be colored
+  labs(title = 'Days: {frame_time}', x = 'Chick weight (grams)', y = 'Chick number') + # labels
+  transition_states(Time,  transition_length = 1, # what the animation will be based on, how long each frame is up
+                    state_length = 1) + # how long is the pause in between
+  ease_aes('linear') # setting a linear speed rather than building up in speed for example.
 
 #In case you get stuck or need further information, don't be afraid to use the animate help page!
 ?animate
@@ -160,13 +162,16 @@ labs(title = 'Days: {frame_time}', x = 'Chick weight (grams)', y = 'Chick number
 ##Task##
 #Write code to save the animation and come up with whatever name you want to call that file.
 ##Hint: Look back at part 1 to see what function you use!##
-
+chicken_saved <- animate(chick_weights, renderer = gifski_renderer())
+anim_save('chick_weights.gif', animation = last_animation(), path = NULL)
 
 #Cool! So now we have one graph in motion and saved...let's do another!
 #Next we're going to create a bar graph
+
 #Task#
 #Assign your graph a name and write code to create a static bar graph where the time is on the y axis and the weight is on the x axis. 
-
+ggplot(ChickWeight, aes(x=weight, y=Time))+
+  geom_bar(stat="identity", aes(fill=Diet))
 
 #That wasn't so bad :)
 #Now here comes the motion!
@@ -175,20 +180,25 @@ labs(title = 'Days: {frame_time}', x = 'Chick weight (grams)', y = 'Chick number
 
 #Write code to show the movement in the graph. 
 #Feel free to use the previous example as a reference
-
-
+Chick_pt2 <- ggplot(ChickWeight, aes(x=weight, y=Time))+
+  geom_bar(stat="identity", aes(fill=Diet))+
+  labs(title = 'Days: {frame_time}', x = 'Chick weight (grams)', y = 'Time') + 
+  transition_states(Time,  transition_length = 1, 
+                    state_length = 1) + 
+  ease_aes('linear')
 
 
 ##Task##
 #Write code to save the gif
-
+chick_pt2_saved <- animate(Chick_pt2, renderer = gifski_renderer())
+anim_save('chick_pt2_saved.gif', animation = last_animation(), path = NULL)
 
 #Whoa! Good job - now the graph is moving!
 #Question: Why might it be important to use gganimate when tidying and working with datasets?
+## it would be a good way to add another dimension to your graph and allow you to see how an aspect of your data changes in reference to another variable. Is it what you expected? Is it not? Is that because there's an error or did you're results change in a way you didn't expect?
 
-
-
-#Question: What other graphs do you think would  be significant to use in gganimate when you are trying to #visulize datasets?
+#Question: What other graphs do you think would be significant to use in gganimate when you are trying to #visulize datasets?
+##I think heat maps and looking at how it changes spatially over time would be cool
 
 #Great job! Now let's go use more datasets!
 
@@ -225,17 +235,24 @@ orange <- data.frame(Orange) %>%
 
 #Let's start with our first graph! We're going to create a simple line graph!
 
-line_graph <- ggplot(orange, aes(age, circumference, group = Tree, color = as.factor(Tree))) +
-  scale_colour_brewer(palette = "Dark2") +
-  geom_line() +
-  labs(title = 'Orange Tree Circumference by Age', x = 'Age in Days', y = 'Circumference in mm') +
-  theme(legend.position = "top") +
-  geom_point(aes(group = seq_along(age)), size=2) 
+line_graph <- ggplot(orange, aes(age, circumference, group = Tree, color = as.factor(Tree))) + # dataset, x and y axis, what each line is (tree), how we want it colored.
+  scale_colour_brewer(palette = "Dark2") + # color palette
+  geom_line() + # what kind of graph we want (line graph)
+  labs(title = 'Orange Tree Circumference by Age', x = 'Age in Days', y = 'Circumference in mm') + # labels
+  theme(legend.position = "top") + # location of legend
+  geom_point(aes(group = seq_along(age)), size=2) # making points to the lines
 line_graph
 
 #TASK: Annotate each line on what it does for the graph
 #TASK: play around with the colors, point shapes, and sizes!
 display.brewer.all()
+
+ggplot(orange, aes(age, circumference, group = Tree, color = as.factor(Tree))) + 
+  scale_colour_brewer(palette = "Set2") +
+  geom_line() + 
+  labs(title = 'Orange Tree Circumference by Age', x = 'Age in Days', y = 'Circumference in mm') + 
+  theme(legend.position = "top") + 
+  geom_point(aes(group = seq_along(age)), size=3) 
 
 #Looks awesome, right? Now, lets add the animation! We're going to have
 #it animate in by tree age
@@ -243,18 +260,22 @@ line_graph +
   transition_reveal(age)
 
 #Question: When would this type of graph and animation be an appropriate way to communicate your data?
-
+## it's a good way to see how they grew together. It draws attention to exactly when something changes, like when tree 5 outgrows tree 4, or tree 3 surpasses tree 2 and creates quite the gap between them.
 #Now for graph 2!We're going to do a bar graph!
 
 #Let's start by making a simple bar graph
-bar_graph <- ggplot(orange, aes(age, circumference, fill=as.factor(Tree))) +
-  geom_bar(stat="identity", position=position_dodge()) + 
-  scale_fill_brewer(palette = "Accent") 
+bar_graph <- ggplot(orange, aes(age, circumference, fill=as.factor(Tree))) + # dataset, x and y axis, how it's colored
+  geom_bar(stat="identity", position=position_dodge()) + # what kind of graph, have them next to each other rather than stacked
+  scale_fill_brewer(palette = "Accent") # color palette
 bar_graph
 
 #TASK: Annotate each line on what it does for the graph
 #TASK: Add titles! Change the width! Flip the axis! Cause chaos!!!
-
+bar_graph <- ggplot(orange, aes(age, circumference, fill=as.factor(Tree))) + # dataset, x and y axis, how it's colored
+  geom_bar(stat="identity", position=position_dodge()) + # what kind of graph, have them next to each other rather than stacked
+  scale_fill_brewer(palette = "Accent")+
+  labs(title = 'Orange Tree Circumference by Age', x = 'Age in Days', y = 'Circumference in mm')
+  
 
 #Now for the transitions!
 bar_graph +
@@ -264,7 +285,7 @@ bar_graph +
   enter_fade()
 
 #Question: When would this type of graph and animation be an appropriate way to communicate your data?
-
+## it's similar to the above line graph but a different way to visualize it. For me it's easier to visualize that the line graph. It would be good to have different ways to visualize your data because each either tells a slightly different story or works with someone's brain better.
 
 #TASK: Create a "racing bar graph" that shows the change in circumference over time! What you'll need to do is:
 #1. Create a bar plot similar to the last example
@@ -273,9 +294,15 @@ bar_graph +
 #4. Change the colors using scale_fill_brewer and Rcolorbrewer
 #5. Save as a gif!
 
+orange_race <- ggplot(orange, aes(age, circumference, fill=as.factor(Tree))) + 
+  geom_bar(stat="identity", position=position_dodge()) + 
+  scale_fill_brewer(palette = "Set3")+
+  labs(title = 'Orange Tree Circumference by Age {closest_state}', x = 'Age in Days', y = 'Circumference in mm')+
+  transition_states(age,  transition_length = 0.5, 
+                    state_length = 0.5) 
 
-
-
+orange_saved <- animate(orange_race, renderer = gifski_renderer())
+anim_save('orange_saved.gif', animation = last_animation(), path = NULL)
 
 #This is a true racing bar graph that I felt was too complicated to dump on y'all, but wanted to share anyways (because it took me forever to get it to work)! geom_tile allows for the bars to actually pass each other and race
 ggplot(orange, aes(circumference, group = Tree)) +  
