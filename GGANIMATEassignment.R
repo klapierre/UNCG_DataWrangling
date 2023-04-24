@@ -355,7 +355,7 @@ ggplot(orange, aes(circumference, group = Tree)) +
 # Make sure you have the "titanic.csv" file downloaded from the github branch or Canvas.
 # Then load it into R as an object and name it "rawTitanic"
 
-
+rawTitanic <- titanic
 
 # This data is a passenger list for the RMS Titanic, including information on the
 # different passengers' names, if they survived, sex, age, number of siblings/spouses aboard, number of parents/children aboard, ticket number, ticket fare,
@@ -367,10 +367,11 @@ ggplot(orange, aes(circumference, group = Tree)) +
 # Question: What problems could the SibSp and Parch columns make for us due to 
 # how they are recorded?
 
-
+#May cause double counting
 
 # Question: What columns seem to be missing information?
 
+#Age, Cabin and embarked
 
 # Now, as we can see, this data is pretty untidy with lots of empty cells and
 # columns that are tricky to work with. So lets trim it down to just what we want
@@ -381,7 +382,26 @@ ggplot(orange, aes(circumference, group = Tree)) +
 # Then make a new column with the age as a 10 year range or age in decades
 # (Make sure the highest age is "60+")
 
-
+titanicTidyAge <- rawTitanic %>% 
+  select(PassengerId, Survived, Pclass, Name, Sex, Age) %>%  
+  na.omit() %>% 
+  mutate(
+    # Create categories
+    age_group = dplyr::case_when(
+      Age <= 10            ~ "0-10",
+      Age > 10 & Age <= 20 ~ "10-20",
+      Age > 20 & Age <= 30 ~ "20-30",
+      Age > 30 & Age <= 40 ~ "30-40",
+      Age > 40 & Age <= 50 ~ "40-50",
+      Age > 50 & Age <= 60 ~ "50-60",
+      Age > 60             ~ "60+"
+    ),
+    # Convert to factor
+    age_group = factor(
+      age_group,
+      level = c("0-10", "10-20", "20-30", "30-40", "40-50", "50-60", "60+")
+    )
+  )
 
 # Once you have that we'll make a second data frame named "titanicTidyCabin" 
 # 1) Include the PassengerId, Survived, Pclass, Sex, Age, and Cabin columns
@@ -389,6 +409,7 @@ ggplot(orange, aes(circumference, group = Tree)) +
 # This letter is the deck the cabin was located, A was the topmost deck and B the
 # next, and so on
 
+titanicTidyCabin <- 
 
 
 # Next you'll be using each of those to make a graph.
