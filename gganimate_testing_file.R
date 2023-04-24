@@ -1,5 +1,6 @@
 install.packages("gganimate")
+install.packages("gifski")
+install.packages("ffmpeg")
 library(ggplot2)
 library(gganimate)
 library(tidyverse)
-titanic <- read.csv("titanic.csv")
