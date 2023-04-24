@@ -242,13 +242,13 @@ orange <- data.frame(Orange) %>%
 
 #Let's start with our first graph! We're going to create a simple line graph!
 
-line_graph <- ggplot(orange, aes(age, circumference, group = Tree, color = as.factor(Tree))) +
-  scale_colour_brewer(palette = "Dark2") +
-  geom_line() +
-  labs(title = 'Orange Tree Circumference by Age', x = 'Age in Days', y = 'Circumference in mm') +
-  theme(legend.position = "top") +
-  geom_point(aes(group = seq_along(age)), size=2) 
-line_graph
+line_graph <- ggplot(orange, aes(age, circumference, group = Tree, color = as.factor(Tree))) + #Sets aesthetic elements
+  scale_colour_brewer(palette = "Set3") + #Sets color pallete
+  geom_line() + #Sets graph to line graph
+  labs(title = 'Orange Tree Circumference by Age', x = 'Age in Days', y = 'Circumference in mm') + #Sets titles
+  theme(legend.position = "top") + #Sets legend position
+  geom_point(aes(group = seq_along(age)), size=3)  #Sets points and size
+line_graph #Displays graph
 
 #TASK: Annotate each line on what it does for the graph
 #TASK: play around with the colors, point shapes, and sizes!
@@ -261,13 +261,17 @@ line_graph +
 
 #Question: When would this type of graph and animation be an appropriate way to communicate your data?
 
+#Any case where there is changes overtime. I could also see this for changes in repsonses to light or nutrient addtions. Many cases!
+
 #Now for graph 2!We're going to do a bar graph!
 
 #Let's start by making a simple bar graph
-bar_graph <- ggplot(orange, aes(age, circumference, fill=as.factor(Tree))) +
-  geom_bar(stat="identity", position=position_dodge()) + 
-  scale_fill_brewer(palette = "Accent") 
-bar_graph
+bar_graph <- ggplot(orange, aes(age, circumference, fill=as.factor(Tree))) + #Pulls data, sets aestheics
+  geom_bar(stat="identity", position=position_dodge(), width = 50) + #Sets as bar graph and alters horizonal positions
+  labs(title = 'Orange Tree Circumference by Age', x = 'Age in Days', y = 'Circumference in mm') + #Sets titles
+  scale_fill_brewer(palette = "Accent") + #Sets color palette
+  coord_flip() #Flips axis
+bar_graph #Displays graph
 
 #TASK: Annotate each line on what it does for the graph
 #TASK: Add titles! Change the width! Flip the axis! Cause chaos!!!
@@ -282,6 +286,7 @@ bar_graph +
 
 #Question: When would this type of graph and animation be an appropriate way to communicate your data?
 
+#Again, great for data overtime! Anything with incremented changes is great too!
 
 #TASK: Create a "racing bar graph" that shows the change in circumference over time! What you'll need to do is:
 #1. Create a bar plot similar to the last example
@@ -290,9 +295,20 @@ bar_graph +
 #4. Change the colors using scale_fill_brewer and Rcolorbrewer
 #5. Save as a gif!
 
+bar_graph <- ggplot(orange, aes(age, circumference, fill=as.factor(Tree))) + #Pulls data, sets aestheics
+  geom_bar(stat="identity", position=position_dodge(), width = 50) + #Sets as bar graph and alters horizonal positions
+  transition_states(Sample,  transition_length = 1, #Sets transition length
+                    state_length = 1) + #Sets state length
+  labs(title = 'Orange Tree Circumference by Age: {closest_state}', x = 'Age in Days', y = 'Circumference in mm') + #Sets titles
+  scale_fill_brewer(palette = "Accent") + #Sets color palette
+  coord_flip() #Flips axis
 
 
+bar_graph
 
+bar_graph_Animate <- animate(Graph4, renderer = gifski_renderer())
+
+anim_save("bar_graph.gif", animation = last_animation(), path = NULL)
 
 #This is a true racing bar graph that I felt was too complicated to dump on y'all, but wanted to share anyways (because it took me forever to get it to work)! geom_tile allows for the bars to actually pass each other and race
 ggplot(orange, aes(circumference, group = Tree)) +  
