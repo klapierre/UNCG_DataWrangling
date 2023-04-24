@@ -4,37 +4,39 @@ author: "Carina Bravo-Chan"
 date: "2023-04-12"
 output: pdf_document
 ---
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+```{r setup,warning=FALSE,include=FALSE}
+knitr::opts_knit$set(echo=TRUE, root.dir='~/Desktop/BIO_400X_R/UNCG_DataWrangling_NewOld')
 ```
 
-## R Markdown
+**Proposed work-flow for independent project:**
 
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+This data set is used on the ongoing research project in Dr. Remington's lab. In our lab we study plants' evolutionary life history and the molecular basis of phenotype divergence within populations. The system studied consists of two sub-populations of the rock cress *Arabdopsis lyrata*. One group from Spiterstulen (SP), Norway, and the other from Mayodan (MA), North Carolina. These populations were chosen because they occupy environments on opposite ends of the spectrum, and display different patterns of resource allocation for reproductive and vegetative growth. 
+The data consists of phenotype records of traits from F2 individuals of *A. lyrata*, accompanied by the genotype of QTL regions. The hypothesis is that the resulting F2 phenotype is influenced by the type of allele inherited, Mayodan or Spiterstulen.
+Individual observations were classified according to the number of allele copies, inherited from Mayodan parents, present in the genes of a QTL region. Individuals with **no** MA alleles, were identified with the number 0. It was expected plants with a more perennial-like phenotype, displaying a longer season of vegetative growth, and a short reproductive season with modest flowering. The heterozygous individuals were identified with the number 1 (one parental copy of the MA allele), and an intermediary phenotype was expected with resource allocation displaying displaying a mixed, or inconsistent, pattern. Finally, the individuals that were homozygous MA were identified with the number 2 (two parental copies of the MA allele). The expected phenotype was more annual-like, displaying stagnation of vegetative growth for overwintering, followed by an intense resource allocation for reproductive growth with significantly more bolting, branching, and flowering. 
+The goal is to write a script to analyze the trends within this data set to find if there is any significant correlation between perennial traits and the underlying alleles. For example, a lower number of inflorescences suggesting a more perennial phenotype, and would allow us to examine if the genotype scoring for this, and other, traits would corroborate our hypothesis.
 
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
 
-```{r cars}
-# Before reading CSV file into data frame,
-#  copy the most recent version from parent directory:
+```{r setup,warning=FALSE,include=FALSE}
+    knitr::opts_knit$set(root.dir='~/Desktop/BIO_400X_R/UNCG_DataWrangling_Old')
+```
 
+```{r, include=FALSE ,message=FALSE, warning=FALSE}
 library(tidyverse)
 
 # Read in the data
-mtDataAll <- read_csv("QTLStudyTraitAnalysis_survMarkers.csv")
+mtDataAll <- read.csv("QTLStudyTraitAnalysis_survMarkers.csv")
 
 # Generate calculated fields:
 mtDataAll <- mtDataAll %>%
   mutate(dDiam21 = Diam2 - Diam1,
          dDiam32 = Diam3 - Diam2,
-         meanBLvs = rowMeans(select(., c(Diameter21, Diameter22, Diameter23)), na.rm = TRUE),
-         meanOrder = rowMeans(select(., c(Order1, Order2, Order3)), na.rm = TRUE),
-         meanBrNode = rowMeans(select(., c(BranchNode1, BranchNode2, BranchNode3)), na.rm = TRUE),
-         meanFlNode = rowMeans(select(., c(FlowerNode1, FlowerNode2, FlowerNode3)), na.rm = TRUE))
+         meanBLvs = rowMeans(select(., 12:14), na.rm = TRUE),
+         meanOrder = rowMeans(select(., c(15, 18, 21)), na.rm = TRUE),
+         meanBrNode = rowMeans(select(., c(16, 19, 22)), na.rm = TRUE),
+         meanFlNode = rowMeans(select(., c(17, 20, 23)), na.rm = TRUE))
 
 # Check variable names
-names(mtDataAll)
+colnames(mtDataAll)
 
 # Check variable classes
 mtDataAll %>%
@@ -51,8 +53,10 @@ mtDataF2 <- mtDataAll %>%
 
 # Check variable names
 names(mtDataF2)
+```
 
-
+```{r, include=FALSE ,message=FALSE, warning=FALSE}
+library(tidyverse)
 # Decompose GI genotype into additive and dominance components
 mtDataF2 <- mtDataF2 %>% 
   mutate(GIAdd = GI - 1,
