@@ -1,7 +1,7 @@
 ---
-title: "Overview and Proposed Workflow-Woody Recruitment after Drought in African Savannas"
+title: "Independent Project: Woody Recruitment after Drought in African Savannas"
 author: "Shelby Williford"
-date: "2023-03-26"
+date: "2023-05-01"
 output: word_document
 ---
 
@@ -11,7 +11,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## Background
 
-In 2016, a severe drought hit the Kruger National Park in South Africa. When the ecosystem began to recover from this drought, researchers noticed shifts in the community composition of the herbaceous cover. For this project, it's focusing on the recruitment of woody plants. Our expected results are that total number of individuals will decrease after 2016 due to the drought then will increase afterwards with varying rates related to each plot's burn treatment. We also expect to see an initial increase in mean diameter, as the larger trees could be better suited to survive the drough, followed by a decrease as tree saplings begin to regrow. 
+Savannas are a naturally occurring ecosystem that is characterized by a balance between herbaceous and woody cover. This system is kept in check by grazing, rainfall, and fire treatments. This can also be affected by naturally occurring disturbances. In 2016, a severe drought hit the Kruger National Park in South Africa. When the ecosystem began to recover from this drought, researchers noticed shifts in the community composition of the herbaceous cover. For this project, it's focusing on the recruitment of woody plants. This is important to keep woody individuals in check to keep the balance of Savannas. Our expected results are that total number of individuals will decrease after 2016 due to the drought then will increase afterwards with varying rates related to each plot's burn treatment. We also expect to see an initial increase in mean diameter, as the larger trees could be better suited to survive the drought, followed by a decrease as tree saplings begin to regrow. 
 
 This data was collected from long term enclosures in the Satara and N'wanetsi regions of the Kruger National Park. These plots were established in 2005/2006 and were initially woody free. Once a year, woody individuals in these plots are measured to study woody recruitment. 
 
@@ -19,7 +19,67 @@ This data was collected from long term enclosures in the Satara and N'wanetsi re
 
 1. Load data and packages (tidyverse)
 2. Tidy data (group by treatment, burn) 
-3. Mutate to create enclosure column that say full, partial, or open enclosure
-4. Mutate/summarise to create column of mean diameters and number of individuals by enclosure
-5. Use ggplot to create a plot w/ line of best fit showing individuals per enclosure by year, faceted by burn treatment 
+3. Mutate/summarize to create column of mean diameters and number of individuals by enclosure
+4. Use ggplot to create a line plot of mean diameters and mean number of individuals faceted by burn treatment 
 
+## Load libraries and datasets
+```{r libraries}
+library(tidyverse)
+library(readxl)
+library(RColorBrewer)
+
+SA_Woody_Data <- read_excel("SA_Woody_Data.xlsx")
+```
+
+## Tidy Data!
+```{r tidy}
+SA_Woody_Data <- mutate(.data=SA_Woody_Data, order=1:924)
+
+treatmeant_SA_Woody <- SA_Woody_Data %>% 
+  group_by(Burn, Year, Treatment, Type) %>% 
+  filter(Species != 'Unknown dead') %>% 
+  summarize((across(.cols=c('Diam_Stem_Live_mm'),
+                    .fns=mean,
+                    na.rm=T))) %>% 
+  ungroup()
+
+mean_SA_woody <- treatmeant_SA_Woody %>% 
+  group_by(Burn, Year, Type) %>% 
+  summarize((across(.cols=c('Diam_Stem_Live_mm'),
+                    .fns=mean,
+                    na.rm=T))) %>% 
+  ungroup()
+
+Total_Individuals <- SA_Woody_Data %>% 
+  group_by(String, Burn, Treatment, Exclosure, Type, Year, Species) %>% 
+  summarize(num_indiv = length(Diam_Stem_Live_mm)) %>% 
+  summarize(num_indiv = mean(num_indiv, na.rm= TRUE)) %>% 
+  ungroup() 
+
+mean_Total_Individuals <- Total_Individuals %>% 
+  group_by(Burn, Year, Type) %>% 
+  summarize(num_indiv = mean(num_indiv, na.rm= TRUE)) %>% 
+  ungroup()
+
+```
+
+## Line Graphs
+``` {r linegraph}
+ggplot(mean_SA_woody, aes(Year, Diam_Stem_Live_mm, group = Type, color = as.factor(Type))) +
+  geom_line(size=1.25) +
+  geom_point(size=2) +
+  scale_colour_brewer(palette = "Dark2") +
+  facet_wrap(~Burn) +
+  labs(title = 'Mean Diameters', x = 'Years', y = 'Mean Diamter in mm') +
+  theme(legend.position = "top") +
+  guides(color = guide_legend(title = "Exclosure Type"))
+
+ggplot(mean_Total_Individuals, aes(Year, num_indiv, group = Type, color = as.factor(Type))) +
+  geom_line(size=1.25) +
+  geom_point(size=2) +
+  scale_colour_brewer(palette = "Dark2") +
+  facet_wrap(~Burn) +
+  labs(title = 'Mean # of Individuals', x = 'Years', y = 'Mean # of Individual') +
+  theme(legend.position = "top") +
+  guides(color = guide_legend(title = "Exclosure Type"))
+```
