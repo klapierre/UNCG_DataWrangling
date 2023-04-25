@@ -315,6 +315,31 @@ bar_graph +
 #4. Change the colors using scale_fill_brewer and Rcolorbrewer
 #5. Save as a gif!
 
+ggplot(orange, aes(x=age, y=circumference, fill=as.factor(Tree))) + 
+  geom_bar(stat="identity") +
+  scale_fill_brewer(palette = "Spectral")+
+  transition_states(Sample,
+                    transition_length = 1, state_length = 1, wrap = FALSE) +
+  view_follow(fixed_x = TRUE)  +
+  ease_aes('linear')+
+  enter_fade()+
+  exit_fade()
+
+
+
+racing_bar <- ggplot(orange, aes(x=age, y=circumference, fill=as.factor(Tree))) + 
+  geom_bar(stat="identity") +
+  scale_fill_brewer(palette = "Spectral")+
+  transition_states(Sample,
+                    transition_length = 1, state_length = 1, wrap = FALSE) +
+  view_follow(fixed_x = TRUE)  +
+  ease_aes('linear')+
+  enter_fade()+
+  exit_fade()
+
+
+racing_gif <- animate(racing_bar, renderer = gifski_renderer())
+anim_save('racing_bar.gif', animation = last_animation(), path = NULL)
 
 
 
