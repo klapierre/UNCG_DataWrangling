@@ -18,7 +18,7 @@ During the peak of mating and young rearing, many backyard bird species, especia
 
 For my final project in class, I will be working with five .csv files. Four from the field data collected at each park, and one file which contains landcover type percentages for each of the 72 boxes. I have already gone back into these datasets and manually entered a "nest_success" column which assigns a numerical value to whether or not a nest produced fledglings.
 
-#Overview of Workflow
+# Overview of Workflow
 
 ```{r}
 
@@ -151,7 +151,7 @@ clean_cntry <- cntry%>%
 ## Come together
 
 ### Now, I'm going to join the individual filtered land_cover dataframes with
-the cleaned up data frames for each park.
+### the cleaned up data frames for each park.
 ### I'm using a left_join for this information because I want to essentially 
 ### pull the information from the land_cover dataframe INTO the park data frame.
 
@@ -194,7 +194,7 @@ cntry_join <- left_join(clean_cntry, filter_cntry_cover, by="box", copy=FALSE)
 ### But what a successful year it was! While all of the boxes had a success,
 ### Only one box, #4, experienced a failure. Some boxes even had multiple
 ### successes in one year!
-```{r,ggplot}
+```{r}
 ggplot(pbp_join, aes(x=nest_success, y=box, fill=as.factor(species))) +
   geom_bar(stat="identity", width=1)+
   scale_fill_brewer(palette="Dark2")+
@@ -210,7 +210,7 @@ ggplot(pbp_join, aes(x=nest_success, y=box, fill=as.factor(species))) +
 ### time, the success across the board has been up and down, except for box #2!
 ### over the past three years, #2 has seen five successes, followed by #10 at four
 ### Boxes #16 and #13 have never had a success, and both have failed at least once.
-```{r,ggplot}
+```{r}
 ggplot(price_join, aes(x=nest_success, y=box, fill=as.factor(species))) +
   geom_bar(stat="identity", width=1)+
   scale_fill_brewer(palette="Dark2")+
@@ -224,7 +224,7 @@ ggplot(price_join, aes(x=nest_success, y=box, fill=as.factor(species))) +
 ### This park has so far seen a lot of success, but boxes #8 and #6 seem to have
 ### some difficulty succeeding. 
 
-```{r,ggplot}
+```{r}
 ggplot(gnc_join, aes(x=nest_success, y=box, fill=as.factor(species))) +
   geom_bar(stat="identity", width=1)+
   scale_fill_brewer(palette="Dark2")+
@@ -239,7 +239,7 @@ ggplot(gnc_join, aes(x=nest_success, y=box, fill=as.factor(species))) +
 ### the boxes. Though a few boxes, such as #31 and #12 stand out as being especially
 ### successful. 
 
-```{r,ggplot}
+```{r}
 ggplot(cntry_join, aes(x=nest_success, y=box, fill=as.factor(species))) +
   geom_bar(stat="identity", width=1)+
   scale_fill_brewer(palette="Dark2")+
