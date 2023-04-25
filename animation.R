@@ -15,7 +15,7 @@ library(gifski)
 ## of data called 'iris' - you may remember this dataset from previous classes!
 
 ## TASK: Go ahead and load 'iris' in!
-
+iris <- iris
 
 
 ## Graph time! Let's plot species by petal length - this dataset describes 3
@@ -23,7 +23,8 @@ library(gifski)
 ## going to try to visualize it and see the lengths of each of their petals!
 
 ## TASK: Let's use a box and whisker plot for this, and color by species.
-
+ggplot(iris,  aes(x = as.factor(Species), y = Petal.Length)) +
+  geom_boxplot(aes(color =(Species)))
 
 
 ## If at anytime you want more info on GGanim, try this function to pull up the
@@ -37,9 +38,9 @@ library(gifski)
 
 ggplot(iris, aes(x = Species, y = Petal.Length)) +
   geom_boxplot(aes(colour = Species)) +
-  transition_states(Petal.Width,
-                    transition_length = 1,
-                    state_length = 1)
+  transition_states(Petal.Width, #this tells R what part to make into an animation
+                    transition_length = 2, # tells R how smooth the transition should be
+                    state_length = 200) # tells R how quick the frames should switch over
 
 ## TASK: Play with the values for transition_length and state_length - what's 
 ## changing? Was this different from what you thought when you were annotating?
@@ -55,6 +56,10 @@ ggplot(iris, aes(x = Species, y = Petal.Length)) +
 ## at first glance. Why don't we try and add some labels for our x and y axis,
 ## and a title for our chart?
 
+ggplot(iris, aes(x = Species, y = Petal.Length)) + 
+  geom_boxplot(aes(colour = Species)) +
+  ylab("Petal Length") +
+  labs(title = "Irises")
 
 
 ## HINT: If you can't get your graph to look right at first, try just changing
@@ -64,8 +69,19 @@ ggplot(iris, aes(x = Species, y = Petal.Length)) +
 ## like in PowerPoint!) to get more familiar with the other functions of gganimate.
 
 ## HINT: Take a look at ?enter and ?exit
+?enter
 
+?exit
 
+ggplot(iris, aes(x = Species, y = Petal.Length)) +
+  geom_boxplot(aes(color = Species)) + 
+  transition_states(Petal.Width,
+                    transition_length = 1,
+                    state_length = 1) +
+  ylab("Petal Length") +
+  labs(title = "Irises") +
+  enter_fade() + 
+  exit_fade()
 
 ## So now we have a cute little graph, showing the relationship between petal
 ## length and width by species. But how would we share this graph with other
@@ -75,6 +91,15 @@ ggplot(iris, aes(x = Species, y = Petal.Length)) +
 
 ## First, assign your graph a name and save it into R.
 
+graph <- ggplot(iris, aes(x = Species, y = Petal.Length)) + 
+  geom_boxplot(aes(colour = Species)) +
+  ylab("Petal Length") +
+  labs(title = "Irises") +
+  transition_states(Petal.Width,
+                    transition_length = 1,
+                    state_length = 1) +
+  enter_fade() + 
+  exit_shrink()
 
 
 ## Now that it's saved, we can use the animate() function - using gifski as our
@@ -84,13 +109,14 @@ ggplot(iris, aes(x = Species, y = Petal.Length)) +
 ## HINT: Check out babytestfile.R in the original branch for an example, and 
 ## ?animate for more help with the package.
 
+animate(graph,renderer = gifski_renderer())
 
 
 ## Finally, we need to save the animation to our computer. Gganimate defaults to
 ## using the last animation, so we don't need to select it. Use anim_save() for
 ## this, and check out ?anim_save for more help. (Or, babytestfile.R!)
 
-
+anim_save('FirstAnimation.gif',animation = last_animation(), path = NULL)
 
 ## Enjoy your little .gif! Now let's move onto something a little spicier...
 
@@ -125,10 +151,13 @@ ggplot(ChickWeight, aes(weight, Chick)) +
 ##TASK##
 #For the following code annotate each line for what you think each function does.
 
+ggplot(ChickWeight, aes(weight, Chick)) + 
+  geom_point(aes(color=Diet)) +
 labs(title = 'Days: {frame_time}', x = 'Chick weight (grams)', y = 'Chick number') + 
   transition_states(Time,  transition_length = 1,
                     state_length = 1) + 
   ease_aes('linear')
+
 
 #In case you get stuck or need further information, don't be afraid to use the animate help page!
 ?animate
@@ -137,12 +166,15 @@ labs(title = 'Days: {frame_time}', x = 'Chick weight (grams)', y = 'Chick number
 #Write code to save the animation and come up with whatever name you want to call that file.
 ##Hint: Look back at part 1 to see what function you use!##
 
+anim_save('BbyChicksAnimation.gif',animation = last_animation(), path = NULL)
 
 #Cool! So now we have one graph in motion and saved...let's do another!
 #Next we're going to create a bar graph
 #Task#
 #Assign your graph a name and write code to create a static bar graph where the time is on the y axis and the weight is on the x axis. 
 
+BabyChicksGraph <- ggplot(ChickWeight, aes(x = weight, y = Time, fill = Diet)) + 
+                            geom_bar(stat='identity')
 
 #That wasn't so bad :)
 #Now here comes the motion!
@@ -152,19 +184,26 @@ labs(title = 'Days: {frame_time}', x = 'Chick weight (grams)', y = 'Chick number
 #Write code to show the movement in the graph. 
 #Feel free to use the previous example as a reference
 
-
+BabyChicksGraph +
+transition_states(Time,  transition_length = 1,
+                  state_length = 1) + 
+  ease_aes('linear')
 
 
 ##Task##
 #Write code to save the gif
 
+anim_save("BbyChicksAnimation2.gif", animation = last_animation(), path = NULL)
 
 #Whoa! Good job - now the graph is moving!
 #Question: Why might it be important to use gganimate when tidying and working with datasets?
 
+# not only is it very cool and hypnotizing to view, it also helps visualize the informaiton better
+# it's like a 3D graph (z-axis) but in a 2D form that makes sense
 
+#Question: What other graphs do you think would be significant to use in gganimate when you are trying to #visulize datasets?
 
-#Question: What other graphs do you think would  be significant to use in gganimate when you are trying to #visulize datasets?
+# I feel like drawing lines on stat plots is another cool idea. Along with the growing or shrinking of different slices in a pie chart.
 
 #Great job! Now let's go use more datasets!
 
@@ -201,12 +240,13 @@ orange <- data.frame(Orange) %>%
 
 #Let's start with our first graph! We're going to create a simple line graph!
 
-line_graph <- ggplot(orange, aes(age, circumference, group = Tree, color = as.factor(Tree))) +
-  scale_colour_brewer(palette = "Dark2") +
-  geom_line() +
-  labs(title = 'Orange Tree Circumference by Age', x = 'Age in Days', y = 'Circumference in mm') +
-  theme(legend.position = "top") +
-  geom_point(aes(group = seq_along(age)), size=2) 
+line_graph <- ggplot(orange, aes(age, circumference, group = Tree, color = as.factor(Tree))) + # took the "orange" data set, set the aes to be based on the age and circumference, then grouped and colored the data based on the tree
+  scale_colour_brewer(palette = "Dark2") + # the color pallet chosen
+  geom_line() + # the type of graph
+  labs(title = 'Orange Tree Circumference by Age', x = 'Age in Days', y = 'Circumference in mm') + # title of graph and axis titles
+  theme(legend.position = "top") + # theme chosen
+  geom_point(aes(group = seq_along(age)), size=2) # points on the graph 
+
 line_graph
 
 #TASK: Annotate each line on what it does for the graph
@@ -220,17 +260,25 @@ line_graph +
 
 #Question: When would this type of graph and animation be an appropriate way to communicate your data?
 
+# helps to visualize the change over time
+
 #Now for graph 2!We're going to do a bar graph!
 
 #Let's start by making a simple bar graph
-bar_graph <- ggplot(orange, aes(age, circumference, fill=as.factor(Tree))) +
-  geom_bar(stat="identity", position=position_dodge()) + 
-  scale_fill_brewer(palette = "Accent") 
+bar_graph <- ggplot(orange, aes(age, circumference, fill=as.factor(Tree))) + # took the orange data, set the aes to be based on age and circumfrence, then filled the bars based on the type of tree
+  geom_bar(stat="identity", position=position_dodge()) + # idk
+  scale_fill_brewer(palette = "Accent") # the color palette
+
 bar_graph
 
 #TASK: Annotate each line on what it does for the graph
 #TASK: Add titles! Change the width! Flip the axis! Cause chaos!!!
 
+bar_graph <- ggplot(orange, aes(age, circumference, fill=as.factor(Tree))) + 
+  geom_bar(stat="identity", position=position_dodge()) + 
+  scale_fill_brewer(palette = "Accent") +
+  labs(title = 'Orange Tree Circumference by Age', x = 'Age in Days', y = 'Circumference in mm')
+  
 
 #Now for the transitions!
 bar_graph +
@@ -241,6 +289,7 @@ bar_graph +
 
 #Question: When would this type of graph and animation be an appropriate way to communicate your data?
 
+# this would show a visualization on how the data changes over time and how it compares to the measurement group right before it
 
 #TASK: Create a "racing bar graph" that shows the change in circumference over time! What you'll need to do is:
 #1. Create a bar plot similar to the last example
@@ -249,8 +298,23 @@ bar_graph +
 #4. Change the colors using scale_fill_brewer and Rcolorbrewer
 #5. Save as a gif!
 
+racing_bar_graph <- ggplot(orange, aes(age, circumference, fill=as.factor(Tree))) +
+  geom_bar(stat="identity", position=position_dodge()) + 
+  scale_fill_brewer(palette = "PiYG") +
+  labs(title = 'Orange Tree Circumference by Age: {closest_state}', x = 'Age (Days)', y = 'Circumference (mm)')
 
+racing_bar_graph
 
+racing_bar_graph +
+  transition_states(Sample,
+                    transition_length = 3,
+                    state_length = 0) +
+  view_follow(fixed_x = TRUE)  +
+  ease_aes('linear')+
+  enter_fade()+
+  exit_fade()
+
+anim_save("RacingBarGraph.gif", animation = last_animation(), path = NULL)
 
 
 #This is a true racing bar graph that I felt was too complicated to dump on y'all, but wanted to share anyways (because it took me forever to get it to work)! geom_tile allows for the bars to actually pass each other and race
@@ -284,6 +348,8 @@ ggplot(orange, aes(circumference, group = Tree)) +
   geom_text(aes(y=circumference,label = circumference, hjust=0)) +
   labs(title = 'Circumference over 7 Sampling Points : {closest_state}')
 
+anim_save("RacingBarGraphLEGIT.gif", animation = last_animation(), path = NULL)
+
 # --------------------------------------------------------------------------- #
 ####                      Section 4: *THE* Titanic                         ####
 # --------------------------------------------------------------------------- #
@@ -298,6 +364,7 @@ ggplot(orange, aes(circumference, group = Tree)) +
 # Make sure you have the "titanic.csv" file downloaded from the github branch or Canvas.
 # Then load it into R as an object and name it "rawTitanic"
 
+rawTitanic <-read.csv("https://raw.githubusercontent.com/klapierre/UNCG_DataWrangling/gganimate_April24/titanic.csv")
 
 
 # This data is a passenger list for the RMS Titanic, including information on the
@@ -310,10 +377,11 @@ ggplot(orange, aes(circumference, group = Tree)) +
 # Question: What problems could the SibSp and Parch columns make for us due to 
 # how they are recorded?
 
-
+# information is crammed into a single column when it should have been kept separate giving convoluted data
 
 # Question: What columns seem to be missing information?
 
+# age
 
 # Now, as we can see, this data is pretty untidy with lots of empty cells and
 # columns that are tricky to work with. So lets trim it down to just what we want
@@ -324,7 +392,13 @@ ggplot(orange, aes(circumference, group = Tree)) +
 # Then make a new column with the age as a 10 year range or age in decades
 # (Make sure the highest age is "60+")
 
-
+titanicTidyAge <- rawTitanic %>% 
+  select(c(PassengerId, Survived, Pclass, Name, Sex, Age)) %>% 
+  na.omit() %>% 
+  mutate(AgeDecade = floor(Age/10)*10) %>% 
+  mutate(AgeDecade = ifelse(AgeDecade>=60,
+                            "60+",
+                            AgeDecade))
 
 # Once you have that we'll make a second data frame named "titanicTidyCabin" 
 # 1) Include the PassengerId, Survived, Pclass, Sex, Age, and Cabin columns
@@ -332,6 +406,10 @@ ggplot(orange, aes(circumference, group = Tree)) +
 # This letter is the deck the cabin was located, A was the topmost deck and B the
 # next, and so on
 
+titanicTidyCabin <- rawTitanic %>% 
+  select(c(PassengerId, Survived, Pclass, Sex, Age, Cabin)) %>% 
+  mutate(Deck = str_extract(Cabin, "[aA-zZ]+")) %>% 
+  na.omit()
 
 
 # Next you'll be using each of those to make a graph.
@@ -344,16 +422,47 @@ ggplot(orange, aes(circumference, group = Tree)) +
 # 5) Color the columns something other than the default
 # Reminder: You may need to further filter the data frame
 
+graphAge <- titanicTidyAge %>% 
+  filter(Survived==1)
+
+graphAge
+
+ggplot(graphAge, aes(x=Sex, fill = Sex)) +
+  geom_bar() +
+  transition_states(AgeDecade, state_length = 1, transition_length = 3) +
+  ease_aes("sine-in-out") +
+  labs(subtitle = "Passengers in their {closest_state}'s")
 
 # Task: Make a scatter plot using the titanicTidyCabin data frame:
 # 1) Plotting age of passengers on the y-axes and deck level on the x-axes
+# ✓
 # 2) Coloring points by Survived, with point shape by Sex
+# ✓
 # 3) Animating the point position by Pclass
+# ✓
 # 4) Jitter the points so they don't all overlap
+# ✓
 # 5) Add code to display what Pclass you're currently showing
+# ✓
 # 6) Add appropriate x- and y-axes labels
+# ✓
 # 
 # Hint: Try aes(group = seq_along(...)) to get all your points to disappear 
 # between frames rather than some disappearing and some moving
 # see https://cran.r-project.org/web/packages/gganimate/vignettes/gganimate.html
 # for examples
+
+ggplot(titanicTidyCabin, aes(x=Deck, y=Age, fill=as.factor(Survived), shape=Sex)) +
+  geom_point(aes(group = seq_along(Pclass)), position = "jitter") +
+  scale_shape_manual(values = c(21, 24)) +
+  scale_fill_manual(
+    values = c("white", "black"),
+    guide = guide_legend(override.aes = list(shape = 21))
+  ) +
+  labs(subtitle = "Currently Showing Class {closest_state} Passengers", y = 'Age (years)') +
+  transition_states(Pclass, 
+                    transition_length = 2, 
+                    state_length = 3) +
+  enter_fade() +
+  exit_fade()
+  
