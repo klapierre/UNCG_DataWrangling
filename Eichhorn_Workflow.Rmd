@@ -58,7 +58,7 @@ For my final project in class, I will be working with five .csv files. Four from
 
 #Code
 
-### First, it's time to load in the csv files.
+## First, it's time to load in the csv files.
 ```{r,read.csv}
 pbp <- read.csv("peabodypark_success.csv")
 
@@ -74,12 +74,46 @@ land_cover <- read.csv("landcover_allboxes_percent.csv")
 
 
 
-###Next, I want to tidy up the land_cover file to just use data from boxes within Peabody Park. To filter via a character variable like "PB", I am going to need to use "str_detect". I also want to omit any "NA" values within the nest_success column of the Peabody Park dataframe.
-```{r, filter, str_detect}
-filter_cover <- land_cover %>%
+## Now things get a little hairy
+### Here, I am going to have to filter the land_cover data for each park based 
+### upon the box ID character that corresponds to each park.
+### The first is Peabody Park, "pb"
+```{r}
+filter_pb_cover <- land_cover %>%
   filter(str_detect(box,"pb"))
 ```
 
+### Next is Price Park, "pp"
+```{r}
+filter_price_cover <- land_cover %>%
+  filter(str_detect(box,"pp"))
+```
+
+### Then Gateway Park, "gnc"
+```{r}
+filter_gnc_cover <- land_cover %>%
+  filter(str_detect(box,"gnc"))
+```
+
+### Finally, Country Park, "cp"
+```{r}
+filter_cntry_cover <- land_cover %>%
+  filter(str_detect(box,"cp"))
+```
+
+
+## Clean up time!
+
+### Now that we have filtered the land_cover file for each park, let's also 
+### clean up each of the park dataframes as well.
+### In these dataframe, we want to omit any NA's within the nest_success column,
+### Without omitting them, you will wind up with a LOT of duplicates when we
+### join with the filtered land_cover data.
+### We also want to subset and delete several rows that are not super important
+### for looking at the rate of success of each nest within each box.
+
+
+### First, Peabody Park
 ```{r}
 clean_pbp <- pbp%>%
   na.omit(nest_success)%>%
@@ -87,6 +121,7 @@ clean_pbp <- pbp%>%
 
 ```
 
+### Now Price Park
 ```{r}
 clean_price <- price%>%
   na.omit(nest_success)%>%
@@ -95,6 +130,7 @@ clean_price <- price%>%
 
 ```
 
+### Then Gateway Park
 ```{r}
 clean_gnc <- gnc%>%
   na.omit(nest_success)%>%
@@ -102,41 +138,111 @@ clean_gnc <- gnc%>%
 
 ```
 
+### Finally, Country Park
 ```{r}
 clean_cntry <- cntry%>%
   na.omit(nest_success)%>%
-   subset(select=-c(comments,n_eggs,n_young,n_fledged,nest))%>%
+  subset(select=-c(comments,n_eggs,n_young,n_fledged,nest))%>%
   rename(box=box_id)
 
 ```
 
-###Now, I'm going to merge the land_cover and Peabody Park information by the intersection of the variables within the "box" column within each respective dataframe.
-###I'm also going to get rid of any columns which do not pertain to dates, box ID's, nest success, or land coverage percentages.
+
+## Come together
+
+### Now, I'm going to join the individual filtered land_cover dataframes with
+the cleaned up data frames for each park.
+### I'm using a left_join for this information because I want to essentially 
+### pull the information from the land_cover dataframe INTO the park data frame.
+
 ```{r}
 
-pbp_join <- left_join(clean_pbp,filter_cover, by="box", copy=FALSE)
+pbp_join <- left_join(clean_pbp,filter_pb_cover, by="box", copy=FALSE)
+
 ```
 
 ```{r}
 
-price_join <- left_join(clean_pbp,filter_cover, by="box", copy=FALSE)
+price_join <- left_join(clean_price,filter_price_cover, by="box", copy=FALSE)
+
 ```
 
 ```{r}
-gnc_join <- left_join(clean_gnc,filter_cover, by="box", copy=FALSE)
+gnc_join <- left_join(clean_gnc,filter_gnc_cover, by="box", copy=FALSE)
+
 ```
 
 ```{r}
-cntry_join <- left_join(clean_cntry,filter_cover, by="box", copy=FALSE)
+cntry_join <- left_join(clean_cntry, filter_cntry_cover, by="box", copy=FALSE)
+
 ```
 
-#Playing around and Plots
+# Playing Around and Plots
 
 ## Now that the data frame is cleaned up, we can now play around with the data!
 
+### To get things started, I'm going to create some basic bar graphs to show
+### case how often a box was successful, and I will also color the bars by species
+### to show which species preferred certain boxes. Because success is a measurement
+### of either 0 or 1, any boxes with multiple successful fledgings throughout multiple
+### years will have those success stacked ontop of eachother in a single bar.
+
+
+## Peabody Park
+
+### In Peabody Park, there has only been one year of data collection.
+### But what a successful year it was! While all of the boxes had a success,
+### Only one box, #4, experienced a failure. Some boxes even had multiple
+### successes in one year!
 ```{r,ggplot}
-ggplot(pbp_join, aes(x=box, y=nest_success, fill=as.factor(species))) +
+ggplot(pbp_join, aes(x=nest_success, y=box, fill=as.factor(species))) +
   geom_bar(stat="identity", width=1)+
+  scale_fill_brewer(palette="Dark2")+
+  ggtitle("Nest Success by Species and Location")
+
+```
+
+
+
+## Price Park
+
+### Price Park has had three years of research completed within it. In that
+### time, the success across the board has been up and down, except for box #2!
+### over the past three years, #2 has seen five successes, followed by #10 at four
+### Boxes #16 and #13 have never had a success, and both have failed at least once.
+```{r,ggplot}
+ggplot(price_join, aes(x=nest_success, y=box, fill=as.factor(species))) +
+  geom_bar(stat="identity", width=1)+
+  scale_fill_brewer(palette="Dark2")+
+  ggtitle("Nest Success by Species and Location")
+
+```
+
+## Gateway Gardens
+
+### Similar to Peabody Park, Gateway Gardens has only had one year of research.
+### This park has so far seen a lot of success, but boxes #8 and #6 seem to have
+### some difficulty succeeding. 
+
+```{r,ggplot}
+ggplot(gnc_join, aes(x=nest_success, y=box, fill=as.factor(species))) +
+  geom_bar(stat="identity", width=1)+
+  scale_fill_brewer(palette="Dark2")+
+  ggtitle("Nest Success by Species and Location")
+
+```
+
+## Country Park
+
+### Like Price Park, Country Park has had three years of research done within it.
+### Over that time there has been a HUGE amount of variation in the success of 
+### the boxes. Though a few boxes, such as #31 and #12 stand out as being especially
+### successful. 
+
+```{r,ggplot}
+ggplot(cntry_join, aes(x=nest_success, y=box, fill=as.factor(species))) +
+  geom_bar(stat="identity", width=1)+
+  scale_fill_brewer(palette="Dark2")+
   ggtitle("Nest Success by Species and Location")
 
 ```
