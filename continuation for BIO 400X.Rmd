@@ -1,0 +1,290 @@
+---
+title: "Individual Project"
+author: "Kaysa Vaarre-Lamoureux"
+date: "2023-04-09"
+output: pdf_document
+---
+# Project Overview
+
+## Description describing the dataset and ecological questions you aim to address
+
+The data I will be using are arthropod ID, arthropod weight, and plant trait CWM (community-weighted mean) data. These data were collected in three different grazing treatments; no grazing, low grazing, and high grazing. All the data I’m using was collected during the summer of 2022 for my graduate mentor Kathryn’s research which I helped collect and then used for my independent research project. These were **my research questions:**
+
+1. How do cattle grazing intensities affect arthropod communities (cattle grazing → arthropod communities)? 
+2. Is there any evidence of an indirect pathway where cattle grazing affects plant communities, then those changes affect arthropod communities (cattle grazing → plant communities → arthropod communities)? 
+
+I previously found that total average arthropod weights, communities, and dispersion of those communities do not change significantly over different grazing treatments, and neither do plant height CWM or specific leaf area (SLA) CWM. 
+
+However, I did find a significant difference in average Hemiptera (true bugs) weights between grazing treatments. I wanted to look further into why this might be by looking at other plant trait CWMs. I also want to see if any Orthoptera (grasshoppers) families are significantly different between grazing treatments since Orthoptera makes up the vast majority of total arthropod biomass. 
+
+**TLDR:**
+
+Basically, I want to see if there are any differences (or lack of) between grazing treatments for Orthoptera families and plant trait CWMs. Then see if there are any correlations between Hemiptera and plant trait CWMs, or Orthoptera families and plant trait CWMs.
+
+# Project Workflow
+
+## Pseudo-code describing what you plan to do with your data
+
+**Insert previous average Hemiptera weight code and figures.**
+
+**Manipulate the data for the purposes of this project**
+
+Make a stacked bar graph showing average Orthoptera weight by grazing treatment broken down by genus (visualize how each genus contributes to overall Orthoptera average biomass).
+
+- Filter arthropod ID data and weight data for Orthoptera only. Select only relevant columns.
+- Combine the two data frames with the sample number as the common column.
+  - Each insect has a unique sample number. By combining I add family and genus to the weight data which it doesn’t have by itself.
+- Find the mean orthoptera weight grouped by grazing treatment and genus and create a stacked bar graph showing the results. Grazing treatment on the x-axis, color-coded stacking by genus with legend.
+
+**Make a bar graph of Orthoptera genus by grazing treatment.**
+
+- Make a bar graph, faceted by genus, of the average weights of genus on the y-axis and grazing treatment on the x-axis.
+  - Calculate the standard errors by grazing treatment and genus to make error bars.
+- Run stats (glmm=generalized linear mixed model, and Tukey test=compare pairwise significance if significance is found in the glmm) to find families with significant differences between grazing treatments.
+- Indicate significance values on the bar graph if there are any.
+
+**Make a boxplot of plant trait CWMs.**
+
+- Make a boxplot faceted by each plant trait CWM with grazing treatment on the x-axis.
+- Run stats (glmm and Tukey) to find plant traits with significant differences between grazing treatments.
+- Indicate significance values on the box plot if there are any.
+
+**Finish with a summary section that talks about trends/correlations seen in the data and what they might mean.**
+
+# The project!
+
+## Past arthropod data and figures.
+
+Here I am importing the necessary packages, csv files, tidied data, and important figures looking at arthropod weights from my past independent project. Since this is past code I will only be including the figures in the R markdown output, not the code, since there is a lot of it and it wasn't done for this project. Of course, you can still see the code in the R markdown script.
+
+```{r setup, warning=FALSE, message=FALSE, echo=FALSE}
+library(lmerTest)
+library(multcomp)
+library(tidyverse)
+library(vegan)
+library(RColorBrewer)
+
+id.data <- read.csv("2022_Sweep_Net_Data_FK.csv", header=TRUE) %>% 
+  select(Block:Date.Completed)
+weight.data <- read.csv("2022_Sweep_Net_Weight_Data_FK.csv", header=TRUE) %>% 
+  select(Block:Notes)
+
+id.data_correct <- id.data %>% 
+  filter(!is.na(Plot)) %>% 
+  filter(Family!="ceraphionidae") %>% 
+  mutate(Order_corrected=ifelse(Order=="araneae", "Araneae",ifelse(Order=="coleoptera", "Coleoptera", ifelse(Order=="diptera", "Diptera", ifelse(Order=="hemiptera", "Hemiptera", ifelse(Order=="hymenoptera", "Hymenoptera", ifelse(Order=="lepidoptera", "Lepidoptera", ifelse(Order=="neuroptera", "Neuroptera", ifelse(Order=="orthoptera", "Orthoptera", Order))))))))) %>% 
+  mutate(Family_corrected=ifelse(Family=="acrididae", "Acrididae", ifelse(Family=="agromyzidae", "Agromyzidae", ifelse(Family=="aphididae", "Aphididae", ifelse(Family=="aphrophoridae", "Aphrophoridae", ifelse(Family=="asilidae", "Asilidae", ifelse(Family=="bethylidae", "Bethylidae", ifelse(Family=="braconidae", "Braconidae", ifelse(Family=="calosotinae", "Calosotinae", ifelse(Family=="chalcididae", "Chalcididae", ifelse(Family=="chironomidae", "Chironomidae", ifelse(Family=="chrionomidae", "Chironomidae", ifelse(Family=="chrysididae", "Chrysididae", ifelse(Family=="chrysomelidae", "Chrysomelidae", ifelse(Family=="cicadellidae", "Cicadellidae", ifelse(Family=="coccinelliadae", "Coccinellidae", ifelse(Family=="coccinellidae", "Coccinellidae", ifelse(Family=="culicidae", "Culicidae", ifelse(Family=="curculionidae", "Curculionidae", ifelse(Family=="formicidae", "Formicidae", ifelse(Family=="geometridae", "Geometridae", ifelse(Family=="latridiidae", "Latridiidae", ifelse(Family=="lycosidae", "Lycosidae", ifelse(Family=="lygaeidae", "Lygaeidae", ifelse(Family=="miridae", "Miridae", ifelse(Family=="muscidae", "Muscidae", ifelse(Family=="pentatomidae", "Pentatomidae", ifelse(Family=="platygastridae", "Platygastridae", ifelse(Family=="pteromalidae", "Pteromalidae", ifelse(Family=="salticidae", "Salticidae", ifelse(Family=="scutelleridae", "Scutelleridae", ifelse(Family=="sepsidae", "Sepsidae", ifelse(Family=="tenebrionidae", "Tenebrionidae", ifelse(Family=="thomisidae", "Thomisidae", ifelse(Family=="tingidae", "Tingidae", ifelse(Family=="tomisidae", "Thomisidae", ifelse(Family=="trichoceridae", "Trichoceridae", ifelse(Family=="unknown", "Unknown", ifelse(Family=="n/a", NA, Family))))))))))))))))))))))))))))))))))))))) %>% 
+  mutate(Genus_corrected=ifelse(Genus=="ageneotettix", "Ageneotettix", ifelse(Genus=="arphia", "Arphia", ifelse(Genus=="dissosteria", "Dissosteria", ifelse(Genus=="eritettix", "Eritettix", ifelse(Genus=="melanoplus", "Melanoplus", ifelse(Genus=="opeia", "Opeia", ifelse(Genus=="phoetaliotes", "Phoetaliotes", ifelse(Genus=="pseudopomala", "Pseudopomala", ifelse(Genus=="n/a", NA, Genus)))))))))) %>% 
+  mutate(Species_corrected=ifelse(Species=="", NA, ifelse(Species=="n/a", NA, Species)))
+
+weight.data_correct <- weight.data %>% 
+  filter(!is.na(Plot)) %>% 
+  mutate(Dry_Weight_g=as.numeric(ifelse(Dry_Weight_g=="<0.0001", "0.00005", ifelse(Dry_Weight_g=="", NA, Dry_Weight_g))))
+
+weight.data_sum <- aggregate(Dry_Weight_g~Block+Grazing_Treatment+Plot+Order, data=weight.data_correct, FUN=sum, na.rm=FALSE) %>% 
+  filter(Order!="Body Parts")
+weight.data_sum$Grazing_Treatment <- as.factor(weight.data_sum$Grazing_Treatment)
+
+weight.data_average <- weight.data_sum %>% 
+  group_by(Grazing_Treatment, Order) %>% 
+  summarise(mean_weight=mean(Dry_Weight_g), SD_weight=sd(Dry_Weight_g), n_weight=length(Dry_Weight_g)) %>% 
+  mutate(std.error_weight=SD_weight/sqrt(n_weight)) %>% 
+  ungroup()
+
+theme_set(theme_bw())
+theme_update(panel.grid.major=element_blank(), panel.grid.minor=element_blank())
+
+ggplot(data=weight.data_average, aes(x=Grazing_Treatment, y=mean_weight, fill=Order))+
+  geom_bar(stat="identity", position="stack")+
+  xlab("Grazing Treatment")+
+  ylab("Average Arthropod Weight (g)")+
+  scale_x_discrete(labels=c("NG"="No Grazing", "LG"="Low Grazing", "HG"="High Grazing"), limits=c("NG", "LG", "HG"))+
+  scale_fill_manual(labels=c("Aranea", "Coleoptera", "Diptera", "Hemiptera", "Hymenoptera", "Lepidoptera", "Neuroptera", "Orthroptera", "Thysanoptera"), values=c("#ff9d2b", "#00c984", "#237100", "#02c2c9", "#8ace30", "#454d8e", "#9d95ff", "#ff8ca1","#aa0059"))+
+  expand_limits(y=1.2)+
+  scale_y_continuous(breaks=seq(0, 1.2, by=0.10))
+
+ggplot(subset(weight.data_average, Order=="Hemiptera"), aes(x=Grazing_Treatment, y=mean_weight, fill=Grazing_Treatment))+
+  geom_bar(stat="identity", position="stack")+
+  xlab("Grazing Treatment")+
+  ylab("Average Hemiptera Weight (g)")+
+  scale_x_discrete(labels=c("NG"="No Grazing", "LG"="Low Grazing", "HG"="High Grazing"), limits=c("NG", "LG", "HG"))+
+  scale_fill_manual(labels=c("High Grazing", "Low Grazing", "No Grazing"), values=c("#332288", "#88CCEE", "#44AA99"))+
+  expand_limits(y=0.08)+
+  scale_y_continuous(breaks=seq(0, 0.08, by=.01))+
+  geom_errorbar(aes(ymin=mean_weight-std.error_weight, ymax=mean_weight+std.error_weight), position=position_dodge(), width=.4, size=0.75)
+```
+
+## Tidying data for this project and making a bar graph visualizing average Orthoptera weights.
+
+Now that I've imported the necessary code and figures from the arthropod weights of my past research project, it's time to get into this research project! Here I make a stacked bar graph showing average Orthoptera weight by grazing treatment broken down by genus. This is to help visualize how each genus contributes to overall Orthoptera average biomass and which ones are most influential. 
+
+```{r orthoptera stacked bar graph, warning=FALSE, message=FALSE}
+weight.data_o <- weight.data_correct %>% 
+  filter(Order=="Orthoptera") %>% 
+  rename(Sample=Sample_Number)
+
+id.data_o <- id.data_correct %>% 
+  filter(Order_corrected=="Orthoptera")
+
+weight.id.data_o <- inner_join(weight.data_o, id.data_o, by=c("Plot", "Sample")) %>% 
+  select(Block.x, Grazing_Treatment.x, Plot, Sample, Dry_Weight_g, Order_corrected, 
+         Family_corrected, Genus_corrected, Species_corrected) %>% 
+  rename(Block=Block.x, Grazing_Treatment=Grazing_Treatment.x, Order=Order_corrected, 
+         Family=Family_corrected, Genus=Genus_corrected, Species=Species_corrected)
+
+weight.id.data_sum <- aggregate(Dry_Weight_g~Block+Grazing_Treatment+Plot+Order+Genus, 
+                                data=weight.id.data_o, FUN=sum, na.rm=FALSE)
+
+weight.id.data_average <- weight.id.data_sum %>% 
+  group_by(Grazing_Treatment, Genus) %>% 
+  summarise(mean_weight=mean(Dry_Weight_g), SD_weight=sd(Dry_Weight_g), 
+            n_weight=length(Dry_Weight_g)) %>% 
+  mutate(std.error_weight=SD_weight/sqrt(n_weight)) %>% 
+  ungroup()
+
+ggplot(data=weight.id.data_average, aes(x=Grazing_Treatment, y=mean_weight, fill=Genus))+
+  geom_bar(stat="identity", position="stack")+
+  scale_x_discrete(labels=c("NG"="No Grazing", "LG"="Low Grazing", "HG"="High Grazing"), 
+                   limits=c("NG", "LG", "HG"))+
+  scale_fill_brewer(type="Diverging", palette="Set3")+
+  xlab("Grazing Treatment")+
+  ylab("Average Orthoptera Biomass (g)")
+
+```
+
+## Looking at each orthoptera genus as it's own bar graph
+
+Here I will be making a bar graph faceted by each genus of Orthoptera over the three grazing treatments, and seeing if there are any significant differences. 
+After running the statistical tests, I didn't find any statistical significance in any of the eligible genus' (the ones that had more than one observation for each grazing treatment).
+
+```{r bar graph faceted by genus, warning=FALSE, message=FALSE}
+ggplot(data=weight.id.data_average, 
+       aes(x=Grazing_Treatment, y=mean_weight, fill=Grazing_Treatment))+
+  geom_bar(stat="identity", position="stack")+
+  facet_wrap(~Genus, scales="free_y")+
+  scale_x_discrete(limits=c("NG", "LG", "HG"))+
+  scale_fill_manual(values=c("#44AA99", "#88CCEE", "#332288"),
+                    breaks=c("NG", "LG", "HG"),
+                    labels=c("No Grazing", "Low Grazing", "High Grazing"))+
+  xlab("Grazing Treatment")+
+  ylab("Total Orthoptera Biomass (g)")+
+  geom_errorbar(aes(ymin=mean_weight-std.error_weight, ymax=mean_weight+std.error_weight), 
+                position=position_dodge(), width=.4, size=0.75)+
+  labs(fill="Grazing Treatment")
+
+```
+
+```{r bar graph stats, warning=FALSE, message=FALSE}
+# run stats on Ageneotettix, Arphia, Melanoplus, Opeia, Phoetaliotes 
+Ageneotettix_grazing_glmm <- lmer(Dry_Weight_g ~ Grazing_Treatment+(1|Block), 
+                                  data=subset(weight.id.data_sum, Genus=="Ageneotettix"))
+anova(Ageneotettix_grazing_glmm)
+
+Arphia_grazing_glmm <- lmer(Dry_Weight_g ~ Grazing_Treatment+(1|Block), 
+                            data=subset(weight.id.data_sum, Genus=="Arphia"))
+anova(Arphia_grazing_glmm)
+
+Melanoplus_grazing_glmm <- lmer(Dry_Weight_g ~ Grazing_Treatment+(1|Block), 
+                                data=subset(weight.id.data_sum, Genus=="Melanoplus"))
+anova(Melanoplus_grazing_glmm)
+
+Opeia_grazing_glmm <- lmer(Dry_Weight_g ~ Grazing_Treatment+(1|Block), 
+                           data=subset(weight.id.data_sum, Genus=="Opeia"))
+anova(Opeia_grazing_glmm)
+
+Phoetaliotes_grazing_glmm <- lmer(Dry_Weight_g ~ Grazing_Treatment+(1|Block), 
+                                  data=subset(weight.id.data_sum, Genus=="Phoetaliotes"))
+anova(Phoetaliotes_grazing_glmm)
+
+```
+
+## Past CWM boxplots
+
+Here I will include the previous work that I did on plant trait CWM's for my independent research project. I looked at height and specific leaf are (SLA). When stats were run on both of these traits, no significance was found. I am not including the code since it wasn't done for this project, however you can still see it in the R markdown script.
+
+```{r past CWM figures, warning=FALSE, message=FALSE, echo=FALSE}
+CWM_data <- read.csv("CWM_Collected_Data_KAYSA.csv", header=T) %>% 
+  filter(grazing_treatment!="stable")
+
+ggplot(CWM_data, aes(grazing_treatment, Height_CWM, color=grazing_treatment))+
+  geom_boxplot(lwd=1)+
+  xlab("Grazing Treatment")+
+  ylab("Height CWM")+
+  scale_x_discrete(labels=c("none"="No Grazing", "destock"="Low Grazing", "heavy"="High Grazing"), 
+                   limits=c("none", "destock", "heavy"))+
+  scale_color_manual(values=c("#44AA99", "#88CCEE", "#332288"),
+                    breaks=c("none", "destock", "heavy"),
+                    labels=c("No Grazing", "Low Grazing", "High Grazing"))+
+  expand_limits(y=16)+
+  theme(legend.position = "none")
+
+ggplot(CWM_data, aes(grazing_treatment, Avg_SLA_CWM, color=grazing_treatment))+
+  geom_boxplot(lwd=1)+
+  xlab("Grazing Treatment")+
+  ylab("SLA CWM")+
+  scale_x_discrete(labels=c("none"="No Grazing", "destock"="Low Grazing", "heavy"="High Grazing"), 
+                   limits=c("none", "destock", "heavy"))+
+  scale_color_manual(values=c("#44AA99", "#88CCEE", "#332288"),
+                     breaks=c("none", "destock", "heavy"),
+                     labels=c("No Grazing", "Low Grazing", "High Grazing"))+
+  expand_limits(y=16)+
+  theme(legend.position = "none")
+```
+
+## Plant trait CWM explored futher
+
+Here I will make boxplot graphs looking at each relevant plant trait. These are leaf thickness, biomass, and growth form. I will not be looking at any traits such as number of living vs. scenesced leaves, number of flowers vs. flower heads, etc. since those change over time and the plant traits were not measured at the same time as when the arthropods were collected. After running the statistical tests,there were no significance values found.
+
+```{r CWM exploration, warning=FALSE, message=FALSE}
+ggplot(CWM_data, aes(grazing_treatment, LeafThickness_CWM, color=grazing_treatment))+
+  geom_boxplot(lwd=1)+
+  xlab("Grazing Treatment")+
+  ylab("Leaf Thickness CWM")+
+  scale_x_discrete(labels=c("none"="No Grazing", "destock"="Low Grazing", "heavy"="High Grazing"), 
+                   limits=c("none", "destock", "heavy"))+
+  scale_color_manual(values=c("#44AA99", "#88CCEE", "#332288"),
+                    breaks=c("none", "destock", "heavy"),
+                    labels=c("No Grazing", "Low Grazing", "High Grazing"))+
+  theme(legend.position = "none")
+
+ggplot(CWM_data, aes(grazing_treatment, Biomass_CWM, color=grazing_treatment))+
+  geom_boxplot(lwd=1)+
+  xlab("Grazing Treatment")+
+  ylab("Biomass CWM")+
+  scale_x_discrete(labels=c("none"="No Grazing", "destock"="Low Grazing", "heavy"="High Grazing"), 
+                   limits=c("none", "destock", "heavy"))+
+  scale_color_manual(values=c("#44AA99", "#88CCEE", "#332288"),
+                    breaks=c("none", "destock", "heavy"),
+                    labels=c("No Grazing", "Low Grazing", "High Grazing"))+
+  theme(legend.position = "none")
+
+ggplot(CWM_data, aes(grazing_treatment, GrowthForm_CWM, color=grazing_treatment))+
+  geom_boxplot(lwd=1)+
+  xlab("Grazing Treatment")+
+  ylab("Growth Form CWM")+
+  scale_x_discrete(labels=c("none"="No Grazing", "destock"="Low Grazing", "heavy"="High Grazing"), 
+                   limits=c("none", "destock", "heavy"))+
+  scale_color_manual(values=c("#44AA99", "#88CCEE", "#332288"),
+                    breaks=c("none", "destock", "heavy"),
+                    labels=c("No Grazing", "Low Grazing", "High Grazing"))+
+  theme(legend.position = "none")
+```
+
+```{r CWM stats, warning=FALSE, message=FALSE}
+leafThick_lmer <- lmer(data=CWM_data, 
+                       LeafThickness_CWM~grazing_treatment+(1|block)+(1|block:paddock))
+anova(leafThick_lmer)  
+
+bio_lmer <- lmer(data=CWM_data, 
+                 Biomass_CWM~grazing_treatment+(1|block)+(1|block:paddock))
+anova(bio_lmer)  
+
+growthForm_lmer <- lmer(data=CWM_data, 
+                        GrowthForm_CWM~grazing_treatment+(1|block)+(1|block:paddock))
+anova(growthForm_lmer)  
+
+```
+
+## Summary
+
+There was no significant difference over the different grazing treatments for overall average orthoptera weights, average orthopteran genus weights, or for the three plant trait CWMs. This might be due to the fact that I am working with the sweep net plots from 2022 and there are only 3 replicates for each grazing treatment (1 for each block), a relatively small data pool. However, in my previous research, I still found a significant difference in the order Hemiptera, where Low Grazing was significantly higher than No Grazing and High Grazing. I hypothesized that this might be due to plant traits that weren't measured like leaf nutrient quality or presence of domatia (small holes in the plants that hemiptera use for habitat, reproduction, hiding places, etc.). I also think it may be due to the fact that some plots had large groups of hemipteran nymphs (~100-500 individuals) since it was a fairly wet season, and this may have skewed the data wherever those large groups were present.
