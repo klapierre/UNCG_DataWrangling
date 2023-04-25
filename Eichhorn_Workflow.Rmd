@@ -90,7 +90,8 @@ clean_pbp <- pbp%>%
 ```{r}
 clean_price <- price%>%
   na.omit(nest_success)%>%
-   subset(select=-c(comments,n_eggs,n_young,n_fledged,nest))
+   subset(select=-c(comments,n_eggs,n_young,n_fledged,nest))%>%
+  rename(box=box_id)
 
 ```
 
@@ -104,7 +105,8 @@ clean_gnc <- gnc%>%
 ```{r}
 clean_cntry <- cntry%>%
   na.omit(nest_success)%>%
-   subset(select=-c(comments,n_eggs,n_young,n_fledged,nest))
+   subset(select=-c(comments,n_eggs,n_young,n_fledged,nest))%>%
+  rename(box=box_id)
 
 ```
 
@@ -112,8 +114,20 @@ clean_cntry <- cntry%>%
 ###I'm also going to get rid of any columns which do not pertain to dates, box ID's, nest success, or land coverage percentages.
 ```{r}
 
-pbp_join <- left_join(omit_pbp,filter_cover, by="box", copy=FALSE)
+pbp_join <- left_join(clean_pbp,filter_cover, by="box", copy=FALSE)
+```
 
+```{r}
+
+price_join <- left_join(clean_pbp,filter_cover, by="box", copy=FALSE)
+```
+
+```{r}
+gnc_join <- left_join(clean_gnc,filter_cover, by="box", copy=FALSE)
+```
+
+```{r}
+cntry_join <- left_join(clean_cntry,filter_cover, by="box", copy=FALSE)
 ```
 
 #Playing around and Plots
