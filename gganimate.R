@@ -389,7 +389,10 @@ ggplot(orange, aes(circumference, group = Tree)) +
 # Make sure you have the "titanic.csv" file downloaded from the github branch or Canvas.
 # Then load it into R as an object and name it "rawTitanic"
 
-
+library(readr)
+urlfile="https://raw.githubusercontent.com/klapierre/UNCG_DataWrangling/gganimate_April24/titanic.csv"
+titanic.csv<-read_csv(url(urlfile))
+rawTitanic <- titanic.csv
 
 # This data is a passenger list for the RMS Titanic, including information on the
 # different passengers' names, if they survived, sex, age, number of siblings/spouses aboard, number of parents/children aboard, ticket number, ticket fare,
@@ -401,10 +404,11 @@ ggplot(orange, aes(circumference, group = Tree)) +
 # Question: What problems could the SibSp and Parch columns make for us due to 
 # how they are recorded?
 
-
+# This complicates being able to differentiate how many siblings, spouses, and children an individual may have, which can be confusing.
 
 # Question: What columns seem to be missing information?
 
+# Cabin seems to be missing a lot of information and age has some NA's
 
 # Now, as we can see, this data is pretty untidy with lots of empty cells and
 # columns that are tricky to work with. So lets trim it down to just what we want
@@ -415,6 +419,12 @@ ggplot(orange, aes(circumference, group = Tree)) +
 # Then make a new column with the age as a 10 year range or age in decades
 # (Make sure the highest age is "60+")
 
+titanicTidyAge <- rawTitanic %>% 
+  select(c(PassengerId, Survived, Pclass, Name, Sex, Age)) %>% 
+  na.omit() %>% 
+  mutate(AgeGroup = floor(Age/10)*10) %>% 
+  mutate(AgeGroup = ifelse(AgeGroup>=60,
+                            "60+", AgeGroup))
 
 
 # Once you have that we'll make a second data frame named "titanicTidyCabin" 
@@ -423,6 +433,9 @@ ggplot(orange, aes(circumference, group = Tree)) +
 # This letter is the deck the cabin was located, A was the topmost deck and B the
 # next, and so on
 
+titanicTidyCabin <- rawTitanic %>% 
+  select(c(PassengerId, Survived, Pclass, Name, Sex,Age, Cabin)) %>% 
+  mutate(Deck = str_extract(Cabin, "[aA-zZ]+"))
 
 
 # Next you'll be using each of those to make a graph.
@@ -434,6 +447,15 @@ ggplot(orange, aes(circumference, group = Tree)) +
 # 4) Be sure to add appropriate x- and y-axes labels and title
 # 5) Color the columns something other than the default
 # Reminder: You may need to further filter the data frame
+
+titanicSurvivor <- titanicTidyAge%>%
+  filter(Survived==1)
+
+ggplot(titanicSurvivor, aes(x=Sex, y=Survived, fill=as.factor(AgeGroup))) + 
+  geom_bar(stat="identity") +
+  scale_fill_brewer(palette = "Spectral")+
+  transition_states(AgeGroup, state_length = 1, transition_length = 3) +
+  labs(x= "Sex", y= "Number Surived", subtitle = "Passenger Age")
 
 
 # Task: Make a scatter plot using the titanicTidyCabin data frame:
@@ -448,3 +470,13 @@ ggplot(orange, aes(circumference, group = Tree)) +
 # between frames rather than some disappearing and some moving
 # see https://cran.r-project.org/web/packages/gganimate/vignettes/gganimate.html
 # for examples
+
+
+ggplot(titanicTidyCabin, aes(x=Deck, y=Age, fill=as.factor(Survived), shape=Sex)) +
+  geom_point(aes(group = seq_along(Pclass)), position = "jitter") +
+  scale_shape_manual(values = c(21, 25)) +
+  scale_fill_manual(values = c("skyblue", "hotpink")) +
+  transition_states(Pclass, transition_length = 1, state_length = 3) +
+  enter_fade() +
+  exit_fade()
+
