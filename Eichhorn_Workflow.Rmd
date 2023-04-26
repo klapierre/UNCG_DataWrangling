@@ -24,7 +24,10 @@ For my final project in class, I will be working with five .csv files. Four from
 ```{r}
 
 #read.csv()#Load in .csv file for park and the landcover# %>%
-  #merge(x=,y=
+  #filter()
+  #na.omit()
+  #subset()
+  #left_join(x=,y=
          # by="Box_ID",all.x=TRUE)
 # The landcover and park datasets all share one similar column, Box ID#.
 # Each park is assigned its own unique Box ID# Prefix: "CP, PP, PB, & GW" 
