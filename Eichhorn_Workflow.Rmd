@@ -1,5 +1,5 @@
 ---
-title: "Effects of manmade wetlands on Birdbox Success"
+title: "Effects of manmade wetlands on birdbox success"
 author: "William Eichhorn"
 date: "2023-03-25"
 output: pdf_document
