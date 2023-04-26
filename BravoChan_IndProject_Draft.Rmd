@@ -58,7 +58,7 @@ names(mtDataF2)
 ```{r, include=FALSE ,message=FALSE, warning=FALSE}
 library(tidyverse)
 # Decompose GI genotype into additive and dominance components
-mtDataF2 <- mtDataF2 %>% 
+mtDataF2 <- mtDataF2 %>% #change df name
   mutate(GIAdd = GI - 1,
          GIDom = 1 - abs(1 - GI))
 
@@ -108,15 +108,17 @@ PCModelF2dExt <- prcomp(PCTraitsF2dExtImputed, scale.=TRUE)
 summary(PCModelF2dExt)
 PCModelF2dExt$rotation
 
-PCPredictF2 <- predict(PCModelF2dExt, newdata = mtDataF2)
-mtDataF2 <- cbind(mtDataF2, PCPredictF2)
+#PCPredictF2 <- predict(PCModelF2dExt, newdata = mtDataF2)
+#mtDataF2 <- cbind(mtDataF2, PCPredictF2)
+PCPredictF2 <- PCModelF2dExt$x
+mtDataF3 <- cbind(mtDataF2, PCPredictF2)
 
-names(mtDataF2)
+names(mtDataF3)
 
-PC1_PIN <- lm(PC1 ~ PIN_combined, data = mtDataF2)
+PC1_PIN <- lm(PC1 ~ PIN_combined, data = mtDataF3)
 summary(PC1_PIN)
 
-PC1_SOC1 <- lm(PC1 ~ SOC1, data = mtDataF2)
+PC1_SOC1 <- lm(PC1 ~ SOC1, data = mtDataF3)
 summary(PC1_SOC1)
 ```
 
