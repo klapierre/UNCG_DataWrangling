@@ -1,0 +1,13 @@
+---
+title: "From MZ Mine to Siruis: How to Tidy Your Data"
+author: "Stephanie Mota"
+date: "2023-04-28"
+output: pdf_document
+---
+
+## Overview
+The data set I am working on is a mass spectrometry analysis of the different compounds found in the plant extracts I am working with. We call this, metabolomics data. I want to know which compound in my extracts is responsible for the antimicrobial activity it shows when tested in an antimicrobial bioassay. But mass spectrometry is not limited to the world biochemistry. Mass spectrometry is a tool used to help identify different compounds in a sample. This sample can range from plant extracts, water samples, soil samples, and more. To figure out what compound is responsible, first I need to sort through which molecules are from the solvent the sample was dissolved in and which molecules are just noise/insignificant/not real.
+\
+\
+There are 2 main parts to how the lab has devised how to filter through the data: There is the metabolomics analysis and then there is the modeling in Sirius. The metabolomics analysis has 4 parts to it: 1) Features, 2) Blank Filter, 3) RSD Filter, and 4) Metabolomics analysis. The modeling in Sirius is what helps generate the figures we need. In this workflow, I will be focusing on the first part which is the bulk of the work and analyzing. If there is time, I will also include the part that generates the figures but that is done using a different program.
+
