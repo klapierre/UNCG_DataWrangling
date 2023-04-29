@@ -4,19 +4,24 @@ author: "Stephanie Mota"
 date: "2023-04-28"
 output: pdf_document
 ---
-```{r Load Packages}
-library(tidyr)
-library(dplyr)
-```
-
-
 
 ## Overview
 The data set I am working on is a mass spectrometry analysis of the different compounds found in the plant extracts I am working with. We call this, metabolomics data. I want to know which compound in my extracts is responsible for the antimicrobial activity it shows when tested in an antimicrobial bioassay. But mass spectrometry is not limited to the world biochemistry. Mass spectrometry is a tool used to help identify different compounds in a sample. This sample can range from plant extracts, water samples, soil samples, and more. To figure out what compound is responsible, first I need to sort through which molecules are from the solvent the sample was dissolved in and which molecules are just noise/insignificant/not real.
 \
 \
 There are 2 main parts to how the lab has devised how to filter through the data: There is the metabolomics analysis and then there is the modeling in Sirius. The metabolomics analysis has 4 parts to it: 1) Features, 2) Blank Filter, 3) RSD Filter, and 4) Metabolomics analysis. The modeling in Sirius is what helps generate the figures we need. In this workflow, I will be focusing on the first part which is the bulk of the work and analyzing. If there is time, I will also include the part that generates the figures but that is done using a different program.
+\
+\
+### Preparations
+Like everything, there are a couple things we need to do first before we can jump right into our coding. First we need to load the packages we are going to be using. Then we need to load the files we will be working with.
 
+```{r Load Packages}
+library(tidyr)
+library(tidyverse)
+library(dplyr)
+```
+
+Here we are loading and merging the positive and negative modes of our mass spectrometry data:
 
 ```{r Loading and Merging The Positive and Negative Modes}
 
@@ -29,6 +34,23 @@ colnames(Tulip_C4Fractions_NEG)<-gsub(".mzML.crop_filtered_NEG.Peak.area","",col
 Tulip_C4Fractions_POSNEG <- bind_rows(Tulip_C4Fractions_POS, Tulip_C4Fractions_NEG)
 
 ```
+\
+Depending on what you are working with, you may wish to omit the merging of the two dataframes. I chose to merge them because all data points are important to look at. Some molecules may appear in the positive mode which do not appear in the negative mode and vice versa. This is simply because of the charge they have when they are getting filtered through the machine. Either way, it takes both positive and negative ions to make up the whole sample which we analyze. So for this set of data, I will be merging the dataframes.
+\
+\
+### Features
+Now that we have our dataframes, let's create our features list. What is a feature? A feature is the m/z value of the molecule combined with its retention time. Retention time is the time the molecule came out of the sample and into the machine. This is what we will use to identify the molecules found in the samples.
 
-
+```{r Create Features List}
+Features <- Tulip_C4Fractions_POSNEG %>% 
+  mutate(row.m.z = round(row.m.z, digits = 4),
+         row.retention.time = round(row.retention.time, digits = 2),
+         Features = paste(row.m.z, row.retention.time, sep = "-")) %>% 
+   relocate(Features, .before = row.ID) %>% 
+  select(-row.m.z, 
+         -row.ID, 
+         -row.retention.time,
+         -X)
+ 
+```
 
