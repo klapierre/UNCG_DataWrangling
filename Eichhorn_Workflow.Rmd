@@ -10,6 +10,7 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(ggplot2)
 library(stringr)
+MyPalette <- c("#ffe570", "#322ea3", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#8507e6", "#CC79A7")
 ```
 
 # Background
@@ -81,27 +82,18 @@ land_cover <- read.csv("landcover_allboxes_percent.csv")
 ## Now things get a little hairy
 ### Here, I am going to have to filter the land_cover data for each park based 
 ### upon the box ID character that corresponds to each park.
-### The first is Peabody Park, "pb"
+
 ```{r}
-filter_pb_cover <- land_cover %>%
+pbp_cover <- land_cover %>%
   filter(str_detect(box,"pb"))
-```
 
-### Next is Price Park, "pp"
-```{r}
-filter_price_cover <- land_cover %>%
+price_cover <- land_cover %>%
   filter(str_detect(box,"pp"))
-```
 
-### Then Gateway Park, "gnc"
-```{r}
-filter_gnc_cover <- land_cover %>%
+gnc_cover <- land_cover %>%
   filter(str_detect(box,"gnc"))
-```
 
-### Finally, Country Park, "cp"
-```{r}
-filter_cntry_cover <- land_cover %>%
+cntry_cover <- land_cover %>%
   filter(str_detect(box,"cp"))
 ```
 
@@ -115,39 +107,88 @@ filter_cntry_cover <- land_cover %>%
 ### join with the filtered land_cover data.
 ### We also want to subset and delete several rows that are not super important
 ### for looking at the rate of success of each nest within each box.
+### Finally, I'm going to seperate the month_day column into seperate columns
+### And I'm going to convert the month acronyms into numerical values,
+### This may be helpful down the road with any statistical analyses. 
 
-
-### First, Peabody Park
 ```{r}
-clean_pbp <- pbp%>%
+pbp_clean <- pbp%>%
   na.omit(nest_success)%>%
-   subset(select=-c(comments,predation,parental_guarding,n_eggs,n_young,n_fledged,nest))
+   subset(select=-c(comments,predation,parental_guarding,n_eggs,n_young,n_fledged,nest))%>%
+  separate(month_day, c('day', 'month'))%>%
+  mutate(month = recode(month,
+                        Jan = 1,
+                        Feb = 2,
+                        Mar = 3,
+                        Apr = 4,
+                        May = 5,
+                        Jun = 6,
+                        Jul = 7,
+                        Aug = 8,
+                        Sep = 9,
+                        Oct = 10,
+                        Nov = 11,
+                        Dec = 12))
 
-```
 
-### Now Price Park
-```{r}
-clean_price <- price%>%
+price_clean <- price%>%
   na.omit(nest_success)%>%
    subset(select=-c(comments,n_eggs,n_young,n_fledged,nest))%>%
-  rename(box=box_id)
+  rename(box=box_id)%>%
+  separate(month_day, c('day', 'month'))%>%
+  mutate(month = recode(month,
+                        Jan = 1,
+                        Feb = 2,
+                        Mar = 3,
+                        Apr = 4,
+                        May = 5,
+                        Jun = 6,
+                        Jul = 7,
+                        Aug = 8,
+                        Sep = 9,
+                        Oct = 10,
+                        Nov = 11,
+                        Dec = 12))
 
-```
-
-### Then Gateway Park
-```{r}
-clean_gnc <- gnc%>%
+gnc_clean <- gnc%>%
   na.omit(nest_success)%>%
-   subset(select=-c(comments,predation,parental_guarding,n_eggs,n_young,n_fledged,nest))
+   subset(select=-c(comments,predation,parental_guarding,n_eggs,n_young,n_fledged,nest))%>%
+  separate(month_day, c('day', 'month'))%>%
+  mutate(month = recode(month,
+                        Jan = 1,
+                        Feb = 2,
+                        Mar = 3,
+                        Apr = 4,
+                        May = 5,
+                        Jun = 6,
+                        Jul = 7,
+                        Aug = 8,
+                        Sep = 9,
+                        Oct = 10,
+                        Nov = 11,
+                        Dec = 12))
 
-```
 
-### Finally, Country Park
-```{r}
-clean_cntry <- cntry%>%
+
+cntry_clean <- cntry%>%
   na.omit(nest_success)%>%
   subset(select=-c(comments,n_eggs,n_young,n_fledged,nest))%>%
-  rename(box=box_id)
+  rename(box=box_id)%>%
+  separate(month_day, c('day', 'month'))%>%
+  mutate(month = recode(month,
+                        Jan = 1,
+                        Feb = 2,
+                        Mar = 3,
+                        Apr = 4,
+                        May = 5,
+                        Jun = 6,
+                        Jul = 7,
+                        Aug = 8,
+                        Sep = 9,
+                        Oct = 10,
+                        Nov = 11,
+                        Dec = 12))
+  
 
 ```
 
@@ -161,24 +202,18 @@ clean_cntry <- cntry%>%
 
 ```{r}
 
-pbp_join <- left_join(clean_pbp,filter_pb_cover, by="box", copy=FALSE)
+pbp_join <- left_join(pbp_clean,pbp_cover, by="box", copy=FALSE)
 
-```
+  
 
-```{r}
+price_join <- left_join(price_clean,price_cover, by="box", copy=FALSE)
+  
 
-price_join <- left_join(clean_price,filter_price_cover, by="box", copy=FALSE)
+gnc_join <- left_join(gnc_clean,gnc_cover, by="box", copy=FALSE)
+  
 
-```
-
-```{r}
-gnc_join <- left_join(clean_gnc,filter_gnc_cover, by="box", copy=FALSE)
-
-```
-
-```{r}
-cntry_join <- left_join(clean_cntry, filter_cntry_cover, by="box", copy=FALSE)
-
+cntry_join <- left_join(cntry_clean,cntry_cover, by="box", copy=FALSE)
+  
 ```
 
 # Playing Around and Plots
@@ -201,8 +236,10 @@ cntry_join <- left_join(clean_cntry, filter_cntry_cover, by="box", copy=FALSE)
 ```{r}
 ggplot(pbp_join, aes(x=nest_success, y=box, fill=as.factor(species))) +
   geom_bar(stat="identity", width=1)+
-  scale_fill_brewer(palette="Dark2")+
-  ggtitle("Nest Success by Species and Location")
+  scale_fill_manual(values=MyPalette)+
+  ggtitle("Nest Success by Species and Location")+
+  labs(x="Nest Success (Additive)", y= "Box ID")+
+  guides(fill=guide_legend("Bird Species"))
 
 ```
 
@@ -217,8 +254,10 @@ ggplot(pbp_join, aes(x=nest_success, y=box, fill=as.factor(species))) +
 ```{r}
 ggplot(price_join, aes(x=nest_success, y=box, fill=as.factor(species))) +
   geom_bar(stat="identity", width=1)+
-  scale_fill_brewer(palette="Dark2")+
-  ggtitle("Nest Success by Species and Location")
+  scale_fill_manual(values=MyPalette)+
+  ggtitle("Nest Success by Species and Location")+
+  labs(x="Nest Success (Additive)", y= "Box ID")+
+  guides(fill=guide_legend("Bird Species"))
 
 ```
 
@@ -231,8 +270,10 @@ ggplot(price_join, aes(x=nest_success, y=box, fill=as.factor(species))) +
 ```{r}
 ggplot(gnc_join, aes(x=nest_success, y=box, fill=as.factor(species))) +
   geom_bar(stat="identity", width=1)+
-  scale_fill_brewer(palette="Dark2")+
-  ggtitle("Nest Success by Species and Location")
+  scale_fill_manual(values=MyPalette)+
+  ggtitle("Nest Success by Species and Location")+
+  labs(x="Nest Success (Additive)", y= "Box ID")+
+  guides(fill=guide_legend("Bird Species"))
 
 ```
 
@@ -246,7 +287,11 @@ ggplot(gnc_join, aes(x=nest_success, y=box, fill=as.factor(species))) +
 ```{r}
 ggplot(cntry_join, aes(x=nest_success, y=box, fill=as.factor(species))) +
   geom_bar(stat="identity", width=1)+
-  scale_fill_brewer(palette="Dark2")+
-  ggtitle("Nest Success by Species and Location")
+  scale_fill_manual(values=MyPalette)+
+  ggtitle("Nest Success by Species and Location")+
+  labs(x="Nest Success (Additive)", y= "Box ID")+
+  guides(fill=guide_legend("Bird Species"))
 
 ```
+
+
