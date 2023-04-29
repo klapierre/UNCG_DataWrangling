@@ -1,0 +1,292 @@
+---
+title: "Effects of manmade wetlands on birdbox success"
+author: "William Eichhorn"
+date: "2023-04-29"
+output: pdf_document
+---
+
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(ggplot2)
+library(stringr)
+MyPalette <- c("#ffe570", "#322ea3", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#8507e6", "#CC79A7")
+```
+
+# Background
+
+During the peak of mating and young rearing, many local bird species, especially bluebirds, seem to depend upon aquatic invertebrate species to feed their young. The PhD student I am working under for this data, Melanie Stadler, is researching the impacts that man made wetlands have on the success of bird fledglings. She is particularly interested in the effects on bluebird species success, however she collects data on a number of other species. The working hypothesis, so far as I understand, is that there should be a positive correlation between spatial proximity to wetlands and the success of fledglings. There are a total of 72 bluebird boxes across 4 parks within the Greensboro area: Peabody Park, Price Park, Gateway Gardens, and Country Park. The nesting and data collection season runs from late March-August. The data collected are the number of eggs, young, and those that are able to fledge.
+
+For my final project in class, I will be working with five .csv files. Four from the field data collected at each park, and one file which contains land cover type percentages for each of the 72 boxes. I have already gone back into these datasets and manually entered a "nest_success" column which assigns a numerical value to whether or not a nest produced fledglings.
+
+
+# Overview of Workflow
+
+```{r}
+
+#read.csv()#Load in .csv file for park and the landcover# %>%
+  #filter()
+  #na.omit()
+  #subset()
+  #left_join(x=,y=
+         # by="Box_ID",all.x=TRUE)
+# The landcover and park datasets all share one similar column, Box ID#.
+# Each park is assigned its own unique Box ID# Prefix: "CP, PP, PB, & GW" 
+# along with a number for each box. I want to join each of the parks with their
+# specific land cover percentages based upon Box ID# %>%
+
+  #DF_Clean = subset(mydata, select = -c()#All columns but "species",
+# "nest_success", "Box_ID", and the landcover percentage categories)) %>%
+
+# There is a lot of extra data within the park datasets which are not useful for
+# my particular interests, so with this cut out some of that extra noise and 
+# allow me to just play with the data I want# %>%
+ 
+# ggplot() %>%
+
+# Although there are statistical analyses I will be doing, 
+# I will not be doing them in this class, so now I just want to include some
+# basic graphs comparing species, nest_success, and landcover type percentages.
+ # ggplot(DF_Clean, aes(x =, y=)) +
+
+# This is going to take some more work shopping, but I would essentially like 
+# to create a few plots for each park which compares nest success for each box
+# relative to its landcover type.
+
+ # geom_point() + 
+ # facet_wrap(~)  
+
+#I assume because there are so many boxes, trying to do one at a time will be
+# incredibly tedious, so a facet wrap would expedite this process
+
+```
+
+#Code
+
+## First, it's time to load in the csv files.
+```{r,read.csv}
+pbp <- read.csv("peabodypark_success.csv")
+
+price <- read.csv("pricepark_success.csv")
+
+gnc <- read.csv("gateway_success.csv")
+
+cntry <- read.csv("countrypark_success.csv")
+
+land_cover <- read.csv("landcover_allboxes_percent.csv")
+
+```
+
+
+
+## Now things get a little hairy
+ Here, I am going to have to filter the land_cover data for each park based 
+ upon the box ID character that corresponds to each park.
+
+```{r}
+pbp_cover <- land_cover %>%
+  filter(str_detect(box,"pb"))
+
+price_cover <- land_cover %>%
+  filter(str_detect(box,"pp"))
+
+gnc_cover <- land_cover %>%
+  filter(str_detect(box,"gnc"))
+
+cntry_cover <- land_cover %>%
+  filter(str_detect(box,"cp"))
+```
+
+
+## Clean up time!
+
+Now that we have filtered the land_cover file for each park, let's also clean up each of the park dataframes as well. In these dataframe, we want to omit any NA's within the nest_success column,
+without omitting them, you will wind up with a LOT of duplicates when we join with the filtered land_cover data. We also want to subset and delete several rows that are not super important for looking at the rate of success of each nest within each box.
+
+Finally, I'm going to seperate the month_day column into seperate columns and I'm going to convert the month acronyms into numerical values. This may be helpful down the road with any statistical analyses. 
+
+```{r}
+pbp_clean <- pbp%>%
+  na.omit(nest_success)%>%
+   subset(select=-c(comments,predation,parental_guarding,n_eggs,n_young,n_fledged,nest))%>%
+  separate(month_day, c('day', 'month'))%>%
+  mutate(month = recode(month,
+                        Jan = 1,
+                        Feb = 2,
+                        Mar = 3,
+                        Apr = 4,
+                        May = 5,
+                        Jun = 6,
+                        Jul = 7,
+                        Aug = 8,
+                        Sep = 9,
+                        Oct = 10,
+                        Nov = 11,
+                        Dec = 12))
+
+
+price_clean <- price%>%
+  na.omit(nest_success)%>%
+   subset(select=-c(comments,n_eggs,n_young,n_fledged,nest))%>%
+  rename(box=box_id)%>%
+  separate(month_day, c('day', 'month'))%>%
+  mutate(month = recode(month,
+                        Jan = 1,
+                        Feb = 2,
+                        Mar = 3,
+                        Apr = 4,
+                        May = 5,
+                        Jun = 6,
+                        Jul = 7,
+                        Aug = 8,
+                        Sep = 9,
+                        Oct = 10,
+                        Nov = 11,
+                        Dec = 12))
+
+gnc_clean <- gnc%>%
+  na.omit(nest_success)%>%
+   subset(select=-c(comments,predation,parental_guarding,n_eggs,n_young,n_fledged,nest))%>%
+  separate(month_day, c('day', 'month'))%>%
+  mutate(month = recode(month,
+                        Jan = 1,
+                        Feb = 2,
+                        Mar = 3,
+                        Apr = 4,
+                        May = 5,
+                        Jun = 6,
+                        Jul = 7,
+                        Aug = 8,
+                        Sep = 9,
+                        Oct = 10,
+                        Nov = 11,
+                        Dec = 12))
+
+
+
+cntry_clean <- cntry%>%
+  na.omit(nest_success)%>%
+  subset(select=-c(comments,n_eggs,n_young,n_fledged,nest))%>%
+  rename(box=box_id)%>%
+  separate(month_day, c('day', 'month'))%>%
+  mutate(month = recode(month,
+                        Jan = 1,
+                        Feb = 2,
+                        Mar = 3,
+                        Apr = 4,
+                        May = 5,
+                        Jun = 6,
+                        Jul = 7,
+                        Aug = 8,
+                        Sep = 9,
+                        Oct = 10,
+                        Nov = 11,
+                        Dec = 12))
+  
+
+```
+
+
+## Come together
+
+ Now, I'm going to join the individual filtered land_cover dataframes with
+ the cleaned up data frames for each park.
+ I'm using a left_join for this information because I want to essentially 
+ pull the information from the land_cover dataframe INTO the park data frame.
+
+```{r}
+
+pbp_join <- left_join(pbp_clean,pbp_cover, by="box", copy=FALSE)
+
+  
+
+price_join <- left_join(price_clean,price_cover, by="box", copy=FALSE)
+  
+
+gnc_join <- left_join(gnc_clean,gnc_cover, by="box", copy=FALSE)
+  
+
+cntry_join <- left_join(cntry_clean,cntry_cover, by="box", copy=FALSE)
+  
+```
+
+# Playing Around and Plots
+
+## Now that the data frame is cleaned up, we can play around with the data!
+
+ To get things started, I'm going to create some basic bar graphs to show
+ case how often a box was successful, and I will also color the bars by species
+ to show which species preferred certain boxes. Because success is a measurement
+ of either 0 or 1, any boxes with multiple successful fledglings throughout multiple
+ years will have those success stacked on-top of each other in a single bar.
+
+
+## Peabody Park
+
+ In Peabody Park, there has only been one year of data collection.
+ But what a successful year it was! While all of the boxes had a success,
+ Only one box, #4, experienced a failure. Some boxes even had multiple
+ successes in one year!
+```{r}
+ggplot(pbp_join, aes(x=nest_success, y=box, fill=as.factor(species))) +
+  geom_bar(stat="identity", width=1)+
+  scale_fill_manual(values=MyPalette)+
+  ggtitle("Nest Success by Species and Location")+
+  labs(x="Nest Success (Additive)", y= "Box ID")+
+  guides(fill=guide_legend("Bird Species"))
+
+```
+
+
+
+## Price Park
+
+ Price Park has had three years of research completed within it. In that
+ time, the success across the board has been up and down, except for box #2!
+ over the past three years, #2 has seen five successes, followed by #10 at four
+ Boxes #16 and #13 have never had a success, and both have failed at least once.
+```{r}
+ggplot(price_join, aes(x=nest_success, y=box, fill=as.factor(species))) +
+  geom_bar(stat="identity", width=1)+
+  scale_fill_manual(values=MyPalette)+
+  ggtitle("Nest Success by Species and Location")+
+  labs(x="Nest Success (Additive)", y= "Box ID")+
+  guides(fill=guide_legend("Bird Species"))
+
+```
+
+## Gateway Gardens
+
+ Similar to Peabody Park, Gateway Gardens has only had one year of research.
+ This park has so far seen a lot of success, but boxes #8 and #6 seem to have
+ some difficulty succeeding. 
+
+```{r}
+ggplot(gnc_join, aes(x=nest_success, y=box, fill=as.factor(species))) +
+  geom_bar(stat="identity", width=1)+
+  scale_fill_manual(values=MyPalette)+
+  ggtitle("Nest Success by Species and Location")+
+  labs(x="Nest Success (Additive)", y= "Box ID")+
+  guides(fill=guide_legend("Bird Species"))
+
+```
+
+## Country Park
+
+ Like Price Park, Country Park has had three years of research done within it.
+ Over that time there has been a HUGE amount of variation in the success of 
+ the boxes. Though a few boxes, such as #31 and #12 stand out as being especially
+ successful. 
+
+```{r}
+ggplot(cntry_join, aes(x=nest_success, y=box, fill=as.factor(species))) +
+  geom_bar(stat="identity", width=1)+
+  scale_fill_manual(values=MyPalette)+
+  ggtitle("Nest Success by Species and Location")+
+  labs(x="Nest Success (Additive)", y= "Box ID")+
+  guides(fill=guide_legend("Bird Species"))
+
+```
+
