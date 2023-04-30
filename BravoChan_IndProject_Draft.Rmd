@@ -18,6 +18,7 @@ The goal is to write a script to analyze the trends within this data set to find
 
 *First step:* Tidying and cleaning the data so only the relevant variables will be at hand.
 ```{r, include=FALSE ,message=FALSE, warning=FALSE,echo=TRUE}
+
 #Load relevant libraries
 library(tidyverse)
 
@@ -99,6 +100,7 @@ for (trait in MT_models) {
 
 *Third Step:* The final step is select the traits to createa principle component analysis to comparing multiple QTL regions to detect relationships among them.
 ```{r, include=FALSE ,message=FALSE, warning=FALSE,echo=TRUE}
+
 #Load relevant libraries
 library(tidyverse,)
 
