@@ -20,7 +20,7 @@ The goal is to write a script to analyze the trends within this data set to find
 ```{r, include=FALSE ,message=FALSE, warning=FALSE,echo=TRUE}
 
 #Load relevant libraries
-library(tidyverse)
+library(tidyverse, mice, Hmisc)
 
 #Read in the data
 mtDataAll <- read.csv("QTLStudyTraitAnalysis_survMarkers.csv")
@@ -62,7 +62,7 @@ names(mtDataF2)
 ```{r, include=FALSE ,message=FALSE, warning=FALSE,echo=TRUE}
 
 #Load relevant library
-library(tidyverse)
+library(tidyverse, mice, Hmisc)
 
 #Decompose GI genotype into additive and dominance components
 mtDataF2Dec <- mtDataF2 %>% #change df name
@@ -102,7 +102,7 @@ for (trait in MT_models) {
 ```{r, include=FALSE ,message=FALSE, warning=FALSE,echo=TRUE}
 
 #Load relevant libraries
-library(tidyverse,)
+library(tidyverse,mice,Hmisc)
 
 # PC Analysis
 PCTraitsF2dExt <- mtDataF2[,c(5,27,31,32,24,41,30,39,40,37)]
