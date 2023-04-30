@@ -142,5 +142,6 @@ ggplot(PCDataF2, aes(x=PC1, y=PC2, color=Sample)) +
   theme_light() +
   theme(legend.position="none")
 ```
-
+**Conclusion**
+The final part of the script calculates linear models of some of the regions being genotyped. It also generates some principal component analysis among QTLs, with outputs of summary tables showing the relationships between traits and genotype. In the last block of code, a summary plot showing the distribution of the trait values in relationship to each other. 
 
