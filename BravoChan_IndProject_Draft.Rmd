@@ -5,6 +5,7 @@ date: "2023-04-12"
 output: pdf_document
 ---
 ```{r setup,warning=FALSE,include=FALSE}
+#Setup the directory to be used for the data analysis
 knitr::opts_knit$set(echo=TRUE, root.dir='~/Desktop/BIO_400X_R/UNCG_DataWrangling_NewOld')
 ```
 
@@ -15,62 +16,64 @@ The data consists of phenotype records of traits from F2 individuals of *A. lyra
 Individual observations were classified according to the number of allele copies, inherited from Mayodan parents, present in the genes of a QTL region. Individuals with **no** MA alleles, were identified with the number 0. It was expected plants with a more perennial-like phenotype, displaying a longer season of vegetative growth, and a short reproductive season with modest flowering. The heterozygous individuals were identified with the number 1 (one parental copy of the MA allele), and an intermediary phenotype was expected with resource allocation displaying displaying a mixed, or inconsistent, pattern. Finally, the individuals that were homozygous MA were identified with the number 2 (two parental copies of the MA allele). The expected phenotype was more annual-like, displaying stagnation of vegetative growth for overwintering, followed by an intense resource allocation for reproductive growth with significantly more bolting, branching, and flowering. 
 The goal is to write a script to analyze the trends within this data set to find if there is any significant correlation between perennial traits and the underlying alleles. For example, a lower number of inflorescences suggesting a more perennial phenotype, and would allow us to examine if the genotype scoring for this, and other, traits would corroborate our hypothesis.
 
-
-```{r setup,warning=FALSE,include=FALSE}
-    knitr::opts_knit$set(root.dir='~/Desktop/BIO_400X_R/UNCG_DataWrangling_Old')
-```
-
-```{r, include=FALSE ,message=FALSE, warning=FALSE}
+*First step:* Tidying and cleaning the data so only the relevant variables will be at hand.
+```{r, include=FALSE ,message=FALSE, warning=FALSE,echo=TRUE}
+#Load relevant libraries
 library(tidyverse)
 
-# Read in the data
+#Read in the data
 mtDataAll <- read.csv("QTLStudyTraitAnalysis_survMarkers.csv")
 
-# Generate calculated fields:
-mtDataAll <- mtDataAll %>%
+#Generate calculated fields
+mtDataAll2 <- mtDataAll %>% 
   mutate(dDiam21 = Diam2 - Diam1,
          dDiam32 = Diam3 - Diam2,
          meanBLvs = rowMeans(select(., 12:14), na.rm = TRUE),
-         meanOrder = rowMeans(select(., c(15, 18, 21)), na.rm = TRUE),
-         meanBrNode = rowMeans(select(., c(16, 19, 22)), na.rm = TRUE),
-         meanFlNode = rowMeans(select(., c(17, 20, 23)), na.rm = TRUE))
+         meanOrder = rowMeans(select(., 15, 18, 21), na.rm = TRUE),
+         meanBrNode = rowMeans(select(., 16, 19, 22), na.rm = TRUE),
+         meanFlNode = rowMeans(select(., 17, 20, 23), na.rm = TRUE)) %>% 
 
-# Check variable names
-colnames(mtDataAll)
+#Convert variables to factors
+  mutate(Pop = as.factor(Pop),
+         Fam = as.factor(Fam),
+         PShootStatus0215 = as.factor(PShootStatus0215),
+         LShootStatus0215 = as.factor(LShootStatus0215))
 
-# Check variable classes
-mtDataAll %>%
+#Create a new dataframe with just the F2 plants
+mtDataF2 <- filter(mtDataAll2, Pop == "F2")
+
+#Calculate the mean of inflorescence branches
+mtDataF2$meanBrNumber <- apply(mtDataF2[, c(17, 20, 23)], 1, mean, na.rm = TRUE) - apply(mtDataF2[, c(16, 19, 22)], 1, mean, na.rm = TRUE)
+
+#Check variable names
+colnames(mtDataF2)
+
+#Check variable classes
+mtDataF2 %>%
   select(Pop, Fam, PShootStatus0215, LShootStatus0215) %>%
   map(class)
 
-# Convert variables to factors
-mtDataAll <- mtDataAll %>%
-  mutate(across(c(Pop, Fam, PShootStatus0215, LShootStatus0215), as.factor))
-
-# Create a new dataframe with just the F2 plants
-mtDataF2 <- mtDataAll %>%
-  filter(Pop == "F2")
-
-# Check variable names
+#Check variable names
 names(mtDataF2)
 ```
 
-```{r, include=FALSE ,message=FALSE, warning=FALSE}
+*Second Step:* Create data frames for specific calculations. One where the effect of a QTL region is decomposed into additive dominance components. Then sort the desired traits within this data frame.
+```{r, include=FALSE ,message=FALSE, warning=FALSE,echo=TRUE}
+
+#Load relevant library
 library(tidyverse)
-# Decompose GI genotype into additive and dominance components
-mtDataF2 <- mtDataF2 %>% #change df name
+
+#Decompose GI genotype into additive and dominance components
+mtDataF2Dec <- mtDataF2 %>% #change df name
   mutate(GIAdd = GI - 1,
          GIDom = 1 - abs(1 - GI))
 
-# Calculate mean number of inflorescence branches
-mtDataF2 <- mtDataF2 %>% mutate(meanBrNumber = meanFlNode - meanBrNode)
-
-# Single-trait regressions on GI genotype
-single_trait_models <- c("Diam3", "dDiam32", "Infl", "Diam2", "Diam1", "dDiam21", 
+#Single-trait regressions on GI genotype
+ST_models <- c("Diam3", "dDiam32", "Infl", "Diam2", "Diam1", "dDiam21", 
                          "meanBLvs", "meanOrder", "LatRating0215", "Rhiz0615", 
                          "meanFlNode", "meanBrNode", "meanBrNumber")
 
-for (trait in single_trait_models) {
+for (trait in ST_models) {
   formula <- formula(paste(trait, "~ GI"))
   model <- lm(formula, data = mtDataF2)
   print(summary(model))
@@ -81,38 +84,42 @@ for (trait in single_trait_models) {
 }
 
 # Regressions on GI additive and dominance components
-multi_trait_models <- c("Diam1", "Diam2")
+MT_models <- c("Diam1", "Diam2")
 
-for (trait in multi_trait_models) {
+for (trait in MT_models) {
   formula <- formula(paste(trait, "~ GIAdd + GIDom"))
-  model <- lm(formula, data = mtDataF2)
+  model <- lm(formula, data = mtDataF2Dec)
   print(summary(model))
-  ggplot(mtDataF2, aes(x = GIAdd, y = !!sym(trait), color = GIDom)) +
+  ggplot(mtDataF2Dec, aes(x = GIAdd, y = !!sym(trait), color = GIDom)) +
     geom_point() +
     geom_smooth(method = "lm", se = FALSE) +
     labs(x = "GIAdd", y = trait, color = "GIDom")
 }
+```
+
+*Third Step:* The final step is select the traits to createa principle component analysis to comparing multiple QTL regions to detect relationships among them.
+```{r, include=FALSE ,message=FALSE, warning=FALSE,echo=TRUE}
+#Load relevant libraries
+library(tidyverse,)
 
 # PC Analysis
-
 PCTraitsF2dExt <- mtDataF2[,c(5,27,31,32,24,41,30,39,40,37)]
 PCTraitsF2dExtTrim <- na.omit(PCTraitsF2dExt)
-PCTraitsF2dExtImputed <- impute(PCTraitsF2dExt) # created a new data frame, using the impute function to force PCA despite empty rows within data frame
 
-length(PCTraitsF2dExtImputed[,1])
+#created a new data frame, using the impute function to force PCA despite empty rows within data frame
+PCTraitsF2dExtImputed <- impute(PCTraitsF2dExt) 
 
-names(PCTraitsF2dExtImputed)
 #replace all is.na=0
+names(PCTraitsF2dExtImputed) 
 
 PCModelF2dExt <- prcomp(PCTraitsF2dExtImputed, scale.=TRUE)
 summary(PCModelF2dExt)
 PCModelF2dExt$rotation
 
-#PCPredictF2 <- predict(PCModelF2dExt, newdata = mtDataF2)
-#mtDataF2 <- cbind(mtDataF2, PCPredictF2)
 PCPredictF2 <- PCModelF2dExt$x
 mtDataF3 <- cbind(mtDataF2, PCPredictF2)
 
+#Checking the column names within the data frame for proper recall
 names(mtDataF3)
 
 PC1_PIN <- lm(PC1 ~ PIN_combined, data = mtDataF3)
@@ -120,14 +127,18 @@ summary(PC1_PIN)
 
 PC1_SOC1 <- lm(PC1 ~ SOC1, data = mtDataF3)
 summary(PC1_SOC1)
+
+# Create a data frame of the principal components
+PCDataF2 <- data.frame(PCModelF2dExt$x[,1:2])
+
+# Add the sample names to the data frame
+PCDataF2$Sample <- rownames(PCDataF2)
+
+# Plot the principal components
+ggplot(PCDataF2, aes(x=PC1, y=PC2, color=Sample)) +
+  geom_point(size=1) +
+  theme_light() +
+  theme(legend.position="none")
 ```
 
-## Including Plots
 
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
