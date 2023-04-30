@@ -8,7 +8,7 @@ output: pdf_document
 #Setup the directory to be used for the data analysis
 knitr::opts_knit$set(echo=TRUE, root.dir='~/Desktop/BIO_400X_R/UNCG_DataWrangling_NewOld')
 ```
-
+   
 **Proposed work-flow for independent project:**
 
 This data set is used on the ongoing research project in Dr. Remington's lab. In our lab we study plants' evolutionary life history and the molecular basis of phenotype divergence within populations. The system studied consists of two sub-populations of the rock cress *Arabdopsis lyrata*. One group from Spiterstulen (SP), Norway, and the other from Mayodan (MA), North Carolina. These populations were chosen because they occupy environments on opposite ends of the spectrum, and display different patterns of resource allocation for reproductive and vegetative growth. 
