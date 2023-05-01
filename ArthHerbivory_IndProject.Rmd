@@ -1,0 +1,216 @@
+---
+title: "Arthropod Hebivory in the Longleaf pine savanna"
+author: "Will Mann"
+date: "2023-05-01"
+output: pdf_document
+---
+###Arthropod Herbivory under Nutrient Deposition and Drought
+
+```{r, setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_knit$set("D:/School Stuff/Graduate Stuff/Graduate Classes/Spring 2023/UNCG_DataWrangling" = '/tmp')
+
+Herb20<-read.csv("Entered Sandhills Leaf Damage Data_2020.csv", na.strings = "")
+
+Herb20Stretch<- Herb20 %>%
+  select(-Notes)%>%
+  drop_na(Plot) %>%
+  group_by(Block, Plot, Treatment, Replicate, Species) %>%
+  gather(HerbType, HerbPerc,6:11)%>%
+  ungroup() %>%
+  drop_na(HerbPerc) %>%
+  select(Block, Plot, Treatment, Replicate, Species, HerbType, HerbPerc) %>%
+  mutate(Year="20") %>%
+  filter(Species!="Chrysopsis_mariana")%>%
+  filter(Species!="Lespedeza_hirta") %>%
+  filter(HerbType==c("Chew","Mine.Suck"))
+
+Herb20Div<- Herb20 %>%
+  select(-Notes)%>%
+  drop_na(Plot) %>%
+  group_by(Block, Plot, Treatment, Replicate, Species) %>%
+  gather(HerbType, HerbPerc,6:11)%>%
+  ungroup() %>%
+  drop_na(HerbPerc) %>%
+  select(Block, Plot, Treatment, Replicate, Species, HerbType, HerbPerc) %>%
+  mutate(Year=paste("20")) %>%
+  mutate(Treatment_Year=paste(Treatment, "20", sep="_")) %>%
+  group_by(Treatment_Year) %>%
+  mutate(Totalherb=sum(HerbPerc)) %>%
+  ungroup()
+ 
+
+HerbCon20<- Herb20Stretch %>%
+  filter(Treatment==c("C", "NPK")) %>%
+  mutate(Year="20") %>%
+  mutate(Treatment_Year=paste(Treatment, Year, sep="_"))
+
+
+
+Master22<-master22
+
+
+TP1<-Master22%>%
+  filter(Timepoint=="1") %>%
+  mutate(Year="TP1")
+
+TP2<-Master22 %>%
+  filter(Timepoint=="2") %>%
+  mutate(Year="TP2")
+
+
+
+
+
+
+Herb21<-read.csv("Entered Sandhills Leaf Damage Data_2021.csv", na.strings = "")
+
+Herb21Stretch<- Herb21 %>%
+  select(-Notes)%>%
+  drop_na(Plot) %>%
+  group_by(Block, Plot, Treatment, Rep, Species) %>%
+  gather(HerbType, HerbPerc,6:11)%>%
+  ungroup() %>%
+  drop_na(HerbPerc) %>%
+  select(-X) %>%
+  mutate(Year="21") %>%
+  filter(HerbType==c("Chew","Mine.Suck"))
+
+HerbCon21<- Herb21Stretch %>%
+  filter(Treatment==c("C", "NPK")) %>%
+  mutate(Year="21") %>%
+  mutate(Treatment_Year=paste(Treatment, Year, sep="_"))
+
+
+TP1Herb22<-read.csv("Mann_Leaf_Damage_Sandhill_Gamelands_2022.csv", na.strings = "")
+
+TP1Herb22Stretch<- TP1Herb22 %>%
+  select(-Notes, -Date, -Damage.Assesser.s., -Scribe)%>%
+  drop_na(Plot) %>%
+  group_by(Block, Plot, Treatment, Replicate, Species) %>%
+  gather(HerbType, HerbPerc,6:11)%>%
+  ungroup() %>%
+  drop_na(HerbPerc) %>%
+  mutate(Year="TP1") %>%
+  filter(HerbType==c("Chew","Mine.Suck"))
+
+TP1HerbCon22<- TP1Herb22Stretch %>%
+  filter(Treatment==c("C", "NPK")) %>%
+  mutate(Year="TP1") %>%
+  mutate(Treatment_Year=paste(Treatment, Year, sep="_"))
+
+
+HCon20_21<-full_join(HerbCon20, HerbCon21)
+HconComp<-full_join(HCon20_21, TP1HerbCon22) %>%
+  filter(HerbType==c("Chew","Mine.Suck"))
+
+HComp2020_21<- full_join(Herb20Stretch, Herb21Stretch)
+
+####Hcompall####
+
+HCompall<-full_join(HComp2020_21, TP1Herb22Stretch) %>%
+  drop_na(HerbPerc) %>%
+  filter(HerbType==c("Chew","Mine.Suck")) %>%
+  group_by(Block, Plot, Treatment, Species, HerbType, Year) %>%
+  summarise(avgherb=mean(HerbPerc)) %>%
+  ungroup() %>%
+  filter(Species!="Chrysopsis_mariana")%>%
+  filter(Species!="Lespedeza_hirta") %>%
+  filter(Species!="Liatris_cokeri")%>%
+  filter(Species!="Dichanthelium_commutatum") %>%
+  mutate(Treatment_Year=paste(Treatment, Year, sep="_"))
+
+
+HCom2<-full_join(HComp2020_21, TP1Herb22Stretch) %>%
+  drop_na(HerbPerc) %>%
+  group_by(Block, Plot, Treatment, Species, HerbType, Year)
+  summarise(avgherb=mean(HerbPerc)) %>%
+  ungroup() %>%
+  filter(Species!="Chrysopsis_mariana")%>%
+  filter(Species!="Lespedeza_hirta") %>%
+  filter(Species!="Liatris_cokeri")%>%
+  filter(Species!="Dichanthelium_commutatum") %>%
+  mutate(Treatment_Year=paste(Treatment, Year, sep="_"))
+
+
+HerbDam<-HCompall %>%
+  summarise(Plot, Species, Treatment_Year, HerbType, avgherb, Year, Treatment) %>%
+  group_by(Plot, Species, Treatment_Year) %>%
+  mutate(Damage= sum(avgherb))%>%
+  ungroup() %>%
+  mutate(totaldam=Damage) %>%
+  select(Plot, Species, Treatment_Year, avgherb, totaldam, Year, Treatment, HerbType)
+```
+
+```{r bind, message=FALSE, warning=FALSE}
+#Bind N and P together
+Soil21<-rbind(N21, P21)
+Samplesoil21<- Soil21 %>%
+  filter(str_detect(sample, "^U")) %>%
+  group_by(sample) %>%
+  summarise(max = max(concentration, na.rm=TRUE)) %>%
+  ungroup()
+```
+
+```{r bind, treatment and sample, warning=FALSE}
+#Bind N+P to treatment
+SSS<-Soil21 %>%
+  select(concentration, units, test, Sample, sample) %>%
+  filter(na.rm=TRUE)%>%
+  filter(str_detect(sample, "^U"))
+
+big21<-left_join(SSS,Samplesoil21)
+
+big21[c('watershed','transect', 'plot', 'misc')]<-str_split_fixed(big21$Sample, '-', 4)
+T21<-big21%>%
+  select(max, concentration, sample, units, test, watershed)
+
+
+STSoil21<-full_join(transect21, T21, by=c("watershed"), na.rm)
+ 
+```
+
+```{r treatment plot, message=FALSE, warning=FALSE}
+treat<-unique(STSoil21$test)
+
+
+uniquename <- STSoil21 %>% mutate(test = ifelse(test %in% c("HCl PO4_1","KCl Ammonia 10","KCL NO3_NO2 2"), c("Phosphorous","Ammonia","Nitrate"), test))
+
+
+
+#Boxplot of concentration by treatment, colored by treatment and data
+ggplot(uniquename, aes(x = test, y= as.numeric(concentration), fill = as.factor(test))) +
+  geom_boxplot() +
+  facet_wrap(~treatment, scales = "free") +
+  scale_fill_manual(values = c("purple","red", "yellow")) +
+  xlab("Nutrient") + ylab("Concentration") +
+  labs(fill = "Legend")
+
+```
+
+
+```{r cv}
+cv <- function(x) 100*( sd(x, na.rm = TRUE)/mean(x, na.rm = TRUE))
+
+cvframe <- uniquename %>%
+  group_by(treatment, test) %>%
+  summarize(cv = cv(as.numeric(concentration))) %>%
+  ungroup()
+
+ggplot(cvframe, aes(x=test, y= as.numeric(cv), fill = as.factor(test))) +
+  geom_bar(stat = "identity") +
+  facet_wrap(~treatment, scales = "free") +
+  scale_fill_manual(values = c("pink","orange", "green4")) +
+  xlab("Nutrient") + ylab("CV of Concentration") +
+  labs(fill = "Legend")
+
+```
+
+
+### Conclusions
+
+ABG *increases forage production*, it comes ***at the cost of habitat quality***. PBG is much more localized, while still instigating growth from vegetation. This **hybrid practice allows for a mixing of values, both of conservation and business practicality**. It has been described as a *"shifting mosaic"* of vegetation, supporting environmental heterogeneity and stability.
+
+Under these considerations, with provided data, it can be said that PBG leads to less abundantly available nutrients with a lower degree of variability. To me, this seems to be taking the landscape simultaneously through multiple succession timelines all at once. Lower nutrient availability allows for slower-growing species to compete with fast growing gasses and forbs, who will likely take over the ABG plots, due to higher nutrient availability.
+
+
