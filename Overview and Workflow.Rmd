@@ -1,0 +1,100 @@
+---
+title: "Independent Project"
+author: "Lowie Vandeplancke"
+date: "2023-05-01"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+```
+
+## Overview
+*Echinochloa crus-galli*, more connonly known as cockspur or barnyard grass, is a destructive weed originating from Asia. It removes significant amounts of available soil nitrogen (up to 80%) and is is known to reduce crop yields and host several diseases. This  weed is adapted to nearly every environment, ranging from wet tropical areas to arid grasslands. Individual plants can produce up to 40,000 seeds per year. This species is considered invasive in the US. A motive for this experiment could be to control the species' growth/spread in North America where it significantly reduces crop yield.     
+I am using a dataset already built into R(CO2) since I do not have a dataset of my own. I will look at the effect of overnight temperature on grass plant carbon dioxide uptake in *Echinochloa crus-galli*. The experiment was performed in two locations, Quebec and Mississippi and each location measured the uptake of six plants. The ambient air carbon dioxide concentration (mL/L) and carbon dioxide uptake rates (\textmu mol/m^2^sec) of the grass was measured. The chilled plants were chilled overnight before the experiment occurred. I am unable to find more data on their methodology and their definition of chilling (if they used the same chilling temperature for both locations or same reduction in temperature relative to the location the data was collected).   
+
+Hypothesis: Overnight chilling on *Echinochloa crus-galli* will have a negative effect on the plant's carbon dioxide uptake. 
+
+
+## Workflow
+* create a graph comparing uptake between 'chilled' and 'nonchilled' treatments
+  + run statistical test to determine any significance
+* create a graph comparing uptake between 'Quebec' and 'Mississippi' treatments
+  + test for any significance
+
+## Analysis
+```{r, setup2, include=FALSE}
+data(CO2)
+#rename items in treatment column
+CO2 <- CO2 %>% 
+  mutate(Treatment = str_replace(Treatment, "nonchilled", "non-chilled"))
+
+#setting up box plot 
+CO2graph <- ggplot(CO2, aes(x = Treatment, y = uptake, fill = Treatment)) + 
+  geom_boxplot() + 
+  scale_fill_manual(values = c('#2b8cbe', '#f03b20')) +
+  facet_wrap(~ Type) +
+  labs(title = expression(paste("CO"[2], " ", "Uptake of Chilled and non-Chilled Plants by Location")), x = "Overnight Treatment", y = expression( paste("CO"[2], " ", "Uptake (\u03bcmol/", m^2, "sec)"))) 
+
+#tidy data for line graph
+CO22 <- CO2 %>%
+  mutate("Sample" = rep(c(1:7), times=12)) %>%
+  mutate("Pl_Trtment" = paste(Plant, Treatment, sep = " ")) %>%
+  mutate("Pl_Loc" = paste(substring(Plant, 1, 1),
+                            substring(Plant, 3),
+                            sep = "")) %>%
+  mutate("Pl" = substring(Plant, 3))
+
+#setting up line graph
+line_graph <- ggplot(CO22, aes(conc, uptake, group = Plant, color = Treatment)) +
+  geom_line() +
+  scale_color_manual(values = c('#2b8cbe', '#f03b20')) +
+  labs(title = expression(paste("CO"[2], " ", "Uptake by Plant per Location Chilled vs. Non-chilled")), x = expression(paste("Ambient", " ", "CO"[2], " ", "Concentration (mL/L)")), y = expression( paste("Uptake Rate (\u03bcmol/", m^2, "sec)"))) +
+  theme(legend.position = "top") +
+  geom_point(aes(group = seq_along(conc)), 
+             size=2) +
+  facet_wrap(~ Pl_Loc)+
+  facet_grid(Type ~ Pl, margins=FALSE)
+```
+
+```{r, boxplot, echo=FALSE}
+CO2graph 
+```
+A 2 sample t-test with a 95% confidence interval was performed between chilled and non-chilled plants for each location.
+
+```{r, Quebecttest, echo=FALSE, results= 'asis'}
+#filter data for Quebec and perform t-test to determine p-value
+QuebecCO2 <- CO2 %>% 
+  filter(Type == "Quebec")
+ttQ <- t.test(QuebecCO2$uptake ~ QuebecCO2$Treatment)
+cat(paste("The p-value between chilled and non-chilled plants in Quebec =", round(ttQ$p.value, 3)))
+```
+
+
+```{r, Mississippittest, echo=FALSE, results= 'asis'}
+#filter data for Mississippi and perform t-test to determine p-value
+MississippiCO2 <- CO2 %>% 
+  filter(Type == "Mississippi")
+ttM <- t.test(MississippiCO2$uptake ~ MississippiCO2$Treatment)
+cat(paste("And the p-value between chilled and non-chilled plants in Mississippi =", round(ttM$p.value, 8)))
+```
+      
+A significant change in carbon dioxide uptake between chilled and non-chilled plants in Mississippi was observed, while no significant change was observed in the Quebec species.     
+Given the large difference of chilling effects between these two locations as determined by the p-values, I wanted to examine the data more closely.        
+
+Next, another 2-sample t-test comparing carbon dioxide uptake rates between the two locations yielded:
+```{r, locationttest, echo=FALSE, results= 'asis'}
+#t-test between locations
+ttl <- t.test(CO2$uptake ~ CO2$Type)
+cat(paste(round(ttl$p.value, 11)))
+```
+. This indicates that there is a significant difference in carbon dioxide uptake rates of *Echinochloa crus-galli* between Quebec and Mississippi.
+
+```{r, linegraph, echo=FALSE}
+line_graph
+```
+Here you can see each of the 6 plants studied, comparing the carbon dioxide uptake across increasing ambient carbon dioxide concentrations. You can clearly see the difference between chilled and non-chilled uptake rates per plant and there is a much larger difference in the Mississippi plants. The difference in carbon dioxide uptake rates between the regions could be explained by the ambient air temperature in the region affecting the rate of transpiration. 
+
+## Conclusion
+Overnight chilling had a negative effect on *Echinochloa crus-galli* carbon dioxide uptake in Mississippi but had negligible effects in Quebec
