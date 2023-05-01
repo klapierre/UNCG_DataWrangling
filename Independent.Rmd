@@ -1,0 +1,294 @@
+---
+title: 'Spatial Subsidy Transfers: Relationship between Bat Activity and Aquatic Insect
+  Emergence'
+author: "Mason Ibrahim"
+date: "2023-04-20"
+output: html_document
+---
+
+```{r, setup, message = FALSE, warning = FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+theme_set(theme_bw())
+
+```
+
+\
+\
+\
+
+## Background
+\
+\
+In the world of ecology, spatial subsidies play a vital role in the transfer of nutrients, energy, and organisms between ecosystems. Spatial subsidies occur when resources, such as nutrients or organisms, move from one ecosystem to another. These movements can have a significant impact on the receiving ecosystem’s biodiversity and productivity. Spatial subsidies can occur through various means, such as water, wind, and animal movement.
+\
+With humans continuously changing the landscape, it is important to analyze how these changes can affect the spatial subsidy transfers that occur. This study aims to find if constructing man-made habitats has any effect on these subsidy transfers. Using the two constructed wetlands on campus, The experiment was set up to see if there was a larger availability of emerging aquatic insects and if bats were more actively feeding in areas that had a wetland and stream habitat versus those that only had a stream habitat.
+\
+To collect the aquatic insect data, emergence traps were set up in both the wetlands and stream for 3-6 days once every month. The emerging insects would fly up into the trap and get stuck in a bottle filled with ethanol, which would be collected at the end of the trapping period. Each site was also equipped with bat detectors that continuously gathered bat data with audio and camera traps. To compare the data, a figure that compares the bat abundance to the mass of emerging insects from the wetlands and streams should be created.
+
+\
+\
+\
+
+## Formating Aquatic Insect Emergence Data
+\
+\
+Lets start by calling in our data.
+\
+
+```{r Read Data}
+df_raw_emergence <- read_csv("data_emergence copy.csv")
+```
+\
+The aquatic insect emergence data contains a lot of extra columns, so we should remove any unnecessary data.
+\
+```{r Tidy Extra Columns}
+df_month_by_trap <- df_raw_emergence %>%
+  select(-date_processed,
+         -who_processed,
+         -note,
+         -correction) #remove extra columns
+```
+\
+Next, we need to tidy up the date and time columns, we can do this by combining the date and time data, and then creating a single column with just the time interval passed between setting up the trap and collecting it.
+\
+```{r Tidy Time}
+df_month_by_trap <-  df_month_by_trap %>%  
+  mutate(dt_set = paste(date_set, time_set), # combine date and time text
+         dt_col = paste(date_collected, time_collected),
+         dt_set = as.POSIXct(dt_set,
+                             format = "%m/%d/%Y %H:%M",
+                             tz = Sys.timezone()), # convert <chr> to <date>
+         dt_col = as.POSIXct(dt_col,
+                             format = "%m/%d/%Y %H:%M",
+                             tz = Sys.timezone()),
+         interval = as.numeric(dt_col - dt_set)) # time interval
+```
+\        
+Now let's create a column with the mass of insects found in each trap over the interval of time the traps were out. Because we want to look at these trends per month, let's format our dates to let us do so. 
+Each trap was set up in an individual 'microhabitat'. To make understanding this data easier, let's tidy up the microhabitat into trap ids instead.
+Let us also tidy up our time data a little more to help us out later. We can use julian date to help set up our time to start at January 1st.
+\
+```{r Tidy Interval}
+df_month_by_trap <- df_month_by_trap %>%
+           mutate(numeric_month = as.numeric(format(dt_set, "%m")), # numeric month
+         date = as.Date(date_collected,
+                        format = "%m/%d/%Y"), 
+         year = as.numeric(format(dt_set, "%Y")), # numeric month
+         flux_abund = abundance / interval, # flux per unit time (abundance / day or wet_weight / day)
+         flux_mass = wet_weight / interval,
+         trap_id = case_when(microhabitat %in% c("for_side", "open", "riffle") ~ 1, # trap id = 1 if microhabitat is either for_side, open or riffle
+                             microhabitat %in% c("road_side", "closed", "pool") ~ 2)  # trap id = 2 if microhabitat is either road_side, closed or pool
+  ) %>% 
+  filter(taxon != "other") %>% # remove "other" taxon
+  group_by(year,
+           date,
+           numeric_month,
+           site,
+           habitat,
+           trap_id) %>% # grouping by habitat, month  
+  summarize(flux_abud = sum(flux_abund),
+            flux_mass = sum(flux_mass),
+            n_taxa = n_distinct(taxon),
+            n_trap = n_distinct(trap_id)) %>% 
+  ungroup() %>%  # ungroup dataframe
+  mutate(first_date = as.Date(paste0(year, "/1/1"), format = "%Y/%m/%d"),
+         julian = julian(date) - julian(first_date) + 1)
+```
+\
+We were able to group by trap, now let's use this formatting to help us group by habitat. Let us also go ahead and find the average mass across all traps for these habitats.
+\
+```{r Tidy Habitat}
+df_month_by_habitat <- df_month_by_trap %>% 
+  group_by(year,
+           date,
+           numeric_month,
+           habitat) %>% 
+  summarize(t_flux_mass = mean(flux_mass),# average across traps
+            n_trap = sum(n_trap)) %>% 
+  mutate(unit_mass = "mg/(day trap") %>% 
+  arrange(year,
+          numeric_month) %>% 
+  ungroup() %>% 
+  mutate(first_date = as.Date(paste0(year, "/1/1"), format = "%Y/%m/%d"),
+         julian = julian(date) - julian(first_date) + 1)
+```
+\
+Now we have the data formatted in a way that we can see the mass of insects emerged each month in either types of habitats. But we have 2 separate sites, one in a open site, and the other in a closed site, what if these behave differently? We should add in the mean mass of emerged insects per site in addition to our habitat to see if this is the case.
+\
+**There are actually 3 sites, but in order to compare this data to the bat data, we are going to manipulate it so that the third site actually becomes the stream for site 2 because the third site only contains a stream**
+\
+```{r Tidy Site}
+## data by habitat x site x month
+df_month_by_sh <- df_month_by_trap %>% 
+  group_by(date, site, habitat) %>% 
+  summarize(t_flux_mass = mean(flux_mass),
+            julian = unique(julian)) %>% 
+  ungroup()
+
+## combine
+df_wet_str <- df_month_by_sh %>% 
+  filter(site != "st3") %>% # no wetland
+  group_by(site, date) %>% 
+  summarize(mean_flux_mass = mean(t_flux_mass)) %>% 
+  ungroup() %>% 
+  mutate(habitat = "wetland_stream")
+
+df_str <- df_month_by_sh %>% 
+  filter(habitat == "stream",
+         site != "st2") %>% 
+  mutate(site = ifelse(site == "st3",
+                       yes = "st2",
+                       no = site)) %>% 
+  rename(mean_flux_mass = t_flux_mass) %>% 
+  dplyr::select(-julian)
+
+df_emerge <- bind_rows(df_wet_str, df_str)
+```
+\
+Now our data contains the mean mass of emerged insects for each site and habitat for each month.
+\
+\
+\
+
+## Formatting Bat Data
+\
+\
+The bat data is collected continuously between dusk and dawn. The people who collected this data also used a different naming system as us, so we should change the names to match our site ids.
+\
+```{r Tidy Col Names}
+df_bat <- read_csv(here::here("data_bat copy.csv")) %>% 
+  rename_with(.fn = str_to_lower, .cols = everything()) %>% 
+  rename(species_id = 'auto id*',
+         site_id = site) %>% 
+  mutate(site = case_when(site_id == "RECCON" ~ "st2",
+                          site_id == "RECWET" ~ "st2",
+                          site_id == "WOODCON" ~ "st1",
+                          site_id == "WOODWET" ~ "st1"),
+         habitat = case_when(site_id == "RECCON" ~ "stream",
+                             site_id == "RECWET" ~ "wetland_stream",
+                             site_id == "WOODCON" ~ "stream",
+                             site_id == "WOODWET" ~ "wetland_stream")) %>% 
+  drop_na(species_id)
+```
+\
+In addition to the names, we also need to put the date and time as the same format as we did for the emerging insect data.
+\
+```{r Tidy Bat Time}
+  df_bat <- df_bat %>% 
+  mutate(year = format(as.Date(date, format = "%m/%d/%Y"), "%Y"),
+         date = as.Date(date, format = "%m/%d/%Y"),
+         first_date = as.Date(paste0(year, "/1/1"), format = "%Y/%m/%d"),
+         julian = julian(date) - julian(first_date) + 1)
+```
+\
+Some of the bat data was collected before we started setting out traps. To remove extra data, we can select only data that was collected in 2021, when our first year of sampling happened. We can also add a month column, to make it easier to compare the continuous bat data to the data that we collected from the emergence traps only once a month.
+\
+```{r Tidy Year Collected}
+df_bat <- df_bat %>% 
+  select(-time) %>%
+  filter(year == 2021) %>% 
+  group_by(site,
+           habitat,
+           date) %>%
+  summarise(n = n()) %>% 
+  ungroup() %>% 
+  right_join(expand(.,
+                    date = seq(as.Date("2021-01-01"),
+                               as.Date("2021-12-31"),
+                               by = 1),
+                    site = unique(site),
+                    habitat = unique(habitat)),
+             by = c("date", "site", "habitat")) %>%
+  arrange(date) %>%
+  mutate(n = replace_na(n, 0),
+         month = months(date))
+```
+\
+Our bat data is very variable. Using an average wouldn't represent the data very well, so let's use a median instead.
+\
+```{r Tidy Bat Median}
+#manipulate with median
+df_bat <- df_bat %>% 
+  group_by(month, site, habitat) %>% 
+  summarise(median_n = median(n)) %>% 
+  ungroup()
+```
+\
+Now we have the median amount of bat activity for each site, habitat, and month, and we are ready to combine the emergence data with our bat activity data.
+\
+\
+\
+
+## Combining Bat and Insect Data
+\
+\
+There are still some minor differences in the two data sets that we need to fix before we can merge. The month in the insect data is numeric while the bat data is by name, let's make them all by name. Now all the columns are the same format and we can continue with merging.
+\
+```{r Merge Bat and Insect}
+#Merge data frames
+df_bat_month <- df_bat %>% 
+  group_by(month, site, habitat) %>% 
+  ungroup()
+
+df_emerge <- df_emerge %>% 
+  mutate(month_numeric = format(date, "%m") %>% 
+           as.numeric(),
+         month = month.name[month_numeric]) %>% 
+  dplyr::select(-month_numeric)
+
+df_merge <- dplyr::left_join(df_bat_month,
+                             df_emerge,
+                             by = c("month", "site", "habitat")) 
+
+```
+\
+Yay! Our two data sets are finally together! Now we can finally compare the two using a line graph!
+\
+\
+\
+
+## Plotting Relationship
+\
+\
+For our plot, we want to represent the bat activity next to the emerging insect activity in both habitats and sites to see if there is any correlation between the two. We will use faceted line graphs to show this.
+Our bat data contains some high values. To help us with visualization, we can log transform our axis. 
+We will also color the lines by habitat to help visualize these differences better. 
+With some changes to color, some smoothing of lines, and adding our titles, our graph is finally completed!
+\
+```{r Plot}
+#Plot correlation
+lab1 <- c(`Stream` = "Stream",
+          `Wetland & Stream` = "Wetland & Stream",
+          `st1` = "Closed",
+          `st2` = "Open")
+
+figure_merge <- df_merge %>% 
+  mutate(habitat = case_when(habitat == "stream" ~ "Stream",
+                             habitat == "wetland_stream" ~ "Wetland & Stream")) %>% 
+  ggplot(aes(x= mean_flux_mass + 1, y= median_n + 1,
+           color = habitat,
+           fill = habitat)) +
+  geom_point()+
+  geom_smooth(method = "lm")+
+  facet_grid(site ~ habitat, labeller = labeller(habitat = lab1,
+                                                 site = lab1)) +
+  scale_x_continuous(trans = "log10")+
+  scale_y_continuous(trans = "log10")+
+  MetBrewer::scale_color_met_d("Peru1") +
+  MetBrewer::scale_fill_met_d("Peru1") +
+  labs(y = "Median Bat Activity (count/day)", x = "Mean Flux Mass ("~ mg/m^2 ~ ")", title = "Correlation of Bat and Insect Data", size = 20,
+       color = "Habitat",
+       fill = "Habitat") +
+  theme(plot.title = element_text(hjust = 0.5),
+    axis.text.x.bottom = element_text(angle = 0),
+        strip.background = element_blank(),
+        panel.grid = element_blank(),
+        panel.background = element_rect(fill = (0.9),
+                                        colour = "black"))
+figure_merge
+```
+\
+Our graph is so interesting! It looks like there might be a slight positive relationship between bat activity and insect emergence. But this relationship seems more pronounced in the open site....hmm I wonder why that is?
+Well, one reason might be that the bats have less obstacles in their way while they are foraging for food, so they may have a preference for insects coming out of the more open wetland, where there are less trees.
+But our two habitats look quite similar to each other. Maybe with a couple more years of data, a difference can be found, but only time will tell!
