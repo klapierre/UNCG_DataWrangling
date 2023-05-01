@@ -1,5 +1,6 @@
 ---
 title: "Independent Project"
+subtitle: "Effect of Chilling on Carbon Dioxide Uptake in *Echinochloa crus-galli*"
 author: "Lowie Vandeplancke"
 date: "2023-05-01"
 output: pdf_document
@@ -11,8 +12,8 @@ library(tidyverse)
 ```
 
 ## Overview
-*Echinochloa crus-galli*, more connonly known as cockspur or barnyard grass, is a destructive weed originating from Asia. It removes significant amounts of available soil nitrogen (up to 80%) and is is known to reduce crop yields and host several diseases. This  weed is adapted to nearly every environment, ranging from wet tropical areas to arid grasslands. Individual plants can produce up to 40,000 seeds per year. This species is considered invasive in the US. A motive for this experiment could be to control the species' growth/spread in North America where it significantly reduces crop yield.     
-I am using a dataset already built into R(CO2) since I do not have a dataset of my own. I will look at the effect of overnight temperature on grass plant carbon dioxide uptake in *Echinochloa crus-galli*. The experiment was performed in two locations, Quebec and Mississippi and each location measured the uptake of six plants. The ambient air carbon dioxide concentration (mL/L) and carbon dioxide uptake rates (\textmu mol/m^2^sec) of the grass was measured. The chilled plants were chilled overnight before the experiment occurred. I am unable to find more data on their methodology and their definition of chilling (if they used the same chilling temperature for both locations or same reduction in temperature relative to the location the data was collected).   
+*Echinochloa crus-galli*, more commonly known as cockspur or barnyard grass, is a destructive weed originating from Asia. It removes significant amounts of available soil nitrogen (up to 80%) and is is known to reduce crop yields and host several diseases. This  weed is adapted to nearly every environment, ranging from wet tropical areas to arid grasslands. Individual plants can produce up to 40,000 seeds per year. This species is considered invasive in the US. A motive for this experiment could be to explore methods to control the species' growth/spread in North America where it significantly reduces crop yield.     
+I am using a dataset already built into R (CO2) since I do not have a dataset of my own. I will look at the effect of overnight temperature on grass plant carbon dioxide uptake in *Echinochloa crus-galli*. The experiment was performed in two locations, Quebec and Mississippi, and each location measured the uptake of six plants. The ambient air carbon dioxide concentration (mL/L) was varied and the corresponding carbon dioxide uptake rates (\textmu mol/m^2^sec) of the grass was measured. The chilled plants were chilled overnight before the experiment occurred. I am unable to find more data on their methodology and their definition of chilling (if they used the same chilling temperature for both locations or same reduction in temperature relative to the location the data was collected).   
 
 Hypothesis: Overnight chilling on *Echinochloa crus-galli* will have a negative effect on the plant's carbon dioxide uptake. 
 
@@ -97,4 +98,4 @@ line_graph
 Here you can see each of the 6 plants studied, comparing the carbon dioxide uptake across increasing ambient carbon dioxide concentrations. You can clearly see the difference between chilled and non-chilled uptake rates per plant and there is a much larger difference in the Mississippi plants. The difference in carbon dioxide uptake rates between the regions could be explained by the ambient air temperature in the region affecting the rate of transpiration. 
 
 ## Conclusion
-Overnight chilling had a negative effect on *Echinochloa crus-galli* carbon dioxide uptake in Mississippi but had negligible effects in Quebec
+Overnight chilling had a negative effect on *Echinochloa crus-galli* carbon dioxide uptake in Mississippi but had negligible effects in Quebec. 
