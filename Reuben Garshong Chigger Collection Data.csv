@@ -1,8 +1,8 @@
-﻿Site,OnHost,FreeLiving
-Lake James State Park,0,18
-Gibson Park,0,0
-Morrow Mountain State Park,35,131
-Pee Dee National Wildlife Refuge,0,25
-Merchants Millpond State Park,0,27
-Kerr Lake State Recreational Area,0,78
-Croatan National Forest,40,46
+﻿Site,OnHost,FreeLiving,Lat,Long
+Lake James State Park,0,18,35.75429703,-81.87643718
+Gibson Park,0,0,36.03226372,-79.94719851
+Morrow Mountain State Park,35,131,35.37051143,-80.10072943
+Pee Dee National Wildlife Refuge,0,25,35.08988865,-80.05017943
+Merchants Millpond State Park,0,27,36.43755002,-76.69743687
+Kerr Lake State Recreational Area,0,78,36.44276847,-78.36192744
+Croatan National Forest,40,46,34.91943247,-77.04797596
