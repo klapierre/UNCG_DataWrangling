@@ -12,6 +12,15 @@ output: pdf_document
 
 **Herbivore damage** is likely driven by three main components of an ecosystem: 1) *plant community composition*, 2) *plant nutrient content*, and 3) *insect community composition and abundance*. In this experiment, I will showcase various herbivore damage metrics taken from the Longleaf Pine Savanna, a perfect vector for arthropod-specific studies.
 
+
+
+## Pseudo-Code
+1. Load data and tidyverse package
+2. Tidy data and combine 'Chew' and 'Mine.Suck' Herbtypes
+3. Separate data between different species and years
+4. Use ggplot to graph Arthropod herbivore damage through time by species
+
+
 ```{r, setup, include=FALSE}
 setwd("D:/School Stuff/Graduate Stuff/Koerner Lab/R Studio files/Grad Research")
 knitr::opts_chunk$set(echo = TRUE)
