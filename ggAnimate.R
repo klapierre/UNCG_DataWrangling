@@ -379,7 +379,7 @@ rawTitanic <- titanic
 # how they are recorded?
 
 # Impossible to tell if it was specifically associated with a sibling or a spouse. Which seems like a 
-# totally wierd way to record this kind of data
+# totally weird way to record this kind of data
 
 # Question: What columns seem to be missing information?
 
@@ -396,9 +396,7 @@ rawTitanic <- titanic
 
 titanicTidyAge <- rawTitanic %>% 
   select(c(PassengerId, Survived, Pclass, Name, Sex, Age)) %>% 
-  na.omit() %>% 
-  mutate(AgeDecade = floor(Age/10)*10) %>% 
-  mutate(AgeDecade = ifelse(AgeDecade>=60,
+  na.omit() %>% mutate(AgeDecade = floor(Age/10)*10) %>% mutate(AgeDecade = ifelse(AgeDecade>=60,
                             "60+",
                             AgeDecade))
 
@@ -409,7 +407,10 @@ titanicTidyAge <- rawTitanic %>%
 # This letter is the deck the cabin was located, A was the topmost deck and B the
 # next, and so on
 
-
+titanicTidyCabin <- rawTitanic %>% 
+  select(c(PassengerId, Survived, Pclass, Sex, Age, Cabin)) %>% 
+  mutate(Deck = str_extract(Cabin, "[aA-zZ]+")) %>% 
+  na.omit()
 
 # Next you'll be using each of those to make a graph.
 
@@ -421,6 +422,15 @@ titanicTidyAge <- rawTitanic %>%
 # 5) Color the columns something other than the default
 # Reminder: You may need to further filter the data frame
 
+ageiguess <- titanicTidyAge %>% 
+  filter(Survived==1)
+
+ggplot(ageiguess, aes(x=Sex, fill = Sex)) +
+  geom_bar() +
+  transition_states(AgeDecade, state_length = 1, transition_length = 3) +
+  ease_aes("sine-in-out") +
+  labs(subtitle = "Passengers in their {closest_state}'s")
+
 
 # Task: Make a scatter plot using the titanicTidyCabin data frame:
 # 1) Plotting age of passengers on the y-axes and deck level on the x-axes
@@ -429,8 +439,25 @@ titanicTidyAge <- rawTitanic %>%
 # 4) Jitter the points so they don't all overlap
 # 5) Add code to display what Pclass you're currently showing
 # 6) Add appropriate x- and y-axes labels
-# 
+
 # Hint: Try aes(group = seq_along(...)) to get all your points to disappear 
 # between frames rather than some disappearing and some moving
 # see https://cran.r-project.org/web/packages/gganimate/vignettes/gganimate.html
 # for examples
+
+
+
+
+ggplot(titanicTidyCabin, aes(x=Deck, y=Age, fill=as.factor(Survived), shape=Sex)) +
+  geom_point(aes(group = seq_along(Pclass)), position = "jitter") +
+  scale_shape_manual(values = c(20, 34)) +
+  scale_fill_manual(
+    values = c("blue", "red"),
+    guide = guide_legend(override.aes = list(shape = 21))
+  ) +
+  
+  
+  transition_states(Pclass, transition_length = 2, state_length = 1) +
+  enter_fade() +
+  exit_fade() +
+  labs(subtitle = "Currently showing Class {closest_state} passengers")
