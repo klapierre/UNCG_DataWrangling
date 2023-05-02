@@ -3,6 +3,7 @@ title: "Independent Project"
 author: "Noah Holland"
 date: "2023-05-01"
 output:
+  pdf_document: default
   html_document:
     df_print: paged
 ---
@@ -13,11 +14,16 @@ knitr::opts_chunk$set(echo = TRUE)
 
 
 
-## Header 2
-and some text for comparison
+### Background
+|      Mite larvae of the families *Trombiculidae* and *Leeuwenhoekiidae* are parasitic in their larval stage, and are commonly referred to as "chiggers" in this parasitic stage. They are a known vector for *Orientia sp.*, the bacterial pathogen that causes the deadly disease, Scrub Typhus (Weitzel, et al. 2022). ). As well, *Rickettsia sp.* bacteria capable of causing disease in humans were detected in chigger mites collected from wild rodents in South Korea (Choi, et al. 2007), and more recently chigger mites infected with *Rickettsia felis*, *R. conorii*, and *R. typhi* were collected from rodents in North Carolina (Ponnusamy, et al. 2022). Data has been collected from seven sites in North Carolina recording both free-living and host-attached chigger mites during the summer of 2022, which were then tested for *Rickettsia sp.* bacteria as a follow-up to the 2022 Ponnusamy, et al. study. However, only a subset of that larger data set including only the number of chiggers collected and if the were free-living or host attached for each of the seven parks. While not a large data set, it will still be useful for exploring the habitat distribution of chigger mites and attack rates in different areas of the state.
 
-### Header 3
-and some text for comparison
+### General Workflow 
+```{}
+
+```
+
+### Packages
+Before launching into the code, it's important to note what packages are being used for this data visualization project. 
 
 ```{r packages, message=FALSE}
 library(knitr)
@@ -29,3 +35,30 @@ library(usmap)
 library(ggmap)
 library(mapdata)
 ```
+
+### Code
+
+
+```{R Data}
+mite <- read.csv("Reuben Garshong Chigger Collection Data.csv")
+```
+
+
+
+
+
+### Literature Cited
+
+| Weitzel, T.; Silva-de la Fuente, M.C.; Martínez-Valdebenito, C.; Stekolnikov, A.A.; Pérez R.; Vial, C.;  
+|       Abarca, K.; Acosta-Jamett, G. Novel Vector of Scrub Typhus in Sub-Antarctic Chile: Evidence from 
+|       Human Exposure. Clinical Infectious Diseases 2022, 74, 1862-1865. 
+|       https://doi.org/10.1093/cid/ciab748 
+
+| Choi, Y.J.; Lee, E.M.; Park, J.M.; Lee, K.M.; Han, S.H.; Kim, J.K.; Lee, S.H.; Song, H.J.; Coi, M.S.; Kim, 
+|       I.S.; Park, K.H.; Jang, W.J. Molecular Detection of Various Rickettsiae in Mites (Acari: Trombiculidae) 
+|       in Southern  Jeolla Province, Korea. Microbiology and Immunology. 2007, 51, 307-312. 
+|       https://doi.org/10.1111/j.1348-0421.2007.tb03912.x   
+
+| Ponnusamy, L.; Garshong, R.; McLean, B.; Wasserberg, G.; Durdeen, L.; Crossley, D.; Apperson, C.; Roe, 
+|       R.M. Rickettsia felis and Other Rickettsia Species in Chigger Mites Collected from Wild Rodents in 
+|       North Carolina, USA. Microorganisms 2022, 10, 1342. https://doi.org/10.3390/microorganisms10071342
