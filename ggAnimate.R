@@ -366,7 +366,7 @@ ggplot(orange, aes(circumference, group = Tree)) +
 # Make sure you have the "titanic.csv" file downloaded from the github branch or Canvas.
 # Then load it into R as an object and name it "rawTitanic"
 
-
+rawTitanic <- titanic
 
 # This data is a passenger list for the RMS Titanic, including information on the
 # different passengers' names, if they survived, sex, age, number of siblings/spouses aboard, number of parents/children aboard, ticket number, ticket fare,
@@ -378,10 +378,12 @@ ggplot(orange, aes(circumference, group = Tree)) +
 # Question: What problems could the SibSp and Parch columns make for us due to 
 # how they are recorded?
 
-
+# Impossible to tell if it was specifically associated with a sibling or a spouse. Which seems like a 
+# totally wierd way to record this kind of data
 
 # Question: What columns seem to be missing information?
 
+# Age and Cabin
 
 # Now, as we can see, this data is pretty untidy with lots of empty cells and
 # columns that are tricky to work with. So lets trim it down to just what we want
@@ -392,6 +394,13 @@ ggplot(orange, aes(circumference, group = Tree)) +
 # Then make a new column with the age as a 10 year range or age in decades
 # (Make sure the highest age is "60+")
 
+titanicTidyAge <- rawTitanic %>% 
+  select(c(PassengerId, Survived, Pclass, Name, Sex, Age)) %>% 
+  na.omit() %>% 
+  mutate(AgeDecade = floor(Age/10)*10) %>% 
+  mutate(AgeDecade = ifelse(AgeDecade>=60,
+                            "60+",
+                            AgeDecade))
 
 
 # Once you have that we'll make a second data frame named "titanicTidyCabin" 
