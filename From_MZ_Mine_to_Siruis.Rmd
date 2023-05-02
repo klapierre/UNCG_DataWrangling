@@ -33,6 +33,9 @@ colnames(Tulip_C4Fractions_NEG)<-gsub(".mzML.crop_filtered_NEG.Peak.area","",col
 
 Tulip_C4Fractions_POSNEG <- bind_rows(Tulip_C4Fractions_POS, Tulip_C4Fractions_NEG)
 
+remove(Tulip_C4Fractions_NEG)
+remove(Tulip_C4Fractions_POS)
+
 ```
 \
 Depending on what you are working with, you may wish to omit the merging of the two dataframes. I chose to merge them because all data points are important to look at. Some molecules may appear in the positive mode which do not appear in the negative mode and vice versa. This is simply because of the charge they have when they are getting filtered through the machine. Either way, it takes both positive and negative ions to make up the whole sample which we analyze. So for this set of data, I will be merging the dataframes.
@@ -42,7 +45,7 @@ Depending on what you are working with, you may wish to omit the merging of the 
 Now that we have our dataframes, let's create our features list. What is a feature? A feature is the m/z value of the molecule combined with its retention time. Retention time is the time the molecule came out of the sample and into the machine. This is what we will use to identify the molecules found in the samples.
 
 ```{r Create Features List}
-Features <- Tulip_C4Fractions_POSNEG %>% 
+FeaturesList <- Tulip_C4Fractions_POSNEG %>% 
   mutate(row.m.z = round(row.m.z, digits = 4),
          row.retention.time = round(row.retention.time, digits = 2),
          Features = paste(row.m.z, row.retention.time, sep = "-")) %>% 
@@ -50,7 +53,18 @@ Features <- Tulip_C4Fractions_POSNEG %>%
   select(-row.m.z, 
          -row.ID, 
          -row.retention.time,
-         -X)
- 
+         -X) 
+```
+
+
+
+
+```{r Filtering Out Blanks}
+BlankFilter <- FeaturesList %>% 
+  mutate(Mean = rowMeans(across(-1)),
+         SD = apply(FeaturesList[, -1], 1, sd, na.rm=T),
+         RSD = SD/Mean*100)
+
+
 ```
 
