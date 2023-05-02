@@ -15,7 +15,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 
 ### Background
-|      Mite larvae of the families *Trombiculidae* and *Leeuwenhoekiidae* are parasitic in their larval stage, and are commonly referred to as "chiggers" in this parasitic stage. They are a known vector for *Orientia sp.*, the bacterial pathogen that causes the deadly disease, Scrub Typhus (Weitzel, et al. 2022). ). As well, *Rickettsia sp.* bacteria capable of causing disease in humans were detected in chigger mites collected from wild rodents in South Korea (Choi, et al. 2007), and more recently chigger mites infected with *Rickettsia felis*, *R. conorii*, and *R. typhi* were collected from rodents in North Carolina (Ponnusamy, et al. 2022). Data has been collected from seven sites in North Carolina recording both free-living and host-attached chigger mites during the summer of 2022, which were then tested for *Rickettsia sp.* bacteria as a follow-up to the 2022 Ponnusamy, et al. study. However, only a subset of that larger data set including only the number of chiggers collected and if the were free-living or host attached for each of the seven parks. While not a large data set, it will still be useful for exploring the habitat distribution of chigger mites across North Carolina.
+|      Mite larvae of the families *Trombiculidae* and *Leeuwenhoekiidae* are parasitic in their larval stage, and are commonly referred to as "chiggers" in this parasitic stage. They are a known vector for *Orientia sp.*, the bacterial pathogen that causes the deadly disease, Scrub Typhus (Weitzel, et al. 2022). ). As well, *Rickettsia sp.* bacteria capable of causing disease in humans were detected in chigger mites collected from wild rodents in South Korea (Choi, et al. 2007), and more recently chigger mites infected with *Rickettsia felis*, *R. conorii*, and *R. typhi* were collected from rodents in North Carolina (Ponnusamy, et al. 2022). Data has been collected from seven sites in North Carolina recording both free-living and host-attached chigger mites during the summer of 2022, which were then tested for *Rickettsia sp.* bacteria as a follow-up to the 2022 Ponnusamy, et al. study. However, only a subset of that larger data set including only the number of chiggers collected and if the were free-living or host attached for each of the seven parks. The mites were collected two ways, free-living mites were collected using the tile method, in which mites are collected off of a black tile using a brush further described in Ponnusamy, et al.(2022), and harvested from live trapped rodents. While not a large data set, it will still be useful for exploring the habitat distribution of chigger mites across North Carolina.
 
 ### General Workflow 
 ```{}
@@ -25,7 +25,17 @@ Add a column for total mites collected
 
 Create a column plot comparing the total number of mites between each site
   x-axis as Site, y-axis as OnHost+FreeLiving
+  Add title and axis labels 
+  color the columns to something nicer than the default
+  
+Create a column plot comparing the total number of mites between each site
+  x-axis as Site, y-axis as number of chiggers collected with one column for each free living and on host
+  Add title and axis labels 
+  color the columns to something nicer than the default with one color for on host and another for freeliving
 
+Create a dot plot to compare West to East trend in total chiggers collected
+  x-axis as Longitude, y-axis total chigger mites collected
+  
 
 
 ```
@@ -50,15 +60,15 @@ library(mapview)
 
 
 ```{R Data}
-mite <- read.csv("Reuben Garshong Chigger Collection Data.csv") %>% 
+mite <- read.csv("Reuben Garshong Chigger Collection Data.csv") 
+miteTotal <- mite %>% 
   mutate(Total = OnHost+FreeLiving)
-
 ```
 
 
 
 ```{R Total Chiggers by Site Column plot}
-ggplot(mite, aes(x=Site, y=Total)) +
+ggplot(miteTotal, aes(x=Site, y=Total)) +
   geom_col(fill = "cyan4") +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
   labs(title = "Total number of chigger mites collected by Site") +
@@ -69,8 +79,29 @@ ggplot(mite, aes(x=Site, y=Total)) +
 
 
 
-```{R Basic Map}
+```{R Grouped Column Plot}
+miteLong <- pivot_longer(mite, -c(Site, Lat, Long), names_to = "Legend", values_to = "value")
 
+ggplot(miteLong, aes(x=Site, y=value, fill = Legend)) +
+  geom_col(position = "dodge") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  labs(title = "Chigger mites collected in each site") +
+  xlab("Site") +
+  ylab("# of chigger mites collected")
+```
+
+
+```{R Basic Map}
+map <- map_data("county")
+nc <- subset(map, region=="north carolina")
+
+
+ggplot() +
+  geom_polygon(data = nc, aes(x=long, y=lat, group=group))+
+  geom_polygon(data=nc, 
+             aes(x=long, y=lat, group=group), 
+             fill=NA, color="white") +
+  geom_point(data = )
 ```
 
 
