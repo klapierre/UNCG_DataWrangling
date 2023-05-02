@@ -3,7 +3,6 @@ title: "Independent Project"
 author: "Noah Holland"
 date: "2023-05-01"
 output:
-  pdf_document: default
   html_document:
     df_print: paged
 ---
@@ -15,19 +14,22 @@ knitr::opts_chunk$set(echo = TRUE)
 
 
 ### Background
-|      Mite larvae of the families *Trombiculidae* and *Leeuwenhoekiidae* are parasitic in their larval stage, and are commonly referred to as "chiggers" in this parasitic stage. They are a known vector for *Orientia sp.*, the bacterial pathogen that causes the deadly disease, Scrub Typhus (Weitzel, et al. 2022). ). As well, *Rickettsia sp.* bacteria capable of causing disease in humans were detected in chigger mites collected from wild rodents in South Korea (Choi, et al. 2007), and more recently chigger mites infected with *Rickettsia felis*, *R. conorii*, and *R. typhi* were collected from rodents in North Carolina (Ponnusamy, et al. 2022). Data has been collected from seven sites in North Carolina recording both free-living and host-attached chigger mites during the summer of 2022, which were then tested for *Rickettsia sp.* bacteria as a follow-up to the 2022 Ponnusamy, et al. study. However, only a subset of that larger data set including only the number of chiggers collected and if the were free-living or host attached for each of the seven parks. The mites were collected two ways, free-living mites were collected using the tile method, in which mites are collected off of a black tile using a brush further described in Ponnusamy, et al.(2022), and harvested from live trapped rodents. While not a large data set, it will still be useful for exploring the habitat distribution of chigger mites across North Carolina.
+Mite larvae of the families *Trombiculidae* and *Leeuwenhoekiidae* are parasitic in their larval stage, and are commonly referred to as "chiggers" in this parasitic stage. They are a known vector for *Orientia sp.*, the bacterial pathogen that causes the deadly disease, Scrub Typhus (Weitzel, et al. 2022). ). As well, *Rickettsia sp.* bacteria capable of causing disease in humans were detected in chigger mites collected from wild rodents in South Korea (Choi, et al. 2007), and more recently chigger mites infected with *Rickettsia felis*, *R. conorii*, and *R. typhi* were collected from rodents in North Carolina (Ponnusamy, et al. 2022). Data has been collected from seven sites in North Carolina recording both free-living and host-attached chigger mites during the summer of 2022, which were then tested for *Rickettsia sp.* bacteria as a follow-up to the 2022 Ponnusamy, et al. study. However, only a subset of that larger data set including only the number of chiggers collected and if the were free-living or host attached for each of the seven parks. The mites were collected two ways, free-living mites were collected using the tile method, in which mites are collected off of a black tile using a brush further described in Ponnusamy, et al.(2022), and harvested from live trapped rodents. While not a large data set, it will still be useful for exploring the habitat distribution of chigger mites across North Carolina.
 
 ### General Workflow 
 ```{}
 Load data set ("Reuben Garshong Chigger Collection Data.csv")
 
-Add a column for total mites collected
+Make a new dataset from the original one with a column for total mites collected 
 
 Create a column plot comparing the total number of mites between each site
   x-axis as Site, y-axis as OnHost+FreeLiving
   Add title and axis labels 
   color the columns to something nicer than the default
   
+Make another new dataframe using the original frame, excluding the latitude and longitude information.
+  pivot longer that new dataframe so that the columns for free living mites and on host mites are one column with duplicate entries for site. 
+
 Create a column plot comparing the total number of mites between each site
   x-axis as Site, y-axis as number of chiggers collected with one column for each free living and on host
   Add title and axis labels 
@@ -35,7 +37,20 @@ Create a column plot comparing the total number of mites between each site
 
 Create a dot plot to compare West to East trend in total chiggers collected
   x-axis as Longitude, y-axis total chigger mites collected
+  add a trend line
+
+Create a dot plot to compare North to South trend in total chiggers collected
+  y-axis as Latitude, x-axis total chigger mites collected
+  add a trend line
   
+Make a map of NC
+  add points showing the location of the sites
+  scale the points based on total number of chigger mites collected
+  
+Make an interactive map of NC
+  add points showing the location of the sites
+  scale points based on total number of chiggers collected
+  make it so that when you hover over the points you can see the site name and total number of chiggers collected
 
 
 ```
@@ -54,19 +69,23 @@ library(ggmap)
 library(mapdata)
 library(sf)
 library(mapview)
+library(RColorBrewer)
 ```
 
 ### Code
 
-
+Once the packages are loaded, it's important to tidy the data based on what we plan to do with it. Here three different objects are made, a base table object, a version with a column for the total of the 'OnHost' and 'FreeLiving' columns, and a table that has been pivoted to list the 'OnHost' and 'FreeLiving' columns as one column.
 ```{R Data}
 mite <- read.csv("Reuben Garshong Chigger Collection Data.csv") 
+
 miteTotal <- mite %>% 
   mutate(Total = OnHost+FreeLiving)
+
+miteLong <- pivot_longer(mite, -c(Site, Lat, Long), names_to = "Legend", values_to = "value")
 ```
 
 
-
+A simple and straightforward way to visualize the data is to compare the total number of chiggers collected between each site.
 ```{R Total Chiggers by Site Column plot}
 ggplot(miteTotal, aes(x=Site, y=Total)) +
   geom_col(fill = "cyan4") +
@@ -78,12 +97,11 @@ ggplot(miteTotal, aes(x=Site, y=Total)) +
 ```
 
 
-
+However, using only the total data leaves out information on how those mites were collected. So, as a complimentary piece we can make a graph that plots both collection methods along side each other as such.
 ```{R Grouped Column Plot}
-miteLong <- pivot_longer(mite, -c(Site, Lat, Long), names_to = "Legend", values_to = "value")
-
 ggplot(miteLong, aes(x=Site, y=value, fill = Legend)) +
   geom_col(position = "dodge") +
+  scale_fill_brewer(palette = 'Accent') +
   theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
   labs(title = "Chigger mites collected in each site") +
   xlab("Site") +
@@ -91,29 +109,71 @@ ggplot(miteLong, aes(x=Site, y=value, fill = Legend)) +
 ```
 
 
+But to really get at the ecological question we have we need to visualize that data spatially. An efficient way of doing this for a west to east habitat gradient is by plotting the longitude of the site by the total number of collected chiggers as a scatterplot. Then, we can add a linear trendline to see if there is a trend. 
+```{R West to East Scatterplot}
+ggplot(miteTotal, aes(x=Long, y=Total)) +
+  geom_point(cex=3) +
+  xlab("Longitude")+
+  ylab("# of chiggers")+
+  geom_smooth(method=lm)
+```
+
+But based on this, there is a slightly positive eastward trend in number of chiggers. However, at least one point falls outside of the 95% confidence interval around the trendline marked in grey.  
+
+The same can be done for the north-south habitat gradient. And in this case, as the gradient is north-south, it may be beneficial to change what axis the locational data is plotted on.  
+Below codes for the latitude represented on the x-axis and number of chiggers on the y-axes, in typical independent value x-axis with dependent variable y-axis form.
+```{R North to South Scatterplot}
+ggplot(miteTotal, aes(x=Lat, y=Total)) +
+  geom_point(cex=3) +
+  xlab("Latitude")+
+  ylab("# of chiggers")+
+  geom_smooth(method=lm) +
+  labs(title="Chigger Mite North-South Habitat Gradient")
+```
+
+This is not particularly intuitive. A typical map displays north at the top and south at the bottom, and as such, it can read better in graphs to keep that tradition.   
+
+So, we can flip the x- and y-axis as done below. 
+```{R North to South Scatterplot 2}
+ggplot(miteTotal, aes(y=Lat, x=Total)) +
+  geom_point(cex=3) +
+  ylab("Latitude")+
+  xlab("# of chiggers")+
+  geom_smooth(method=lm) +
+  labs(title="Chigger Mite North-South Habitat Gradient")
+```
+
+This produces a graph that maps to the common visualization of north and south, even if it breaks typical graphing conventions of independent variable x-axis, dependent variable y-axis.    
+
+However, this is not the only way to spatially visualize data. Data in R can also be visualized on a map. Using the 'maps', 'mapdata', 'ggmap', and 'usmap' packages R can be used for a wide variety of map creation inside the ggplot2 framework.  
+Using maps, the latitude and longitude information for the chigger collecting sites can be given context by overlaying points on top of a map drawn in ggplot2. Below is code that generates a map of North Carolina counties and adds points on that map based on the lat and long data for each chigger collection site. Then, using the 'size' function within 'geom_point(aes(...))', the points can be scaled such that the more chiggers collected at that site, the larger the point.
 ```{R Basic Map}
 map <- map_data("county")
 nc <- subset(map, region=="north carolina")
 
 
 ggplot() +
-  geom_polygon(data = nc, aes(x=long, y=lat, group=group))+
   geom_polygon(data=nc, 
              aes(x=long, y=lat, group=group), 
-             fill=NA, color="white") +
-  geom_point(data = )
+             fill="grey40", color="white") +
+  coord_fixed(1.3)+
+  geom_point(data = miteTotal, aes(x=Long, y=Lat, size=Total), col="cyan") +
+  xlab("Longitude") +
+  ylab("Latitude") +
+  labs(title="Map of North Carolina Chigger Collection Sites")
 ```
 
 
-
+Taking maps further and generating more functionality, packages such as 'shiny' and 'mapview' can be used to make interactive webapps within an RMarkdown file when Knitted as an HTML file. In this case, 'mapview' is specialized for this data's mapping needs, generating simple interactive maps with very little code. 
 ```{R Interactive Map of Site Locations}
-mapview(mite, xcol = "Long", ycol = "Lat", crs = 4269, grid = FALSE)
+mapview(miteTotal, xcol = "Long", ycol = "Lat", crs = 4269, grid = FALSE)
 ```
 
+The map above can me zoomed in and out, as well as panned around to better view the spatial relationship of the data. As well, when any of the points are hovered over, a pop-up box lists the point's coordinates.  
 
-
+But, to improve on an interactive map, the popup can be made to instead display either the site name or total number of mites when hovered over, based on which layers are active. As well, to further improve on the information conveyed visually, the point size and color can be set along a gradient based on total number of chigger mites collected. Again, we can make use of the mapview package for this with additional code from the 'sf' package, that allows us to create "spatial data frame" and streamline the process.
 ```{R Interactive Map of Site Locations With point size based on total cigger mites}
-miteSpatial <- st_as_sf(mite, coords = c("Long", "Lat"), crs = 4269)
+miteSpatial <- st_as_sf(miteTotal, coords = c("Long", "Lat"), crs = 4269)
 mapview(miteSpatial, 
         zcol = "Site",
         cex = "Total", 
