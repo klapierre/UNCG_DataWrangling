@@ -6,9 +6,18 @@ output: pdf_document
 ---
 ###Arthropod Herbivory under Nutrient Deposition and Drought
 
+# ***Herbivory, a key ecosystem process across nearly all ecosystems***, impacts nutrient cycling, ensures energy transfer up food webs, and alters community dynamics. Herbivory is a particularly important driver of grassland and savanna dynamics with these systems supporting nearly all of the world’s mega-herbivore biomass.
+
+**Insect herbivores**, when outbreaks occur, can have devastating effects on plant communities causing the death of certain individuals; however, lower continuous levels are more common and present throughout most ecosystems. Plant-insect herbivore interactions are nearly ubiquitous across the plant kingdom. Understanding *arthropod herbivory* and the role it plays in structuring ecosystems is critical, especially as the current *‘insect apocalypse’*, a worldwide decline in insect abundance, unfolds.
+
+**Herbivore damage** is likely driven by three main components of an ecosystem: 1) *plant community composition*, 2) *plant nutrient content*, and 3) *insect community composition and abundance*. In this experiment, I will showcase various herbivore damage metrics taken from the Longleaf Pine Savanna, a perfect vector for arthropod-specific studies.
+
 ```{r, setup, include=FALSE}
+setwd("D:/School Stuff/Graduate Stuff/Koerner Lab/R Studio files/Grad Research")
 knitr::opts_chunk$set(echo = TRUE)
-knitr::opts_knit$set("D:/School Stuff/Graduate Stuff/Graduate Classes/Spring 2023/UNCG_DataWrangling" = '/tmp')
+knitr::opts_knit$set("D:/School Stuff/Graduate Stuff/Koerner Lab/R Studio files/Grad Research" = '/tmp')
+
+library(tidyverse)
 
 Herb20<-read.csv("Entered Sandhills Leaf Damage Data_2020.csv", na.strings = "")
 
@@ -25,43 +34,6 @@ Herb20Stretch<- Herb20 %>%
   filter(Species!="Lespedeza_hirta") %>%
   filter(HerbType==c("Chew","Mine.Suck"))
 
-Herb20Div<- Herb20 %>%
-  select(-Notes)%>%
-  drop_na(Plot) %>%
-  group_by(Block, Plot, Treatment, Replicate, Species) %>%
-  gather(HerbType, HerbPerc,6:11)%>%
-  ungroup() %>%
-  drop_na(HerbPerc) %>%
-  select(Block, Plot, Treatment, Replicate, Species, HerbType, HerbPerc) %>%
-  mutate(Year=paste("20")) %>%
-  mutate(Treatment_Year=paste(Treatment, "20", sep="_")) %>%
-  group_by(Treatment_Year) %>%
-  mutate(Totalherb=sum(HerbPerc)) %>%
-  ungroup()
- 
-
-HerbCon20<- Herb20Stretch %>%
-  filter(Treatment==c("C", "NPK")) %>%
-  mutate(Year="20") %>%
-  mutate(Treatment_Year=paste(Treatment, Year, sep="_"))
-
-
-
-Master22<-master22
-
-
-TP1<-Master22%>%
-  filter(Timepoint=="1") %>%
-  mutate(Year="TP1")
-
-TP2<-Master22 %>%
-  filter(Timepoint=="2") %>%
-  mutate(Year="TP2")
-
-
-
-
-
 
 Herb21<-read.csv("Entered Sandhills Leaf Damage Data_2021.csv", na.strings = "")
 
@@ -76,11 +48,6 @@ Herb21Stretch<- Herb21 %>%
   mutate(Year="21") %>%
   filter(HerbType==c("Chew","Mine.Suck"))
 
-HerbCon21<- Herb21Stretch %>%
-  filter(Treatment==c("C", "NPK")) %>%
-  mutate(Year="21") %>%
-  mutate(Treatment_Year=paste(Treatment, Year, sep="_"))
-
 
 TP1Herb22<-read.csv("Mann_Leaf_Damage_Sandhill_Gamelands_2022.csv", na.strings = "")
 
@@ -94,18 +61,11 @@ TP1Herb22Stretch<- TP1Herb22 %>%
   mutate(Year="TP1") %>%
   filter(HerbType==c("Chew","Mine.Suck"))
 
-TP1HerbCon22<- TP1Herb22Stretch %>%
-  filter(Treatment==c("C", "NPK")) %>%
-  mutate(Year="TP1") %>%
-  mutate(Treatment_Year=paste(Treatment, Year, sep="_"))
-
-
-HCon20_21<-full_join(HerbCon20, HerbCon21)
-HconComp<-full_join(HCon20_21, TP1HerbCon22) %>%
-  filter(HerbType==c("Chew","Mine.Suck"))
 
 HComp2020_21<- full_join(Herb20Stretch, Herb21Stretch)
+```
 
+```{r herbivory, include=FALSE, message=FALSE, warning=FALSE}
 ####Hcompall####
 
 HCompall<-full_join(HComp2020_21, TP1Herb22Stretch) %>%
@@ -121,17 +81,6 @@ HCompall<-full_join(HComp2020_21, TP1Herb22Stretch) %>%
   mutate(Treatment_Year=paste(Treatment, Year, sep="_"))
 
 
-HCom2<-full_join(HComp2020_21, TP1Herb22Stretch) %>%
-  drop_na(HerbPerc) %>%
-  group_by(Block, Plot, Treatment, Species, HerbType, Year)
-  summarise(avgherb=mean(HerbPerc)) %>%
-  ungroup() %>%
-  filter(Species!="Chrysopsis_mariana")%>%
-  filter(Species!="Lespedeza_hirta") %>%
-  filter(Species!="Liatris_cokeri")%>%
-  filter(Species!="Dichanthelium_commutatum") %>%
-  mutate(Treatment_Year=paste(Treatment, Year, sep="_"))
-
 
 HerbDam<-HCompall %>%
   summarise(Plot, Species, Treatment_Year, HerbType, avgherb, Year, Treatment) %>%
@@ -142,75 +91,107 @@ HerbDam<-HCompall %>%
   select(Plot, Species, Treatment_Year, avgherb, totaldam, Year, Treatment, HerbType)
 ```
 
-```{r bind, message=FALSE, warning=FALSE}
+```{r treatments,include=FALSE, message=FALSE, warning=FALSE}
 #Bind N and P together
-Soil21<-rbind(N21, P21)
-Samplesoil21<- Soil21 %>%
-  filter(str_detect(sample, "^U")) %>%
-  group_by(sample) %>%
-  summarise(max = max(concentration, na.rm=TRUE)) %>%
-  ungroup()
+HerbTypeTreat20<- ggplot(Herb20Stretch, aes(x=Treatment, y=HerbPerc, fill=HerbType))+
+  geom_bar(stat="identity",position="dodge")
+HerbTypeTreat20
+
+
+HerbTypeTreat21<- ggplot(Herb21Stretch, aes(x=Treatment, y=HerbPerc, fill=HerbType))+
+  geom_bar(stat="identity",position="dodge")
+HerbTypeTreat21
+
+
+HerbTypeTreatTP1<- ggplot(TP1Herb22Stretch, aes(x=Treatment, y=HerbPerc, fill=HerbType))+
+  geom_bar(stat="identity",position="dodge")
+HerbTypeTreatTP1
+
+
+Herball<- ggplot(HCompall, aes(x=Treatment_Year, y=avgherb, fill=HerbType))+
+  geom_bar(stat="identity",position="dodge")
+Herball
 ```
 
-```{r bind, treatment and sample, warning=FALSE}
+```{r damage, treatment and sample, warning=FALSE}
 #Bind N+P to treatment
-SSS<-Soil21 %>%
-  select(concentration, units, test, Sample, sample) %>%
-  filter(na.rm=TRUE)%>%
-  filter(str_detect(sample, "^U"))
-
-big21<-left_join(SSS,Samplesoil21)
-
-big21[c('watershed','transect', 'plot', 'misc')]<-str_split_fixed(big21$Sample, '-', 4)
-T21<-big21%>%
-  select(max, concentration, sample, units, test, watershed)
+#Total Arthropod Herbivory damage across all years and species
+HerbDamage <- ggplot(data = HerbDam, aes(x = Treatment, y = totaldam, fill=Year)) + ggtitle("Total Arthropod Herbivore Damage across all years and species") +geom_bar(stat = "identity") + facet_grid(~ Year, scales = "free")
+HerbDamage
 
 
-STSoil21<-full_join(transect21, T21, by=c("watershed"), na.rm)
+#Total Arthropod Herbivory damage across all years on Aristida stricta
+ASDamage<- ggplot(data=subset(HerbDam, Species == "Aristida_stricta"), aes(x = Treatment, y = totaldam, fill=Year)) + ggtitle("Total Herbivore Damage on Aristida stricta across all years") + geom_bar(stat = "identity") + facet_grid(~ Year, scales = "free")
+ASDamage
+
+
+#Total across years on Pityopsis aspera
+PAHerbDam<- HerbDam %>%
+  filter(Species=="Pityopsis_aspera")
+
+
+PADamage<- ggplot(data = PAHerbDam, aes(x = Treatment, y = totaldam, fill=Year)) + ggtitle("Total Herbivore Damage on Pityopsis aspera across all years") + geom_bar(stat = "identity") + facet_grid(~ Year, scales = "free")
+PADamage
+
+#Total across years on Pteridium aquilinum
+PtAHerbDam<-ggplot(data=subset(HerbDam, Species == "Pteridium_aquilinum"), aes(x = Treatment, y = totaldam, fill = Year)) +ggtitle("Total Herbivore Damage on Pteridium aquilinum across all years") + geom_bar(stat = "identity")+ facet_wrap( ~ Year, scales = "free")
+PtAHerbDam
+
+#Total across years on Vaccinium tenellum
+VtHerbDam<-ggplot(data=subset(HerbDam, Species == "Vaccinium_tenellum"), aes(x = Treatment, y = totaldam, fill = Year)) +ggtitle("Total Herbivore Damage on Vaccinium tenellum across all years") + geom_bar(stat = "identity")+ facet_wrap( ~ Year, scales = "free")
+VtHerbDam
+
+
+
+
+
+####HerbPlot figures####
+Herbplot<- ggplot(data = HCompall, aes(x = Treatment, y = avgherb, fill = HerbType)) + ggtitle("Herbivore Damage by Type across all species") +geom_bar(stat = "identity") + facet_grid(HerbType ~ Year, scales = "free")
+Herbplot
+
+
+HCompall20<- HCompall %>%
+  filter(Year=="20")
+
+HCompall21<- HCompall %>%
+  filter(Year=="21")
+
+HCompallTP1<- HCompall %>%
+  filter(Year=="TP1")
+
+ASplot<- ggplot(data=subset(HCompall, Species == "Aristida_stricta"), aes(x = Treatment, y = avgherb, fill = HerbType)) +ggtitle("Aristida stricta Herbivore Damage by Type") + geom_bar(stat = "identity")+ facet_wrap( ~ Year, scales = "free")
+ASplot
+
+
+ASplot20<- ggplot(data=subset(HCompall20, Species == "Aristida_stricta"), aes(x = Treatment, y = avgherb, fill = HerbType)) +ggtitle("Aristida stricta 2020 Herbivore Damage by Type") + geom_bar(stat = "identity")+ facet_wrap( ~ Year, scales = "free")
+ASplot20
+
+ASplot21<- ggplot(data=subset(HCompall21, Species == "Aristida_stricta"), aes(x = Treatment, y = avgherb, fill = HerbType)) +ggtitle("Aristida stricta 2021 Herbivore Damage by Type") + geom_bar(stat = "identity")+ facet_wrap( ~ Year, scales = "free")
+ASplot21
+
+ASplotTP1<- ggplot(data=subset(HCompallTP1, Species == "Aristida_stricta"), aes(x = Treatment, y = avgherb, fill = HerbType)) +ggtitle("Aristida stricta TP1 Herbivore Damage by Type") + geom_bar(stat = "identity")+ facet_wrap( ~ Year, scales = "free")
+ASplotTP1
+
+
+PAplot<- ggplot(data=subset(HCompall, Species == "Pityopsis_aspera"), aes(x = Treatment, y = avgherb, fill = HerbType)) +ggtitle("Pityopsis aspera Herbivore Damage across years by Type") + geom_bar(stat = "identity")+ facet_wrap( ~ Year, scales = "free")
+PAplot
+
+
+PtAplot<- ggplot(data=subset(HCompall, Species == "Pteridium_aquilinum"), aes(x = Treatment, y = avgherb, fill = HerbType))+ggtitle("Pteridium aquilinum Herbivore Damage across years by Type") + geom_bar(stat = "identity") + facet_wrap( ~ Year, scales = "free")
+PtAplot
+
+
+VTplot<- ggplot(data=subset(HCompall, Species == "Vaccinium_tenellum"), aes(x = Treatment, y = avgherb, fill = HerbType))+ggtitle("Vaccinium tenellum Herbivore Damage across years by Type") + geom_bar(stat = "identity") + facet_wrap( ~ Year, scales = "free")
+VTplot
  
 ```
 
-```{r treatment plot, message=FALSE, warning=FALSE}
-treat<-unique(STSoil21$test)
-
-
-uniquename <- STSoil21 %>% mutate(test = ifelse(test %in% c("HCl PO4_1","KCl Ammonia 10","KCL NO3_NO2 2"), c("Phosphorous","Ammonia","Nitrate"), test))
-
-
-
-#Boxplot of concentration by treatment, colored by treatment and data
-ggplot(uniquename, aes(x = test, y= as.numeric(concentration), fill = as.factor(test))) +
-  geom_boxplot() +
-  facet_wrap(~treatment, scales = "free") +
-  scale_fill_manual(values = c("purple","red", "yellow")) +
-  xlab("Nutrient") + ylab("Concentration") +
-  labs(fill = "Legend")
-
-```
-
-
-```{r cv}
-cv <- function(x) 100*( sd(x, na.rm = TRUE)/mean(x, na.rm = TRUE))
-
-cvframe <- uniquename %>%
-  group_by(treatment, test) %>%
-  summarize(cv = cv(as.numeric(concentration))) %>%
-  ungroup()
-
-ggplot(cvframe, aes(x=test, y= as.numeric(cv), fill = as.factor(test))) +
-  geom_bar(stat = "identity") +
-  facet_wrap(~treatment, scales = "free") +
-  scale_fill_manual(values = c("pink","orange", "green4")) +
-  xlab("Nutrient") + ylab("CV of Concentration") +
-  labs(fill = "Legend")
-
-```
 
 
 ### Conclusions
 
-ABG *increases forage production*, it comes ***at the cost of habitat quality***. PBG is much more localized, while still instigating growth from vegetation. This **hybrid practice allows for a mixing of values, both of conservation and business practicality**. It has been described as a *"shifting mosaic"* of vegetation, supporting environmental heterogeneity and stability.
+Overall, it seems as if total damage is *increasing* in **all treatments** from year-to-year. Different focal species are herbivorized differently due to feeding guild difference and preference. In the 'Total Herbivore Damage on *Pityopsis aspera* across all years' figure, NPK treatments in timepoint 1 (TP1) exibit a great deal of herbivore damage, even compared to treatments within its own timescale. This informs us that the NPK plot has been preferred by present arthropods as a vital source of nutrients. In TP1, there is a *slight* decrease in herbivore damage. This may be due to the growing of plants through time. Plant do not 'heal' as other organisms do. As the leaf grows, so too does the hole that an arthropod may have left early in that plant's lifespan. The peak season results from 2020 and 2021 may be due to the *expansion* of those holes through time. I expect that, **once TP2 is included in these figures, there will be a significant increase in herbivore damage from the intra-seasonal sampling**.
 
-Under these considerations, with provided data, it can be said that PBG leads to less abundantly available nutrients with a lower degree of variability. To me, this seems to be taking the landscape simultaneously through multiple succession timelines all at once. Lower nutrient availability allows for slower-growing species to compete with fast growing gasses and forbs, who will likely take over the ABG plots, due to higher nutrient availability.
 
+There is evidence that differences in herbivore may be due to the arthropod community, specifically the family *Formicidae*, or Ants. There has been a large influx of ants into the community in 2021, and that trend seems to be continuing into timepoint 1 of 2022. Should the ants be responsible, it does indicate a few things. One, *ants may be used as an indicator species of nutrient-rich plants* within their zone-of-influence. Two, if ants are claiming the site as their own, it may be difficult to quantify the impact of other arthropods within the system. For now, we must wait and see what the LLP Savanna has to offer.
 
