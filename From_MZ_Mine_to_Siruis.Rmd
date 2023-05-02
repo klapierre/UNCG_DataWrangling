@@ -60,11 +60,21 @@ FeaturesList <- Tulip_C4Fractions_POSNEG %>%
 
 
 ```{r Filtering Out Blanks}
-BlankFilter <- FeaturesList %>% 
-  mutate(Mean = rowMeans(across(-1)),
-         SD = apply(FeaturesList[, -1], 1, sd, na.rm=T),
-         RSD = SD/Mean*100)
+BlankFilterMath <- FeaturesList %>% 
+  mutate(MeanALL = rowMeans(across(-1)),
+         SDALL = apply(FeaturesList[, -1], 1, sd, na.rm=T),
+         RSD = SDALL/MeanALL*100) %>% 
+  filter(RSD>30) %>% 
+  mutate(MeanSamples = rowMeans(select(., contains("LT.C4")), na.rm=T),
+         MeanBlanks = rowMeans(select(., contains("zBLK")), na.rm=T),
+         MeanPblanks = rowMeans(select(., contains("PROCBLANK")), na.rm=T),
+         "PBlank/Sample" = MeanPblanks/MeanSamples*100,
+         "WBlank/Sample" = MeanBlanks/MeanSamples*100) %>% 
+  filter("PBlank/Sample" > 80) %>% 
+  filter("WBlank/Sample" > 80)
 
-
+BlankFiltered <- BlankFilterMath %>% 
+  select(Features,
+         contains("LT.C4"))
 ```
 
