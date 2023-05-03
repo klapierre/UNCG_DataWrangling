@@ -54,9 +54,18 @@ FeaturesList <- Tulip_C4Fractions_POSNEG %>%
          -row.ID, 
          -row.retention.time,
          -X) 
+
+remove(Tulip_C4Fractions_POSNEG)
 ```
 
-
+With our Features List, we are going to filter out the values which 1) too low and 2) are too similar to our blanks. 
+\
+If the values are too low, they are considered insignificant to work with and thus cannot be used to make a statistically accurate analysis. If the values are too similar too similar to our blanks, then we are looking at the blanks. 
+\
+Allow me to elaborate. We dissolve our sample in the solvent (or solvents) of our choosing so that they may be processed by the LC-MS. We run the solvent(s) as a blank so that we can cancel it out later in this process. After all, we do not wish to analyze the solvent which our sample was dissolved in.
+\
+\
+The code below can be adjusted to fit what you have decided to name your samples and blanks. In the second set of mutate functions, I am doing math using the names of the columns. My samples contain "LT.C4" in their name, so I will filter out my samples using that keyword. I do the same with the two blanks I ran. Should you find yourself needing to use this code for your own data, those would be the lines of code which would need some adjustment.
 
 
 ```{r Filtering Out Blanks}
@@ -73,8 +82,84 @@ BlankFilterMath <- FeaturesList %>%
   filter("PBlank/Sample" > 80) %>% 
   filter("WBlank/Sample" > 80)
 
+remove(FeaturesList)
+
 BlankFiltered <- BlankFilterMath %>% 
   select(Features,
          contains("LT.C4"))
+
+remove(BlankFilterMath)
 ```
+
+### RSD Filtered
+/
+This is the hardest part of the coding. With that said, I could not make this a generic code which could be used across data frames.
+/
+I am so sorry, there was no way to make this part clean. The code is long and most of it is done column by column. Ideally, this would have been done using a couple, simple lines of code. Maybe after learning how to do matrix math, aggregate, and other complex code and new packages. I simply lost the will to continue and made this code work in my own special way.
+
+```{r RSD Filtered}
+RSDFiltered2 <- BlankFiltered %>% 
+  mutate(LT.C4.1 = (apply(select(., contains("LT.C4.1")), 1, sd, na.rm=T))/(rowMeans(select(., contains("LT.C4.1")), na.rm=T)),
+         LT.C4.2 = (apply(select(., contains("LT.C4.2")), 1, sd, na.rm=T))/(rowMeans(select(., contains("LT.C4.2")), na.rm=T)),
+         LT.C4.3 = (apply(select(., contains("LT.C4.3")), 1, sd, na.rm=T))/(rowMeans(select(., contains("LT.C4.3")), na.rm=T)),
+         LT.C4.4 = (apply(select(., contains("LT.C4.4")), 1, sd, na.rm=T))/(rowMeans(select(., contains("LT.C4.4")), na.rm=T)),
+         LT.C4.5 = (apply(select(., contains("LT.C4.5")), 1, sd, na.rm=T))/(rowMeans(select(., contains("LT.C4.5")), na.rm=T)),
+         LT.C4.6 = (apply(select(., contains("LT.C4.6")), 1, sd, na.rm=T))/(rowMeans(select(., contains("LT.C4.6")), na.rm=T)),
+         LT.C4.7 = (apply(select(., contains("LT.C4.7")), 1, sd, na.rm=T))/(rowMeans(select(., contains("LT.C4.7")), na.rm=T))) %>% 
+  select(Features, 
+         LT.C4.1, 
+         LT.C4.2, 
+         LT.C4.3, 
+         LT.C4.4,
+         LT.C4.5,
+         LT.C4.6,
+         LT.C4.7) %>% 
+  mutate(across(where(is.numeric), ~ifelse(.>0.35, 0, .))) %>% 
+  replace(is.na(.), 0)
+
+
+RSDFiltered3 <- BlankFiltered %>% 
+  mutate(LT.C4.1 = (rowMeans(select(., contains("LT.C4.1")), na.rm=T)),
+         LT.C4.2 = (rowMeans(select(., contains("LT.C4.2")), na.rm=T)),
+         LT.C4.3 = (rowMeans(select(., contains("LT.C4.3")), na.rm=T)),
+         LT.C4.4 = (rowMeans(select(., contains("LT.C4.4")), na.rm=T)),
+         LT.C4.5 = (rowMeans(select(., contains("LT.C4.5")), na.rm=T)),
+         LT.C4.6 = (rowMeans(select(., contains("LT.C4.6")), na.rm=T)),
+         LT.C4.7 = (rowMeans(select(., contains("LT.C4.7")), na.rm=T)))%>% 
+  select(Features, 
+         LT.C4.1, 
+         LT.C4.2, 
+         LT.C4.3, 
+         LT.C4.4,
+         LT.C4.5,
+         LT.C4.6,
+         LT.C4.7)
+
+RSDFiltered5 <- merge(RSDFiltered2, RSDFiltered3, by = "Features") %>% 
+  mutate(LT.C4.1.y = ifelse(LT.C4.1.x == 0, NA, LT.C4.1.y),
+         LT.C4.2.y = ifelse(LT.C4.2.x == 0, NA, LT.C4.2.y),
+         LT.C4.3.y = ifelse(LT.C4.3.x == 0, NA, LT.C4.3.y),
+         LT.C4.4.y = ifelse(LT.C4.4.x == 0, NA, LT.C4.4.y),
+         LT.C4.5.y = ifelse(LT.C4.5.x == 0, NA, LT.C4.5.y),
+         LT.C4.6.y = ifelse(LT.C4.6.x == 0, NA, LT.C4.6.y),
+         LT.C4.7.y = ifelse(LT.C4.7.x == 0, NA, LT.C4.7.y)) %>% 
+  select(-contains("x")) %>% 
+  replace(is.na(.), 0) %>% 
+  filter(rowMeans(.[,-1]) != 0)
+
+
+RSDFiltered9 <- t(RSDFiltered5) 
+print(RSDFiltered9)
+```
+
+***Metabolomics Analysis
+Now the data is ready to be exported to Sirius where we can do some figure generation. The program Sirius is commonly used but not in America. It is a paid program used in Europe which helps comparing all the many different compounds found (there's a LOT even after filtering through them) with the fractions showing antimicrobial activity a lot easier. I believe it is used for other types of analysis, but I am not well versed in the program itself to say what kinds of analysis and how to do them.
+\
+\
+These figures include, but are not limited to: a scores and loadings plot and a selectivity ratio plot.
+\
+\
+In figure 1, there are graphs: one with few points and another with much more points. The one with few points ranks the significance of the fraction in its antimicrobial activity. The other does the same but with the compounds found in the fractions.
+\
+Figure 2 shows the selectivity ratio plot generated with the same information. It is a bar graph which visualizes the antimicrobial activity of the compounds.
 
