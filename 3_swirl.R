@@ -38,6 +38,8 @@
 # If that happens, type swirl() to resume and enter the same user name you used 
 # previously, and you should be able to navigate directly back to where 
 # you left off. 
+swirl()
+#swril()
 
 # If swirl is not yet installed, install it first
 # install.packages("swirl")
@@ -45,6 +47,7 @@
 library(swirl)
 # Then install the course R Programming
 install_course("R Programming")
+
 
 # Now run the code below
 swirl()
@@ -55,6 +58,8 @@ swirl()
 # ---------------------------------------------------------- #
 # QUESTION: What would you do to get back a line of code you previously ran
 # from your console without retyping the whole thing again?
+#probably type info() or copy the previous line of code to run it again.
+
 
 
 # ---------------------------------------------------------- #
@@ -62,8 +67,11 @@ swirl()
 # ---------------------------------------------------------- #
 # QUESTION: What is the difference between your working directory
 # and your local workspace?
-
+#local workspace is the folder inside the working directory.working directory is essentially the project folder
+ 
 # QUESTION: How do you find help files for a function using R code?
+# probably by clicking help()
+
 
 
 # ---------------------------------------------------------- #
@@ -71,6 +79,9 @@ swirl()
 # ---------------------------------------------------------- #
 # QUESTION: In R, is there usually just one way or many different
 # ways of doing the same thing? Why might this be useful?
+#there's different way for doing the same thing. It might be useful cause it
+#make it easier to work with since everyone will have different options to 
+#choose
 
 
 # ---------------------------------------------------------- #
@@ -79,16 +90,25 @@ swirl()
 # QUESTION: Describe in your own words the difference between a 
 # logical vector, a character vector, an integer vector, and a 
 # numeric vector.
-
+#logical vector only use True or false as values.
+#in character vector each value a string (surrounded by pair "", or '' quotes)
+#integer vector exist so data can be passed to C which expects them, and so
+#small integer data can be represented exactly and compactly.
+#numeric vector contains value of numeric type.numeric create a real vector of 
+#the specified length.
 # QUESTION: What does <= stand for?
+#less than or equal to
 
 # QUESTION: What does == stand for?
+#stands for equality or equal to
 
 # QUESTION: What does != stand for?
+#not equal to
 
 # QUESTION: What does | mean in R?
-
+#Or,binary.
 # QUESTION: What does & mean when testing for TRUE/FALSE statements?
+# & means And. 
 
 
 # ---------------------------------------------------------- #
@@ -103,7 +123,11 @@ swirl()
 # help on using this (or any) function.
 
 
-# QUESTION: Explain why my_data and my_data2 were or were not identical.
+
+
+
+
+# QUESTION: 
 
 
 # ---------------------------------------------------------- #
@@ -120,8 +144,7 @@ swirl()
 # ---------------------------------------------------------- #
 #### VII. R Programming -> 7. Matrices and Data Frames    ####
 # ---------------------------------------------------------- #
-# QUESTION: In the code matrix[x,y], which letter represents the rows? 
-# Which letter represents the columns?
+# QUESTION:
 
 
 # QUESTION: What are two different ways you could assign the numbers 1-20
@@ -146,6 +169,8 @@ swirl()
 # why each one might be useful.
 
 # TASK: Run the str() function on the cars dataset.
+#str()
+
 
 # QUESTION: In your own words, describe what the str() function does.
 # Why might this be useful?
@@ -157,13 +182,7 @@ swirl()
 
 # I) Without running the code, what does the following block 
 # of code print? Please explain why.
-a <- 1
-b <- 2
-c <- a + b
-b <- 4
-a <- b
-c <- a
-c
+
 
 
 # II) Three of the following lines produce the same result. 
@@ -202,5 +221,6 @@ elephant2_lb <- 7757
 # QUESTION: Would you have preferred to split the Swirl tutorial over weeks
 # 1 and 3 of the class instead of the week 1 assignment you previously 
 # completed? Why or why not?
+#split tutorial over weeks . its too much information and i get confused.
 
 # REMEMBER: Save and push your script when you're done with this assignment!
