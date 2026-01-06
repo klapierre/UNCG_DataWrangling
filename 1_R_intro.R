@@ -23,18 +23,18 @@
 
 ## Now try running the lines preceded by hashtags
 ## QUESTION: What happens? Why might this be useful?
-# It runs the comment and puts it in the console.
+
 
 ## TASK: On a new line in the R script, type ctl+shift+c (windows) or
 ## cmd+shift+c (mac) and make yourself a note that keyboard shortcuts are awesome
 
 
-## TASK: Use the other basic algebraic operators: '-', '*', '/' and '^' to 
-## subtract, multiply, etc. the values 2 and 3.
+## TASK: Use the following four basic algebraic operators: '-', '*', '/' and '^'  
+## to subtract, multiply, etc. the values 2 and 3.
 
  
-## Like any good interactive calculator, 
-## R follows the standard mathematical order of operations. 
+## Like any good interactive calculator, R follows the standard mathematical 
+## order of operations. 
 ## Type:
 3+2/8
 
@@ -72,8 +72,8 @@ Sum(2, 3)
 ## take the square root, abs() for the absolute value, and exp()
 ## to take e^some number.
 
-## TASK: What is the absolute value of e^3? Write this as
-## a single line of code.
+## TASK: What is the absolute value of e^3? Write this as a single line of code.
+## Did you encounter any challenges in running your code? How did you solve them?
 
 
 
@@ -81,11 +81,13 @@ Sum(2, 3)
 #### 3) Results can be stored and reused as objects. #####
 # ----------------------------------------------------------
 
-## We've summed 2 and 3 a lot! This time let's just save the results for future use.
+## We've summed 2 and 3 a lot! This time let's just save the results for 
+## future use.
 ## Type:
 x <- sum(2,3)
 
-## This can be read as "x gets 2 plus 3". Notice that R did not print the result 5 this time.
+## This can be read as "x gets 2 plus 3". Notice that R did not print the result 
+## 5 this time.
 ## To view the contents of the variable x, just type x and run:
 
 
@@ -107,7 +109,7 @@ y <- x/8
 z <- c(1.1, 9, 3.14)
 
 ## Type z to view its contents:
-z
+
 
 ## QUESTION: What do you notice about z? How many elements does it have?
 
@@ -122,8 +124,11 @@ z
 
 
 ## Numeric vectors can be used in arithmetic expressions. 
-## Type:
+## Run the following code:
 z*2+100
+
+## QUESTION: What happened when you ran the above line?
+
 
 ## Create a new vector my_sqrt:
 my_sqrt <- sqrt(z-1)
@@ -162,6 +167,7 @@ my_seq <- seq(5, 10, length=30)
 ## TASK: Use a function to confirm that my_seq has length 30.
 
 
+
 ## Maybe we want to create a vector that contains 40 0s. 
 ## Type:
 rep(0, times=40)
@@ -185,18 +191,19 @@ kims_favorite <- c("Schizachyrium", "scoparium")
 
 ## Let's view that vector. But typing kims_favorite takes a looong time. 
 ## To save time, type ki then press tab. What happens?
-kims_favorite
 
-## TASK: Use the function length to confirm the length of kims_favorite
+
+## TASK: Use the length function to confirm the length of kims_favorite
 
 
 ## What if I want genus and species to be grouped as a single character string?
-## Type:
+## Run:
 kims_favorite2 <- paste("Schizachyrium", "scoparium")
-## OR type:
+## Now run:
 kims_favorite3 <- "Schizachyrium scoparium"
 
-## TASK: Use the function length to confirm the length of kims_favorite2
+## TASK: Use the length function to confirm the lengths of kims_favorite2 and
+## kims_favorite3
 
 
 ## TASK: Use the function 'paste' to join together the genus and species of your 
@@ -222,24 +229,31 @@ kims_favorite3 <- "Schizachyrium scoparium"
 ## The colon : operator can be used to create a sequence.
 firstVector <- 1:24
 
-## Take a look at the dim help file
+## Take a look at the dim help file by running the following code:
 ?dim 
 
-## According to ?dim, the dim() function can be used to both retrieve or SET the dimensions of an object.
+## According to ?dim, the dim() function can be used to both retrieve or SET 
+## the dimensions of an object.
+
+## QUESTION: What are the dimensions of firstVector? Use dim() to find out.
+
+
 ## Let's use it to set the dimensions of firstVector
 dim(firstVector) <- c(4,6)
 
-## QUESTION: What are the dimensions of firstVector now? Use dim() to find out
+## QUESTION: What are the dimensions of firstVector now? Use dim() to find out.
 
 
-## QUESTION: What is the class of firstVector now? Use the class() function to find out.
+## QUESTION: What is the class of firstVector? Use the class() function 
+## to find out.
 
 
 ## Congratulations, you've changed a 24-element into a 4 row by 6 column matrix!
 ## To reflect this change, let's assign our new matrix to an object called "firstMatrix"
 firstMatrix <- firstVector
 
-# and if you like you can remove the firstVector object
+## And if you like you can remove the firstVector object from your environment by
+## running the following code:
 rm(firstVector)
 
 ## Suppose that firstMatrix represents the happiness levels over time for some
@@ -277,10 +291,12 @@ thirdMatrix[3,2]
 
 
 ## Additional Thoughts:
-## There are many ways to do the same thing in R. We could also make a matrix using the matrix function.
+## There are many ways to do the same thing in R. We could also make a matrix 
+## using the matrix function.
 fourthMatrix <- matrix(1:24, nrow=4, ncol=6)
 
-## We can check to see if the matrices are the same using the identical() function.
+## We can check to see if the matrices are the same using the 
+## identical() function.
 identical(firstMatrix, fourthMatrix)  #Did we succeed?
 
 ## Now, let's use a data structure that allows columns with different data types
@@ -321,7 +337,7 @@ colnames(happyData) #note colnames() is a function that prints the column names
 
 ## When working with dataframes you can also access entire columns 
 ## using the $, so you call yourdataframe$yourcolumnname. For example
-## the below code gives you all student names
+## the below code gives you all student names:
 happyData$student
 
 ## TASK: in a single line of code, find the mean happiness at time2.
@@ -333,7 +349,7 @@ happyData$student
 # ----------------------------------------------------------
 
 ## Let's take a closer look at functions
-## Functions have 5 different properties
+## Functions have 5 different properties:
 ## 1) the name, 2) the body, 3) the arguments, 
 ## 4) the default values (sometimes), and 
 ## 5) the last line of code that it will return
@@ -349,7 +365,7 @@ roll2 <- function(die = 1:6){
 ## The last line (i.e., what is returned) is the sum of rolling the dice twice
 ## This function rolls two die and sums their values!
 
-## What happens if you run roll2 without supplying any arguments?
+## QUESTION: What happens if you run roll2 without supplying any arguments?
 roll2()
 
 
@@ -367,40 +383,44 @@ roll2(die=30:60)
 #### 9) R libraries are bundles of functions ####
 # ----------------------------------------------------------
 
-## R is open-source, which means that anyone can share code by creating an R package (also called a library)
-## R packages are bundles of functions, often based around a theme
-## You only have to install a package once, either through the dropdown menus or using the function install.packages()
-## But you have to load an installed package each R session
+## R is open-source, which means that anyone can share code by creating an 
+## R package (also called a library).
+## R packages are bundles of functions, often based around a theme.
+## You only have to install a package once, either through the dropdown menus 
+## or using the function install.packages()
+## But you have to load an installed package each R session.
 
 ## For example, try printing the code underlying the function pivot_longer
 pivot_longer
 
-## What happened? Why? 
+## QUESTION: What happened? 
 
 
 ## pivot_longer is a function in the package tidyr
-## If you haven't already, install tidyr now by uncommenting and running the following code:
+## If you haven't already, install tidyr now by uncommenting and running 
+## the following code:
 # install.packages("tidyr")
 
-## Everyone try loading the package now:
+## Now load the package that you just installed using the following code:
 library(tidyr)
 
-## Now what happens when you print pivot_longer?
+## QUESTION: Now what happens when you print pivot_longer?
 
 
-## pivot_longer is a function to help "tidy" data, which we will cover later
-## but as a preview, let's use it to transform the dataframe happy data
-pivot_longer(happyData, cols = 2:ncol(happyData), names_to = "timepoints", values_to = "happiness")
+## pivot_longer is a function to help "tidy" data, which we will cover later.
+## But as a preview, let's use it to transform the dataframe happy data:
+pivot_longer(happyData, cols = 2:ncol(happyData), 
+             names_to = "timepoints", values_to = "happiness")
 
-## What did pivot_longer do? Why might this be useful? 
-
-
-## TASK: Now install and load the package 'nycflights13'
-## which is one of the examples we use in the textbook.
+## QUESTION: What did pivot_longer do? Why might this be useful? 
 
 
-## What is the name of the third column of the object flights?
-## note this object can be accessed onced nycflights13 is loaded.
+## TASK: Now install and load the package 'nycflights13', which is one of the 
+## examples we use in the textbook.
+
+
+## QUESTION: What is the name of the third column of the object flights?
+## Note this object can be accessed once nycflights13 is loaded.
 
 
 
@@ -410,10 +430,10 @@ pivot_longer(happyData, cols = 2:ncol(happyData), names_to = "timepoints", value
 
 ## The arguments to each function are always documented. 
 ## Let's look up the possible arguments for the paste function.
-##Type: 
+## Run the following: 
 ?paste
 
-## QUESTION: Using the help for the paste function, identify what is the role of the 
+## QUESTION: Using the help for the paste function, identify the role of the 
 ## argument 'sep'.
 
 
@@ -430,9 +450,8 @@ pivot_longer(happyData, cols = 2:ncol(happyData), names_to = "timepoints", value
 # ----------------------------------------------------------
 
 ## There are a lot of different tools available to learn R
-## A great one is an R package called swirl
-## With the motto "Learn R, in R"
-## Install and load swirl now
+## A great one is an R package called swirl, with the motto "Learn R, in R".
+## Install and load swirl now:
 install.packages("swirl")
 library(swirl)
 
