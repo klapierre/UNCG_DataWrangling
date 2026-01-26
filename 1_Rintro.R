@@ -266,6 +266,7 @@ secondMatrix <- cbind(students, firstMatrix)
 ## Hint, don't forget about the new column we added too!
 
 
+
 ## Accessing elements in a matrix uses square brackets, [], with the order
 ## rows by columns. For example, if I want to print to the screen the 
 ## element in the third row and second column, I would use
