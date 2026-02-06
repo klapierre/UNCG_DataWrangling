@@ -19,13 +19,17 @@
 ## QUESTION: Open up the file "knb-lter-knz.148.3.txt". What does this file contain?
 
 
-## QUESTION: From this file, who are the dataset contributors?
+## QUESTION: From this file or the original website, who are the dataset contributors?
 
 
-## QUESTION: From this file, what are the start and end dates of the dataset?
+## QUESTION: From this file or the original website, what are the start and end 
+## dates of the dataset?
 
 
 ## QUESTION: Is the data collection still ongoing?
+## Confession from Professor Komatsu: despite the dates of data included in the 
+## file, the answer here is yes.We're just behind in getting the data cleaned 
+## and uploaded :(
 
 
 ## QUESTION: Given your answer to the previous question, why might it be good to
@@ -39,10 +43,10 @@
 ## We can use the .gitignore file to tell git what files not to sync to GitHub!
 
 ## QUESTION: What are two reasons why we wouldn't want GitHub to sync this data?
-# GitHub is not good at storing data.
 
 
-## TASK: Check the Git tab in RStudio. Do you see your data folder listed added?
+
+## TASK: Check the Git tab in RStudio. Do you see your data folder listed?
 ## Now, open the .gitignore file from the files tab in RStudio.
 ## Tell git to ignore the entire folder containing the data you just downloaded.
 ## Save the .gitignore file.
@@ -74,11 +78,12 @@
 ## using '<-' and be sure to carefully consider your naming convention when doing so.
 
 
-## Run the following code.
-conSMEcoverAlt <- read.csv("https://portal.edirepository.org/nis/dataviewer?packageid=knb-lter-knz.148.3&entityid=5716ee946efd717292fa3da9241cda7c")
+## After completing the above taask, run the following code.
+conSMEcoverAlt <- read.csv("https://pasta.lternet.edu/package/data/eml/knb-lter-knz/148/5/5716ee946efd717292fa3da9241cda7c")
 
 
-## QUESTION: What did this code do? What can you say about these two dataframes?
+## QUESTION: What did this code do? What can you say about the two dataframes 
+## you have created thus far?
 
 
 ## TASK: Check to see if the two dataframes are identical using an R function.
@@ -120,8 +125,8 @@ conSMEcoverAlt <- read.csv("https://portal.edirepository.org/nis/dataviewer?pack
 ## plan to use different naming conventions to reference different object types?
 
 
-## TASK: Save your R script. Stage, commit, and pull/push your modified code to the branch
-## you created for this week with an appropriate commit message.
+## TASK: Save your R script. Stage, commit, and pull/push your modified code to 
+## the branch you created for this week with an appropriate commit message.
 
 
 
@@ -133,8 +138,9 @@ conSMEcoverAlt <- read.csv("https://portal.edirepository.org/nis/dataviewer?pack
 ## Opening issues in GitHub is a really effective way to keep track of these 
 ## problems.
 
-## TASK: Create a new dataframe named "duplicates" by binding the rows of two 
-## conSME dataframes you made into one using the rbind() function.
+## TASK: Create a new dataframe named "duplicates" by binding the rows of the two 
+## conSME dataframes you have created into one ultimate dataframe using the 
+## rbind() function.
 ## (Hint: Very similar to the cbind function we used in the Week 1 assignment)
 
 
@@ -143,8 +149,8 @@ conSMEcoverAlt <- read.csv("https://portal.edirepository.org/nis/dataviewer?pack
 ## duplicates dataframe compared to the two original dataframes?
 
 
-## TASK: Save your R script. Stage, commit, and pull/push your modified code to the branch
-## you created for this week with an appropriate commit message.
+## TASK: Save your R script. Stage, commit, and pull/push your modified code to 
+## the branch you created for this week with an appropriate commit message.
 
 
 ## TASK: Open the duplicates dataframe by clicking on the file name in the 
@@ -177,10 +183,10 @@ duplicates[with(duplicates, order(RecDate, Block, Plot, Taxa)),]
 noDuplicates <- unique(duplicates)
 
 
-## QUESTION: Looking at the information for each dataframe in the environment tab
-## of RStudio, what do you notice about the number of observations for the 
-## noDuplicates dataframe compared to the dulpicates dataframe? What about compared
-## to the two original dataframes?
+## QUESTION: Looking at the information for each dataframe in the environment 
+## tab of RStudio, what do you notice about the number of observations for the 
+## noDuplicates dataframe compared to the dulpicates dataframe? What about 
+## compared to the two original dataframes?
 
 
 ## TASK: Go back to our repository in GitHub through your web browser. Find the
@@ -199,8 +205,8 @@ noDuplicates <- unique(duplicates)
 
 
 ## TASK: Follow these instructions carefully!
-## Save your R script. Stage and commit with the commit message "learning to amend",
-## but this time DON'T pull/push your modified code!
+## Save your R script. Stage and commit with the commit message "learning to 
+## amend", but this time DON'T pull/push your modified code!
 
 ## TASK: Type another comment below.
 
@@ -223,4 +229,4 @@ noDuplicates <- unique(duplicates)
 
 ## TASK: Once you've answered the above questions, save your R script one last time. 
 ## Stage your modified code, amend it to the previous commit, and finally pull/push
-## your commits to the branch you created for this week.
+## your commits to your branch in our class repository.
