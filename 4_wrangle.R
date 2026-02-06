@@ -39,30 +39,43 @@
 #### PART 1.0: LEARNING THE FUNCTIONS                     ####
 # ---------------------------------------------------------- #
 
-# We will use a dataset of water temperature in Calispell Creek and its tributaries
-# from eastern Washington State. These type of data are great for scripted analysis 
-# because their formats remain constant but graphs frequently need to be updated to 
-# reflect new data.
-# In case you're interested, Calispell is the main river, while Smalle and Winchester
-# are tributaries.
+# We will use a dataset of water temperature in Calispell Creek and its 
+# tributaries from eastern Washington State. These type of data are great for 
+# scripted analysis because their formats remain constant but graphs frequently 
+# need to be updated to reflect new data.
+# In case you're interested, Calispell is the main river, while Smalle and 
+# Winchester are tributaries.
 
-# TASK: Download the data from the canvas website. Remember to save it to your working
-# directory for this class! I have already added it to your .gitignore file for you.
+# TASK: Download the data from the Canvas website. Remember to save it to your 
+# working directory for this class! I have already added it to your .gitignore 
+# file for you.
 
 
 # TASK: Read in the data by running the following line of code.
-streamTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv", stringsAsFactors = TRUE) 
+streamTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv", 
+                       stringsAsFactors = TRUE) 
 
 
-# QUESTION: What do you think stringsAsFactors mean? Why would we want to make it false?
-# Try reading your data in without this extra argument included. What is the difference?
+# QUESTION: What do you think stringsAsFactors mean?
 
 
 # TASK: Let's learn a little more about our data. Run the following line of code.
 str(streamTemp)
 
 # QUESTION: What does it look like the str() function does?
-# How many rows does it have? How many columns? What class of data is in each column?
+
+
+# QUESTION: How many rows does our dataframe have? How many columns? 
+# What class of data is in each column?
+
+
+# TASK: Try reading your data in without the stringsAsFactors argument included.
+
+
+# QUESTION: What is the difference? (HINT: rerun the str function to check).
+# When would we want to set the stringsAsFactors argument to true?  When would 
+# it be better to make it false?
+
 
 
 # ---------------------------------------------------------- #
@@ -78,33 +91,36 @@ colnames(streamTemp)
 # QUESTION: What output do you get in the console? Why is this useful?
 
 
-# QUESTION: What happened to the column title Calispell Cr Temp C) when it was loaded
+# QUESTION: What happened to the title of the third column when it was loaded
 # into R?
-# HINT: What happened to the spaces and ) in the R column names?
+# HINT: What happened to the spaces and parenthesis in the R column names?
 
 
 # TASK: Run the following line of code. Note the alignment of the code components.
 streamTempRename <- rename(.data=streamTemp,
                            calispell_temp=Calispell.Cr.Temp.C.,
-                           Smalle_temp=Smalle.Cr.Temp.C.,
-                           Winchester_temp=Winchester.Cr.Temp..C.)
+                           smalle_temp=Smalle.Cr.Temp.C.,
+                           winchester_temp=Winchester.Cr.Temp..C.)
 
 
-# TASK: Write your own code to find the column names of our new dataframe (streamTempRename). 
+# TASK: Write your own code to find the column names of our new dataframe 
+# (streamTempRename). 
 
 
-# QUESTION: What differences do you notice from before? In your own words, what did each line
-# from the rename function do? Why might this function be useful for wrangling data?
-# In this code, does the new column name come before or after the =?
+# QUESTION: What differences do you notice from before? In your own words, what 
+# did each line from the rename function do? Why might this function be useful 
+# for wrangling data? In the rename code above, does the new column name come 
+# before or after the =?
 
 
 # ---------------------------------------------------------- #
 ### PART 1.2: SELECTING COLUMNS                           ####
 # ---------------------------------------------------------- #
 
-# The select() function allows you to pick columns by name. This can be helpful when
-# you want to clean a larger dataset and focus on your variables of interest.
-# 
+# The select() function allows you to pick columns by name. This can be helpful 
+# when you want to clean a larger dataset and focus on your variables of 
+# interest.
+
 # Let's imagine that we are only interested in the temperature at the Calispell 
 # site.
 
@@ -129,18 +145,19 @@ calispellTemp <- select(.data=streamTempRename,
 # argument to the function.
 
 
-# TASK: Recall that in R, the `:` operator is a compact way to create a sequence of
-# numbers. For example, write the code below to generate a sequence from 1 to 3.
+# TASK: Recall that in R, the `:` operator is a compact way to create a sequence 
+# of numbers. For example, write code below to generate a sequence from 1 to 3.
 # HINT: Look back to assignment #1 or the swirl tutorial for help (or google!).
 
 
-# Normally this notation is just for numbers, but the select() function allows you
-# to specify a sequence of columns this way. This can save a bunch of typing!
+# Normally this notation is just for numbers, but the select() function allows 
+# you to specify a sequence of columns this way. This can save a bunch of typing!
 
-#TASK: Create a new dataframe called calispellTemp2 and select the date, time, and
-# calispell_temp columns using the sequence notation.
-# HINT: Replace the code where each column was listed out with a sequence of column
-# names. Be sure they are listed in the order they exist in the original dataframe.
+#TASK: Create a new dataframe called calispellTemp2 and select the date, time, 
+# and calispell_temp columns using the sequence notation.
+# HINT: Replace the code where each column was listed out with a sequence of 
+# column names. Be sure they are listed in the order they exist in the original 
+# dataframe.
 
 
 # TASK: Write code to check your column names again to see what happened in your
@@ -151,40 +168,44 @@ calispellTemp <- select(.data=streamTempRename,
 # TASK: Run the following code to remove the Smalle_temp and Winchester_temp 
 # columns. Note the use of the - sign to remove columns.
 calispellTemp3 <- select(.data=streamTempRename,
-                         -Smalle_temp, -Winchester_temp)
+                         -smalle_temp, -winchester_temp)
 
 # The same thing can be accomplished by running the following code, which
 # concatenates these columns together.
 calispellTemp4 <- select(.data=streamTempRename,
-                         -c(Smalle_temp, Winchester_temp))
+                         -c(smalle_temp, winchester_temp))
 
 # And the same thing can ALSO be accomplished by running the following code, which
 # subtracts out a sequence of columns.
 calispellTemp5 <- select(.data=streamTempRename,
-                         -Smalle_temp:-Winchester_temp)
+                         -smalle_temp:-winchester_temp)
 
 
-# TASK: Write code to check that these three new dataframes (calispellTemp3,  calispellTemp4, and calispellTemp5 are identical).
+# TASK: Write code to check that these three new dataframes (calispellTemp3,
+# calispellTemp4, and calispellTemp5) are identical.
+# HINT: Unless you want to try to get very fancy with your code, you'll have to 
+# check dataframes two at a time. But you can always google to try to find sample
+# code to do all three at once!
 
 
 # ---------------------------------------------------------- #
 ### PART 1.3: FILTERING ROWS                              ####
 # ---------------------------------------------------------- #
 
-# Now that we've gone over how to select a subset of columns using THE select()
+# Now that we've gone over how to select a subset of columns using the select()
 # function, a natural next question is “How do I select a subset of rows?” 
-# That’s where the filter() function comes in! Isn't this fun!?
+# That’s where the filter() function comes in! Hooray!
 
 # Note that filter() is really, by definition, subsetting our data. But, base R
 # has a subset() function already. So in the tidyverse world, we refer to this as
 # filtering instead.
 
-# We might be worried about high water temperatures. Let's filter the the Calispell
-# dataframe to only include data where the Calispell Creek has temperature equal or
-# greater than 15 C.
+# We might be worried about high water temperatures. Let's filter the the 
+# Calispell dataframe to only include data where the Calispell Creek has 
+# temperature equal or greater than 15 C.
 
 # QUESTION: If you remove all of the observations (rows) with temperatures lower
-# than 15C, would you expect your new dataframe to have more, the same, or fewer
+# than 15 C, would you expect your new dataframe to have more, the same, or fewer
 # observations than the original dataframe?
 
 
@@ -198,15 +219,15 @@ calispellHighTemp <- filter(.data=calispellTemp,
 # R environment tab.
 
 
-# QUESTION: How many observations did the original dataframe (calispellTemp) have?
-# How many does the new dataframe (calispellHighTemp) have?
+# QUESTION: How many observations did the original dataframe (calispellTemp) 
+# have? How many does the new dataframe (calispellHighTemp) have?
 
 
-# REALLY IMPORTANT: Even if the function runs, R can do all kinds of bad things if
-# you've accidentally coded something incorrectly. It is always really very 
-# important to think about how many rows and columns you expect your new dataframe
-# to have before you run your code and then check whether your new dataframe matches
-# your expectation.
+# REALLY IMPORTANT: Even if the function runs, R can do all kinds of bad things 
+# if you've accidentally coded something incorrectly. It is always very, very 
+# important to think about how many rows and columns you expect your new 
+# dataframe to have before you run your code and then check whether your new
+# dataframe matches your expectations.
 
 
 # We can also filter based on multiple conditions. For example, did the water get
@@ -227,22 +248,22 @@ highTempTributaries <- filter(.data=streamTempRename,
                               calispell_temp >= 15 | smalle_temp >= 15 | winchester_temp >= 15)
 
 
-# Finally, we might want to only get the rows which do not have missing data. We can
-# detect missing values with the is.na() function. Try it out:
+# Finally, we might want to only get the rows that do not have missing data. We 
+# can detect missing values with the is.na() function. Try it out:
 is.na(c(3, 5, NA, 6))
 
 # Now put an exclamation point (!) before is.na() to look for the opposite. This
-# changes all of the TRUEs to FALSEs and FALSEs to TRUEs (i.e., tells us what is not
-# an NA).
+# changes all of the TRUEs to FALSEs and FALSEs to TRUEs (i.e., tells us what is 
+# not an NA).
 !is.na(c(3, 5, NA, 6))
 
-# Time to put this all together! We can filter all of the rows of wtemp for which
-# the value of calispell_temp is NOT NA.
+# Time to put this all together! We can filter all of the rows of calispellTemp 
+# for which the value of calispell_temp is NOT NA.
 calispellData <- filter(.data=calispellTemp,
                         !is.na(calispell_temp))
 
-# QUESTION: How many observations are in the datafile calispellData? Write code to
-# determine how many values of calispell_temp were NA.
+# QUESTION: How many observations are in the datafile calispellData? Write code
+# to determine how many values of calispell_temp were NA.
 
 
 # ---------------------------------------------------------- #
@@ -260,8 +281,8 @@ calispellTempF <- mutate(.data=calispellTemp,
                          calispell_temp_F = calispell_temp*9/5 + 32)
 
 
-# Take a look at the new dataframeto see if it worked by either opening 
-# it from the R environment tab or running the following line of code.
+# Take a look at the new dataframe to see if it worked by either opening it from 
+# the R environment tab or running the following line of code.
 head(calispellTempF) 
 
 
@@ -275,12 +296,12 @@ calispellTempSum <- mutate(.data=calispellTempF,
 # Check the dataframe to see if it worked.
 
 
-# TASK: The column we just created makes no sense. Write code below to remove it
-# from the dataframe.
+# TASK: The column we just created makes no sense (why would you ever want to
+# sum the C and F temperatures?). Write code below to remove it from the dataframe.
 
 
-# QUESTION: We might also want to add a column that describes the dataset. What happens 
-# when you run the following code?
+# QUESTION: We might also want to add a column that describes the dataset. What 
+# happens when you run the following code?
 calispellTempFaquatic <- mutate(.data=calispellTempF,
                                 type='aquatic')
 
@@ -291,23 +312,25 @@ calispellTempFaquatic <- mutate(.data=calispellTempF,
 
 # Sometimes it is nice to be able to combine columns. 
 
-# TASK: Write code to create one more column named ecosystem in a new dataframe and 
-# fill it with the word 'stream'.
+# TASK: Write code to create one more column named ecosystem in the 
+# calispellTempFaquatic dataframe and fill it with the word 'stream'.
 
 
-# Now we might want to create a new column that includes information from both of
-# the columns we just created. We would do so by running the following lines of code:
-calispellTempF4 <- unite(data=calispellTempF3,
+# Now we might want to create a new column that includes information from both 
+# of the columns we just created. We would do so by running the following lines 
+# of code:
+calispellTempF4 <- unite(data=calispellTempFaquatic,
                          col='type_ecosystem',
                          c('type', 'ecosystem'),
                          sep='::')
 
-# QUESTION: Describe in your own words what the code above does. What part creates
-# a new column? What part tells R which columns to combine? What does the sep= mean?
+# QUESTION: Describe in your own words what the code above does. What part 
+# creates a new column? What part tells R which columns to combine? What does 
+# the sep= argument do?
 
 
-# Another very useful function is separate, which takes apart a column into two or
-# more pieces.
+# Another very useful function is separate, which takes apart a column into two
+# or more pieces.
 
 # TASK: Run the following code:
 calispellTempF5 <- separate(data=calispellTempF4,
@@ -317,6 +340,7 @@ calispellTempF5 <- separate(data=calispellTempF4,
 
 # QUESTION: Why isn't the column name in quotes this time?
 
+
 # QUESTION: Describe in your own words what the code above does.
 
 
@@ -325,29 +349,30 @@ calispellTempF5 <- separate(data=calispellTempF4,
 # ---------------------------------------------------------- #
 
 # Take a look at your R environment tab (upper right of RStudio).
-# Do you feel overwhelmed by how many files are there? I do!
-# An amazing thing about tidyverse is that it can pass one function after another to
-# a dataframe using an operator called a pipe. This allows you to perform a whole
-# series of functions on one dataframe without having to create tons and tons of
-# new dataframes.
+# Do you feel overwhelmed by how many files are there?
+# An amazing thing about tidyverse is that it can pass one function after 
+# another to a dataframe using an operator called a pipe. This allows you to 
+# perform a whole series of functions on one dataframe without having to create 
+# tons and tons of new dataframes.
 
-# TASK: Click on the broom icon in your environment tab or run the following line of code
-# to clear your R environment.
+# TASK: Click on the broom icon in your environment tab or run the following 
+# line of code to clear your R environment.
 rm(list = ls())
 
 
-# SHORTCUT: You can efficiently type the pipe icon '%>%' by using the pipe shortcut ctl+shift+m (windows) or cmd+shift+m (mac)! Try using the shortcut to create pipes whenever needed for the rest of the assignment.
+# SHORTCUT: You can efficiently type the pipe icon '%>%' by using the pipe 
+# shortcut ctl+shift+m (windows) or cmd+shift+m (mac)! Try using the shortcut 
+# to create pipes whenever needed for the rest of the assignment.
 
+# The pipe icon tells R to pass the dataframe it was just working with into 
+# another function. This is how we can get from one function to the next without 
+# creating and naming dozens of new dataframes. This is great for organization!
 
-# The pipe icon tells R to pass the dataframe it was just creating into another function.
-# This is how we can get from one function to the next without creating and naming
-# dozens of new dataframes. Hooray!
-
-# TASK: We can start by creating our original dataframe, renaming the columns,
-# selecting just the Calispell data, filtering to observations where the temperature
-# was greater or equal to 15 C, and mutate a column to Farenheit temperatures. 
-# Run the following lines of code and take a look at this new dataframe to see if R did
-# everything we expect it to have done.
+# TASK: We can start over by creating our original dataframe, renaming the 
+# columns, selecting just the Calispell data, filtering to observations where 
+# the temperature was greater or equal to 15 C, and mutate a column to Farenheit. 
+# Run the following lines of code and take a look at this new dataframe to see 
+# if R did everything we expect it to have done.
 calispellHighTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv", stringsAsFactors = TRUE) %>% 
   rename(calispell_temp=Calispell.Cr.Temp.C.,
          smalle_temp=Smalle.Cr.Temp.C.,
@@ -362,28 +387,32 @@ calispellHighTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv", stri
 # ---------------------------------------------------------- #
 
 # Put the functions you just learned to the test! We can use our skills to clean
-# up a dataset of leaf carbon and nitrogen percentages from a nitrogen addition experiment
-# in a grassland in Minnesota. We want to end up with nicely named variables, all the info
-# we need about the experiment (but not too much info!), remove some observations that
-# were collected a little differently than others, split apart a column into more
-# functional parts, and ultimately calculate the C:N ratio (a useful number for
-# understanding plant nutrient status).
+# up a dataset of leaf carbon and nitrogen percentages from a nitrogen addition 
+# experiment in a grassland in Minnesota. We want to end up with nicely named 
+# variables, all the info we need about the experiment (but not too much info!), 
+# remove some observations that were collected a little differently than others, 
+# split apart a column into more functional parts, and ultimately calculate the 
+# C:N ratio (a useful number for understanding plant nutrient status).
 
 # TASK: Perform the following steps in one workflow (i.e., using pipes):
 # (1) Create a dataframe called cdr and load the .csv file 
 # 'e001_Plant aboveground biomass carbon and nitrogen.csv' into it.
 # (2) Add a column named 'Exp' and fill it with the text 'e001' so we know what 
 # experiment we're working with.
-# (3) Rename our last two columns that were originally '% Carbon' and '% Nitrogen' in
-# our csv file. Make the new names 'C' and 'N', respectively.
+# (3) Rename our last two columns that were originally '% Carbon' and '% Nitrogen' 
+# in our csv file. Make the new names 'C' and 'N', respectively.
 # (4) Remove any observations that were not obtained from Strip 1.
-# (5) Create a new column called NTrtInfo that include the information from both NTrt 
-# and NAdd, separated by an underscore.
-# (6) Split the Species column into two columns, one named 'genus' and one named 'species'.
-# (7) Create a column called CN that contains the ratio of C to N for each observation.
+# (5) Create a new column called NTrtInfo that include the information from both 
+# NTrt and NAdd, separated by an underscore.
+# (6) Split the Species column into two columns, one named 'genus' and one named 
+# 'species'.
+# (7) Create a column called CN that contains the ratio of C to N for each 
+# observation.
 # HINT: The ratio of C to N is calculated as C/N.
 # (8) Keep only the following columns: Exp, Date, Plot, NTrtInfo, genus, species, 
 # Field, C, N, and CN. 
 
 
-# REMEMBER: Save and push your script when you're done with this assignment!
+
+# REMEMBER: Save and push your script to your branch when you're done with this 
+# assignment!
