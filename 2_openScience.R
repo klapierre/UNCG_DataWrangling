@@ -11,7 +11,7 @@
 # ----------------------------------------------------------
 
 ## Go to the following website and download the full data package
-## (halfway down the page): https://portal.edirepository.org/nis/mapbrowse?packageid=knb-lter-knz.148.3
+## (halfway down the page): https://doi.org/10.6073/pasta/10f6c28a2eddfdef6f19691e233c6a7b
 
 ## Extract (unzip) the files into a folder named "YourLastName_conSME_data".
 
