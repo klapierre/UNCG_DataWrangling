@@ -16,15 +16,23 @@
 ## Extract (unzip) the files into a folder named "YourLastName_conSME_data".
 
 
-## QUESTION: Open up the file "knb-lter-knz.148.3.txt". What does this file contain?
+## QUESTION: Open up the file "knb-lter-knz.148.5.txt". What does this file contain?
+# The file contains the metadata The Consumer Size Manipulation Experiment 
+# (ConSME) at Konza Prairie.
 
 
 ## QUESTION: From this file or the original website, who are the dataset contributors?
-
+# Komatsu, Kimberly
+# Avolio, Meghan
+# Hope, Andrew
+# Koerner, Sally
+# Louthan, Allison
+# Wilcox, Kevin
 
 ## QUESTION: From this file or the original website, what are the start and end 
 ## dates of the dataset?
-
+# Start : 2019-01-01
+# End: 2022-12-30
 
 ## QUESTION: Is the data collection still ongoing?
 ## Confession from Professor Komatsu: despite the dates of data included in the 
@@ -34,7 +42,7 @@
 
 ## QUESTION: Given your answer to the previous question, why might it be good to
 ## have a reproducible script for data analysis related to this dataset?
-
+# 
 
 # ----------------------------------------------------------
 #### 2) Preventing GitHub from syncing the data files.####
