@@ -17,24 +17,27 @@
 
 
 ## QUESTION: Open up the file "knb-lter-knz.148.3.txt". What does this file contain?
-
+# a description of a research project being conducted at the Konza Prairie
 
 ## QUESTION: From this file or the original website, who are the dataset contributors?
+# you, Meghan Avolio, Andrew Hope, Sally Koerner, Allison Louthan, Kevin Wilcox, Konza LTER
 
 
 ## QUESTION: From this file or the original website, what are the start and end 
 ## dates of the dataset?
-
+# start: 2019-01-01
+# end: 2022-12-30
 
 ## QUESTION: Is the data collection still ongoing?
 ## Confession from Professor Komatsu: despite the dates of data included in the 
-## file, the answer here is yes.We're just behind in getting the data cleaned 
+## file, the answer here is yes. We're just behind in getting the data cleaned 
 ## and uploaded :(
 
 
 ## QUESTION: Given your answer to the previous question, why might it be good to
 ## have a reproducible script for data analysis related to this dataset?
 
+# Having reproducible script is useful when a project is being worked on by multiple people...
 
 # ----------------------------------------------------------
 #### 2) Preventing GitHub from syncing the data files.####
@@ -43,6 +46,8 @@
 ## We can use the .gitignore file to tell git what files not to sync to GitHub!
 
 ## QUESTION: What are two reasons why we wouldn't want GitHub to sync this data?
+
+# the data has not been completely cleaned yet, and 
 
 
 
