@@ -6,6 +6,8 @@
 ## Branch from a GitHub repository and practice staging, committing, and pull/pushing code. 
 ## Create a resource to refer back to.
 
+library(tidyverse)
+
 # ----------------------------------------------------------
 #### 1) Finding and interpreting open data.####
 # ----------------------------------------------------------
@@ -18,23 +20,35 @@
 
 ## QUESTION: Open up the file "knb-lter-knz.148.3.txt". What does this file contain?
 
+# This text file contains a list of contributors, authors, keywords, an abstract,
+# it's basically a directory for the conSME project.
+
 
 ## QUESTION: From this file or the original website, who are the dataset contributors?
 
 
+# The data contributors listed in the file are Kimberly Komatsu, Meghan Avolio,
+# Andrew Hope, Sally Koerner, Allison Louthan, and Kevin Wilcox.
+
 ## QUESTION: From this file or the original website, what are the start and end 
 ## dates of the dataset?
 
+# The dataset began on 2019-01-01 and ended 2022-12-30.
 
 ## QUESTION: Is the data collection still ongoing?
 ## Confession from Professor Komatsu: despite the dates of data included in the 
 ## file, the answer here is yes.We're just behind in getting the data cleaned 
 ## and uploaded :(
 
+# While new data hasn't been uploaded, so the end date is listed as 2022-12-30,
+# there is newly collected data that has yet to be updated.
 
 ## QUESTION: Given your answer to the previous question, why might it be good to
 ## have a reproducible script for data analysis related to this dataset?
 
+# Having a reproducible analysis script would be beneficial to anyone adding new
+# data, as all previous (relevant) analyses have to be repeateded including the 
+# new data.
 
 # ----------------------------------------------------------
 #### 2) Preventing GitHub from syncing the data files.####
@@ -44,7 +58,8 @@
 
 ## QUESTION: What are two reasons why we wouldn't want GitHub to sync this data?
 
-
+# You don't want to sync large data sheets to GitHub, and you might have a 
+# test or 'throwaway' script that you use but don't want uploaded.
 
 ## TASK: Check the Git tab in RStudio. Do you see your data folder listed?
 ## Now, open the .gitignore file from the files tab in RStudio.
@@ -55,6 +70,7 @@
 ## QUESTION: What happened to the data folder listed in the Git tab of RStudio
 ## when you hit save?
 
+# The folder disappears, as git is now ignoring it.
 
 ## TASK: Stage, commit, and pull/push your modified .gitignore file to the branch
 ## you created for this week with an appropriate commit message.
@@ -70,6 +86,7 @@
 ## for this class on your computer using the function setwd().
 ## Hint - set the working directory as the top folder.
 
+setwd("C:\Users\teaml\OneDrive\Documents\bio709\bio657\UNCG_DataWrangling") # This file path is a mess, I know :()
 
 ## TASK: Now we can import one of these datasets into R. Let's import the plant
 ## species abundance datafile (CME011). To do so, use the read.csv() function, 
@@ -77,22 +94,28 @@
 ## a name that includes the experiment name (conSME) and the data type (abundance)
 ## using '<-' and be sure to carefully consider your naming convention when doing so.
 
+conSME_cme011 <- read.csv("Lyons_ConSME_data/CME011.csv")
 
 ## After completing the above taask, run the following code.
 conSMEcoverAlt <- read.csv("https://pasta.lternet.edu/package/data/eml/knb-lter-knz/148/5/5716ee946efd717292fa3da9241cda7c")
-
+view(conSMEcoverAlt)
 
 ## QUESTION: What did this code do? What can you say about the two dataframes 
 ## you have created thus far?
+
+# This reads a spreadsheet file and uploads it as a data frame. It's assigned to a vector.
+view(conSMEcoverAlt)
 
 
 ## TASK: Check to see if the two dataframes are identical using an R function.
 ## (Hint: remember the Week 1 assignment?)
 
+identical(conSME_cme011, conSMEcoverAlt) # TRUE
 
 ## QUESTION: Why might it be better to source data straight from the data portal?
 ## Why might it be worse?
 
+# This requires less code, but it is less collaborative and requires locally files.
 
 ## TASK: Save your R script. Then stage, commit, and pull/push your
 ## modified code to the branch you created for this week with an appropriate 
