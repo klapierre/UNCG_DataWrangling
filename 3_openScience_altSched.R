@@ -127,6 +127,8 @@ conSMEcoverAlt <- read.csv("https://pasta.lternet.edu/package/data/eml/knb-lter-
 
 ## QUESTION: What naming convention did the dataset creators use for column names?
 
+#They are all named shortened versions of the plain English description of what
+#data is in that column.
 
 ## QUESTION: What naming convention do you plan to use for this course for the
 ## following types of objects in R:
@@ -136,10 +138,13 @@ conSMEcoverAlt <- read.csv("https://pasta.lternet.edu/package/data/eml/knb-lter-
 ## columns within dataframes
 ## homemade functions
 
+#I'm not sure exactly. I'll probably just try to make them as short but 
+#understandable as possible. Maybe including the year for some of these?
 
 ## QUESTION: Do all of your objects follow the same naming convention or do you
 ## plan to use different naming conventions to reference different object types?
 
+#I'll do my best to name all my objects the same way. 
 
 ## TASK: Save your R script. Stage, commit, and pull/push your modified code to 
 ## the branch you created for this week with an appropriate commit message.
