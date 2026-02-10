@@ -18,23 +18,35 @@
 
 ## QUESTION: Open up the file "knb-lter-knz.148.3.txt". What does this file contain?
 
+#A bunch of information including the names of those who worked on the data and
+#the methods of obtaining it.
 
 ## QUESTION: From this file or the original website, who are the dataset contributors?
 
+#Komatsu, Kimberly
+#Avolio, Meghan
+#Hope, Andrew
+#Koerner, Sally
+#Louthan, Allison
+#Wilcox, Kevin
 
 ## QUESTION: From this file or the original website, what are the start and end 
 ## dates of the dataset?
 
+#2019-01-01 to 2022-12-30
 
 ## QUESTION: Is the data collection still ongoing?
 ## Confession from Professor Komatsu: despite the dates of data included in the 
 ## file, the answer here is yes.We're just behind in getting the data cleaned 
 ## and uploaded :(
 
+#Yes
 
 ## QUESTION: Given your answer to the previous question, why might it be good to
 ## have a reproducible script for data analysis related to this dataset?
 
+#So that new data collected for the same project can be processed and 
+#analyzed faster.
 
 # ----------------------------------------------------------
 #### 2) Preventing GitHub from syncing the data files.####
@@ -44,7 +56,8 @@
 
 ## QUESTION: What are two reasons why we wouldn't want GitHub to sync this data?
 
-
+#1. My personal work on this doesn't need to be in our class GitHub.
+#2. To keep GitHub clean, since I can just store the data in my personal files.
 
 ## TASK: Check the Git tab in RStudio. Do you see your data folder listed?
 ## Now, open the .gitignore file from the files tab in RStudio.
@@ -55,6 +68,7 @@
 ## QUESTION: What happened to the data folder listed in the Git tab of RStudio
 ## when you hit save?
 
+#The data was replaced with a path that just says .gitignore.
 
 ## TASK: Stage, commit, and pull/push your modified .gitignore file to the branch
 ## you created for this week with an appropriate commit message.
@@ -70,7 +84,6 @@
 ## for this class on your computer using the function setwd().
 ## Hint - set the working directory as the top folder.
 
-
 ## TASK: Now we can import one of these datasets into R. Let's import the plant
 ## species abundance datafile (CME011). To do so, use the read.csv() function, 
 ## putting the relative file path and file name. Assign the dataframe you import
@@ -78,13 +91,15 @@
 ## using '<-' and be sure to carefully consider your naming convention when doing so.
 
 
-## After completing the above taask, run the following code.
+## After completing the above task, run the following code.
 conSMEcoverAlt <- read.csv("https://pasta.lternet.edu/package/data/eml/knb-lter-knz/148/5/5716ee946efd717292fa3da9241cda7c")
 
 
 ## QUESTION: What did this code do? What can you say about the two dataframes 
 ## you have created thus far?
 
+#This code imported another version of the same dataset. The two dataframes
+#seem to be the same.
 
 ## TASK: Check to see if the two dataframes are identical using an R function.
 ## (Hint: remember the Week 1 assignment?)
@@ -93,13 +108,14 @@ conSMEcoverAlt <- read.csv("https://pasta.lternet.edu/package/data/eml/knb-lter-
 ## QUESTION: Why might it be better to source data straight from the data portal?
 ## Why might it be worse?
 
+#To source data straight from the portal, you need an internet connection, which
+#may hinder some. However, it might be useful if you don't want to download the
+#dataset to your own files.
 
 ## TASK: Save your R script. Then stage, commit, and pull/push your
 ## modified code to the branch you created for this week with an appropriate 
 ## commit message. Remember, it is most effective to commit small chunks of code 
 ## often with specific commit messages!
-
-
 
 # ----------------------------------------------------------
 #### 4) Thinking through your naming conventions.####
