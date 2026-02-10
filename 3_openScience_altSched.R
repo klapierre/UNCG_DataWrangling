@@ -209,6 +209,8 @@ noDuplicates <- unique(duplicates)
 ## noDuplicates dataframe compared to the dulpicates dataframe? What about 
 ## compared to the two original dataframes?
 
+#The noDuplicates dataframe has fewer objects than all the other dataframes,
+#but the number is much closer to the first two.
 
 ## TASK: Go back to our repository in GitHub through your web browser. Find the
 ## issue you created and resolve it.
