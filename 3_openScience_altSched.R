@@ -17,23 +17,27 @@
 
 
 ## QUESTION: Open up the file "knb-lter-knz.148.3.txt". What does this file contain?
-
+#ANSWER: The file contains the data package.
 
 ## QUESTION: From this file or the original website, who are the dataset contributors?
+#ANSWER: The contributors are Kimberly Komatsu, Meghan Avolio, Andrew Hope, Sally Koerner, Allison Louthan, and Kevin Wilcox.
 
 
 ## QUESTION: From this file or the original website, what are the start and end 
 ## dates of the dataset?
+#ANSWER: 1/1/2019 to 12/31/2022.
 
 
 ## QUESTION: Is the data collection still ongoing?
 ## Confession from Professor Komatsu: despite the dates of data included in the 
 ## file, the answer here is yes.We're just behind in getting the data cleaned 
 ## and uploaded :(
+#ANSWER: Yes.
 
 
 ## QUESTION: Given your answer to the previous question, why might it be good to
 ## have a reproducible script for data analysis related to this dataset?
+#ANSWER: It's a good idea because it will make it easier to integrate new data later on. 
 
 
 # ----------------------------------------------------------
@@ -43,17 +47,20 @@
 ## We can use the .gitignore file to tell git what files not to sync to GitHub!
 
 ## QUESTION: What are two reasons why we wouldn't want GitHub to sync this data?
-
+#ANSWER: 1) Because the experiment is not complete yet. 2) Because the data may contain sensitive information.
 
 
 ## TASK: Check the Git tab in RStudio. Do you see your data folder listed?
 ## Now, open the .gitignore file from the files tab in RStudio.
 ## Tell git to ignore the entire folder containing the data you just downloaded.
 ## Save the .gitignore file.
+BrownDoyoyo_conSME_data/
+
 
 
 ## QUESTION: What happened to the data folder listed in the Git tab of RStudio
 ## when you hit save?
+#ANSWER: It is no longer there and now says .gitignore.
 
 
 ## TASK: Stage, commit, and pull/push your modified .gitignore file to the branch
@@ -69,6 +76,7 @@
 ## TASK: Start by setting your working directory to the GitHub repository folder
 ## for this class on your computer using the function setwd().
 ## Hint - set the working directory as the top folder.
+setwd("UNCG_DataWrangling")
 
 
 ## TASK: Now we can import one of these datasets into R. Let's import the plant
@@ -76,7 +84,7 @@
 ## putting the relative file path and file name. Assign the dataframe you import
 ## a name that includes the experiment name (conSME) and the data type (abundance)
 ## using '<-' and be sure to carefully consider your naming convention when doing so.
-
+conSME_abundance <- read.csv("BrownDoyoyo_conSME_data/knb-lter-knz.148.5/CME011.csv")
 
 ## After completing the above taask, run the following code.
 conSMEcoverAlt <- read.csv("https://pasta.lternet.edu/package/data/eml/knb-lter-knz/148/5/5716ee946efd717292fa3da9241cda7c")
@@ -84,14 +92,18 @@ conSMEcoverAlt <- read.csv("https://pasta.lternet.edu/package/data/eml/knb-lter-
 
 ## QUESTION: What did this code do? What can you say about the two dataframes 
 ## you have created thus far?
+##ANSWER: It created another dataset pulled from the original website. The two datasets appear to be identical.
 
 
 ## TASK: Check to see if the two dataframes are identical using an R function.
 ## (Hint: remember the Week 1 assignment?)
+identical(conSME_abundance, conSMEcoverAlt)
+##COMMENT: Results in "TRUE".
 
 
 ## QUESTION: Why might it be better to source data straight from the data portal?
 ## Why might it be worse?
+##ANSWER: It might be better because it ensures that you are retrieving the most updated form of the data, but it could be worse because it relies on the internet, and there may be issues with downloading the files. 
 
 
 ## TASK: Save your R script. Then stage, commit, and pull/push your
