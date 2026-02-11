@@ -17,23 +17,28 @@
 
 
 ## QUESTION: Open up the file "knb-lter-knz.148.3.txt". What does this file contain?
+#Answer: The file contains information anbout the people who contributed to the data, along with some information about how the experiment was performed, and information about what code was used to interpret/use the data.
 
 
 ## QUESTION: From this file or the original website, who are the dataset contributors?
+#Answer: The people listed in the document are, Kimberly Komatsu, Meghan Avolio, Andrew Hope, Sally Koerner, Allison Louthan, kevin Wilcox, and Konza LTER.
 
 
 ## QUESTION: From this file or the original website, what are the start and end 
 ## dates of the dataset?
+#Answer: I think that the start date is 2019-01-01, and the end date is 2022-12-30.
 
 
 ## QUESTION: Is the data collection still ongoing?
 ## Confession from Professor Komatsu: despite the dates of data included in the 
 ## file, the answer here is yes.We're just behind in getting the data cleaned 
 ## and uploaded :(
+#Answer: Then the answer is yes, the data is still ongoing, sometimes this stuff takes a really long time so it is alright if it gets a bit behind.
 
 
 ## QUESTION: Given your answer to the previous question, why might it be good to
 ## have a reproducible script for data analysis related to this dataset?
+#It would be good to have a reproducible script for data analysis because if a project becomes less important than another at any given time leading to a pause on the project, it is important to have a way to easily get back to the project when it is time again, and to know where you were and how to start back at it.
 
 
 # ----------------------------------------------------------
@@ -42,11 +47,12 @@
 
 ## We can use the .gitignore file to tell git what files not to sync to GitHub!
 
-## QUESTION: What are two reasons why we wouldn't want GitHub to sync this data?
-
+## RETURN TO QUESTION: What are two reasons why we wouldn't want GitHub to sync this data?####
+#Answer: The reasons why we might not want GitHub to sync data is because GitHub repositories can be used by multiple people, and so you might not want other people to be able to see the data. Also, data is often in very large file sizes that could use a lot of data space.
 
 
 ## TASK: Check the Git tab in RStudio. Do you see your data folder listed?
+#Answer: Yes
 ## Now, open the .gitignore file from the files tab in RStudio.
 ## Tell git to ignore the entire folder containing the data you just downloaded.
 ## Save the .gitignore file.
@@ -54,6 +60,7 @@
 
 ## QUESTION: What happened to the data folder listed in the Git tab of RStudio
 ## when you hit save?
+#Answer: When I saved the data to the .gitignore file my data file disappeared from the Git tab
 
 
 ## TASK: Stage, commit, and pull/push your modified .gitignore file to the branch
@@ -69,14 +76,15 @@
 ## TASK: Start by setting your working directory to the GitHub repository folder
 ## for this class on your computer using the function setwd().
 ## Hint - set the working directory as the top folder.
-
+setwd("C:/Users/bigsi/OneDrive/Desktop/UNCG_DataWrangling")
 
 ## TASK: Now we can import one of these datasets into R. Let's import the plant
 ## species abundance datafile (CME011). To do so, use the read.csv() function, 
 ## putting the relative file path and file name. Assign the dataframe you import
 ## a name that includes the experiment name (conSME) and the data type (abundance)
 ## using '<-' and be sure to carefully consider your naming convention when doing so.
-
+?read.csv
+conSME_abundance<-read.csv("McLester_conSME_data/CME011.csv")
 
 ## After completing the above taask, run the following code.
 conSMEcoverAlt <- read.csv("https://pasta.lternet.edu/package/data/eml/knb-lter-knz/148/5/5716ee946efd717292fa3da9241cda7c")
@@ -84,14 +92,17 @@ conSMEcoverAlt <- read.csv("https://pasta.lternet.edu/package/data/eml/knb-lter-
 
 ## QUESTION: What did this code do? What can you say about the two dataframes 
 ## you have created thus far?
+#So I can now see that there are two sets of data in my environment tab, I can see that they both are 9245 obs, but they have different names. They are identical in size.
 
 
 ## TASK: Check to see if the two dataframes are identical using an R function.
 ## (Hint: remember the Week 1 assignment?)
-
+identical(conSME_abundance,conSMEcoverAlt)
+#Answer: This came back as true meaning that they are identical dataframes
 
 ## QUESTION: Why might it be better to source data straight from the data portal?
 ## Why might it be worse?
+#Pulling the data straight from the data portal means that you know all of the data is there, and that you can always come back to it. compared to from your computer where you could accidently upload the wrong data set, and it might not be an accessible path for other people to see the data. It is also really easy to accidentally delete a data file on your laptop and then store it in a different place and the code no longer works for you either.
 
 
 ## TASK: Save your R script. Then stage, commit, and pull/push your
