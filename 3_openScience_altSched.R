@@ -131,22 +131,26 @@ identical(conSME_cme011, conSMEcoverAlt) # TRUE
 ## TASK: Check the names of the columns in the species cover dataset you imported.
 ## (Hint: remember the Week 1 assignment?)
 
+colnames(conSMEcoverAlt)
 
 ## QUESTION: What naming convention did the dataset creators use for column names?
 
+# First letter of each word capitalized, 2 words abbreviated (i.e. RecType)
 
 ## QUESTION: What naming convention do you plan to use for this course for the
 ## following types of objects in R:
-## R scripts
-## vectors
-## dataframes
-## columns within dataframes
-## homemade functions
+## R scripts number_group_description: (e.g. 01_piedprair_insectabundances.R)
+## vectors name_extrainfo: (e.g. heights_versicolor)
+## dataframes: df_name_extrainfo (e.g. df_heights_mu)
+## columns within dataframes: name_name2 (e.g. "species" or "veg_height")
+## homemade functions: I don't know yet! Probably compounded, no cap (e.g. funcname() )
 
 
 ## QUESTION: Do all of your objects follow the same naming convention or do you
 ## plan to use different naming conventions to reference different object types?
 
+# All of my naming conventions use a very similar format (except functions), with
+# slight changes that provide some context into what an object is at a glance.
 
 ## TASK: Save your R script. Stage, commit, and pull/push your modified code to 
 ## the branch you created for this week with an appropriate commit message.
