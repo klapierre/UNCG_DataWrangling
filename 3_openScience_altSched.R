@@ -237,6 +237,7 @@ noDuplicates <- unique(duplicates)
 
 ## TASK: Type a comment below.
 
+# I really like ichneumonid wasps. They are so cool!
 
 ## TASK: Follow these instructions carefully!
 ## Save your R script. Stage and commit with the commit message "learning to 
@@ -244,6 +245,7 @@ noDuplicates <- unique(duplicates)
 
 ## TASK: Type another comment below.
 
+# Sphecid and pompilid wasps are pretty cool, too!
 
 ## TASK: Save your R script. Open up the commit window in RStudio.
 
