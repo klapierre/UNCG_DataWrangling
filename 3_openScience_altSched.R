@@ -170,13 +170,13 @@ colnames(conSMEcoverAlt)
 ## rbind() function.
 ## (Hint: Very similar to the cbind function we used in the Week 1 assignment)
 
-duplicates <- rbind(conSME_cme011, conSMEcoverAlt)
+duplicates <- rbind(conSMEcoverAlt, conSME_cme011)
 
 ## QUESTION: Looking at the information for each dataframe in the environment tab
 ## of RStudio, what do you notice about the number of observations for the 
 ## duplicates dataframe compared to the two original dataframes?
 
-# duplicates has all of the observations from the original (2x total)
+# duplicates has all of the observations from the original (2x more)
 
 ## TASK: Save your R script. Stage, commit, and pull/push your modified code to 
 ## the branch you created for this week with an appropriate commit message.
@@ -192,6 +192,8 @@ duplicates[with(duplicates, order(RecDate, Block, Plot, Taxa)),]
 ## QUESTION: What do you notice about the data? Specifically, compare rows 
 ## 4934 and 12173 (if they are sorted correctly, those should be on top).
 
+# The data in these rows is identical, as they're the same corresponding row
+# from the duplicate dataframes.
 
 ## TASK: Save your R script. Stage, commit, and pull/push your modified code to the branch
 ## you created for this week with an appropriate commit message.
