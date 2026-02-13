@@ -9,19 +9,15 @@
 # ----------------------------------------------------------
 #### 1) Finding and interpreting open data.####
 # ----------------------------------------------------------
-
 ## Go to the following website and download the full data package
 ## (halfway down the page): https://doi.org/10.6073/pasta/10f6c28a2eddfdef6f19691e233c6a7b
-
 ## Extract (unzip) the files into a folder named "YourLastName_conSME_data".
-
 
 ## QUESTION: Open up the file "knb-lter-knz.148.3.txt". What does this file contain?
 # a description of a research project being conducted at the Konza Prairie
 
 ## QUESTION: From this file or the original website, who are the dataset contributors?
-# you, Meghan Avolio, Andrew Hope, Sally Koerner, Allison Louthan, Kevin Wilcox, Konza LTER
-
+# Kim Komatsu, Meghan Avolio, Andrew Hope, Sally Koerner, Allison Louthan, Kevin Wilcox, Konza LTER
 
 ## QUESTION: From this file or the original website, what are the start and end 
 ## dates of the dataset?
@@ -33,33 +29,27 @@
 ## file, the answer here is yes. We're just behind in getting the data cleaned 
 ## and uploaded :(
 
-
 ## QUESTION: Given your answer to the previous question, why might it be good to
 ## have a reproducible script for data analysis related to this dataset?
-
-# Having reproducible script is useful when a project is being worked on by multiple people...
+# Having reproducible script is useful when a project is being worked on by multiple people because it allows for several different edits to be made to a file, and then potentially combined later, when each person has ocmpleted their specific data cleaning (etc) tasks
 
 # ----------------------------------------------------------
 #### 2) Preventing GitHub from syncing the data files.####
 # ----------------------------------------------------------
-
 ## We can use the .gitignore file to tell git what files not to sync to GitHub!
 
 ## QUESTION: What are two reasons why we wouldn't want GitHub to sync this data?
-
-# the data has not been completely cleaned yet, and 
-
-
+# The data has not been completely cleaned yet, and we do not want an unfinished script to be made publicly available to other github users. Additionally, it allows you to be specific about what files to ignore. You can upload all of the contents of a folder to git, but 'ignore' anything within that folder that is not ready to be shared. 
 
 ## TASK: Check the Git tab in RStudio. Do you see your data folder listed?
 ## Now, open the .gitignore file from the files tab in RStudio.
 ## Tell git to ignore the entire folder containing the data you just downloaded.
 ## Save the .gitignore file.
 
-
 ## QUESTION: What happened to the data folder listed in the Git tab of RStudio
 ## when you hit save?
 
+# the size of the file changed, and it popped up in my Git tab as a new path
 
 ## TASK: Stage, commit, and pull/push your modified .gitignore file to the branch
 ## you created for this week with an appropriate commit message.
