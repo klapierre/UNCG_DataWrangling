@@ -16,24 +16,39 @@
 ## Extract (unzip) the files into a folder named "YourLastName_conSME_data".
 
 
-## QUESTION: Open up the file "knb-lter-knz.148.3.txt". What does this file contain?
+## QUESTION: Open up the file "knb-lter-knz.148.3.txt". What does this file contain? 
+
+## Not sure how in-depth you want me to go with this, because it's a bit confusing to read through. However, it contains anything from names of those who contributed, their emails, where they work, as well at set dates and information about the project.
 
 
-## QUESTION: From this file or the original website, who are the dataset contributors?
+
+## QUESTION: From this file or the original website, who are the dataset contributors? 
+
+## Kimberly Komatsu, Meghan Avolio, Andrew Hope, Sally Koerner, Allison Louthan, Kevin Wilcox, and Konza LTER.
 
 
-## QUESTION: From this file or the original website, what are the start and end 
+
+## QUESTION: From this file or the original website, what are the start and end
 ## dates of the dataset?
+
+## 2019-01-01 to 2022-12-30, but I also see the date 2023-04-28 under the authors, so I'm not sure what that's supposed to represent.
+
 
 
 ## QUESTION: Is the data collection still ongoing?
-## Confession from Professor Komatsu: despite the dates of data included in the 
+## Confession from Professor Komatsu: despite the dates of data included in the
 ## file, the answer here is yes.We're just behind in getting the data cleaned 
 ## and uploaded :(
+
+## Based on the dates, there is no more data collection, but based on your comment, there is still more data collection.
+
 
 
 ## QUESTION: Given your answer to the previous question, why might it be good to
 ## have a reproducible script for data analysis related to this dataset?
+
+## When moving past an organized, but not complete project, data collection can take a long time or be complex. It would be beneficial to have a clean, reproducible script to recall any information that needs to be added, clarified, changed, etc. without losing information of creating a script that's incredibly confusing or disorganized. A reproducible script can benefit other projects for other people if this is open source.
+
 
 
 # ----------------------------------------------------------
@@ -43,6 +58,8 @@
 ## We can use the .gitignore file to tell git what files not to sync to GitHub!
 
 ## QUESTION: What are two reasons why we wouldn't want GitHub to sync this data?
+
+## The data may be personal or sensitive, so you wouldn't want that uploaded to GitHub. Another reason may be that the data is too large/unncessary, you may want to just post certain results or data without figures.
 
 
 
@@ -54,6 +71,9 @@
 
 ## QUESTION: What happened to the data folder listed in the Git tab of RStudio
 ## when you hit save?
+
+## the data folder "Marlowe_conSME_data" disappeared from the Git tab entirely.
+
 
 
 ## TASK: Stage, commit, and pull/push your modified .gitignore file to the branch
@@ -70,6 +90,12 @@
 ## for this class on your computer using the function setwd().
 ## Hint - set the working directory as the top folder.
 
+setwd("C:/Users/dylan/OneDrive/Desktop/R Files/UNCG_DataWrangling")
+
+getwd()
+[1] "C:/Users/dylan/OneDrive/Desktop/R Files/UNCG_DataWrangling"
+
+
 
 ## TASK: Now we can import one of these datasets into R. Let's import the plant
 ## species abundance datafile (CME011). To do so, use the read.csv() function, 
@@ -77,21 +103,35 @@
 ## a name that includes the experiment name (conSME) and the data type (abundance)
 ## using '<-' and be sure to carefully consider your naming convention when doing so.
 
+conSME_abundance <- read.csv("Marlowe_conSME_data/CME011.csv")
 
-## After completing the above taask, run the following code.
+
+
+
+## After completing the above task, run the following code.
 conSMEcoverAlt <- read.csv("https://pasta.lternet.edu/package/data/eml/knb-lter-knz/148/5/5716ee946efd717292fa3da9241cda7c")
 
 
 ## QUESTION: What did this code do? What can you say about the two dataframes 
 ## you have created thus far?
 
+## This code created an identical copy to my data frame "conSME_abundance". The only difference is that my data frame came from a file path, while the copy came from an online data path.
+
+
 
 ## TASK: Check to see if the two dataframes are identical using an R function.
 ## (Hint: remember the Week 1 assignment?)
 
+identical(conSME_abundance,conSMEcoverAlt)
+[1] TRUE
+
+
 
 ## QUESTION: Why might it be better to source data straight from the data portal?
 ## Why might it be worse?
+
+## It might be better to source data from the data portal because you will get updates automatically. Your code will also be unanimous for anyone following your steps, because the code pathing will be the same for you as it would them. It might be worse because it requires an internet connection. Also, possible updates that occur might cause your code to break. 
+
 
 
 ## TASK: Save your R script. Then stage, commit, and pull/push your
