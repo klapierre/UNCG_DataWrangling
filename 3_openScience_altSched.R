@@ -222,9 +222,11 @@ duplicates <- rbind(conSME_abundance,conSMEcoverAlt)
 ## You could also run the following code to get the same outcome:
 duplicates[with(duplicates, order(RecDate, Block, Plot, Taxa)),]
 
-
 ## QUESTION: What do you notice about the data? Specifically, compare rows 
 ## 4934 and 12173 (if they are sorted correctly, those should be on top).
+
+## I tried doing this manually and through the code you gave above, and didn't get those numbers you wanted above. I got "4984" and "14229" at the top. Still, I think I get the point. I see that there are 2 of the same of each data next to each other. This is because we combined 2 identical data frames into 1.
+
 
 
 ## TASK: Save your R script. Stage, commit, and pull/push your modified code to the branch
