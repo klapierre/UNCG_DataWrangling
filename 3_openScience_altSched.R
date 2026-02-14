@@ -17,16 +17,24 @@
 
 
 ## QUESTION: Open up the file "knb-lter-knz.148.3.txt". What does this file contain?
-
+## This has the same information provided in the data package summary website. 
 
 ## QUESTION: From this file or the original website, who are the dataset contributors?
-
+## LTER, Konza
+## Komatsu, Kimberly
+## Avoiio, Meghan
+## Hope, Andrew 
+## Koerner, Sally 
+## Louthan, Allison
+## Wilcox, Kevin
 
 ## QUESTION: From this file or the original website, what are the start and end 
 ## dates of the dataset?
+## Start: 2019-01-01
+## End: 2022-12-30
 
-
-## QUESTION: Is the data collection still ongoing?
+## QUESTION: Is the data collection still ongoing? 
+## No, it's not ongoing still.
 ## Confession from Professor Komatsu: despite the dates of data included in the 
 ## file, the answer here is yes.We're just behind in getting the data cleaned 
 ## and uploaded :(
@@ -34,7 +42,9 @@
 
 ## QUESTION: Given your answer to the previous question, why might it be good to
 ## have a reproducible script for data analysis related to this dataset?
-
+## Yes, because the database is a movinig target, a reproducibnle script turns 
+## your analysis into a reusable machine that updates smoothly whenever new data
+## arrives. 
 
 # ----------------------------------------------------------
 #### 2) Preventing GitHub from syncing the data files.####
@@ -43,7 +53,8 @@
 ## We can use the .gitignore file to tell git what files not to sync to GitHub!
 
 ## QUESTION: What are two reasons why we wouldn't want GitHub to sync this data?
-
+## Keeping data out of GitHub protects people's privacy and keeps your repository
+## light, clean, and efficient.
 
 
 ## TASK: Check the Git tab in RStudio. Do you see your data folder listed?
@@ -54,7 +65,8 @@
 
 ## QUESTION: What happened to the data folder listed in the Git tab of RStudio
 ## when you hit save?
-
+## The data folder disappeared from the Git tab because Git is now ignoring it
+## no longer tracking changes to it
 
 ## TASK: Stage, commit, and pull/push your modified .gitignore file to the branch
 ## you created for this week with an appropriate commit message.
