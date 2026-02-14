@@ -274,6 +274,9 @@ noDuplicates <- unique(duplicates)
 
 ## TASK: Type a comment below.
 
+## I typed a comment below.
+
+
 
 ## TASK: Follow these instructions carefully!
 ## Save your R script. Stage and commit with the commit message "learning to 
@@ -281,13 +284,19 @@ noDuplicates <- unique(duplicates)
 
 ## TASK: Type another comment below.
 
+## I typed another comment below.
+
+
 
 ## TASK: Save your R script. Open up the commit window in RStudio.
 
 
 ## QUESTION: How many commits are you ahead of your branch on GitHub?
-## (Hint: look for the message "Your branch is ahead of..." near the top of the 
+## (Hint: look for the message "Your branch is ahead of..." near the top of the
 ## window.)
+
+## I says I am ahead by 1 commit.
+
 
 
 ## TASK: Stage your modified code and check the "Amend previous commit" box.
@@ -296,6 +305,9 @@ noDuplicates <- unique(duplicates)
 
 ## QUESTION: What happened when you clicked "Amend previous commit"?
 ## How many commits is your branch ahead by now?
+
+## When I clicked "Amend previous commit" is recalled the previous commit comment I had made. I am still ahead by 1 commit.
+
 
 
 ## TASK: Once you've answered the above questions, save your R script one last time. 
