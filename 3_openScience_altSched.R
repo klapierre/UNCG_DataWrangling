@@ -18,12 +18,22 @@
 
 ## QUESTION: Open up the file "knb-lter-knz.148.3.txt". What does this file contain?
 
+#It has the names, emails and the orchID from all contributors of the data and 
+# all the information of the data
+
 
 ## QUESTION: From this file or the original website, who are the dataset contributors?
+
+#Kimberly Komatsu, Meghan Avolio, Andrew Hope, Sally Koerner, Allison Louthan, 
+#Kevin Wilcox, Konza LTER
+
 
 
 ## QUESTION: From this file or the original website, what are the start and end 
 ## dates of the dataset?
+
+# 2019-01-01 to 2022-12-30
+
 
 
 ## QUESTION: Is the data collection still ongoing?
@@ -31,9 +41,13 @@
 ## file, the answer here is yes.We're just behind in getting the data cleaned 
 ## and uploaded :(
 
+#yes
+
 
 ## QUESTION: Given your answer to the previous question, why might it be good to
 ## have a reproducible script for data analysis related to this dataset?
+
+#For new data found to be inserted from others, or for gaps to be filled in.
 
 
 # ----------------------------------------------------------
@@ -43,6 +57,9 @@
 ## We can use the .gitignore file to tell git what files not to sync to GitHub!
 
 ## QUESTION: What are two reasons why we wouldn't want GitHub to sync this data?
+
+#we don't want our own data to overwrite the original file, especially when its
+#for an individual assignment
 
 
 
@@ -55,6 +72,7 @@
 ## QUESTION: What happened to the data folder listed in the Git tab of RStudio
 ## when you hit save?
 
+#The data folder disappreared from the Git tab
 
 ## TASK: Stage, commit, and pull/push your modified .gitignore file to the branch
 ## you created for this week with an appropriate commit message.
@@ -77,21 +95,32 @@
 ## a name that includes the experiment name (conSME) and the data type (abundance)
 ## using '<-' and be sure to carefully consider your naming convention when doing so.
 
+#conSME_species_abundance <- read.csv("Parker_conSME_data/CME011.csv")
 
-## After completing the above taask, run the following code.
-conSMEcoverAlt <- read.csv("https://pasta.lternet.edu/package/data/eml/knb-lter-knz/148/5/5716ee946efd717292fa3da9241cda7c")
+## After completing the above taask, run the following code
+##conSMEcoverAlt <- read.csv("https://pasta.lternet.edu/package/data/eml/knb-lter-knz/148/5/5716ee946efd717292fa3da9241cda7c")
 
 
 ## QUESTION: What did this code do? What can you say about the two dataframes 
 ## you have created thus far?
 
+#It imported a dataset into R directly from the Url and storing it under conSMEcoverAlt
+#conSME_species_abundance was imported from an already downloaded file, and conSMEcoverAlt
+# was imported directly from an online portal
+
 
 ## TASK: Check to see if the two dataframes are identical using an R function.
 ## (Hint: remember the Week 1 assignment?)
 
+#identical(conSME_species_abundance, conSMEcoverAlt)
 
 ## QUESTION: Why might it be better to source data straight from the data portal?
 ## Why might it be worse?
+
+#It may be better because we dont have to store the data on the computer, we can
+# just insert the data straight into the code. It may be worse because if you've
+# already used the file to generate a product, when the portal updates it could mess
+#up or change the data and conclusions.
 
 
 ## TASK: Save your R script. Then stage, commit, and pull/push your
