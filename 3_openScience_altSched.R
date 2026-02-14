@@ -124,20 +124,21 @@ identical(conSMEcoverAlt,headconSME_abundace)
 
 
 ## QUESTION: What naming convention did the dataset creators use for column names?
-
+##cars
 
 ## QUESTION: What naming convention do you plan to use for this course for the
 ## following types of objects in R:
-## R scripts
-## vectors
-## dataframes
-## columns within dataframes
-## homemade functions
+## R scripts = conSME_abundance_analysis.R
+## vectors = species_list
+## dataframes = conSME_traits
+## columns within dataframes = plot_id
+## homemade functions = calculate_richess() 
 
 
 ## QUESTION: Do all of your objects follow the same naming convention or do you
 ## plan to use different naming conventions to reference different object types?
-
+## I would plan to use slightly different but consistent naming conventions
+## depending on the object type.
 
 ## TASK: Save your R script. Stage, commit, and pull/push your modified code to 
 ## the branch you created for this week with an appropriate commit message.
