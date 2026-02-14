@@ -253,6 +253,12 @@ noDuplicates <- unique(duplicates)
 ## noDuplicates dataframe compared to the dulpicates dataframe? What about 
 ## compared to the two original dataframes?
 
+## Comparing "noDuplicates" to "duplicates" shows that the number of observations has lessened around half the amount, which is what we'd expect. However, when comparing "noDuplicates" to each of the "conSME" data frames, we have lost an extra 70 observations.
+
+9245-9175
+[1] 70
+
+
 
 ## TASK: Go back to our repository in GitHub through your web browser. Find the
 ## issue you created and resolve it.
