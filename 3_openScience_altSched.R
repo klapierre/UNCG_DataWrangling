@@ -75,12 +75,12 @@
 # ----------------------------------------------------------
 #### 3) Getting open data into R.####
 # ----------------------------------------------------------
-
 ## You can import your data into R!
 
 ## TASK: Start by setting your working directory to the GitHub repository folder
 ## for this class on your computer using the function setwd().
 ## Hint - set the working directory as the top folder.
+swtwd("~/Downloads/HUFF_conSME_data")
 
 
 ## TASK: Now we can import one of these datasets into R. Let's import the plant
@@ -88,23 +88,25 @@
 ## putting the relative file path and file name. Assign the dataframe you import
 ## a name that includes the experiment name (conSME) and the data type (abundance)
 ## using '<-' and be sure to carefully consider your naming convention when doing so.
+headconSME_abundace <- read.csv("CME011.csv")
 
-
-## After completing the above taask, run the following code.
+## After completing the above task, run the following code.
 conSMEcoverAlt <- read.csv("https://pasta.lternet.edu/package/data/eml/knb-lter-knz/148/5/5716ee946efd717292fa3da9241cda7c")
 
 
 ## QUESTION: What did this code do? What can you say about the two dataframes 
 ## you have created thus far?
-
+## It imported a dataset that is the same as one previously but what is different
+## they have two different names. 
 
 ## TASK: Check to see if the two dataframes are identical using an R function.
 ## (Hint: remember the Week 1 assignment?)
-
+identical(conSMEcoverAlt,headconSME_abundace)
 
 ## QUESTION: Why might it be better to source data straight from the data portal?
 ## Why might it be worse?
-
+## Using the portal increases accuracy and transparency, but relying only on it
+## without version control can reduce reproducibility. 
 
 ## TASK: Save your R script. Then stage, commit, and pull/push your
 ## modified code to the branch you created for this week with an appropriate 
