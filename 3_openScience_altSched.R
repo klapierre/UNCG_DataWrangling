@@ -140,18 +140,22 @@
 
 ## QUESTION: What naming convention did the dataset creators use for column names?
 
+#They used mixed case, theres no spaces and the names start with a capital letter
+
 
 ## QUESTION: What naming convention do you plan to use for this course for the
 ## following types of objects in R:
-## R scripts
-## vectors
-## dataframes
-## columns within dataframes
-## homemade functions
+## R scripts: number_topic.R
+## vectors: data name with no spaces, ex. SpeciesNames
+## dataframes: DataSetName_description
+## columns within dataframes: mixed case like the previous dataset we looked at
+## homemade functions: verb+name
 
 
 ## QUESTION: Do all of your objects follow the same naming convention or do you
 ## plan to use different naming conventions to reference different object types?
+
+#They are mostly similar but are different for the object types but are similar in build.
 
 
 ## TASK: Save your R script. Stage, commit, and pull/push your modified code to 
