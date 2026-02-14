@@ -157,12 +157,13 @@ identical(conSMEcoverAlt,headconSME_abundace)
 ## conSME dataframes you have created into one ultimate dataframe using the 
 ## rbind() function.
 ## (Hint: Very similar to the cbind function we used in the Week 1 assignment)
-
+duplicates <- rbind(headconSME_abundace, conSMEcoverAlt)
 
 ## QUESTION: Looking at the information for each dataframe in the environment tab
 ## of RStudio, what do you notice about the number of observations for the 
 ## duplicates dataframe compared to the two original dataframes?
-
+## The number of rows increases (adds together), while the number of columns 
+## stays the same. 
 
 ## TASK: Save your R script. Stage, commit, and pull/push your modified code to 
 ## the branch you created for this week with an appropriate commit message.
