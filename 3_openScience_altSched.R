@@ -148,8 +148,16 @@ identical(conSME_abundance,conSMEcoverAlt)
 ## TASK: Check the names of the columns in the species cover dataset you imported.
 ## (Hint: remember the Week 1 assignment?)
 
+colnames(conSMEcoverAlt)
+[1] "Datacode"  "RecType"   "RecYear"   "Season"    "RecDate"   "Watershed"
+[7] "Block"     "Plot"      "Sppnum"    "Taxa"      "Cover"     "Comments"
+
+
 
 ## QUESTION: What naming convention did the dataset creators use for column names?
+
+## The naming convention used is capitalizing the first letter of the word with no spaces in between.
+
 
 
 ## QUESTION: What naming convention do you plan to use for this course for the
@@ -160,9 +168,15 @@ identical(conSME_abundance,conSMEcoverAlt)
 ## columns within dataframes
 ## homemade functions
 
+##I think that I'm going to use underscores, because it has a cleaner look than using capital letters for first letters fo words.
+
+
 
 ## QUESTION: Do all of your objects follow the same naming convention or do you
 ## plan to use different naming conventions to reference different object types?
+
+## I can understand the personal use of wanting to have different naming conventions for different things (easier to personally separate categories visually), but it would be more simple on myself and everyone else to keep it as one naming convention, so that's what I'm going to do.
+
 
 
 ## TASK: Save your R script. Stage, commit, and pull/push your modified code to 
