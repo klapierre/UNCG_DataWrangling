@@ -234,6 +234,7 @@ noDuplicates <- unique(duplicates)
 # ----------------------------------------------------------
 
 ## TASK: Type a comment below.
+# Comment 1
 
 
 ## TASK: Follow these instructions carefully!
@@ -241,6 +242,7 @@ noDuplicates <- unique(duplicates)
 ## amend", but this time DON'T pull/push your modified code!
 
 ## TASK: Type another comment below.
+# Comment 2
 
 
 ## TASK: Save your R script. Open up the commit window in RStudio.
