@@ -119,18 +119,19 @@ identical(conSME_abundance, conSMEcoverAlt)
 
 ## TASK: Check the names of the columns in the species cover dataset you imported.
 ## (Hint: remember the Week 1 assignment?)
+colnames(conSMEcoverAlt)
 
 
 ## QUESTION: What naming convention did the dataset creators use for column names?
-
+##ANSWER: They use distinct capitalization to separate words (ex. "RecYear").
 
 ## QUESTION: What naming convention do you plan to use for this course for the
 ## following types of objects in R:
-## R scripts
-## vectors
-## dataframes
-## columns within dataframes
-## homemade functions
+## R scripts: lowercase_underscores
+## vectors: lowercase_underscore
+## dataframes: DistinctCapitalization
+## columns within dataframes: DistinctCapitalization
+## homemade functions: lowercase_underscore
 
 
 ## QUESTION: Do all of your objects follow the same naming convention or do you
