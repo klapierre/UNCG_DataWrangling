@@ -16,17 +16,18 @@
 ## Extract (unzip) the files into a folder named "YourLastName_conSME_data".
 
 
-## QUESTION: Open up the file "knb-lter-knz.148.3.txt". What does this file contain?
-
+## QUESTION: Open up the file "knb-lter-knz.148.5.txt". What does this file contain?
+#This file contains data policies about the Consumer Size Manipulation Experiment (ConSME) at Konza Prairie.
 
 ## QUESTION: From this file or the original website, who are the dataset contributors?
-
+#The dataset contributers are Kimberly Komatsu, Meghan Avolio, Andrew Hope, Sally Koerner, Allison Louthan, Kevin Wilcox, and Konza LTER. 
 
 ## QUESTION: From this file or the original website, what are the start and end 
 ## dates of the dataset?
+#The start date is 01/01/2019 and end date is 12/30/2022
 
-
-## QUESTION: Is the data collection still ongoing?
+## QUESTION: Is the data collection still ongoing? 
+#Yes, the data is still ongoing. 
 ## Confession from Professor Komatsu: despite the dates of data included in the 
 ## file, the answer here is yes.We're just behind in getting the data cleaned 
 ## and uploaded :(
@@ -34,7 +35,7 @@
 
 ## QUESTION: Given your answer to the previous question, why might it be good to
 ## have a reproducible script for data analysis related to this dataset?
-
+#It's good to have a reproducible script for data analysis so that other researchers can replicate the experiment or apply this method to their own experiments.
 
 # ----------------------------------------------------------
 #### 2) Preventing GitHub from syncing the data files.####
@@ -43,10 +44,11 @@
 ## We can use the .gitignore file to tell git what files not to sync to GitHub!
 
 ## QUESTION: What are two reasons why we wouldn't want GitHub to sync this data?
-
+#Since it's an ongoing experiment, it's not ready for others than the authors to view this data. Also, the data still needs to get cleaned up before uploading onto GitHub to prevent confusion from interested viewers.
 
 
 ## TASK: Check the Git tab in RStudio. Do you see your data folder listed?
+#I do not see my data folder listed but I'm in my branch.
 ## Now, open the .gitignore file from the files tab in RStudio.
 ## Tell git to ignore the entire folder containing the data you just downloaded.
 ## Save the .gitignore file.
@@ -54,11 +56,11 @@
 
 ## QUESTION: What happened to the data folder listed in the Git tab of RStudio
 ## when you hit save?
-
+#A .gitignore path appeared under the Git tab.
 
 ## TASK: Stage, commit, and pull/push your modified .gitignore file to the branch
 ## you created for this week with an appropriate commit message.
-
+#Done.
 
 # ----------------------------------------------------------
 #### 3) Getting open data into R.####
@@ -69,35 +71,36 @@
 ## TASK: Start by setting your working directory to the GitHub repository folder
 ## for this class on your computer using the function setwd().
 ## Hint - set the working directory as the top folder.
-
-
+setwd("~/Desktop/BIO457/UNCG_DataWrangling/Bautista_conSME_data")
+getwd()
+"/Users/michellebautista/Desktop/BIO 457/UNCG_DataWrangling/Bautista_conSME_data"
 ## TASK: Now we can import one of these datasets into R. Let's import the plant
 ## species abundance datafile (CME011). To do so, use the read.csv() function, 
 ## putting the relative file path and file name. Assign the dataframe you import
 ## a name that includes the experiment name (conSME) and the data type (abundance)
 ## using '<-' and be sure to carefully consider your naming convention when doing so.
-
-
+read.csv("CME011.csv")
+conSME_abundance<-("CME011.csv")
 ## After completing the above taask, run the following code.
 conSMEcoverAlt <- read.csv("https://pasta.lternet.edu/package/data/eml/knb-lter-knz/148/5/5716ee946efd717292fa3da9241cda7c")
-
+#Done.
 
 ## QUESTION: What did this code do? What can you say about the two dataframes 
 ## you have created thus far?
-
+#This code gave me a dataframe of 9245 observations of 12 variables. Both dataframes list CME01 from 2019. The first dataframe includes plant species taxa and cover.
 
 ## TASK: Check to see if the two dataframes are identical using an R function.
 ## (Hint: remember the Week 1 assignment?)
-
-
+identical(conSMEcoverAlt,conSME_abundance)
+#The two dataframes are not identical. 
 ## QUESTION: Why might it be better to source data straight from the data portal?
 ## Why might it be worse?
-
-
+#It might be better to source data straight from the data portal since the content comes from the direct source and faster to access. However, it might be worse if the data is not up-to-date to present studies.
 ## TASK: Save your R script. Then stage, commit, and pull/push your
 ## modified code to the branch you created for this week with an appropriate 
 ## commit message. Remember, it is most effective to commit small chunks of code 
 ## often with specific commit messages!
+#Done.
 
 
 
