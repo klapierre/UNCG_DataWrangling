@@ -222,7 +222,7 @@ noDuplicates <- unique(duplicates)
 ## amend", but this time DON'T pull/push your modified code!
 
 ## TASK: Type another comment below.
-## Ammending in R.
+## Amending in R.
 
 ## TASK: Save your R script. Open up the commit window in RStudio.
 
@@ -230,7 +230,7 @@ noDuplicates <- unique(duplicates)
 ## QUESTION: How many commits are you ahead of your branch on GitHub?
 ## (Hint: look for the message "Your branch is ahead of..." near the top of the 
 ## window.)
-
+##ANSWER: I am one commit ahead of my branch.
 
 ## TASK: Stage your modified code and check the "Amend previous commit" box.
 ## Then commit your code (still don't pull/push).
@@ -238,6 +238,7 @@ noDuplicates <- unique(duplicates)
 
 ## QUESTION: What happened when you clicked "Amend previous commit"?
 ## How many commits is your branch ahead by now?
+##ANSWER: It is still one commit ahead. 
 
 
 ## TASK: Once you've answered the above questions, save your R script one last time. 
