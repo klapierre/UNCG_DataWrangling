@@ -109,6 +109,7 @@ identical(conSME_abundance,conSMEcoverAlt)
 ## modified code to the branch you created for this week with an appropriate 
 ## commit message. Remember, it is most effective to commit small chunks of code 
 ## often with specific commit messages!
+#DONE!
 
 
 
@@ -118,22 +119,24 @@ identical(conSME_abundance,conSMEcoverAlt)
 
 ## TASK: Check the names of the columns in the species cover dataset you imported.
 ## (Hint: remember the Week 1 assignment?)
-
+colnames(conSME_abundance)
 
 ## QUESTION: What naming convention did the dataset creators use for column names?
+#Answer: They used no dashes or underscores, they used a capital letter to differentiate words.
 
 
 ## QUESTION: What naming convention do you plan to use for this course for the
 ## following types of objects in R:
-## R scripts
-## vectors
-## dataframes
-## columns within dataframes
-## homemade functions
+## R scripts: I will use underscores - Ex. Open_Science
+## vectors: I like dashes and all lowercase for vectors - Ex. open-science
+## dataframes: I might use periods for dataframes - open.science.data
+## columns within dataframes: I also like the capitals to differentiate words: OpenScience
+## homemade functions: I can use astrix for homemade functions: open*science()
 
 
 ## QUESTION: Do all of your objects follow the same naming convention or do you
 ## plan to use different naming conventions to reference different object types?
+#Answer: I would like to try to use all different conventions so that I can keep everything seperate/know what everything is
 
 
 ## TASK: Save your R script. Stage, commit, and pull/push your modified code to 
