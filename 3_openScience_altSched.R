@@ -110,27 +110,27 @@ identical(conSMEcoverAlt,conSME_abundance)
 
 ## TASK: Check the names of the columns in the species cover dataset you imported.
 ## (Hint: remember the Week 1 assignment?)
-
+#The names of the columns are Taxa, Cover, and Comments.
 
 ## QUESTION: What naming convention did the dataset creators use for column names?
-
+#For each column name, begins with a capital first letter and for the rest lowercase letters.
 
 ## QUESTION: What naming convention do you plan to use for this course for the
 ## following types of objects in R:
-## R scripts
-## vectors
-## dataframes
-## columns within dataframes
-## homemade functions
+## R scripts: Split files into distinct chunks. Include numbers in the name to indicate order they should be run.
+## vectors: Avoid spaces and use the c() function for sequences of numbers, integers, and lowercase letters.
+## dataframes: No spaces, lowercase letters and the data.frame(,) function binding column of interests.
+## columns within dataframes: Lowercase letters and concatenate the column names into a vector.
+## homemade functions: Parenthesis, lowercase letters, symbols (=,<-)
 
 
 ## QUESTION: Do all of your objects follow the same naming convention or do you
 ## plan to use different naming conventions to reference different object types?
-
+#All objects should avoid spaces when running a code. Most of the objects follow the same naming convection.
 
 ## TASK: Save your R script. Stage, commit, and pull/push your modified code to 
 ## the branch you created for this week with an appropriate commit message.
-
+#Done in the 3_openScience_altSched.R path.
 
 
 # ----------------------------------------------------------
@@ -145,12 +145,12 @@ identical(conSMEcoverAlt,conSME_abundance)
 ## conSME dataframes you have created into one ultimate dataframe using the 
 ## rbind() function.
 ## (Hint: Very similar to the cbind function we used in the Week 1 assignment)
-
+duplicates<-rbind(conSMEcoverAlt,conSME_abundance)
 
 ## QUESTION: Looking at the information for each dataframe in the environment tab
 ## of RStudio, what do you notice about the number of observations for the 
 ## duplicates dataframe compared to the two original dataframes?
-
+#The duplicates dataframe has 9246 observations, the conSMEcoverAlt has 9245 observations, and the conSME_abundance data has one observation. 
 
 ## TASK: Save your R script. Stage, commit, and pull/push your modified code to 
 ## the branch you created for this week with an appropriate commit message.
