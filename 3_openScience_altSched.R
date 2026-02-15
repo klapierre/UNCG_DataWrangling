@@ -219,14 +219,14 @@ noDuplicates <- unique(duplicates)
 # ----------------------------------------------------------
 
 ## TASK: Type a comment below.
-
+#Answer: This is my comment
 
 ## TASK: Follow these instructions carefully!
 ## Save your R script. Stage and commit with the commit message "learning to 
 ## amend", but this time DON'T pull/push your modified code!
 
 ## TASK: Type another comment below.
-
+#Answer: This is my second comment
 
 ## TASK: Save your R script. Open up the commit window in RStudio.
 
