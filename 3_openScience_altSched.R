@@ -156,11 +156,12 @@ colnames(conSME_abundance)
 ## conSME dataframes you have created into one ultimate dataframe using the 
 ## rbind() function.
 ## (Hint: Very similar to the cbind function we used in the Week 1 assignment)
-
+duplicates<-rbind(conSME_abundance,conSMEcoverAlt)
 
 ## QUESTION: Looking at the information for each dataframe in the environment tab
 ## of RStudio, what do you notice about the number of observations for the 
 ## duplicates dataframe compared to the two original dataframes?
+#Answer: The duplicates datafram has 18490 observatios instead of 9245. This makes sense because 9245*2 is 18490
 
 
 ## TASK: Save your R script. Stage, commit, and pull/push your modified code to 
