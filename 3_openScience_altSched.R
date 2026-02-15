@@ -28,7 +28,7 @@
 # Koerner, Sally
 # Louthan, Allison
 # Wilcox, Kevin
-# Konza LTER
+# Konza Prairie LTER
 
 ## QUESTION: From this file or the original website, what are the start and end 
 ## dates of the dataset?
@@ -56,7 +56,7 @@
 ## QUESTION: What are two reasons why we wouldn't want GitHub to sync this data?
 # It is a work in progress and may be misinterpreted if synced and accessed by
 # other.
-#  It may confuse other users updating the same file.
+# It may confuse other users updating the same file and cause merge conflicts.
 
 
 
@@ -91,7 +91,7 @@ setwd("/Users/a_pandey2/Desktop/github/Data Analysis and Visualization/UNCG_Data
 ## putting the relative file path and file name. Assign the dataframe you import
 ## a name that includes the experiment name (conSME) and the data type (abundance)
 ## using '<-' and be sure to carefully consider your naming convention when doing so.
-conSME_abundance <- read.csv("/Users/a_pandey2/Desktop/github/Data Analysis and Visualization/UNCG_DataWrangling/PandeyArnav_conSME_data/CME011.csv")
+conSME_abundance <- read.csv("PandeyArnav_conSME_data/CME011.csv")
 
 
 ## After completing the above task, run the following code.
@@ -101,7 +101,7 @@ conSMEcoverAlt <- read.csv("https://pasta.lternet.edu/package/data/eml/knb-lter-
 ## QUESTION: What did this code do? What can you say about the two dataframes 
 ## you have created thus far? 
 # First code created a dataset from my local workspace.
-# Second code created a dataset from an online source.
+# Second code extracted the dataset from an online source.
 
 
 ## TASK: Check to see if the two dataframes are identical using an R function.
@@ -112,8 +112,8 @@ identical(conSME_abundance,conSMEcoverAlt)
 ## Why might it be worse?
 # It will be better to source data straight from the data portal because that way
 # we will be using the latest version. It might be worse because sometimes we may
-# write an entire code based on what we first see, but then the data providers
-# might change the data in the source, making it another task to re-write entire 
+# write an entire code based on what we first saw, but then the data providers
+# might change the data in the source, making it another task to re-write the 
 # code.
 
 ## TASK: Save your R script. Then stage, commit, and pull/push your
@@ -218,7 +218,8 @@ noDuplicates <- unique(duplicates)
 ## compared to the two original dataframes?
 # There are less than half the number of observations in noDuplicates compared to
 # duplicates dataframe. There are 70 less observations in noDuplicates compared to
-# original dataframes.
+# each original dataframes. There must have been duplicates within eachoriginal 
+# files.
 
 
 ## TASK: Go back to our repository in GitHub through your web browser. Find the
@@ -248,10 +249,9 @@ noDuplicates <- unique(duplicates)
 ## TASK: Save your R script. Open up the commit window in RStudio.
 
 
-## QUESTION: How many commits are you ahead of your branch on GitHub? 
+## QUESTION: How many commits are you ahead of your branch on GitHub? 8
 ## (Hint: look for the message "Your branch is ahead of..." near the top of the 
 ## window.) 
-# 8. I realized I forgot to push before..
 
 
 ## TASK: Stage your modified code and check the "Amend previous commit" box.
@@ -259,7 +259,7 @@ noDuplicates <- unique(duplicates)
 
 
 ## QUESTION: What happened when you clicked "Amend previous commit"?
-# It combined changes from the last two commits together.
+# It combined changes from the last commit to the most recent commit together.
 ## How many commits is your branch ahead by now? 8
 
 
