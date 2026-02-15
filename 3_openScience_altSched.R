@@ -248,9 +248,10 @@ noDuplicates <- unique(duplicates)
 ## TASK: Save your R script. Open up the commit window in RStudio.
 
 
-## QUESTION: How many commits are you ahead of your branch on GitHub?
+## QUESTION: How many commits are you ahead of your branch on GitHub? 
 ## (Hint: look for the message "Your branch is ahead of..." near the top of the 
-## window.)
+## window.) 
+# 8. I realized I forgot to push before..
 
 
 ## TASK: Stage your modified code and check the "Amend previous commit" box.
@@ -258,7 +259,8 @@ noDuplicates <- unique(duplicates)
 
 
 ## QUESTION: What happened when you clicked "Amend previous commit"?
-## How many commits is your branch ahead by now?
+# It combined changes from the last two commits together.
+## How many commits is your branch ahead by now? 8
 
 
 ## TASK: Once you've answered the above questions, save your R script one last time. 
