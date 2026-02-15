@@ -161,7 +161,7 @@ duplicates<-rbind(conSME_abundance,conSMEcoverAlt)
 ## QUESTION: Looking at the information for each dataframe in the environment tab
 ## of RStudio, what do you notice about the number of observations for the 
 ## duplicates dataframe compared to the two original dataframes?
-#Answer: The duplicates datafram has 18490 observatios instead of 9245. This makes sense because 9245*2 is 18490
+#Answer: The duplicates dataframe has 18490 observatios instead of 9245. This makes sense because 9245*2 is 18490
 
 
 ## TASK: Save your R script. Stage, commit, and pull/push your modified code to 
@@ -177,7 +177,7 @@ duplicates[with(duplicates, order(RecDate, Block, Plot, Taxa)),]
 
 ## QUESTION: What do you notice about the data? Specifically, compare rows 
 ## 4934 and 12173 (if they are sorted correctly, those should be on top).
-#Answer: They are on top! Yay!. What I noticed about 4934 and 14179 is that all of the information for the two of them is the same. I also noticed there seems to be a pair for each species.
+#Answer: They are on top! Yay!. What I noticed about 4934 and 14179 is that all of the information for the two of them is the same. I also noticed there seems to be a pair for each species which makes sense because we have combined two data sets with identical data.
 
 
 ## TASK: Save your R script. Stage, commit, and pull/push your modified code to the branch
@@ -203,6 +203,7 @@ noDuplicates <- unique(duplicates)
 ## tab of RStudio, what do you notice about the number of observations for the 
 ## noDuplicates dataframe compared to the dulpicates dataframe? What about 
 ## compared to the two original dataframes?
+#Answer: So conSME_abundance, conSMEcoverAlt, and duplicates still have the same number of observations, but noDuplicates now has less than all three other dataframes. There are the two original dataframes with 9245, and then duplicates that has the double # over 18490, but then noDuplicates has 9175.
 
 
 ## TASK: Go back to our repository in GitHub through your web browser. Find the
