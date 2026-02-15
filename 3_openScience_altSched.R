@@ -177,6 +177,7 @@ duplicates[with(duplicates, order(RecDate, Block, Plot, Taxa)),]
 
 ## QUESTION: What do you notice about the data? Specifically, compare rows 
 ## 4934 and 12173 (if they are sorted correctly, those should be on top).
+#Answer: They are on top! Yay!. What I noticed about 4934 and 14179 is that all of the information for the two of them is the same. I also noticed there seems to be a pair for each species.
 
 
 ## TASK: Save your R script. Stage, commit, and pull/push your modified code to the branch
