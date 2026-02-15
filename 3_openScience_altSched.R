@@ -160,7 +160,7 @@ duplicates <- rbind(conSME_abundance, conSMEcoverAlt)
 ## QUESTION: Looking at the information for each dataframe in the environment tab
 ## of RStudio, what do you notice about the number of observations for the 
 ## duplicates dataframe compared to the two original dataframes?
-
+##ANSWER: Each dataframe has 9245 observations, the duplicates dataframe has 18490 (double the amout) of observations. This makes sense since it combines the two original dataframes.
 
 ## TASK: Save your R script. Stage, commit, and pull/push your modified code to 
 ## the branch you created for this week with an appropriate commit message.
