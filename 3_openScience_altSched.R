@@ -216,6 +216,9 @@ noDuplicates <- unique(duplicates)
 ## tab of RStudio, what do you notice about the number of observations for the 
 ## noDuplicates dataframe compared to the dulpicates dataframe? What about 
 ## compared to the two original dataframes?
+# There are less than half the number of observations in noDuplicates compared to
+# duplicates dataframe. There are 70 less observations in noDuplicates compared to
+# original dataframes.
 
 
 ## TASK: Go back to our repository in GitHub through your web browser. Find the
