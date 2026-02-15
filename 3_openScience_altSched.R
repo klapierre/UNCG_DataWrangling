@@ -102,7 +102,7 @@ identical(conSME_abundance,conSMEcoverAlt)
 
 ## QUESTION: Why might it be better to source data straight from the data portal?
 ## Why might it be worse?
-#Pulling the data straight from the data portal means that you know all of the data is there, and that you can always come back to it. compared to from your computer where you could accidently upload the wrong data set, and it might not be an accessible path for other people to see the data. It is also really easy to accidentally delete a data file on your laptop and then store it in a different place and the code no longer works for you either.
+#Answer: Pulling the data straight from the data portal means that you know all of the data is there, and that you can always come back to it. compared to from your computer where you could accidently upload the wrong data set, and it might not be an accessible path for other people to see the data. It is also really easy to accidentally delete a data file on your laptop and then store it in a different place and the code no longer works for you either.
 
 
 ## TASK: Save your R script. Then stage, commit, and pull/push your
