@@ -234,6 +234,7 @@ noDuplicates <- unique(duplicates)
 ## QUESTION: How many commits are you ahead of your branch on GitHub?
 ## (Hint: look for the message "Your branch is ahead of..." near the top of the 
 ## window.)
+#Answer: I am ahead by 1 commit
 
 
 ## TASK: Stage your modified code and check the "Amend previous commit" box.
@@ -242,6 +243,7 @@ noDuplicates <- unique(duplicates)
 
 ## QUESTION: What happened when you clicked "Amend previous commit"?
 ## How many commits is your branch ahead by now?
+#Answer: When I clicked the "Amend previous commit" button, my commit message from my previous commit popped up, and I am not still ahead by only 1 commit.
 
 
 ## TASK: Once you've answered the above questions, save your R script one last time. 
