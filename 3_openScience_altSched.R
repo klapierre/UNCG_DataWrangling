@@ -17,7 +17,7 @@
 
 
 ## QUESTION: Open up the file "knb-lter-knz.148.5.txt". What does this file contain?
-# The file contains the metadata The Consumer Size Manipulation Experiment 
+# The file contains the metadata for The Consumer Size Manipulation Experiment 
 # (ConSME) at Konza Prairie.
 
 
@@ -28,6 +28,7 @@
 # Koerner, Sally
 # Louthan, Allison
 # Wilcox, Kevin
+# Konza LTER
 
 ## QUESTION: From this file or the original website, what are the start and end 
 ## dates of the dataset?
@@ -42,7 +43,9 @@
 
 ## QUESTION: Given your answer to the previous question, why might it be good to
 ## have a reproducible script for data analysis related to this dataset?
-# 
+# Reproducible scripts make dataset accessible such that it will be useful for 
+# other researchers to utilize this dataset to perform actions pertaining to
+# their needs.
 
 # ----------------------------------------------------------
 #### 2) Preventing GitHub from syncing the data files.####
@@ -51,21 +54,24 @@
 ## We can use the .gitignore file to tell git what files not to sync to GitHub!
 
 ## QUESTION: What are two reasons why we wouldn't want GitHub to sync this data?
+# It is a work in progress and may be misinterpreted if synced and accessed by
+# other.
+#  It may confuse other users updating the same file.
 
 
 
-## TASK: Check the Git tab in RStudio. Do you see your data folder listed?
+## TASK: Check the Git tab in RStudio. Do you see your data folder listed? Yes
 ## Now, open the .gitignore file from the files tab in RStudio.
 ## Tell git to ignore the entire folder containing the data you just downloaded.
 ## Save the .gitignore file.
 
 
 ## QUESTION: What happened to the data folder listed in the Git tab of RStudio
-## when you hit save?
+## when you hit save? The folder disappeared from the Git tab.
 
 
 ## TASK: Stage, commit, and pull/push your modified .gitignore file to the branch
-## you created for this week with an appropriate commit message.
+## you created for this week with an appropriate commit message. 
 
 
 # ----------------------------------------------------------
@@ -77,6 +83,7 @@
 ## TASK: Start by setting your working directory to the GitHub repository folder
 ## for this class on your computer using the function setwd().
 ## Hint - set the working directory as the top folder.
+setwd("/Users/a_pandey2/Desktop/github/Data Analysis and Visualization/UNCG_DataWrangling")
 
 
 ## TASK: Now we can import one of these datasets into R. Let's import the plant
@@ -84,23 +91,30 @@
 ## putting the relative file path and file name. Assign the dataframe you import
 ## a name that includes the experiment name (conSME) and the data type (abundance)
 ## using '<-' and be sure to carefully consider your naming convention when doing so.
+conSME_abundance <- read.csv("/Users/a_pandey2/Desktop/github/Data Analysis and Visualization/UNCG_DataWrangling/PandeyArnav_conSME_data/CME011.csv")
 
 
-## After completing the above taask, run the following code.
+## After completing the above task, run the following code.
 conSMEcoverAlt <- read.csv("https://pasta.lternet.edu/package/data/eml/knb-lter-knz/148/5/5716ee946efd717292fa3da9241cda7c")
 
 
 ## QUESTION: What did this code do? What can you say about the two dataframes 
-## you have created thus far?
+## you have created thus far? 
+# First code created a dataset from my local workspace.
+# Second code created a dataset from an online source.
 
 
 ## TASK: Check to see if the two dataframes are identical using an R function.
-## (Hint: remember the Week 1 assignment?)
-
+## (Hint: remember the Week 1 assignment?) 
+identical(conSME_abundance,conSMEcoverAlt)
 
 ## QUESTION: Why might it be better to source data straight from the data portal?
 ## Why might it be worse?
-
+# It will be better to source data straight from the data portal because that way
+# we will be using the latest version. It might be worse because sometimes we may
+# write an entire code based on what we first see, but then the data providers
+# might change the data in the source, making it another task to re-write entire 
+# code.
 
 ## TASK: Save your R script. Then stage, commit, and pull/push your
 ## modified code to the branch you created for this week with an appropriate 
