@@ -190,7 +190,7 @@ noDuplicates <- unique(duplicates)
 ## tab of RStudio, what do you notice about the number of observations for the 
 ## noDuplicates dataframe compared to the dulpicates dataframe? What about 
 ## compared to the two original dataframes?
-
+duplicates are both datasets toghter think stacked no duplicates the exact data sets with the duplicates removed 
 
 ## TASK: Go back to our repository in GitHub through your web browser. Find the
 ## issue you created and resolve it.
@@ -219,7 +219,7 @@ noDuplicates <- unique(duplicates)
 
 ## QUESTION: How many commits are you ahead of your branch on GitHub?
 ## (Hint: look for the message "Your branch is ahead of..." near the top of the 
-## window.)
+## window.)2 
 
 
 ## TASK: Stage your modified code and check the "Amend previous commit" box.
@@ -228,7 +228,7 @@ noDuplicates <- unique(duplicates)
 
 ## QUESTION: What happened when you clicked "Amend previous commit"?
 ## How many commits is your branch ahead by now?
-
+R replaced and update the prevoius commit 
 
 ## TASK: Once you've answered the above questions, save your R script one last time. 
 ## Stage your modified code, amend it to the previous commit, and finally pull/push
