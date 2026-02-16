@@ -323,8 +323,9 @@ calispellTempSum <- select(.data=calispellTempSum,
 
 # QUESTION: We might also want to add a column that describes the dataset. What 
 # happens when you run the following code?
-calispellTempFaquatic <- mutate(.data=calispellTemp,
+calispellTempFaquatic <- mutate(.data=calispellTempF,
                                 type='aquatic')
+##ANSWER: It creates a column called "aquatic" that gives every value the type "aquatic."
 
 
 # ---------------------------------------------------------- #
