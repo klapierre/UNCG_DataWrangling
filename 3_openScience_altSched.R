@@ -198,12 +198,14 @@ check <- unique(conSMEcoverAlt)
 # ----------------------------------------------------------
 
 ## TASK: Type a comment below.
+# comment yayyyyyyyy 
 
 ## TASK: Follow these instructions carefully!
 ## Save your R script. Stage and commit with the commit message "learning to 
 ## amend", but this time DON'T pull/push your modified code!
 
 ## TASK: Type another comment below.
+# another comment yay yayyyyyyy
 
 
 ## TASK: Save your R script. Open up the commit window in RStudio.
