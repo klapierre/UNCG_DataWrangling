@@ -16,24 +16,30 @@
 ## Extract (unzip) the files into a folder named "YourLastName_conSME_data".
 
 
-## QUESTION: Open up the file "knb-lter-knz.148.3.txt". What does this file contain?
-
+## QUESTION: Open up the file "knb-lter-knz.148.5.txt". What does this file contain?
+# The text file contains the information of people involved in the project as well
+# as information about the project. 
 
 ## QUESTION: From this file or the original website, who are the dataset contributors?
-
+# The data creators are Komatsu, Kimberly, Avolio, Meghan, Hope,Andrew, Koerner, 
+#Sally, Louthan, Allison, Wilcox, Kevin. 
 
 ## QUESTION: From this file or the original website, what are the start and end 
 ## dates of the dataset?
-
+# The start date is 2019-01-01 and the end date was 2022-12-30
 
 ## QUESTION: Is the data collection still ongoing?
+# Yes, because data is still being cleaned and uploaded. 
 ## Confession from Professor Komatsu: despite the dates of data included in the 
 ## file, the answer here is yes.We're just behind in getting the data cleaned 
 ## and uploaded :(
 
 
 ## QUESTION: Given your answer to the previous question, why might it be good to
-## have a reproducible script for data analysis related to this dataset?
+## have a reproducible script for data analysis related to this dataset?#
+# It is good to have reproducible script for data analysis related to this data set
+# because maybe someone would want to replicate this data or follow up on how this 
+# data was achieved. 
 
 
 # ----------------------------------------------------------
@@ -43,7 +49,8 @@
 ## We can use the .gitignore file to tell git what files not to sync to GitHub!
 
 ## QUESTION: What are two reasons why we wouldn't want GitHub to sync this data?
-
+#Two reasons why we wouldn't want Github to sync this data is the data is too large and
+# you may want to work on it without being updated to Github. 
 
 
 ## TASK: Check the Git tab in RStudio. Do you see your data folder listed?
@@ -54,7 +61,7 @@
 
 ## QUESTION: What happened to the data folder listed in the Git tab of RStudio
 ## when you hit save?
-
+# The data file disappeared.  
 
 ## TASK: Stage, commit, and pull/push your modified .gitignore file to the branch
 ## you created for this week with an appropriate commit message.
@@ -69,14 +76,14 @@
 ## TASK: Start by setting your working directory to the GitHub repository folder
 ## for this class on your computer using the function setwd().
 ## Hint - set the working directory as the top folder.
-
+setwd("~/Desktop/Data Class/UNCG_DataWrangling")
 
 ## TASK: Now we can import one of these datasets into R. Let's import the plant
 ## species abundance datafile (CME011). To do so, use the read.csv() function, 
 ## putting the relative file path and file name. Assign the dataframe you import
 ## a name that includes the experiment name (conSME) and the data type (abundance)
 ## using '<-' and be sure to carefully consider your naming convention when doing so.
-
+conSME_abundance <- read.csv("Leyva-Espino_conSME_data/CME011.csv")
 
 ## After completing the above taask, run the following code.
 conSMEcoverAlt <- read.csv("https://pasta.lternet.edu/package/data/eml/knb-lter-knz/148/5/5716ee946efd717292fa3da9241cda7c")
@@ -84,15 +91,20 @@ conSMEcoverAlt <- read.csv("https://pasta.lternet.edu/package/data/eml/knb-lter-
 
 ## QUESTION: What did this code do? What can you say about the two dataframes 
 ## you have created thus far?
+# This code downloaded data (CVS file) from the website above and inserted it into R in the from
+# of a data frame (conSMEcoverAlt).
+# The two data frames are the same. They both contain data about plants. 
 
 
 ## TASK: Check to see if the two dataframes are identical using an R function.
 ## (Hint: remember the Week 1 assignment?)
-
-
+identical(conSME_abundance,conSMEcoverAlt)
+ 
 ## QUESTION: Why might it be better to source data straight from the data portal?
 ## Why might it be worse?
-
+# It might be better to source data straight from the data portal because it is 
+# the most accurate data. It might be worse because the data could be deleted and you 
+# would have to find another source. 
 
 ## TASK: Save your R script. Then stage, commit, and pull/push your
 ## modified code to the branch you created for this week with an appropriate 
