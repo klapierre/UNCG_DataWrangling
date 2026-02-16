@@ -130,7 +130,8 @@ colnames(streamTempRename)
 
 # TASK: Look again at the columns you have in the streamTempRename dataframe by
 # writing the necessary code below.
-
+colnames(streamTempRename)
+##[1] "Date"            "Time"            "calispell_temp"  "smalle_temp"     "winchester_temp"
 
 # TASK: Run the following line of code to select our columns of interest.
 calispellTemp <- select(.data=streamTempRename,
@@ -141,7 +142,8 @@ calispellTemp <- select(.data=streamTempRename,
 # by coding the appropriate R function of course. What do you notice about the 
 # new dataframe? Which columns are present? Which are absent? Are they in the same 
 # order as before?
-
+colnames(calispellTemp)
+##ANSWER: The output was "[1] "calispell_temp" "Date"           "Time""; the names of the columns are not the same, and they are not in the same order. 
 
 # A nice thing to notice about this code. We didn't have to type 'streamTemp$date'
 # etc to indicate each column as we would outside of the tidyverse. The select()
