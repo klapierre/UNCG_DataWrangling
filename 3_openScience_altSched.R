@@ -9,7 +9,6 @@ gitcreds_set()
 
 library(usethis)
 create_github_token()
-
 ## OBJECTIVE:
 ## Know where to find data and how to bring it into the R environment.
 ## Set up a good file management system for yourself, which you can build on in the future.
