@@ -52,7 +52,7 @@
 ## Now, open the .gitignore file from the files tab in RStudio.
 ## Tell git to ignore the entire folder containing the data you just downloaded.
 ## Save the .gitignore file.
-
+#Done.
 
 ## QUESTION: What happened to the data folder listed in the Git tab of RStudio
 ## when you hit save?
@@ -161,11 +161,11 @@ duplicates<-rbind(conSMEcoverAlt,conSME_abundance)
 ## on the tops of those columns in that order.
 ## You could also run the following code to get the same outcome:
 duplicates[with(duplicates, order(RecDate, Block, Plot, Taxa)),]
-
+#Done.
 
 ## QUESTION: What do you notice about the data? Specifically, compare rows 
 ## 4934 and 12173 (if they are sorted correctly, those should be on top).
-#The data moved for every time I click on a column. I see row 4934 at the very top, there has been many repeated observations when sorted in that order. I do not see row 12173. 
+#The data moved for every time I click on a column. I see row 4934 at the very top, there has been many repeated observations when sorted in that order. I do not see row 12173 but 14179 in the second row. Both rows contain the same data across the columns. 
 
 ## TASK: Save your R script. Stage, commit, and pull/push your modified code to the branch
 ## you created for this week with an appropriate commit message.
@@ -197,7 +197,7 @@ noDuplicates <- unique(duplicates)
 #Done.
 ## TASK: Save your R script. Stage, commit, and pull/push your modified code to 
 ## the branch you created for this week with an appropriate commit message.
-
+#Done.
 
 
 # ----------------------------------------------------------
@@ -205,31 +205,32 @@ noDuplicates <- unique(duplicates)
 # ----------------------------------------------------------
 
 ## TASK: Type a comment below.
-
+#GitHub is not difficult itself, however I struggled with importing the correct files from my computer.
 
 ## TASK: Follow these instructions carefully!
 ## Save your R script. Stage and commit with the commit message "learning to 
 ## amend", but this time DON'T pull/push your modified code!
 
 ## TASK: Type another comment below.
-
+#What happens if we don't click pull/push?
 
 ## TASK: Save your R script. Open up the commit window in RStudio.
-
+#Done
 
 ## QUESTION: How many commits are you ahead of your branch on GitHub?
 ## (Hint: look for the message "Your branch is ahead of..." near the top of the 
 ## window.)
-
+#My branch is ahead by 8 commits.
 
 ## TASK: Stage your modified code and check the "Amend previous commit" box.
 ## Then commit your code (still don't pull/push).
-
+#Done.
 
 ## QUESTION: What happened when you clicked "Amend previous commit"?
 ## How many commits is your branch ahead by now?
-
+#I got a message "1 file changed, 7 insertions(+), 7 deletions(-).My branch is still ahead by 8 commits.
 
 ## TASK: Once you've answered the above questions, save your R script one last time. 
 ## Stage your modified code, amend it to the previous commit, and finally pull/push
 ## your commits to your branch in our class repository.
+#Done.
