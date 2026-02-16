@@ -72,12 +72,13 @@ dim(streamTemp)
 ##ANSWER: There are 61100 rows and 5 columns. Date is a factor, Time is a factor, Calispell.Cr.Temp is a number, Smalle.Cr.Temp is a number, Winchester.Cr.Temp is a number.
 
 # TASK: Try reading your data in without the stringsAsFactors argument included.
-
+streamTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv") 
 
 # QUESTION: What is the difference? (HINT: rerun the str function to check).
 # When would we want to set the stringsAsFactors argument to true?  When would 
 # it be better to make it false?
-
+str(streamTemp)
+##ANSWER: The Date and Time values are read as characters rather than factors. It would be useful to set the argument as true when you want to be able to organize values by category (ex. if you want to organize a dataset by months), and it would be useful to not use the argument if you want to have unique values that are not grouped together (ex. names of individuals).
 
 
 # ---------------------------------------------------------- #
