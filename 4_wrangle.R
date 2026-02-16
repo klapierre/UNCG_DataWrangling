@@ -92,7 +92,7 @@ colnames(streamTemp)
 
 
 # QUESTION: What output do you get in the console? Why is this useful?
-
+##ANSWER: I got the names of the columns that are in excel.
 
 # QUESTION: What happened to the title of the third column when it was loaded
 # into R?
