@@ -325,7 +325,7 @@ calispellTempSum <- select(.data=calispellTempSum,
 # happens when you run the following code?
 calispellTempFaquatic <- mutate(.data=calispellTempF,
                                 type='aquatic')
-##ANSWER: It creates a column called "aquatic" that gives every value the type "aquatic."
+##ANSWER: It creates a column called "type" where every value is "aquatic."
 
 
 # ---------------------------------------------------------- #
@@ -336,7 +336,7 @@ calispellTempFaquatic <- mutate(.data=calispellTempF,
 
 # TASK: Write code to create one more column named ecosystem in the 
 # calispellTempFaquatic dataframe and fill it with the word 'stream'.
-
+calispellTempFaquatic <- mutate(.data=calispellTempFaquatic, ecosystem='stream')
 
 # Now we might want to create a new column that includes information from both 
 # of the columns we just created. We would do so by running the following lines 
