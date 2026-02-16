@@ -143,7 +143,6 @@ names(conSME_abundance)
 ## the branch you created for this week with an appropriate commit message.
 
 
-
 # ----------------------------------------------------------
 #### 5) Opening Issues.####
 # ----------------------------------------------------------
@@ -157,11 +156,17 @@ names(conSME_abundance)
 ## rbind() function.
 ## (Hint: Very similar to the cbind function we used in the Week 1 assignment)
 
+duplicates <- rbind(conSME_abundance, conSMEcoverAlt)
 
 ## QUESTION: Looking at the information for each dataframe in the environment tab
 ## of RStudio, what do you notice about the number of observations for the 
 ## duplicates dataframe compared to the two original dataframes?
 
+nrow(conSME_abundance)
+nrow(conSMEcoverAlt)
+nrow(duplicates)
+
+##duplicates has twice the number of rows 
 
 ## TASK: Save your R script. Stage, commit, and pull/push your modified code to 
 ## the branch you created for this week with an appropriate commit message.
