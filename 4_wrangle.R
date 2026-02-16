@@ -164,6 +164,7 @@ colnames(calispellTemp)
 # HINT: Replace the code where each column was listed out with a sequence of 
 # column names. Be sure they are listed in the order they exist in the original 
 # dataframe.
+calispellTemp2 <- select(.data = streamTempRename, Date:calispell_temp)
 
 
 # TASK: Write code to check your column names again to see what happened in your
