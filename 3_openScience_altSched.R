@@ -18,15 +18,21 @@
 
 ## QUESTION: Open up the file "knb-lter-knz.148.3.txt". What does this file contain?
 
+#ANSWER: it contains the authors contact information, an abstract of the study, and other metadata.
 
 ## QUESTION: From this file or the original website, who are the dataset contributors?
 
+#ANSWER: Komatsu, Kimberly; Avolio,; Meghan; Hope, Andrew; Koerner, Sally; Louthan, Allison; and Wilcox, Kevin
 
 ## QUESTION: From this file or the original website, what are the start and end 
 ## dates of the dataset?
 
+#ANSWER: Start=01/01/2019; End=12/31/2022
 
 ## QUESTION: Is the data collection still ongoing?
+
+#ANSWER: According to the metadata, no. According to Kim, yes.
+
 ## Confession from Professor Komatsu: despite the dates of data included in the 
 ## file, the answer here is yes.We're just behind in getting the data cleaned 
 ## and uploaded :(
@@ -35,6 +41,7 @@
 ## QUESTION: Given your answer to the previous question, why might it be good to
 ## have a reproducible script for data analysis related to this dataset?
 
+#ANSWER: Just in case things take longer than expected, it is nice to be able to have good, organized scripts so you don't have to spend forever trying to figure out what you were doing. 
 
 # ----------------------------------------------------------
 #### 2) Preventing GitHub from syncing the data files.####
