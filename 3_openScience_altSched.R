@@ -84,7 +84,7 @@ conSMEcoverAlt <- read.csv("https://pasta.lternet.edu/package/data/eml/knb-lter-
 
 ## QUESTION: What did this code do? What can you say about the two dataframes 
 ## you have created thus far?
-
+they are both data frmes that come from differnt sources 
 
 ## TASK: Check to see if the two dataframes are identical using an R function.
 ## (Hint: remember the Week 1 assignment?)
@@ -92,7 +92,7 @@ conSMEcoverAlt <- read.csv("https://pasta.lternet.edu/package/data/eml/knb-lter-
 
 ## QUESTION: Why might it be better to source data straight from the data portal?
 ## Why might it be worse?
-
+its a local file so not to many issue alawys can be up to date and alwyas easy to reprodcue 
 
 ## TASK: Save your R script. Then stage, commit, and pull/push your
 ## modified code to the branch you created for this week with an appropriate 
@@ -108,9 +108,12 @@ conSMEcoverAlt <- read.csv("https://pasta.lternet.edu/package/data/eml/knb-lter-
 ## TASK: Check the names of the columns in the species cover dataset you imported.
 ## (Hint: remember the Week 1 assignment?)
 
-
+[1] "Datacode"  "RecType"   "RecYear"  
+[4] "Season"    "RecDate"   "Watershed"
+[7] "Block"     "Plot"      "Sppnum"   
+[10] "Taxa"      "Cover"     "Comments"
 ## QUESTION: What naming convention did the dataset creators use for column names?
-
+just words from what i see words combations lowercase and uppercases 
 
 ## QUESTION: What naming convention do you plan to use for this course for the
 ## following types of objects in R:
@@ -119,11 +122,11 @@ conSMEcoverAlt <- read.csv("https://pasta.lternet.edu/package/data/eml/knb-lter-
 ## dataframes
 ## columns within dataframes
 ## homemade functions
-
+dataframes 
 
 ## QUESTION: Do all of your objects follow the same naming convention or do you
 ## plan to use different naming conventions to reference different object types?
-
+yes they do and I dont plan on  different naming convections only if im renaming or cleaing up my space 
 
 ## TASK: Save your R script. Stage, commit, and pull/push your modified code to 
 ## the branch you created for this week with an appropriate commit message.
@@ -147,7 +150,7 @@ conSMEcoverAlt <- read.csv("https://pasta.lternet.edu/package/data/eml/knb-lter-
 ## QUESTION: Looking at the information for each dataframe in the environment tab
 ## of RStudio, what do you notice about the number of observations for the 
 ## duplicates dataframe compared to the two original dataframes?
-
+there are more observations rows as to the other two data sets 
 
 ## TASK: Save your R script. Stage, commit, and pull/push your modified code to 
 ## the branch you created for this week with an appropriate commit message.
