@@ -133,22 +133,25 @@ identical(conSME_abundance, conSMEcoverAlt)
 
 ## TASK: Check the names of the columns in the species cover dataset you imported.
 ## (Hint: remember the Week 1 assignment?)
-
+colnames(conSME_abundance)
+colnames(conSMEcoverAlt)
 
 ## QUESTION: What naming convention did the dataset creators use for column names?
-
+#ANSWER: They abbreviated words and used capital letters to denote different words. 
 
 ## QUESTION: What naming convention do you plan to use for this course for the
 ## following types of objects in R:
-## R scripts
-## vectors
-## dataframes
-## columns within dataframes
-## homemade functions
+## R scripts - I will separate words with  underscores and hyphens. 
+## vectors - abbreviations and when needed using underscores
+## dataframes - I will separate words with  underscores and hyphens. 
+## columns within dataframes - I will separate words with  underscores and abbreviate 
+## homemade functions - will use underscores
 
 
 ## QUESTION: Do all of your objects follow the same naming convention or do you
 ## plan to use different naming conventions to reference different object types?
+
+#ANSWER: They will follow the same naming convention.
 
 
 ## TASK: Save your R script. Stage, commit, and pull/push your modified code to 
