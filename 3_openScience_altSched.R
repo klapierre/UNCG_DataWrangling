@@ -150,22 +150,24 @@ duplicates<-rbind(conSMEcoverAlt,conSME_abundance)
 ## QUESTION: Looking at the information for each dataframe in the environment tab
 ## of RStudio, what do you notice about the number of observations for the 
 ## duplicates dataframe compared to the two original dataframes?
-#The duplicates dataframe has 9246 observations, the conSMEcoverAlt has 9245 observations, and the conSME_abundance data has one observation. 
+#The duplicates dataframe has 18490 observations, the conSMEcoverAlt has 9245 observations, and the conSME_abundance data has 9245 observation. 
 
 ## TASK: Save your R script. Stage, commit, and pull/push your modified code to 
 ## the branch you created for this week with an appropriate commit message.
-
+#Done.
 
 ## TASK: Open the duplicates dataframe by clicking on the file name in the 
 ## environment tab. Sort by Taxa, Plot, Block, Watershed, and RecDate by clicking
 ## on the tops of those columns in that order.
 ## You could also run the following code to get the same outcome:
 duplicates[with(duplicates, order(RecDate, Block, Plot, Taxa)),]
-
+conSME_abundance
+CME011.csv
+#Done. 
 
 ## QUESTION: What do you notice about the data? Specifically, compare rows 
 ## 4934 and 12173 (if they are sorted correctly, those should be on top).
-
+#The data moved for every time I click on a column. I see row 4934, I do not see row 12173. 
 
 ## TASK: Save your R script. Stage, commit, and pull/push your modified code to the branch
 ## you created for this week with an appropriate commit message.
