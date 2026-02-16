@@ -222,6 +222,8 @@ noDuplicates <- unique(duplicates)
 ## noDuplicates dataframe compared to the dulpicates dataframe? What about 
 ## compared to the two original dataframes?
 
+#ANSWER: There is less than half the number of obswervations than the duplicates df. There are less observations than the original two df
+
 
 ## TASK: Go back to our repository in GitHub through your web browser. Find the
 ## issue you created and resolve it.
