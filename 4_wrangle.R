@@ -141,6 +141,9 @@ calispellTemp <- select(.data=streamTempRename,
 # by coding the appropriate R function of course. What do you notice about the 
 # new dataframe? Which columns are present? Which are absent? Are they in the same 
 # order as before?
+# The Temperature for the Calispell and the Date and Time columns are preserved
+# while the columns for the other two streams have been removed. It seems the 
+# calispell temperature is now the first one by order though over date or time.
 
 
 # A nice thing to notice about this code. We didn't have to type 'streamTemp$date'
