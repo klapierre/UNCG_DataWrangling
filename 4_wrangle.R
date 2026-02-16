@@ -284,7 +284,7 @@ str(calispellData)
 na_calispellData <- filter(.data=calispellTemp,
                            is.na(calispell_temp))
 
-##ANSWER: 8770 observations were NA.
+##ANSWER: 52330 observations are in the calispellData file. 8770 observations of the original file are NA.
 
 # ---------------------------------------------------------- #
 ### PART 1.4: CREATING COLUMNS                            ####
