@@ -92,12 +92,12 @@ colnames(streamTemp)
 
 
 # QUESTION: What output do you get in the console? Why is this useful?
-
+## Date / Time / Calispell.Cr.Temp.C. / Smalle.Cr.Temp.C / etc
 
 # QUESTION: What happened to the title of the third column when it was loaded
 # into R?
 # HINT: What happened to the spaces and parenthesis in the R column names?
-
+# The spaces and parentheses have been turned into periods.
 
 # TASK: Run the following line of code. Note the alignment of the code components.
 streamTempRename <- rename(.data=streamTemp,
@@ -114,7 +114,8 @@ streamTempRename <- rename(.data=streamTemp,
 # did each line from the rename function do? Why might this function be useful 
 # for wrangling data? In the rename code above, does the new column name come 
 # before or after the =?
-
+# Each line of the rename function renamed a given column, the new column name
+# comes before the = while the old function name lies after it.
 
 # ---------------------------------------------------------- #
 ### PART 1.2: SELECTING COLUMNS                           ####
