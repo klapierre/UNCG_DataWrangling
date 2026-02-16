@@ -57,17 +57,18 @@ streamTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv",
 
 
 # QUESTION: What do you think stringsAsFactors mean?
-
+# I'm not sure, seems to have done something with the Date & Time values,
+# I guess centering them as factors compared to the temperatures?
 
 # TASK: Let's learn a little more about our data. Run the following line of code.
 str(streamTemp)
 
 # QUESTION: What does it look like the str() function does?
-
+# It shows the some of the data in each row.
 
 # QUESTION: How many rows does our dataframe have? How many columns? 
 # What class of data is in each column?
-
+# We have 61,100 rows and 5 columns.
 
 # TASK: Try reading your data in without the stringsAsFactors argument included.
 
@@ -75,7 +76,9 @@ str(streamTemp)
 # QUESTION: What is the difference? (HINT: rerun the str function to check).
 # When would we want to set the stringsAsFactors argument to true?  When would 
 # it be better to make it false?
-
+# It has the Date / Time classified as "chr" instead of factors, presumably being
+# taken as time variables rather than factors. Perhaps it's important to classify
+# those values as factors for later data manipulation?
 
 
 # ---------------------------------------------------------- #
