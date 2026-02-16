@@ -169,7 +169,7 @@ duplicates[with(duplicates, order(RecDate, Block, Plot, Taxa)),]
 
 ## TASK: Save your R script. Stage, commit, and pull/push your modified code to the branch
 ## you created for this week with an appropriate commit message.
-
+#Done
 
 ## It looks like we have a problem (that we created for ourselves)! Let's open an
 ## issue to make note of this.
@@ -178,23 +178,23 @@ duplicates[with(duplicates, order(RecDate, Block, Plot, Taxa)),]
 ## TASK: Go to our repository in GitHub through your web browser. Click on issues
 ## and start a new issue. Give it a descriptive title that references the script
 ## name and line number of the issue. The write a comment describing the issue.
-
+#Done
 
 ## Now let's fix our issue!
 ## A great function to get rid of exact duplicate columns in R is unique().
 ## Run the following code.
 noDuplicates <- unique(duplicates)
-
+noDuplicates <- unique(duplicates)
 
 ## QUESTION: Looking at the information for each dataframe in the environment 
 ## tab of RStudio, what do you notice about the number of observations for the 
 ## noDuplicates dataframe compared to the dulpicates dataframe? What about 
 ## compared to the two original dataframes?
-
+#The noDuplicates dateframe has 18302 observations, the duplicates dataframe has 18490 observations, conSMEcoverAlt has 9245 observations, and conSME_abundance has 9245 observations.
 
 ## TASK: Go back to our repository in GitHub through your web browser. Find the
 ## issue you created and resolve it.
-
+#Done.
 ## TASK: Save your R script. Stage, commit, and pull/push your modified code to 
 ## the branch you created for this week with an appropriate commit message.
 
