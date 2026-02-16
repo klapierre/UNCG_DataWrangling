@@ -50,7 +50,7 @@ library(tidyverse)
 # TASK: Download the data from the Canvas website. Remember to save it to your 
 # working directory for this class! I have already added it to your .gitignore 
 # file for you.
-
+list.files()
 
 # TASK: Read in the data by running the following line of code.
 streamTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv", 
@@ -58,7 +58,7 @@ streamTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv",
 
 
 # QUESTION: What do you think stringsAsFactors mean?
-
+# ANSWER: I think it means that strings/text will be interpreted as factors in the dataset. 
 
 # TASK: Let's learn a little more about our data. Run the following line of code.
 str(streamTemp)
