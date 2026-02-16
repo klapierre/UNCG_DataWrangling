@@ -1,5 +1,7 @@
 #### MODULE 2: Open Data, Project Management, and GitHub #### 
 
+#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
+
 ## OBJECTIVE:
 ## Know where to find data and how to bring it into the R environment.
 ## Set up a good file management system for yourself, which you can build on in the future.
@@ -48,12 +50,12 @@
 
 ## QUESTION: What happened to the data folder listed in the Git tab of RStudio
 ## when you hit save?
-
 # the size of the file changed, and it popped up in my Git tab as a new path
+
 
 ## TASK: Stage, commit, and pull/push your modified .gitignore file to the branch
 ## you created for this week with an appropriate commit message.
-
+# I think I did this??? 
 
 # ----------------------------------------------------------
 #### 3) Getting open data into R.####
@@ -65,35 +67,34 @@
 ## for this class on your computer using the function setwd().
 ## Hint - set the working directory as the top folder.
 
-
 ## TASK: Now we can import one of these datasets into R. Let's import the plant
 ## species abundance datafile (CME011). To do so, use the read.csv() function, 
 ## putting the relative file path and file name. Assign the dataframe you import
 ## a name that includes the experiment name (conSME) and the data type (abundance)
 ## using '<-' and be sure to carefully consider your naming convention when doing so.
+conSME_spec_abundance <- read.csv("~/Desktop/UNCG_DataWrangling/Dixon_conSME_data/knb-lter-knz.148.5/CME011.csv")
 
-
-## After completing the above taask, run the following code.
+## After completing the above task, run the following code.
 conSMEcoverAlt <- read.csv("https://pasta.lternet.edu/package/data/eml/knb-lter-knz/148/5/5716ee946efd717292fa3da9241cda7c")
-
 
 ## QUESTION: What did this code do? What can you say about the two dataframes 
 ## you have created thus far?
-
+# both codes appear to have made the same dataframe, as there are multiple ways to load and open the same datasets. 
 
 ## TASK: Check to see if the two dataframes are identical using an R function.
 ## (Hint: remember the Week 1 assignment?)
-
+identical(conSME_species_abundance, conSMEcoverAlt) #TRUE
 
 ## QUESTION: Why might it be better to source data straight from the data portal?
 ## Why might it be worse?
-
+# It can be problematic because in order to source from the data portal, you have to specify the working directory within the line of code. This means that it only works on your specific device, and does not translate as well to other devices. For the same reason, it can be useful to share the csv publicly, allowing for others to download it into whatever location they choose. 
 
 ## TASK: Save your R script. Then stage, commit, and pull/push your
 ## modified code to the branch you created for this week with an appropriate 
 ## commit message. Remember, it is most effective to commit small chunks of code 
 ## often with specific commit messages!
 
+#having issues with the git connection. when I hit the push button, it asks me for my keychain login, but I do not recall ever setting that up. 
 
 
 # ----------------------------------------------------------
@@ -102,10 +103,10 @@ conSMEcoverAlt <- read.csv("https://pasta.lternet.edu/package/data/eml/knb-lter-
 
 ## TASK: Check the names of the columns in the species cover dataset you imported.
 ## (Hint: remember the Week 1 assignment?)
-
+colnames(conSMEcoverAlt)
 
 ## QUESTION: What naming convention did the dataset creators use for column names?
-
+# capitalization 
 
 ## QUESTION: What naming convention do you plan to use for this course for the
 ## following types of objects in R:
@@ -114,21 +115,20 @@ conSMEcoverAlt <- read.csv("https://pasta.lternet.edu/package/data/eml/knb-lter-
 ## dataframes
 ## columns within dataframes
 ## homemade functions
+# I like to use a combination of capitalization and underscores
 
 
 ## QUESTION: Do all of your objects follow the same naming convention or do you
 ## plan to use different naming conventions to reference different object types?
-
+# so far, I have not gotten specific with using different conventions for different objects, but I can see why this is useful
 
 ## TASK: Save your R script. Stage, commit, and pull/push your modified code to 
 ## the branch you created for this week with an appropriate commit message.
-
-
+# I need to come to your office hours on monday to get this issue worked out.
 
 # ----------------------------------------------------------
 #### 5) Opening Issues.####
 # ----------------------------------------------------------
-
 ## Sometimes there are issues with code, either your own or someone else's.
 ## Opening issues in GitHub is a really effective way to keep track of these 
 ## problems.
@@ -137,12 +137,12 @@ conSMEcoverAlt <- read.csv("https://pasta.lternet.edu/package/data/eml/knb-lter-
 ## conSME dataframes you have created into one ultimate dataframe using the 
 ## rbind() function.
 ## (Hint: Very similar to the cbind function we used in the Week 1 assignment)
-
+duplicates <- rbind(conSME_species_abundance, conSMEcoverAlt)
 
 ## QUESTION: Looking at the information for each dataframe in the environment tab
 ## of RStudio, what do you notice about the number of observations for the 
 ## duplicates dataframe compared to the two original dataframes?
-
+# the number has doubled
 
 ## TASK: Save your R script. Stage, commit, and pull/push your modified code to 
 ## the branch you created for this week with an appropriate commit message.
@@ -157,7 +157,7 @@ duplicates[with(duplicates, order(RecDate, Block, Plot, Taxa)),]
 
 ## QUESTION: What do you notice about the data? Specifically, compare rows 
 ## 4934 and 12173 (if they are sorted correctly, those should be on top).
-
+# those are not the first two rows I see ...
 
 ## TASK: Save your R script. Stage, commit, and pull/push your modified code to the branch
 ## you created for this week with an appropriate commit message.
