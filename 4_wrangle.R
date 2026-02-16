@@ -33,7 +33,7 @@
 
 # TASK: Install tidyverse and load the library. HINT: see the end of the week 1 
 # assignment if you forget how to install and load a package.
-
+library(tidyverse)
 
 # ---------------------------------------------------------- #
 #### PART 1.0: LEARNING THE FUNCTIONS                     ####
@@ -49,7 +49,8 @@
 # TASK: Download the data from the Canvas website. Remember to save it to your 
 # working directory for this class! I have already added it to your .gitignore 
 # file for you.
-
+getwd()
+setwd("C:/Users/kelly/Documents/data wrangling/04-wrangle_data")
 
 # TASK: Read in the data by running the following line of code.
 streamTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv", 
@@ -57,26 +58,30 @@ streamTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv",
 
 
 # QUESTION: What do you think stringsAsFactors mean?
-
+?read.csv
+#ANSWER: It is asking if the vectors should be converted to factors.
 
 # TASK: Let's learn a little more about our data. Run the following line of code.
 str(streamTemp)
 
 # QUESTION: What does it look like the str() function does?
 
+#ANSWER:It displays the structure of the data in a consice manner. 
 
 # QUESTION: How many rows does our dataframe have? How many columns? 
 # What class of data is in each column?
+dim(streamTemp)
+#ANSWER: There are 61100 rows and 5 columns
 
 
 # TASK: Try reading your data in without the stringsAsFactors argument included.
-
+streamTemp.1 <- read.csv("CalispellCreekandTributaryTemperatures.csv")
 
 # QUESTION: What is the difference? (HINT: rerun the str function to check).
 # When would we want to set the stringsAsFactors argument to true?  When would 
 # it be better to make it false?
-
-
+str(streamTemp.1)
+#ANSWER: when stringsAsFactors = TRUE the date and the time were considered factors which allows for better control with working with the dataset. It would be beneficial to set it to FALSE when you don't want the characters to be factors when you are uploading the data and need to manipulate it. 
 
 # ---------------------------------------------------------- #
 ### PART 1.1: RENAMING COLUMNS                            ####
