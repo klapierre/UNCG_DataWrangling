@@ -1,14 +1,12 @@
 # ---------------------------------------------------------- #
 #### MODULE 2: Wrangle some data!                         ####               
 # ---------------------------------------------------------- #
-
-## OBJECTIVE:
+## OBJECTIVES:
 # 1. To learn how to manipulate and transform data into a form usable for 
 # analysis and graphs.
 # 2. To do this in a way that each step is traceable and reproducible.
 # To this end we'll be familiarizing ourselves with and diving into the dplyr 
 # package.
-
 
 # ---------------------------------------------------------- #
 #### SET UP:                                              ####
@@ -33,7 +31,7 @@
 
 # TASK: Install tidyverse and load the library. HINT: see the end of the week 1 
 # assignment if you forget how to install and load a package.
-
+library(tidyverse)
 
 # ---------------------------------------------------------- #
 #### PART 1.0: LEARNING THE FUNCTIONS                     ####
@@ -55,26 +53,32 @@
 streamTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv", 
                        stringsAsFactors = TRUE) 
 
-
 # QUESTION: What do you think stringsAsFactors mean?
-
+# the different "strings" are the different columns without our dataset, i.e the different kinds of data
 
 # TASK: Let's learn a little more about our data. Run the following line of code.
 str(streamTemp)
 
 # QUESTION: What does it look like the str() function does?
-
+# it shows which columns are being considered factors, and which are still considered other 'types' of data
 
 # QUESTION: How many rows does our dataframe have? How many columns? 
 # What class of data is in each column?
-
+# this dataframe has 61100 rows, 5 columns. The class of the first two columns (date and time) are considered factors, and the remaining three columns contain numeric data
 
 # TASK: Try reading your data in without the stringsAsFactors argument included.
+streamTemp2 <- read.csv("CalispellCreekandTributaryTemperatures.csv")
 
+# check
+str(streamTemp)
+str(streamTemp2)
 
 # QUESTION: What is the difference? (HINT: rerun the str function to check).
 # When would we want to set the stringsAsFactors argument to true?  When would 
 # it be better to make it false?
+# The difference is when stringsAsFactors is set to TRUE, the date and time columns are considered factors. When set to FALSE (or not included), these columns are both considered characters. My understanding is that RStudio automatically sets that function to be true, but it can be useful to make it false when you want to ............................ girl i dont know
+
+
 
 
 
