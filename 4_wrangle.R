@@ -236,9 +236,11 @@ identical (calispellTemp4, calispellTemp5) #TRUE = IDENTICAL
 # Calispell dataframe to only include data where the Calispell Creek has 
 # temperature equal or greater than 15 C.
 
+
 # QUESTION: If you remove all of the observations (rows) with temperatures lower
 # than 15 C, would you expect your new dataframe to have more, the same, or fewer
 # observations than the original dataframe?
+# It could either have same or fewer observations than the original dataframe.
 
 
 # TASK: Run the following code to only keep the values greater than or equal to 15C.
@@ -249,10 +251,13 @@ calispellHighTemp <- filter(.data=calispellTemp,
 # TASK: Check the number of observations in your dataframe! You can either do 
 # this using the str() function or by looking next to the dataframe name in the
 # R environment tab.
+str(calispellHighTemp)
 
 
 # QUESTION: How many observations did the original dataframe (calispellTemp) 
 # have? How many does the new dataframe (calispellHighTemp) have?
+# calispellTemp has 61100 observations.
+# calispellHighTemp has 7703 observations.
 
 
 # REALLY IMPORTANT: Even if the function runs, R can do all kinds of bad things 
@@ -260,7 +265,8 @@ calispellHighTemp <- filter(.data=calispellTemp,
 # important to think about how many rows and columns you expect your new 
 # dataframe to have before you run your code and then check whether your new
 # dataframe matches your expectations.
-
+str(calispellHighTemp)
+# It matches the expectations.
 
 # We can also filter based on multiple conditions. For example, did the water get
 # hot in both of the tributaries (Winchester and Smalle Creeks)?
@@ -296,7 +302,9 @@ calispellData <- filter(.data=calispellTemp,
 
 # QUESTION: How many observations are in the datafile calispellData? Write code
 # to determine how many values of calispell_temp were NA.
-
+# calispellData has 52330 observations.
+na_count <- sum(is.na(calispellTemp$calispell_temp))
+na_count # 8770 values of calispell_temp were NA.
 
 # ---------------------------------------------------------- #
 ### PART 1.4: CREATING COLUMNS                            ####
