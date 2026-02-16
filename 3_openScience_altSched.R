@@ -15,10 +15,9 @@
 
 ## Extract (unzip) the files into a folder named "YourLastName_conSME_data".
 
-
 ## QUESTION: Open up the file "knb-lter-knz.148.3.txt". What does this file contain?
 
-#ANSWER: it contains the authors contact information, an abstract of the study, and other metadata.
+#ANSWER: The zip file contained knb-lter-knz.148.5.txt which contains the authors contact information, an abstract of the study, and other metadata.
 
 ## QUESTION: From this file or the original website, who are the dataset contributors?
 
@@ -51,6 +50,7 @@
 
 ## QUESTION: What are two reasons why we wouldn't want GitHub to sync this data?
 
+#ANSWER: 1) you might not want to publish your data right away. 2) you are just playing (or practicing)around with the data and don't want to commit anything right away
 
 
 ## TASK: Check the Git tab in RStudio. Do you see your data folder listed?
@@ -61,6 +61,8 @@
 
 ## QUESTION: What happened to the data folder listed in the Git tab of RStudio
 ## when you hit save?
+
+#ANSWER: It is now ignored.
 
 
 ## TASK: Stage, commit, and pull/push your modified .gitignore file to the branch
@@ -84,21 +86,38 @@
 ## a name that includes the experiment name (conSME) and the data type (abundance)
 ## using '<-' and be sure to carefully consider your naming convention when doing so.
 
+setwd("C:/Users/kelly/Documents/data wrangling/Clark_conSME_data")
 
-## After completing the above taask, run the following code.
+conSME_abundance <- read.csv("CME011.csv")
+
+
+## After completing the above task, run the following code.
 conSMEcoverAlt <- read.csv("https://pasta.lternet.edu/package/data/eml/knb-lter-knz/148/5/5716ee946efd717292fa3da9241cda7c")
 
 
 ## QUESTION: What did this code do? What can you say about the two dataframes 
 ## you have created thus far?
 
+dim(conSME_abundance)
+head(conSME_abundance)
+str(conSME_abundance)
+
+
+dim(conSMEcoverAlt)
+head(conSMEcoverAlt)
+str(conSMEcoverAlt)
+
+
+#ANSWER: It imported the conSME data into R. The data frames look to be the exact same.
 
 ## TASK: Check to see if the two dataframes are identical using an R function.
 ## (Hint: remember the Week 1 assignment?)
-
+identical(conSME_abundance, conSMEcoverAlt)
 
 ## QUESTION: Why might it be better to source data straight from the data portal?
 ## Why might it be worse?
+
+#ANSWER: It might be better because you are getting the published data and dont have to worry about entry errors. It might be worse because the authors that published the data may not have cleaned it in a way that is preferable to you (it could be very unorganized).
 
 
 ## TASK: Save your R script. Then stage, commit, and pull/push your
