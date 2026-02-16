@@ -52,11 +52,12 @@
 
 
 # TASK: Read in the data by running the following line of code.
-streamTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv", 
-                       stringsAsFactors = TRUE) 
+
+streamTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv", stringsAsFactors = TRUE)
 
 
 # QUESTION: What do you think stringsAsFactors mean?
+# To change the factors.
 
 
 # TASK: Let's learn a little more about our data. Run the following line of code.
@@ -64,9 +65,12 @@ str(streamTemp)
 
 # QUESTION: What does it look like the str() function does?
 
+#It gives a summary of the data frame
 
 # QUESTION: How many rows does our dataframe have? How many columns? 
 # What class of data is in each column?
+
+#there are 5 rows and 61100 columns and there is date, time, $$
 
 
 # TASK: Try reading your data in without the stringsAsFactors argument included.
@@ -75,6 +79,9 @@ str(streamTemp)
 # QUESTION: What is the difference? (HINT: rerun the str function to check).
 # When would we want to set the stringsAsFactors argument to true?  When would 
 # it be better to make it false?
+
+#without using the strings it just shows the entire set of data isntead of it being
+#condensed and showing the data parts converted from characters
 
 
 
@@ -90,10 +97,15 @@ colnames(streamTemp)
 
 # QUESTION: What output do you get in the console? Why is this useful?
 
+#I get the names of the columns, this can be helpful to know the names of all the
+#columns in case you want to narrow down specific data quickly.
+
 
 # QUESTION: What happened to the title of the third column when it was loaded
 # into R?
 # HINT: What happened to the spaces and parenthesis in the R column names?
+
+#The spaces got converted into dots and the paranthesis were removed
 
 
 # TASK: Run the following line of code. Note the alignment of the code components.
@@ -107,10 +119,15 @@ streamTempRename <- rename(.data=streamTemp,
 # (streamTempRename). 
 
 
+colnames(streamTempRename)
+
 # QUESTION: What differences do you notice from before? In your own words, what 
 # did each line from the rename function do? Why might this function be useful 
 # for wrangling data? In the rename code above, does the new column name come 
 # before or after the =?
+
+#It cleaned up the names of the columns and added underscores where the spaces 
+#would be 
 
 
 # ---------------------------------------------------------- #
