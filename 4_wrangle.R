@@ -114,6 +114,7 @@ colnames(streamTempRename)
 # did each line from the rename function do? Why might this function be useful 
 # for wrangling data? In the rename code above, does the new column name come 
 # before or after the =?
+##ANSWER: In the rename code, which changes the column names of the dataset, the new column name comes before the '='. The new dataset renames the column names to more simple, readable terms. This could be useful for easier organization of data, and for recalling the names of columns.
 
 
 # ---------------------------------------------------------- #
