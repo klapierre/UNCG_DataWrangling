@@ -34,6 +34,8 @@
 # TASK: Install tidyverse and load the library. HINT: see the end of the week 1 
 # assignment if you forget how to install and load a package.
 
+install.packages('tidyverse')
+library('tidyverse')
 
 # ---------------------------------------------------------- #
 #### PART 1.0: LEARNING THE FUNCTIONS                     ####
@@ -50,6 +52,8 @@
 # working directory for this class! I have already added it to your .gitignore 
 # file for you.
 
+setwd("c:/users/bigsi/OneDrive/Desktop/UNCG_DataWrangling")
+
 
 # TASK: Read in the data by running the following line of code.
 streamTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv", 
@@ -57,25 +61,30 @@ streamTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv",
 
 
 # QUESTION: What do you think stringsAsFactors mean?
+#Answer: My guess as to what strings as Factors means is that all of the strings in the data will not function as a factor instead of a string.
 
 
 # TASK: Let's learn a little more about our data. Run the following line of code.
 str(streamTemp)
 
 # QUESTION: What does it look like the str() function does?
+#Answer: I think the str() function shows what the inside of the data frame looks like because it is reciting the # of observations and the # of variables, but also the 5 variables.
+
 
 
 # QUESTION: How many rows does our dataframe have? How many columns? 
 # What class of data is in each column?
+#Our data set has 5 rows and 61100 observations. It appears that Date and time are both factors and Calispell.Cr.Temp.C., Smalle.Cr.Temp.C., and Winchester.Cr.Temp..C. are numbers.
 
 
 # TASK: Try reading your data in without the stringsAsFactors argument included.
-
+streamTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv")
+str(streamTemp)
 
 # QUESTION: What is the difference? (HINT: rerun the str function to check).
 # When would we want to set the stringsAsFactors argument to true?  When would 
 # it be better to make it false?
-
+#Answer: It looks like the difference between the two is that when the strings are not being viewed as factors it is classified as a character and instead of catagorizing each text as a level, each one is listed out. I think that the False strings as # is easier to read and understand, but if you need to filter data by date and time it might be better to have a True stringsAsFactors. However it might be easier to have a FALSE statement if you want to filer the temperature results instead of data dn time.
 
 
 # ---------------------------------------------------------- #
