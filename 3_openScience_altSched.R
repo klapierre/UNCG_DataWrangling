@@ -222,7 +222,7 @@ check <- unique(conSMEcoverAlt)
 
 ## QUESTION: What happened when you clicked "Amend previous commit"?
 ## How many commits is your branch ahead by now?
-
+# the comment I left on my previous commit appeared in the text box and my brach is ahead by one commit
 
 ## TASK: Once you've answered the above questions, save your R script one last time. 
 ## Stage your modified code, amend it to the previous commit, and finally pull/push
