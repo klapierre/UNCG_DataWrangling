@@ -17,24 +17,27 @@
 
 
 ## QUESTION: Open up the file "knb-lter-knz.148.3.txt". What does this file contain?
-
+## The file contains information on the principal contributors and some other information
+## i.e. the dates of collection and the some functions relating to the project.
 
 ## QUESTION: From this file or the original website, who are the dataset contributors?
-
+## Kimberly Komatsu, Meghan Avolio, Andrew Hope, Sally Koerner, Allison Louthan,
+## Kevin Wilcox, Konza LTER
 
 ## QUESTION: From this file or the original website, what are the start and end 
 ## dates of the dataset?
-
+## January 1st 2019 for the start and December 31st 2022 for the end.
 
 ## QUESTION: Is the data collection still ongoing?
 ## Confession from Professor Komatsu: despite the dates of data included in the 
 ## file, the answer here is yes.We're just behind in getting the data cleaned 
 ## and uploaded :(
-
+## From the file the answer would be no but I guess it's a yes in actuality.
 
 ## QUESTION: Given your answer to the previous question, why might it be good to
 ## have a reproducible script for data analysis related to this dataset?
-
+## It allows you to access the script at a later date in order to continue cleaning
+## up data etc.
 
 # ----------------------------------------------------------
 #### 2) Preventing GitHub from syncing the data files.####
@@ -43,7 +46,8 @@
 ## We can use the .gitignore file to tell git what files not to sync to GitHub!
 
 ## QUESTION: What are two reasons why we wouldn't want GitHub to sync this data?
-
+## We maybe have data which we don't want to be public yet given were it synced
+## to github anyone could access it, additionally it may just result in clutter.
 
 
 ## TASK: Check the Git tab in RStudio. Do you see your data folder listed?
@@ -54,7 +58,7 @@
 
 ## QUESTION: What happened to the data folder listed in the Git tab of RStudio
 ## when you hit save?
-
+## It disappears, no longer shows up in the Git tab of Rstudio.
 
 ## TASK: Stage, commit, and pull/push your modified .gitignore file to the branch
 ## you created for this week with an appropriate commit message.
@@ -84,7 +88,9 @@ conSMEcoverAlt <- read.csv("https://pasta.lternet.edu/package/data/eml/knb-lter-
 
 ## QUESTION: What did this code do? What can you say about the two dataframes 
 ## you have created thus far?
-
+## Both dataframes contain the same information but pulled from two different 
+## sources, one pulled from the file contained locally on my PC and one from
+## a file hosted online.
 
 ## TASK: Check to see if the two dataframes are identical using an R function.
 ## (Hint: remember the Week 1 assignment?)
@@ -92,7 +98,8 @@ conSMEcoverAlt <- read.csv("https://pasta.lternet.edu/package/data/eml/knb-lter-
 
 ## QUESTION: Why might it be better to source data straight from the data portal?
 ## Why might it be worse?
-
+## Anyone could use the function given the data is hosted online identically for
+## all as opposed to pulling from a local file which would break the function.
 
 ## TASK: Save your R script. Then stage, commit, and pull/push your
 ## modified code to the branch you created for this week with an appropriate 
