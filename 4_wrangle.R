@@ -33,7 +33,8 @@
 
 # TASK: Install tidyverse and load the library. HINT: see the end of the week 1 
 # assignment if you forget how to install and load a package.
-
+install.packages("tidyverse")
+library(tidyverse)
 
 # ---------------------------------------------------------- #
 #### PART 1.0: LEARNING THE FUNCTIONS                     ####
