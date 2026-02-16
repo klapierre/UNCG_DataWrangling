@@ -17,24 +17,24 @@
 
 
 ## QUESTION: Open up the file "knb-lter-knz.148.3.txt". What does this file contain?
-
+#data from The Consumer Size Manipulation Experiment
 
 ## QUESTION: From this file or the original website, who are the dataset contributors?
-
+#Kimberly Komatsu, Meghan Avolio, Andrew Hope, Sally Koerner, Allison Louthan, Kevin Wilcox
 
 ## QUESTION: From this file or the original website, what are the start and end 
 ## dates of the dataset?
-
+#2019-01-01 to 2022-12-30
 
 ## QUESTION: Is the data collection still ongoing?
 ## Confession from Professor Komatsu: despite the dates of data included in the 
 ## file, the answer here is yes.We're just behind in getting the data cleaned 
 ## and uploaded :(
-
+#yes
 
 ## QUESTION: Given your answer to the previous question, why might it be good to
 ## have a reproducible script for data analysis related to this dataset?
-
+# so that if more data is added or manipulated, you can have a script that relates to the original data, and you can see what youve done
 
 # ----------------------------------------------------------
 #### 2) Preventing GitHub from syncing the data files.####
@@ -43,7 +43,7 @@
 ## We can use the .gitignore file to tell git what files not to sync to GitHub!
 
 ## QUESTION: What are two reasons why we wouldn't want GitHub to sync this data?
-
+#we may not be done working with it so we don't want it publically published, or we might want to clean it up before we push it to github
 
 
 ## TASK: Check the Git tab in RStudio. Do you see your data folder listed?
@@ -54,7 +54,7 @@
 
 ## QUESTION: What happened to the data folder listed in the Git tab of RStudio
 ## when you hit save?
-
+# the folder was replaced with the .gitignore file
 
 ## TASK: Stage, commit, and pull/push your modified .gitignore file to the branch
 ## you created for this week with an appropriate commit message.
@@ -84,7 +84,7 @@ conSMEcoverAlt <- read.csv("https://pasta.lternet.edu/package/data/eml/knb-lter-
 
 ## QUESTION: What did this code do? What can you say about the two dataframes 
 ## you have created thus far?
-
+# It added a copy of the dataframe that I just named to the environment. They look the be the exact same.
 
 ## TASK: Check to see if the two dataframes are identical using an R function.
 ## (Hint: remember the Week 1 assignment?)
@@ -92,8 +92,8 @@ conSMEcoverAlt <- read.csv("https://pasta.lternet.edu/package/data/eml/knb-lter-
 
 ## QUESTION: Why might it be better to source data straight from the data portal?
 ## Why might it be worse?
-
-
+# it might be better because it's probably more up to date than locally saved files
+# it could be less beneficial to use a link because the link could break
 ## TASK: Save your R script. Then stage, commit, and pull/push your
 ## modified code to the branch you created for this week with an appropriate 
 ## commit message. Remember, it is most effective to commit small chunks of code 
