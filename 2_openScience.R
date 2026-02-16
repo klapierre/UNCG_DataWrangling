@@ -112,7 +112,6 @@ all.equal(conSME_abundance, conSMEcoverAlt)
 ## often with specific commit messages!
 
 
-
 # ----------------------------------------------------------
 #### 4) Thinking through your naming conventions.####
 # ----------------------------------------------------------
@@ -120,22 +119,25 @@ all.equal(conSME_abundance, conSMEcoverAlt)
 ## TASK: Check the names of the columns in the species cover dataset you imported.
 ## (Hint: remember the Week 1 assignment?)
 
+names(conSME_abundance)
 
 ## QUESTION: What naming convention did the dataset creators use for column names?
 
+##Capitalized words with no underscores
 
 ## QUESTION: What naming convention do you plan to use for this course for the
 ## following types of objects in R:
-## R scripts
-## vectors
-## dataframes
-## columns within dataframes
-## homemade functions
+## R scripts: lowercase with underscores
+## vectors: lowercase with underscores
+## dataframes: lowercase with underscores
+## columns within dataframes: lowercase with underscores
+## homemade functions: lowercase with underscores
 
 
 ## QUESTION: Do all of your objects follow the same naming convention or do you
 ## plan to use different naming conventions to reference different object types?
 
+##Same conventions
 
 ## TASK: Save your R script. Stage, commit, and pull/push your modified code to 
 ## the branch you created for this week with an appropriate commit message.
