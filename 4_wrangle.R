@@ -362,9 +362,11 @@ calispellTempF5 <- separate(data=calispellTempF4,
                             sep='::')
 
 # QUESTION: Why isn't the column name in quotes this time?
+##ANSWER: It is not in quotes because it already exists this time.
 
 
 # QUESTION: Describe in your own words what the code above does.
+##ANSWER: The above code separates the type_ecosystem column into type and ecosystem; the "into=c()" function specifies the names of the new columns while the "sep=" function specifies where the data will be separated.
 
 
 # ---------------------------------------------------------- #
