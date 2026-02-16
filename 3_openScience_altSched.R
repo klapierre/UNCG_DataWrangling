@@ -161,13 +161,11 @@ duplicates<-rbind(conSMEcoverAlt,conSME_abundance)
 ## on the tops of those columns in that order.
 ## You could also run the following code to get the same outcome:
 duplicates[with(duplicates, order(RecDate, Block, Plot, Taxa)),]
-conSME_abundance
-CME011.csv
-#Done. 
+
 
 ## QUESTION: What do you notice about the data? Specifically, compare rows 
 ## 4934 and 12173 (if they are sorted correctly, those should be on top).
-#The data moved for every time I click on a column. I see row 4934, I do not see row 12173. 
+#The data moved for every time I click on a column. I see row 4934 at the very top, there has been many repeated observations when sorted in that order. I do not see row 12173. 
 
 ## TASK: Save your R script. Stage, commit, and pull/push your modified code to the branch
 ## you created for this week with an appropriate commit message.
