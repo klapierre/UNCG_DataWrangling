@@ -17,24 +17,34 @@
 
 
 ## QUESTION: Open up the file "knb-lter-knz.148.3.txt". What does this file contain?
-
+#This file contains text about people working on the project pertaining to herbivore
+#grazing and the effects on grasslands. It also contains a description of the 
+#experiment as well as the dataset code used to determine the effect of 
+#three types of herbivores grazing on the Konza Prairie and how this effect vary
+#across fire regimes.
 
 ## QUESTION: From this file or the original website, who are the dataset contributors?
-
+#Kimberly Komatsu, Meghan Avolio, Andrew Hope, Sally Koerner, Allison Louthan, 
+#Kevin Wilcox
 
 ## QUESTION: From this file or the original website, what are the start and end 
 ## dates of the dataset?
+#	2019-01-01 - 2022-12-30
 
 
 ## QUESTION: Is the data collection still ongoing?
 ## Confession from Professor Komatsu: despite the dates of data included in the 
 ## file, the answer here is yes.We're just behind in getting the data cleaned 
 ## and uploaded :(
-
+#The data collection is still ongoing
 
 ## QUESTION: Given your answer to the previous question, why might it be good to
 ## have a reproducible script for data analysis related to this dataset?
-
+#It may be a good idea to have a reproducible script for data analysis related to
+#this dataset so that the script can be ran whenever needed to generate the output
+#of the code to be analyzed and so data can be added for more analysis. The
+#reproducible script makes it easy for anyone who needs to work with or analyze the data
+#to be able to run the code and work with it.
 
 # ----------------------------------------------------------
 #### 2) Preventing GitHub from syncing the data files.####
@@ -54,7 +64,7 @@
 
 ## QUESTION: What happened to the data folder listed in the Git tab of RStudio
 ## when you hit save?
-
+The folder Everette_conSME_data is gone from 
 
 ## TASK: Stage, commit, and pull/push your modified .gitignore file to the branch
 ## you created for this week with an appropriate commit message.
