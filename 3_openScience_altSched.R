@@ -1,9 +1,5 @@
 #### MODULE 2: Open Data, Project Management, and GitHub #### 
 
-#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
-
-# new : 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
-
 library(gitcreds)
 gitcreds_set()
 
