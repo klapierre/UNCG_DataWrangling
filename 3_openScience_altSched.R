@@ -1,5 +1,4 @@
 #### MODULE 2: Open Data, Project Management, and GitHub #### 
-
 library(gitcreds)
 gitcreds_set()
 
@@ -123,11 +122,10 @@ colnames(conSMEcoverAlt)
 
 ## QUESTION: Do all of your objects follow the same naming convention or do you
 ## plan to use different naming conventions to reference different object types?
-# so far, I have not gotten specific with using different conventions for different objects, but I can see why this is useful
+# So far, I have not gotten specific with using different conventions for different objects, but I can see why this is useful
 
 ## TASK: Save your R script. Stage, commit, and pull/push your modified code to 
 ## the branch you created for this week with an appropriate commit message.
-# I need to come to your office hours on monday to get this issue worked out.
 
 # ----------------------------------------------------------
 #### 5) Opening Issues.####
@@ -140,7 +138,7 @@ colnames(conSMEcoverAlt)
 ## conSME dataframes you have created into one ultimate dataframe using the 
 ## rbind() function.
 ## (Hint: Very similar to the cbind function we used in the Week 1 assignment)
-duplicates <- rbind(conSME_species_abundance, conSMEcoverAlt)
+duplicates <- rbind(conSME_spec_abundance, conSMEcoverAlt)
 
 ## QUESTION: Looking at the information for each dataframe in the environment tab
 ## of RStudio, what do you notice about the number of observations for the 
@@ -160,7 +158,7 @@ duplicates[with(duplicates, order(RecDate, Block, Plot, Taxa)),]
 
 ## QUESTION: What do you notice about the data? Specifically, compare rows 
 ## 4934 and 12173 (if they are sorted correctly, those should be on top).
-# those are not the first two rows I see ...
+# those are not the first two rows I see ... 4934 and 14179 are the two that I see, and they share all of the same associaited data (aside form their specimen ID number)
 
 ## TASK: Save your R script. Stage, commit, and pull/push your modified code to the branch
 ## you created for this week with an appropriate commit message.
