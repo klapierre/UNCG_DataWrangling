@@ -20,7 +20,7 @@
 # (2) Navigate to the branch YOU created in RStudio's Git tab.
 # (3) Only once you are in your branch, go to the terminal (tab next to console),
 # and run the following code:
-# git rebase main
+ git rebase main
 # (4) Open this week's assignment in your branch to complete and submit on GitHub.
 
 # Ideally, you'll commit your answers a bit at a time (like you were prompted to
@@ -33,7 +33,7 @@
 
 # TASK: Install tidyverse and load the library. HINT: see the end of the week 1 
 # assignment if you forget how to install and load a package.
-
+install.packages("tidyverse")
 
 # ---------------------------------------------------------- #
 #### PART 1.0: LEARNING THE FUNCTIONS                     ####
@@ -57,26 +57,31 @@ streamTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv",
 
 
 # QUESTION: What do you think stringsAsFactors mean?
-
+## R automatically converts character strings into factors 
 
 # TASK: Let's learn a little more about our data. Run the following line of code.
 str(streamTemp)
 
 # QUESTION: What does it look like the str() function does?
-
+## It gives a compact summary of the internal structure of an object. 
 
 # QUESTION: How many rows does our dataframe have? How many columns? 
 # What class of data is in each column?
-
-
+## 61100 rows 
+## 5 columns
+## class: 6100 5
 # TASK: Try reading your data in without the stringsAsFactors argument included.
 
 
 # QUESTION: What is the difference? (HINT: rerun the str function to check).
 # When would we want to set the stringsAsFactors argument to true?  When would 
 # it be better to make it false?
-
-
+## The data type of text columns changes; but the number of rows and columns stay
+## the same. 
+## Set it to TRUE when the variable is truly categorical, you plan to use it in 
+## statistical models, and/or your going to group or plot categorical data.
+## Set it to FALSE when you are working with text data, manipulating strings,and/
+## or the columns is not truly categorical. 
 
 # ---------------------------------------------------------- #
 ### PART 1.1: RENAMING COLUMNS                            ####
@@ -89,10 +94,12 @@ colnames(streamTemp)
 
 
 # QUESTION: What output do you get in the console? Why is this useful?
-
+## it tells me the name of the column names; it useful because it lets R know
+## what data to use. 
 
 # QUESTION: What happened to the title of the third column when it was loaded
-# into R?
+# into R? 
+## It got cleaned up and R removed the spaces and parenthesis. 
 # HINT: What happened to the spaces and parenthesis in the R column names?
 
 
@@ -105,7 +112,7 @@ streamTempRename <- rename(.data=streamTemp,
 
 # TASK: Write your own code to find the column names of our new dataframe 
 # (streamTempRename). 
-
+colnames(streamTempRename)
 
 # QUESTION: What differences do you notice from before? In your own words, what 
 # did each line from the rename function do? Why might this function be useful 
@@ -129,8 +136,7 @@ streamTempRename <- rename(.data=streamTemp,
 
 
 # TASK: Run the following line of code to select our columns of interest.
-calispellTemp <- select(.data=streamTempRename,
-                        calispell_temp, Date, Time)
+
 
 
 # QUESTION: Take a look at the column names for our new dataframe (calispellTemp),
@@ -148,7 +154,7 @@ calispellTemp <- select(.data=streamTempRename,
 # TASK: Recall that in R, the `:` operator is a compact way to create a sequence 
 # of numbers. For example, write code below to generate a sequence from 1 to 3.
 # HINT: Look back to assignment #1 or the swirl tutorial for help (or google!).
-
+1:3
 
 # Normally this notation is just for numbers, but the select() function allows 
 # you to specify a sequence of columns this way. This can save a bunch of typing!
@@ -158,11 +164,11 @@ calispellTemp <- select(.data=streamTempRename,
 # HINT: Replace the code where each column was listed out with a sequence of 
 # column names. Be sure they are listed in the order they exist in the original 
 # dataframe.
-
+calispellTemp2 <- calispellTemp[1:3]
 
 # TASK: Write code to check your column names again to see what happened in your
 # new dataframe.
-
+colnames(calispellTemp2)
 
 # We can also specify the columns that we want to discard by selecting them out.
 # TASK: Run the following code to remove the Smalle_temp and Winchester_temp 
@@ -186,8 +192,9 @@ calispellTemp5 <- select(.data=streamTempRename,
 # HINT: Unless you want to try to get very fancy with your code, you'll have to 
 # check dataframes two at a time. But you can always google to try to find sample
 # code to do all three at once!
-
-
+identical(calispellTemp3,calispellTemp4)
+identical(calispellTemp3,calispellTemp5)
+identical(calispellTemp4,calispellTemp5)
 # ---------------------------------------------------------- #
 ### PART 1.3: FILTERING ROWS                              ####
 # ---------------------------------------------------------- #
@@ -207,7 +214,7 @@ calispellTemp5 <- select(.data=streamTempRename,
 # QUESTION: If you remove all of the observations (rows) with temperatures lower
 # than 15 C, would you expect your new dataframe to have more, the same, or fewer
 # observations than the original dataframe?
-
+## Removing rows with temperatures lower than 15 C will reduce the number of rows
 
 # TASK: Run the following code to only keep the values greater than or equal to 15C.
 calispellHighTemp <- filter(.data=calispellTemp,
@@ -217,11 +224,12 @@ calispellHighTemp <- filter(.data=calispellTemp,
 # TASK: Check the number of observations in your dataframe! You can either do 
 # this using the str() function or by looking next to the dataframe name in the
 # R environment tab.
-
+str(calispellHighTemp)
 
 # QUESTION: How many observations did the original dataframe (calispellTemp) 
 # have? How many does the new dataframe (calispellHighTemp) have?
-
+## Original dataframe had 61100 observations 
+## New dataframe has 7703 observations 
 
 # REALLY IMPORTANT: Even if the function runs, R can do all kinds of bad things 
 # if you've accidentally coded something incorrectly. It is always very, very 
@@ -264,8 +272,9 @@ calispellData <- filter(.data=calispellTemp,
 
 # QUESTION: How many observations are in the datafile calispellData? Write code
 # to determine how many values of calispell_temp were NA.
-
-
+## calispellData has 52330 observations
+is.na(calispellData$calispell_temp)
+## Zero values were NA
 # ---------------------------------------------------------- #
 ### PART 1.4: CREATING COLUMNS                            ####
 # ---------------------------------------------------------- #
@@ -298,13 +307,14 @@ calispellTempSum <- mutate(.data=calispellTempF,
 
 # TASK: The column we just created makes no sense (why would you ever want to
 # sum the C and F temperatures?). Write code below to remove it from the dataframe.
-
+calispellData$temp_sum <- NULL 
 
 # QUESTION: We might also want to add a column that describes the dataset. What 
-# happens when you run the following code?
+# happens when you run the following code? 
 calispellTempFaquatic <- mutate(.data=calispellTempF,
                                 type='aquatic')
-
+## What happens whenn you run the code is it adds the following column into the 
+## dataset
 
 # ---------------------------------------------------------- #
 ### PART 1.5: PASTING AND SEPARATING COLUMNS              ####
@@ -314,7 +324,7 @@ calispellTempFaquatic <- mutate(.data=calispellTempF,
 
 # TASK: Write code to create one more column named ecosystem in the 
 # calispellTempFaquatic dataframe and fill it with the word 'stream'.
-
+calispellTempFaquatic$ecosystem <- 'stream'
 
 # Now we might want to create a new column that includes information from both 
 # of the columns we just created. We would do so by running the following lines 
@@ -327,7 +337,8 @@ calispellTempF4 <- unite(data=calispellTempFaquatic,
 # QUESTION: Describe in your own words what the code above does. What part 
 # creates a new column? What part tells R which columns to combine? What does 
 # the sep= argument do?
-
+## This code creates a new column named type_ecosystem by combining the type
+## and ecosystem columns, and it uses :: to separate their values in each row
 
 # Another very useful function is separate, which takes apart a column into two
 # or more pieces.
@@ -339,9 +350,11 @@ calispellTempF5 <- separate(data=calispellTempF4,
                             sep='::')
 
 # QUESTION: Why isn't the column name in quotes this time?
-
+## adding a new column name you must provide it as a string
 
 # QUESTION: Describe in your own words what the code above does.
+## This code splits the combined type_ecosystem column back into two separate
+## columns, type and ecosystem, using :: as the separator.
 
 
 # ---------------------------------------------------------- #
@@ -349,7 +362,7 @@ calispellTempF5 <- separate(data=calispellTempF4,
 # ---------------------------------------------------------- #
 
 # Take a look at your R environment tab (upper right of RStudio).
-# Do you feel overwhelmed by how many files are there?
+# Do you feel overwhelmed by how many files are there? ##YES
 # An amazing thing about tidyverse is that it can pass one function after 
 # another to a dataframe using an operator called a pipe. This allows you to 
 # perform a whole series of functions on one dataframe without having to create 
@@ -411,8 +424,13 @@ calispellHighTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv", stri
 # HINT: The ratio of C to N is calculated as C/N.
 # (8) Keep only the following columns: Exp, Date, Plot, NTrtInfo, genus, species, 
 # Field, C, N, and CN. 
-
-
-
+cdr <- read_csv("e001_Plant aboveground biomass carbon and nitrogen.csv") %>%
+                 mutate(Exp = 'e001') %>%
+                 rename( C = '% Carbon', N = '% Nitrogen ') %>%
+                 fliter(Strip == 1) %>%  
+                 unite(NTrtInfo, Ntrt, NAdd, sep = "_") %>%
+                 separate(Species, into = c('genus', 'species'), sep = " ") %>%
+                 mutate(CN = C / N) %>%
+                 select(Exp, Data, Plot, NTrtInfo, genus, species, Field, C, N, CN)
 # REMEMBER: Save and push your script to your branch when you're done with this 
 # assignment!

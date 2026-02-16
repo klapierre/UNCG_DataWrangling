@@ -43,8 +43,9 @@
 # it to a dataframe named streamTemp. Clean up the column names to the following:
 # data, time, calispell, smalle, winchester
 # HINT: Check last week's assignment if you forget how to read data into R.
-
-
+setwd("path/HUFF_conSME_data")
+streamTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv")
+              
 # ---------------------------------------------------------- #
 ### PART 1.1: SUMMARIZING DATA                            ####
 # ---------------------------------------------------------- #
