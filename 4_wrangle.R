@@ -64,11 +64,12 @@ streamTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv",
 str(streamTemp)
 
 # QUESTION: What does it look like the str() function does?
-
+## ANSWER: It lists a summary of an object, inclusing its type, observations, and variables.
 
 # QUESTION: How many rows does our dataframe have? How many columns? 
 # What class of data is in each column?
-
+dim(streamTemp)
+##ANSWER: There are 61100 rows and 5 columns. Date is a factor, Time is a factor, Calispell.Cr.Temp is a number, Smalle.Cr.Temp is a number, Winchester.Cr.Temp is a number.
 
 # TASK: Try reading your data in without the stringsAsFactors argument included.
 
