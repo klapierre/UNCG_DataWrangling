@@ -64,7 +64,7 @@
 
 ## QUESTION: What happened to the data folder listed in the Git tab of RStudio
 ## when you hit save?
-The folder Everette_conSME_data is gone from 
+#The folder Everette_conSME_data is no longer in the Git tab.
 
 ## TASK: Stage, commit, and pull/push your modified .gitignore file to the branch
 ## you created for this week with an appropriate commit message.
@@ -80,6 +80,7 @@ The folder Everette_conSME_data is gone from
 ## for this class on your computer using the function setwd().
 ## Hint - set the working directory as the top folder.
 
+setwd("C:/Users/patti/Downloads/UNCG_DataWrangling")
 
 ## TASK: Now we can import one of these datasets into R. Let's import the plant
 ## species abundance datafile (CME011). To do so, use the read.csv() function, 
@@ -87,22 +88,31 @@ The folder Everette_conSME_data is gone from
 ## a name that includes the experiment name (conSME) and the data type (abundance)
 ## using '<-' and be sure to carefully consider your naming convention when doing so.
 
+conSME_abundance <- read.csv("Everette_conSME-data/CME011.csv")
 
 ## After completing the above taask, run the following code.
+
 conSMEcoverAlt <- read.csv("https://pasta.lternet.edu/package/data/eml/knb-lter-knz/148/5/5716ee946efd717292fa3da9241cda7c")
 
 
 ## QUESTION: What did this code do? What can you say about the two dataframes 
 ## you have created thus far?
-
+#The first code read the CME011 csv that was downloaded 
+#to my computer in the Everette_conSME-data subfolder which within my
+#UNCG_DataWrangling folder.
+#The second code read the datafile in the link provided to create a dataframe.
+#Both contain data about plant abundance.
 
 ## TASK: Check to see if the two dataframes are identical using an R function.
 ## (Hint: remember the Week 1 assignment?)
-
+#Yes the dataframes are identical
+identical(conSME_abundance, conSMEcoverAlt)
 
 ## QUESTION: Why might it be better to source data straight from the data portal?
 ## Why might it be worse?
-
+#It may be better to source data straight from the data portal because
+#it is likely the most current data. It may be worse because it has not been 
+#manipulated into the most intuitive format.
 
 ## TASK: Save your R script. Then stage, commit, and pull/push your
 ## modified code to the branch you created for this week with an appropriate 
