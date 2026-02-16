@@ -206,7 +206,9 @@ noDuplicates <- unique(duplicates)
 ## tab of RStudio, what do you notice about the number of observations for the 
 ## noDuplicates dataframe compared to the dulpicates dataframe? What about 
 ## compared to the two original dataframes?
-
+# no Duplicates has 9175 observations, duplicates has 18490 observations and abundance and alt has 
+# 9245 observations. No duplicates has fewer observations compared to all the other data frames because
+# the data is original, removing any duplicate information. 
 
 ## TASK: Go back to our repository in GitHub through your web browser. Find the
 ## issue you created and resolve it.
