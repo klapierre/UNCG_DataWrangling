@@ -97,7 +97,7 @@ colnames(streamTemp)
 # QUESTION: What happened to the title of the third column when it was loaded
 # into R?
 # HINT: What happened to the spaces and parenthesis in the R column names?
-
+##ANSWER: The spaces and parenthesis turn into periods. 
 
 # TASK: Run the following line of code. Note the alignment of the code components.
 streamTempRename <- rename(.data=streamTemp,
@@ -108,7 +108,7 @@ streamTempRename <- rename(.data=streamTemp,
 
 # TASK: Write your own code to find the column names of our new dataframe 
 # (streamTempRename). 
-
+colnames(streamTempRename)
 
 # QUESTION: What differences do you notice from before? In your own words, what 
 # did each line from the rename function do? Why might this function be useful 
