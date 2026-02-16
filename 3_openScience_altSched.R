@@ -247,6 +247,7 @@ noDuplicates <- unique(duplicates)
 
 ## TASK: Type another comment below.
 
+#Fun fact: did you know that in October, the mitochondria undergoes a transformation? It goes from being the powerhouse of the cell to the haunted house of the cell.
 
 ## TASK: Save your R script. Open up the commit window in RStudio.
 
@@ -255,6 +256,7 @@ noDuplicates <- unique(duplicates)
 ## (Hint: look for the message "Your branch is ahead of..." near the top of the 
 ## window.)
 
+#ANSWER: My branch is ahead of 1 commit.
 
 ## TASK: Stage your modified code and check the "Amend previous commit" box.
 ## Then commit your code (still don't pull/push).
@@ -262,6 +264,8 @@ noDuplicates <- unique(duplicates)
 
 ## QUESTION: What happened when you clicked "Amend previous commit"?
 ## How many commits is your branch ahead by now?
+
+#ANSWER: Still ahead by 1?? I think i have been doing this differently the entire time? I've been using the github desktop to commit and push my code. Does the staging do something different??
 
 
 ## TASK: Once you've answered the above questions, save your R script one last time. 
