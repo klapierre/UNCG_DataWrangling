@@ -158,11 +158,10 @@ duplicates[with(duplicates, order(RecDate, Block, Plot, Taxa)),]
 
 ## QUESTION: What do you notice about the data? Specifically, compare rows 
 ## 4934 and 12173 (if they are sorted correctly, those should be on top).
-# those are not the first two rows I see ... 4934 and 14179 are the two that I see, and they share all of the same associaited data (aside form their specimen ID number)
+# those are not the first two rows I see ... 4934 and 14179 are the two that I see, and they share all of the same associated data (aside form their specimen ID number)
 
 ## TASK: Save your R script. Stage, commit, and pull/push your modified code to the branch
 ## you created for this week with an appropriate commit message.
-
 
 ## It looks like we have a problem (that we created for ourselves)! Let's open an
 ## issue to make note of this.
@@ -178,12 +177,14 @@ duplicates[with(duplicates, order(RecDate, Block, Plot, Taxa)),]
 ## Run the following code.
 noDuplicates <- unique(duplicates)
 
+# this is my attempt at checking to make sure my understanding below is correct
+check <- unique(conSMEcoverAlt)
 
 ## QUESTION: Looking at the information for each dataframe in the environment 
 ## tab of RStudio, what do you notice about the number of observations for the 
 ## noDuplicates dataframe compared to the dulpicates dataframe? What about 
 ## compared to the two original dataframes?
-
+# The first two dataframes are the exact same thing, so it makes sense that they have the same number of observations. The "duplicates" object just doubled each observation. The "noDuplicates" object has removed any accidental duplicates, such as the two objects I was referring to on line 161 of this code. 
 
 ## TASK: Go back to our repository in GitHub through your web browser. Find the
 ## issue you created and resolve it.
@@ -192,13 +193,11 @@ noDuplicates <- unique(duplicates)
 ## the branch you created for this week with an appropriate commit message.
 
 
-
 # ----------------------------------------------------------
 #### 6) The final push :) ####
 # ----------------------------------------------------------
 
 ## TASK: Type a comment below.
-
 
 ## TASK: Follow these instructions carefully!
 ## Save your R script. Stage and commit with the commit message "learning to 
