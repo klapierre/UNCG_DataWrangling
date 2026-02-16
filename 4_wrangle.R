@@ -58,44 +58,55 @@ streamTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv",
 
 
 # QUESTION: What do you think stringsAsFactors mean?
+# It stores strings data as factors data type.
 
 
 # TASK: Let's learn a little more about our data. Run the following line of code.
 str(streamTemp)
 
 # QUESTION: What does it look like the str() function does?
-
+# It provides the summary of the total number of observations, different variables
+# present, type of data each variable stores, and displays some of the data too.
 
 # QUESTION: How many rows does our dataframe have? How many columns? 
 # What class of data is in each column?
-
+# Rows 61100
+# Columns = 5
+# Class of data: Date = Factor, Time = Factor, Calispell.Cr.Temp.C. = Numeric,
+# Smalle.Cr.Temp.C. = Numeric,  Winchester.Cr.Temp..C. = Numeric
 
 # TASK: Try reading your data in without the stringsAsFactors argument included.
-
+streamTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv", 
+                       stringsAsFactors = FALSE) 
 
 # QUESTION: What is the difference? (HINT: rerun the str function to check).
 # When would we want to set the stringsAsFactors argument to true?  When would 
 # it be better to make it false?
-
+str(streamTemp)
+# All the strings in the date and time have character data type.
+# 
 
 
 # ---------------------------------------------------------- #
 ### PART 1.1: RENAMING COLUMNS                            ####
 # ---------------------------------------------------------- #
 
-# Let's assign some more useable column names! We do this using the rename() function.
+# Let's assign some more usable column names! We do this using the rename() function.
 # TASK: Open the file you downloaded from Canvas on your computer (e.g., using 
 # excel. Then, run the following line of code.
 colnames(streamTemp)
 
 
 # QUESTION: What output do you get in the console? Why is this useful?
-
+# "Date"   "Time"  Calispell.Cr.Temp.C." "Smalle.Cr.Temp.C."     
+# "Winchester.Cr.Temp..C.
+# I didn't need to go and open the file manually, so it was faster.
 
 # QUESTION: What happened to the title of the third column when it was loaded
 # into R?
 # HINT: What happened to the spaces and parenthesis in the R column names?
-
+# It removed spaces and parenthesis from the column titled and replaced them with
+# periods.
 
 # TASK: Run the following line of code. Note the alignment of the code components.
 streamTempRename <- rename(.data=streamTemp,
@@ -106,12 +117,18 @@ streamTempRename <- rename(.data=streamTemp,
 
 # TASK: Write your own code to find the column names of our new dataframe 
 # (streamTempRename). 
-
+colnames(streamTempRename)
 
 # QUESTION: What differences do you notice from before? In your own words, what 
 # did each line from the rename function do? Why might this function be useful 
 # for wrangling data? In the rename code above, does the new column name come 
 # before or after the =?
+# The column names were renamed.The code renamed the column names with name we 
+# wanted them to have instead of R renaming them for us. 
+# The first argument of the rename function instructed where to take the data from.
+# The series of arguments after that provided information on what the column names
+# should be. The new column names were before "=" and the original column names
+# were after "="
 
 
 # ---------------------------------------------------------- #
@@ -127,7 +144,7 @@ streamTempRename <- rename(.data=streamTemp,
 
 # TASK: Look again at the columns you have in the streamTempRename dataframe by
 # writing the necessary code below.
-
+colnames(streamTempRename)
 
 # TASK: Run the following line of code to select our columns of interest.
 calispellTemp <- select(.data=streamTempRename,
@@ -138,7 +155,12 @@ calispellTemp <- select(.data=streamTempRename,
 # by coding the appropriate R function of course. What do you notice about the 
 # new dataframe? Which columns are present? Which are absent? Are they in the same 
 # order as before?
-
+colnames(calispellTemp)
+# The new dataframe only had the columns from the dataframe "streamTempRename"
+# that we selected. Only columns calispell_temp, Date, and Time are present in 
+# new calispellTemp dataframe. Columns smalle_temp and winchester_temp are absent.
+# No, they are not in same order. They are in the order we wrote the code when we
+# selected specific columns.
 
 # A nice thing to notice about this code. We didn't have to type 'streamTemp$date'
 # etc to indicate each column as we would outside of the tidyverse. The select()
@@ -149,6 +171,7 @@ calispellTemp <- select(.data=streamTempRename,
 # TASK: Recall that in R, the `:` operator is a compact way to create a sequence 
 # of numbers. For example, write code below to generate a sequence from 1 to 3.
 # HINT: Look back to assignment #1 or the swirl tutorial for help (or google!).
+1:3
 
 
 # Normally this notation is just for numbers, but the select() function allows 
@@ -159,10 +182,16 @@ calispellTemp <- select(.data=streamTempRename,
 # HINT: Replace the code where each column was listed out with a sequence of 
 # column names. Be sure they are listed in the order they exist in the original 
 # dataframe.
+calispellTemp2 <- select(.data=streamTempRename, 
+                         Date:calispell_temp)
 
 
 # TASK: Write code to check your column names again to see what happened in your
 # new dataframe.
+colnames(calispellTemp2)
+# It selected only Date, Time, and calispell_temp columns from dataframe 
+# streamTempRename. This time, it was in the order that it was in the original
+# dataframe.
 
 
 # We can also specify the columns that we want to discard by selecting them out.
@@ -187,6 +216,8 @@ calispellTemp5 <- select(.data=streamTempRename,
 # HINT: Unless you want to try to get very fancy with your code, you'll have to 
 # check dataframes two at a time. But you can always google to try to find sample
 # code to do all three at once!
+identical(calispellTemp3, calispellTemp4) #TRUE = IDENTICAL
+identical (calispellTemp4, calispellTemp5) #TRUE = IDENTICAL
 
 
 # ---------------------------------------------------------- #
