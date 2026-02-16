@@ -98,11 +98,12 @@ colnames(streamTemp)
 
 
 # QUESTION: What output do you get in the console? Why is this useful?
-
+#Answer: The output is a list of all the column names. This is very useful because you can look at them and their order without the clutter of the rest of the data. It also makes it easier to edit the columns when you can see all of them, and it means you can see the contents of the data without looking at all of the data.
 
 # QUESTION: What happened to the title of the third column when it was loaded
 # into R?
 # HINT: What happened to the spaces and parenthesis in the R column names?
+#Answer: What happened is that all of the spaces were replaced with periods, and all of the parenthesis were replaced with periods.
 
 
 # TASK: Run the following line of code. Note the alignment of the code components.
@@ -114,12 +115,14 @@ streamTempRename <- rename(.data=streamTemp,
 
 # TASK: Write your own code to find the column names of our new dataframe 
 # (streamTempRename). 
+colnames(streamTempRename)
 
 
 # QUESTION: What differences do you notice from before? In your own words, what 
 # did each line from the rename function do? Why might this function be useful 
 # for wrangling data? In the rename code above, does the new column name come 
 # before or after the =?
+#Answer: Each line of the rename code changed the name of the column name in the line, so you place the new name that you want to the left of the equal sign, and the name that you want to change on the right. The thing that I noticed is that becuase date and time were already concise names the only names that were changed were the last three which got distorted in the transfer from excel into R. This is a super helpful function because it allows you to make sure that the data is readable even if the format changes between platforms.
 
 
 # ---------------------------------------------------------- #
