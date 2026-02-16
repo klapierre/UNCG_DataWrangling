@@ -91,14 +91,12 @@ str(streamTemp2)
 # excel. Then, run the following line of code.
 colnames(streamTemp)
 
-
 # QUESTION: What output do you get in the console? Why is this useful?
+# it shows us the titles of each column. This is useful if you just need to be reminded of what is in your dataset, or perhaps you need to troubleshoot a line of code but you don't want to scroll through a potentially long line of code to see everything
 
-
-# QUESTION: What happened to the title of the third column when it was loaded
-# into R?
+# QUESTION: What happened to the title of the third column when it was loaded into R?
 # HINT: What happened to the spaces and parenthesis in the R column names?
-
+# spaces and parenthesis appeared rather than the former periods in place of spaces and the parenthesis
 
 # TASK: Run the following line of code. Note the alignment of the code components.
 streamTempRename <- rename(.data=streamTemp,
@@ -109,13 +107,15 @@ streamTempRename <- rename(.data=streamTemp,
 
 # TASK: Write your own code to find the column names of our new dataframe 
 # (streamTempRename). 
-
+colnames(streamTempRename)
 
 # QUESTION: What differences do you notice from before? In your own words, what 
 # did each line from the rename function do? Why might this function be useful 
 # for wrangling data? In the rename code above, does the new column name come 
 # before or after the =?
-
+# This code is once again just slightly changing the naming conventions used in each column. 
+# The first line is creating a new object and applying the rename function to the entire dataframe, which is specified (again in the first line) by using .data=
+# The next three lines are what we want the new columns to be called, using the = symbol to specify which lines will be changed, and to what
 
 # ---------------------------------------------------------- #
 ### PART 1.2: SELECTING COLUMNS                           ####
