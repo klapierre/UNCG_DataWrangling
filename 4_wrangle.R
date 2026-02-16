@@ -58,15 +58,24 @@ streamTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv",
 
 # QUESTION: What do you think stringsAsFactors mean?
 
+## I'm not entirely sure, but I think "stringsAsFactors" means turning character strings into number strings. Usually when I think of strings, it's with a character string. So, a string of factors, seems to be more numerical.
+
+
 
 # TASK: Let's learn a little more about our data. Run the following line of code.
 str(streamTemp)
 
 # QUESTION: What does it look like the str() function does?
 
+## It looks like the str() function gives a list of each string of factors within the data frame, each containing observations and variables. In other words, it also seems to give an overview of what's inside the data frame.
+
+
 
 # QUESTION: How many rows does our dataframe have? How many columns? 
 # What class of data is in each column?
+
+## There are 61,100 rows (observations) and 5 columns (variables). The classes of each data in each of the columns are "Date", "Time", "Calispell.Cr.Temp.C", "Smalle.Cr.Temp.C", and "Winchester.Cr.Temp.C".
+
 
 
 # TASK: Try reading your data in without the stringsAsFactors argument included.
@@ -75,6 +84,8 @@ str(streamTemp)
 # QUESTION: What is the difference? (HINT: rerun the str function to check).
 # When would we want to set the stringsAsFactors argument to true?  When would 
 # it be better to make it false?
+
+## The difference is that without "stringsAsFactors" our observations are character strings, instead of numerical/factorial strings. When using str() on both versions, it seems that the version with "stringsAsFactors" is more specific to tell me how many observations carry the same type of observation, whereas the version without "stringsAsFactors" just lists the observations without any sorting. We would want this to be set to TRUE if we have many observations, many of which that could be repeating values for the sake of pure data collection. This allows us to consolidate data into a repeating pattern or make updated data based on each unique instance. It could also be helpful when we know the observations are statistical. We would want this to be set to FALSE when we want each observation listed, without trying to sort between repeating values. This would help with a general data visualization without changing anything about the data. It would also be beneficial when we know the observations are not statistical (more based around words.)
 
 
 
