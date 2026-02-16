@@ -117,20 +117,21 @@ conSMEcoverAlt <- read.csv("https://pasta.lternet.edu/package/data/eml/knb-lter-
 
 
 ## QUESTION: What naming convention did the dataset creators use for column names?
-
+## Columns have the first letter capitalized and if there are two words then the
+## first letter of any subsequent word is also capitalized.
 
 ## QUESTION: What naming convention do you plan to use for this course for the
 ## following types of objects in R:
-## R scripts
-## vectors
-## dataframes
-## columns within dataframes
-## homemade functions
+## R scripts - all_lowercase
+## vectors - Capitalize_First_Letter
+## dataframes - CapitalizeFirstLetter
+## columns within dataframes - CapitalizeFirstLetter
+## homemade functions - all_lowercase
 
 
 ## QUESTION: Do all of your objects follow the same naming convention or do you
 ## plan to use different naming conventions to reference different object types?
-
+## I'll presumably use some overlapping conventions but not for all objects.
 
 ## TASK: Save your R script. Stage, commit, and pull/push your modified code to 
 ## the branch you created for this week with an appropriate commit message.
