@@ -357,6 +357,8 @@ head(calispellTempFaquatic)
 
 # TASK: Write code to create one more column named ecosystem in the 
 # calispellTempFaquatic dataframe and fill it with the word 'stream'.
+calispellTempFaquatic <- mutate(.data=calispellTempFaquatic,
+                                ecosystem ='stream')
 
 
 # Now we might want to create a new column that includes information from both 
@@ -370,7 +372,10 @@ calispellTempF4 <- unite(data=calispellTempFaquatic,
 # QUESTION: Describe in your own words what the code above does. What part 
 # creates a new column? What part tells R which columns to combine? What does 
 # the sep= argument do?
-
+# The unite part created a new column using argument col. The second argument that
+# we input in col function tells R which columns to combine.
+# The column combined the values in columns 'type' and 'ecosystem and separated
+# them by : using sep= argument.
 
 # Another very useful function is separate, which takes apart a column into two
 # or more pieces.
@@ -382,7 +387,7 @@ calispellTempF5 <- separate(data=calispellTempF4,
                             sep='::')
 
 # QUESTION: Why isn't the column name in quotes this time?
-
+# Because we are not inputting 
 
 # QUESTION: Describe in your own words what the code above does.
 
