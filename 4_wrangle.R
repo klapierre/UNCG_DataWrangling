@@ -318,11 +318,12 @@ str(calispellTempSum)
 
 # TASK: The column we just created makes no sense (why would you ever want to
 # sum the C and F temperatures?). Write code below to remove it from the dataframe.
-
+calispellTempSum <- select(.data=calispellTempSum,
+                           -sum)
 
 # QUESTION: We might also want to add a column that describes the dataset. What 
 # happens when you run the following code?
-calispellTempFaquatic <- mutate(.data=calispellTempF,
+calispellTempFaquatic <- mutate(.data=calispellTemp,
                                 type='aquatic')
 
 
