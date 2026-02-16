@@ -349,6 +349,7 @@ calispellTempF4 <- unite(data=calispellTempFaquatic,
 # QUESTION: Describe in your own words what the code above does. What part 
 # creates a new column? What part tells R which columns to combine? What does 
 # the sep= argument do?
+##ANSWER: The code creates a new dataset that combines the type and ecosystem columns. The "col=" argument creates the new column, the c() argument specifies which columns, and the "sep=" argument specifies how the values will be separated.
 
 
 # Another very useful function is separate, which takes apart a column into two
