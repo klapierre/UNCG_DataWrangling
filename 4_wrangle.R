@@ -101,10 +101,20 @@ colnames(streamTemp)
 
 # QUESTION: What output do you get in the console? Why is this useful?
 
+colnames(streamTemp)
+[1] "Date"                   "Time"                   "Calispell.Cr.Temp.C."  
+[4] "Smalle.Cr.Temp.C."      "Winchester.Cr.Temp..C."
+
+## This is useful because it can quickly tell us the column names without us having to check the file itself. Also, if we change the names, we can run the same code to see if the code did what we wanted it to do.
+
+
 
 # QUESTION: What happened to the title of the third column when it was loaded
 # into R?
 # HINT: What happened to the spaces and parenthesis in the R column names?
+
+## In R, the spaces and parentheses are turned into "." because spaces and parentheses aren't wanted in this format.
+
 
 
 # TASK: Run the following line of code. Note the alignment of the code components.
@@ -117,11 +127,19 @@ streamTempRename <- rename(.data=streamTemp,
 # TASK: Write your own code to find the column names of our new dataframe 
 # (streamTempRename). 
 
+colnames(streamTempRename)
+[1] "Date"            "Time"            "calispell_temp"  "smalle_temp"    
+[5] "winchester_temp"
 
-# QUESTION: What differences do you notice from before? In your own words, what 
+
+
+# QUESTION: What differences do you notice from before? In your own words, what
 # did each line from the rename function do? Why might this function be useful 
 # for wrangling data? In the rename code above, does the new column name come 
 # before or after the =?
+
+## First of all, the names did indeed change to what we wanted them to be changed to. The top line told us the new data frame we wanted to make out of the old data frame, using the rename function. The following lines are the renaming processes, each line representing a singular rename of a certain column.
+
 
 
 # ---------------------------------------------------------- #
