@@ -368,7 +368,16 @@ calispellTempF <- mutate(.data=calispellTemp,
 
 # Take a look at the new dataframe to see if it worked by either opening it from 
 # the R environment tab or running the following line of code.
+
 head(calispellTempF) 
+calispell_temp   Date        Time calispell_temp_F
+1           1.96 1/1/09  1:11:23 AM           35.528
+2           1.32 1/1/09  1:11:23 PM           34.376
+3           1.16 1/1/09 10:11:23 AM           34.088
+4           1.96 1/1/09 10:11:23 PM           35.528
+5           1.16 1/1/09 11:11:23 AM           34.088
+6           1.96 1/1/09 11:11:23 PM           35.528
+
 
 
 # We can also use mathematical functions on entire columns. Let's try it!
@@ -380,15 +389,35 @@ calispellTempSum <- mutate(.data=calispellTempF,
 
 # Check the dataframe to see if it worked.
 
+head(calispellTempSum)
+calispell_temp   Date        Time calispell_temp_F    sum
+1           1.96 1/1/09  1:11:23 AM           35.528 37.488
+2           1.32 1/1/09  1:11:23 PM           34.376 35.696
+3           1.16 1/1/09 10:11:23 AM           34.088 35.248
+4           1.96 1/1/09 10:11:23 PM           35.528 37.488
+5           1.16 1/1/09 11:11:23 AM           34.088 35.248
+6           1.96 1/1/09 11:11:23 PM           35.528 37.488
+
+
 
 # TASK: The column we just created makes no sense (why would you ever want to
 # sum the C and F temperatures?). Write code below to remove it from the dataframe.
 
+select(.data = calispellTempSum, -sum)
 
-# QUESTION: We might also want to add a column that describes the dataset. What 
+## Or, since this just brings us back to "calispellTempF", we could just:
+
+rm(calispellTempSum)
+
+
+
+# QUESTION: We might also want to add a column that describes the dataset. What
 # happens when you run the following code?
 calispellTempFaquatic <- mutate(.data=calispellTempF,
                                 type='aquatic')
+
+## This adds a new column labelled "type" and has the word "aquatic" in every observation under that column.
+
 
 
 # ---------------------------------------------------------- #
