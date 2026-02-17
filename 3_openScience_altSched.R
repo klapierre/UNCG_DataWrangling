@@ -162,7 +162,7 @@ duplicates[with(duplicates, order(RecDate, Block, Plot, Taxa)),]
 
 ## QUESTION: What do you notice about the data? Specifically, compare rows 
 ## 4934 and 12173 (if they are sorted correctly, those should be on top).
-
+#every line is duplicated
 
 ## TASK: Save your R script. Stage, commit, and pull/push your modified code to the branch
 ## you created for this week with an appropriate commit message.
