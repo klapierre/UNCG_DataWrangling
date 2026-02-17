@@ -165,11 +165,12 @@ nrow(duplicates)
 ## on the tops of those columns in that order.
 ## You could also run the following code to get the same outcome:
 duplicates[with(duplicates, order(RecDate, Block, Plot, Taxa)),]
-
+duplicates_sorted <- duplicates[with(duplicates, order(Taxa, Plot, Block, Watershed, RecDate)),]
 
 ## QUESTION: What do you notice about the data? Specifically, compare rows 
 ## 4934 and 12173 (if they are sorted correctly, those should be on top).
-
+View(duplicates_sorted)
+# Answer: After sorting the duplicates, I noticed that rows appear twice. Comparing rows 4934 and 12173 shows they have identical values across all columns.
 
 ## TASK: Save your R script. Stage, commit, and pull/push your modified code to the branch
 ## you created for this week with an appropriate commit message.
