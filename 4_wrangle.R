@@ -266,9 +266,16 @@ identical(calispellTemp3, calispellTemp4) & identical(calispellTemp3, calispellT
 # Calispell dataframe to only include data where the Calispell Creek has 
 # temperature equal or greater than 15 C.
 
+filter(.data = calispellTemp, calispell_temp >= 15)
+
+
+
 # QUESTION: If you remove all of the observations (rows) with temperatures lower
 # than 15 C, would you expect your new dataframe to have more, the same, or fewer
 # observations than the original dataframe?
+
+##You would have fewer observations, as you would be removing observations that are less than 15 C.
+
 
 
 # TASK: Run the following code to only keep the values greater than or equal to 15C.
@@ -280,9 +287,19 @@ calispellHighTemp <- filter(.data=calispellTemp,
 # this using the str() function or by looking next to the dataframe name in the
 # R environment tab.
 
+str(calispellHighTemp)
+'data.frame':	7703 obs. of  3 variables:
+  $ calispell_temp: num  15.1 15.1 15.1 15.1 16.5 ...
+$ Date          : Factor w/ 1821 levels "1/1/09","1/1/10",..: 1182 1182 1182 1217 1222 1222 1222 1222 1222 1222 ...
+$ Time          : Factor w/ 288 levels "1:01:00 AM","1:01:00 PM",..: 104 128 152 104 6 78 102 126 150 174 ...
+
+
 
 # QUESTION: How many observations did the original dataframe (calispellTemp) 
 # have? How many does the new dataframe (calispellHighTemp) have?
+
+## "calispellTemp" had 61,100 observations, while "calispellHighTemp" had 7,703 observations.
+
 
 
 # REALLY IMPORTANT: Even if the function runs, R can do all kinds of bad things 
@@ -326,6 +343,12 @@ calispellData <- filter(.data=calispellTemp,
 
 # QUESTION: How many observations are in the datafile calispellData? Write code
 # to determine how many values of calispell_temp were NA.
+
+calispell_na_Data <- filter(.data=calispellTemp,
+                            is.na(calispell_temp))
+
+## In "calispellData" there are 52,330 observations, and in "calispell_na_Data" there are 8,770 observations.
+
 
 
 # ---------------------------------------------------------- #
