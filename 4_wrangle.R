@@ -307,7 +307,7 @@ calispellTempF <- mutate(.data=calispellTemp,
 # Take a look at the new dataframe to see if it worked by either opening it from 
 # the R environment tab or running the following line of code.
 head(calispellTempF) 
-
+head(calispellTemp)
 
 # We can also use mathematical functions on entire columns. Let's try it!
 
@@ -318,6 +318,7 @@ calispellTempSum <- mutate(.data=calispellTempF,
 
 # Check the dataframe to see if it worked.
 head(calispellTempSum)
+#head(calispellTempF)
 
 
 # TASK: The column we just created makes no sense (why would you ever want to
@@ -369,7 +370,7 @@ calispellTempF5 <- separate(data=calispellTempF4,
                             col=type_ecosystem,
                             into=c('type', 'ecosystem'),
                             sep='::')
-
+head(calispellTempF5)
 # QUESTION: Why isn't the column name in quotes this time?
 
 #ANSWER: Because the column already exists.
@@ -433,11 +434,15 @@ head(calispellHighTemp)
 # TASK: Perform the following steps in one workflow (i.e., using pipes):
 # (1) Create a dataframe called cdr and load the .csv file 
 # 'e001_Plant aboveground biomass carbon and nitrogen.csv' into it.
+##DONE
 # (2) Add a column named 'Exp' and fill it with the text 'e001' so we know what 
 # experiment we're working with.
+##DONE
 # (3) Rename our last two columns that were originally '% Carbon' and '% Nitrogen' 
 # in our csv file. Make the new names 'C' and 'N', respectively.
+##DONE
 # (4) Remove any observations that were not obtained from Strip 1.
+##DONE
 # (5) Create a new column called NTrtInfo that include the information from both 
 # NTrt and NAdd, separated by an underscore.
 # (6) Split the Species column into two columns, one named 'genus' and one named 
@@ -448,6 +453,24 @@ head(calispellHighTemp)
 # (8) Keep only the following columns: Exp, Date, Plot, NTrtInfo, genus, species, 
 # Field, C, N, and CN. 
 
+# cdr <- read.csv('e001_Plant aboveground biomass carbon and nitrogen.csv', stringsAsFactors = TRUE)
+# colnames(cdr)
+# head(cdr)
+
+cdr <- read.csv('e001_Plant aboveground biomass carbon and nitrogen.csv', stringsAsFactors = TRUE)  %>% #(1) 
+  mutate(Exp='e001') %>% #(2)
+  rename(C = X..Carbon,
+         N = X..Nitrogen) %>% #(3)
+  filter(Strip==1) %>% #(4)
+  unite(col="NTrtInfo",
+        c('NTrt', 'NAdd'),
+        sep = '_') %>% #(5)
+  separate(col= Species,
+           into = c('genus', 'species')) %>% #(6)
+  mutate(CN = C/N) %>% #(7) #X..Carbon and X..Nitrogen were renamed, so use the new names
+  select(Exp, Date, Plot, NTrtInfo, genus, species, Field, C, N, CN)
+  
+  head(cdr)
 
 
 # REMEMBER: Save and push your script to your branch when you're done with this 
