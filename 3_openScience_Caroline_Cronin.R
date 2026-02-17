@@ -145,15 +145,14 @@ conSMEcoverAlt <- read.csv("https://pasta.lternet.edu/package/data/eml/knb-lter-
 ## conSME dataframes you have created into one ultimate dataframe using the 
 ## rbind() function.
 ## (Hint: Very similar to the cbind function we used in the Week 1 assignment)
+
 duplicates <- rbind(conSME_abundance, conSMEcoverAlt)
 View(duplicates)
 
 ## QUESTION: Looking at the information for each dataframe in the environment tab
 ## of RStudio, what do you notice about the number of observations for the 
 ## duplicates dataframe compared to the two original dataframes?
-nrow(conSME_abundance)
-nrow(conSMEcoverAlt)
-nrow(duplicates)
+
 # Answer: The duplicates dataframe has the combined rows from both original dataframes, so it has twice as many observations (rows).
 
 ## TASK: Save your R script. Stage, commit, and pull/push your modified code to 
@@ -165,12 +164,16 @@ nrow(duplicates)
 ## on the tops of those columns in that order.
 ## You could also run the following code to get the same outcome:
 duplicates[with(duplicates, order(RecDate, Block, Plot, Taxa)),]
-duplicates_sorted <- duplicates[with(duplicates, order(Taxa, Plot, Block, Watershed, RecDate)),]
 
 ## QUESTION: What do you notice about the data? Specifically, compare rows 
 ## 4934 and 12173 (if they are sorted correctly, those should be on top).
 View(duplicates_sorted)
 # Answer: After sorting the duplicates, I noticed that rows appear twice. Comparing rows 4934 and 12173 shows they have identical values across all columns.
+
+
+## QUESTION: What do you notice about the data? Specifically, compare rows 
+## 4934 and 12173 (if they are sorted correctly, those should be on top).
+
 
 ## TASK: Save your R script. Stage, commit, and pull/push your modified code to the branch
 ## you created for this week with an appropriate commit message.
@@ -189,16 +192,12 @@ View(duplicates_sorted)
 ## A great function to get rid of exact duplicate columns in R is unique().
 ## Run the following code.
 noDuplicates <- unique(duplicates)
-View(noDuplicates)
 
 ## QUESTION: Looking at the information for each dataframe in the environment 
 ## tab of RStudio, what do you notice about the number of observations for the 
 ## noDuplicates dataframe compared to the dulpicates dataframe? What about 
 ## compared to the two original dataframes?
-nrow(conSME_abundance)
-nrow (conSMEcoverAlt)
-nrow(duplicates)
-nrow(noDuplicates)
+
 #Answer: The duplicates dataframe had twice as many observations as the originals. After using unique(), the noDuplicates dataframe returned to the same number of observations as the original datasets.
 
 ## TASK: Go back to our repository in GitHub through your web browser. Find the
@@ -221,6 +220,7 @@ nrow(noDuplicates)
 ## amend", but this time DON'T pull/push your modified code!
 
 ## TASK: Type another comment below.
+
 # Comment: practicing commit amendments.
 
 ## TASK: Save your R script. Open up the commit window in RStudio.
@@ -229,7 +229,9 @@ nrow(noDuplicates)
 ## QUESTION: How many commits are you ahead of your branch on GitHub?
 ## (Hint: look for the message "Your branch is ahead of..." near the top of the 
 ## window.)
+
 # Answer: my branch is ahead of 'origin/Caroline_Cronin' by 1 commit. 
+
 
 ## TASK: Stage your modified code and check the "Amend previous commit" box.
 ## Then commit your code (still don't pull/push).
@@ -237,7 +239,9 @@ nrow(noDuplicates)
 
 ## QUESTION: What happened when you clicked "Amend previous commit"?
 ## How many commits is your branch ahead by now?
+
 # Answer: The commit amount does not change, my branch remains 1 commit ahead.
+
 
 ## TASK: Once you've answered the above questions, save your R script one last time. 
 ## Stage your modified code, amend it to the previous commit, and finally pull/push
