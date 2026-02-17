@@ -146,15 +146,20 @@ colnames(streamTempRename)
 ### PART 1.2: SELECTING COLUMNS                           ####
 # ---------------------------------------------------------- #
 
-# The select() function allows you to pick columns by name. This can be helpful 
+# The select() function allows you to pick columns by name. This can be helpful
 # when you want to clean a larger dataset and focus on your variables of 
 # interest.
 
-# Let's imagine that we are only interested in the temperature at the Calispell 
+# Let's imagine that we are only interested in the temperature at the Calispell
 # site.
 
 # TASK: Look again at the columns you have in the streamTempRename dataframe by
 # writing the necessary code below.
+
+colnames(streamTempRename)
+[1] "Date"            "Time"            "calispell_temp"  "smalle_temp"    
+[5] "winchester_temp"
+
 
 
 # TASK: Run the following line of code to select our columns of interest.
@@ -167,6 +172,12 @@ calispellTemp <- select(.data=streamTempRename,
 # new dataframe? Which columns are present? Which are absent? Are they in the same 
 # order as before?
 
+## The only columns present in the data frame "calispellTemp" are "calispell_temp", "Date", and "Time". This means that the columns absent are "smalle_temp" and "winchester_temp". The columns remaining are not in the same order as before. They are ordered in the data frame the same way we ordered them in the code.
+
+colnames(calispellTemp)
+[1] "calispell_temp" "Date"           "Time"
+
+
 
 # A nice thing to notice about this code. We didn't have to type 'streamTemp$date'
 # etc to indicate each column as we would outside of the tidyverse. The select()
@@ -178,6 +189,10 @@ calispellTemp <- select(.data=streamTempRename,
 # of numbers. For example, write code below to generate a sequence from 1 to 3.
 # HINT: Look back to assignment #1 or the swirl tutorial for help (or google!).
 
+seq(1:3)
+[1] 1 2 3
+
+
 
 # Normally this notation is just for numbers, but the select() function allows 
 # you to specify a sequence of columns this way. This can save a bunch of typing!
@@ -185,12 +200,25 @@ calispellTemp <- select(.data=streamTempRename,
 #TASK: Create a new dataframe called calispellTemp2 and select the date, time, 
 # and calispell_temp columns using the sequence notation.
 # HINT: Replace the code where each column was listed out with a sequence of 
-# column names. Be sure they are listed in the order they exist in the original 
+# column names. Be sure they are listed in the order they exist in the original
 # dataframe.
+
+calispellTemp2 <- select(.data=calispellTemp, 1:3)
+calispellTemp2_again <- select(.data=streamTempRename, 3, 1:2)
+
+## I was unsure of which "original data frame" you meant, so I did two versions, with one using "calispellTemp" and another using "streamTempRename". Although, I believe you meant for me to use "streamTempRename".
+
 
 
 # TASK: Write code to check your column names again to see what happened in your
 # new dataframe.
+
+colnames(calispellTemp2)
+[1] "calispell_temp" "Date"           "Time"
+
+colnames(calispellTemp2_again)
+[1] "calispell_temp" "Date"           "Time"
+
 
 
 # We can also specify the columns that we want to discard by selecting them out.
@@ -212,9 +240,14 @@ calispellTemp5 <- select(.data=streamTempRename,
 
 # TASK: Write code to check that these three new dataframes (calispellTemp3,
 # calispellTemp4, and calispellTemp5) are identical.
-# HINT: Unless you want to try to get very fancy with your code, you'll have to 
+
+# HINT: Unless you want to try to get very fancy with your code, you'll have to
 # check dataframes two at a time. But you can always google to try to find sample
 # code to do all three at once!
+
+identical(calispellTemp3, calispellTemp4) & identical(calispellTemp3, calispellTemp5)
+[1] TRUE
+
 
 
 # ---------------------------------------------------------- #
