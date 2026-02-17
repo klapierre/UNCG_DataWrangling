@@ -189,13 +189,17 @@ View(duplicates_sorted)
 ## A great function to get rid of exact duplicate columns in R is unique().
 ## Run the following code.
 noDuplicates <- unique(duplicates)
-
+View(noDuplicates)
 
 ## QUESTION: Looking at the information for each dataframe in the environment 
 ## tab of RStudio, what do you notice about the number of observations for the 
 ## noDuplicates dataframe compared to the dulpicates dataframe? What about 
 ## compared to the two original dataframes?
-
+nrow(conSME_abundance)
+nrow (conSMEcoverAlt)
+nrow(duplicates)
+nrow(noDuplicates)
+#Answer: The duplicates dataframe had twice as many observations as the originals. After using unique(), the noDuplicates dataframe returned to the same number of observations as the original datasets.
 
 ## TASK: Go back to our repository in GitHub through your web browser. Find the
 ## issue you created and resolve it.
