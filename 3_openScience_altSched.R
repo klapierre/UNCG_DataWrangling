@@ -69,14 +69,14 @@
 ## TASK: Start by setting your working directory to the GitHub repository folder
 ## for this class on your computer using the function setwd().
 ## Hint - set the working directory as the top folder.
-
+setwd("Aldridge_conSME_data")
 
 ## TASK: Now we can import one of these datasets into R. Let's import the plant
 ## species abundance datafile (CME011). To do so, use the read.csv() function, 
 ## putting the relative file path and file name. Assign the dataframe you import
 ## a name that includes the experiment name (conSME) and the data type (abundance)
 ## using '<-' and be sure to carefully consider your naming convention when doing so.
-
+conSMEabundanceData <- read.csv("CME011.csv")
 
 ## After completing the above taask, run the following code.
 conSMEcoverAlt <- read.csv("https://pasta.lternet.edu/package/data/eml/knb-lter-knz/148/5/5716ee946efd717292fa3da9241cda7c")
@@ -88,7 +88,7 @@ conSMEcoverAlt <- read.csv("https://pasta.lternet.edu/package/data/eml/knb-lter-
 
 ## TASK: Check to see if the two dataframes are identical using an R function.
 ## (Hint: remember the Week 1 assignment?)
-
+identical(conSMEabundanceData, conSMEcoverAlt)
 
 ## QUESTION: Why might it be better to source data straight from the data portal?
 ## Why might it be worse?
@@ -107,7 +107,7 @@ conSMEcoverAlt <- read.csv("https://pasta.lternet.edu/package/data/eml/knb-lter-
 
 ## TASK: Check the names of the columns in the species cover dataset you imported.
 ## (Hint: remember the Week 1 assignment?)
-#used colnames function
+colnames(conSMEabundanceData)
 
 ## QUESTION: What naming convention did the dataset creators use for column names?
 #They used capitalization to distinguish between words.They did not use any punctuation.
@@ -142,12 +142,12 @@ conSMEcoverAlt <- read.csv("https://pasta.lternet.edu/package/data/eml/knb-lter-
 ## conSME dataframes you have created into one ultimate dataframe using the 
 ## rbind() function.
 ## (Hint: Very similar to the cbind function we used in the Week 1 assignment)
-
+duplicates <- rbind(conSMEabundanceData, conSMEcoverAlt)
 
 ## QUESTION: Looking at the information for each dataframe in the environment tab
 ## of RStudio, what do you notice about the number of observations for the 
 ## duplicates dataframe compared to the two original dataframes?
-
+# the number of observations doubled
 
 ## TASK: Save your R script. Stage, commit, and pull/push your modified code to 
 ## the branch you created for this week with an appropriate commit message.
