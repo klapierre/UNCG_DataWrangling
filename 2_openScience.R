@@ -224,6 +224,7 @@ noDuplicates <- unique(duplicates)
 
 ## TASK: Type a comment below.
 
+##Almost there
 
 ## TASK: Follow these instructions carefully!
 ## Save your R script. Stage and commit with the commit message "learning to 
@@ -231,6 +232,7 @@ noDuplicates <- unique(duplicates)
 
 ## TASK: Type another comment below.
 
+##Another one
 
 ## TASK: Save your R script. Open up the commit window in RStudio.
 
@@ -239,6 +241,7 @@ noDuplicates <- unique(duplicates)
 ## (Hint: look for the message "Your branch is ahead of..." near the top of the 
 ## window.)
 
+##1
 
 ## TASK: Stage your modified code and check the "Amend previous commit" box.
 ## Then commit your code (still don't pull/push).
@@ -247,6 +250,7 @@ noDuplicates <- unique(duplicates)
 ## QUESTION: What happened when you clicked "Amend previous commit"?
 ## How many commits is your branch ahead by now?
 
+##Combined the new changes into the last commit instead of making a new one
 
 ## TASK: Once you've answered the above questions, save your R script one last time. 
 ## Stage your modified code, amend it to the previous commit, and finally pull/push
