@@ -57,6 +57,7 @@ streamTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv", stringsAsFa
 
 
 # QUESTION: What do you think stringsAsFactors mean?
+
 # To change the factors.
 
 
@@ -127,7 +128,7 @@ colnames(streamTempRename)
 # before or after the =?
 
 #It cleaned up the names of the columns and added underscores where the spaces 
-#would be 
+#would be.
 
 
 # ---------------------------------------------------------- #
@@ -155,6 +156,8 @@ calispellTemp <- select(.data=streamTempRename,
 # new dataframe? Which columns are present? Which are absent? Are they in the same 
 # order as before?
 
+#It only includes the columns that I selected and there is only one temperature column for Calispell
+#the columns are also in the order i typed them.
 
 # A nice thing to notice about this code. We didn't have to type 'streamTemp$date'
 # etc to indicate each column as we would outside of the tidyverse. The select()
@@ -166,6 +169,7 @@ calispellTemp <- select(.data=streamTempRename,
 # of numbers. For example, write code below to generate a sequence from 1 to 3.
 # HINT: Look back to assignment #1 or the swirl tutorial for help (or google!).
 
+1:3
 
 # Normally this notation is just for numbers, but the select() function allows 
 # you to specify a sequence of columns this way. This can save a bunch of typing!
