@@ -214,14 +214,14 @@ nrow(noDuplicates)
 # ----------------------------------------------------------
 
 ## TASK: Type a comment below.
-
+# Commment: I learned how to identify and remove duplicate observations using rbind() and unique().
 
 ## TASK: Follow these instructions carefully!
 ## Save your R script. Stage and commit with the commit message "learning to 
 ## amend", but this time DON'T pull/push your modified code!
 
 ## TASK: Type another comment below.
-
+# Comment: practicing commit amendments.
 
 ## TASK: Save your R script. Open up the commit window in RStudio.
 
@@ -229,7 +229,7 @@ nrow(noDuplicates)
 ## QUESTION: How many commits are you ahead of your branch on GitHub?
 ## (Hint: look for the message "Your branch is ahead of..." near the top of the 
 ## window.)
-
+# Answer: my branch is ahead of 'origin/Caroline_Cronin' by 1 commit. 
 
 ## TASK: Stage your modified code and check the "Amend previous commit" box.
 ## Then commit your code (still don't pull/push).
@@ -237,7 +237,7 @@ nrow(noDuplicates)
 
 ## QUESTION: What happened when you clicked "Amend previous commit"?
 ## How many commits is your branch ahead by now?
-
+# Answer: The commit amount does not change, my branch remains 1 commit ahead.
 
 ## TASK: Once you've answered the above questions, save your R script one last time. 
 ## Stage your modified code, amend it to the previous commit, and finally pull/push
