@@ -58,16 +58,19 @@ streamTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv",
 
 # QUESTION: What do you think stringsAsFactors mean?
 
+#It means that the strings of text in the data will be converted to factors.
 
 # TASK: Let's learn a little more about our data. Run the following line of code.
 str(streamTemp)
 
 # QUESTION: What does it look like the str() function does?
 
+#It gives some info about the dataframe's basic structure.
 
 # QUESTION: How many rows does our dataframe have? How many columns? 
 # What class of data is in each column?
 
+#61,100 rows, 5 columns. Two of the columns are factors and three are numeric.
 
 # TASK: Try reading your data in without the stringsAsFactors argument included.
 
@@ -76,7 +79,10 @@ str(streamTemp)
 # When would we want to set the stringsAsFactors argument to true?  When would 
 # it be better to make it false?
 
-
+#The first two columns are now classed as characters instead of factors. We 
+#would set this argument to true if we want to treat the columns as categories
+#and we would leave it as false if we want to treat them as individual labels,
+#like if they were people's names.
 
 # ---------------------------------------------------------- #
 ### PART 1.1: RENAMING COLUMNS                            ####
@@ -90,11 +96,14 @@ colnames(streamTemp)
 
 # QUESTION: What output do you get in the console? Why is this useful?
 
+#I get the names of all of the columns in the data frame. This is useful to 
+#know how R read the names of the columns in the original file.
 
 # QUESTION: What happened to the title of the third column when it was loaded
 # into R?
 # HINT: What happened to the spaces and parenthesis in the R column names?
 
+#All of the spaces and parentheses were converted to periods.
 
 # TASK: Run the following line of code. Note the alignment of the code components.
 streamTempRename <- rename(.data=streamTemp,
@@ -106,12 +115,18 @@ streamTempRename <- rename(.data=streamTemp,
 # TASK: Write your own code to find the column names of our new dataframe 
 # (streamTempRename). 
 
+colnames(streamTempRename)
 
 # QUESTION: What differences do you notice from before? In your own words, what 
 # did each line from the rename function do? Why might this function be useful 
 # for wrangling data? In the rename code above, does the new column name come 
 # before or after the =?
 
+#The names of the columns look cleaner and use underscores instead of periods.
+#The first line of the rename function was the function itself and told it what
+#data frame we want to rename things in. The rest of the columns are telling it
+#what the old column name was and what we want to change it to. The new column
+#name comes before the =.
 
 # ---------------------------------------------------------- #
 ### PART 1.2: SELECTING COLUMNS                           ####
