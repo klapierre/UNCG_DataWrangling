@@ -514,7 +514,8 @@ calispellHighTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv", stri
 # ---------------------------------------------------------- #
 
 # Put the functions you just learned to the test! We can use our skills to clean
-# up a dataset of leaf carbon and nitrogen percentages from a nitrogen addition 
+# up a dataset of leaf carbon and nitrogen percentages from a nitrogen addition
+
 # experiment in a grassland in Minnesota. We want to end up with nicely named 
 # variables, all the info we need about the experiment (but not too much info!), 
 # remove some observations that were collected a little differently than others, 
@@ -538,6 +539,23 @@ calispellHighTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv", stri
 # HINT: The ratio of C to N is calculated as C/N.
 # (8) Keep only the following columns: Exp, Date, Plot, NTrtInfo, genus, species, 
 # Field, C, N, and CN. 
+
+cdr <- read.csv("e001_Plant aboveground biomass carbon and nitrogen.csv",
+                stringsAsFactors = TRUE) %>%
+                mutate(Exp = "e001") %>%
+                rename(C = X..Carbon,
+                       N = X..Nitrogen) %>%
+                filter(Strip == 1) %>%
+                unite(col = 'NTrtInfo',
+                      c('NTrt','NAdd'),
+                      sep = '_') %>%
+                separate(col = Species,
+                        into = c('genus', 'species'),
+                        sep = ' ') %>%
+                mutate(CN = C/N) %>%
+                select(Exp, Date, Plot, NTrtInfo, genus, species, Field, C, N, CN)
+
+## Some things that happened that required me to research online: I was trying to rename "% Carbon" and "% Nitrogen". I realized I needed to use back-ticks to surround them because R would read "%" as a function piece and not as characters. So, it would've looked like `% Carbon` and `% Nitrogen`. the rename function didn't like quotations, which is why I had to use back-ticks. Then, that didn't work. I found out that when you use "read.csv", symbols like "%", turn into "X..". So, I turned "% Carbon" and "% Nitrogen" into "X..Carbon" and "X..Nitrogen". After that, I didn't have to look online for anything else. I had a couple other syntax issues, but I fixed those by myself using my notes.
 
 
 
