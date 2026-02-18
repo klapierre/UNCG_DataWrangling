@@ -142,6 +142,7 @@ colnames(streamTempRename)
 # TASK: Look again at the columns you have in the streamTempRename dataframe by
 # writing the necessary code below.
 
+colnames(streamTempRename)
 
 # TASK: Run the following line of code to select our columns of interest.
 calispellTemp <- select(.data=streamTempRename,
@@ -153,6 +154,8 @@ calispellTemp <- select(.data=streamTempRename,
 # new dataframe? Which columns are present? Which are absent? Are they in the same 
 # order as before?
 
+#The present columns are calispell_temp, date, and time. smalle_temp and 
+#winchester_temp are absent. calispell_temp was moved to be the first column.
 
 # A nice thing to notice about this code. We didn't have to type 'streamTemp$date'
 # etc to indicate each column as we would outside of the tidyverse. The select()
@@ -164,6 +167,7 @@ calispellTemp <- select(.data=streamTempRename,
 # of numbers. For example, write code below to generate a sequence from 1 to 3.
 # HINT: Look back to assignment #1 or the swirl tutorial for help (or google!).
 
+1:3
 
 # Normally this notation is just for numbers, but the select() function allows 
 # you to specify a sequence of columns this way. This can save a bunch of typing!
@@ -174,10 +178,13 @@ calispellTemp <- select(.data=streamTempRename,
 # column names. Be sure they are listed in the order they exist in the original 
 # dataframe.
 
+calispellTemp2 <- select(.data=streamTempRename,
+                         +                         1:3)
 
 # TASK: Write code to check your column names again to see what happened in your
 # new dataframe.
 
+colnames(calispellTemp2)
 
 # We can also specify the columns that we want to discard by selecting them out.
 # TASK: Run the following code to remove the Smalle_temp and Winchester_temp 
@@ -202,6 +209,8 @@ calispellTemp5 <- select(.data=streamTempRename,
 # check dataframes two at a time. But you can always google to try to find sample
 # code to do all three at once!
 
+identical(calispellTemp3, calispellTemp4)
+identical(calispellTemp4, calispellTemp5)
 
 # ---------------------------------------------------------- #
 ### PART 1.3: FILTERING ROWS                              ####
