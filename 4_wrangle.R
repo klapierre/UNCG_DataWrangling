@@ -479,7 +479,7 @@ calispellTempF5 <- separate(data=calispellTempF4,
 # Do you feel overwhelmed by how many files are there?
 # An amazing thing about tidyverse is that it can pass one function after 
 # another to a dataframe using an operator called a pipe. This allows you to 
-# perform a whole series of functions on one dataframe without having to create 
+# perform a whole series of functions on one dataframe without having to create
 # tons and tons of new dataframes.
 
 # TASK: Click on the broom icon in your environment tab or run the following 
