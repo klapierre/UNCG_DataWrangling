@@ -232,6 +232,7 @@ identical(calispellTemp4, calispellTemp5)
 # than 15 C, would you expect your new dataframe to have more, the same, or fewer
 # observations than the original dataframe?
 
+#I would expect the new dataframe to have fewer observations than the original.
 
 # TASK: Run the following code to only keep the values greater than or equal to 15C.
 calispellHighTemp <- filter(.data=calispellTemp,
@@ -246,6 +247,7 @@ calispellHighTemp <- filter(.data=calispellTemp,
 # QUESTION: How many observations did the original dataframe (calispellTemp) 
 # have? How many does the new dataframe (calispellHighTemp) have?
 
+#The original had 61,100 and the new one has 7,703.
 
 # REALLY IMPORTANT: Even if the function runs, R can do all kinds of bad things 
 # if you've accidentally coded something incorrectly. It is always very, very 
@@ -289,6 +291,8 @@ calispellData <- filter(.data=calispellTemp,
 # QUESTION: How many observations are in the datafile calispellData? Write code
 # to determine how many values of calispell_temp were NA.
 
+#There are 52,330 observations.
+is.na(calispellData)
 
 # ---------------------------------------------------------- #
 ### PART 1.4: CREATING COLUMNS                            ####
