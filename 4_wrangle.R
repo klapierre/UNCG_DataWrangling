@@ -429,6 +429,10 @@ calispellTempFaquatic <- mutate(.data=calispellTempF,
 # TASK: Write code to create one more column named ecosystem in the 
 # calispellTempFaquatic dataframe and fill it with the word 'stream'.
 
+calispellTempFaquatic <- mutate(.data=calispellTempFaquatic,
+                                ecosystem ='stream')
+
+
 
 # Now we might want to create a new column that includes information from both 
 # of the columns we just created. We would do so by running the following lines 
@@ -442,6 +446,9 @@ calispellTempF4 <- unite(data=calispellTempFaquatic,
 # creates a new column? What part tells R which columns to combine? What does 
 # the sep= argument do?
 
+## The first line will create a new data frame named "calispellTempF4" from the data frame "calispellTempFaquatic", while preparing a column-combining function. The second line will determine that the new column will be named "type_ecosystem". The third line tells us which two columns that are being used to create one column. In this case, that would be the columns "type" and "ecosystem". The fourth line is referring to the spacing between our observation values in this new column. Our observations before were "aquatic" and "stream", so without any spacing it would be "aquaticstream". However, this fourth line tells us that we have a "::" between them, or "aquatic::stream".
+
+
 
 # Another very useful function is separate, which takes apart a column into two
 # or more pieces.
@@ -454,8 +461,14 @@ calispellTempF5 <- separate(data=calispellTempF4,
 
 # QUESTION: Why isn't the column name in quotes this time?
 
+## I'm not entirely sure. I think it's because when you're using unite(), you're creating a name that hasn't been recognized by R yet, so it wants you to use quotations. However, when you're using separate(), the name is already recognized by R, so it doesn't care if you use quotations or not.
+
+
 
 # QUESTION: Describe in your own words what the code above does.
+
+## So, the first line is telling us that it's creating a new data frame called "calispellTempF5" out of the pre-existing data frame "calispellTempF4". The first line is also laying out the foundation for separating two columns. The second line is telling us the column we are going to separate. In this case, it is "type_ecosystem". The third line is telling us that we are making the column "type_ecosystem" into two columns named "type" and "ecosystem". The fourth line is explaining where we are splitting the observations. When using unite(), we used "::" to decide where we were putting "::" in the observation. Now that we are using separate(), we are deciding where to split the observation from one column to the other.This is needed, because the third line is separating variables, while the fourth line is separating observations. So, it's about organizing where everything separates to.
+
 
 
 # ---------------------------------------------------------- #
