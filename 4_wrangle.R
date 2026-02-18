@@ -327,8 +327,6 @@ calispellTempSum <- mutate(.data=calispellTempF,
 # TASK: The column we just created makes no sense (why would you ever want to
 # sum the C and F temperatures?). Write code below to remove it from the dataframe.
 
-calispellTempNormal <- select(.data=calispellTempSum,
-                         -sum)
 
 # QUESTION: We might also want to add a column that describes the dataset. What 
 # happens when you run the following code?
@@ -360,6 +358,9 @@ calispellTempF4 <- unite(data=calispellTempFaquatic,
 # creates a new column? What part tells R which columns to combine? What does 
 # the sep= argument do?
 
+#The second line crates a new column called "type_ecosystem". The third line
+#tells R which columns to combine. the sep= argument tells it how the contents
+#of the columns should be separated.
 
 # Another very useful function is separate, which takes apart a column into two
 # or more pieces.
@@ -372,9 +373,11 @@ calispellTempF5 <- separate(data=calispellTempF4,
 
 # QUESTION: Why isn't the column name in quotes this time?
 
+#Because it already exists. Before, we were making a new column.
 
 # QUESTION: Describe in your own words what the code above does.
 
+#It does the opposite of the unite code from before.
 
 # ---------------------------------------------------------- #
 ### PART 1.6: PIPES                                       ####
