@@ -180,9 +180,12 @@ calispellTemp <- select(.data=streamTempRename,
 # column names. Be sure they are listed in the order they exist in the original 
 # dataframe.
 
+calispellTemp2 <- select(streamTempRename, Date:calispell_temp)
 
 # TASK: Write code to check your column names again to see what happened in your
 # new dataframe.
+
+colnames(calispellTemp2)
 
 
 # We can also specify the columns that we want to discard by selecting them out.
@@ -208,6 +211,9 @@ calispellTemp5 <- select(.data=streamTempRename,
 # check dataframes two at a time. But you can always google to try to find sample
 # code to do all three at once!
 
+
+identical(calispellTemp3, calispellTemp4)
+identical(calispellTemp4, calispellTemp5)
 
 # ---------------------------------------------------------- #
 ### PART 1.3: FILTERING ROWS                              ####
