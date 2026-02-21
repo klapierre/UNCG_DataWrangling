@@ -17,24 +17,30 @@
 
 
 ## QUESTION: Open up the file "knb-lter-knz.148.3.txt". What does this file contain?
-
+a fiile of your data set and who corsponded 
 
 ## QUESTION: From this file or the original website, who are the dataset contributors?
+Kimberly Komatsu
+Meghan Avolio
+Andrew Hope
+Sally Koerner
+Allison Louthan
+Kevin Wilcox
+Konza LTER
 
 
-## QUESTION: From this file or the original website, what are the start and end 
-## dates of the dataset?
-
+## QUESTION: From this file or the original website, what are the start and end ## dates of the dataset?
+01/01/2019
 
 ## QUESTION: Is the data collection still ongoing?
 ## Confession from Professor Komatsu: despite the dates of data included in the 
 ## file, the answer here is yes.We're just behind in getting the data cleaned 
 ## and uploaded :(
-
+yes the data seems to be ongoing 
 
 ## QUESTION: Given your answer to the previous question, why might it be good to
 ## have a reproducible script for data analysis related to this dataset?
-
+new data is being adede all. the time these types of scripts lets you go back and and rerun what you did if you messed up helps reduced the amount of mistake that can be made 
 
 # ----------------------------------------------------------
 #### 2) Preventing GitHub from syncing the data files.####
@@ -43,7 +49,8 @@
 ## We can use the .gitignore file to tell git what files not to sync to GitHub!
 
 ## QUESTION: What are two reasons why we wouldn't want GitHub to sync this data?
-
+files may be to large for git hub 
+and our code and data is updated or replaced so we foucs on the coding more and we can always look what happend and re  import the files  
 
 
 ## TASK: Check the Git tab in RStudio. Do you see your data folder listed?
@@ -54,7 +61,7 @@
 
 ## QUESTION: What happened to the data folder listed in the Git tab of RStudio
 ## when you hit save?
-
+the data folder should disappera from our gittab 
 
 ## TASK: Stage, commit, and pull/push your modified .gitignore file to the branch
 ## you created for this week with an appropriate commit message.
