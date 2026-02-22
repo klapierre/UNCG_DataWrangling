@@ -77,9 +77,8 @@ read.csv("CalispellCreekandTributaryTemperatures.csv")
 # When would we want to set the stringsAsFactors argument to true?  When would 
 # it be better to make it false?
 str(streamTemp)
-#Without the stringAsFactors included, it shows data for the first 200 rows across the same columns. With the stringAsFactors argument, it randomly picks out data from the dataframe across the same columns.We would want to set the stringAsFactors to true when
-#It would be better to make it false when 
-hhhhhhhhhhhhhhhhhhhhhhhhhhhh
+#Without the stringAsFactors included, it shows data for the first 200 rows across the same columns. With the stringAsFactors argument, it randomly picks out data from the dataframe across the same columns.We would want to set the stringAsFactors to true when we would like the values to be part of a factor or category.It would be better to make it false when we want the values to just be characters and not part of category. 
+
 # ---------------------------------------------------------- #
 ### PART 1.1: RENAMING COLUMNS                            ####
 # ---------------------------------------------------------- #
@@ -88,32 +87,35 @@ hhhhhhhhhhhhhhhhhhhhhhhhhhhh
 # TASK: Open the file you downloaded from Canvas on your computer (e.g., using 
 # excel. Then, run the following line of code.
 colnames(streamTemp)
-
+colnames(streamTemp)
 
 # QUESTION: What output do you get in the console? Why is this useful?
-
+#I get the name of the columns ("Date", "Time", "Calispell.Cr.Temp.C.","Smalle.Cr.Temp.C.""Winchester.Cr.Temp"). This is useful when one wants to know the names of the columns in a easy and quick manner, rather than opening the file.
 
 # QUESTION: What happened to the title of the third column when it was loaded
 # into R?
 # HINT: What happened to the spaces and parenthesis in the R column names?
-
+#I think the title of the third column was cut short, since the name was long and didn't fit into the cell. Also, R used '.' to separate words.
 
 # TASK: Run the following line of code. Note the alignment of the code components.
 streamTempRename <- rename(.data=streamTemp,
                            calispell_temp=Calispell.Cr.Temp.C.,
                            smalle_temp=Smalle.Cr.Temp.C.,
                            winchester_temp=Winchester.Cr.Temp..C.)
-
+streamTempRename <- rename(.data=streamTemp,
+                           calispell_temp=Calispell.Cr.Temp.C.,
+                           smalle_temp=Smalle.Cr.Temp.C.,
+                           winchester_temp=Winchester.Cr.Temp..C.)
 
 # TASK: Write your own code to find the column names of our new dataframe 
 # (streamTempRename). 
-
+colnames(streamTempRename)
 
 # QUESTION: What differences do you notice from before? In your own words, what 
 # did each line from the rename function do? Why might this function be useful 
 # for wrangling data? In the rename code above, does the new column name come 
 # before or after the =?
-
+#The last three column names are shorter in the streamTempRename ("calispell_temp","smalle_temp","winchester_temp").The new column name comes before the '='.Each line in the rename function took the 'new name" and replaced it with the old name after =. This function is useful and a quicker approach to change more than one name. This can be done in just one code rather than doing separate lines for each name you want to change.
 
 # ---------------------------------------------------------- #
 ### PART 1.2: SELECTING COLUMNS                           ####
@@ -128,19 +130,20 @@ streamTempRename <- rename(.data=streamTemp,
 
 # TASK: Look again at the columns you have in the streamTempRename dataframe by
 # writing the necessary code below.
-
+colnames(streamTempRename)
 
 # TASK: Run the following line of code to select our columns of interest.
 calispellTemp <- select(.data=streamTempRename,
                         calispell_temp, Date, Time)
-
+calispellTemp <- select(.data=streamTempRename,
+                        calispell_temp, Date, Time)
 
 # QUESTION: Take a look at the column names for our new dataframe (calispellTemp),
 # by coding the appropriate R function of course. What do you notice about the 
 # new dataframe? Which columns are present? Which are absent? Are they in the same 
 # order as before?
-
-
+colnames(calispellTemp)
+#I noticed the calispellTemp contains data from the Calispell site only. The following columns are present: "calispell_temp", Date" and "Time". This does not follow the original order (Date, Time, calispell_temp). The columns are absent: "smalle_temp" and "winchester_temp".
 # A nice thing to notice about this code. We didn't have to type 'streamTemp$date'
 # etc to indicate each column as we would outside of the tidyverse. The select()
 # function knows we are referring to streamTemp because the dataframe is our first
@@ -150,7 +153,7 @@ calispellTemp <- select(.data=streamTempRename,
 # TASK: Recall that in R, the `:` operator is a compact way to create a sequence 
 # of numbers. For example, write code below to generate a sequence from 1 to 3.
 # HINT: Look back to assignment #1 or the swirl tutorial for help (or google!).
-
+1:3
 
 # Normally this notation is just for numbers, but the select() function allows 
 # you to specify a sequence of columns this way. This can save a bunch of typing!
@@ -160,36 +163,44 @@ calispellTemp <- select(.data=streamTempRename,
 # HINT: Replace the code where each column was listed out with a sequence of 
 # column names. Be sure they are listed in the order they exist in the original 
 # dataframe.
-
+calispellTemp2<-select(calispellTemp,calispell_temp:Time)
 
 # TASK: Write code to check your column names again to see what happened in your
 # new dataframe.
-
+colnames(calispellTemp2)
+#The columns in the new dataframe are calispell_temp", "Date", and "Time".
 
 # We can also specify the columns that we want to discard by selecting them out.
 # TASK: Run the following code to remove the Smalle_temp and Winchester_temp 
 # columns. Note the use of the - sign to remove columns.
 calispellTemp3 <- select(.data=streamTempRename,
                          -smalle_temp, -winchester_temp)
-
+calispellTemp3 <- select(.data=streamTempRename,
+                         -smalle_temp, -winchester_temp)
 # The same thing can be accomplished by running the following code, which
 # concatenates these columns together.
 calispellTemp4 <- select(.data=streamTempRename,
                          -c(smalle_temp, winchester_temp))
-
+calispellTemp4 <- select(.data=streamTempRename,
+                         -c(smalle_temp, winchester_temp))
 # And the same thing can ALSO be accomplished by running the following code, which
 # subtracts out a sequence of columns.
 calispellTemp5 <- select(.data=streamTempRename,
                          -smalle_temp:-winchester_temp)
 
-
+calispellTemp5 <- select(.data=streamTempRename,
+                         -smalle_temp:-winchester_temp)
 # TASK: Write code to check that these three new dataframes (calispellTemp3,
 # calispellTemp4, and calispellTemp5) are identical.
 # HINT: Unless you want to try to get very fancy with your code, you'll have to 
 # check dataframes two at a time. But you can always google to try to find sample
 # code to do all three at once!
-
-
+identical(calispellTemp3,calispellTemp4)
+#identical
+identical(calispellTemp3,calispellTemp5)
+#identical
+identical(calispellTemp4,calispellTemp5)
+#identical
 # ---------------------------------------------------------- #
 ### PART 1.3: FILTERING ROWS                              ####
 # ---------------------------------------------------------- #
