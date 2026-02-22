@@ -49,7 +49,7 @@
 # TASK: Download the data from the Canvas website. Remember to save it to your 
 # working directory for this class! I have already added it to your .gitignore 
 # file for you.
-
+list.files()
 
 # TASK: Read in the data by running the following line of code.
 streamTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv", 
@@ -57,26 +57,29 @@ streamTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv",
 
 
 # QUESTION: What do you think stringsAsFactors mean?
-
+# Answer: It most likely tells R to convert the strings of text into factors (categories).
 
 # TASK: Let's learn a little more about our data. Run the following line of code.
 str(streamTemp)
 
 # QUESTION: What does it look like the str() function does?
-
+# Answer: It shows the number of rows/columns, column names, and the data type of each column, and example values. 
 
 # QUESTION: How many rows does our dataframe have? How many columns? 
 # What class of data is in each column?
-
+dim(streamTemp)
+sapply(streamTemp, class)
+# Answer: The dataframe has 61,100 rows and 5 columns. Date and Time are factors. Calispell.Cr.Temp.C., Smalle.Cr.Temp.C., and Winchester.Cr.Temp..C. are numeric. 
 
 # TASK: Try reading your data in without the stringsAsFactors argument included.
-
+streamTemp_noFactor <- read.csv("CalispellCreekandTributaryTemperatures.csv")
 
 # QUESTION: What is the difference? (HINT: rerun the str function to check).
 # When would we want to set the stringsAsFactors argument to true?  When would 
 # it be better to make it false?
-
-
+str(streamTemp_noFactor)
+str(streamTemp)
+# Answer: When the data is read without stringsAsFactors, the Date and Time columns are stored as character data instead of factors. With stringsAsfactors = TRUE, those text columns are turned into factors. It would be better to set it to TRUE if you want those categories to be factors, and it would be better to make it FALSE when the text should stay as character data.
 
 # ---------------------------------------------------------- #
 ### PART 1.1: RENAMING COLUMNS                            ####
@@ -89,12 +92,12 @@ colnames(streamTemp)
 
 
 # QUESTION: What output do you get in the console? Why is this useful?
-
+# Answer: The console gave the names of all columns in the dataframe.This is useful because it lets me see the exact column names so I can select different columns, or rename them, or change variables in them. 
 
 # QUESTION: What happened to the title of the third column when it was loaded
 # into R?
 # HINT: What happened to the spaces and parenthesis in the R column names?
-
+# Answer; Spaces were replaced with periods and the parentheses were removed. 
 
 # TASK: Run the following line of code. Note the alignment of the code components.
 streamTempRename <- rename(.data=streamTemp,
@@ -105,13 +108,13 @@ streamTempRename <- rename(.data=streamTemp,
 
 # TASK: Write your own code to find the column names of our new dataframe 
 # (streamTempRename). 
-
+colnames(streamTempRename)
 
 # QUESTION: What differences do you notice from before? In your own words, what 
 # did each line from the rename function do? Why might this function be useful 
 # for wrangling data? In the rename code above, does the new column name come 
 # before or after the =?
-
+# Answer: The column names are now shorter and easier to read. Each line from the rename() function makes a new name for some of the columns. This function is useful because it makes messy column names easier to work with and easier to type out. In the rename function, the new column name comes before the = sign. 
 
 # ---------------------------------------------------------- #
 ### PART 1.2: SELECTING COLUMNS                           ####
