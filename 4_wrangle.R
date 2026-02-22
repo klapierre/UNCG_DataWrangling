@@ -442,17 +442,29 @@ calispellHighTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv", stri
 # (8) Keep only the following columns: Exp, Date, Plot, NTrtInfo, genus, species, 
 # Field, C, N, and CN. 
 
-cdr <- read.csv("e001_Plant aboveground biomass carbon and nitrogen.csv") %>% 
-  mutate(exp='e001') %>% 
-  rename(C = all_of("% Carbon"),N = all_of("% Nitrogen")) %>%
+#Workflow #1
+cdr <- read.csv("e001_Plant aboveground biomass carbon and nitrogen.csv", stringsAsFactors = TRUE) %>% 
+#Workflow #2
+  mutate(Exp='e001') %>% 
+#Workflow #3
+  rename(C= 'X..Carbon' , N= 'X..Nitrogen') %>%
+#Workflow #4
   filter(Strip == 1) %>% 
+#Workflow #5
   mutate(NTrtInfor=paste(NTrt, NAdd, sep = " ")) %>% 
+#Workflow #6
   separate(Species, into=c("genus", "species"), sep=" ") %>% 
+#Workflow #7
   mutate(CN = C/N) %>% 
+#Workflow #8
   select(Exp, Date, Plot, NTrtInfor, genus, species, Field, C, N, CN) 
+
+#Okay, so I just learned something important. Sometimes colnames() does not provide the appropriate name to use in the code, and you need to pull up the actual names by opening the data set. I had this issue with no matter how much I altered the names of the columns in rename it was saying that the column did not exist. I then opened the data in R and noticed that because of the percent the columns were named 'X..Carbon' instead.
   
 cdr <- read_csv("e001_Plant aboveground biomass carbon and nitrogen.csv")
-
 colnames(cdr)
+?rename
+str(cdr)
+head(cdr)
 # REMEMBER: Save and push your script to your branch when you're done with this 
 # assignment!
