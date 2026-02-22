@@ -296,11 +296,12 @@ sum(is.na(calispellTemp$calispell_temp))
 calispellTempF <- mutate(.data=calispellTemp,
                          calispell_temp_F = calispell_temp*9/5 + 32)
 
-
+calispellTempF <- mutate(.data=calispellTemp,
+                         calispell_temp_F = calispell_temp*9/5 + 32)
 # Take a look at the new dataframe to see if it worked by either opening it from 
 # the R environment tab or running the following line of code.
 head(calispellTempF) 
-
+#Yes, I see a calispell_temp_F column. 
 
 # We can also use mathematical functions on entire columns. Let's try it!
 
@@ -308,19 +309,22 @@ head(calispellTempF)
 # temperature columns.
 calispellTempSum <- mutate(.data=calispellTempF,
                            sum=calispell_temp + calispell_temp_F)
-
+calispellTempSum <- mutate(.data=calispellTempF,
+                           sum=calispell_temp + calispell_temp_F)
 # Check the dataframe to see if it worked.
-
-
+head(calispellTempSum)
+#It worked!
 # TASK: The column we just created makes no sense (why would you ever want to
 # sum the C and F temperatures?). Write code below to remove it from the dataframe.
-
+rm(calispellTempSum)
 
 # QUESTION: We might also want to add a column that describes the dataset. What 
 # happens when you run the following code?
 calispellTempFaquatic <- mutate(.data=calispellTempF,
                                 type='aquatic')
-
+calispellTempFaquatic <- mutate(.data=calispellTempF,
+                                type='aquatic')
+#A new dataframe was created named "calispellTempFaquatic". It contains data for calispell_temp, date, time, calispell_temp_F, and type. The function took the calispellTempF dataset and added a "Type" column for aquatic species. 
 
 # ---------------------------------------------------------- #
 ### PART 1.5: PASTING AND SEPARATING COLUMNS              ####
