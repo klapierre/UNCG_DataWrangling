@@ -33,8 +33,8 @@
 
 # TASK: Install tidyverse and load the library. HINT: see the end of the week 1 
 # assignment if you forget how to install and load a package.
-
-
+install.packages("tidyverse")
+library(tidyverse)
 # ---------------------------------------------------------- #
 #### PART 1.0: LEARNING THE FUNCTIONS                     ####
 # ---------------------------------------------------------- #
@@ -49,35 +49,37 @@
 # TASK: Download the data from the Canvas website. Remember to save it to your 
 # working directory for this class! I have already added it to your .gitignore 
 # file for you.
-
+#Done.
 
 # TASK: Read in the data by running the following line of code.
 streamTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv", 
                        stringsAsFactors = TRUE) 
-
+streamTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv", 
+                       stringsAsFactors = TRUE) 
 
 # QUESTION: What do you think stringsAsFactors mean?
-
+#A character (anything with letters) of factors (put those words into categories)
 
 # TASK: Let's learn a little more about our data. Run the following line of code.
 str(streamTemp)
-
+str(streamTemp)
 # QUESTION: What does it look like the str() function does?
-
+#It looks like the str() function provides a displays the first few objects of the dataframe, with columns listed and the observations within the columns. 
 
 # QUESTION: How many rows does our dataframe have? How many columns? 
 # What class of data is in each column?
-
+#The dataframe has 61100 rows and 5 columns. The first column contains dates, second column contains times, the third column contains Calispell.Cr.Temp.C, the fourth column contains Smalle.Cr.Temp.C, and the fifth column contains Winchester.Cr.Temp.C. 
 
 # TASK: Try reading your data in without the stringsAsFactors argument included.
-
+read.csv("CalispellCreekandTributaryTemperatures.csv")
 
 # QUESTION: What is the difference? (HINT: rerun the str function to check).
 # When would we want to set the stringsAsFactors argument to true?  When would 
 # it be better to make it false?
-
-
-
+str(streamTemp)
+#Without the stringAsFactors included, it shows data for the first 200 rows across the same columns. With the stringAsFactors argument, it randomly picks out data from the dataframe across the same columns.We would want to set the stringAsFactors to true when
+#It would be better to make it false when 
+hhhhhhhhhhhhhhhhhhhhhhhhhhhh
 # ---------------------------------------------------------- #
 ### PART 1.1: RENAMING COLUMNS                            ####
 # ---------------------------------------------------------- #
