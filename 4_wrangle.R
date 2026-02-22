@@ -338,7 +338,9 @@ head(calispellTempFaquatic)
 
 # TASK: Write code to create one more column named ecosystem in the 
 # calispellTempFaquatic dataframe and fill it with the word 'stream'.
-
+calispellTempFaquatic <- mutate(.data=calispellTempFaquatic,
+                                ecosystem='stream')
+head(calispellTempFaquatic)
 
 # Now we might want to create a new column that includes information from both 
 # of the columns we just created. We would do so by running the following lines 
@@ -351,7 +353,8 @@ calispellTempF4 <- unite(data=calispellTempFaquatic,
 # QUESTION: Describe in your own words what the code above does. What part 
 # creates a new column? What part tells R which columns to combine? What does 
 # the sep= argument do?
-
+#Answer: The section that makes the new column is the col= function which you then assign the name of the column after the = sign. The unite function tells R to combine the columns, so inside unite you tell the function what data set you are using, then is where you are adding/assignning a column, and then the c which is the function that also indicates the creation of a vector is used to dictate which column data is being united which in this situation is 'type' and 'ecosystem'. After the function is closed, the sep function is being used so that when the columns are combined there is seperation between the observation that are now in the same columns. So now in the type_ecosystme column instead of saying 'aquaticstream' it says 'aquatic::stream'
+head(calispellTempF4)
 
 # Another very useful function is separate, which takes apart a column into two
 # or more pieces.
@@ -363,10 +366,10 @@ calispellTempF5 <- separate(data=calispellTempF4,
                             sep='::')
 
 # QUESTION: Why isn't the column name in quotes this time?
-
+#Answer: I think that the column name is not in quotes this time we are not using col to make a new column, instead we are seperating a column that already exists into two "new" columns where using the separate function you dictate the new columns using the into= instead of col=.
 
 # QUESTION: Describe in your own words what the code above does.
-
+#Answer: so the code above uses the function separate to take the data set calispellTempF4 and seperates the column type_ecosystem into two columns, 'type and 'ecosystem'. The first portion, data=, tells the function which data set the code is refering to, next col=, tells the function which existing column in the data set is being seperated, then into= contains what the preexisting column is being turned into, in this case it is being seperated into two columns 'type' and 'ecosystem'.
 
 # ---------------------------------------------------------- #
 ### PART 1.6: PIPES                                       ####
@@ -374,6 +377,9 @@ calispellTempF5 <- separate(data=calispellTempF4,
 
 # Take a look at your R environment tab (upper right of RStudio).
 # Do you feel overwhelmed by how many files are there?
+
+#Answer: Yes, very much so actually, especially if I want to use split screen to understand how a function works and the help is not cutting it, it becomes hard to read the dataset names.
+
 # An amazing thing about tidyverse is that it can pass one function after 
 # another to a dataframe using an operator called a pipe. This allows you to 
 # perform a whole series of functions on one dataframe without having to create 
@@ -436,7 +442,17 @@ calispellHighTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv", stri
 # (8) Keep only the following columns: Exp, Date, Plot, NTrtInfo, genus, species, 
 # Field, C, N, and CN. 
 
+cdr <- read.csv("e001_Plant aboveground biomass carbon and nitrogen.csv") %>% 
+  mutate(exp='e001') %>% 
+  rename(C = all_of("% Carbon"),N = all_of("% Nitrogen")) %>%
+  filter(Strip == 1) %>% 
+  mutate(NTrtInfor=paste(NTrt, NAdd, sep = " ")) %>% 
+  separate(Species, into=c("genus", "species"), sep=" ") %>% 
+  mutate(CN = C/N) %>% 
+  select(Exp, Date, Plot, NTrtInfor, genus, species, Field, C, N, CN) 
+  
+cdr <- read_csv("e001_Plant aboveground biomass carbon and nitrogen.csv")
 
-
+colnames(cdr)
 # REMEMBER: Save and push your script to your branch when you're done with this 
 # assignment!
