@@ -58,7 +58,7 @@ streamTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv",
 
 
 # QUESTION: What do you think stringsAsFactors mean?
-# It stores strings data as factors data type.
+# It stores strings data as factors data type. Factors stores categorical data.
 
 
 # TASK: Let's learn a little more about our data. Run the following line of code.
