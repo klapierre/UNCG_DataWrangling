@@ -84,8 +84,8 @@ streamTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv",
 # it be better to make it false?
 str(streamTemp)
 # All the strings in the date and time have character data type.
-# 
-
+# We want to set the stringsAsFactors argument to true when the data is categorical.
+# We want to be false when it is distinct or unique.
 
 # ---------------------------------------------------------- #
 ### PART 1.1: RENAMING COLUMNS                            ####
@@ -387,9 +387,15 @@ calispellTempF5 <- separate(data=calispellTempF4,
                             sep='::')
 
 # QUESTION: Why isn't the column name in quotes this time?
-# Because we are not inputting 
+# Because we are not assigning the column name for the first time. R already
+# recognizes that it is an exisiting column, so we don't need to put it in quotes.
 
 # QUESTION: Describe in your own words what the code above does.
+# The above code takes the data from calispellTempF4, and it separtes the column
+# type_ecosystem into columns type and ecosystems if they are separated by "::"
+# in type_ecosystem. It stores the results in a new dataframe called 
+# calispellTempF5.
+
 
 
 # ---------------------------------------------------------- #
@@ -397,7 +403,7 @@ calispellTempF5 <- separate(data=calispellTempF4,
 # ---------------------------------------------------------- #
 
 # Take a look at your R environment tab (upper right of RStudio).
-# Do you feel overwhelmed by how many files are there?
+# Do you feel overwhelmed by how many files are there? Yes
 # An amazing thing about tidyverse is that it can pass one function after 
 # another to a dataframe using an operator called a pipe. This allows you to 
 # perform a whole series of functions on one dataframe without having to create 
@@ -429,6 +435,7 @@ calispellHighTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv", stri
   filter(calispell_temp>=15) %>% 
   mutate(calispell_temp_F = calispell_temp*9/5 + 32)
 
+calispellHighTemp
 
 # ---------------------------------------------------------- #
 #### PART 2.0: USING YOUR NEW KNOWLEDGE                   ####
@@ -460,6 +467,19 @@ calispellHighTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv", stri
 # (8) Keep only the following columns: Exp, Date, Plot, NTrtInfo, genus, species, 
 # Field, C, N, and CN. 
 
+cdr <- read.csv("e001_Plant aboveground biomass carbon and nitrogen.csv", stringsAsFactors = TRUE) %>% 
+  mutate(Exp = "e001") %>% 
+  rename ( C = X..Carbon,
+           N = X..Nitrogen) %>% 
+  filter(Strip == 1) %>% 
+  unite(col = "NTrtInfo",
+        c("NTrt","NAdd"),
+        sep = "_") %>% 
+  separate(col= Species,
+           into=c("genus", "species"),
+           sep=" ") %>% 
+  mutate(CN = C/N) %>% 
+  select (Exp, Date, Plot, NTrtInfo, genus, species, Field, C, N, CN)
 
 
 # REMEMBER: Save and push your script to your branch when you're done with this 
