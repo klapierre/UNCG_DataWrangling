@@ -220,21 +220,22 @@ identical(calispellTemp4,calispellTemp5)
 # QUESTION: If you remove all of the observations (rows) with temperatures lower
 # than 15 C, would you expect your new dataframe to have more, the same, or fewer
 # observations than the original dataframe?
-
+#I would expect the new dataframe to have fewer observations than the original dataframe. For the streamTemp dataframe, I did not see any temperatures above 15C. 
 
 # TASK: Run the following code to only keep the values greater than or equal to 15C.
 calispellHighTemp <- filter(.data=calispellTemp,
                             calispell_temp >= 15)
-
+calispellHighTemp <- filter(.data=calispellTemp,
+                            calispell_temp >= 15)
 # How do you know if it worked??
 # TASK: Check the number of observations in your dataframe! You can either do 
 # this using the str() function or by looking next to the dataframe name in the
 # R environment tab.
-
+#It worked because the calispellHighTemp data has 7703 observations. The calispellTemp data has 61100 observations.
 
 # QUESTION: How many observations did the original dataframe (calispellTemp) 
 # have? How many does the new dataframe (calispellHighTemp) have?
-
+#The original dataframe (calispellTemp) has 61100 observations.The calispellHighTemp data has 7703 observations.
 
 # REALLY IMPORTANT: Even if the function runs, R can do all kinds of bad things 
 # if you've accidentally coded something incorrectly. It is always very, very 
@@ -264,21 +265,23 @@ highTempTributaries <- filter(.data=streamTempRename,
 # Finally, we might want to only get the rows that do not have missing data. We 
 # can detect missing values with the is.na() function. Try it out:
 is.na(c(3, 5, NA, 6))
-
+is.na(c(3, 5, NA, 6))
 # Now put an exclamation point (!) before is.na() to look for the opposite. This
 # changes all of the TRUEs to FALSEs and FALSEs to TRUEs (i.e., tells us what is 
 # not an NA).
 !is.na(c(3, 5, NA, 6))
-
+!is.na(c(3, 5, NA, 6))
 # Time to put this all together! We can filter all of the rows of calispellTemp 
 # for which the value of calispell_temp is NOT NA.
 calispellData <- filter(.data=calispellTemp,
                         !is.na(calispell_temp))
-
+calispellData <- filter(.data=calispellTemp,
+                        !is.na(calispell_temp))
 # QUESTION: How many observations are in the datafile calispellData? Write code
 # to determine how many values of calispell_temp were NA.
-
-
+#There are 52330 observations in calispellData. 
+sum(is.na(calispellTemp$calispell_temp))
+#There are 8770 NA's in calispell_temp.
 # ---------------------------------------------------------- #
 ### PART 1.4: CREATING COLUMNS                            ####
 # ---------------------------------------------------------- #
