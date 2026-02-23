@@ -271,7 +271,7 @@ calispellData <- filter(.data=calispellTemp,
 
 # QUESTION: How many observations are in the datafile calispellData? Write code
 # to determine how many values of calispell_temp were NA.
-
+52330 observations and Na values are 8770
 
 # ---------------------------------------------------------- #
 ### PART 1.4: CREATING COLUMNS                            ####
@@ -312,7 +312,7 @@ calispellTempSum <- mutate(.data=calispellTempF,
 calispellTempFaquatic <- mutate(.data=calispellTempF,
                                 type='aquatic')
 
-
+R studios gives you an error message becsue the code is incomplete i believe 
 # ---------------------------------------------------------- #
 ### PART 1.5: PASTING AND SEPARATING COLUMNS              ####
 # ---------------------------------------------------------- #
@@ -334,7 +334,7 @@ calispellTempF4 <- unite(data=calispellTempFaquatic,
 # QUESTION: Describe in your own words what the code above does. What part 
 # creates a new column? What part tells R which columns to combine? What does 
 # the sep= argument do?
-
+ 
 
 # Another very useful function is separate, which takes apart a column into two
 # or more pieces.
