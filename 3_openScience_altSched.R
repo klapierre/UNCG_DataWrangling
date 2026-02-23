@@ -17,24 +17,27 @@
 
 
 ## QUESTION: Open up the file "knb-lter-knz.148.3.txt". What does this file contain?
-
+I believe its an overview of the data and what it represents. 
 
 ## QUESTION: From this file or the original website, who are the dataset contributors?
-
+Kimberly Komatsu,Meghan Avolio, Andrew Hope, Sally Koerner, Allison Louthan, Kevin Wilcox, and Konza LTER
 
 ## QUESTION: From this file or the original website, what are the start and end 
 ## dates of the dataset?
+2019-01-01
+
+2022-12-30
 
 
 ## QUESTION: Is the data collection still ongoing?
 ## Confession from Professor Komatsu: despite the dates of data included in the 
 ## file, the answer here is yes.We're just behind in getting the data cleaned 
 ## and uploaded :(
-
+Yes, you let me know so!~
 
 ## QUESTION: Given your answer to the previous question, why might it be good to
 ## have a reproducible script for data analysis related to this dataset?
-
+It's g'ood to have reproducible script as it helps reduces the the amount of time needed to package and clean data so it is more easily publishable. 
 
 # ----------------------------------------------------------
 #### 2) Preventing GitHub from syncing the data files.####
@@ -43,14 +46,14 @@
 ## We can use the .gitignore file to tell git what files not to sync to GitHub!
 
 ## QUESTION: What are two reasons why we wouldn't want GitHub to sync this data?
-
+The first reason is that we don't wan't the responses to replace the template for all the students, which would reduce their ability to learn and pratice their new knowledge. Another reason to consider is that there would be lots of duplicate forms stored in 1 spot so it would be a lot duplicate information taking up storage. 
 
 
 ## TASK: Check the Git tab in RStudio. Do you see your data folder listed?
 ## Now, open the .gitignore file from the files tab in RStudio.
 ## Tell git to ignore the entire folder containing the data you just downloaded.
 ## Save the .gitignore file.
-
+.gitignore
 
 ## QUESTION: What happened to the data folder listed in the Git tab of RStudio
 ## when you hit save?
