@@ -106,20 +106,27 @@ colnames(streamTemp)
 
 # TASK: Run the following line of code. Note the alignment of the code components.
 streamTempRename <- rename(.data=streamTemp,
-                           calispell_temp=Calispell.Cr.Temp.C.,
+                           calispell_tempCalispell.Cr.Temp.C.,
                            smalle_temp=Smalle.Cr.Temp.C.,
                            winchester_temp=Winchester.Cr.Temp..C.)
 
 
 # TASK: Write your own code to find the column names of our new dataframe 
 # (streamTempRename). 
-
+colnames(streamTempRename)
 
 # QUESTION: What differences do you notice from before? In your own words, what 
 # did each line from the rename function do? Why might this function be useful 
 # for wrangling data? In the rename code above, does the new column name come 
 # before or after the =?
-
+# I noticed that the names were changed to have underscores instead of periods and
+# they are now shorter and have no uppercase letters. 
+# In the first line we are telling r to rename columns in stream temp data set. 
+# In the second line we are changing the name of the Calispell.Cr column to calispell_temp.
+# In the third line we are changing the name of the Smalle.Cr column to smalle_temp and in the 
+# fourth line we are changing the name of the Winchester.Cr column to winchester_temp.
+# This function might be useful for wrangling data because it is a quick way to rename
+# your columns. The new column name comes before the equal sign. 
 
 # ---------------------------------------------------------- #
 ### PART 1.2: SELECTING COLUMNS                           ####
