@@ -57,17 +57,18 @@ streamTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv",
 
 
 # QUESTION: What do you think stringsAsFactors mean?
-
+well brekaing down the name im guessing tells R what to put where in order?
+  
 
 # TASK: Let's learn a little more about our data. Run the following line of code.
 str(streamTemp)
 
 # QUESTION: What does it look like the str() function does?
-
+Gives you a quick summary of the dataframe
 
 # QUESTION: How many rows does our dataframe have? How many columns? 
 # What class of data is in each column?
-
+1 row and 5 columns 
 
 # TASK: Try reading your data in without the stringsAsFactors argument included.
 
@@ -76,7 +77,7 @@ str(streamTemp)
 # When would we want to set the stringsAsFactors argument to true?  When would 
 # it be better to make it false?
 
-
+the different text columns print strcture text columns didnt stay as characters
 
 # ---------------------------------------------------------- #
 ### PART 1.1: RENAMING COLUMNS                            ####
