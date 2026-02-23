@@ -76,7 +76,7 @@ str(streamTemp2)
 # QUESTION: What is the difference? (HINT: rerun the str function to check).
 # When would we want to set the stringsAsFactors argument to true?  When would 
 # it be better to make it false?
-# The difference is when stringsAsFactors is set to TRUE, the date and time columns are considered factors. When set to FALSE (or not included), these columns are both considered characters. My understanding is that RStudio automatically sets that function to be true, but it can be useful to make it false when you want to ............................ be able to separate items easily? Honestly I am struggling with this one. It doesnt reallllly seem all that different to me, and I'm not finding a good explaination online.
+# The difference is when stringsAsFactors is set to TRUE, the date and time columns are considered factors. When set to FALSE (or not included), these columns are both considered characters. My understanding is that RStudio automatically sets that function to be true, but it can be useful to make it false when you want to ............................ be able to separate items easily? Honestly I am struggling with this one. It doesnt reallllly seem all that different to me, and I'm not finding a good explanation online.
 
 # ---------------------------------------------------------- #
 ### PART 1.1: RENAMING COLUMNS                            ####
