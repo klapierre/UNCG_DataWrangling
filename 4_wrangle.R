@@ -229,21 +229,23 @@ all_identical <- identical(calispellTemp3, calispellTemp4) &
 # QUESTION: If you remove all of the observations (rows) with temperatures lower
 # than 15 C, would you expect your new dataframe to have more, the same, or fewer
 # observations than the original dataframe?
-
+# We would expect to see fewer observations than our original data because we are filtering
+# out data in the new data frame. 
 
 # TASK: Run the following code to only keep the values greater than or equal to 15C.
 calispellHighTemp <- filter(.data=calispellTemp,
                             calispell_temp >= 15)
 
 # How do you know if it worked??
+# We will know it worked when we see fewer observations compared to our original data set. 
 # TASK: Check the number of observations in your dataframe! You can either do 
 # this using the str() function or by looking next to the dataframe name in the
 # R environment tab.
-
+str(calispellHighTemp)
 
 # QUESTION: How many observations did the original dataframe (calispellTemp) 
 # have? How many does the new dataframe (calispellHighTemp) have?
-
+# Our original data frame has 61100 observations and our new data frame has 7703 observations. 
 
 # REALLY IMPORTANT: Even if the function runs, R can do all kinds of bad things 
 # if you've accidentally coded something incorrectly. It is always very, very 
