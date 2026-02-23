@@ -145,7 +145,7 @@ calispellTemp <- select(.data=streamTempRename,
 # by coding the appropriate R function of course. What do you notice about the 
 # new dataframe? Which columns are present? Which are absent? Are they in the same 
 # order as before?
-
+the column names are easeir before they were longer and a bit messy why is it useful ill say cleaner naming and m
 
 # A nice thing to notice about this code. We didn't have to type 'streamTemp$date'
 # etc to indicate each column as we would outside of the tidyverse. The select()
@@ -215,7 +215,7 @@ calispellTemp5 <- select(.data=streamTempRename,
 # QUESTION: If you remove all of the observations (rows) with temperatures lower
 # than 15 C, would you expect your new dataframe to have more, the same, or fewer
 # observations than the original dataframe?
-
+calispell_temp,Date and the Time but stereamTempRename is absent 
 
 # TASK: Run the following code to only keep the values greater than or equal to 15C.
 calispellHighTemp <- filter(.data=calispellTemp,
