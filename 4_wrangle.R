@@ -430,21 +430,29 @@ calispellHighTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv", stri
 # TASK: Perform the following steps in one workflow (i.e., using pipes):
 # (1) Create a dataframe called cdr and load the .csv file 
 # 'e001_Plant aboveground biomass carbon and nitrogen.csv' into it.
+cdr <-read_csv("e001_Plant aboveground biomass carbon and nitrogen.csv") %>% 
 # (2) Add a column named 'Exp' and fill it with the text 'e001' so we know what 
 # experiment we're working with.
+  mutate(Exp="e001") %>% 
 # (3) Rename our last two columns that were originally '% Carbon' and '% Nitrogen' 
 # in our csv file. Make the new names 'C' and 'N', respectively.
+  rename(C = '% Carbon',
+         N = '% Nitrogen') %>% 
 # (4) Remove any observations that were not obtained from Strip 1.
+  filter(Strip == 1 ) %>% 
 # (5) Create a new column called NTrtInfo that include the information from both 
 # NTrt and NAdd, separated by an underscore.
+  unite(NTrtInfo, NTrt, NAdd, sep = "-", remove = FALSE) %>% 
 # (6) Split the Species column into two columns, one named 'genus' and one named 
 # 'species'.
+  separate(Species, into = c("genus", "species"), sep = " ", extra = "merge") %>%
 # (7) Create a column called CN that contains the ratio of C to N for each 
 # observation.
 # HINT: The ratio of C to N is calculated as C/N.
+  mutate(CN = C / N) %>%
 # (8) Keep only the following columns: Exp, Date, Plot, NTrtInfo, genus, species, 
 # Field, C, N, and CN. 
-
+ select(Exp, Date, Plot, NTrtInfo, genus, species, Field, C, N, CN)
 
 
 # REMEMBER: Save and push your script to your branch when you're done with this 
