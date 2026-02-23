@@ -11,7 +11,7 @@
 
 
 # ---------------------------------------------------------- #
-#### SET UP:                                              ####
+#### SET UP:                                               ####
 # ---------------------------------------------------------- #
 # REMINDER: Be sure you are working in YOUR branch of our repository for all 
 # commits related to this assignment.
@@ -33,7 +33,7 @@
 
 # TASK: Install tidyverse and load the library. HINT: see the end of the week 1 
 # assignment if you forget how to install and load a package.
-
+library(tidyverse)
 
 # ---------------------------------------------------------- #
 #### PART 1.0: LEARNING THE FUNCTIONS                     ####
@@ -52,30 +52,37 @@
 
 
 # TASK: Read in the data by running the following line of code.
+
 streamTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv", 
                        stringsAsFactors = TRUE) 
 
 
 # QUESTION: What do you think stringsAsFactors mean?
-
+#I think StringsAsFactors means that strings of text are written as factors with 
+# " " marks around the text.
 
 # TASK: Let's learn a little more about our data. Run the following line of code.
 str(streamTemp)
 
 # QUESTION: What does it look like the str() function does?
-
+#the str() function shows the structure of the dataset such as name and number of 
+#columns and number of rows.
 
 # QUESTION: How many rows does our dataframe have? How many columns? 
 # What class of data is in each column?
-
+#61100 rows and 5 columns
 
 # TASK: Try reading your data in without the stringsAsFactors argument included.
 
+streamTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv",) 
 
 # QUESTION: What is the difference? (HINT: rerun the str function to check).
 # When would we want to set the stringsAsFactors argument to true?  When would 
 # it be better to make it false?
-
+str (streamTemp) 
+#The difference is without StringsAsFactors the dates and times are characters
+#rather than factors. It would be best to set this to true if it is categorical 
+#data but should be false if it is not categorical data.
 
 
 # ---------------------------------------------------------- #
@@ -89,14 +96,16 @@ colnames(streamTemp)
 
 
 # QUESTION: What output do you get in the console? Why is this useful?
-
+#The column names is the output. This is useful in showing the different columns
+#data is inputed within. Helps understand organization.
 
 # QUESTION: What happened to the title of the third column when it was loaded
 # into R?
 # HINT: What happened to the spaces and parenthesis in the R column names?
-
+#The spaces and parenthesis because periods.
 
 # TASK: Run the following line of code. Note the alignment of the code components.
+
 streamTempRename <- rename(.data=streamTemp,
                            calispell_temp=Calispell.Cr.Temp.C.,
                            smalle_temp=Smalle.Cr.Temp.C.,
@@ -106,12 +115,17 @@ streamTempRename <- rename(.data=streamTemp,
 # TASK: Write your own code to find the column names of our new dataframe 
 # (streamTempRename). 
 
+colnames(streamTempRename)
 
 # QUESTION: What differences do you notice from before? In your own words, what 
 # did each line from the rename function do? Why might this function be useful 
 # for wrangling data? In the rename code above, does the new column name come 
 # before or after the =?
-
+# .Cr. became _ and .C. was dropped. Also, capital letters were converted to 
+lowercase. Each line from the function changed the name of a specific column in
+#the dataset. This function of renaming columns may be useful to shorten or edit
+#names #of columns from imported datasets to better fit the R language. The new
+#name is written before the = and the old name is written after =.
 
 # ---------------------------------------------------------- #
 ### PART 1.2: SELECTING COLUMNS                           ####
@@ -126,7 +140,7 @@ streamTempRename <- rename(.data=streamTemp,
 
 # TASK: Look again at the columns you have in the streamTempRename dataframe by
 # writing the necessary code below.
-
+colnames(streamTempRename)
 
 # TASK: Run the following line of code to select our columns of interest.
 calispellTemp <- select(.data=streamTempRename,
