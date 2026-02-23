@@ -30,7 +30,7 @@
 # REMINDER: The dplyr and tidyr packages are nested within the tidyverse package
 # (along with many others). Be sure to start by loading the tidyverse library.
 # HINT: see the end of assignment #1 if you forgot how to load a package.
-
+library('tidyverse')
 
 # ---------------------------------------------------------- #
 #### PART 1.0: LEARNING THE FUNCTIONS                     ####
@@ -43,7 +43,12 @@
 # it to a dataframe named streamTemp. Clean up the column names to the following:
 # data, time, calispell, smalle, winchester
 # HINT: Check last week's assignment if you forget how to read data into R.
-
+streamTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv", 
+                       stringsAsFactors = TRUE) 
+streamTemp <- rename(.data=streamTemp,
+                           calispell=Calispell.Cr.Temp.C.,
+                           smalle=Smalle.Cr.Temp.C.,
+                           winchester=Winchester.Cr.Temp..C.)
 
 # ---------------------------------------------------------- #
 ### PART 1.1: SUMMARIZING DATA                            ####
@@ -58,26 +63,32 @@ streamTempLength <- streamTemp %>%
 
 # QUESTION: When you open the streamTempLength dataframe, what value is in each 
 # column?
+#Answer: 61100 is the value that is in each column
 
 
 # QUESTION: How does this number compare to the number of observations listed by
 # the dataframe in the R environment tab?
+#Answer: The R environment tab  says there is only 1 observation in the streamTempLength, but then in streamTemp it also says 61100 observations just like the value in the dataframe.
 
 
 # QUESTION: Based on your previous answers, what do you think the length 
 # function does?
+#Answer: I think that the length function gives the number of observations in the column.
 
 
 # It can be a bit tedious to type out all the column names and the length 
 # function multiple times. The across() function within the summarize() step can
 # help us to identify multiple columns to summarize the data for. Try running 
 # the following code:
+
+#streamTempLength is a new dataset made from streamTemp
 streamTempLength <- streamTemp %>% 
+#Summarize the columns calispell, smalle, and winchester by how long the column is (# of observations)
   summarize(across(.cols=c('calispell', 'smalle', 'winchester'), 
                    .fns=length))
 
 # TASK: Using comments in the code above, describe what each line is doing.
-
+#Completed
 
 # We might also want to know some other statistics about our data, such as the 
 # max, min, and mean values. The across() function is useful for this too, by 
@@ -88,14 +99,16 @@ streamTempSummary <- streamTemp %>%
                    .fns=list(maximum=max, mean=mean, minimim=min)))
 
 # TASK: Write code to view the column names of the streamTempSummary dataframe.
-
+colnames(streamTempSummary)
 
 # QUESTION: How does R know what to name each column when we use the summarize 
 # function above?
+#Answer: It looks like R takes the column name and uses that with an underscore and then the functions applied. So the list function seems to have a list of text that is being added to the original column names.
 
 
 # QUESTION: What values do you see for the columns when you open up the 
 # dataframe streamTempSummary? Why do you think this is?
+#Answer: There are only NA values. I suspect this is becuase there are other columns in the data set that contain characters and also a lot of the data in the dataset was missing.
 
 
 # Recall that our data had a lot of missing values. R doesn't know how to find 
@@ -105,15 +118,17 @@ streamTempSummary <- streamTemp %>%
 streamTempSummary <- streamTemp %>% 
   summarize(across(.cols=c('calispell', 'smalle', 'winchester'), 
                    .fns=list(maximum=max, mean=mean, minimim=min),
-                   na.rm=T))
+                   na.rm=TRUE))
 
 # QUESTION: Now what values do you see for the columns when you open up the 
 # dataframe streamTempSummary? What line of the above code removed the NAs from 
 # our data?
+#Answer: Now there are numerical values in the dataset. it is the na.rm=TRUE that removed all of the NAs from the data.
 
 
 # QUESTION: What happened to the column we created in the beginning called 
 # data_type? Where did the date and time columns go?
+#Answer: I believe that because of the summarize function it got rid of any colum that was not in the list of columns that was provided to the function.
 
 
 # RECOMMENDED: Take a look at the summarize help file, particularly the "Useful 
