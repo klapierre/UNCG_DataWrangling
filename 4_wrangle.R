@@ -335,7 +335,7 @@ calispellTempFaquatic <- mutate(.data=calispellTempF,
 # TASK: Write code to create one more column named ecosystem in the 
 # calispellTempFaquatic dataframe and fill it with the word 'stream'.
 
-
+calispellTempFaquatic<-mutate(.data=calispellTempFaquatic,ecosystem='stream')
 # Now we might want to create a new column that includes information from both 
 # of the columns we just created. We would do so by running the following lines 
 # of code:
@@ -343,11 +343,14 @@ calispellTempF4 <- unite(data=calispellTempFaquatic,
                          col='type_ecosystem',
                          c('type', 'ecosystem'),
                          sep='::')
-
+calispellTempF4 <- unite(data=calispellTempFaquatic,
+                         col='type_ecosystem',
+                         c('type', 'ecosystem'),
+                         sep='::')
 # QUESTION: Describe in your own words what the code above does. What part 
 # creates a new column? What part tells R which columns to combine? What does 
 # the sep= argument do?
-
+#The above function gets combines the 'type' and 'ecosystem' columns into one column 'type_ecosystem'. The col='type_ecosystem' creates a new column in the calispellTempFaquatic dataset. The c('type','ecosystem') tells R to combine both of these columns.The sep= function separates the values for 'type' and 'environment' in each cell.
 
 # Another very useful function is separate, which takes apart a column into two
 # or more pieces.
@@ -357,12 +360,15 @@ calispellTempF5 <- separate(data=calispellTempF4,
                             col=type_ecosystem,
                             into=c('type', 'ecosystem'),
                             sep='::')
-
+calispellTempF5 <- separate(data=calispellTempF4,
+                            col=type_ecosystem,
+                            into=c('type', 'ecosystem'),
+                            sep='::')
 # QUESTION: Why isn't the column name in quotes this time?
-
+#The column type_ecosystem exists in the calispellTempF4 dataset, therefore no quotes are needed. Whereas in the previous code, the type_ecosystem did not exist therefore we created a column with the following name.
 
 # QUESTION: Describe in your own words what the code above does.
-
+#The code takes the column type_ecosystem from calispellTempF4 and separates the column back into two individual columns ('type' and 'ecosystem').
 
 # ---------------------------------------------------------- #
 ### PART 1.6: PIPES                                       ####
