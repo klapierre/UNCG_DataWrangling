@@ -34,7 +34,6 @@
 # TASK: Install tidyverse and load the library. HINT: see the end of the week 1 
 # assignment if you forget how to install and load a package.
 library(tidyverse)
-
 # ---------------------------------------------------------- #
 #### PART 1.0: LEARNING THE FUNCTIONS                     ####
 # ---------------------------------------------------------- #
@@ -432,14 +431,15 @@ calispellHighTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv", stri
 # TASK: Perform the following steps in one workflow (i.e., using pipes):
 # (1) Create a dataframe called cdr and load the .csv file 
 
+
 cdr <- read.csv("e001_Plant aboveground biomass carbon and nitrogen.csv") %>% 
-  mutate(Exp = "e001") %>% 
-  rename(C= "% Carbon", N= "% Nitrogen") %>% 
+  mutate(Exp = "e001") %>%
+  rename(C = X..Carbon, N = X..Nitrogen) %>% 
   filter(Strip == 1) %>% 
-  mutate(NTrtInfo = paste(NTrt, NAdd, sep = "_")) %>% 
-           separate(Species, into = c("genus", "species"), sep = " ") %>% 
-           mutate(CN = C / N) %>% 
-           select(Exp, Date, Plot, NTrtInfo, genus, species, Field, C, N, CN)
+  unite(col = "NTrtInfo", NTrt, NAdd, sep = "_") %>% 
+  separate(Species, into = c("genus", "species"), sep = " ") %>% 
+  mutate(CN = C / N) %>% 
+  select(Exp, Date, Plot, NTrtInfo, genus, species, Field, C, N, CN)
            
            
   
