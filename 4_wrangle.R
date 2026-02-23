@@ -215,8 +215,7 @@ calispellTemp5 <- select(.data=streamTempRename,
 # QUESTION: If you remove all of the observations (rows) with temperatures lower
 # than 15 C, would you expect your new dataframe to have more, the same, or fewer
 # observations than the original dataframe?
-calispell_temp,Date and the Time but stereamTempRename is absent 
-
+less observations should be observerd 
 # TASK: Run the following code to only keep the values greater than or equal to 15C.
 calispellHighTemp <- filter(.data=calispellTemp,
                             calispell_temp >= 15)
@@ -229,7 +228,7 @@ calispellHighTemp <- filter(.data=calispellTemp,
 
 # QUESTION: How many observations did the original dataframe (calispellTemp) 
 # have? How many does the new dataframe (calispellHighTemp) have?
-
+333
 
 # REALLY IMPORTANT: Even if the function runs, R can do all kinds of bad things 
 # if you've accidentally coded something incorrectly. It is always very, very 
