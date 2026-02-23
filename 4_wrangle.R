@@ -95,12 +95,14 @@ colnames(streamTemp)
 
 
 # QUESTION: What output do you get in the console? Why is this useful?
-
+# The output is the column names of our dataset. This is useful because we are 
+# able to see all of the column names in one place.
 
 # QUESTION: What happened to the title of the third column when it was loaded
 # into R?
 # HINT: What happened to the spaces and parenthesis in the R column names?
-
+# The spaces are replaced with periods and the parenthesis in the R column names 
+# disappeared.  
 
 # TASK: Run the following line of code. Note the alignment of the code components.
 streamTempRename <- rename(.data=streamTemp,
