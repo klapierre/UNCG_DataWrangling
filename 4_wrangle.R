@@ -334,7 +334,7 @@ calispellTempF4 <- unite(data=calispellTempFaquatic,
 # QUESTION: Describe in your own words what the code above does. What part 
 # creates a new column? What part tells R which columns to combine? What does 
 # the sep= argument do?
- 
+unite() it coombines two columns such as (type and ecosystem)
 
 # Another very useful function is separate, which takes apart a column into two
 # or more pieces.
@@ -346,9 +346,10 @@ calispellTempF5 <- separate(data=calispellTempF4,
                             sep='::')
 
 # QUESTION: Why isn't the column name in quotes this time?
-
+becasue of col= type_ecostystem is something that already existed 
 
 # QUESTION: Describe in your own words what the code above does.
+both functions seprate tkae type_ecosystem and just splits it in two columsn type and ecosystem 
 
 
 # ---------------------------------------------------------- #
