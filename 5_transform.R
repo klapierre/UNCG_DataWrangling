@@ -44,8 +44,8 @@
 # data, time, calispell, smalle, winchester
 # HINT: Check last week's assignment if you forget how to read data into R.
 
-streamTemp <- read.csv(CalispellCreekandTributaryTemperatures.csv)
-colnames(streamTemp) <- c("Data", "Time", "Calispell", "Smalle", "Winchester")
+streamTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv")
+colnames(streamTemp) <- c("data", "time", "calispell", "smalle", "winchester")
 
 # ---------------------------------------------------------- #
 ### PART 1.1: SUMMARIZING DATA                            ####
@@ -61,9 +61,12 @@ streamTempLength <- streamTemp %>%
 # QUESTION: When you open the streamTempLength dataframe, what value is in each 
 # column?
 
+#61100
 
 # QUESTION: How does this number compare to the number of observations listed by
 # the dataframe in the R environment tab?
+
+#The number of observations listed in the environment tab is 1 whereas
 
 
 # QUESTION: Based on your previous answers, what do you think the length 
