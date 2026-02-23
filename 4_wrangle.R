@@ -90,11 +90,14 @@ colnames(streamTemp)
 
 
 # QUESTION: What output do you get in the console? Why is this useful?
-
+[3] "Calispell.Cr.Temp.C."   "Smalle.Cr.Temp.C."     
+[5] "Winchester.Cr.Temp..C."
+> shows the column names correctly shows your name of columns 
 
 # QUESTION: What happened to the title of the third column when it was loaded
 # into R?
 # HINT: What happened to the spaces and parenthesis in the R column names?
+My guess R cleaned it up by deafult so to most likely change it to a vaild name to use 
 
 
 # TASK: Run the following line of code. Note the alignment of the code components.
@@ -112,6 +115,10 @@ streamTempRename <- rename(.data=streamTemp,
 # did each line from the rename function do? Why might this function be useful 
 # for wrangling data? In the rename code above, does the new column name come 
 # before or after the =?
+streamTempRename <- rename(.data=streamTemp,
+                           calispell_temp=Calispell.Cr.Temp.C.,
+                           smalle_temp=Smalle.Cr.Temp.C.,
+                           winchester_temp=Winchester.Cr.Temp..C.)
 
 
 # ---------------------------------------------------------- #
