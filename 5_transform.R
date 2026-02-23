@@ -43,8 +43,11 @@
 # it to a dataframe named streamTemp. Clean up the column names to the following:
 # data, time, calispell, smalle, winchester
 # HINT: Check last week's assignment if you forget how to read data into R.
-
-
+streamTemp <- read.csv(CalispellCreekandTributaryTemperatures.csv)
+streamTemp <-rename(.data=streamTemp,
+                        calispell=Calispell.Cr.Temp.C.,
+                        smalle=Smalle.Cr.Temp.C.,
+                        winchester=Winchester.Cr.Temp..C.)
 # ---------------------------------------------------------- #
 ### PART 1.1: SUMMARIZING DATA                            ####
 # ---------------------------------------------------------- #
@@ -59,14 +62,17 @@ streamTempLength <- streamTemp %>%
 # QUESTION: When you open the streamTempLength dataframe, what value is in each 
 # column?
 
+#61,100 for all three.
 
 # QUESTION: How does this number compare to the number of observations listed by
 # the dataframe in the R environment tab?
 
+#It's the same.
 
 # QUESTION: Based on your previous answers, what do you think the length 
 # function does?
 
+#It tells you the length in observations of each given column.
 
 # It can be a bit tedious to type out all the column names and the length 
 # function multiple times. The across() function within the summarize() step can
@@ -78,6 +84,8 @@ streamTempLength <- streamTemp %>%
 
 # TASK: Using comments in the code above, describe what each line is doing.
 
+#The first line establishes which dataframe is our source and what the one we're
+#creating is called. The second 
 
 # We might also want to know some other statistics about our data, such as the 
 # max, min, and mean values. The across() function is useful for this too, by 
