@@ -58,18 +58,21 @@ streamTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv",
 
 
 # QUESTION: What do you think stringsAsFactors mean?
-
+# I think stringasfactors means converting a string into a factor. 
 
 # TASK: Let's learn a little more about our data. Run the following line of code.
 str(streamTemp)
 
 # QUESTION: What does it look like the str() function does?
-
+# The str() function shows us the structure of our data set in the console. 
 
 # QUESTION: How many rows does our dataframe have? How many columns? 
 # What class of data is in each column?
-
-
+dim(streamTemp)
+str(streamTemp)
+# There are 61100 rows and 5 columns in the data frame.
+# The date and time columns are factor class. 
+# The last 3 columns are numeric class. 
 # TASK: Try reading your data in without the stringsAsFactors argument included.
 
 
