@@ -288,8 +288,10 @@ calispellData <- filter(.data=calispellTemp,
 
 # QUESTION: How many observations are in the datafile calispellData? Write code
 # to determine how many values of calispell_temp were NA.
-
-
+str(calispellData)
+# There are 52330 observations in the data file calispellData. 
+sum(is.na(calispellTemp$calispell_temp))
+# There are 8770 values that are NA. 
 # ---------------------------------------------------------- #
 ### PART 1.4: CREATING COLUMNS                            ####
 # ---------------------------------------------------------- #
