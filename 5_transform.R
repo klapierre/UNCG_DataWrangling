@@ -30,8 +30,7 @@
 # REMINDER: The dplyr and tidyr packages are nested within the tidyverse package
 # (along with many others). Be sure to start by loading the tidyverse library.
 # HINT: see the end of assignment #1 if you forgot how to load a package.
-
-
+library(tidyverse)
 # ---------------------------------------------------------- #
 #### PART 1.0: LEARNING THE FUNCTIONS                     ####
 # ---------------------------------------------------------- #
