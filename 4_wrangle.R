@@ -74,13 +74,15 @@ str(streamTemp)
 # The date and time columns are factor class. 
 # The last 3 columns are numeric class. 
 # TASK: Try reading your data in without the stringsAsFactors argument included.
-
-
+streamTemp1 <- read.csv("CalispellCreekandTributaryTemperatures.csv")
+str(streamTemp1)
 # QUESTION: What is the difference? (HINT: rerun the str function to check).
 # When would we want to set the stringsAsFactors argument to true?  When would 
 # it be better to make it false?
-
-
+# The difference is that the date and time columns changed to character. 
+# We would want to set the stringsasfactors argument to be true when we want to change
+# the characters into factors. It would be better to make it false when we want our column
+# to remain as a character. 
 
 # ---------------------------------------------------------- #
 ### PART 1.1: RENAMING COLUMNS                            ####
