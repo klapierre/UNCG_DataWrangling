@@ -107,21 +107,6 @@ cheapishDiamonds <- diamonds %>%
 
 
 
-# why doesn't this work?!
-diamondsSummary <- diamonds %>% 
-  group_by(cut, color, clarity) %>% 
-  summarize(price_mean=mean(price), .groups=drop)
-
-
-
-
-
-
-
-
-
-
-
 
 # why doesn't this work?!
 diamondsSummary <- diamonds %>% 
@@ -129,3 +114,22 @@ diamondsSummary <- diamonds %>%
   summarize(price_mean=mean(price), .groups='drop')
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# why doesn't this work?!
+diamondsSummary <- diamonds %>% 
+  group_by(cut, color, clarity) %>% 
+  summarize(price_mean=mean(price), .groups=drop)
