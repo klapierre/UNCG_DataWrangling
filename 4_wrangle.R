@@ -396,7 +396,7 @@ rm(list = ls())
 # SHORTCUT: You can efficiently type the pipe icon '%>%' by using the pipe 
 # shortcut ctl+shift+m (windows) or cmd+shift+m (mac)! Try using the shortcut 
 # to create pipes whenever needed for the rest of the assignment.
-
+# %>% %>% 
 # The pipe icon tells R to pass the dataframe it was just working with into 
 # another function. This is how we can get from one function to the next without 
 # creating and naming dozens of new dataframes. This is great for organization!
