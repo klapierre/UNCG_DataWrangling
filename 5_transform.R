@@ -34,7 +34,7 @@
 # TASK: Read in the CalispellCreekandTributaryTemperatures.csv file and assign it to a dataframe
 # named streamTemp.
 # HINT: Check last week's assignment if you forget how to read data into R.
-'streamTemp' <- read.csv("CalispellCreekandTributaryTemperatures.csv")
+streamTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv") %>% rename('calispell' = Calispell.Cr.Temp.C.,'smalle' = Smalle.Cr.Temp.C., 'winchester' = Winchester.Cr.Temp..C.)
 
 # ---------------------------------------------------------- #
 ### PART 1.1: SUMMARIZING DATA                            ####
@@ -48,14 +48,15 @@ streamTempLength <- streamTemp %>%
             winchester_length = length(winchester))
 
 # QUESTION: When you open the streamTempLength dataframe, what value is in each column?
-
+##ANSWER: The number of observations in each of the original columns.
 
 # QUESTION: How does this number compare to the number of observations listed by the dataframe
 # in the R environment tab?
+##ANSWER: The value in each column is the same as the number of observations in streamTemp, while the number of observations in streamTempLength is one. 
 
 
 # QUESTION: Based on your previous answers, what do you think the length function does?
-
+##ANSWER: I think that it determined the number of observations that are within a column. 
 
 # It can be a bit tedious to type out all the column names and the length function
 # multiple times. The across() function within the summarize() step can help us to 
@@ -75,7 +76,7 @@ streamTempSummary <- streamTemp %>%
                    .fns=list(maximum=max, mean=mean, minimim=min)))
 
 # TASK: Write code to view the column names of the streamTempSummary dataframe.
-
+colnames(streamTempSummary)
 
 # QUESTION: How does R know what to name each column when we use the summarize function above?
 
