@@ -393,7 +393,7 @@ calispellHighTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv", stri
   filter(calispell_temp>=15) %>% 
   mutate(calispell_temp_F = calispell_temp*9/5 + 32)
 
-
+str(calispellHighTemp)
 # ---------------------------------------------------------- #
 #### PART 2.0: USING YOUR NEW KNOWLEDGE                   ####
 # ---------------------------------------------------------- #
@@ -424,7 +424,9 @@ calispellHighTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv", stri
 # (8) Keep only the following columns: Exp, Date, Plot, NTrtInfo, genus, species, 
 # Field, C, N, and CN. 
 
+cdr <- read.csv("e001_Plant aboveground biomass carbon and nitrogen.csv",   check.names = FALSE, stringsAsFactors = FALSE) %>%                          mutate(Exp = "e001") %>%                                                    rename(C = '% Carbon', N = '% Nitrogen') %>%                                 filter(Strip == 1 ) %>%                                                         unite(col = "NTrtInfo", c("NTrt", "NAdd"), sep = "_") %>%                       separate(col = Species, into = c("genus", "species"), sep = " ",             extra = "merge",   fill = "right") %>%                                      mutate(CN = C / N) %>%                                                      select(Exp, Date, Plot, NTrtInfo, genus, species, Field, C, N, CN)
 
+str(cdr)
 
 # REMEMBER: Save and push your script to your branch when you're done with this 
 # assignment!
