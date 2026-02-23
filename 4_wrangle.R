@@ -306,17 +306,17 @@ calispellTempSum <- mutate(.data=calispellTempF,
                            sum=calispell_temp + calispell_temp_F)
 
 # Check the dataframe to see if it worked.
-
+View(calispellTempSum)
 
 # TASK: The column we just created makes no sense (why would you ever want to
 # sum the C and F temperatures?). Write code below to remove it from the dataframe.
-
+calispellTempF <- select(calispellTempSum, -sum)
 
 # QUESTION: We might also want to add a column that describes the dataset. What 
 # happens when you run the following code?
 calispellTempFaquatic <- mutate(.data=calispellTempF,
                                 type='aquatic')
-
+# Answer: The mutate function creates a new column called 'type' and puts 'aquatic' as the value for every row. 
 
 # ---------------------------------------------------------- #
 ### PART 1.5: PASTING AND SEPARATING COLUMNS              ####
@@ -326,7 +326,7 @@ calispellTempFaquatic <- mutate(.data=calispellTempF,
 
 # TASK: Write code to create one more column named ecosystem in the 
 # calispellTempFaquatic dataframe and fill it with the word 'stream'.
-
+calispellTempFaquatic <- mutate(calispellTempFaquatic, ecosystem = "stream")
 
 # Now we might want to create a new column that includes information from both 
 # of the columns we just created. We would do so by running the following lines 
@@ -339,7 +339,7 @@ calispellTempF4 <- unite(data=calispellTempFaquatic,
 # QUESTION: Describe in your own words what the code above does. What part 
 # creates a new column? What part tells R which columns to combine? What does 
 # the sep= argument do?
-
+# Answer: unite() creates a new column called 'type_ecosystem'. The part c('type', 'ecosystem') tells R which columns to combine. The sep='::' argument tells R to separate the combined values. 
 
 # Another very useful function is separate, which takes apart a column into two
 # or more pieces.
@@ -351,10 +351,10 @@ calispellTempF5 <- separate(data=calispellTempF4,
                             sep='::')
 
 # QUESTION: Why isn't the column name in quotes this time?
-
+# Answer: The column name is not in quotes because separate() uses tidyverse which enables column names to be used directly. 
 
 # QUESTION: Describe in your own words what the code above does.
-
+# Answer: The separate() splits the 'type_ecosystem' column into two new columns called 'type' and 'ecosystem' using '::' as the separator. 
 
 # ---------------------------------------------------------- #
 ### PART 1.6: PIPES                                       ####
