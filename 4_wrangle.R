@@ -309,13 +309,13 @@ calispellTempSum <- mutate(.data=calispellTempF,
 
 # TASK: The column we just created makes no sense (why would you ever want to
 # sum the C and F temperatures?). Write code below to remove it from the dataframe.
-
+calispellTempSumRemoved <- select(calispellTempSum, -sum)
 
 # QUESTION: We might also want to add a column that describes the dataset. What 
 # happens when you run the following code?
 calispellTempFaquatic <- mutate(.data=calispellTempF,
                                 type='aquatic')
-
+# It adds an extra column that describes all data as "aquatic".
 
 # ---------------------------------------------------------- #
 ### PART 1.5: PASTING AND SEPARATING COLUMNS              ####
