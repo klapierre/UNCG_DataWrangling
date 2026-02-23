@@ -442,7 +442,7 @@ cdr <-read_csv("e001_Plant aboveground biomass carbon and nitrogen.csv") %>%
   filter(Strip == 1 ) %>% 
 # (5) Create a new column called NTrtInfo that include the information from both 
 # NTrt and NAdd, separated by an underscore.
-  unite(NTrtInfo, NTrt, NAdd, sep = "-", remove = FALSE) %>% 
+  unite(NTrtInfo, NTrt, NAdd, sep = "_", remove = FALSE) %>% 
 # (6) Split the Species column into two columns, one named 'genus' and one named 
 # 'species'.
   separate(Species, into = c("genus", "species"), sep = " ", extra = "merge") %>%
