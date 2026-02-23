@@ -22,8 +22,8 @@
 # REMINDER: The dplyr and tidyr packages are nested within the tidyverse package
 # (along with many others). Be sure to start by loading the tidyverse library.
 # HINT: see the end of assignment #1 if you forgot how to load a package.
-
-
+library(tidyr)
+library(dplyr)
 # ---------------------------------------------------------- #
 #### PART 1.0: LEARNING THE FUNCTIONS                     ####
 # ---------------------------------------------------------- #
@@ -35,7 +35,7 @@
 # named streamTemp.
 # HINT: Check last week's assignment if you forget how to read data into R.
 
-
+streamTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv")
 # ---------------------------------------------------------- #
 ### PART 1.1: SUMMARIZING DATA                            ####
 # ---------------------------------------------------------- #
