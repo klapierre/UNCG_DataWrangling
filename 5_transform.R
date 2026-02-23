@@ -44,6 +44,8 @@
 # data, time, calispell, smalle, winchester
 # HINT: Check last week's assignment if you forget how to read data into R.
 
+streamTemp <- read.csv(CalispellCreekandTributaryTemperatures.csv)
+colnames(streamTemp) <- c("Data", "Time", "Calispell", "Smalle", "Winchester")
 
 # ---------------------------------------------------------- #
 ### PART 1.1: SUMMARIZING DATA                            ####
