@@ -340,8 +340,9 @@ head(calispellTempFaquatic)
 
 # TASK: Write code to create one more column named ecosystem in the 
 # calispellTempFaquatic dataframe and fill it with the word 'stream'.
-
-
+calispellTempFaquatic <-mutate(.data= calispellTempFaquatic,
+                               ecosystem= "stream")
+head(calispellTempFaquatic)
 # Now we might want to create a new column that includes information from both 
 # of the columns we just created. We would do so by running the following lines 
 # of code:
@@ -353,7 +354,10 @@ calispellTempF4 <- unite(data=calispellTempFaquatic,
 # QUESTION: Describe in your own words what the code above does. What part 
 # creates a new column? What part tells R which columns to combine? What does 
 # the sep= argument do?
-
+# The code above combines ecosystem and type into one new single column. Col='type_ecosystem'
+# makes a new column named type_ecosystem. c('type','ecosystem') tells R which columns to
+# combine. 
+# The sep= argument separates 2 values from a column. 
 
 # Another very useful function is separate, which takes apart a column into two
 # or more pieces.
@@ -365,10 +369,13 @@ calispellTempF5 <- separate(data=calispellTempF4,
                             sep='::')
 
 # QUESTION: Why isn't the column name in quotes this time?
-
+# The column name is not in quotes this time because tidyverse can read the 
+# code with and without quotes.  
 
 # QUESTION: Describe in your own words what the code above does.
-
+# The code takes the type_ecosystem column in the calispellTempF4 data frame and splits
+# the values type and ecosystem into 2 new columns. A new data frame called calispellTempF5 is 
+#is created. 
 
 # ---------------------------------------------------------- #
 ### PART 1.6: PIPES                                       ####
