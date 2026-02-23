@@ -214,21 +214,24 @@ identical (calispellTemp4, calispellTemp5)
 # QUESTION: If you remove all of the observations (rows) with temperatures lower
 # than 15 C, would you expect your new dataframe to have more, the same, or fewer
 # observations than the original dataframe?
-
+# Answer: The new dataframe would have fewer observations than the original dataframe because rows with temperatures lower than 15 C are removed. 
 
 # TASK: Run the following code to only keep the values greater than or equal to 15C.
 calispellHighTemp <- filter(.data=calispellTemp,
                             calispell_temp >= 15)
 
 # How do you know if it worked??
+# Answer: I know it worked because I checked the number of observations using nrow(). The filtered dataframe (calispellHighTemp) has fewer rows than the original dataframe. 
+
 # TASK: Check the number of observations in your dataframe! You can either do 
 # this using the str() function or by looking next to the dataframe name in the
 # R environment tab.
-
+nrow(calispellHighTemp)
+nrow(calispellTemp)
 
 # QUESTION: How many observations did the original dataframe (calispellTemp) 
 # have? How many does the new dataframe (calispellHighTemp) have?
-
+# Answer: The original dataframe (calispellTemp) has 61,100 observations. The new dataframe (calispellHighTemp) has 7,703 observations.
 
 # REALLY IMPORTANT: Even if the function runs, R can do all kinds of bad things 
 # if you've accidentally coded something incorrectly. It is always very, very 
@@ -271,7 +274,9 @@ calispellData <- filter(.data=calispellTemp,
 
 # QUESTION: How many observations are in the datafile calispellData? Write code
 # to determine how many values of calispell_temp were NA.
-
+nrow(calispellData)
+sum(is.na(calispellTemp$calispell_temp))
+# Answer: The dataframe calispellData has 52,330 observations. There were 8,770 NA values in calispell_temp. 
 
 # ---------------------------------------------------------- #
 ### PART 1.4: CREATING COLUMNS                            ####
