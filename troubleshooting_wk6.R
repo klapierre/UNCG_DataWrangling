@@ -10,8 +10,14 @@ setwd(C:\\Users\\kjkomatsu\\OneDrive - UNCG\\teaching\\BIO 457 - Data Wrangling)
 
 
 
+
+
+
+
 # why doesn't this work?!
 setwd('C:\Users\kjkomatsu\OneDrive - UNCG\teaching\BIO 457 - Data Wrangling')
+
+
 
 
 
@@ -34,11 +40,14 @@ read.csv('CalispellCreekandTributaryTemperatures')
 
 
 
+
+
+
+
+
 data("diamonds")
 
 diamonds <- as.data.frame(diamonds)
-
-
 
 
 # why doesn't this work?! (i.e., make a dataframe)
@@ -62,6 +71,10 @@ cheapishDiamonds <- diamonds
 
 
 
+  
+  
+  
+  
 
   
 # why doesn't this work?!
@@ -73,9 +86,19 @@ cheapishDiamonds <- diamonds %>%
 
 
 
+
+
+
+
+
+
 # why doesn't this work?!
 cheapishDiamonds <- diamonds %>% 
   filter(price=1000)
+
+
+
+
 
 
 
