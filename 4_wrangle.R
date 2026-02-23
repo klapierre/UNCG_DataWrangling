@@ -34,6 +34,8 @@
 # TASK: Install tidyverse and load the library. HINT: see the end of the week 1 
 # assignment if you forget how to install and load a package.
 
+install.packages("tidyverse")
+library(tidyverse)
 
 # ---------------------------------------------------------- #
 #### PART 1.0: LEARNING THE FUNCTIONS                     ####
@@ -58,25 +60,35 @@ streamTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv",
 
 # QUESTION: What do you think stringsAsFactors mean?
 
+##Treat columns as categories
 
 # TASK: Let's learn a little more about our data. Run the following line of code.
 str(streamTemp)
 
 # QUESTION: What does it look like the str() function does?
 
+##Gives a summary
 
 # QUESTION: How many rows does our dataframe have? How many columns? 
 # What class of data is in each column?
 
+dim(streamTemp)   
+## 61100 rows and 5 columns
+
+str(streamTemp)   
+## Date and Time are factors while the Temp columns are numeric
 
 # TASK: Try reading your data in without the stringsAsFactors argument included.
 
+streamTemp2 <- read.csv("CalispellCreekandTributaryTemperatures.csv")
+str(streamTemp2)
 
 # QUESTION: What is the difference? (HINT: rerun the str function to check).
 # When would we want to set the stringsAsFactors argument to true?  When would 
 # it be better to make it false?
 
-
+##Date and Time are now character instead of factor. True when grouping in categories and false
+##when plain text.
 
 # ---------------------------------------------------------- #
 ### PART 1.1: RENAMING COLUMNS                            ####
