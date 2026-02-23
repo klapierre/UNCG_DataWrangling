@@ -375,7 +375,7 @@ calispellTempF5 <- separate(data=calispellTempF4,
 # ---------------------------------------------------------- #
 
 # Take a look at your R environment tab (upper right of RStudio).
-# Do you feel overwhelmed by how many files are there?
+# Do you feel overwhelmed by how many files are there? Yes
 # An amazing thing about tidyverse is that it can pass one function after 
 # another to a dataframe using an operator called a pipe. This allows you to 
 # perform a whole series of functions on one dataframe without having to create 
@@ -406,8 +406,14 @@ calispellHighTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv", stri
   select(Date, Time, calispell_temp) %>% 
   filter(calispell_temp>=15) %>% 
   mutate(calispell_temp_F = calispell_temp*9/5 + 32)
-
-
+calispellHighTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv", stringsAsFactors = TRUE) %>% 
+  rename(calispell_temp=Calispell.Cr.Temp.C.,
+         smalle_temp=Smalle.Cr.Temp.C.,
+         winchester_temp=Winchester.Cr.Temp..C.) %>% 
+  select(Date, Time, calispell_temp) %>% 
+  filter(calispell_temp>=15) %>% 
+  mutate(calispell_temp_F = calispell_temp*9/5 + 32)
+#Yes, this code created the following columns: 'calispell_temp' and 'calispell_temp_F'.
 # ---------------------------------------------------------- #
 #### PART 2.0: USING YOUR NEW KNOWLEDGE                   ####
 # ---------------------------------------------------------- #
