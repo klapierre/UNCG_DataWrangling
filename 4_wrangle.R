@@ -57,17 +57,17 @@ streamTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv",
 
 
 # QUESTION: What do you think stringsAsFactors mean?
-
+#strings of characters are converted to factors (categorical)
 
 # TASK: Let's learn a little more about our data. Run the following line of code.
 str(streamTemp)
 
 # QUESTION: What does it look like the str() function does?
-
+#it shows the structure of the dataset
 
 # QUESTION: How many rows does our dataframe have? How many columns? 
 # What class of data is in each column?
-
+# It has 5 columns and 61100 rows. Two columns contain factors or categorical data and the other three contain numerical data.
 
 # TASK: Try reading your data in without the stringsAsFactors argument included.
 
@@ -75,7 +75,9 @@ str(streamTemp)
 # QUESTION: What is the difference? (HINT: rerun the str function to check).
 # When would we want to set the stringsAsFactors argument to true?  When would 
 # it be better to make it false?
-
+#The structure is a bit different with two columns having character data rather than factors.
+# The stringsAsFactors argument should be set to true if you want the data to be treated as 
+#factors, and false if you want the data to be treated as characters (ex. names of cities).
 
 
 # ---------------------------------------------------------- #
