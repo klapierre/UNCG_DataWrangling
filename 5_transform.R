@@ -43,8 +43,7 @@
 # it to a dataframe named streamTemp. Clean up the column names to the following:
 # data, time, calispell, smalle, winchester
 # HINT: Check last week's assignment if you forget how to read data into R.
-
-
+streamTemp <- read.csv('CalispellCreekandTributaryTemperatures.csv') %>% rename('calispell' = Calispell.Cr.Temp.C., 'smalle' = Smalle.Cr.Temp.C., 'winchester' = Winchester.Cr.Temp..C.)
 # ---------------------------------------------------------- #
 ### PART 1.1: SUMMARIZING DATA                            ####
 # ---------------------------------------------------------- #
@@ -58,15 +57,15 @@ streamTempLength <- streamTemp %>%
 
 # QUESTION: When you open the streamTempLength dataframe, what value is in each 
 # column?
-
+##ANSWER: The value in each column is the total number of observations of each original column.
 
 # QUESTION: How does this number compare to the number of observations listed by
 # the dataframe in the R environment tab?
-
+##ANSWER: It is the same as the number of observations listed by the original dataframe, while the new dataframe only has one observation.
 
 # QUESTION: Based on your previous answers, what do you think the length 
 # function does?
-
+##ANSWER: I think that it determines the total number of obsertvations in a column. 
 
 # It can be a bit tedious to type out all the column names and the length 
 # function multiple times. The across() function within the summarize() step can
@@ -77,7 +76,7 @@ streamTempLength <- streamTemp %>%
                    .fns=length))
 
 # TASK: Using comments in the code above, describe what each line is doing.
-
+##????
 
 # We might also want to know some other statistics about our data, such as the 
 # max, min, and mean values. The across() function is useful for this too, by 
@@ -88,7 +87,7 @@ streamTempSummary <- streamTemp %>%
                    .fns=list(maximum=max, mean=mean, minimim=min)))
 
 # TASK: Write code to view the column names of the streamTempSummary dataframe.
-
+colnames(streamTempSummary)
 
 # QUESTION: How does R know what to name each column when we use the summarize 
 # function above?
