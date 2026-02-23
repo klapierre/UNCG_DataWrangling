@@ -431,6 +431,18 @@ calispellHighTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv", stri
 
 # TASK: Perform the following steps in one workflow (i.e., using pipes):
 # (1) Create a dataframe called cdr and load the .csv file 
+
+cdr <- read.csv("e001_Plant aboveground biomass carbon and nitrogen.csv") %>% 
+  mutate(Exp = "e001") %>% 
+  rename(C= "% Carbon", N= "% Nitrogen") %>% 
+  filter(Strip == 1) %>% 
+  mutate(NTrtInfo = paste(NTrt, NAdd, sep = "_")) %>% 
+           separate(Species, into = c("genus", "species"), sep = " ") %>% 
+           mutate(CN = C / N) %>% 
+           select(Exp, Date, Plot, NTrtInfo, genus, species, Field, C, N, CN)
+           
+           
+  
 # 'e001_Plant aboveground biomass carbon and nitrogen.csv' into it.
 # (2) Add a column named 'Exp' and fill it with the text 'e001' so we know what 
 # experiment we're working with.
