@@ -44,6 +44,14 @@
 # data, time, calispell, smalle, winchester
 # HINT: Check last week's assignment if you forget how to read data into R.
 
+streamTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv") %>% 
+                       rename(data = Date,
+                              time = Time,
+                              calispell = Calispell.Cr.Temp.C.,
+                              smalle = Smalle.Cr.Temp.C.,
+                              winchester = Winchester.Cr.Temp..C.)
+
+
 
 # ---------------------------------------------------------- #
 ### PART 1.1: SUMMARIZING DATA                            ####
