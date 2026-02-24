@@ -64,27 +64,40 @@ streamTempLength <- streamTemp %>%
             smalle_length = length(smalle),
             winchester_length = length(winchester))
 
-# QUESTION: When you open the streamTempLength dataframe, what value is in each 
+# QUESTION: When you open the streamTempLength dataframe, what value is in each
 # column?
+
+## The value in each column is 61,100.
+
 
 
 # QUESTION: How does this number compare to the number of observations listed by
 # the dataframe in the R environment tab?
 
+## It's the same number within the data frame as listed within the R environment tab.
+
+
 
 # QUESTION: Based on your previous answers, what do you think the length 
 # function does?
+
+## The length() function is going to determine how many elements/observations/values are within a certain category.
+
 
 
 # It can be a bit tedious to type out all the column names and the length 
 # function multiple times. The across() function within the summarize() step can
 # help us to identify multiple columns to summarize the data for. Try running 
 # the following code:
-streamTempLength <- streamTemp %>% 
+
+streamTempLength <- streamTemp %>%
   summarize(across(.cols=c('calispell', 'smalle', 'winchester'), 
                    .fns=length))
 
 # TASK: Using comments in the code above, describe what each line is doing.
+
+## The first line is creating a new data frame from a previous data frame, and setting up a pipe system. The second line is creating the summarize() function, while using the across() function to select the three columns we want to summarize. The third line is applying the length() function within the across() function. Since we're trying to get the same result of length() without listing it over and over, we still have to apply the function at the end to tell the across() function what to do with the columns we select.
+
 
 
 # We might also want to know some other statistics about our data, such as the 
@@ -97,13 +110,25 @@ streamTempSummary <- streamTemp %>%
 
 # TASK: Write code to view the column names of the streamTempSummary dataframe.
 
+names(streamTempSummary)
+"calispell_maximum"  "calispell_mean"     "calispell_minimim" 
+"smalle_maximum"     "smalle_mean"        "smalle_minimim"    
+"winchester_maximum" "winchester_mean"    "winchester_minimim"
+
+
 
 # QUESTION: How does R know what to name each column when we use the summarize 
 # function above?
 
+## By using the across() function, we first gathered the columns we wanted to use. By using the list() function inside the summarize() and across() functions, R knows we want to find and assign maximum, mean, and minimum to each of these columns. Because these are three different lists for three different columns, it will apply three lists for each column, for a total of nine columns. These columns will have the name of the column, followed by maximum, mean, or minimum.
+
+
 
 # QUESTION: What values do you see for the columns when you open up the 
 # dataframe streamTempSummary? Why do you think this is?
+
+## Nothing but NA values. Going through "streamTemp" there are many NA values, and we didn't specify R to dodge non-numerical values. So, R doesn't know what to do, and is forced to give us NA as a result of combining numbers with unknown values.
+
 
 
 # Recall that our data had a lot of missing values. R doesn't know how to find 
@@ -116,12 +141,24 @@ streamTempSummary <- streamTemp %>%
                    na.rm=T))
 
 # QUESTION: Now what values do you see for the columns when you open up the 
-# dataframe streamTempSummary? What line of the above code removed the NAs from 
+# dataframe streamTempSummary? What line of the above code removed the NAs from
 # our data?
+
+streamTempSummary
+calispell_maximum calispell_mean calispell_minimim smalle_maximum smalle_mean
+            22.38       7.985702             -0.28          20.05    5.928555
+smalle_minimim winchester_maximum winchester_mean winchester_minimim
+          -0.1              18.65        6.089913              -1.75
+
+## The last line of code "na.rm=T" removed the NAs from our data.
+
 
 
 # QUESTION: What happened to the column we created in the beginning called 
 # data_type? Where did the date and time columns go?
+
+## They didn't go anywhere, because they weren't in the across() function when we were listing columns to use for a new data frame. They weren't pulled, so they are still in "streamTemp".
+
 
 
 # RECOMMENDED: Take a look at the summarize help file, particularly the "Useful 
