@@ -446,6 +446,8 @@ head(calispellHighTemp)
 # split apart a column into more functional parts, and ultimately calculate the 
 # C:N ratio (a useful number for understanding plant nutrient status).
 
+library(tidyverse)
+
 # TASK: Perform the following steps in one workflow (i.e., using pipes):
 # (1) Create a dataframe called cdr and load the .csv file 
 # 'e001_Plant aboveground biomass carbon and nitrogen.csv' into it.
@@ -464,7 +466,21 @@ head(calispellHighTemp)
 # (8) Keep only the following columns: Exp, Date, Plot, NTrtInfo, genus, species, 
 # Field, C, N, and CN. 
 
+library(dplyr)
+library(tidyr)
 
+cdr <- read.csv("e001_Plant aboveground biomass carbon and nitrogen.csv") %>%
+  mutate(Exp = "e001") %>%
+  rename(C = X..Carbon,
+         N = X..Nitrogen) %>%
+  filter(Strip == 1) %>%
+  unite(NTrtInfo, NTrt, NAdd, sep = "_", remove = FALSE) %>%
+  separate(Species, into = c("genus", "species"), sep = " ", extra = "merge") %>%
+  mutate(CN = C / N) %>%
+  select(Exp, Date, Plot, NTrtInfo, genus, species, Field, C, N, CN)
+
+head(cdr)
+str(cdr)
 
 # REMEMBER: Save and push your script to your branch when you're done with this 
 # assignment!
