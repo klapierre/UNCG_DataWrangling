@@ -428,7 +428,19 @@ calispellHighTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv", stri
 # (8) Keep only the following columns: Exp, Date, Plot, NTrtInfo, genus, species, 
 # Field, C, N, and CN. 
 
-
+cdr <- read.csv("e001_Plant aboveground biomass carbon and nitrogen.csv") %>% 
+  mutate(Exp="e001") %>% 
+  rename(C=X..Carbon,
+         N=X..Nitrogen) %>% 
+         filter(Strip==1) %>% 
+           unite(col="NTrtInfo",
+                 c("NTrt","NAdd"),
+                 sep='_') %>% 
+           separate(col=Species,
+                    into=c("genus","species"),
+                    sep=' ') %>% 
+           mutate(CN=C/N) %>% 
+           select(Exp,Date,Plot,NTrtInfo,genus,species,Field,C,N,CN)
 
 # REMEMBER: Save and push your script to your branch when you're done with this 
 # assignment!
