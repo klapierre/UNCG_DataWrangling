@@ -180,13 +180,30 @@ smalle_minimim winchester_maximum winchester_mean winchester_minimim
 # HINT: Check the help documentation for the separate(), mutate(), and paste() 
 # functions.
 
+streamTempMDY <- streamTemp %>%
+                 separate(col = date,
+                          into = c("month", "day", "year"),
+                          sep = "/") %>%
+                 mutate(year = paste("20", year, sep = ""))
+
+
 
 # TASK: Write code to create a new dataframe called streamTempJan that filters 
 # only rows where the month column is equal to 1 from the streamTempMDY dataframe.
 
+streamTempJan <- streamTempMDY %>%
+  filter(month == "1")
+
+
 
 # TASK: Write code that uses the summarize function to find the mean temperature 
 # for Calispell, Smalle, and Winchester streams in only January.
+
+streamTempJanMean <- streamTempJan %>%
+                        summarize(across(.cols = c("calispell", "smalle",                                                         "winchester"),
+                                         .fns = mean,
+                                         na.rm = T))
+
 
 
 # Now imagine you had to repeat this set of steps (creating new filtered 
@@ -211,9 +228,15 @@ streamTempMonthlyMean <- streamTempMDY %>%
 # QUESTION: When you look at the streamTempMonthlyMean dataframe, how many means 
 # do you see for each stream?
 
+## I see 12 means for each stream.
+
+
 
 # QUESTION: In your own words, what do you think the group_by() function does 
 # when used before the summarize() function?
+
+## Since the months are grouped by numbers 1-12, the function is going to group like numbers together and then proceed to create a mean within each of the numbers 1-12, instead of creating a mean of all of the months together.
+
 
 
 # We can also group by multiple columns. Try running the following code:
@@ -226,6 +249,9 @@ streamTempMeans <- streamTempMDY %>%
 
 # QUESTION: What columns did we group by to get our new means? What does the new 
 # dataframe show?
+
+## We grouped by the month and year columns to get our new means. The data frame shows 60 observations with 5 variables.
+
 
 
 # ---------------------------------------------------------- #
