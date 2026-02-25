@@ -149,14 +149,23 @@ streamTempSummary <- streamTemp %>%
 # HINT: Check the help documentation for the separate(), mutate(), and paste() 
 # functions.
 
+streamTempMDY <- streamTemp %>%
+  separate(col=date,
+           into=c('month', 'date', 'year'),
+           sep='/')  %>%
+  mutate(year = paste0('20', year))
 
 # TASK: Write code to create a new dataframe called streamTempJan that filters 
 # only rows where the month column is equal to 1 from the streamTempMDY dataframe.
-
-
+streamTempJan <- streamTempMDY %>%
+  filter(month == 1)
+  
 # TASK: Write code that uses the summarize function to find the mean temperature 
 # for Calispell, Smalle, and Winchester streams in only January.
-
+streamTempJan <- streamTempJan %>% 
+  summarize(across(.cols=c('calispell', 'smalle', 'winchester'), 
+                   .fns=list(mean=mean),
+                   na.rm=T))
 
 # Now imagine you had to repeat this set of steps (creating new filtered 
 # dataframes) for all 12 months!
@@ -179,11 +188,11 @@ streamTempMonthlyMean <- streamTempMDY %>%
 
 # QUESTION: When you look at the streamTempMonthlyMean dataframe, how many means 
 # do you see for each stream?
-
+# 12
 
 # QUESTION: In your own words, what do you think the group_by() function does 
 # when used before the summarize() function?
-
+# the group_by function is grouping every unique variable within the month column
 
 # We can also group by multiple columns. Try running the following code:
 streamTempMeans <- streamTempMDY %>% 
@@ -195,7 +204,7 @@ streamTempMeans <- streamTempMDY %>%
 
 # QUESTION: What columns did we group by to get our new means? What does the new 
 # dataframe show?
-
+# grouping by both month and year will do the same thing as it did when we were just looking at months, but now it is only subsetting from the rows that had data for both the month and the year at the same time. i.e., many years data was collected between 2008-2013, and some years excluded 2008. 
 
 # ---------------------------------------------------------- #
 ### PART 1.3: PRACTICING THESE SKILLS                     ####
