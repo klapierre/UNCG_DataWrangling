@@ -43,7 +43,7 @@
 # it to a dataframe named streamTemp. Clean up the column names to the following:
 # data, time, calispell, smalle, winchester
 # HINT: Check last week's assignment if you forget how to read data into R.
-streamTemp <- read.csv(CalispellCreekandTributaryTemperatures.csv)
+streamTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv")
 streamTemp <-rename(.data=streamTemp,
                         calispell=Calispell.Cr.Temp.C.,
                         smalle=Smalle.Cr.Temp.C.,
@@ -85,7 +85,8 @@ streamTempLength <- streamTemp %>%
 # TASK: Using comments in the code above, describe what each line is doing.
 
 #The first line establishes which dataframe is our source and what the one we're
-#creating is called. The second 
+#creating is called. The second tells R that we want a summary of all 3 of the 
+#listed columns. The third tells it what variable we want to know.
 
 # We might also want to know some other statistics about our data, such as the 
 # max, min, and mean values. The across() function is useful for this too, by 
@@ -93,18 +94,22 @@ streamTempLength <- streamTemp %>%
 # the following code:
 streamTempSummary <- streamTemp %>% 
   summarize(across(.cols=c('calispell', 'smalle', 'winchester'), 
-                   .fns=list(maximum=max, mean=mean, minimim=min)))
+                   .fns=list(maximum=max, mean=mean, minimum=min)))
 
 # TASK: Write code to view the column names of the streamTempSummary dataframe.
 
+colnames(streamTempSummary)
 
 # QUESTION: How does R know what to name each column when we use the summarize 
 # function above?
 
+#It combines the name of the source column with the names we gave it (maximum,
+#mean, and minimum)
 
 # QUESTION: What values do you see for the columns when you open up the 
 # dataframe streamTempSummary? Why do you think this is?
 
+#All of the values just say "NA".
 
 # Recall that our data had a lot of missing values. R doesn't know how to find 
 # the mean, max, or min of a group of observations that include NAs.
@@ -119,15 +124,20 @@ streamTempSummary <- streamTemp %>%
 # dataframe streamTempSummary? What line of the above code removed the NAs from 
 # our data?
 
+#The line "na.rm=T" removed the NAs. The values now read: 22.38, 7.985702, -0.28,
+#20.05, 5.928555, -0.1, 18.65, 6.089913, -1.75.
 
 # QUESTION: What happened to the column we created in the beginning called 
 # data_type? Where did the date and time columns go?
 
+#We didn't ask for the summarize command to include the date and time columns
+#in its summary, so they aren't there. 
 
 # RECOMMENDED: Take a look at the summarize help file, particularly the "Useful 
 # functions" section to see all of the different ways you can summarize your 
 # dataframe.
 
+?summarize
 
 # ---------------------------------------------------------- #
 ### PART 1.2: GROUPING DATA                               ####
@@ -143,14 +153,24 @@ streamTempSummary <- streamTemp %>%
 # HINT: Check the help documentation for the separate(), mutate(), and paste() 
 # functions.
 
+streamTempMDY <- separate(data=streamTemp,
+                          col=Date,
+                          into=c('Month', 'Day', 'Year'),
+                          sep="/") %>% 
+mutate(Year= paste("20", Year, sep="")) 
+
 
 # TASK: Write code to create a new dataframe called streamTempJan that filters 
 # only rows where the month column is equal to 1 from the streamTempMDY dataframe.
 
+streamTempJan <- filter(.data=streamTempMDY, Month==1)
 
 # TASK: Write code that uses the summarize function to find the mean temperature 
 # for Calispell, Smalle, and Winchester streams in only January.
 
+summarize(.data=streamTempJan, across(
+        .cols = c('calispell', 'smalle', 'winchester'), 
+         .fns = list(mean = \(x) mean(x, na.rm = TRUE))))
 
 # Now imagine you had to repeat this set of steps (creating new filtered 
 # dataframes) for all 12 months!
@@ -174,10 +194,14 @@ streamTempMonthlyMean <- streamTempMDY %>%
 # QUESTION: When you look at the streamTempMonthlyMean dataframe, how many means 
 # do you see for each stream?
 
+#12
 
 # QUESTION: In your own words, what do you think the group_by() function does 
 # when used before the summarize() function?
 
+#I think group_by() makes it so that, instead of just taking the means of the
+#whole columns, we separate the data based on shared "month" values and then 
+#take the mean for each month.
 
 # We can also group by multiple columns. Try running the following code:
 streamTempMeans <- streamTempMDY %>% 
@@ -190,6 +214,8 @@ streamTempMeans <- streamTempMDY %>%
 # QUESTION: What columns did we group by to get our new means? What does the new 
 # dataframe show?
 
+#We grouped by month and year. The new dataframe shows the means for each stream
+#separated by both month and year.
 
 # ---------------------------------------------------------- #
 ### PART 1.3: PRACTICING THESE SKILLS                     ####
