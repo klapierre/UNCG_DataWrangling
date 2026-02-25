@@ -244,9 +244,11 @@ ungroup()
 # (4) ungroup the dataframe;
 # (5) assign the output to a dataframe named monthlyDelaySummary
 
+monthlyDelaySummary <- flightData %>% filter(dest == 'RDU') %>% group_by(month, origin) %>% summarize(mean_delay = mean(arr_delay, na.rm = T)) %>% 
+ungroup()
 
 # QUESTION: Which month and airport has the longest mean delay?
-
+#ANSWER: March at EWR.
 
 # ---------------------------------------------------------- #
 ### PART 2.0: INTRO TO TIDY DATA                          ####
