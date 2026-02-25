@@ -386,6 +386,9 @@ willow <- read_csv("Niwot_Salix_2014_WillowSeedlingSurvey.csv", skip = 10)
 # QUESTION: To clean up the willow dataframe, where do we want to fill in values? 
 # That is, which columns have lots of NAs.
 
+## Every column has a lot of NAs, so we need to go through every column and fill the NAs with values. After doing the step after this, I see you were more specific with noting that there are columns that have repeating information, so it's easy to fill those in. I understand that now.
+
+
 
 # We can fix our missing value problem using the fill() function (try it by 
 # running the following code):
@@ -395,9 +398,15 @@ willowFill <- willow %>%
 # QUESTION: What does the code 'block:temp' mean when passed to the fill() 
 # function above?
 
+## 'block:temp' is referring to column names. This is saying to fill in NA values from the 'block' column to the 'temp' column, which is 6 columns total.
+
+
 
 # QUESTION: Looking at the dataframe willowFill, describe what happened compared 
 # to our initial dataframe.
+
+## In 'willowFill', the fill() function was used to fill in NA values from the 'block' column to the 'temp' column. The NAs were filled with the previous entry above, until it hit a numeric entry, in which the next set of NAs would use that entry, and so on.
+
 
 
 # ---------------------------------------------------------- #
