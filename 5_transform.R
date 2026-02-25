@@ -370,29 +370,32 @@ willowCleaner  <- willowClean %>%
 
 # TASK: Verbally describe how you would want to change this problem 
 # (i.e., pseudocode).
-
+# I would want to take the alive/dead data from the ht1 column to give that data its own column while leaving height in the ht1 column. I would want to take the time information from the willow_ID column and give that its own column as well. 
 
 # ifelse() is a very powerful function that helps us with this problem!
 
 # TASK: Look at the ifelse help file and describe in your own words the ordering 
 # of the syntax.
-
+# Within the ifelse function you first specify the 'test' that you want to apply to the dataset, something that should result in true or false. 'Yes' indicates the return values for the test if it results in TRUE, while 'no' indicates the desired return value for the test if it results in FALSE.
 
 # We can nest the ifelse() function within a mutate() function to create a new 
 # column that contains one entry if the logical statement we provide is TRUE and 
 # another if the logical statement is FALSE. Run the following code to try it 
 # out to help fix our first problem (ht1 column has information on both plant 
 # status and actual height values).
-willowClean3 <- willowClean2 %>%
+willowClean3 <- willowCleaner %>%
+  # Creates a new dataset named willowClean3 from willowCleaner (changed name since willowClean2   does not exist). 
   mutate(status = ifelse(ht1 == 'dead', 'dead', 'alive')) %>% 
+  # Uses the mutate function to make a new column called 'status.' The ifelse function tests for   whether the tree is dead, and assigns it the 'dead' value if true and the 'alive' value if     false.
   mutate(ht1 = ifelse(status == 'dead', NA, ht1))
+  # Uses the mutate function to alter the 'ht1' column. The ifelse function tests for   whether   the tree is dead, and assigns it the 'NA' value if true and its original ht1 value if false.
 
 # TASK: Annotate the previous lines of code to indicate what each is doing.
 
 
 # QUESTION: This is a good time to make sure the relevant columns are numeric. 
 # Run the str() function on this dataframe. What class is the ht1 column?
-
+str(willowClean3) # The ht1 column's class is character. 
 
 # Let's make the ht1 column numeric. And while we're at it, the columns ht2, 
 # cnpy1, and cnpy2 should also be made numeric. We can do so by running the 
@@ -406,7 +409,7 @@ willowClean4 <- willowClean3 %>%
 # TASK: Run the str() function again to view the classes for each column in 
 # willowClean4. Did we succeed in making the columns we wanted into numeric 
 # classes?
-
+str(willowClean4) # Yes.
 
 # %in% is another powerful function! With %in% we can use logical statements on 
 # a whole bunch of stuff at once, instead of making a billion ifelse statements. 
@@ -419,7 +422,7 @@ willowClean5 <- willowClean4 %>%
 # seedlings with identifiers that were letters versus numbers? That is, what 
 # year were willow seedlings that were identified with letters planted? What year 
 # were willow seedlings that were identified with numbers planted?
-
+# ANSWER: The willow seedlings from A, B, and C were planted in 2006 while the rest of the seedlings were planted in 2007. 
 
 # ---------------------------------------------------------- #
 ### PART 2.5: RELATIONAL DATA                             ####
