@@ -223,14 +223,16 @@ ungroup()
 # (4) ungroup the dataframe;
 # (5) assign the output to a dataframe named timeDelaySummary
 
+timeDelaySummary <- flightData %>% filter(dest == 'RDU') %>% group_by(hour) %>% summarize(mean_delay = mean(arr_delay, na.rm = T), maximum_delay = max(arr_delay, na.rm = T)) %>% 
+ungroup()
 
 # QUESTION: What is the earliest hour of the day that flights leave New York for 
 # Raleigh?
-
+#ANSWER: 6 am.
 
 # QUESTION: Which hour of the day has the longest mean delay? What about the 
 # longest maximum delay?
-
+#ANSWER: 10 pm has the longest mean delay, 12 pm has the longest maximum delay. 
 
 # TASK: Write a pipeline to figure out which month of the year and airport to 
 # avoid when flying to Raleigh by taking the original flight dataframe 
