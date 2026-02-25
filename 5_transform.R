@@ -255,7 +255,7 @@ ungroup()
 # ---------------------------------------------------------- #
 
 # QUESTION: What are three characteristics of tidy data?
-
+#ANSWER: Each variable forms a column, each observation forms a row, each cell is a single measurement.
 
 # There are five common problems associated with messy data:
 # 1. Column headers are values, not variable names
@@ -273,7 +273,7 @@ willow <- read_csv("Niwot_Salix_2014_WillowSeedlingSurvey.csv", skip = 10)
 # QUESTION: What do you think the statement 'skip = 10' means in the code above?
 # HINT: Compare the csv file on your computer and the dataframe that you loaded 
 # into R.
-
+#ANSWER: It ignores the first ten rows of the file because they do not contain data.
 
 # ---------------------------------------------------------- #
 ### PART 2.1: FILL MISSING DATA                           ####
