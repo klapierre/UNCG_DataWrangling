@@ -127,7 +127,7 @@ streamTempSummary <- streamTemp %>%
 
 # QUESTION: What happened to the column we created in the beginning called 
 # data_type? Where did the date and time columns go?
-# I never saw a column with this
+# I never saw a column with this name, but I would imagine the unite function was used to join the date and time columns... 
 
 
 # RECOMMENDED: Take a look at the summarize help file, particularly the "Useful 
