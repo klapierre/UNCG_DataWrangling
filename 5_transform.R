@@ -351,6 +351,9 @@ monthlyDelaySummary <- flightData %>%
 
 # QUESTION: What are three characteristics of tidy data?
 
+## Each variable forms a column, each observations forms a row, and each cell is a single measurement.
+
+
 
 # There are five common problems associated with messy data:
 # 1. Column headers are values, not variable names
@@ -366,8 +369,11 @@ rm(list = ls())
 willow <- read_csv("Niwot_Salix_2014_WillowSeedlingSurvey.csv", skip = 10)
 
 # QUESTION: What do you think the statement 'skip = 10' means in the code above?
-# HINT: Compare the csv file on your computer and the dataframe that you loaded 
+# HINT: Compare the csv file on your computer and the dataframe that you loaded
 # into R.
+
+## 'skip = 10' is going to tell the code to not read the first 10 observations.
+
 
 
 # ---------------------------------------------------------- #
