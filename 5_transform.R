@@ -456,7 +456,6 @@ willowDataTrt <- left_join(plotInfo, willowData)
 # might want to use each type. We will practice more with joining data in the 
 # coming weeks.
 
-
 # ---------------------------------------------------------- #
 ### PART 2.6: PRACTICING YOUR SKILLS                      ####
 # ---------------------------------------------------------- #
@@ -481,6 +480,7 @@ willowDataTrt <- left_join(plotInfo, willowData)
 # (6) pivot_wider so that the values of percentage_mean are contained in 
 #     different columns
 
+cdr <- read.csv('e001_Plant aboveground biomass carbon and nitrogen.csv') %>% rename('C' = X..Carbon, 'N' = X..Nitrogen) %>% filter(Strip %in% c(1, 2)) %>% pivot_longer(cols = C:N, names_to = 'element', values_to = 'percentage') %>% group_by(Date, Plot, NTrt, Species, Field, Strip, element) %>% summarize(percentage_mean = mean(percentage)) %>% ungroup() %>% pivot_wider(names_from = element, values_from = percentage_mean)
 
 # ---------------------------------------------------------- #
 ### PART 3.0: SUBMIT YOUR WORK                            ####
