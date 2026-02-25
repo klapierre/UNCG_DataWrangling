@@ -143,10 +143,11 @@ streamTempMDY <- streamTemp %>% separate(Date, c('month', 'day', 'year'), sep = 
 # TASK: Write code to create a new dataframe called streamTempJan that filters 
 # only rows where the month column is equal to 1 from the streamTempMDY dataframe.
 
+streamTempJan <- streamTempMDY %>% filter(month == 1)
 
 # TASK: Write code that uses the summarize function to find the mean temperature 
 # for Calispell, Smalle, and Winchester streams in only January.
-
+streamTempJanSummary <- streamTempJan %>% summarize(across(.cols=c('calispell', 'smalle', 'winchester'), .fns=mean, na.rm = T))
 
 # Now imagine you had to repeat this set of steps (creating new filtered 
 # dataframes) for all 12 months!
