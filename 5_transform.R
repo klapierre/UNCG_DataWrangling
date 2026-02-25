@@ -308,7 +308,7 @@ willowFill <- willow %>%
 # that were sampled repeatedly.
 
 # TASK: Write code to indicate the sequence of columns from w1 through wC. 
-
+willowFill[w_1:w_C]
 
 # We can fix this problem using the pivot_longer() function. pivot_longer() takes 
 # multiple columns and condenses them into just two columns, one that indicates 
@@ -317,13 +317,19 @@ willowFill <- willow %>%
 # individual number.
 # Run the following code:
 willowClean <- willowFill %>%
+  # Creates the willowClean dataframe from the willowFill dataframe.
   pivot_longer(cols = w_1:w_C,
+              # Applies the pivot_longer function to the w_1 through w_C columns.
                names_to = "willow_id",
+              # Converts the names of the columns to a column called 'willow_id.'
                values_to = "value") %>%
+              # Converts the values of the columns to a column called 'value.'
   separate(col = willow_id,
            into = c("remove", "willow_ID"),
            sep = "_") %>%
+  # Separates the column 'willow_id' into new 'remove' and 'willow_ID' columns, separated via an   underscore.
   select(-remove)
+  # Removes the new 'remove' column from the dataset. 
 
 
 # TASK: Annotate (add comments) the code above to indicate what each line does.
