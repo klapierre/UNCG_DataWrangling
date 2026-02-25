@@ -134,7 +134,6 @@ streamTempSummary <- streamTemp %>%
 # functions" section to see all of the different ways you can summarize your 
 # dataframe.
 
-
 # ---------------------------------------------------------- #
 ### PART 1.2: GROUPING DATA                               ####
 # ---------------------------------------------------------- #
@@ -224,10 +223,14 @@ flightData <- nycflights13::flights
 #     remove NAs;
 # (4) ungroup the dataframe;
 # (5) assign the output to a dataframe named airportDelaySummary.
-
+airportDelaySummary <- flightData %>%
+  filter(dest == 'RDU') %>%
+  group_by(origin) %>%
+  summarize(arr.delay = mean(arr_delay, na.rm=T)) %>%
+  ungroup()
 
 # QUESTION: Which airport should you avoid if you want the shortest delays?
-
+# LGA
 
 # TASK: Write a pipeline to figure out which month of the year to avoid when 
 # flying to Raleigh  by taking the original flight dataframe (flightData) and 
@@ -238,15 +241,22 @@ flightData <- nycflights13::flights
 #     remembering to remove NAs;
 # (4) ungroup the dataframe;
 # (5) assign the output to a dataframe named timeDelaySummary
+timeDelaySummary <- flightData %>%
+  filter(dest == 'RDU') %>%
+  group_by(hour) %>%
+  summarize(arr.delay_mean = mean(arr_delay, na.rm=T),
+            arr.delay_max = max(arr_delay, na.rm=T)) %>%
+  ungroup()
 
 
 # QUESTION: What is the earliest hour of the day that flights leave New York for 
 # Raleigh?
-
+# 6
 
 # QUESTION: Which hour of the day has the longest mean delay? What about the 
 # longest maximum delay?
-
+# longest mean = hour 22
+# longest max = hour 12
 
 # TASK: Write a pipeline to figure out which month of the year and airport to 
 # avoid when flying to Raleigh by taking the original flight dataframe 
@@ -257,10 +267,14 @@ flightData <- nycflights13::flights
 #     to remove NAs;
 # (4) ungroup the dataframe;
 # (5) assign the output to a dataframe named monthlyDelaySummary
-
+monthlyDelaySummary <- flightData %>%
+  filter(dest == 'RDU') %>%
+  group_by(hour, origin) %>%
+  summarize(arr.delay_mean = mean(arr_delay, na.rm=T)) %>%
+  ungroup()
 
 # QUESTION: Which month and airport has the longest mean delay?
-
+# JFK
 
 # ---------------------------------------------------------- #
 ### PART 2.0: INTRO TO TIDY DATA                          ####
