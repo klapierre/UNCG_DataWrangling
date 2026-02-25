@@ -138,6 +138,7 @@ streamTempSummary <- streamTemp %>%
 # HINT: Check the help documentation for the separate(), mutate(), and paste() 
 # functions.
 
+streamTempMDY <- streamTemp %>% separate(Date, c('month', 'day', 'year'), sep = '/') %>% mutate(year = paste('20', year, sep =""))
 
 # TASK: Write code to create a new dataframe called streamTempJan that filters 
 # only rows where the month column is equal to 1 from the streamTempMDY dataframe.
