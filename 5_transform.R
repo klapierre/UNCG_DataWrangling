@@ -170,11 +170,11 @@ streamTempMonthlyMean <- streamTempMDY %>%
 
 # QUESTION: When you look at the streamTempMonthlyMean dataframe, how many means 
 # do you see for each stream?
-
+#ANSWER: There are 12 means for each stream, corresponding to the total number of months. 
 
 # QUESTION: In your own words, what do you think the group_by() function does 
 # when used before the summarize() function?
-
+##ANSWER: I think that it tells R to apply the summarize function to specific columns. 
 
 # We can also group by multiple columns. Try running the following code:
 streamTempMeans <- streamTempMDY %>% 
@@ -186,7 +186,7 @@ streamTempMeans <- streamTempMDY %>%
 
 # QUESTION: What columns did we group by to get our new means? What does the new 
 # dataframe show?
-
+#ANSWER: We grouped by month and year, the new dataframe shows the average temperature in each stream for each month and year pairing (ex. the means in January 2009).
 
 # ---------------------------------------------------------- #
 ### PART 1.3: PRACTICING THESE SKILLS                     ####
