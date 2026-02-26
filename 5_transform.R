@@ -419,21 +419,43 @@ willowFill <- willow %>%
 
 # TASK: Write code to indicate the sequence of columns from w1 through wC. 
 
+names(willowFill)[8:20]
+"w_1"  "w_2"  "w_3"  "w_4"  "w_5"  "w_6"  "w_7"  "w_8"  "w_9"  "w_10" "w_A" 
+"w_B"  "w_C"
+
+
 
 # We can fix this problem using the pivot_longer() function. pivot_longer() takes 
-# multiple columns and condenses them into just two columns, one that indicates 
+# multiple columns and condenses them into just two columns, one that indicates
 # what column the data came from and the other that contains the data itself.
 # And while we're at it, let's get rid of the 'w' in front of each willow 
 # individual number.
 # Run the following code:
-willowClean <- willowFill %>%
-  pivot_longer(cols = w_1:w_C,
-               names_to = "willow_id",
-               values_to = "value") %>%
+
+willowClean <- willowFill %>% 
+## Creates the new data frame "willowClean", using the existing data frame "willowFill".
+  
+  pivot_longer(cols = w_1:w_C, 
+## Begins the "pivot_longer()" function by targeting the columns we want to reorganize from variables to observations.
+
+               names_to = "willow_id", 
+## Creates the new column named "willow_id" for the "w_1:w_C" observations that used to be variables.
+
+               values_to = "value") %>% 
+## Creates a new column "value" that takes all of the observations that were under the "w_1:w_C" columns and puts them under one new column that organizes to each new "1:C" observation.
+  
   separate(col = willow_id,
+## Creates the "separate()" function that will target the new "willow_id" column.
+
            into = c("remove", "willow_ID"),
+## The "willow_id" column is being split into two columns named "remove" and "willow_ID".
+
            sep = "_") %>%
+## The observations within the columns are bring split at the "_", so "w_1" would turn into "w" going with the "remove" column and "1" going with the "willow_ID" column.
+
   select(-remove)
+## The "remove" column is being selected and deleted from the data frame.
+
 
 
 # TASK: Annotate (add comments) the code above to indicate what each line does.
