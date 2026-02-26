@@ -468,19 +468,31 @@ willowClean <- willowFill %>%
 # Yikes, another common problem, the variables are stored in both rows and columns!
 
 # QUESTION: What column contains the labels that tell us there are multiple 
-# variables stored in one column? What column contains the corresponding date 
+# variables stored in one column? What column contains the corresponding data 
 # for these variables?
+
+## Based on the previous segment, our labels come from the "willow_ID" column, and our actual data comes from the "value" column.
+
 
 
 # Good news, we can fix this problem with the complementary function to pivot_longer().
 # This time we will use the pivot_wider() function to turn one column into multiple.
 willowCleaner  <- willowClean %>%
+## We are creating the new data frame "willowCleaner" from the existing data frame "willowClean".
+  
   pivot_wider(names_from = variable,
+## We are using the "pivot_wider()" function to turn the "variable" column into many columns using the observations within that column.
+
               values_from = value)
+## After the previous line we have many variables without observations. Using the "value" column as observations, we can conclude the "pivot_wider" function.
+
 
 
 # TASK: Take a look at our new dataframe. How does it differ from the previous?
 # Annotate (add comments) the code above to indicate what each line does.
+
+## "willowCleaner" differs from "willowClean" in that it is wider, and more tidy with how the information is laid out.
+
 
 
 # ---------------------------------------------------------- #
