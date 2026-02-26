@@ -593,6 +593,10 @@ willowClean5 <- willowClean4 %>%
 
 # QUESTION: What columns would go in each of our two relational databases?
 
+## The columns that refer to the plot's treatments are block:temp, and the columns that refer to willow growth are ht1:cnpy2. Based on the code below, we are adding some of the plot data into our informational data, but only enough to tell us where the information goes to in the other dataset.
+
+
+
 # Let's do it! Run the following code:
 plotInfo <- willowClean5 %>%
   select(block:temp) %>%
@@ -607,10 +611,16 @@ willowData <- willowClean5 %>%
 # TASK: Write code to join these two dataframes back together into a new 
 # dataframe called willowDataTrt using the left_join() function.
 
+willowDataTrt <- left_join(plotInfo, willowData, by = c("block", "plot"))
 
-# ON YOUR OWN: There are so many ways to join databases! Think through when you 
+
+
+# ON YOUR OWN: There are so many ways to join databases! Think through when you
 # might want to use each type. We will practice more with joining data in the 
 # coming weeks.
+
+## I'm assuming you just want me to think about this and not actually answer.
+
 
 
 # ---------------------------------------------------------- #
