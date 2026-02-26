@@ -641,13 +641,33 @@ willowDataTrt <- left_join(plotInfo, willowData, by = c("block", "plot"))
 #     that contains C or N and another column called percentage that contains 
 #     the values of either %C or %N.
 # (5) group_by() Date, Plot, NTrt, Species, Field, and Strip and then use the 
-#     summarize() function to calculate the mean value of the percentage column 
+#     summarize() function to calculate the mean value of the percentage column
 #     for each group. Store the mean values in a column called 'percentage_mean'. 
 #     Don't forget to ungroup at the end!
 # (6) pivot_wider so that the values of percentage_mean are contained in 
 #     different columns
 
+cdr <- read.csv("e001_Plant aboveground biomass carbon and nitrogen.csv",
+                stringsAsFactors = TRUE) %>%
+               rename(C = X..Carbon,
+                      N = X..Nitrogen) %>%
+              filter(Strip %in% c(1, 2)) %>%
+              pivot_longer(cols = c(C, N),
+                           names_to = "element",
+                           values_to = "percentage") %>%
+              group_by(Date, Plot, NTrt, Species, Field, Strip) %>%
+              summarize(percentage_mean_C = mean(percentage[element == "C"],
+                                                 na.rm = T),
+                        percentage_mean_N = mean(percentage[element == "N"],
+                                                 na.rm = T)) %>%
+              ungroup()
+              pivot_wider(names_from = Strip,
+                          values_from = percentage_mean_C, percentage_mean_N)
 
+## Honestly, this was a mess, and I'm not entirely sure if this is what you're asking of me in the steps. I couldn't cleanly find a way to make this work without breaking some steps that seemed clear in their statement of what to do and what not to do. This took a decent amount of research to try and find ways to possibly bend the steps rather than break them, so hopefully this is acceptable.
+              
+              
+              
 # ---------------------------------------------------------- #
 ### PART 3.0: SUBMIT YOUR WORK                            ####
 # ---------------------------------------------------------- #
