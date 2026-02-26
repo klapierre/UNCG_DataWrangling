@@ -508,11 +508,19 @@ willowCleaner  <- willowClean %>%
 # TASK: Verbally describe how you would want to change this problem 
 # (i.e., pseudocode).
 
+## I'd probably use the separate() function to split the columns, in an attempt to single out variables and observations within each specific column.
+
+
 
 # ifelse() is a very powerful function that helps us with this problem!
 
 # TASK: Look at the ifelse help file and describe in your own words the ordering 
 # of the syntax.
+
+## ifelse(text, yes, no)
+## I'm going to try and use an example to explain how I think this works:
+## Let's say that x <- c(4,5,6), and we want to label the numbers as "tall" if they are greater than 5 and "short" if they aren't. The "text" portion would say "x > 5". The "yes" portion would say "tall". The "no" portion would say "short".
+
 
 
 # We can nest the ifelse() function within a mutate() function to create a new 
@@ -520,15 +528,25 @@ willowCleaner  <- willowClean %>%
 # another if the logical statement is FALSE. Run the following code to try it 
 # out to help fix our first problem (ht1 column has information on both plant 
 # status and actual height values).
-willowClean3 <- willowClean2 %>%
-  mutate(status = ifelse(ht1 == 'dead', 'dead', 'alive')) %>% 
+
+willowClean3 <- willowCleaner %>%
+## A new data frame named "willowClean3" is being made from the data frame "willowCleaner".
+  
+  mutate(status = ifelse(ht1 == 'dead', 'dead', 'alive')) %>%
+## We are creating a new column named "status", by using both the mutate() and ifelse() functions. This one is stating that within the new "status" column, if the observation within the previous "ht1" column says "dead" then the "status" will also say "dead", otherwise the observation will say "alive".
+  
   mutate(ht1 = ifelse(status == 'dead', NA, ht1))
+## This is mutating the "ht1" column off of the newly made "status" column. If the "status" column's observation reads "dead", then "ht1" will say "NA", otherwise it'll read the numbers within the "ht1" column.
 
 # TASK: Annotate the previous lines of code to indicate what each is doing.
 
 
+
 # QUESTION: This is a good time to make sure the relevant columns are numeric. 
 # Run the str() function on this dataframe. What class is the ht1 column?
+
+## The "ht1" column is considered a character column. The only one considered numeric is the "block" column.
+
 
 
 # Let's make the ht1 column numeric. And while we're at it, the columns ht2, 
@@ -544,8 +562,11 @@ willowClean4 <- willowClean3 %>%
 # willowClean4. Did we succeed in making the columns we wanted into numeric 
 # classes?
 
+## Yes, it worked.
 
-# %in% is another powerful function! With %in% we can use logical statements on 
+
+
+# %in% is another powerful function! With %in% we can use logical statements on
 # a whole bunch of stuff at once, instead of making a billion ifelse statements. 
 # Let's try it out to fix our second problem, where willow_ID also contains info 
 # about when the seedling was planted. Run the following lines of code:
@@ -556,6 +577,9 @@ willowClean5 <- willowClean4 %>%
 # seedlings with identifiers that were letters versus numbers? That is, what 
 # year were willow seedlings that were identified with letters planted? What year 
 # were willow seedlings that were identified with numbers planted?
+
+## The willow seedlings that had letters as identifiers were from 2006, whereas the willow seedlings that had numbers as identifiers were from 2007. 
+
 
 
 # ---------------------------------------------------------- #
