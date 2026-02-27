@@ -341,7 +341,8 @@ willowFill <- willow %>%
 
 # TASK: Write code to indicate the sequence of columns from w1 through wC. 
 
-
+cols=(willowFill, w_1:w_C )
+colnames(willowFill) hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
 # We can fix this problem using the pivot_longer() function. pivot_longer() takes 
 # multiple columns and condenses them into just two columns, one that indicates 
 # what column the data came from and the other that contains the data itself.
@@ -356,10 +357,17 @@ willowClean <- willowFill %>%
            into = c("remove", "willow_ID"),
            sep = "_") %>%
   select(-remove)
-
+willowClean <- willowFill %>%
+  pivot_longer(cols = w_1:w_C,
+               names_to = "willow_id",
+               values_to = "value") %>%
+  separate(col = willow_id,
+           into = c("remove", "willow_ID"),
+           sep = "_") %>%
+  select(-remove)
 
 # TASK: Annotate (add comments) the code above to indicate what each line does.
-
+#The first line codes for a new dataset 'willowClean' based on 'willowFill'. The second line will collapse columns w_1 to w_C into a column 'willow_id". The values for these column will be under the 'value' column.The 'willow_id' column breaks into two columns 'remove' and 'willow_ID'. Then, the 'remove' column is selected to be deleted from the dataset.
 
 # ---------------------------------------------------------- #
 ### PART 2.3: PIVOT WIDER                                 ####
