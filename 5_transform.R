@@ -281,7 +281,9 @@ monthlyDelaySummary <- flightData %>%
 # ---------------------------------------------------------- #
 
 # QUESTION: What are three characteristics of tidy data?
-
+# columns always refer to variables
+# rows always refer to individual observations
+# each cell represents a single piece of data
 
 # There are five common problems associated with messy data:
 # 1. Column headers are values, not variable names
@@ -299,7 +301,7 @@ willow <- read_csv("Niwot_Salix_2014_WillowSeedlingSurvey.csv", skip = 10)
 # QUESTION: What do you think the statement 'skip = 10' means in the code above?
 # HINT: Compare the csv file on your computer and the dataframe that you loaded 
 # into R.
-
+# it is telling R to not import the first ten lines in the csv
 
 # ---------------------------------------------------------- #
 ### PART 2.1: FILL MISSING DATA                           ####
@@ -310,7 +312,7 @@ willow <- read_csv("Niwot_Salix_2014_WillowSeedlingSurvey.csv", skip = 10)
 
 # QUESTION: To clean up the willow dataframe, where do we want to fill in values? 
 # That is, which columns have lots of NAs.
-
+# any columns that correspond to a dead plant
 
 # We can fix our missing value problem using the fill() function (try it by 
 # running the following code):
@@ -319,10 +321,12 @@ willowFill <- willow %>%
 
 # QUESTION: What does the code 'block:temp' mean when passed to the fill() 
 # function above?
+# it is filling the NA values between the columns 'block' and 'temp' with whatever information is filling the column above
 
 
 # QUESTION: Looking at the dataframe willowFill, describe what happened compared 
 # to our initial dataframe.
+# struggling to think of a way to answer this without just repeating what I said above. The NA values in the willow columns havent changed....
 
 
 # ---------------------------------------------------------- #
@@ -334,7 +338,7 @@ willowFill <- willow %>%
 # that were sampled repeatedly.
 
 # TASK: Write code to indicate the sequence of columns from w1 through wC. 
-
+# w_1:w_C
 
 # We can fix this problem using the pivot_longer() function. pivot_longer() takes 
 # multiple columns and condenses them into just two columns, one that indicates 
@@ -353,7 +357,11 @@ willowClean <- willowFill %>%
 
 
 # TASK: Annotate (add comments) the code above to indicate what each line does.
-
+# line 349 is creating a new object from the previously existing willowFill object
+# line 350 is selecting which columns R is going to condense 
+# line 351 and 352 is telling R to crate a new "willow_id" and "value" column from the info in w_1:1_C
+# line 352 through 355 is selecting the willow_id column to be split into "remove" and "willow_ID", which was being separated by the "_"
+# line 356 is removing the entire "remove" column
 
 # ---------------------------------------------------------- #
 ### PART 2.3: PIVOT WIDER                                 ####
@@ -364,18 +372,18 @@ willowClean <- willowFill %>%
 # QUESTION: What column contains the labels that tell us there are multiple 
 # variables stored in one column? What column contains the corresponding date 
 # for these variables?
+# this question is also kind of confusing me, because I am seeing multiple columns (variable, willow_ID and value) that contain multiple variables (ex: willow_ID having both numbers and letters), and I am seeing no column that contains a date in the willowClean dataframe
 
 
 # Good news, we can fix this problem with the complementary function to pivot_longer().
 # This time we will use the pivot_wider() function to turn one column into multiple.
-willowCleaner  <- willowClean %>%
-  pivot_wider(names_from = variable,
-              values_from = value)
-
+willowCleaner  <- willowClean %>%      # create new df from previous df
+  pivot_wider(names_from = variable,   # changes the 'variable' column into 5 different columns, each their own variable 
+              values_from = value)     # attaches the values associated with each of the 5 variables to the correct location
 
 # TASK: Take a look at our new dataframe. How does it differ from the previous?
 # Annotate (add comments) the code above to indicate what each line does.
-
+# variables have become their own individual columns, values have been rearranged to stay with their variables
 
 # ---------------------------------------------------------- #
 ### PART 2.4: IF ELSE                                     ####
@@ -389,29 +397,31 @@ willowCleaner  <- willowClean %>%
 
 # TASK: Verbally describe how you would want to change this problem 
 # (i.e., pseudocode).
-
+# I would want to use a code similar to what na.rm does, but rather than removing either the characters or numbers from these columns, I would attach a function that tells R studio to ignore columns with certain kinds of data in them 
 
 # ifelse() is a very powerful function that helps us with this problem!
 
 # TASK: Look at the ifelse help file and describe in your own words the ordering 
 # of the syntax.
-
+# you have to first specify what part of the dataframe we are asking R to consider logical. Once this is done, we have to set which values will be considered "yes" or "no" (aka T or F)
 
 # We can nest the ifelse() function within a mutate() function to create a new 
 # column that contains one entry if the logical statement we provide is TRUE and 
 # another if the logical statement is FALSE. Run the following code to try it 
 # out to help fix our first problem (ht1 column has information on both plant 
 # status and actual height values).
-willowClean3 <- willowClean2 %>%
-  mutate(status = ifelse(ht1 == 'dead', 'dead', 'alive')) %>% 
-  mutate(ht1 = ifelse(status == 'dead', NA, ht1))
 
-# TASK: Annotate the previous lines of code to indicate what each is doing.
+willowClean3 <- willowCleaner %>% #creating new df with a new column
+  mutate(status = ifelse(ht1 == 'dead', 'dead', 'alive')) %>% # creates a new column called 'status' that states whether a plant was alive or dead based on what was previously in that column
+  mutate(ht1 = ifelse(status == 'dead', NA, ht1)) # changes the ht1 column to make anything considered 'dead' based on the previous line an NA value. If the column contains 'dead' or an NA, then it will be considered a yes in accordance with the order that dead and alive are listed in above
+
+# TASK: Annotate the previous lines of code to indicate what each is doing
+# specifying the logical statement within the column ht1 that the ifelse function is testing
 
 
 # QUESTION: This is a good time to make sure the relevant columns are numeric. 
 # Run the str() function on this dataframe. What class is the ht1 column?
-
+str(willowClean3) #ht1 is character
 
 # Let's make the ht1 column numeric. And while we're at it, the columns ht2, 
 # cnpy1, and cnpy2 should also be made numeric. We can do so by running the 
@@ -425,7 +435,7 @@ willowClean4 <- willowClean3 %>%
 # TASK: Run the str() function again to view the classes for each column in 
 # willowClean4. Did we succeed in making the columns we wanted into numeric 
 # classes?
-
+str(willowClean4) # yes 
 
 # %in% is another powerful function! With %in% we can use logical statements on 
 # a whole bunch of stuff at once, instead of making a billion ifelse statements. 
@@ -438,7 +448,7 @@ willowClean5 <- willowClean4 %>%
 # seedlings with identifiers that were letters versus numbers? That is, what 
 # year were willow seedlings that were identified with letters planted? What year 
 # were willow seedlings that were identified with numbers planted?
-
+# willow seedlings identified with letters were planted in 2006, whereas everything else was planted in 2007
 
 # ---------------------------------------------------------- #
 ### PART 2.5: RELATIONAL DATA                             ####
@@ -450,6 +460,9 @@ willowClean5 <- willowClean4 %>%
 # and the other willowData.
 
 # QUESTION: What columns would go in each of our two relational databases?
+# plotInfo will contain all of the columns between 'block' and 'temp'
+# willowData will contain all of the columns following willowID
+
 
 # Let's do it! Run the following code:
 plotInfo <- willowClean5 %>%
@@ -464,12 +477,12 @@ willowData <- willowClean5 %>%
 
 # TASK: Write code to join these two dataframes back together into a new 
 # dataframe called willowDataTrt using the left_join() function.
-
+willowDataTrt <- left_join(plotInfo, willowData)
 
 # ON YOUR OWN: There are so many ways to join databases! Think through when you 
 # might want to use each type. We will practice more with joining data in the 
 # coming weeks.
-
+# if you were collecting the same data from different locations and made separate csv's for each location, it may be useful to join the csv's into one dataframe once you are attempting to analyze this data in r
 
 # ---------------------------------------------------------- #
 ### PART 2.6: PRACTICING YOUR SKILLS                      ####
@@ -495,6 +508,20 @@ willowData <- willowClean5 %>%
 # (6) pivot_wider so that the values of percentage_mean are contained in 
 #     different columns
 
+cdr <- read_csv("e001_Plant aboveground biomass carbon and nitrogen.csv") %>%
+  rename(C="% Carbon",
+         N="% Nitrogen") %>% 
+  filter(Strip %in% c(1, 2)) %>%
+  pivot_longer(cols = C:N,
+               names_to = "element",
+               values_to = "percentage") %>%
+  group_by(Date, Plot, NTrt, Species, Field, Strip) %>%
+  summarize(percentage_mean = mean(percentage, na.rm = T)) %>%
+  ungroup()
+# %>% pivot_wider(names_from=?,
+#              values_from=percentage_mean)
+
+#the code is working until I get to this point, and I am not sure how I should be splitting the percentage_mean column because that column only contains one value 
 
 # ---------------------------------------------------------- #
 ### PART 3.0: SUBMIT YOUR WORK                            ####
