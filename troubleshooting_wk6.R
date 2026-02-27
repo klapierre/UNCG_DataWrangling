@@ -10,8 +10,14 @@ setwd(C:\\Users\\kjkomatsu\\OneDrive - UNCG\\teaching\\BIO 457 - Data Wrangling)
 
 
 
+
+
+
+
 # why doesn't this work?!
 setwd('C:\Users\kjkomatsu\OneDrive - UNCG\teaching\BIO 457 - Data Wrangling')
+
+
 
 
 
@@ -34,11 +40,14 @@ read.csv('CalispellCreekandTributaryTemperatures')
 
 
 
+
+
+
+
+
 data("diamonds")
 
 diamonds <- as.data.frame(diamonds)
-
-
 
 
 # why doesn't this work?! (i.e., make a dataframe)
@@ -62,6 +71,10 @@ cheapishDiamonds <- diamonds
 
 
 
+  
+  
+  
+  
 
   
 # why doesn't this work?!
@@ -73,11 +86,6 @@ cheapishDiamonds <- diamonds %>%
 
 
 
-# why doesn't this work?!
-cheapishDiamonds <- diamonds %>% 
-  filter(price=1000)
-
-
 
 
 
@@ -85,9 +93,9 @@ cheapishDiamonds <- diamonds %>%
 
 
 # why doesn't this work?!
-diamondsSummary <- diamonds %>% 
-  group_by(cut, color, clarity) %>% 
-  summarize(price_mean=mean(price), .groups=drop)
+cheapishDiamonds <- diamonds %>% 
+  filter(price=1000)
+
 
 
 
@@ -106,3 +114,22 @@ diamondsSummary <- diamonds %>%
   summarize(price_mean=mean(price), .groups='drop')
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# why doesn't this work?!
+diamondsSummary <- diamonds %>% 
+  group_by(cut, color, clarity) %>% 
+  summarize(price_mean=mean(price), .groups=drop)
