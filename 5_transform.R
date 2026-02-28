@@ -302,6 +302,9 @@ monthlyDelaySummary
 # ---------------------------------------------------------- #
 
 # QUESTION: What are three characteristics of tidy data?
+# Rows are observations
+# Columns are variables
+# Each cell is a single measurement
 
 
 # There are five common problems associated with messy data:
@@ -320,7 +323,8 @@ willow <- read_csv("Niwot_Salix_2014_WillowSeedlingSurvey.csv", skip = 10)
 # QUESTION: What do you think the statement 'skip = 10' means in the code above?
 # HINT: Compare the csv file on your computer and the dataframe that you loaded 
 # into R.
-
+willow
+# It skipped the first 10 rows.
 
 # ---------------------------------------------------------- #
 ### PART 2.1: FILL MISSING DATA                           ####
@@ -331,6 +335,7 @@ willow <- read_csv("Niwot_Salix_2014_WillowSeedlingSurvey.csv", skip = 10)
 
 # QUESTION: To clean up the willow dataframe, where do we want to fill in values? 
 # That is, which columns have lots of NAs.
+# block, plot, code, snow, n, temp
 
 
 # We can fix our missing value problem using the fill() function (try it by 
@@ -340,7 +345,8 @@ willowFill <- willow %>%
 
 # QUESTION: What does the code 'block:temp' mean when passed to the fill() 
 # function above?
-
+willowFill
+# it filled all NAs from column block to temp
 
 # QUESTION: Looking at the dataframe willowFill, describe what happened compared 
 # to our initial dataframe.
