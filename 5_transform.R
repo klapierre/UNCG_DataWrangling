@@ -346,10 +346,14 @@ willowFill <- willow %>%
 # QUESTION: What does the code 'block:temp' mean when passed to the fill() 
 # function above?
 willowFill
-# it filled all NAs from column block to temp
+# It filled all NAs from column block to temp with previous non-NA value in row
+# above it.
 
 # QUESTION: Looking at the dataframe willowFill, describe what happened compared 
 # to our initial dataframe.
+# it filled all NAs from column block to temp with previous non-NA value in row
+# above it. There are no rows missing values anymore from column block to 
+# variable now.
 
 
 # ---------------------------------------------------------- #
@@ -361,6 +365,7 @@ willowFill
 # that were sampled repeatedly.
 
 # TASK: Write code to indicate the sequence of columns from w1 through wC. 
+w_1:wC
 
 
 # We can fix this problem using the pivot_longer() function. pivot_longer() takes 
@@ -369,16 +374,14 @@ willowFill
 # And while we're at it, let's get rid of the 'w' in front of each willow 
 # individual number.
 # Run the following code:
-willowClean <- willowFill %>%
-  pivot_longer(cols = w_1:w_C,
-               names_to = "willow_id",
-               values_to = "value") %>%
-  separate(col = willow_id,
-           into = c("remove", "willow_ID"),
-           sep = "_") %>%
-  select(-remove)
-
-
+willowClean <- willowFill %>% # taking WillowFill dataframe and piping it to perform various actions below and storing the results in new WillowClean dataframe
+  pivot_longer(cols = w_1:w_C, #converting columns w1 thru wC from wide to long data 
+               names_to = "willow_id", #storing column names w1 thru wC to new column willow_id
+               values_to = "value") %>% # storing measurements corresponding to willows in new column called value
+  separate(col = willow_id, # separating values in column willow_id
+           into = c("remove", "willow_ID"), #separating column willow_id into two new columns remove and willow_ID
+           sep = "_") %>% # separating values separated by underscore
+  select(-remove) # selecting the willow_ID column only
 # TASK: Annotate (add comments) the code above to indicate what each line does.
 
 
