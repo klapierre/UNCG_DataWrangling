@@ -134,7 +134,7 @@ streamTempSummary <- streamTemp %>%
 # RECOMMENDED: Take a look at the summarize help file, particularly the "Useful 
 # functions" section to see all of the different ways you can summarize your 
 # dataframe.
-
+?summarize
 
 # ---------------------------------------------------------- #
 ### PART 1.2: GROUPING DATA                               ####
@@ -149,14 +149,21 @@ streamTempSummary <- streamTemp %>%
 # (3) Call your new dataframe streamTempMDY.
 # HINT: Check the help documentation for the separate(), mutate(), and paste() 
 # functions.
+streamTempMDY <- streamTemp %>%
+  separate(Date, into = c("month", "day", "year"), sep = "/") %>%
+  mutate(year = paste("20", year, sep = ""))
 
 
 # TASK: Write code to create a new dataframe called streamTempJan that filters 
 # only rows where the month column is equal to 1 from the streamTempMDY dataframe.
+streamTempJan <- streamTempMDY %>%
+  filter(month == "1")
 
 
 # TASK: Write code that uses the summarize function to find the mean temperature 
 # for Calispell, Smalle, and Winchester streams in only January.
+streamTempJan %>%
+  summarize(Calispell_mean = mean(calispell, na.rm = TRUE),Smalle_mean = mean(smalle, na.rm = TRUE),Winchester_mean = mean(winchester, na.rm = TRUE))
 
 
 # Now imagine you had to repeat this set of steps (creating new filtered 
@@ -180,10 +187,11 @@ streamTempMonthlyMean <- streamTempMDY %>%
 
 # QUESTION: When you look at the streamTempMonthlyMean dataframe, how many means 
 # do you see for each stream?
-
+#Answer: I see twelve means for each stream
 
 # QUESTION: In your own words, what do you think the group_by() function does 
 # when used before the summarize() function?
+#Answer: It creates the groups that summarize will summarize. So if you use group_by before summarize, instead of getting one summary per column, you get a summary per previous grouping.
 
 
 # We can also group by multiple columns. Try running the following code:
@@ -196,6 +204,7 @@ streamTempMeans <- streamTempMDY %>%
 
 # QUESTION: What columns did we group by to get our new means? What does the new 
 # dataframe show?
+#Answer: Month and year were grouped together to show a mean per month recorded per year recorded. There are five years recorded, so there are twelve means per five years meaning there are 60 means.
 
 
 # ---------------------------------------------------------- #
