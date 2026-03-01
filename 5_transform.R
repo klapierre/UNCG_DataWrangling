@@ -405,56 +405,64 @@ willowCleaner  <- willowClean %>%
 
 # TASK: Verbally describe how you would want to change this problem 
 # (i.e., pseudocode).
-
-
+#First, I would want to take the 'ht1' column and 'widen' into 'alive' and 'dead' columns. Next, the 'willow_ID' column for the seedlings could follow the 'dead' and 'alive' columns (not sure how to do this step).
+#The pesudocode: willowCleanest<-willowCleaner %>% 
+pivot_wider(names_from=ht1,
+            values_from=ht1)
 # ifelse() is a very powerful function that helps us with this problem!
 
 # TASK: Look at the ifelse help file and describe in your own words the ordering 
 # of the syntax.
-
+#ifelse(test,yes,no). The 'test' argument can be applied to our objective. The 'yes' argument will return the values for true elements of 'test', and the 'no' argument will return the false elements of 'test'.
 
 # We can nest the ifelse() function within a mutate() function to create a new 
 # column that contains one entry if the logical statement we provide is TRUE and 
 # another if the logical statement is FALSE. Run the following code to try it 
 # out to help fix our first problem (ht1 column has information on both plant 
 # status and actual height values).
-willowClean3 <- willowClean2 %>%
+willowClean2 <- willowCleaner %>%
   mutate(status = ifelse(ht1 == 'dead', 'dead', 'alive')) %>% 
   mutate(ht1 = ifelse(status == 'dead', NA, ht1))
-
+willowClean2 <- willowCleaner %>%
+  mutate(status = ifelse(ht1 == 'dead', 'dead', 'alive')) %>% 
+  mutate(ht1 = ifelse(status == 'dead', NA, ht1))
 # TASK: Annotate the previous lines of code to indicate what each is doing.
-
+#In the first line, a new dataset 'willowClean2' is created based on 'willowCleaner'. In the next line, a 'status' column is added. The value should be 'dead' if it matches 'dead' from the 'ht1' column, otherwise it should state 'alive'. In the final line, the 'ht1' column is modified. If 'dead' is stated in the 'status' column, then 'NA' should be under the 'ht1' column. If 'dead' is not stated, then the value under the 'ht1' column should be stated. 
 
 # QUESTION: This is a good time to make sure the relevant columns are numeric. 
 # Run the str() function on this dataframe. What class is the ht1 column?
-
+str(willowClean2)
+#The ht1 column is a list of 676.
 
 # Let's make the ht1 column numeric. And while we're at it, the columns ht2, 
 # cnpy1, and cnpy2 should also be made numeric. We can do so by running the 
 # following code:
-willowClean4 <- willowClean3 %>% 
-  mutate(ht1 = as.numeric(ht1),
-         ht2 = as.numeric(ht2),
-         cnpy1 = as.numeric(cnpy1),
-         cnpy2 = as.numeric(cnpy1))
+library(purrr)
+willowClean3 <- willowClean2 %>% 
+  mutate(
+    ht1 = map_dbl(ht1,~ifelse(length(.x)==0,NA,as.numeric(.x[1]))),
+         ht2 = map_dbl(ht2,~ifelse(length(.x)==0,NA,as.numeric(.x[1]))),
+         cnpy1 = map_dbl(cnpy1,~ifelse(length(.x)==0,NA,as.numeric(.x[1]))),
+         cnpy2 = map_dbl(cnpy2,~ifelse(length(.x)==0,NA,as.numeric(.x[1]))))
 
 # TASK: Run the str() function again to view the classes for each column in 
 # willowClean4. Did we succeed in making the columns we wanted into numeric 
 # classes?
-
-
+str(willowClean3)
+#Yes, the columns are now numeric classes.
 # %in% is another powerful function! With %in% we can use logical statements on 
 # a whole bunch of stuff at once, instead of making a billion ifelse statements. 
 # Let's try it out to fix our second problem, where willow_ID also contains info 
 # about when the seedling was planted. Run the following lines of code:
-willowClean5 <- willowClean4 %>% 
+willowClean4 <- willowClean3 %>% 
   mutate(year = ifelse(willow_ID %in% c("A", "B", "C"), 2006, 2007))
-
+willowClean4 <- willowClean3 %>% 
+  mutate(year = ifelse(willow_ID %in% c("A", "B", "C"), 2006, 2007))
 # QUESTION: Based on the lines of code above, what can you conclude about willow 
 # seedlings with identifiers that were letters versus numbers? That is, what 
 # year were willow seedlings that were identified with letters planted? What year 
 # were willow seedlings that were identified with numbers planted?
-
+#The seedlings that were identified with letters were planted in 2006. The seedlings identified with numbers were planted in 2007. The letter-identified seedlings were possibly the control group before data collection began.
 
 # ---------------------------------------------------------- #
 ### PART 2.5: RELATIONAL DATA                             ####
