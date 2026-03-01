@@ -474,22 +474,25 @@ willowClean4 <- willowClean3 %>%
 # and the other willowData.
 
 # QUESTION: What columns would go in each of our two relational databases?
-
+#PlotInfo dataframe should contain the following columns: block, plot. code, snow, n, and temp. The willowData dataframe should contain the following columns: block, plot, willow_ID, ht1, ht2, cnpy1, cnpy2, notes, status, and year.
 # Let's do it! Run the following code:
-plotInfo <- willowClean5 %>%
+plotInfo <- willowClean4 %>%
   select(block:temp) %>%
   unique()
-
-willowData <- willowClean5 %>%
+plotInfo <- willowClean4 %>%
+  select(block:temp) %>%
+  unique()
+willowData <- willowClean4 %>%
   select(block, plot, willow_ID:year)
-
+willowData <- willowClean4 %>%
+  select(block, plot, willow_ID:year)
 # It might seem trivial to have this be a relational database, but it's super 
 # useful for larger and more complicated datasets.
 
 # TASK: Write code to join these two dataframes back together into a new 
 # dataframe called willowDataTrt using the left_join() function.
 
-
+willowDataTrt<-left_join(plotInfo,willowData)
 # ON YOUR OWN: There are so many ways to join databases! Think through when you 
 # might want to use each type. We will practice more with joining data in the 
 # coming weeks.
