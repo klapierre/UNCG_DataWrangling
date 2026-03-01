@@ -42,8 +42,8 @@ library(tidyverse)
 # it to a dataframe named streamTemp. Clean up the column names to the following:
 # data, time, calispell, smalle, winchester
 # HINT: Check last week's assignment if you forget how to read data into R.
-
-
+streamTemp <-read.csv("CalispellCreekandTributaryTemperatures.csv")
+colnames(streamTemp) <-c("date", "time", "calispell", "smalle", 'winchester' )
 # ---------------------------------------------------------- #
 ### PART 1.1: SUMMARIZING DATA                            ####
 # ---------------------------------------------------------- #
