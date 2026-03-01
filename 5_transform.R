@@ -64,22 +64,26 @@ streamTempLength <- streamTemp %>%
 # QUESTION: When you open the streamTempLength dataframe, what value is in each 
 # column?
 
+#ANSWER: 61100
 
 # QUESTION: How does this number compare to the number of observations listed by
 # the dataframe in the R environment tab?
 
+#ANSWER: that number is the same as the number of observations in streamTemp.
 
 # QUESTION: Based on your previous answers, what do you think the length 
 # function does?
 
+#ANSWER: tells you the number of observations. 
 
 # It can be a bit tedious to type out all the column names and the length 
 # function multiple times. The across() function within the summarize() step can
 # help us to identify multiple columns to summarize the data for. Try running 
 # the following code:
-streamTempLength <- streamTemp %>% 
-  summarize(across(.cols=c('calispell', 'smalle', 'winchester'), 
-                   .fns=length))
+
+streamTempLength <- streamTemp %>% # creating a new df with the streamTemp data, using the piped functions below 
+  summarize(across(.cols=c('calispell', 'smalle', 'winchester'), # using summarize to reduce the data from columns calispell, smalle, and winchester.
+                   .fns=length)) # from those columns, summarize the amount of observations (rows) in each column
 
 # TASK: Using comments in the code above, describe what each line is doing.
 
@@ -94,14 +98,18 @@ streamTempSummary <- streamTemp %>%
 
 # TASK: Write code to view the column names of the streamTempSummary dataframe.
 
+colnames(streamTempSummary)
 
 # QUESTION: How does R know what to name each column when we use the summarize 
 # function above?
+
+#ANSWER: We defined the columns that we wanted to summarize using .cols. Then we told R that we wanted the max, mean, and min of those columns using .fns. 
 
 
 # QUESTION: What values do you see for the columns when you open up the 
 # dataframe streamTempSummary? Why do you think this is?
 
+#ANSWER: NA. Because there are a lot of NAs in the original streamTemp df.
 
 # Recall that our data had a lot of missing values. R doesn't know how to find 
 # the mean, max, or min of a group of observations that include NAs.
@@ -115,16 +123,25 @@ streamTempSummary <- streamTemp %>%
 # QUESTION: Now what values do you see for the columns when you open up the 
 # dataframe streamTempSummary? What line of the above code removed the NAs from 
 # our data?
+head(streamTempSummary)
 
+#ANSWER: calispell_maximum calispell_mean calispell_minimim smalle_maximum smalle_mean
+#            22.38       7.985702             -0.28          20.05    5.928555
+#smalle_minimim winchester_maximum winchester_mean winchester_minimim
+#         -0.1              18.65        6.089913              -1.75
+
+#na.rm=T removed the NAs
 
 # QUESTION: What happened to the column we created in the beginning called 
 # data_type? Where did the date and time columns go?
 
+#ANSWER: I don't remember making a column called data_type?? The time and date columns were not included in this dataframe because we did not becuase we did not select those columns to be sumarized.
 
 # RECOMMENDED: Take a look at the summarize help file, particularly the "Useful 
 # functions" section to see all of the different ways you can summarize your 
 # dataframe.
 
+?summarize
 
 # ---------------------------------------------------------- #
 ### PART 1.2: GROUPING DATA                               ####
