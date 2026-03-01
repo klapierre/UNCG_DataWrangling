@@ -45,8 +45,10 @@
 # HINT: Check last week's assignment if you forget how to read data into R.
 
 getwd()
+library(tidyverse)
 streamTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv", 
-                       stringsAsFactors = TRUE) 
+                       stringsAsFactors = TRUE) %>% 
+  rename(date = Date, time = Time, calispell = Calispell.Cr.Temp.C., smalle = Smalle.Cr.Temp.C., winchester = Winchester.Cr.Temp..C.)
 
 # ---------------------------------------------------------- #
 ### PART 1.1: SUMMARIZING DATA                            ####
