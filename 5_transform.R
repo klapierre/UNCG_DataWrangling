@@ -287,7 +287,7 @@ monthlyDelaySummary <- flightData %>%
 # ---------------------------------------------------------- #
 
 # QUESTION: What are three characteristics of tidy data?
-
+#Answer: Each column is a variable, each row is an observation, and each cell is one measurement.
 
 # There are five common problems associated with messy data:
 # 1. Column headers are values, not variable names
@@ -305,6 +305,7 @@ willow <- read_csv("Niwot_Salix_2014_WillowSeedlingSurvey.csv", skip = 10)
 # QUESTION: What do you think the statement 'skip = 10' means in the code above?
 # HINT: Compare the csv file on your computer and the dataframe that you loaded 
 # into R.
+#Answer: The original datafram appears to have some information at the top that the data in R does not have, so my guess is that skip ignores line 10 or ignores 10 lines starting from the top moving down.
 
 
 # ---------------------------------------------------------- #
@@ -316,6 +317,7 @@ willow <- read_csv("Niwot_Salix_2014_WillowSeedlingSurvey.csv", skip = 10)
 
 # QUESTION: To clean up the willow dataframe, where do we want to fill in values? 
 # That is, which columns have lots of NAs.
+# Answer: Most of the columns have a ton of NAs. The only ones that don't are the variable columns and willow_1 (which just has less than the other willows.)
 
 
 # We can fix our missing value problem using the fill() function (try it by 
@@ -325,10 +327,12 @@ willowFill <- willow %>%
 
 # QUESTION: What does the code 'block:temp' mean when passed to the fill() 
 # function above?
+#Answer: It tells the fill function that columns block through column temp, all NA should be filled.
 
 
 # QUESTION: Looking at the dataframe willowFill, describe what happened compared 
 # to our initial dataframe.
+#Answer: The new data frame has columns block through temp filled with no more NAs. It looks like the previous observation was dragged through the empty cells below until a new observation was hit.
 
 
 # ---------------------------------------------------------- #
