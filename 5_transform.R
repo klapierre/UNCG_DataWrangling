@@ -394,19 +394,22 @@ willowClean <- willowFill %>% # taking WillowFill dataframe and piping it to per
 # QUESTION: What column contains the labels that tell us there are multiple 
 # variables stored in one column? What column contains the corresponding date 
 # for these variables?
+# variable
+# in value column
 
 
 # Good news, we can fix this problem with the complementary function to pivot_longer().
 # This time we will use the pivot_wider() function to turn one column into multiple.
-willowCleaner  <- willowClean %>%
-  pivot_wider(names_from = variable,
-              values_from = value)
+willowCleaner  <- willowClean %>% # piping dataframe willowClean to use different functions on it and store results to new dataframe willowCleaner
+  pivot_wider(names_from = variable, #converting long data from column variable to wide data
+              values_from = value) # newly formed columns take value from column value
 
 
 # TASK: Take a look at our new dataframe. How does it differ from the previous?
 # Annotate (add comments) the code above to indicate what each line does.
-
-
+willowCleaner 
+# Now all the values from column variables are now variables themselves that take
+# value from the column value.
 # ---------------------------------------------------------- #
 ### PART 2.4: IF ELSE                                     ####
 # ---------------------------------------------------------- #
@@ -419,29 +422,36 @@ willowCleaner  <- willowClean %>%
 
 # TASK: Verbally describe how you would want to change this problem 
 # (i.e., pseudocode).
-
+# We would have to identify if the plant is dead or alive first and store this
+# information in a new column. Then if the plant is dead, we want to store the value 
+# for height 1 as NA.
 
 # ifelse() is a very powerful function that helps us with this problem!
 
 # TASK: Look at the ifelse help file and describe in your own words the ordering 
 # of the syntax.
-
+?ifelse
+# ifelse() function takes in some logical operation as first argument, what to
+# do in case it is TRUE as the second argument and what to do in case it is 
+# FALSE as a third argument.
 
 # We can nest the ifelse() function within a mutate() function to create a new 
 # column that contains one entry if the logical statement we provide is TRUE and 
 # another if the logical statement is FALSE. Run the following code to try it 
 # out to help fix our first problem (ht1 column has information on both plant 
 # status and actual height values).
-willowClean3 <- willowClean2 %>%
-  mutate(status = ifelse(ht1 == 'dead', 'dead', 'alive')) %>% 
-  mutate(ht1 = ifelse(status == 'dead', NA, ht1))
-
+willowClean3 <- willowCleaner %>% # piping dataframe willowCleaner to use different functions on it and store results to new dataframe willowClean3
+  mutate(status = ifelse(ht1 == 'dead', 'dead', 'alive')) %>% # testing if plant is dead or alive using column ht1 and storing this
+  # information in column status
+  mutate(ht1 = ifelse(status == 'dead', NA, ht1)) # using column status storing values for dead as NA and keeping the values in ht1 as it is in column ht1 itself
+# information in column status
 # TASK: Annotate the previous lines of code to indicate what each is doing.
 
 
 # QUESTION: This is a good time to make sure the relevant columns are numeric. 
 # Run the str() function on this dataframe. What class is the ht1 column?
-
+str(willowClean3) 
+#It is a character
 
 # Let's make the ht1 column numeric. And while we're at it, the columns ht2, 
 # cnpy1, and cnpy2 should also be made numeric. We can do so by running the 
@@ -455,7 +465,8 @@ willowClean4 <- willowClean3 %>%
 # TASK: Run the str() function again to view the classes for each column in 
 # willowClean4. Did we succeed in making the columns we wanted into numeric 
 # classes?
-
+str(willowClean4)
+# Yes
 
 # %in% is another powerful function! With %in% we can use logical statements on 
 # a whole bunch of stuff at once, instead of making a billion ifelse statements. 
@@ -468,6 +479,8 @@ willowClean5 <- willowClean4 %>%
 # seedlings with identifiers that were letters versus numbers? That is, what 
 # year were willow seedlings that were identified with letters planted? What year 
 # were willow seedlings that were identified with numbers planted?
+# 2006 - willow seedlings that were identified with letters planted
+# 2007 - willow seedlings that were identified with numbers planted
 
 
 # ---------------------------------------------------------- #
