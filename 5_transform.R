@@ -352,13 +352,22 @@ willowFill <- willow %>%
 # And while we're at it, let's get rid of the 'w' in front of each willow 
 # individual number.
 # Run the following code:
+
+#Creates a new dataset, 'willowClean' from dataset willowFill
 willowClean <- willowFill %>%
+#Converts the rows w_1:w_C into rows instead of columns
   pivot_longer(cols = w_1:w_C,
+#The original column name moves into the column willow_id
                names_to = "willow_id",
+#the original values of each column go into the new column value
                values_to = "value") %>%
+#The willow_id column is seperated into two columns
   separate(col = willow_id,
+#The two new columns are "remove" and "willow_ID"
            into = c("remove", "willow_ID"),
+#The willow_id column is seperated where there is an underscore
            sep = "_") %>%
+#The column remove was deleted from the dataframe.
   select(-remove)
 
 
@@ -374,17 +383,22 @@ willowClean <- willowFill %>%
 # QUESTION: What column contains the labels that tell us there are multiple 
 # variables stored in one column? What column contains the corresponding date 
 # for these variables?
+#Answer: There is one column that is labeled variable, and I am not sure where the corresponding dates are for these variables. Maybe is is the values column or the id column that tells you which  willow it is, but the variables are just repeated over and over in the column per willow in each plot per block.
 
 
 # Good news, we can fix this problem with the complementary function to pivot_longer().
 # This time we will use the pivot_wider() function to turn one column into multiple.
+
+#Makes a new dataframe "willowCleaner' from the datafram willowclean
 willowCleaner  <- willowClean %>%
+#Takes the names that are in the column variable and turns them into columns with the values from the value column.
   pivot_wider(names_from = variable,
               values_from = value)
 
 
 # TASK: Take a look at our new dataframe. How does it differ from the previous?
 # Annotate (add comments) the code above to indicate what each line does.
+#Answer: Now all of the variables that were in the variables column are there own individual columns
 
 
 # ---------------------------------------------------------- #
