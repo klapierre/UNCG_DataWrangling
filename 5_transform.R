@@ -213,8 +213,12 @@ flightData <- nycflights13::flights
 #     remove NAs;
 # (4) ungroup the dataframe;
 # (5) assign the output to a dataframe named airportDelaySummary.
-
-
+airportDelaySummary <- flightData %>%
+  filter(dest == "RDU") %>%
+  group_by(origin) %>%
+  summarize(mean_arrival_delay = mean(arr_delay, na.rm = TRUE)) %>%
+  
+  ungroup()
 # QUESTION: Which airport should you avoid if you want the shortest delays?
 
 
