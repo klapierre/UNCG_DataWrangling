@@ -62,18 +62,20 @@ streamTempLength <- streamTemp %>%
 
 # QUESTION: How does this number compare to the number of observations listed by
 # the dataframe in the R environment tab?
-
+# It says 1 obs. of 3 variables compared to 61100. 
 
 # QUESTION: Based on your previous answers, what do you think the length 
 # function does?
-
+# The length function counts how many observations are in the column. 
 
 # It can be a bit tedious to type out all the column names and the length 
 # function multiple times. The across() function within the summarize() step can
 # help us to identify multiple columns to summarize the data for. Try running 
 # the following code:
 streamTempLength <- streamTemp %>% 
-  summarize(across(.cols=c('calispell', 'smalle', 'winchester'), 
+  # passes the streamTemp data into summarize 
+  summarize(across(.cols=c('calispell', 'smalle', 'winchester'),
+# The length function is now applied to calispell, smalle and winchester
                    .fns=length))
 
 # TASK: Using comments in the code above, describe what each line is doing.
