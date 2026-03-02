@@ -90,15 +90,15 @@ streamTempSummary <- streamTemp %>%
                    .fns=list(maximum=max, mean=mean, minimim=min)))
 
 # TASK: Write code to view the column names of the streamTempSummary dataframe.
-
+colnames(streamTempSummary)
 
 # QUESTION: How does R know what to name each column when we use the summarize 
 # function above?
-
+# R uses the original names provided and they are kept because of the length function.
 
 # QUESTION: What values do you see for the columns when you open up the 
 # dataframe streamTempSummary? Why do you think this is?
-
+streamTempSummary
 
 # Recall that our data had a lot of missing values. R doesn't know how to find 
 # the mean, max, or min of a group of observations that include NAs.
