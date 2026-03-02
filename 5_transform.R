@@ -333,6 +333,7 @@ willow <- read_csv("Niwot_Salix_2014_WillowSeedlingSurvey.csv", skip = 10)
 # QUESTION: To clean up the willow dataframe, where do we want to fill in values? 
 # That is, which columns have lots of NAs.
 
+#ANSWER: We especially want to fill in the missing values of the measurements of each willow
 
 # We can fix our missing value problem using the fill() function (try it by 
 # running the following code):
@@ -342,10 +343,12 @@ willowFill <- willow %>%
 # QUESTION: What does the code 'block:temp' mean when passed to the fill() 
 # function above?
 
+#Answer: it is filling in all the columns between block and temp.
 
 # QUESTION: Looking at the dataframe willowFill, describe what happened compared 
 # to our initial dataframe.
 
+#ANSWER: All of the NAs in the columns from block to temp are now filled in with data. 
 
 # ---------------------------------------------------------- #
 ### PART 2.2: PIVOT LONGER                                ####
