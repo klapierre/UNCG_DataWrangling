@@ -415,11 +415,16 @@ willowCleaner  <- willowClean %>% pivot_wider(names_from = variable, #Turns one 
 # TASK: Verbally describe how you would want to change this problem 
 # (i.e., pseudocode).
 
+#The ht1 with "dead" should have NA, willow_ID should be separated by ID and the planted time
+
 
 # ifelse() is a very powerful function that helps us with this problem!
 
 # TASK: Look at the ifelse help file and describe in your own words the ordering 
 # of the syntax.
+
+#ifelse(test, yes, no), test is the condition,if the ht1 is dead or alive. Yes 
+#will be sent if its true, no will be sent if the test is false.
 
 
 # We can nest the ifelse() function within a mutate() function to create a new 
@@ -427,16 +432,21 @@ willowCleaner  <- willowClean %>% pivot_wider(names_from = variable, #Turns one 
 # another if the logical statement is FALSE. Run the following code to try it 
 # out to help fix our first problem (ht1 column has information on both plant 
 # status and actual height values).
-willowClean3 <- willowClean2 %>%
+willowClean3 <- willowCleaner %>%
   mutate(status = ifelse(ht1 == 'dead', 'dead', 'alive')) %>% 
   mutate(ht1 = ifelse(status == 'dead', NA, ht1))
 
 # TASK: Annotate the previous lines of code to indicate what each is doing.
 
+willowClean3 <- willowCleaner %>% 
+  mutate(status = ifelse(ht1 == 'dead', 'dead', 'alive')) %>% #mutate creates a new column (status), status is dead if ht1=dead
+  mutate(ht1 = ifelse(status == 'dead', NA, ht1)) #if status=dead then replace ht1 with NA 
 
 # QUESTION: This is a good time to make sure the relevant columns are numeric. 
 # Run the str() function on this dataframe. What class is the ht1 column?
 
+str(willowClean3)
+#the column is character
 
 # Let's make the ht1 column numeric. And while we're at it, the columns ht2, 
 # cnpy1, and cnpy2 should also be made numeric. We can do so by running the 
@@ -445,12 +455,14 @@ willowClean4 <- willowClean3 %>%
   mutate(ht1 = as.numeric(ht1),
          ht2 = as.numeric(ht2),
          cnpy1 = as.numeric(cnpy1),
-         cnpy2 = as.numeric(cnpy1))
+         cnpy2 = as.numeric(cnpy2))
 
 # TASK: Run the str() function again to view the classes for each column in 
 # willowClean4. Did we succeed in making the columns we wanted into numeric 
 # classes?
 
+str(willowClean4)
+#yes we did succeed
 
 # %in% is another powerful function! With %in% we can use logical statements on 
 # a whole bunch of stuff at once, instead of making a billion ifelse statements. 
@@ -463,6 +475,9 @@ willowClean5 <- willowClean4 %>%
 # seedlings with identifiers that were letters versus numbers? That is, what 
 # year were willow seedlings that were identified with letters planted? What year 
 # were willow seedlings that were identified with numbers planted?
+
+#the seedlings with A,B,C were planted in 2006, whereas the seedlings with numbers as
+#identifiers were planted in 2007.
 
 
 # ---------------------------------------------------------- #
