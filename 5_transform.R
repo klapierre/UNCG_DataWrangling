@@ -151,14 +151,23 @@ streamTempSummary <- streamTemp %>%
 # HINT: Check the help documentation for the separate(), mutate(), and paste() 
 # functions.
 
+streamTempMDY <- streamTemp %>%
+  mutate(data = as.character(data)) %>%
+  separate(col = data, into = c("month", "day", "year"), sep = "/") %>%
+  mutate(year = paste0("20", year))
 
 # TASK: Write code to create a new dataframe called streamTempJan that filters 
 # only rows where the month column is equal to 1 from the streamTempMDY dataframe.
-
+streamTempJan <- streamTempMDY %>% 
+  filter(month ==1)
 
 # TASK: Write code that uses the summarize function to find the mean temperature 
 # for Calispell, Smalle, and Winchester streams in only January.
 
+streamTempJanSummary <- streamTempJan %>% 
+  summarize(across(.cols=c('calispell', 'smalle', 'winchester'), 
+                   .fns=list(mean=mean),
+                   na.rm=T))
 
 # Now imagine you had to repeat this set of steps (creating new filtered 
 # dataframes) for all 12 months!
@@ -181,10 +190,13 @@ streamTempMonthlyMean <- streamTempMDY %>%
 
 # QUESTION: When you look at the streamTempMonthlyMean dataframe, how many means 
 # do you see for each stream?
-
+#12 means for each of the 3 columns so 36 in total
 
 # QUESTION: In your own words, what do you think the group_by() function does 
 # when used before the summarize() function?
+#The group by function basically sorts by the column name in the group_by() parentheses
+#so that when the summarize function is used, it calculates summarys for each group. Since we grouped 
+#by the month column, this calculated the mean summary for each of the 12 months.
 
 
 # We can also group by multiple columns. Try running the following code:
@@ -197,7 +209,8 @@ streamTempMeans <- streamTempMDY %>%
 
 # QUESTION: What columns did we group by to get our new means? What does the new 
 # dataframe show?
-
+#We grouped by month and year and this shows the mean for each month of each year
+#rather than the mean of each month for all years.
 
 # ---------------------------------------------------------- #
 ### PART 1.3: PRACTICING THESE SKILLS                     ####
