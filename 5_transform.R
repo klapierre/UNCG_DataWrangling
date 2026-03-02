@@ -360,20 +360,27 @@ willowClean <- willowFill %>%
 # Yikes, another common problem, the variables are stored in both rows and columns!
 
 # QUESTION: What column contains the labels that tell us there are multiple 
-# variables stored in one column? What column contains the corresponding date 
+# variables stored in one column? What column contains the corresponding date
+#(could not find a date maybe data?)
 # for these variables?
+# The column variable tells us there are multiple variables stored in one column. 
+# Value contains the corresponding data for these variables. 
 
 
 # Good news, we can fix this problem with the complementary function to pivot_longer().
 # This time we will use the pivot_wider() function to turn one column into multiple.
+# creates a new data frame named willowCleaner
 willowCleaner  <- willowClean %>%
   pivot_wider(names_from = variable,
+              #makes the column into multiple columns using the names form variable. 
               values_from = value)
+              # uses the values from value and distributes it into the new columns. 
 
 
 # TASK: Take a look at our new dataframe. How does it differ from the previous?
 # Annotate (add comments) the code above to indicate what each line does.
-
+# It replaced the variable column and the value column into separate columns for each type 
+# of measurement. 
 
 # ---------------------------------------------------------- #
 ### PART 2.4: IF ELSE                                     ####
