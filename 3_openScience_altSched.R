@@ -110,7 +110,13 @@ conSMEcoverAlt <- read.csv("https://pasta.lternet.edu/package/data/eml/knb-lter-
 
 
 ## QUESTION: What naming convention did the dataset creators use for column names?
-
+names(conSMEcoverAlt)
+#1] "Datacode"  "RecType"  
+[3] "RecYear"   "Season"   
+[5] "RecDate"   "Watershed"
+[7] "Block"     "Plot"     
+[9] "Sppnum"    "Taxa"     
+[11] "Cover"     "Comments" 
 
 ## QUESTION: What naming convention do you plan to use for this course for the
 ## following types of objects in R:
@@ -119,11 +125,11 @@ conSMEcoverAlt <- read.csv("https://pasta.lternet.edu/package/data/eml/knb-lter-
 ## dataframes
 ## columns within dataframes
 ## homemade functions
-
+#mostly snake_case (lowercase words separated by underscores), with some abbreviated codes for field names.
 
 ## QUESTION: Do all of your objects follow the same naming convention or do you
 ## plan to use different naming conventions to reference different object types?
-
+#I’ll use mostly snake_case across everything, but I’ll distinguish object types by meaningful prefixes or words
 
 ## TASK: Save your R script. Stage, commit, and pull/push your modified code to 
 ## the branch you created for this week with an appropriate commit message.
