@@ -531,9 +531,25 @@ willowDataTrt <- left_join(plotInfo, willowData)
 # (6) pivot_wider so that the values of percentage_mean are contained in 
 #     different columns
 
+rm(list = ls())
+
+
+cdr <- read_csv("e001_Plant aboveground biomass carbon and nitrogen.csv") %>% #1
+  rename(C = "% Carbon",
+         N = "% Nitrogen") %>% #2
+  filter(Strip %in% c("1", "2")) %>% #3
+  pivot_longer(cols= c(C, N),
+               names_to = "element",
+               values_to = "percentage") %>% #4
+  group_by(Date, Plot, NTrt, Species, Field, Strip, element) %>% #also groups by elements since, we use it in pivot longer. But if thats not what you wanted, another option could be makeing a new up until the group by then merging them together??
+  summarize(percentage_mean=mean(percentage)) %>% #5
+  ungroup() %>%
+  pivot_wider(names_from = element, values_from = percentage_mean) 
+
 
 # ---------------------------------------------------------- #
 ### PART 3.0: SUBMIT YOUR WORK                            ####
 # ---------------------------------------------------------- #
 
 # REMINDER: If you haven't already, make sure to commit and push your code to your branch in GitHub!
+rm(list = ls())
