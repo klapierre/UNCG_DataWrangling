@@ -228,11 +228,11 @@ flightData <- nycflights13::flights
 airportDelaySummary <- flightData %>% 
   filter(dest == "RDU") %>% 
   group_by(origin) %>% 
-summarize(across(.cols=c('arr_delay'), 
-                 .fns=list( mean=mean),
-                 na.rm=T)) %>% 
-ungroup()
-                   
+  summarize(across(.cols=c('arr_delay'), 
+                   .fns=list( mean=mean),
+                   na.rm=T)) %>% 
+  ungroup()
+
 
 # (1) filter to keep only flights that have RDU as the destination (dest column);
 # (2) groups the data by airport of origin (origin column);
@@ -248,15 +248,15 @@ ungroup()
 # TASK: Write a pipeline to figure out which month of the year to avoid when 
 # flying to Raleigh  by taking the original flight dataframe (flightData) and 
 # performing the following tasks:
-  
-  timeDelaySummary <- flightData %>%
-    filter(dest == "RDU") %>%
-    group_by(hour) %>%
-    summarize(across(.cols=c('arr_delay'), 
-                     .fns=list( mean=mean, maximum=max),
-                     na.rm=T)) %>% 
-    ungroup()
-  
+
+timeDelaySummary <- flightData %>%
+  filter(dest == "RDU") %>%
+  group_by(hour) %>%
+  summarize(across(.cols=c('arr_delay'), 
+                   .fns=list( mean=mean, maximum=max),
+                   na.rm=T)) %>% 
+  ungroup()
+
 # (1) filter to keep only flights that have RDU as the destination (dest column);
 # (2) groups the data by hour;
 # (3) summarize to find the mean AND the maximum arrival delay (arr_delay column), 
@@ -273,21 +273,21 @@ ungroup()
 # longest maximum delay?
 
 #Hour 22 has the longest mean delayHour 12 has the longest max delay
-  
+
 # TASK: Write a pipeline to figure out which month of the year and airport to 
 # avoid when flying to Raleigh by taking the original flight dataframe 
 # (flightData) and performing the following tasks:
-  
-  library(dplyr)
-  
-  monthlyDelaySummary <- flightData %>%
-    filter(dest == "RDU") %>%
-    group_by(month, origin) %>% 
-    summarize(
-      mean_delay = mean(arr_delay, na.rm = TRUE)) %>%
-    ungroup()
-  
-  
+
+library(dplyr)
+
+monthlyDelaySummary <- flightData %>%
+  filter(dest == "RDU") %>%
+  group_by(month, origin) %>% 
+  summarize(
+    mean_delay = mean(arr_delay, na.rm = TRUE)) %>%
+  ungroup()
+
+
 # (1) filter to keep only flights that have RDU as the destination (dest column);
 # (2) groups the data by month AND origin;
 # (3) summarize to find the mean arrival delay (arr_delay column), remembering 
@@ -307,7 +307,7 @@ ungroup()
 #According to the in class pdf,variables form columns, observations form rows, 
 #and cells are a single measurement
 
-  
+
 # There are five common problems associated with messy data:
 # 1. Column headers are values, not variable names
 # 2. Multiple variables are stored in one column
@@ -318,7 +318,7 @@ ungroup()
 # Here we will build a workflow to demonstrate how we can tidy up a dataset.
 # Let's start by clearing our R environmnet and then bringing the Willow 
 # Seedling Survey data into R by running the following line of code:
-  
+
 rm(list = ls())
 willow <- read_csv("Niwot_Salix_2014_WillowSeedlingSurvey.csv", skip = 10)
 
@@ -426,12 +426,18 @@ willowCleaner  <- willowClean %>% #selects dataset and renames the new one we ar
 
 # TASK: Verbally describe how you would want to change this problem 
 # (i.e., pseudocode).
-
+#Use the pivotwider function to seperate the ht1 column so that it would make seperate
+#columns for alive, dead, and plant height. Next I would use the pivot wider function in the 
+#willow_ID column to create new columns for each of the differant values in this dataset.
 
 # ifelse() is a very powerful function that helps us with this problem!
 
 # TASK: Look at the ifelse help file and describe in your own words the ordering 
 # of the syntax.
+#First you indicate the dataframe, use the mutate function to create new column and name it
+#then use the ifelse and indicate the column you are selecting values from (old column)
+# indicate 
+ifelse(?)
 
 
 # We can nest the ifelse() function within a mutate() function to create a new 
@@ -439,20 +445,24 @@ willowCleaner  <- willowClean %>% #selects dataset and renames the new one we ar
 # another if the logical statement is FALSE. Run the following code to try it 
 # out to help fix our first problem (ht1 column has information on both plant 
 # status and actual height values).
-willowClean3 <- willowClean2 %>%
-  mutate(status = ifelse(ht1 == 'dead', 'dead', 'alive')) %>% 
-  mutate(ht1 = ifelse(status == 'dead', NA, ht1))
+willowClean3 <- willowCleaner %>% #selecting and renaming the dataset
+  mutate(status = ifelse(ht1 == 'dead', 'dead', 'alive')) %>% #create new column 
+  #named value and if the value in ht1 is dead the value is dead and if not, it is alive.
+  mutate(ht1 = ifelse(status == 'dead', NA, ht1)) #mutate ht1 so that if the status
+#is dead ht1 will be NA and if not dead the value is the ht1 value.
 
 # TASK: Annotate the previous lines of code to indicate what each is doing.
 
 
 # QUESTION: This is a good time to make sure the relevant columns are numeric. 
 # Run the str() function on this dataframe. What class is the ht1 column?
-
+str(willowClean3)
+#Currently the ht1 class is character
 
 # Let's make the ht1 column numeric. And while we're at it, the columns ht2, 
 # cnpy1, and cnpy2 should also be made numeric. We can do so by running the 
 # following code:
+
 willowClean4 <- willowClean3 %>% 
   mutate(ht1 = as.numeric(ht1),
          ht2 = as.numeric(ht2),
@@ -462,12 +472,14 @@ willowClean4 <- willowClean3 %>%
 # TASK: Run the str() function again to view the classes for each column in 
 # willowClean4. Did we succeed in making the columns we wanted into numeric 
 # classes?
-
+str(willowClean4)
+#Yes these are now numeric
 
 # %in% is another powerful function! With %in% we can use logical statements on 
 # a whole bunch of stuff at once, instead of making a billion ifelse statements. 
 # Let's try it out to fix our second problem, where willow_ID also contains info 
 # about when the seedling was planted. Run the following lines of code:
+
 willowClean5 <- willowClean4 %>% 
   mutate(year = ifelse(willow_ID %in% c("A", "B", "C"), 2006, 2007))
 
@@ -475,7 +487,8 @@ willowClean5 <- willowClean4 %>%
 # seedlings with identifiers that were letters versus numbers? That is, what 
 # year were willow seedlings that were identified with letters planted? What year 
 # were willow seedlings that were identified with numbers planted?
-
+#Seeds identified with letters were plamted in 2006 and the seeds identified with
+#numbers were planted in 2007.
 
 # ---------------------------------------------------------- #
 ### PART 2.5: RELATIONAL DATA                             ####
