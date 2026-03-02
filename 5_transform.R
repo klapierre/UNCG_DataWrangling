@@ -43,7 +43,12 @@
 # it to a dataframe named streamTemp. Clean up the column names to the following:
 # data, time, calispell, smalle, winchester
 # HINT: Check last week's assignment if you forget how to read data into R.
+streamTemp <- read.csv("C:/Users/nsalt/Documents/DataWrangling/UNCG_DataWrangling/CalispellCreek/CalispellCreekandTributaryTemperatures.csv", stringsAsFactors = TRUE)
 
+streamTempRename <- rename(.data=streamTemp,
+                           calispell=Calispell.Cr.Temp.C.,
+                           smalle=Smalle.Cr.Temp.C.,
+                           winchester=Winchester.Cr.Temp..C.)
 
 # ---------------------------------------------------------- #
 ### PART 1.1: SUMMARIZING DATA                            ####
@@ -51,28 +56,28 @@
 
 # We can use the summarize() function to get a lot of quick stats on our data!
 # Let's try out the length function by running the following code:
-streamTempLength <- streamTemp %>% 
+streamTempLength <- streamTempRename %>% 
   summarize(calispell_length = length(calispell),
             smalle_length = length(smalle),
             winchester_length = length(winchester))
 
 # QUESTION: When you open the streamTempLength dataframe, what value is in each 
 # column?
-
+# The number of observations for each stream.
 
 # QUESTION: How does this number compare to the number of observations listed by
 # the dataframe in the R environment tab?
-
+# It matches the number of observations exactly.
 
 # QUESTION: Based on your previous answers, what do you think the length 
 # function does?
-
+# It tells you the number of rows in a column.
 
 # It can be a bit tedious to type out all the column names and the length 
 # function multiple times. The across() function within the summarize() step can
 # help us to identify multiple columns to summarize the data for. Try running 
 # the following code:
-streamTempLength <- streamTemp %>% 
+streamTempLength <- streamTempRename %>% 
   summarize(across(.cols=c('calispell', 'smalle', 'winchester'), 
                    .fns=length))
 
@@ -83,26 +88,27 @@ streamTempLength <- streamTemp %>%
 # max, min, and mean values. The across() function is useful for this too, by 
 # letting you set multiple functions to summarize each column by. Try running 
 # the following code:
-streamTempSummary <- streamTemp %>% 
+streamTempSummary <- streamTempRename %>% 
   summarize(across(.cols=c('calispell', 'smalle', 'winchester'), 
                    .fns=list(maximum=max, mean=mean, minimim=min)))
 
 # TASK: Write code to view the column names of the streamTempSummary dataframe.
-
+colnames(streamTempSummary)
 
 # QUESTION: How does R know what to name each column when we use the summarize 
 # function above?
-
+# It takes the names specified in the code above, and then combines it with 
+# each preexisting column we're pulling from.
 
 # QUESTION: What values do you see for the columns when you open up the 
 # dataframe streamTempSummary? Why do you think this is?
-
+# Each value is listed as N/A. Likely due to N/As existing in our data.
 
 # Recall that our data had a lot of missing values. R doesn't know how to find 
 # the mean, max, or min of a group of observations that include NAs.
 # To fix this problem, we need to add a statement telling R to remove the NAs 
 # when calculating these summary stats. Run the following code:
-streamTempSummary <- streamTemp %>% 
+streamTempSummary <- streamTempRename %>% 
   summarize(across(.cols=c('calispell', 'smalle', 'winchester'), 
                    .fns=list(maximum=max, mean=mean, minimim=min),
                    na.rm=T))
@@ -110,11 +116,12 @@ streamTempSummary <- streamTemp %>%
 # QUESTION: Now what values do you see for the columns when you open up the 
 # dataframe streamTempSummary? What line of the above code removed the NAs from 
 # our data?
-
+# Now the we have actual values for each measure, the na.rm=T line removed the 
+# N/As from the data.
 
 # QUESTION: What happened to the column we created in the beginning called 
 # data_type? Where did the date and time columns go?
-
+# The date and time columns were deleted in the summary data.
 
 # RECOMMENDED: Take a look at the summarize help file, particularly the "Useful 
 # functions" section to see all of the different ways you can summarize your 
