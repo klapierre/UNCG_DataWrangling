@@ -135,8 +135,8 @@ streamTempSummary <- streamTemp %>%
 # QUESTION: What happened to the column we created in the beginning called 
 # data_type? Where did the date and time columns go?
 
-# It isnt included because we didnt summarize them because they werent grouping other 
-#variables they werent summarized.
+# It isnt included because we didn't summarize them because they werent grouping other 
+#variables they weren't summarized.
 
 # RECOMMENDED: Take a look at the summarize help file, particularly the "Useful 
 # functions" section to see all of the different ways you can summarize your 
@@ -157,13 +157,19 @@ streamTempSummary <- streamTemp %>%
 # HINT: Check the help documentation for the separate(), mutate(), and paste() 
 # functions.
 
+streamTempMDY <- streamTemp %>% separate(data, into = c("month", "day", "year"), 
+  sep = "/") %>% mutate(year = paste0("20", year))
 
 # TASK: Write code to create a new dataframe called streamTempJan that filters 
 # only rows where the month column is equal to 1 from the streamTempMDY dataframe.
 
+streamTempJan <- streamTempMDY %>% filter(as.integer(month) == 1)
 
 # TASK: Write code that uses the summarize function to find the mean temperature 
 # for Calispell, Smalle, and Winchester streams in only January.
+
+jan_means <- streamTempJan %>% summarize(calispell_mean = mean(calispell, na.rm = TRUE),
+  smalle_mean = mean(smalle, na.rm = TRUE), winchester_mean = mean(winchester, na.rm = TRUE))
 
 
 # Now imagine you had to repeat this set of steps (creating new filtered 
@@ -188,9 +194,13 @@ streamTempMonthlyMean <- streamTempMDY %>%
 # QUESTION: When you look at the streamTempMonthlyMean dataframe, how many means 
 # do you see for each stream?
 
+#There are 12 means for each stream
 
 # QUESTION: In your own words, what do you think the group_by() function does 
 # when used before the summarize() function?
+
+#The group by function before the summarize function means to summarize each group separate than
+#each other
 
 
 # We can also group by multiple columns. Try running the following code:
@@ -204,6 +214,8 @@ streamTempMeans <- streamTempMDY %>%
 # QUESTION: What columns did we group by to get our new means? What does the new 
 # dataframe show?
 
+#We grouped by the year and the month, the dataframe now shows the temperature mean for 
+#calispell, smalle, winchester
 
 # ---------------------------------------------------------- #
 ### PART 1.3: PRACTICING THESE SKILLS                     ####
