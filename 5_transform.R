@@ -215,10 +215,14 @@ flightData <- nycflights13::flights
 #     remove NAs;
 # (4) ungroup the dataframe;
 # (5) assign the output to a dataframe named airportDelaySummary.
-
+airportDelaySummary <- flightData %>%
+  filter(dest == "RDU") %>%
+  group_by(origin) %>%
+  summarize(mean_arr_delay = mean(arr_delay, na.rm = TRUE)) %>%
+  ungroup()
 
 # QUESTION: Which airport should you avoid if you want the shortest delays?
-
+# Answer: You should avoid EWR airport because it has the longest mean delay (12.661256).
 
 # TASK: Write a pipeline to figure out which month of the year to avoid when 
 # flying to Raleigh  by taking the original flight dataframe (flightData) and 
@@ -230,14 +234,23 @@ flightData <- nycflights13::flights
 # (4) ungroup the dataframe;
 # (5) assign the output to a dataframe named timeDelaySummary
 
+timeDelaySummary <- flightData %>%
+  filter(dest == "RDU") %>%
+  group_by(hour) %>%
+  summarize(mean_arr_delay = mean(arr_delay, na.rm = TRUE), max_arr_delay = max(arr_delay, na.rm = TRUE)) %>%
+  ungroup()
 
 # QUESTION: What is the earliest hour of the day that flights leave New York for 
 # Raleigh?
-
+min(timeDelaySummary$hour, na.rm = TRUE)
+# Answer: The earliest hour of the day that flights leave New York for Raleigh is 6am. 
 
 # QUESTION: Which hour of the day has the longest mean delay? What about the 
 # longest maximum delay?
-
+timeDelaySummary %>% arrange(desc(mean_arr_delay))
+# Answer hour 22 has the longest mean delay. 
+timeDelaySummary %>% arrange(desc(max_arr_delay))
+# Answer the longest maximum delay is in hour 12. 
 
 # TASK: Write a pipeline to figure out which month of the year and airport to 
 # avoid when flying to Raleigh by taking the original flight dataframe 
@@ -249,16 +262,22 @@ flightData <- nycflights13::flights
 # (4) ungroup the dataframe;
 # (5) assign the output to a dataframe named monthlyDelaySummary
 
+monthlyDelaySummary <- flightData %>%
+  filter(dest == "RDU") %>%
+  group_by(month, origin) %>%
+  summarize(mean_arr_delay = mean(arr_delay, na.rm = TRUE)) %>%
+  ungroup()
 
 # QUESTION: Which month and airport has the longest mean delay?
-
+monthlyDelaySummary %>% arrange(desc(mean_arr_delay))
+# Answer: The 3rd month of the year (March) and EWR airport has the longest mean delay. 
 
 # ---------------------------------------------------------- #
 ### PART 2.0: INTRO TO TIDY DATA                          ####
 # ---------------------------------------------------------- #
 
 # QUESTION: What are three characteristics of tidy data?
-
+# Answer: Each variable is a column, each observation is a row, and each value is a single cell. 
 
 # There are five common problems associated with messy data:
 # 1. Column headers are values, not variable names
@@ -276,7 +295,7 @@ willow <- read_csv("Niwot_Salix_2014_WillowSeedlingSurvey.csv", skip = 10)
 # QUESTION: What do you think the statement 'skip = 10' means in the code above?
 # HINT: Compare the csv file on your computer and the dataframe that you loaded 
 # into R.
-
+# Answer: 'skip = 10' tells R to ignore the first 10 lines of the CSV file when importing it. 
 
 # ---------------------------------------------------------- #
 ### PART 2.1: FILL MISSING DATA                           ####
