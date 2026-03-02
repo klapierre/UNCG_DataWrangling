@@ -357,6 +357,7 @@ willowFill <- willow %>%
 
 # TASK: Write code to indicate the sequence of columns from w1 through wC. 
 
+colnames(willowFill)
 
 # We can fix this problem using the pivot_longer() function. pivot_longer() takes 
 # multiple columns and condenses them into just two columns, one that indicates 
@@ -365,13 +366,21 @@ willowFill <- willow %>%
 # individual number.
 # Run the following code:
 willowClean <- willowFill %>%
+#names the new dataframe
   pivot_longer(cols = w_1:w_C,
+#indicates which columns will be condensed
                names_to = "willow_id",
+#names the new column we're making and puts the names of the previous columns in it
                values_to = "value") %>%
+#names the other new column and puts the values of the previous columns in it
   separate(col = willow_id,
+#indicates which column will be separated
            into = c("remove", "willow_ID"),
+#names the new columns made from the separation
            sep = "_") %>%
+#indicates where the values will be separated
   select(-remove)
+#removes the column where we put the "w"s
 
 
 # TASK: Annotate (add comments) the code above to indicate what each line does.
@@ -384,20 +393,26 @@ willowClean <- willowFill %>%
 # Yikes, another common problem, the variables are stored in both rows and columns!
 
 # QUESTION: What column contains the labels that tell us there are multiple 
-# variables stored in one column? What column contains the corresponding date 
+# variables stored in one column? What column contains the corresponding data 
 # for these variables?
 
+#The "variable" column and the "value" column.
 
 # Good news, we can fix this problem with the complementary function to pivot_longer().
 # This time we will use the pivot_wider() function to turn one column into multiple.
 willowCleaner  <- willowClean %>%
+#names the new dataframe
   pivot_wider(names_from = variable,
+#makes all the "variable" values into column names
               values_from = value)
+#puts the values from the "value" column into the new columns.
 
 
 # TASK: Take a look at our new dataframe. How does it differ from the previous?
 # Annotate (add comments) the code above to indicate what each line does.
 
+#The new dataframe looks much cleaner. Each variable is a column and each row
+#is an observation.
 
 # ---------------------------------------------------------- #
 ### PART 2.4: IF ELSE                                     ####
