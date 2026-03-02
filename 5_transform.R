@@ -296,6 +296,8 @@ ungroup()
 
 # QUESTION: What are three characteristics of tidy data?
 
+#Each variable forms a column, each observation forms a row, each cell is a 
+#single measurement.
 
 # There are five common problems associated with messy data:
 # 1. Column headers are values, not variable names
@@ -308,12 +310,14 @@ ungroup()
 # Let's start by clearing our R environmnet and then bringing the Willow 
 # Seedling Survey data into R by running the following line of code:
 rm(list = ls())
-willow <- read_csv("Niwot_Salix_2014_WillowSeedlingSurvey.csv", skip = 10)
+willow <- read.csv("Niwot_Salix_2014_WillowSeedlingSurvey.csv", skip = 10)
 
 # QUESTION: What do you think the statement 'skip = 10' means in the code above?
 # HINT: Compare the csv file on your computer and the dataframe that you loaded 
 # into R.
 
+#I think it means that the first 10 rows of the excel file are skipped, because
+#these rows are descriptors and info about the project, not actual data.
 
 # ---------------------------------------------------------- #
 ### PART 2.1: FILL MISSING DATA                           ####
@@ -325,6 +329,7 @@ willow <- read_csv("Niwot_Salix_2014_WillowSeedlingSurvey.csv", skip = 10)
 # QUESTION: To clean up the willow dataframe, where do we want to fill in values? 
 # That is, which columns have lots of NAs.
 
+#The "block" column is the most problematic.
 
 # We can fix our missing value problem using the fill() function (try it by 
 # running the following code):
@@ -334,10 +339,13 @@ willowFill <- willow %>%
 # QUESTION: What does the code 'block:temp' mean when passed to the fill() 
 # function above?
 
+#It fills all the "NA" cells with whatever the most recent value was in that
+#column.
 
 # QUESTION: Looking at the dataframe willowFill, describe what happened compared 
 # to our initial dataframe.
 
+#The block of each entry is now filled in, so there are no more NAs.
 
 # ---------------------------------------------------------- #
 ### PART 2.2: PIVOT LONGER                                ####
