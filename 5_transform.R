@@ -290,6 +290,9 @@ monthlyDelaySummary <- flightData %>% filter(dest == "RDU") %>% group_by(month, 
 
 # QUESTION: What are three characteristics of tidy data?
 
+#Each observation has its own row
+#All variables have their own column
+#A value in a singular cell
 
 # There are five common problems associated with messy data:
 # 1. Column headers are values, not variable names
@@ -308,6 +311,7 @@ willow <- read_csv("Niwot_Salix_2014_WillowSeedlingSurvey.csv", skip = 10)
 # HINT: Compare the csv file on your computer and the dataframe that you loaded 
 # into R.
 
+#The first 10 rows of the data will be skipped when its read.
 
 # ---------------------------------------------------------- #
 ### PART 2.1: FILL MISSING DATA                           ####
