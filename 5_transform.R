@@ -529,17 +529,23 @@ willowDataTrt<- left_join(plotInfo,willowData)
 #     for each group. Store the mean values in a column called 'percentage_mean'. 
 #     Don't forget to ungroup at the end!
 # (6) pivot_wider so that the values of percentage_mean are contained in 
-#     different columns
+#     different columns (I am having a really hard time understanding what this is asking me to do)
 
-cdr <- read_csv("e001_Plant aboveground biomass carbon and nitrogen.csv") %>% 
+#*Because before the grouping section there was a C and an N percentage per, I am going to add element to the grouping and then pivot_wider by element
+library(readr)
+library(tidyverse)
+
+cdr_original <- read_csv("e001_Plant aboveground biomass carbon and nitrogen.csv")
+cdr<-cdr_original %>% 
   rename(C = `% Carbon`,N = `% Nitrogen`) %>%
   filter(Strip %in% c(1, 2)) %>%  
   pivot_longer(cols = c(C, N),names_to = "element",values_to = "percentage") %>%
-  group_by(Date, Plot, NTrt, Species, Field, Strip) %>% 
+  group_by(Date, Plot, NTrt, Species, Field, Strip, element) %>% 
   summarize(percentage_mean = mean(percentage, na.rm = TRUE)) %>%
   ungroup() %>%
   pivot_wider(names_from = element,values_from = percentage_mean)
 
+?pivot_wider
 
 # ---------------------------------------------------------- #
 ### PART 3.0: SUBMIT YOUR WORK                            ####
