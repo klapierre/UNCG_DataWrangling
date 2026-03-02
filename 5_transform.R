@@ -368,16 +368,20 @@ willowClean <- willowFill %>%
 # QUESTION: What column contains the labels that tell us there are multiple 
 # variables stored in one column? What column contains the corresponding date 
 # for these variables?
-
+# The variable column shows that there are many variables stored in one column.
+# The values column shows that the variables were recorded on different dates.
 
 # Good news, we can fix this problem with the complementary function to pivot_longer().
 # This time we will use the pivot_wider() function to turn one column into multiple.
 willowCleaner  <- willowClean %>%
+  # uses data from the willowClean dataframe to make a new one called willowCleaner
   pivot_wider(names_from = variable,
+  #pivots the variable types in the variable column into separate columns 
               values_from = value)
-
+ # pivots the values from the adjacent cells in the value column to the corresponding cells for each variable
 
 # TASK: Take a look at our new dataframe. How does it differ from the previous?
+# It has more columns and fewer rows.
 # Annotate (add comments) the code above to indicate what each line does.
 
 
@@ -393,29 +397,37 @@ willowCleaner  <- willowClean %>%
 
 # TASK: Verbally describe how you would want to change this problem 
 # (i.e., pseudocode).
-
+# You would want to move the plant status to its own column and remove the word 
+# dead from the height1 column for plants that are dead. You would then fill the
+# empty cells in the height 1 column with NA.
 
 # ifelse() is a very powerful function that helps us with this problem!
 
 # TASK: Look at the ifelse help file and describe in your own words the ordering 
 # of the syntax.
-
+# The object in question is stated first, and then the name that you want to use 
+# to signify that the object is true is listed. Finally, the name that you want 
+# to use to signify that the object is false or not the same as the object in question is listed.
 
 # We can nest the ifelse() function within a mutate() function to create a new 
 # column that contains one entry if the logical statement we provide is TRUE and 
 # another if the logical statement is FALSE. Run the following code to try it 
 # out to help fix our first problem (ht1 column has information on both plant 
 # status and actual height values).
-willowClean3 <- willowClean2 %>%
+willowClean3 <- willowCleaner %>%
+  # creates a new dataframe using data from the previous dataframe
   mutate(status = ifelse(ht1 == 'dead', 'dead', 'alive')) %>% 
+  # creates a column called status that contains either the word dead or alive 
+  #in each cell based on whether the word dead was present in the ht1 column.
   mutate(ht1 = ifelse(status == 'dead', NA, ht1))
-
+  # fills cells that originally contained the word dead in the ht1 column with NA
 # TASK: Annotate the previous lines of code to indicate what each is doing.
 
 
 # QUESTION: This is a good time to make sure the relevant columns are numeric. 
 # Run the str() function on this dataframe. What class is the ht1 column?
-
+str(willowClean3)
+# it is classified as a character value column
 
 # Let's make the ht1 column numeric. And while we're at it, the columns ht2, 
 # cnpy1, and cnpy2 should also be made numeric. We can do so by running the 
@@ -429,7 +441,8 @@ willowClean4 <- willowClean3 %>%
 # TASK: Run the str() function again to view the classes for each column in 
 # willowClean4. Did we succeed in making the columns we wanted into numeric 
 # classes?
-
+str(willowClean4)
+# yes
 
 # %in% is another powerful function! With %in% we can use logical statements on 
 # a whole bunch of stuff at once, instead of making a billion ifelse statements. 
@@ -442,7 +455,8 @@ willowClean5 <- willowClean4 %>%
 # seedlings with identifiers that were letters versus numbers? That is, what 
 # year were willow seedlings that were identified with letters planted? What year 
 # were willow seedlings that were identified with numbers planted?
-
+# The seedlings that were labled with letters were recorded in 2006, and the 
+# ones labeled with numbers were recorded in 2007.
 
 # ---------------------------------------------------------- #
 ### PART 2.5: RELATIONAL DATA                             ####
