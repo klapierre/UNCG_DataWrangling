@@ -151,7 +151,7 @@ streamTempJan <- streamTempMDY %>%
 
 # TASK: Write code that uses the summarize function to find the mean temperature 
 # for Calispell, Smalle, and Winchester streams in only January.
-streamTempJanSummary <- streamTemp %>% 
+streamTempJanSummary <- streamTempJan %>% 
   summarize(across(.cols = c(calispell, smalle , winchester), .fns = mean, na.rm = TRUE))
 
 # Now imagine you had to repeat this set of steps (creating new filtered 
@@ -175,11 +175,12 @@ streamTempMonthlyMean <- streamTempMDY %>%
 
 # QUESTION: When you look at the streamTempMonthlyMean dataframe, how many means 
 # do you see for each stream?
-
-
+streamTempMonthlyMean
+# You see 12 means for each stream. One for each month. 
 # QUESTION: In your own words, what do you think the group_by() function does 
 # when used before the summarize() function?
-
+# When the group by function is used before the summarize function it will calculate
+# the statistics separately for each group.  
 
 # We can also group by multiple columns. Try running the following code:
 streamTempMeans <- streamTempMDY %>% 
