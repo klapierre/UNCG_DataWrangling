@@ -427,21 +427,33 @@ willowCleaner  <- willowClean %>%
 # TASK: Verbally describe how you would want to change this problem 
 # (i.e., pseudocode).
 
+#I would want to make two new columns, one for if the plant is dead or alive and
+#one for the height of the alive ones. I'd do this by putting all the numeric
+#entries into the height column and the text entries into the dead/alive column,
+#then deleting the original "ht1" column. 
 
 # ifelse() is a very powerful function that helps us with this problem!
 
 # TASK: Look at the ifelse help file and describe in your own words the ordering 
 # of the syntax.
 
+?ifelse
+#In the parentheses, the first part of the syntax is what object is being 
+#manipulated, then what the returned values should look like for the "yes" and 
+#"no" cases, in that order.
 
 # We can nest the ifelse() function within a mutate() function to create a new 
 # column that contains one entry if the logical statement we provide is TRUE and 
 # another if the logical statement is FALSE. Run the following code to try it 
 # out to help fix our first problem (ht1 column has information on both plant 
 # status and actual height values).
-willowClean3 <- willowClean2 %>%
+willowClean3 <- willowCleaner %>%
+#names our new dataframe
   mutate(status = ifelse(ht1 == 'dead', 'dead', 'alive')) %>% 
+#makes a column called "status" that returns "dead" if the corresponding value
+#in the ht1 column is "dead" and otherwise returns "alive".
   mutate(ht1 = ifelse(status == 'dead', NA, ht1))
+#Mutates the existing ht1 column to replace the "dead" entries with NAs.
 
 # TASK: Annotate the previous lines of code to indicate what each is doing.
 
@@ -449,6 +461,8 @@ willowClean3 <- willowClean2 %>%
 # QUESTION: This is a good time to make sure the relevant columns are numeric. 
 # Run the str() function on this dataframe. What class is the ht1 column?
 
+str(willowClean3)
+#It's classed as a list.
 
 # Let's make the ht1 column numeric. And while we're at it, the columns ht2, 
 # cnpy1, and cnpy2 should also be made numeric. We can do so by running the 
@@ -463,6 +477,8 @@ willowClean4 <- willowClean3 %>%
 # willowClean4. Did we succeed in making the columns we wanted into numeric 
 # classes?
 
+#No, that code returned an error. I think some of the syntax was off with our
+#previous code in some way.
 
 # %in% is another powerful function! With %in% we can use logical statements on 
 # a whole bunch of stuff at once, instead of making a billion ifelse statements. 
@@ -476,6 +492,9 @@ willowClean5 <- willowClean4 %>%
 # year were willow seedlings that were identified with letters planted? What year 
 # were willow seedlings that were identified with numbers planted?
 
+
+#I can conclude that seedlings with letter identifiers were planted in 2006 and
+#those with numbers were planted in 2007.
 
 # ---------------------------------------------------------- #
 ### PART 2.5: RELATIONAL DATA                             ####
@@ -502,6 +521,10 @@ willowData <- willowClean5 %>%
 # TASK: Write code to join these two dataframes back together into a new 
 # dataframe called willowDataTrt using the left_join() function.
 
+#I was unable to make the dataframes in the first place due to the aforementioned
+#problem with the given code, so I can't test it, but here's my guess for the code:
+willowDataTrt <- willowData %>%
+  left_join(plotInfo, by = c("block", "plot"))
 
 # ON YOUR OWN: There are so many ways to join databases! Think through when you 
 # might want to use each type. We will practice more with joining data in the 
@@ -518,20 +541,31 @@ willowData <- willowClean5 %>%
 # TASK: Perform the following steps in one workflow (i.e., using pipes):
 # (1) Create a dataframe called cdr and load the .csv file 
 # 'e001_Plant aboveground biomass carbon and nitrogen.csv' into it.
+cdr <- read.csv("e001_Plant aboveground biomass carbon and nitrogen.csv") %>% 
 # (2) Rename our last two columns that were originally '% Carbon' and 
 # '% Nitrogen' in our csv file. Make the new names 'C' and 'N', respectively.
+rename(C = "X..Carbon",
+       N = "X..Nitrogen") %>% 
 # (3) Remove any observations that were not obtained from Strips 1 or 2 using an 
 #     %in% statement.
+filter(Strip %in% c(1, 2)) %>% 
 # (4) pivot_longer the C and N data so that there is one column called element 
 #     that contains C or N and another column called percentage that contains 
 #     the values of either %C or %N.
+pivot_longer(cols = c(C, N),
+    names_to = "element",
+    values_to = "percentage") %>% 
 # (5) group_by() Date, Plot, NTrt, Species, Field, and Strip and then use the 
 #     summarize() function to calculate the mean value of the percentage column 
 #     for each group. Store the mean values in a column called 'percentage_mean'. 
 #     Don't forget to ungroup at the end!
+group_by(Date, Plot, NTrt, Species, Field, Strip, element) %>% 
+summarise(percentage_mean = mean(percentage, na.rm = TRUE)) %>% 
+ungroup() %>% 
 # (6) pivot_wider so that the values of percentage_mean are contained in 
 #     different columns
-
+pivot_wider(names_from = element,
+    values_from = percentage_mean)
 
 # ---------------------------------------------------------- #
 ### PART 3.0: SUBMIT YOUR WORK                            ####
