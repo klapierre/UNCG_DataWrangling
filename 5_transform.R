@@ -220,7 +220,7 @@ airportDelaySummary <- flightData %>%
   
   ungroup()
 # QUESTION: Which airport should you avoid if you want the shortest delays?
-
+#EWR because it has the longest mean arrival delay. 
 
 # TASK: Write a pipeline to figure out which month of the year to avoid when 
 # flying to Raleigh  by taking the original flight dataframe (flightData) and 
