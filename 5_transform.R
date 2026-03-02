@@ -521,7 +521,7 @@ cdr <- read_csv("e001_Plant aboveground biomass carbon and nitrogen.csv") %>%
 # %>% pivot_wider(names_from=?,
 #              values_from=percentage_mean)
 
-#the code is working until I get to this point, and I am not sure how I should be splitting the percentage_mean column because that column only contains one value 
+#the code is working until I get to this point, and I am not sure how I should be splitting the percentage_mean column because that column only contains one value ?
 
 # ---------------------------------------------------------- #
 ### PART 3.0: SUBMIT YOUR WORK                            ####
