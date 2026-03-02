@@ -67,6 +67,9 @@
 # Start by writing code to load the tidyverse library.
 # HINT: see the end of assignment #1 if you forgot how to load a package.
 
+library(tidyverse)
+
+
 
 # ---------------------------------------------------------- #
 ### PART 1.0: TIDY THE DATA                               ####                                           
