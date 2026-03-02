@@ -333,7 +333,7 @@ willow <- read_csv("Niwot_Salix_2014_WillowSeedlingSurvey.csv", skip = 10)
 # QUESTION: To clean up the willow dataframe, where do we want to fill in values? 
 # That is, which columns have lots of NAs.
 
-#ANSWER: We especially want to fill in the missing values of the measurements of each willow
+#ANSWER: We want to fill in the missing values of block through temp. And all other missing data about the willow measurements. 
 
 # We can fix our missing value problem using the fill() function (try it by 
 # running the following code):
@@ -358,8 +358,9 @@ willowFill <- willow %>%
 # names! In this case, the columns w1 through wC are individual willow seedlings 
 # that were sampled repeatedly.
 
-# TASK: Write code to indicate the sequence of columns from w1 through wC. 
-
+# TASK: Write code to indicate the sequence of columns from w1 through wC.
+willowFill %>% 
+  select(w_1:w_C) #???
 
 # We can fix this problem using the pivot_longer() function. pivot_longer() takes 
 # multiple columns and condenses them into just two columns, one that indicates 
@@ -367,14 +368,14 @@ willowFill <- willow %>%
 # And while we're at it, let's get rid of the 'w' in front of each willow 
 # individual number.
 # Run the following code:
-willowClean <- willowFill %>%
-  pivot_longer(cols = w_1:w_C,
-               names_to = "willow_id",
-               values_to = "value") %>%
-  separate(col = willow_id,
-           into = c("remove", "willow_ID"),
-           sep = "_") %>%
-  select(-remove)
+willowClean <- willowFill %>% #naming the new df that will be made and id-ing the data to use
+  pivot_longer(cols = w_1:w_C, #using pivot_longer() to convert columns into rows. In this case, all willows (w1-wC) will now be observations instead of variables
+               names_to = "willow_id", #naming the new column where the willow data will go
+               values_to = "value") %>% #letting R know the values will be characters in the willow_id column?
+  separate(col = willow_id, #spiltting the willow_id values
+           into = c("remove", "willow_ID"), #making two new columns. 1) remove = the w and 2) willow_id the willow replicate number
+           sep = "_") #tell R to split the column at the _
+  select(-remove) #deleting the remove column
 
 
 # TASK: Annotate (add comments) the code above to indicate what each line does.
