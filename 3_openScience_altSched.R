@@ -186,6 +186,7 @@ duplicates[with(duplicates, order(RecDate, Block, Plot, Taxa)),]
 ## Now let's fix our issue!
 ## A great function to get rid of exact duplicate columns in R is unique().
 ## Run the following code.
+
 noDuplicates <- unique(duplicates)
 
 
@@ -193,7 +194,7 @@ noDuplicates <- unique(duplicates)
 ## tab of RStudio, what do you notice about the number of observations for the 
 ## noDuplicates dataframe compared to the dulpicates dataframe? What about 
 ## compared to the two original dataframes?
-
+#no duplicates is less than the original two and significantly less than the duplicates.
 
 ## TASK: Go back to our repository in GitHub through your web browser. Find the
 ## issue you created and resolve it.
