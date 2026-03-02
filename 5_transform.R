@@ -57,6 +57,7 @@ streamTempLength <- streamTemp %>%
 
 # QUESTION: When you open the streamTempLength dataframe, what value is in each 
 # column?
+# The value in each column is 61100
 
 
 # QUESTION: How does this number compare to the number of observations listed by
