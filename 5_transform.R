@@ -350,6 +350,7 @@ willowFill <- willow %>%
 
 # TASK: Write code to indicate the sequence of columns from w1 through wC. 
 
+#w_1:w_C
 
 # We can fix this problem using the pivot_longer() function. pivot_longer() takes 
 # multiple columns and condenses them into just two columns, one that indicates 
@@ -369,6 +370,12 @@ willowClean <- willowFill %>%
 
 # TASK: Annotate (add comments) the code above to indicate what each line does.
 
+willowClean <- willowFill %>% pivot_longer(cols = w_1:w_C, #Takes the columns w1-1C and turns them to rows
+               names_to = "willow_id", #creates a new column and stores the old columns in there
+               values_to = "value") %>% #new column thats made
+  separate(col = willow_id, # willow id split into two
+           into = c("remove", "willow_ID"), sep = "_") %>% #split made where the underscore is at
+  select(-remove)  # dropped the remove column
 
 # ---------------------------------------------------------- #
 ### PART 2.3: PIVOT WIDER                                 ####
