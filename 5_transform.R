@@ -43,9 +43,10 @@
 # it to a dataframe named streamTemp. Clean up the column names to the following:
 # data, time, calispell, smalle, winchester
 # HINT: Check last week's assignment if you forget how to read data into R.
-setwd("path/HUFF_conSME_data")
-streamTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv")
-              
+streamTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv",
+                        stringsAsFactors = FALSE)
+colnames(streamTemp) <- c("data","time","calispell", "smalle","winchester")
+head(streamTemp)
 # ---------------------------------------------------------- #
 ### PART 1.1: SUMMARIZING DATA                            ####
 # ---------------------------------------------------------- #
@@ -59,15 +60,17 @@ streamTempLength <- streamTemp %>%
 
 # QUESTION: When you open the streamTempLength dataframe, what value is in each 
 # column?
-
+## 61100 
+## 61100
+## 61100
 
 # QUESTION: How does this number compare to the number of observations listed by
 # the dataframe in the R environment tab?
-
+## It's very much not the same as the one in the R environment tab.
 
 # QUESTION: Based on your previous answers, what do you think the length 
 # function does?
-
+## It tells you the number of elements
 
 # It can be a bit tedious to type out all the column names and the length 
 # function multiple times. The across() function within the summarize() step can
@@ -78,7 +81,12 @@ streamTempLength <- streamTemp %>%
                    .fns=length))
 
 # TASK: Using comments in the code above, describe what each line is doing.
-
+## Create a new object called streamTempLength
+## Use the summarize() function to create a summary of the data 
+## across() allows the same function to be applied to multiple columns 
+##. cols specifies the columns to apply the function to
+## .fns specifies the function to apply to each selected column 
+## length() counts the number of observations (values) in each column
 
 # We might also want to know some other statistics about our data, such as the 
 # max, min, and mean values. The across() function is useful for this too, by 
@@ -89,15 +97,23 @@ streamTempSummary <- streamTemp %>%
                    .fns=list(maximum=max, mean=mean, minimim=min)))
 
 # TASK: Write code to view the column names of the streamTempSummary dataframe.
-
+colnames(streamTempSummary)
 
 # QUESTION: How does R know what to name each column when we use the summarize 
 # function above?
-
+## It uses the original column names. 
 
 # QUESTION: What values do you see for the columns when you open up the 
 # dataframe streamTempSummary? Why do you think this is?
-
+## calispell_maximum
+## calispell_mean
+## calispell_minimim
+## smalle_maximum
+## smalle_mean
+## smalle_miinimim
+## winchester_maximum
+## winchester_mean
+## winchester_minimim 
 
 # Recall that our data had a lot of missing values. R doesn't know how to find 
 # the mean, max, or min of a group of observations that include NAs.
@@ -111,11 +127,22 @@ streamTempSummary <- streamTemp %>%
 # QUESTION: Now what values do you see for the columns when you open up the 
 # dataframe streamTempSummary? What line of the above code removed the NAs from 
 # our data?
-
+## column 1 = 22.38
+## column 2 = 7.985702
+## column 3 = -0.28
+## column 4 = 20.05
+## column 5 = 5.928555
+## column 6 = -0.1
+## column 7 = 18.65
+## column 8 = 6.089913
+## column 9 = -1.75
+## The line na.rm = TRUE removes all NA values
 
 # QUESTION: What happened to the column we created in the beginning called 
 # data_type? Where did the date and time columns go?
-
+## The date, time, and data_type columns were removed becasue summarize() only
+## keeps the columns being summarized and drops all other variables not 
+## included in the across() function. 
 
 # RECOMMENDED: Take a look at the summarize help file, particularly the "Useful 
 # functions" section to see all of the different ways you can summarize your 
@@ -135,15 +162,22 @@ streamTempSummary <- streamTemp %>%
 # (3) Call your new dataframe streamTempMDY.
 # HINT: Check the help documentation for the separate(), mutate(), and paste() 
 # functions.
-
+streamTempMDY <- streamTemp %>%
+  separate(data, into = c("month","day", "year"), sep = "/") %>%
+  mutate(year = paste("20",year, sep = ""))
 
 # TASK: Write code to create a new dataframe called streamTempJan that filters 
 # only rows where the month column is equal to 1 from the streamTempMDY dataframe.
-
+streamTempJan <- streamTempMDY %>%
+  filter(month == "1") 
 
 # TASK: Write code that uses the summarize function to find the mean temperature 
 # for Calispell, Smalle, and Winchester streams in only January.
-
+streamTempJan %>%
+  summarize(calispell_mean = mean(calispell, na.rm = TRUE),
+            smalle_mean = mean(smalle, na.rm =TRUE),
+            winchester_mean = mean(winchester, na.rm. = TRUE)
+            )
 
 # Now imagine you had to repeat this set of steps (creating new filtered 
 # dataframes) for all 12 months!
@@ -166,11 +200,12 @@ streamTempMonthlyMean <- streamTempMDY %>%
 
 # QUESTION: When you look at the streamTempMonthlyMean dataframe, how many means 
 # do you see for each stream?
-
+## I see 4 means in the dataframe
 
 # QUESTION: In your own words, what do you think the group_by() function does 
 # when used before the summarize() function?
-
+## group_by() function is like telling R to sort your data. into little labled
+## bins before it does any math.
 
 # We can also group by multiple columns. Try running the following code:
 streamTempMeans <- streamTempMDY %>% 
@@ -182,7 +217,8 @@ streamTempMeans <- streamTempMDY %>%
 
 # QUESTION: What columns did we group by to get our new means? What does the new 
 # dataframe show?
-
+## we grouped the month and year columns. The new data show the two columns 
+## combined data and the other three columns(calispell,smalle, winchester)
 
 # ---------------------------------------------------------- #
 ### PART 1.3: PRACTICING THESE SKILLS                     ####
@@ -202,10 +238,14 @@ flightData <- nycflights13::flights
 #     remove NAs;
 # (4) ungroup the dataframe;
 # (5) assign the output to a dataframe named airportDelaySummary.
-
+airportDelaySummary <- flightData %>%
+  filter(dest == "RDU") %>%
+  group_by(origin) %>%
+  summarize(mean_arr_delay = mean(arr_delay, na.rm = TRUE)) %>%
+  ungroup()
 
 # QUESTION: Which airport should you avoid if you want the shortest delays?
-
+## You would want to avoid EWR airport because it has the longest delays
 
 # TASK: Write a pipeline to figure out which month of the year to avoid when 
 # flying to Raleigh  by taking the original flight dataframe (flightData) and 
@@ -216,15 +256,23 @@ flightData <- nycflights13::flights
 #     remembering to remove NAs;
 # (4) ungroup the dataframe;
 # (5) assign the output to a dataframe named timeDelaySummary
-
+timeDelaySummary <- flightData %>%
+  filter(dest == "RDU") %>%
+  group_by(hour) %>%
+  summarize(mean_arr_delay = mean(arr_delay, na.rm = TRUE),
+            max_arr_delay = max(arr_delay, na.rm = TRUE)
+            ) %>%
+  ungroup()
 
 # QUESTION: What is the earliest hour of the day that flights leave New York for 
 # Raleigh?
-
+## The earliest hour of the day that flights leave New York for Raleigh is 
+## 1635
 
 # QUESTION: Which hour of the day has the longest mean delay? What about the 
 # longest maximum delay?
-
+## The hour of the day that has the longest mean delay is 22
+## The longest maximum delay is 12
 
 # TASK: Write a pipeline to figure out which month of the year and airport to 
 # avoid when flying to Raleigh by taking the original flight dataframe 
@@ -235,17 +283,24 @@ flightData <- nycflights13::flights
 #     to remove NAs;
 # (4) ungroup the dataframe;
 # (5) assign the output to a dataframe named monthlyDelaySummary
-
+monthlyDelaySummary <- flightData %>%
+  filter(dest == "RDU") %>%
+  group_by(month, origin) %>%
+  summarize(mean_arr_delay = mean(arr_delay, na.rm =TRUE)
+  ) %>%
+  ungroup()
 
 # QUESTION: Which month and airport has the longest mean delay?
-
+## Month 3 in EWR apirport has the longest mean delay
 
 # ---------------------------------------------------------- #
 ### PART 2.0: INTRO TO TIDY DATA                          ####
 # ---------------------------------------------------------- #
 
 # QUESTION: What are three characteristics of tidy data?
-
+## Each variable has it's own column
+## Each observation has it's own row
+## Each type of observation unit has it's own table
 
 # There are five common problems associated with messy data:
 # 1. Column headers are values, not variable names
@@ -263,7 +318,10 @@ willow <- read_csv("Niwot_Salix_2014_WillowSeedlingSurvey.csv", skip = 10)
 # QUESTION: What do you think the statement 'skip = 10' means in the code above?
 # HINT: Compare the csv file on your computer and the dataframe that you loaded 
 # into R.
-
+## R ignores the first 10 What do you think the statement 'skip = 10' means in the code above?
+# HINT: Compare the csv file on your computer and the dataframe that you loaded 
+# into R
+## R ignores the first 10 lines of the file when reading it in
 
 # ---------------------------------------------------------- #
 ### PART 2.1: FILL MISSING DATA                           ####
@@ -274,16 +332,18 @@ willow <- read_csv("Niwot_Salix_2014_WillowSeedlingSurvey.csv", skip = 10)
 
 # QUESTION: To clean up the willow dataframe, where do we want to fill in values? 
 # That is, which columns have lots of NAs.
-
+## We want to fill in values in the columns that contain many NAs, especially
+## if those columns unless describe categories that should apply to multiple
+## rows
 
 # We can fix our missing value problem using the fill() function (try it by 
 # running the following code):
 willowFill <- willow %>%
   fill(block:temp)
-
+willow <- read_csv("willow.csv")
 # QUESTION: What does the code 'block:temp' mean when passed to the fill() 
 # function above?
-
+## block:temp is a column range selector
 
 # QUESTION: Looking at the dataframe willowFill, describe what happened compared 
 # to our initial dataframe.
@@ -298,7 +358,7 @@ willowFill <- willow %>%
 # that were sampled repeatedly.
 
 # TASK: Write code to indicate the sequence of columns from w1 through wC. 
-
+w1:wC
 
 # We can fix this problem using the pivot_longer() function. pivot_longer() takes 
 # multiple columns and condenses them into just two columns, one that indicates 
@@ -317,8 +377,16 @@ willowClean <- willowFill %>%
 
 
 # TASK: Annotate (add comments) the code above to indicate what each line does.
-
-
+## Convert the data from wide format to long format 
+## Takes columns w1 through wC and stacks them into two new columns
+## pivot_longer(cola = w1:wC),
+## names_to = "willow_id", New column that stores the original columns names
+## values_to = "value") %>%, New columnn that stores the data values from those
+## columns
+## Spilt the willow_id column into separate columns based on the underscore 
+## separate(col = willow_id, into = c ("remove", "willlow_ID"), sep = "_") %>%
+## "remove" will hold the "w", willow_ID will hold hold the number/letter
+## Remove the unnecessary column ("remove") since it only conntains the letter w
 # ---------------------------------------------------------- #
 ### PART 2.3: PIVOT WIDER                                 ####
 # ---------------------------------------------------------- #
@@ -336,10 +404,13 @@ willowCleaner  <- willowClean %>%
   pivot_wider(names_from = variable,
               values_from = value)
 
-
 # TASK: Take a look at our new dataframe. How does it differ from the previous?
 # Annotate (add comments) the code above to indicate what each line does.
-
+## Create a new object called. willowCleaner
+## Reshape the data from long format back to wide format 
+## Take the values in the "variable" column and turn each unique value into its
+## own column
+## Fill those new columns with the corresponding values from the "value" column
 
 # ---------------------------------------------------------- #
 ### PART 2.4: IF ELSE                                     ####
@@ -353,13 +424,24 @@ willowCleaner  <- willowClean %>%
 
 # TASK: Verbally describe how you would want to change this problem 
 # (i.e., pseudocode).
+## Create a new column called status; if ht1 contains the word "dead", then 
+## status = "dead", otherwise status = "alive"
+## Create a new column called height; if ht1 contains a number, extract that 
+## number, if ht1 says "dead", set height = NA
+## Remove or replace the original ht1 column once information is separated
 
+## Separate the willow_ID column into multiple columns using a separator
+## Assign the first part to ID
+## Assign the second part to planting data info
+## Convert data information into proper data format if needed
 
 # ifelse() is a very powerful function that helps us with this problem!
 
 # TASK: Look at the ifelse help file and describe in your own words the ordering 
 # of the syntax.
-
+## First, ask the logical question (Is the plant dead?)
+## Second, what should happen if the answer is TRUE? (then label it dead)
+## Third, what should happen if the answer is FALSE? (otherwise label ir alive)
 
 # We can nest the ifelse() function within a mutate() function to create a new 
 # column that contains one entry if the logical statement we provide is TRUE and 
@@ -371,7 +453,13 @@ willowClean3 <- willowClean2 %>%
   mutate(ht1 = ifelse(status == 'dead', NA, ht1))
 
 # TASK: Annotate the previous lines of code to indicate what each is doing.
-
+## Create a new object called willowClean3 from willowClean2 
+## Create a new column called "status"
+## if ht1 is equal to "dead", then status = "dead"
+## otherwise, status = "alive" 
+## Modify the ht1 column
+## if the status is "dead", replace ht1 with NA (no height value)
+## otherwise, keep the original ht1 value 
 
 # QUESTION: This is a good time to make sure the relevant columns are numeric. 
 # Run the str() function on this dataframe. What class is the ht1 column?
@@ -402,7 +490,8 @@ willowClean5 <- willowClean4 %>%
 # seedlings with identifiers that were letters versus numbers? That is, what 
 # year were willow seedlings that were identified with letters planted? What year 
 # were willow seedlings that were identified with numbers planted?
-
+## We can conclude that seeding identified with letters were planted in 2006;
+## seedlings identified with numbers were planted in 2007
 
 # ---------------------------------------------------------- #
 ### PART 2.5: RELATIONAL DATA                             ####
@@ -428,7 +517,8 @@ willowData <- willowClean5 %>%
 
 # TASK: Write code to join these two dataframes back together into a new 
 # dataframe called willowDataTrt using the left_join() function.
-
+willowDataTrt <- willowData %>%
+  left_join(plotInfo, by = c("block", "plot"))
 
 # ON YOUR OWN: There are so many ways to join databases! Think through when you 
 # might want to use each type. We will practice more with joining data in the 
