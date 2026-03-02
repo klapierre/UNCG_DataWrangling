@@ -491,6 +491,9 @@ willowClean5 <- willowClean4 %>%
 
 # QUESTION: What columns would go in each of our two relational databases?
 
+#in plotInfo everything from block to temp should be in it and for willowData everything
+#from the willow_ID data to the year shold be included.
+
 # Let's do it! Run the following code:
 plotInfo <- willowClean5 %>%
   select(block:temp) %>%
@@ -505,6 +508,7 @@ willowData <- willowClean5 %>%
 # TASK: Write code to join these two dataframes back together into a new 
 # dataframe called willowDataTrt using the left_join() function.
 
+willowDataTrt <- willowData %>% left_join(plotInfo, by = c("block", "plot"))
 
 # ON YOUR OWN: There are so many ways to join databases! Think through when you 
 # might want to use each type. We will practice more with joining data in the 
@@ -535,6 +539,12 @@ willowData <- willowClean5 %>%
 # (6) pivot_wider so that the values of percentage_mean are contained in 
 #     different columns
 
+cdr <- read_csv("e001_Plant aboveground biomass carbon and nitrogen.csv") %>% 
+  rename(C = `% Carbon`,N = `% Nitrogen`) %>% filter(Strip %in% c("1", "2")) %>% 
+  pivot_longer(cols = c(C, N), names_to = "element", values_to = "percentage") %>% 
+  group_by(Date, Plot, NTrt, Species, Field, Strip, element) %>% 
+  summarize(percentage_mean = mean(percentage, na.rm = TRUE), .groups = "drop") %>% 
+  pivot_wider(names_from = element, values_from = percentage_mean)
 
 # ---------------------------------------------------------- #
 ### PART 3.0: SUBMIT YOUR WORK                            ####
