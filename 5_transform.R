@@ -237,9 +237,15 @@ flightData <- nycflights13::flights
 # (4) ungroup the dataframe;
 # (5) assign the output to a dataframe named airportDelaySummary.
 
+airportDelaySummary <- flightData %>% 
+  filter(dest == "RDU") %>% #1
+  group_by(origin) %>% #2
+  summarize(arr_delay_mean=mean(arr_delay, na.rm = TRUE)) %>% #3
+  ungroup() #4
 
 # QUESTION: Which airport should you avoid if you want the shortest delays?
 
+#ANSWER: You should avoid EWR if you want the shorted delay
 
 # TASK: Write a pipeline to figure out which month of the year to avoid when 
 # flying to Raleigh  by taking the original flight dataframe (flightData) and 
@@ -251,13 +257,22 @@ flightData <- nycflights13::flights
 # (4) ungroup the dataframe;
 # (5) assign the output to a dataframe named timeDelaySummary
 
+timeDelaySummary <- flightData %>% 
+  filter(dest == "RDU") %>% #1
+  group_by(hour) %>% #2
+  summarize(arr_delay_mean=mean(arr_delay, na.rm = TRUE), arr_delay_max=max(arr_delay, na.rm = TRUE)) %>% #3
+  ungroup() #4
+
 
 # QUESTION: What is the earliest hour of the day that flights leave New York for 
 # Raleigh?
 
+#ANSWER: 6 am
 
 # QUESTION: Which hour of the day has the longest mean delay? What about the 
 # longest maximum delay?
+
+#ANSWER: longest mean= 22 (10 pm) longest max = 12 (12 pm)
 
 
 # TASK: Write a pipeline to figure out which month of the year and airport to 
@@ -270,9 +285,14 @@ flightData <- nycflights13::flights
 # (4) ungroup the dataframe;
 # (5) assign the output to a dataframe named monthlyDelaySummary
 
+monthlyDelaySummary <- flightData %>% 
+  filter(dest == "RDU") %>% #1
+  group_by(month, origin) %>% #2
+  summarize(arr_delay_mean=mean(arr_delay, na.rm = TRUE)) %>% #3
+  ungroup() #4
 
 # QUESTION: Which month and airport has the longest mean delay?
-
+#ANSWER: March out of EWR
 
 # ---------------------------------------------------------- #
 ### PART 2.0: INTRO TO TIDY DATA                          ####
