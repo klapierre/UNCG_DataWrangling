@@ -146,7 +146,8 @@ mutate (year= paste("20", year, sep = ""))
 
 # TASK: Write code to create a new dataframe called streamTempJan that filters 
 # only rows where the month column is equal to 1 from the streamTempMDY dataframe.
-
+streamTempJan <- streamTempMDY %>% 
+  filter(month == 1)
 
 # TASK: Write code that uses the summarize function to find the mean temperature 
 # for Calispell, Smalle, and Winchester streams in only January.
