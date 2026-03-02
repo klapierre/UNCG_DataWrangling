@@ -324,7 +324,9 @@ willowFill <- willow %>%
 # that were sampled repeatedly.
 
 # TASK: Write code to indicate the sequence of columns from w1 through wC. 
+willow %>% select(w1:wC)
 
+willow %>% select(starts_with("w"))
 
 # We can fix this problem using the pivot_longer() function. pivot_longer() takes 
 # multiple columns and condenses them into just two columns, one that indicates 
@@ -332,15 +334,21 @@ willowFill <- willow %>%
 # And while we're at it, let's get rid of the 'w' in front of each willow 
 # individual number.
 # Run the following code:
+# creates a new database named willowClean.
 willowClean <- willowFill %>%
+  # converts column into 2 separate columns.
   pivot_longer(cols = w_1:w_C,
+               # willow_id for the orginal column names and value for the measurements. 
                names_to = "willow_id",
                values_to = "value") %>%
+  #separate willow_id column into 2 parts at the underscore
+  
   separate(col = willow_id,
            into = c("remove", "willow_ID"),
+           # willow_ID now has number values and remove now have a w value. 
            sep = "_") %>%
   select(-remove)
-
+# Remove is now taken away from the column. 
 
 # TASK: Annotate (add comments) the code above to indicate what each line does.
 
