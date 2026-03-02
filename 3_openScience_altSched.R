@@ -57,7 +57,7 @@ The first reason is that we don't wan't the responses to replace the template fo
 
 ## QUESTION: What happened to the data folder listed in the Git tab of RStudio
 ## when you hit save?
-
+it just disappeared!
 
 ## TASK: Stage, commit, and pull/push your modified .gitignore file to the branch
 ## you created for this week with an appropriate commit message.
@@ -72,8 +72,10 @@ The first reason is that we don't wan't the responses to replace the template fo
 ## TASK: Start by setting your working directory to the GitHub repository folder
 ## for this class on your computer using the function setwd().
 ## Hint - set the working directory as the top folder.
-
-
+setwd("~/Desktop/Bio 457 - DATA WRANGLING 2026/UNCG_DataWrangling Public")
+## I was able to obtain this through Session -> set working directory -> To project directory.
+getwd()
+## confirmation that my directory works.
 ## TASK: Now we can import one of these datasets into R. Let's import the plant
 ## species abundance datafile (CME011). To do so, use the read.csv() function, 
 ## putting the relative file path and file name. Assign the dataframe you import
@@ -81,7 +83,7 @@ The first reason is that we don't wan't the responses to replace the template fo
 ## using '<-' and be sure to carefully consider your naming convention when doing so.
 
 
-## After completing the above taask, run the following code.
+## After completing the above task, run the following code.
 conSMEcoverAlt <- read.csv("https://pasta.lternet.edu/package/data/eml/knb-lter-knz/148/5/5716ee946efd717292fa3da9241cda7c")
 
 
