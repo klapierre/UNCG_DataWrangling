@@ -397,18 +397,22 @@ willowClean <- willowFill %>% #selects dataset
 # QUESTION: What column contains the labels that tell us there are multiple 
 # variables stored in one column? What column contains the corresponding date 
 # for these variables?
-
+#The variable column. the values column contains the corresponding date (I think. I am
+#a little bit confused by this part)
 
 # Good news, we can fix this problem with the complementary function to pivot_longer().
 # This time we will use the pivot_wider() function to turn one column into multiple.
-willowCleaner  <- willowClean %>%
-  pivot_wider(names_from = variable,
-              values_from = value)
+willowCleaner  <- willowClean %>% #selects dataset and renames the new one we are creating
+  pivot_wider(names_from = variable, #creates new columns with the 4 different values in the variable column
+              values_from = value) #The values from the value column then go in
+#the correct new variable column 
 
 
 # TASK: Take a look at our new dataframe. How does it differ from the previous?
 # Annotate (add comments) the code above to indicate what each line does.
-
+#It differs from the previous dataset by making new columns from each different variable value
+#and placing the correct value from the value column in this and then removing the value column. 
+#This makes the data wider rather than longer so it is more columns and less rows.
 
 # ---------------------------------------------------------- #
 ### PART 2.4: IF ELSE                                     ####
