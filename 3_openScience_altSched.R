@@ -17,6 +17,7 @@
 
 
 ## QUESTION: Open up the file "knb-lter-knz.148.5.txt". What does this file contain?
+
 # The file contains the metadata for The Consumer Size Manipulation Experiment 
 # (ConSME) at Konza Prairie.
 
@@ -29,6 +30,7 @@
 # Louthan, Allison
 # Wilcox, Kevin
 # Konza Prairie LTER
+
 
 ## QUESTION: From this file or the original website, what are the start and end 
 ## dates of the dataset?
@@ -43,9 +45,13 @@
 
 ## QUESTION: Given your answer to the previous question, why might it be good to
 ## have a reproducible script for data analysis related to this dataset?
+
 # Reproducible scripts make dataset accessible such that it will be useful for 
 # other researchers to utilize this dataset to perform actions pertaining to
 # their needs.
+
+# 
+
 
 # ----------------------------------------------------------
 #### 2) Preventing GitHub from syncing the data files.####
