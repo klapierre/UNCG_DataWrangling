@@ -1,7 +1,7 @@
 # ---------------------------------------------------------- #
 #### MODULE 2: Transform some data!                         ####               
 # ---------------------------------------------------------- #
-New Version
+
 ## OBJECTIVE:
 # 1. To learn how to manipulate and transform data into a form usable for 
 # analysis and graphs.
