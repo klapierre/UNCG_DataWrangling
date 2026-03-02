@@ -17,24 +17,24 @@
 
 
 ## QUESTION: Open up the file "knb-lter-knz.148.3.txt". What does this file contain?
-
+#It describes herbivore size classes and their effects on grassland plant community composition and aboveground biomass and where it happened
 
 ## QUESTION: From this file or the original website, who are the dataset contributors?
-
+#Kimberly Komatsu, Meghan Avolio, Andrew Hope, Sally Koerner, Allison Louthan, Kevin Wilcox.
 
 ## QUESTION: From this file or the original website, what are the start and end 
 ## dates of the dataset?
-
+#Start: 2019-01-01 End: 2022-12-30
 
 ## QUESTION: Is the data collection still ongoing?
 ## Confession from Professor Komatsu: despite the dates of data included in the 
 ## file, the answer here is yes.We're just behind in getting the data cleaned 
 ## and uploaded :(
-
+#yes still onoing
 
 ## QUESTION: Given your answer to the previous question, why might it be good to
 ## have a reproducible script for data analysis related to this dataset?
-
+# it is good for transparency, reduces human error, and makes it easy to repeat
 
 # ----------------------------------------------------------
 #### 2) Preventing GitHub from syncing the data files.####
@@ -43,7 +43,8 @@
 ## We can use the .gitignore file to tell git what files not to sync to GitHub!
 
 ## QUESTION: What are two reasons why we wouldn't want GitHub to sync this data?
-
+#The dataset contains files thatcan be too large 
+#Tracking the data would clutter version history and make collaboration more difficult.
 
 
 ## TASK: Check the Git tab in RStudio. Do you see your data folder listed?
@@ -54,7 +55,7 @@
 
 ## QUESTION: What happened to the data folder listed in the Git tab of RStudio
 ## when you hit save?
-
+#After saving the,the data folder its files disappeared from the Git tab because Git is now ignoring that folder and no longer tracking it.
 
 ## TASK: Stage, commit, and pull/push your modified .gitignore file to the branch
 ## you created for this week with an appropriate commit message.
@@ -84,7 +85,7 @@ conSMEcoverAlt <- read.csv("https://pasta.lternet.edu/package/data/eml/knb-lter-
 
 ## QUESTION: What did this code do? What can you say about the two dataframes 
 ## you have created thus far?
-
+#It downloaded a dataset directly from the data portal URL and loaded it into R as a dataframe
 
 ## TASK: Check to see if the two dataframes are identical using an R function.
 ## (Hint: remember the Week 1 assignment?)
@@ -92,8 +93,7 @@ conSMEcoverAlt <- read.csv("https://pasta.lternet.edu/package/data/eml/knb-lter-
 
 ## QUESTION: Why might it be better to source data straight from the data portal?
 ## Why might it be worse?
-
-
+#Better because its always current, reproducible, no needing local file management and worse because it needs internet/portal access
 ## TASK: Save your R script. Then stage, commit, and pull/push your
 ## modified code to the branch you created for this week with an appropriate 
 ## commit message. Remember, it is most effective to commit small chunks of code 
