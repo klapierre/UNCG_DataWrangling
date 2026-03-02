@@ -220,10 +220,14 @@ flightData <- nycflights13::flights
 #     remove NAs;
 # (4) ungroup the dataframe;
 # (5) assign the output to a dataframe named airportDelaySummary.
-
+airportDelaySummary <- flightData %>% 
+  filter(dest=='RDU') %>% 
+  group_by(origin) %>% 
+  summarize(arr_delay = mean(arr_delay,na.rm=T)) %>% 
+  ungroup()
 
 # QUESTION: Which airport should you avoid if you want the shortest delays?
-
+# EWR
 
 # TASK: Write a pipeline to figure out which month of the year to avoid when 
 # flying to Raleigh  by taking the original flight dataframe (flightData) and 
@@ -234,15 +238,21 @@ flightData <- nycflights13::flights
 #     remembering to remove NAs;
 # (4) ungroup the dataframe;
 # (5) assign the output to a dataframe named timeDelaySummary
+timeDelaySummary<-flightData %>% 
+  filter(dest=="RDU") %>% 
+  group_by(hour) %>% 
+  summarize(arr_delay_mean= mean(arr_delay, na.rm=T),
+arr_delay_max= max(arr_delay, na.rm=T)) %>% 
+  ungroup()
 
 
 # QUESTION: What is the earliest hour of the day that flights leave New York for 
 # Raleigh?
-
+# We didn't filter by flights that leave from NY but the earliest flight that goes to RDU is at 6 am.
 
 # QUESTION: Which hour of the day has the longest mean delay? What about the 
 # longest maximum delay?
-
+# The 22nd hour or 10 pm has the longest mean delay. The longest maximum delay is hour 12 or noon.
 
 # TASK: Write a pipeline to figure out which month of the year and airport to 
 # avoid when flying to Raleigh by taking the original flight dataframe 
@@ -253,10 +263,13 @@ flightData <- nycflights13::flights
 #     to remove NAs;
 # (4) ungroup the dataframe;
 # (5) assign the output to a dataframe named monthlyDelaySummary
-
-
+monthlyDelaySummary <- flightData %>% 
+  filter(dest == "RDU") %>% 
+  group_by(month,origin) %>% 
+  summarize(arr_delay_mean = mean(arr_delay, na.rm = T)) %>% 
+  ungroup()
 # QUESTION: Which month and airport has the longest mean delay?
-
+# month 3 (March) at EWR
 
 # ---------------------------------------------------------- #
 ### PART 2.0: INTRO TO TIDY DATA                          ####
