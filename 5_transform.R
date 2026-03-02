@@ -413,21 +413,29 @@ willowCleaner  <- willowClean %>%
 
 # TASK: Verbally describe how you would want to change this problem 
 # (i.e., pseudocode).
+#Answer: I would want to take the ht1 column and almost sort it into two columns, one column with the height and another column that is if the plant is alive or not. 
+#then with the willow_ID column I would want to stop repetatively recording data for all of the willows that were found to be dead so that you can clearly see the living willows and the data that is recorded for them.
 
 
 # ifelse() is a very powerful function that helps us with this problem!
 
 # TASK: Look at the ifelse help file and describe in your own words the ordering 
 # of the syntax.
-
+?ifelse
+#I do not completedly understand this function, but what I think it is doing is that the first value is a question or test if the variable passes the test then either the value of yes is put into the place or x does what is in the yes space (The second value in the function), if the test is false than the no value is used.
 
 # We can nest the ifelse() function within a mutate() function to create a new 
 # column that contains one entry if the logical statement we provide is TRUE and 
 # another if the logical statement is FALSE. Run the following code to try it 
 # out to help fix our first problem (ht1 column has information on both plant 
 # status and actual height values).
-willowClean3 <- willowClean2 %>%
+
+#I changed the willowClean2 into willowCleaner becuase I had not created a willowClean2 at this point
+#A new dataset willowClean3 is created from the dataset willowCleaner
+willowClean3 <- willowCleaner %>%
+#A new column "status" is made with the mutate function where if the observation says dead then the observation remains as 'dead' and if it has a numerical value than it says 'alive' instead
   mutate(status = ifelse(ht1 == 'dead', 'dead', 'alive')) %>% 
+#The height column was then changed so that if the observation says 'dead' the value will now be NA, and if it is not 'dead' then it remains as the original numerical value.
   mutate(ht1 = ifelse(status == 'dead', NA, ht1))
 
 # TASK: Annotate the previous lines of code to indicate what each is doing.
@@ -435,7 +443,8 @@ willowClean3 <- willowClean2 %>%
 
 # QUESTION: This is a good time to make sure the relevant columns are numeric. 
 # Run the str() function on this dataframe. What class is the ht1 column?
-
+str(willowClean3)
+#Answer: The ht1 comumn is character
 
 # Let's make the ht1 column numeric. And while we're at it, the columns ht2, 
 # cnpy1, and cnpy2 should also be made numeric. We can do so by running the 
@@ -449,7 +458,8 @@ willowClean4 <- willowClean3 %>%
 # TASK: Run the str() function again to view the classes for each column in 
 # willowClean4. Did we succeed in making the columns we wanted into numeric 
 # classes?
-
+str(willowClean3)
+#Answer: No we did not succeed :(
 
 # %in% is another powerful function! With %in% we can use logical statements on 
 # a whole bunch of stuff at once, instead of making a billion ifelse statements. 
@@ -462,6 +472,7 @@ willowClean5 <- willowClean4 %>%
 # seedlings with identifiers that were letters versus numbers? That is, what 
 # year were willow seedlings that were identified with letters planted? What year 
 # were willow seedlings that were identified with numbers planted?
+#Answer: Based off of the ifelse it appears that seedlings labled as A, B, or C were planted in 2006, and seedlings labled as numbers were planted in 2007.
 
 
 # ---------------------------------------------------------- #
