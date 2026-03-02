@@ -57,7 +57,7 @@ streamTempLength <- streamTemp %>%
 
 # QUESTION: When you open the streamTempLength dataframe, what value is in each 
 # column?
-# The value in each column is 61100
+# The value in each column is 61100.
 
 
 # QUESTION: How does this number compare to the number of observations listed by
@@ -99,6 +99,8 @@ colnames(streamTempSummary)
 # QUESTION: What values do you see for the columns when you open up the 
 # dataframe streamTempSummary? Why do you think this is?
 streamTempSummary
+# I see no values in streamTemp Summary. This is because we did not summerized 
+# streamTempLength and not streamTempSummary. There was an object mix up. 
 
 # Recall that our data had a lot of missing values. R doesn't know how to find 
 # the mean, max, or min of a group of observations that include NAs.
@@ -112,11 +114,13 @@ streamTempSummary <- streamTemp %>%
 # QUESTION: Now what values do you see for the columns when you open up the 
 # dataframe streamTempSummary? What line of the above code removed the NAs from 
 # our data?
-
+streamTempSummary 
+# We see the maximum, mean and minimum temperatures for each stream. The line of
+#code that removed the Nas was na.rm=T
 
 # QUESTION: What happened to the column we created in the beginning called 
 # data_type? Where did the date and time columns go?
-
+# They disappeared because summarize only keeps the columns it's told to summarize. 
 
 # RECOMMENDED: Take a look at the summarize help file, particularly the "Useful 
 # functions" section to see all of the different ways you can summarize your 
