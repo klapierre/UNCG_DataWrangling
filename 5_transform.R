@@ -374,7 +374,7 @@ willowClean <- willowFill %>% #naming the new df that will be made and id-ing th
                values_to = "value") %>% #letting R know the values will be characters in the willow_id column?
   separate(col = willow_id, #spiltting the willow_id values
            into = c("remove", "willow_ID"), #making two new columns. 1) remove = the w and 2) willow_id the willow replicate number
-           sep = "_") #tell R to split the column at the _
+           sep = "_") %>%  #tell R to split the column at the _
   select(-remove) #deleting the remove column
 
 
@@ -418,28 +418,31 @@ willowCleaner  <- willowClean %>% #naming the new df that will be made and id-in
 # TASK: Verbally describe how you would want to change this problem 
 # (i.e., pseudocode).
 
+#ANSWER:make a column that give the status of the tree (dead or alive), then have the height for the live willows.
 
 # ifelse() is a very powerful function that helps us with this problem!
 
 # TASK: Look at the ifelse help file and describe in your own words the ordering 
 # of the syntax.
-
+?ifelse
+#ANSWER: ifelse is a logical test. Test is what you are checking. If what you are check is logical, it will return what you put for the "yes". If it is not, then it will return what you put for "no".
 
 # We can nest the ifelse() function within a mutate() function to create a new 
 # column that contains one entry if the logical statement we provide is TRUE and 
 # another if the logical statement is FALSE. Run the following code to try it 
 # out to help fix our first problem (ht1 column has information on both plant 
 # status and actual height values).
-willowClean3 <- willowClean2 %>%
-  mutate(status = ifelse(ht1 == 'dead', 'dead', 'alive')) %>% 
-  mutate(ht1 = ifelse(status == 'dead', NA, ht1))
+willowClean3 <- willowCleaner %>% #naming the new df that will be made and id-ing the data to use
+  mutate(status = ifelse(ht1 == 'dead', 'dead', 'alive')) %>% #adding a column named status and telling R to fill the values with dead or alive. testing if the value is dead, if yes, the cell will fill with dead. If no, the cell will fill with alive
+  mutate(ht1 = ifelse(status == 'dead', NA, ht1)) #re-organizing data in ht1. if the value is dead, the cell will fill with NA. If the value is not dead, it will will with the original height data.
 
 # TASK: Annotate the previous lines of code to indicate what each is doing.
 
 
 # QUESTION: This is a good time to make sure the relevant columns are numeric. 
 # Run the str() function on this dataframe. What class is the ht1 column?
-
+str(willowClean3)
+#ANSWER: the values in ht1 are being stored as characters. 
 
 # Let's make the ht1 column numeric. And while we're at it, the columns ht2, 
 # cnpy1, and cnpy2 should also be made numeric. We can do so by running the 
@@ -453,6 +456,7 @@ willowClean4 <- willowClean3 %>%
 # TASK: Run the str() function again to view the classes for each column in 
 # willowClean4. Did we succeed in making the columns we wanted into numeric 
 # classes?
+str(willowClean4) #yes
 
 
 # %in% is another powerful function! With %in% we can use logical statements on 
@@ -467,6 +471,7 @@ willowClean5 <- willowClean4 %>%
 # year were willow seedlings that were identified with letters planted? What year 
 # were willow seedlings that were identified with numbers planted?
 
+#ANSWER They were planted a year before the numbered willows. So, maybe they were the pilots or controls bc they are all dead?
 
 # ---------------------------------------------------------- #
 ### PART 2.5: RELATIONAL DATA                             ####
