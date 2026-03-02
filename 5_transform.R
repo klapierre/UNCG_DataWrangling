@@ -192,7 +192,8 @@ streamTempMeans <- streamTempMDY %>%
 
 # QUESTION: What columns did we group by to get our new means? What does the new 
 # dataframe show?
-
+# The columns we grouped to get our new means are the month and year. The new data frame
+# shows the mean temp for each stream for each month and year. 
 
 # ---------------------------------------------------------- #
 ### PART 1.3: PRACTICING THESE SKILLS                     ####
