@@ -66,11 +66,14 @@ streamTempLength <- streamTemp %>%
 # QUESTION: How does this number compare to the number of observations listed by
 # the dataframe in the R environment tab?
 
-#The number of observations listed in the environment tab is 1 whereas
+#The number of observations listed in the environment tab is 1 whereas the value inside 
+#the one row is 61100
 
 
 # QUESTION: Based on your previous answers, what do you think the length 
 # function does?
+
+#The length function will show how many values are in the vector
 
 
 # It can be a bit tedious to type out all the column names and the length 
@@ -83,6 +86,9 @@ streamTempLength <- streamTemp %>%
 
 # TASK: Using comments in the code above, describe what each line is doing.
 
+streamTempLength <- streamTemp %>% # taking the streamTemp data and making a pipe
+summarize(across(.cols=c('calispell', 'smalle', 'winchester'), # make a one row summary across the 3 columns
+                   .fns=length)) # run the length function on each column
 
 # We might also want to know some other statistics about our data, such as the 
 # max, min, and mean values. The across() function is useful for this too, by 
@@ -94,13 +100,20 @@ streamTempSummary <- streamTemp %>%
 
 # TASK: Write code to view the column names of the streamTempSummary dataframe.
 
+colnames(streamTempSummary)
+
 
 # QUESTION: How does R know what to name each column when we use the summarize 
 # function above?
 
+#Because we used the across function for the column names we wanted then we added the
+#function names to the list
 
 # QUESTION: What values do you see for the columns when you open up the 
 # dataframe streamTempSummary? Why do you think this is?
+
+#The values are NA, because there are NA values this is probably because the mean 
+#maximum and minimum have NA values
 
 
 # Recall that our data had a lot of missing values. R doesn't know how to find 
@@ -116,10 +129,14 @@ streamTempSummary <- streamTemp %>%
 # dataframe streamTempSummary? What line of the above code removed the NAs from 
 # our data?
 
+#I saw actual numbers and values for the columns,the na.rm=T removed the NAs
+
 
 # QUESTION: What happened to the column we created in the beginning called 
 # data_type? Where did the date and time columns go?
 
+# It isnt included because we didnt summarize them because they werent grouping other 
+#variables they werent summarized.
 
 # RECOMMENDED: Take a look at the summarize help file, particularly the "Useful 
 # functions" section to see all of the different ways you can summarize your 
