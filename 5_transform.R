@@ -361,7 +361,8 @@ willowClean <- willowFill %>%
 # QUESTION: What column contains the labels that tell us there are multiple 
 # variables stored in one column? What column contains the corresponding date 
 # for these variables?
-
+names(willowClean)
+# Answer: The column that contains the labels for multiple variables is the 'variable' column. The column that contains the corresponding data values is the 'value' column. 
 
 # Good news, we can fix this problem with the complementary function to pivot_longer().
 # This time we will use the pivot_wider() function to turn one column into multiple.
@@ -372,7 +373,7 @@ willowCleaner  <- willowClean %>%
 
 # TASK: Take a look at our new dataframe. How does it differ from the previous?
 # Annotate (add comments) the code above to indicate what each line does.
-
+# Answer: The data is wider now. The variable column has been spread into multiple columns. (ht1, ht2, cnpy1, cnpy2).
 
 # ---------------------------------------------------------- #
 ### PART 2.4: IF ELSE                                     ####
@@ -386,13 +387,15 @@ willowCleaner  <- willowClean %>%
 
 # TASK: Verbally describe how you would want to change this problem 
 # (i.e., pseudocode).
-
+# Answer: If ht1 equals "dead", mark the plant status as dead. If ht1 is not "dead", mark the plant status as alive. Replace ht1 with NA for dead plants and keep the heights for alive plants.
 
 # ifelse() is a very powerful function that helps us with this problem!
 
 # TASK: Look at the ifelse help file and describe in your own words the ordering 
 # of the syntax.
-
+?ifelse()
+# Answer: usage ifelse(test, yes, no). The ifelse() function first checks a logical condition. If the condition is TRUE, it returns the second argument if it is FALSE it returns the third argument. 
+willowClean2 <- willowCleaner
 
 # We can nest the ifelse() function within a mutate() function to create a new 
 # column that contains one entry if the logical statement we provide is TRUE and 
@@ -404,11 +407,12 @@ willowClean3 <- willowClean2 %>%
   mutate(ht1 = ifelse(status == 'dead', NA, ht1))
 
 # TASK: Annotate the previous lines of code to indicate what each is doing.
-
+# Answer: mutate(status = ifelse(ht1 == 'dead', 'dead', 'alive')) %>%  - creates status column.  mutate(ht1 = ifelse(status == 'dead', NA, ht1)) - replaces ht1 with NA if dead. 
 
 # QUESTION: This is a good time to make sure the relevant columns are numeric. 
 # Run the str() function on this dataframe. What class is the ht1 column?
-
+str(willowClean3)
+# Answer; ht1 is a character (chr) column.
 
 # Let's make the ht1 column numeric. And while we're at it, the columns ht2, 
 # cnpy1, and cnpy2 should also be made numeric. We can do so by running the 
@@ -417,12 +421,13 @@ willowClean4 <- willowClean3 %>%
   mutate(ht1 = as.numeric(ht1),
          ht2 = as.numeric(ht2),
          cnpy1 = as.numeric(cnpy1),
-         cnpy2 = as.numeric(cnpy1))
+         cnpy2 = as.numeric(cnpy2))
 
 # TASK: Run the str() function again to view the classes for each column in 
 # willowClean4. Did we succeed in making the columns we wanted into numeric 
 # classes?
-
+str(willowClean4)
+# Answer: Yes, we did succeed in making the columns we wanted into numeric classes.
 
 # %in% is another powerful function! With %in% we can use logical statements on 
 # a whole bunch of stuff at once, instead of making a billion ifelse statements. 
@@ -435,7 +440,7 @@ willowClean5 <- willowClean4 %>%
 # seedlings with identifiers that were letters versus numbers? That is, what 
 # year were willow seedlings that were identified with letters planted? What year 
 # were willow seedlings that were identified with numbers planted?
-
+# Answer: Willow seedlings identified with letters (A, B, C) were planted in 2006. All other seedlings identified with numbers were planted in 2007. 
 
 # ---------------------------------------------------------- #
 ### PART 2.5: RELATIONAL DATA                             ####
