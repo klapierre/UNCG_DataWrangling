@@ -154,12 +154,11 @@ duplicates <- rbind(conSME_abundance, conSMEcoverAlt)
 ## QUESTION: Looking at the information for each dataframe in the environment tab
 ## of RStudio, what do you notice about the number of observations for the 
 ## duplicates dataframe compared to the two original dataframes?
+
 #the duplicates is a both the original dataframes added togetre still with 12 variables.
 
 ## TASK: Save your R script. Stage, commit, and pull/push your modified code to 
 ## the branch you created for this week with an appropriate commit message.
-
-
 ## TASK: Open the duplicates dataframe by clicking on the file name in the 
 ## environment tab. Sort by Taxa, Plot, Block, Watershed, and RecDate by clicking
 ## on the tops of those columns in that order.
@@ -169,7 +168,7 @@ duplicates[with(duplicates, order(RecDate, Block, Plot, Taxa)),]
 
 ## QUESTION: What do you notice about the data? Specifically, compare rows 
 ## 4934 and 12173 (if they are sorted correctly, those should be on top).
-
+#Rows 4934 and 12173 contain the same observation,the dataset now includes exact duplicate rows created by stacking the two data sets.
 
 ## TASK: Save your R script. Stage, commit, and pull/push your modified code to the branch
 ## you created for this week with an appropriate commit message.
