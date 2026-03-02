@@ -151,7 +151,8 @@ streamTempJan <- streamTempMDY %>%
 
 # TASK: Write code that uses the summarize function to find the mean temperature 
 # for Calispell, Smalle, and Winchester streams in only January.
-
+streamTempJanSummary <- streamTemp %>% 
+  summarize(across(.cols = c(calispell, smalle , winchester), .fns = mean, na.rm = TRUE))
 
 # Now imagine you had to repeat this set of steps (creating new filtered 
 # dataframes) for all 12 months!
