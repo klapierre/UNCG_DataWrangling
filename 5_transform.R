@@ -306,7 +306,8 @@ willow <- read_csv("Niwot_Salix_2014_WillowSeedlingSurvey.csv", skip = 10)
 
 # QUESTION: To clean up the willow dataframe, where do we want to fill in values? 
 # That is, which columns have lots of NAs.
-
+colSums(is.na(willow))
+# Answer: block, plot, code, snow, n, temp variable, w_1, w_2, w_3 have lots of NA's. 
 
 # We can fix our missing value problem using the fill() function (try it by 
 # running the following code):
@@ -315,11 +316,11 @@ willowFill <- willow %>%
 
 # QUESTION: What does the code 'block:temp' mean when passed to the fill() 
 # function above?
-
+# Answer: It means all columns from 'block' through 'temp'.
 
 # QUESTION: Looking at the dataframe willowFill, describe what happened compared 
 # to our initial dataframe.
-
+# Answer: These columns now have their missing values filled in columns block through temp. 
 
 # ---------------------------------------------------------- #
 ### PART 2.2: PIVOT LONGER                                ####
@@ -330,7 +331,7 @@ willowFill <- willow %>%
 # that were sampled repeatedly.
 
 # TASK: Write code to indicate the sequence of columns from w1 through wC. 
-
+w_1:w_C
 
 # We can fix this problem using the pivot_longer() function. pivot_longer() takes 
 # multiple columns and condenses them into just two columns, one that indicates 
@@ -349,7 +350,7 @@ willowClean <- willowFill %>%
 
 
 # TASK: Annotate (add comments) the code above to indicate what each line does.
-
+# Answer: willowClean <- willowFill %>% - starting with filled datframe and a pipeline. pivot_longer(cols = w_1:w_C, - take columns w_1 through w_C. names_to = "willow_id", - stores old column names in "willow_id". values_to = "value") %>% - stores the cell values in "value". separate(col = willow_id, - splits the willow_id column.  into = c("remove", "willow_ID"), - puts pieces into the new columns. sep = "_") %>% - split wherever "_" is. select(-remove) - drop the 'remove" column. 
 
 # ---------------------------------------------------------- #
 ### PART 2.3: PIVOT WIDER                                 ####
