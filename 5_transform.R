@@ -366,6 +366,7 @@ willowFill <- willow %>%
 
 # TASK: Write code to indicate the sequence of columns from w1 through wC. 
 
+#I am not exactly sure what this is asking
 
 # We can fix this problem using the pivot_longer() function. pivot_longer() takes 
 # multiple columns and condenses them into just two columns, one that indicates 
@@ -373,14 +374,15 @@ willowFill <- willow %>%
 # And while we're at it, let's get rid of the 'w' in front of each willow 
 # individual number.
 # Run the following code:
-willowClean <- willowFill %>%
-  pivot_longer(cols = w_1:w_C,
-               names_to = "willow_id",
-               values_to = "value") %>%
-  separate(col = willow_id,
-           into = c("remove", "willow_ID"),
-           sep = "_") %>%
-  select(-remove)
+
+willowClean <- willowFill %>% #selects dataset
+  pivot_longer(cols = w_1:w_C, #selects all columns between w_1 and w_c to make new column
+               names_to = "willow_id", #names the column willow_id
+               values_to = "value") %>% #names new column value and adds values from pivoted columns
+  separate(col = willow_id, #Seperates this column
+           into = c("remove", "willow_ID"), #makes these new columns
+           sep = "_") %>% #seperates the columns at _ so remove has w and willowID has the number after _
+  select(-remove) #removes the remove column
 
 
 # TASK: Annotate (add comments) the code above to indicate what each line does.
