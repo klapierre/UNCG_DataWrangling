@@ -500,7 +500,8 @@ willowClean5 <- willowClean4 %>%
 # and the other willowData.
 
 # QUESTION: What columns would go in each of our two relational databases?
-
+#The block column through the temp column will be plotInfo and th block, plot, willow ID through year
+#will be willowData
 # Let's do it! Run the following code:
 plotInfo <- willowClean5 %>%
   select(block:temp) %>%
@@ -515,6 +516,13 @@ willowData <- willowClean5 %>%
 # TASK: Write code to join these two dataframes back together into a new 
 # dataframe called willowDataTrt using the left_join() function.
 
+#I was confused about this step and asked chatGPT if my code was correct and it
+#instructed me to add the by=c("block" , "plot") line of code. However, I am still
+#a little bit confused about why this step is necessary. Could you possibly help me 
+#understand this?Is this because these are the only two columns that were included in both datasets 
+#and we only want them included once in the new dataset?
+
+willowDataTrt <- left_join(willowData, plotInfo, by = c("block", "plot"))
 
 # ON YOUR OWN: There are so many ways to join databases! Think through when you 
 # might want to use each type. We will practice more with joining data in the 
