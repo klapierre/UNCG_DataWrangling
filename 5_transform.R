@@ -490,6 +490,9 @@ willowClean5 <- willowClean4 %>%
 
 # QUESTION: What columns would go in each of our two relational databases?
 
+##plotInfo has the plot treatment info
+#willowData has the individual measurements
+
 # Let's do it! Run the following code:
 plotInfo <- willowClean5 %>%
   select(block:temp) %>%
@@ -504,6 +507,8 @@ willowData <- willowClean5 %>%
 # TASK: Write code to join these two dataframes back together into a new 
 # dataframe called willowDataTrt using the left_join() function.
 
+willowDataTrt <- willowData %>%
+  left_join(plotInfo, by = c("block", "plot"))
 
 # ON YOUR OWN: There are so many ways to join databases! Think through when you 
 # might want to use each type. We will practice more with joining data in the 
