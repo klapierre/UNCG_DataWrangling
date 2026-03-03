@@ -536,8 +536,17 @@ willowDataTrt <- left_join(willowData, plotInfo, by = c("block", "plot"))
 # Let's go back to the data of leaf carbon and nitrogen percentages from a 
 # nitrogen addition experiment in a grassland in Minnesota.
 
+cdr <- read.csv("e001_Plant aboveground biomass carbon and nitrogen.csv") %>% 
+rename(C = X..Carbon, N = X..Nitrogen) %>% 
+  filter(Strip %in% c(1, 2)) %>% 
+  pivot_longer(cols = c(C, N), names_to = "element", values_to = "percentage") %>% 
+  group_by(Date, Plot, NTrt, Species, Field, Strip, element) %>% 
+  summarize(percentage_mean = mean(percentage, na.rm = TRUE)) %>%
+  ungroup() %>% 
+  pivot_wider(names_from = element, values_from = percentage_mean)
+  
 # TASK: Perform the following steps in one workflow (i.e., using pipes):
-# (1) Create a dataframe called cdr and load the .csv file 
+# (1) Create a dataframe called cdr and load the .csv file
 # 'e001_Plant aboveground biomass carbon and nitrogen.csv' into it.
 # (2) Rename our last two columns that were originally '% Carbon' and 
 # '% Nitrogen' in our csv file. Make the new names 'C' and 'N', respectively.
