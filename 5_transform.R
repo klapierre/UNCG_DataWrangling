@@ -141,15 +141,24 @@ streamTempSummary <- streamTempRename %>%
 # (3) Call your new dataframe streamTempMDY.
 # HINT: Check the help documentation for the separate(), mutate(), and paste() 
 # functions.
-
+streamTempRenameSep <- streamTempRename %>%
+  tidyr::separate(
+    col = Date,
+    into = c("Month","Day","Year"),
+    sep = "/"
+    )
+streamTempMDY <- streamTempRenameSep %>%
+  mutate(Year = paste0(20,Year))
 
 # TASK: Write code to create a new dataframe called streamTempJan that filters 
 # only rows where the month column is equal to 1 from the streamTempMDY dataframe.
-
+streamTempJan <- streamTempMDY %>%
+  filter(Month == 1)
 
 # TASK: Write code that uses the summarize function to find the mean temperature 
 # for Calispell, Smalle, and Winchester streams in only January.
-
+streamTempJanAvg <- streamTempJan %>%
+     summarize(across(c(calispell, smalle, winchester), mean, na.rm = TRUE))
 
 # Now imagine you had to repeat this set of steps (creating new filtered 
 # dataframes) for all 12 months!
@@ -159,7 +168,7 @@ streamTempSummary <- streamTempRename %>%
 # groups we specify.
 # Try running the following code:
 streamTempMonthlyMean <- streamTempMDY %>% 
-  group_by(month) %>% 
+  group_by(Month) %>% 
   summarize(across(.cols=c('calispell', 'smalle', 'winchester'), 
                    .fns=mean,
                    na.rm=T)) %>% 
@@ -172,15 +181,16 @@ streamTempMonthlyMean <- streamTempMDY %>%
 
 # QUESTION: When you look at the streamTempMonthlyMean dataframe, how many means 
 # do you see for each stream?
-
+# 12.
 
 # QUESTION: In your own words, what do you think the group_by() function does 
 # when used before the summarize() function?
-
+# It tells R which things to group, either by looking at characters or numbers
+# in the relevant column.
 
 # We can also group by multiple columns. Try running the following code:
 streamTempMeans <- streamTempMDY %>% 
-  group_by(month, year) %>% 
+  group_by(Month, Year) %>% 
   summarize(across(.cols=c('calispell', 'smalle', 'winchester'), 
                    .fns=mean,
                    na.rm=T)) %>% 
@@ -188,7 +198,8 @@ streamTempMeans <- streamTempMDY %>%
 
 # QUESTION: What columns did we group by to get our new means? What does the new 
 # dataframe show?
-
+# Now we have averages for a given month in each year rather than months across
+# all years of sampling.
 
 # ---------------------------------------------------------- #
 ### PART 1.3: PRACTICING THESE SKILLS                     ####
