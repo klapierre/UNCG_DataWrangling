@@ -392,17 +392,20 @@ willowClean <- willowFill %>% ##Start with willowFill
 # variables stored in one column? What column contains the corresponding date 
 # for these variables?
 
+##Variable column
+##Date column
 
 # Good news, we can fix this problem with the complementary function to pivot_longer().
 # This time we will use the pivot_wider() function to turn one column into multiple.
-willowCleaner  <- willowClean %>%
-  pivot_wider(names_from = variable,
-              values_from = value)
+willowCleaner  <- willowClean %>% ##Take willowClean
+  pivot_wider(names_from = variable, ##Turn the variable names into columns
+              values_from = value) ##Fill the new columns with the values from the value column
 
 
 # TASK: Take a look at our new dataframe. How does it differ from the previous?
 # Annotate (add comments) the code above to indicate what each line does.
 
+##The values such as ht1, ht2, etc. in the variable column are now their own separate columns.
 
 # ---------------------------------------------------------- #
 ### PART 2.4: IF ELSE                                     ####
