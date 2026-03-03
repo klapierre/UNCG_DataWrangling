@@ -324,6 +324,7 @@ willow <- read_csv("Niwot_Salix_2014_WillowSeedlingSurvey.csv", skip = 10)
 # HINT: Compare the csv file on your computer and the dataframe that you loaded 
 # into R.
 
+##R does not read the first 10 rows 
 
 # ---------------------------------------------------------- #
 ### PART 2.1: FILL MISSING DATA                           ####
@@ -335,6 +336,7 @@ willow <- read_csv("Niwot_Salix_2014_WillowSeedlingSurvey.csv", skip = 10)
 # QUESTION: To clean up the willow dataframe, where do we want to fill in values? 
 # That is, which columns have lots of NAs.
 
+##block through temp
 
 # We can fix our missing value problem using the fill() function (try it by 
 # running the following code):
@@ -344,10 +346,12 @@ willowFill <- willow %>%
 # QUESTION: What does the code 'block:temp' mean when passed to the fill() 
 # function above?
 
+##Selects the columns from block through temp.
 
 # QUESTION: Looking at the dataframe willowFill, describe what happened compared 
 # to our initial dataframe.
 
+##The NAs were filled with the value above them
 
 # ---------------------------------------------------------- #
 ### PART 2.2: PIVOT LONGER                                ####
