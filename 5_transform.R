@@ -420,21 +420,24 @@ willowCleaner  <- willowClean %>% ##Take willowClean
 # TASK: Verbally describe how you would want to change this problem 
 # (i.e., pseudocode).
 
+##Make a new column for plant status 
+#If ht1 says dead then status would be NA
+#If ht1 has a value then status would be alive and ht1 would stay as the height value 
 
 # ifelse() is a very powerful function that helps us with this problem!
 
 # TASK: Look at the ifelse help file and describe in your own words the ordering 
 # of the syntax.
-
+##test, value if true, value if false
 
 # We can nest the ifelse() function within a mutate() function to create a new 
 # column that contains one entry if the logical statement we provide is TRUE and 
 # another if the logical statement is FALSE. Run the following code to try it 
 # out to help fix our first problem (ht1 column has information on both plant 
 # status and actual height values).
-willowClean3 <- willowClean2 %>%
-  mutate(status = ifelse(ht1 == 'dead', 'dead', 'alive')) %>% 
-  mutate(ht1 = ifelse(status == 'dead', NA, ht1))
+willowClean3 <- willowCleaner %>% ##Take willowCleaner
+  mutate(status = ifelse(ht1 == 'dead', 'dead', 'alive')) %>% ##Make status column based on ht1
+  mutate(ht1 = ifelse(status == 'dead', NA, ht1)) ##Replace ht1 with NA if plant is dead
 
 # TASK: Annotate the previous lines of code to indicate what each is doing.
 
@@ -442,6 +445,8 @@ willowClean3 <- willowClean2 %>%
 # QUESTION: This is a good time to make sure the relevant columns are numeric. 
 # Run the str() function on this dataframe. What class is the ht1 column?
 
+str(willowClean3)
+##Character
 
 # Let's make the ht1 column numeric. And while we're at it, the columns ht2, 
 # cnpy1, and cnpy2 should also be made numeric. We can do so by running the 
@@ -456,6 +461,8 @@ willowClean4 <- willowClean3 %>%
 # willowClean4. Did we succeed in making the columns we wanted into numeric 
 # classes?
 
+str(willowClean4)
+##Yes
 
 # %in% is another powerful function! With %in% we can use logical statements on 
 # a whole bunch of stuff at once, instead of making a billion ifelse statements. 
@@ -469,6 +476,8 @@ willowClean5 <- willowClean4 %>%
 # year were willow seedlings that were identified with letters planted? What year 
 # were willow seedlings that were identified with numbers planted?
 
+##Letters in 2006
+##Numbers in 2007
 
 # ---------------------------------------------------------- #
 ### PART 2.5: RELATIONAL DATA                             ####
