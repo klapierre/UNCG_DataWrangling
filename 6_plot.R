@@ -167,21 +167,21 @@ ggplot(redband, aes(x = Weight)) %>%
 # What are the aesthetics? What will the resulting graph be plotting?
 ggplot(redband, aes(x=ScaleAge, y=Length))
 
+# redband is the dataframe and ScaleAge and Length are the x/y-axis aesthetic levels 
 
 # When we start, we tell ggplot that we want certain aesthetics (x- and y-axis).
-# But without specifying a geometric object (what shape to add to the plot), we won't
-# see any data! Let's add a new type of geometric object (points!) by running the 
-# following code:
+# But without specifying a geometric object (what shape to add to the plot), we won't see any data! Let's add a new type of geometric object (points!) by running the following code:
 ggplot(redband, aes(x=ScaleAge, y=Length)) + 
   geom_point()
 
 # QUESTION: Based on the figure that was generated from the code above, 
 # what would you conclude about the relationship between fish age and length?
-
+# fish length generally increases with scale age 
 
 # TASK: Write your own code to visualize the relationship between Redband 
 # length and weight.
-
+ggplot(redband, aes(x=Length, y=Weight)) + 
+  geom_point()
 
 # ---------------------------------------------------------- #
 #### PART 1.4 ADDING AESTHETICS TO GEOMETRIC OBJECTS      ####
@@ -197,11 +197,12 @@ ggplot(redband, aes(x=Length, y=Weight)) +
 
 # TASK: Copy and paste the code above to make the same graph, but this time remove
 # as.factor() from the part where we color by ScaleAge.
-
+ggplot(redband, aes(x=Length, y=Weight)) + 
+  geom_point(aes(color=(ScaleAge)))
 
 # QUESTION: What differs between the graph where ScaleAge was wrapped in the
 # as.factor() statement and the graph where you removed as.factor()? Why?
-
+# the only difference is that with as.factor applied, we get individual categories for the possible years. Without this, R automatically set it to a gradient/range between 0-7. 
 
 # TASK: Visit the ggplot Cookbook webpage at http://www.cookbook-r.com/Graphs/
 # This website is a great go-to place to find how to change all kinds of things
@@ -210,11 +211,14 @@ ggplot(redband, aes(x=Length, y=Weight)) +
 # TASK: Copy and paste the code for our previous graph below. Then modify the
 # aesthetics of the geometric object so that the size of the points varies with 
 # as.factor(ScaleAge).
-
+ggplot(redband, aes(x=Length, y=Weight)) + 
+  geom_point(aes(size=(ScaleAge)))
 
 # TASK: Modify the aesthetics of the geometric object from the previous graph
 # so that the size AND color of the points varies with ScaleAge.
-
+ggplot(redband, aes(x=Length, y=Weight)) + 
+  geom_point(aes(size=(ScaleAge),
+                 color=(ScaleAge)))
 
 # It is important to note that different kinds of geometric objects have different
 # types of associated aesthetics. Points and lines have colors, while bars and
@@ -223,19 +227,21 @@ ggplot(redband, aes(x = as.factor(ScaleAge), y = Weight)) +
   geom_boxplot(color = 'purple', fill = 'green')
 
 # QUESTION: What does color mean for boxplots? What does fill mean for boxplots?
-
+# Color is the outline and the outlier dots of the boxplot. Fill is the color that the inside of the box is filled with.
 
 # QUESTION: Why did we have to specify as.factor() for ScaleAge in the initial
 # aes() statement? 
 # HINT: Try running the code without that statement, what happens?
-
+ggplot(redband, aes(x = as.factor(ScaleAge), y = Weight)) + 
+  geom_boxplot(color = 'purple', fill = 'green')
+# as.factor separated specimens into the different categories (0-7) instead of combining all specimens into one box
 
 # ---------------------------------------------------------- #
 #### PART 1.5 ADDING A LAYER: STATISTICAL TRANSFORMATIONS #### 
 # ---------------------------------------------------------- #
 
 # A statistical transformation takes a dataset as input and visualizes a new, 
-# processed dataset with new variables as output.For example, we could relate 
+# processed dataset with new variables as output. For example, we could relate 
 # length and weight by calculating and graphing a smoothing function by running
 # the following code:
 ggplot(redband, aes(x = Length, y = Weight)) + 
