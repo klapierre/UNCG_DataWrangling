@@ -428,6 +428,7 @@ ggplot(redband, aes(x = Length, y = Weight, color = as.factor(ScaleAge))) +
 
 # QUESTION: What is different about this graph from before?
 
+#The regression lines from geom_smooth are also colored.
 
 # ---------------------------------------------------------- #
 #### PART 1.8: ALTERING SCALES                            ####
@@ -466,6 +467,11 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 # Fill in your boxplots with your favorite color and make the outline your least
 # favorite color. Label the x-axis Scale Age (years) and the y-axis Length (mm).
 
+ggplot(redband, aes(x = as.factor(ScaleAge), y = Length)) + 
+  geom_boxplot(fill="purple", color="orange") +
+  scale_y_log10() +
+  xlab("Scale Age (years)")+
+  ylab("Length (mm)")
 
 # ---------------------------------------------------------- #
 #### PART 1.9: SETTING THEMES                             ####
