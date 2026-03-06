@@ -103,7 +103,7 @@ redband <- read.csv(file = "LowerSpokaneFish.csv") %>%
 # a blank graph with a coordinate system.
 ggplot()
 
-# Now we want to add in an aesthetic (aes). In ggplot2, an "aesthetic" refers to 
+# Now we want to add in an aesthetic (aes). In ggplot2, an "aesthetic" refers to
 # something you can see, such as an axis, a point, a bar, or a line.
 # Because we are going to build a histogram, we only need an x-axis aesthetic.
 # Run the following code to generate our x=axis based on the Length column
@@ -154,9 +154,10 @@ ggplot(redband, aes(x = ScaleAge)) +
 ggplot(redband, aes(x = Weight)) %>%
   geom_histogram()
 
-# QUESTION: What warning message is generated in the console when you create the 
+# QUESTION: What warning message is generated in the console when you create the
 # weight histogram? What does this warning message mean? Do you think it is ok 
 # to proceed or should you alter your code to get rid of this warning?
+
 # Received a warning message because some fish have NA in place of a length measurement. To alter the code, we could filter the dataset to remove NA values first using filter(drop.NA)
 
 # ---------------------------------------------------------- #
@@ -189,9 +190,7 @@ ggplot(redband, aes(x=Length, y=Weight)) +
 
 # We can also add aesthetics to any geometric object!
 # For example, we can integrate the relationships we plotted above among Redband
-# age, length, and weight by coloring points on our figure plotting length vs weight
-# based on ScaleAge. To do this, we have to nest an aes() statement within the 
-# geom_point() statement. Try it out by running the following code:
+# age, length, and weight by coloring points on our figure plotting length vs weight based on ScaleAge. To do this, we have to nest an aes() statement within the geom_point() statement. Try it out by running the following code:
 ggplot(redband, aes(x=Length, y=Weight)) + 
   geom_point(aes(color=as.factor(ScaleAge)))
 
@@ -251,7 +250,7 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 # QUESTION: Using the geom_smooth help page, what type of function is being used 
 # in the above graph for our statistical transformation fit?
 # HINT: What is the default model type for a dataframe of our size?
-
+# the geom_smooth function just draws a "trend line" that helps with visualization 
 
 # We also can specify a specific model to fit. Try running the following code to
 # specify a linear model:
@@ -262,7 +261,9 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 # TASK: As with most things in R, there are multiple ways to accomplish the same
 # task. Using the geom_smooth help page, write code below to specify a linear
 # model using a method= statement instead of the formula= statement.
-
+ggplot(redband, aes(x = Length, y = Weight)) + 
+  geom_point() + 
+  geom_smooth(method = 'lm')
 
 # A linear model does not seem like a good fit to our data. Try running the
 # following code to generate a quadratic model.
@@ -282,7 +283,7 @@ ggplot(redband, aes(x = as.factor(ScaleAge), y=Weight)) +
 # QUESTION: Name another statistical transformation we have already used in this
 # assignment.
 # HINT: It was in the very first part of the assignment.
-
+# 
 
 # TASK: Let's put this all together! Create a graph with the following:
 # (1) redband dataframe,
@@ -290,7 +291,11 @@ ggplot(redband, aes(x = as.factor(ScaleAge), y=Weight)) +
 # (3) points colored by ScaleAge as a factor
 # (4) quadratic line that is black in color and size=2 (HINT: check ggplot
 #     cookbook to help figure out how to change line color and size).
-
+ggplot(redband, aes(x = Length, y = Weight)) + 
+  geom_point(aes(color=as.factor(ScaleAge))) + 
+  geom_smooth(method = 'lm',
+              color = 'black',
+              size = 2)
 
 # ---------------------------------------------------------- #
 #### PART 1.6 DATA IN VS DATA OUT                         #### 
@@ -306,9 +311,8 @@ ggplot(redband, aes(x = as.factor(ScaleAge), y=Weight)) +
 ggplot(redband, aes(x = as.factor(ScaleAge), y = Weight)) + 
   geom_bar(stat='identity')
 
-# QUESTION: What is the graph output? Note the scale of the y-axis. Does this seem
-# right to you? What do you think happened to result in this graph?
-
+# QUESTION: What is the graph output? Note the scale of the y-axis. Does this seem right to you? What do you think happened to result in this graph?
+# scale is now way too large because stat='identity' was applied, so now R seems to be adding together the weights of each fish that fall into the individual scale age groupings.
 
 # Typically, when plotting a bar graph we want to have the output show the mean
 # and standard error for each category. But unlike when we use the geom_boxplot 
@@ -325,7 +329,12 @@ ggplot(redband, aes(x = as.factor(ScaleAge), y = Weight)) +
 # (4) Mutates to create a new column called Weight_se that includes the standard
 #     error of weight for each group (se=1.96*sd).
 # HINT:Don't forget to remove NAs and ungroup at the appropriate place.
-
+redbandSummary <- redband %>%
+  group_by(ScaleAge) %>%
+  summarize(Weight_mean = mean(Weight, na.rm=T),
+            Weight_sd = sd(Weight, na.rm=T)) %>%
+  mutate(Weight_se = Weight_sd * 1.96) %>%
+  ungroup
 
 # Let's try again to make our bargraph by running the following code:
 ggplot(redbandSummary, aes(x = as.factor(ScaleAge), y = Weight_mean)) + 
@@ -333,36 +342,38 @@ ggplot(redbandSummary, aes(x = as.factor(ScaleAge), y = Weight_mean)) +
 
 # QUESTION: What does the stat='identity' part do in the code above? Check the 
 # geom_bar() help or google to find the answer.
-
+# geom_bar automatically applies the function stat_count, thus it counts the number of cases at each individual scale age group. When 'identity' is applied, we are telling R to show the sum of values for a particular variable in our data frame
 
 # The above code gave us nice bars.  Now we need to add error bars! We will do this
 # by adding in a second geometric object that specifies errorbars. Try it by
 # running the following code:
-ggplot(redbandSummary, aes(x = as.factor(ScaleAge), y = Weight_mean)) + 
-  geom_bar(stat='identity') +
-  geom_errorbar(aes(ymin=Weight_mean-Weight_se,
+ggplot(redbandSummary, aes(x = as.factor(ScaleAge), y = Weight_mean)) + #selecting what dataframe to pull from, and assigning the x and y axis
+  geom_bar(stat='identity') + #
+  geom_errorbar(aes(ymin=Weight_mean-Weight_se, 
                     ymax=Weight_mean+Weight_se,
-                    width=0.2))
+                    width=0.2)) # lines 352-354 apply an error bar to each scale age bar; y-minimum is calculated by Weight_mean minus Weight_se, and y-maximum is calculated by Weight_mean plus Weight_se. width = 0.2 adjusts the length of the error bar caps at each end (I cant think of a better word for the part that stops the line...)
 
 # QUESTION: Annotate the code above with what each line does.
 
-
 # QUESTION: What does the statement width=0.2 do? If you're unsure, try removing
 # it and seeing what happens.
-
+# width = 0.2 adjusts the length of the error bar min/max stopper 
 
 # TASK: Modify the code below to make the bar fill light green, the bar outline 
 # dark green, and the error bars dark orange with end caps 40% the bar width.
 ggplot(redbandSummary, aes(x = as.factor(ScaleAge), y = Weight_mean)) + 
-  geom_bar(stat='identity') +
+  geom_bar(stat='identity',
+           color = 'darkgreen',
+           fill = 'lightgreen') +
   geom_errorbar(aes(ymin=Weight_mean-Weight_se,
                     ymax=Weight_mean+Weight_se,
-                    width=0.2))
+                    width=0.4,
+                    color = 'darkorange'))
 
 # ---------------------------------------------------------- #
 #### PART 1.7 AESTHETICS PLACEMENT MATTERS!               #### 
 # ---------------------------------------------------------- #
-
+b
 # In our previous figures, we have been placing the aesthetics statements for our
 # lines in the geometric object functions. What happens if we move the aesthetics
 # for color up into the initial ggplot aesthetics statement? Try it out by running
@@ -372,7 +383,7 @@ ggplot(redband, aes(x = Length, y = Weight, color = as.factor(ScaleAge))) +
   geom_smooth(method='lm', se=F)
 
 # QUESTION: What is different about this graph from before?
-
+# Now we have several smoothing lines, one for each scale age. However, the color of the points did not change when we put the color into the initial aesthetics statement
 
 # ---------------------------------------------------------- #
 #### PART 1.8: ALTERING SCALES                            ####
@@ -410,7 +421,10 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 # scale (i.e., with scale age on a linear x axis and length on a log y axis).
 # Fill in your boxplots with your favorite color and make the outline your least
 # favorite color. Label the x-axis Scale Age (years) and the y-axis Length (mm).
-
+ggplot(redband, aes(x = as.factor(ScaleAge), y = Length)) + 
+  geom_boxplot(size=.5, color="purple", fill="#7CCD7C") +
+  xlab("Scale age (years)") + 
+  ylab("Length (mm)")
 
 # ---------------------------------------------------------- #
 #### PART 1.9: SETTING THEMES                             ####
@@ -463,6 +477,8 @@ ggplot(redband, aes(x = Length, y = Weight)) +
   geom_point() +
   theme(panel.background = element_blank())
 
+#panel.grid.minor applies grid lines to the plot based on where our values are on the x/y-axis. 
+#panel.background applies to the color and theme of the entire plot background
 
 # Try running the following code to alter text size:
 ggplot(redband, aes(x = Length, y = Weight)) + 
@@ -470,12 +486,14 @@ ggplot(redband, aes(x = Length, y = Weight)) +
   theme(axis.title.y=element_text(size=100))
 
 # QUESTION: What does element_text() refer to in the code above?
-
+# it refers to the y-axis title
 
 # TASK: Write your own code below to change the size of the x-axis labels
 # (i.e., the numbers along the x-axis) to 50. 
 # HINT: Check out the ggplot cookbook or ggplot2 themes websites for help.
-
+ggplot(redband, aes(x = Length, y = Weight)) + 
+  geom_point() +
+  theme(axis.text.x=element_text(size=50))
 
 # We can set the theme to include all kinds of variations by adding them all to
 # the theme statement for an individual ggplot.
@@ -505,12 +523,12 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 # we later specify a theme update for any given figure). This is handy to unify
 # the overall look of our garphics without having to type it all out every time.
 # Run the following code to set our theme for the rest of the assignment.
-theme_set(theme_bw())
+theme_set(theme_bw()) 
 theme_update(axis.title.x = element_text(size = 20, vjust = -0.35, margin = margin(t = 15)),
-             axis.text.x = element_text(size = 16),
+             axis.text.x = element_text(size = 10),
              axis.title.y = element_text(size = 20, angle = 90,
                                          vjust = 0.5, margin = margin(r = 15)),
-             axis.text.y = element_text(size = 16),
+             axis.text.y = element_text(size = 10),
              plot.title = element_text(size = 24, vjust = 2),
              panel.grid.major = element_blank(),
              panel.grid.minor = element_blank(),
@@ -545,6 +563,9 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 # specified uniquely for each subpanel.
 # HINT: Check the help file for facet_wrap if you're unsure. Look under the 
 # Arguments section for scales.
+ggplot(redband, aes(x = Length)) + 
+  geom_histogram(binwidth=30) + 
+  facet_wrap(~ScaleAge)
 
 
 # ---------------------------------------------------------- #
@@ -562,7 +583,7 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 ggsave("Redband_histogram_facet.png")
 
 # QUESTION: Where did this file show up? And what was the graph?
-
+# The graph that saved is the histogram I made above, and it showed up in the folder I have set as my working directory, UNCG_DataWrangling
 
 # TASK: Investigate the ggsave() function through the help files. Then write
 # code to save the file at 600 dpi, 10 inch width and 8 inch height.
@@ -581,7 +602,7 @@ ggsave("Redband_histogram_facet.png")
 # graph, and a dot plot with a trend line. Which of these figures was an example
 # of a correlation? Which showed deviations from a benchmark or baseline? And which
 # was an example of a distribution?
-
+# the dot plot shows us correlation, the bar graph shows deviation from the baseline (0), and the boxplot and histogram both show distribution.
 
 
 # TASK: Import the full SpokaneFish dataset, keeping all observations (i.e., 
@@ -591,9 +612,30 @@ ggsave("Redband_histogram_facet.png")
 # triangles colored by species, informative x and y axes labels that include units.
 # Then save your file as a .png with an informative figure name at a width of 9
 # inches and a height of 7 inches and 450 dpi.
+SpokaneFish <- read.csv(file = "LowerSpokaneFish.csv")
+
+
+ggplot(SpokaneFish, aes(x = Weight, y = Length, color = Species)) + 
+  geom_point(size=.8, shape=2) +
+  scale_x_log10() + 
+  (theme(axis.title.x=element_text(size=18,
+                                   margin=margin(t=15)),
+         axis.text.x=element_text(size=13),
+         axis.title.y=element_text(size=18,
+                                   angle=90,
+                                   margin=margin(r=15)),
+         axis.text.y=element_text(size=13),
+         plot.title = element_text(size=24,
+                                   vjust=2),
+         legend.text=element_text(size=10))) +
+  facet_wrap(~ScaleAge)
 
 
 # QUESTION: Why do you think we focused on Redband Trout for most of this assignment?
 
+# because that is the most abumdant species in this dataset
+
 
 # REMEMBER: Save and push your script when you're done with this assignment!
+
+
