@@ -338,6 +338,7 @@ ggplot(redband, aes(x = as.factor(ScaleAge), y = Weight)) +
 
 # QUESTION: What is the graph output? Note the scale of the y-axis. Does this seem
 # right to you? What do you think happened to result in this graph?
+#Answer: So this is a bar graph, with the age as 0-7 like all of the other graphs that we have created, but the weight is by 20,000 which is definitly odd. I wonder if the unit is really small.
 
 
 # Typically, when plotting a bar graph we want to have the output show the mean
@@ -348,12 +349,18 @@ ggplot(redband, aes(x = as.factor(ScaleAge), y = Weight)) +
 # TASK: Write code to make a new dataframe called redbandSummary that does each
 # of the following in a single pipeline:
 # (1) Takes the redband data,
+redbandSummary <- redband %>% 
 # (2) Groups by ScaleAge,
+  group_by(ScaleAge) %>%
 # (3) Summarizes to calculate a new column called Weight_mean that includes the 
 #     mean weight for each group AND a new column called Weight_sd that includes
 #     the standard deviation of weight for each group,
+  summarize(Weight_mean = mean(Weight, na.rm = TRUE), 
+            Weight_sd = sd(Weight, na.rm = TRUE) ) %>%
+  ungroup() %>%
 # (4) Mutates to create a new column called Weight_se that includes the standard
 #     error of weight for each group (se=1.96*sd).
+  mutate(Weight_se=1.96 * Weight_sd)
 # HINT:Don't forget to remove NAs and ungroup at the appropriate place.
 
 
@@ -363,31 +370,38 @@ ggplot(redbandSummary, aes(x = as.factor(ScaleAge), y = Weight_mean)) +
 
 # QUESTION: What does the stat='identity' part do in the code above? Check the 
 # geom_bar() help or google to find the answer.
-
+#Answer: Stat tells the code how to determine the height of the bars. When using identity it is telling the code to use the numbers you put in Y to determine the heightwhereas if you use count it would count how many of each value to determine the height of the bar. 
+?geom_bar
 
 # The above code gave us nice bars.  Now we need to add error bars! We will do this
 # by adding in a second geometric object that specifies errorbars. Try it by
 # running the following code:
+
+#ggplot makes a graph using the redbandSummary data set, with the x axis as Scale age that is use as factors, and the the y axis is the Weight_mean
 ggplot(redbandSummary, aes(x = as.factor(ScaleAge), y = Weight_mean)) + 
+#the graph will be a bar graph with the bar height determined by the weight_mean column
   geom_bar(stat='identity') +
+#The error bars with have the ymin as the weight_mean value minus the Weight_se value, and the ymax as the Weight_mean plus the Weight_se values, and then the width of the lines that make the error bars is 0.2
   geom_errorbar(aes(ymin=Weight_mean-Weight_se,
                     ymax=Weight_mean+Weight_se,
                     width=0.2))
 
 # QUESTION: Annotate the code above with what each line does.
+#Answer: Completed, see above
 
 
 # QUESTION: What does the statement width=0.2 do? If you're unsure, try removing
 # it and seeing what happens.
+#Answer: The statement width=0.2 tells the code how thick the lines that make the error bars should be.
 
 
 # TASK: Modify the code below to make the bar fill light green, the bar outline 
 # dark green, and the error bars dark orange with end caps 40% the bar width.
 ggplot(redbandSummary, aes(x = as.factor(ScaleAge), y = Weight_mean)) + 
-  geom_bar(stat='identity') +
+  geom_bar(stat='identity',color="darkgreen", fill="lightgreen") +
   geom_errorbar(aes(ymin=Weight_mean-Weight_se,
                     ymax=Weight_mean+Weight_se,
-                    width=0.2))
+                    width=0.4, color="darkorange"))
 
 # ---------------------------------------------------------- #
 #### PART 1.7 AESTHETICS PLACEMENT MATTERS!               #### 
