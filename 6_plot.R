@@ -172,6 +172,9 @@ ggplot(redband, aes(x=Weight)) +
 
 # QUESTION: In the code below, what is the dataframe being examined?
 # What are the aesthetics? What will the resulting graph be plotting?
+#Answer: So the aesthetics are that the x-axis will be the scale age, and the y-axis will be the length of the fish. So hopefully the graph that is plotted will show the relationship between how old the fish is and how large the fish is.
+
+#correction: I ran the code and nothing showed up, maybe because we did not give the code a geom.
 ggplot(redband, aes(x=ScaleAge, y=Length))
 
 
@@ -184,10 +187,15 @@ ggplot(redband, aes(x=ScaleAge, y=Length)) +
 
 # QUESTION: Based on the figure that was generated from the code above, 
 # what would you conclude about the relationship between fish age and length?
+#Answer: It appears that in general, the older the fish the larger the fish. There are some interesting points though with some of the older fish being smaller than majority of the 4-5 year old fish. It makes me wonder if the smaller of the 4-5 year old fish are the ones that will survive to be 6 or 7 years old.
 
 
 # TASK: Write your own code to visualize the relationship between Redband 
 # length and weight.
+ggplot(redband, aes(x=Length, y=Weight)) +
+  geom_point()
+
+#Wait I really like this graph, it is super cool, is swooshes upwards and diffuses as it moves up.
 
 
 # ---------------------------------------------------------- #
