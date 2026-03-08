@@ -210,12 +210,18 @@ ggplot(redband, aes(x=Length, y=Weight)) +
 ggplot(redband, aes(x=Length, y=Weight)) + 
   geom_point(aes(color=as.factor(ScaleAge)))
 
+
+#Wait this is so cool, I have never been so excited about code, like ever. It's a freakin rainbow wave.
+
 # TASK: Copy and paste the code above to make the same graph, but this time remove
 # as.factor() from the part where we color by ScaleAge.
+ggplot(redband, aes(x=Length, y=Weight)) + 
+  geom_point(aes(color=ScaleAge))
 
 
 # QUESTION: What differs between the graph where ScaleAge was wrapped in the
 # as.factor() statement and the graph where you removed as.factor()? Why?
+#So the graph that has the as.factor() assigned each age to a color, so it was a rainbow, without the as.factor it is instead a gradient of the same blue color. I believe it does this becuase as.factor is taking each of the waits and assigning them to a weight class just like in the histogram, so each bar of the histogram would be assigned a color, but without the as.factor it is being plotted exactly as the weight is.
 
 
 # TASK: Visit the ggplot Cookbook webpage at http://www.cookbook-r.com/Graphs/
@@ -225,11 +231,13 @@ ggplot(redband, aes(x=Length, y=Weight)) +
 # TASK: Copy and paste the code for our previous graph below. Then modify the
 # aesthetics of the geometric object so that the size of the points varies with 
 # as.factor(ScaleAge).
-
+ggplot(redband, aes(x=Length, y=Weight)) + 
+  geom_point(aes(color=ScaleAge, size=as.factor(ScaleAge)))
 
 # TASK: Modify the aesthetics of the geometric object from the previous graph
 # so that the size AND color of the points varies with ScaleAge.
-
+ggplot(redband, aes(x=Length, y=Weight)) +
+  geom_point(aes(color=as.factor(ScaleAge), size=as.factor(ScaleAge)))
 
 # It is important to note that different kinds of geometric objects have different
 # types of associated aesthetics. Points and lines have colors, while bars and
@@ -238,11 +246,15 @@ ggplot(redband, aes(x = as.factor(ScaleAge), y = Weight)) +
   geom_boxplot(color = 'purple', fill = 'green')
 
 # QUESTION: What does color mean for boxplots? What does fill mean for boxplots?
+#Answer: So color is the color that the outline of the box and the lines of the box, what color they will be. Then, the fill is what the inside of the box color will be. So the box has a purple outline, and is filled in with green.
 
 
 # QUESTION: Why did we have to specify as.factor() for ScaleAge in the initial
 # aes() statement? 
+#Answer: Without the as.factor() The graph is one large box instead of being multiple boxes, one per age class.
 # HINT: Try running the code without that statement, what happens?
+ggplot(redband, aes(x = ScaleAge, y = Weight)) + 
+  geom_boxplot(color = 'purple', fill = 'green')
 
 
 # ---------------------------------------------------------- #
