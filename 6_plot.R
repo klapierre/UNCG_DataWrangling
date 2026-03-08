@@ -602,7 +602,9 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 # specified uniquely for each subpanel.
 # HINT: Check the help file for facet_wrap if you're unsure. Look under the 
 # Arguments section for scales.
-
+ggplot(redband, aes(x = Length)) + 
+  geom_histogram() + 
+  facet_wrap(~ScaleAge, scales="free_y")
 
 # ---------------------------------------------------------- #
 #### PART 1.11: SAVING YOUR GRAPHICS                      ####
