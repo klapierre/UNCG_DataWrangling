@@ -416,7 +416,7 @@ ggplot(redband, aes(x = Length, y = Weight, color = as.factor(ScaleAge))) +
   geom_smooth(method='lm', se=F)
 
 # QUESTION: What is different about this graph from before?
-
+#Answer: So now there are not only the dots that are as.factor, but there are also the linear lines, each a different color to smooth each data class. So it looks really confusing. It seems when you put it in the ggplot function it applies to all functions below, whereas when you apply it to the functions under you can have more control over where the aes is applied.
 
 # ---------------------------------------------------------- #
 #### PART 1.8: ALTERING SCALES                            ####
