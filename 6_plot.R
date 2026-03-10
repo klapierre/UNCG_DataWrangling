@@ -630,8 +630,11 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 # specified uniquely for each subpanel.
 # HINT: Check the help file for facet_wrap if you're unsure. Look under the 
 # Arguments section for scales.
-
-
+ggplot(redband, aes(x = Length)) + 
+  geom_histogram() + 
+  facet_wrap(~ScaleAge, scales = "free_y") 
+  
+?facet_wrap
 # ---------------------------------------------------------- #
 #### PART 1.11: SAVING YOUR GRAPHICS                      ####
 # ---------------------------------------------------------- #
@@ -647,11 +650,20 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 ggsave("Redband_histogram_facet.png")
 
 # QUESTION: Where did this file show up? And what was the graph?
+# It saved in my UNCG_DataWrangling directory.It was our last graph from code below:
+# ggplot(redband, aes(x = Length)) + 
+#  geom_histogram() + 
+#  facet_wrap(~ScaleAge, scales = "free_y") 
 
 
 # TASK: Investigate the ggsave() function through the help files. Then write
 # code to save the file at 600 dpi, 10 inch width and 8 inch height.
-
+?ggsave
+ggsave("Redband_histogram_facet.png",
+       dpi = 600,
+       width = 10,
+       height = 8,
+       units = "in")
 
 # NOTE: You can also save the graphics you make by exporting them from the plots
 # tab in RStudio. However, this can be less precise than specifying the graphic
@@ -666,6 +678,9 @@ ggsave("Redband_histogram_facet.png")
 # graph, and a dot plot with a trend line. Which of these figures was an example
 # of a correlation? Which showed deviations from a benchmark or baseline? And which
 # was an example of a distribution?
+# Bar graph = Deviations from a benchmark or baseline
+# Histogram = Distribution
+# Dot plot = Correlation
 
 
 
