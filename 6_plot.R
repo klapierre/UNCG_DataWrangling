@@ -291,7 +291,6 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 # QUESTION: Using the geom_smooth help page, what type of function is being used 
 # in the above graph for our statistical transformation fit?
 # HINT: What is the default model type for a dataframe of our size?
-
 ?geom_smooth
 # gam model is used for dataframe of our size (>1000).
 
@@ -304,7 +303,9 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 # TASK: As with most things in R, there are multiple ways to accomplish the same
 # task. Using the geom_smooth help page, write code below to specify a linear
 # model using a method= statement instead of the formula= statement.
-
+ggplot(redband, aes(x = Length, y = Weight)) + 
+  geom_point() + 
+  geom_smooth(method = lm)
 
 # A linear model does not seem like a good fit to our data. Try running the
 # following code to generate a quadratic model.
@@ -481,7 +482,7 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 ggplot(redband, aes(x = as.factor(ScaleAge), y = Length)) + 
   geom_boxplot(color="yellow", fill="tan") + 
   scale_y_log10() +
-  xlab("Scale Age (years") + 
+  xlab("Scale Age (years)") + 
   ylab("Length (mm)")
 
 # ---------------------------------------------------------- #
@@ -683,7 +684,6 @@ ggsave("Redband_histogram_facet.png",
 # Dot plot = Correlation
 
 
-
 # TASK: Import the full SpokaneFish dataset, keeping all observations (i.e., 
 # don't filter down to a single species or remove observations without scale age).
 # Then make a set of plots faceted by species, with each plot displaying fish 
@@ -692,8 +692,27 @@ ggsave("Redband_histogram_facet.png",
 # Then save your file as a .png with an informative figure name at a width of 9
 # inches and a height of 7 inches and 450 dpi.
 
+spokane_fish_all <- read.csv("LowerSpokaneFish.csv")
+
+ggplot(spokane_fish_all, 
+       aes(x = Weight,
+           y = Length, color = Species))+
+  geom_point(shape = 17)+
+  scale_y_log10()+
+  xlab("Weight (g)") + 
+  ylab("Length (mm)")+
+  facet_wrap(~Species)
+
+  
+ggsave("Spokane_fish_all_dotplot.png",
+       dpi = 450,
+       width = 9,
+       height = 7,
+       units = "in")
+
 
 # QUESTION: Why do you think we focused on Redband Trout for most of this assignment?
-
+# There were lots of Redband Trout data in this study.This species should have 
+# ecological importance to the author.
 
 # REMEMBER: Save and push your script when you're done with this assignment!
