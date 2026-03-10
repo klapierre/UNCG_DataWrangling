@@ -321,11 +321,11 @@ ggplot(redband,aes(x=Length, y=Weight))+
 # graph separated by fish age.
 ggplot(redband, aes(x = as.factor(ScaleAge), y = Weight)) + 
   geom_bar(stat='identity')
-
+ggplot(redband, aes(x = as.factor(ScaleAge), y = Weight)) + 
+  geom_bar(stat='identity')
 # QUESTION: What is the graph output? Note the scale of the y-axis. Does this seem
 # right to you? What do you think happened to result in this graph?
-
-
+#A bar graph for weight based on ScaleAge. The x-range is 0 to 7. The y-range is 0 to over 80,000. The scale of the y-axis does not seem right because there are inputs less than 1000 in the 'Weight' column. I think the values for 'weight' were added for each ScaleAge. 
 # Typically, when plotting a bar graph we want to have the output show the mean
 # and standard error for each category. But unlike when we use the geom_boxplot 
 # object, ggplot doesn't calculate these values for us when we when call the 
@@ -342,14 +342,19 @@ ggplot(redband, aes(x = as.factor(ScaleAge), y = Weight)) +
 #     error of weight for each group (se=1.96*sd).
 # HINT:Don't forget to remove NAs and ungroup at the appropriate place.
 
-
+redbandSummary<-redband %>% 
+  group_by(ScaleAge) %>% 
+  summarise(Weight_mean=mean(Weight,na.rm=TRUE),Weight_sd=sd(Weight,na.rm=TRUE),n=n()) %>% 
+  mutate(Weight_se=Weight_sd/sqrt(n)) %>% 
+  ungroup()
 # Let's try again to make our bargraph by running the following code:
 ggplot(redbandSummary, aes(x = as.factor(ScaleAge), y = Weight_mean)) + 
   geom_bar(stat='identity')
-
+ggplot(redbandSummary, aes(x = as.factor(ScaleAge), y = Weight_mean)) + 
+  geom_bar(stat='identity')
 # QUESTION: What does the stat='identity' part do in the code above? Check the 
 # geom_bar() help or google to find the answer.
-
+#stat='identity' tells ggplot to use the actual values from the dataset and do no calculations. 
 
 # The above code gave us nice bars.  Now we need to add error bars! We will do this
 # by adding in a second geometric object that specifies errorbars. Try it by
@@ -359,21 +364,25 @@ ggplot(redbandSummary, aes(x = as.factor(ScaleAge), y = Weight_mean)) +
   geom_errorbar(aes(ymin=Weight_mean-Weight_se,
                     ymax=Weight_mean+Weight_se,
                     width=0.2))
-
-# QUESTION: Annotate the code above with what each line does.
-
-
-# QUESTION: What does the statement width=0.2 do? If you're unsure, try removing
-# it and seeing what happens.
-
-
-# TASK: Modify the code below to make the bar fill light green, the bar outline 
-# dark green, and the error bars dark orange with end caps 40% the bar width.
 ggplot(redbandSummary, aes(x = as.factor(ScaleAge), y = Weight_mean)) + 
   geom_bar(stat='identity') +
   geom_errorbar(aes(ymin=Weight_mean-Weight_se,
                     ymax=Weight_mean+Weight_se,
                     width=0.2))
+# QUESTION: Annotate the code above with what each line does.
+#The first line takes the 'redbandSummary' dataframe and plots ScaleAge vs Weight_mean. The next line tells ggplot to use the actual values from the dataset and do no calculations. The third line codes for the error bars. The top and bottom lines of the error bars will have a width of 0.2. Weight_mean+Weight_se calculates the y-max of the error bar. Weight_mean-Weight_se calculates the y-min of the error bar.  
+
+# QUESTION: What does the statement width=0.2 do? If you're unsure, try removing
+# it and seeing what happens.
+
+#The top and bottom lines of the error bars will have a width of 0.2. 
+# TASK: Modify the code below to make the bar fill light green, the bar outline 
+# dark green, and the error bars dark orange with end caps 40% the bar width.
+ggplot(redbandSummary, aes(x = as.factor(ScaleAge), y = Weight_mean)) + 
+  geom_bar(stat='identity',fill="lightgreen",color="darkgreen") +
+  geom_errorbar(aes(ymin=Weight_mean-Weight_se,
+                    ymax=Weight_mean+Weight_se,color="darkorange",
+                    width=0.4))
 
 # ---------------------------------------------------------- #
 #### PART 1.7 AESTHETICS PLACEMENT MATTERS!               #### 
@@ -386,9 +395,11 @@ ggplot(redbandSummary, aes(x = as.factor(ScaleAge), y = Weight_mean)) +
 ggplot(redband, aes(x = Length, y = Weight, color = as.factor(ScaleAge))) + 
   geom_point() + 
   geom_smooth(method='lm', se=F)
-
+ggplot(redband, aes(x = Length, y = Weight, color = as.factor(ScaleAge))) + 
+  geom_point() + 
+  geom_smooth(method='lm', se=F)
 # QUESTION: What is different about this graph from before?
-
+#In this graph, each ScaleAge value has a 'smooth' line along with a specific color.
 
 # ---------------------------------------------------------- #
 #### PART 1.8: ALTERING SCALES                            ####
