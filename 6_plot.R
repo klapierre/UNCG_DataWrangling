@@ -623,14 +623,14 @@ ggplot(redband,aes(x=Length))+
 
 # Try running the following code:
 ggsave("Redband_histogram_facet.png")
-
+ggsave("Redband_histogram_facet.png")
 # QUESTION: Where did this file show up? And what was the graph?
-
+#This file showed up under the "Files" tab for UNCG_DataWrangling. The graph was the last histogram of length faceted by scale age, with eight unique sub panels, 'length' on the x-axis and 'count' on the y-axis.
 
 # TASK: Investigate the ggsave() function through the help files. Then write
 # code to save the file at 600 dpi, 10 inch width and 8 inch height.
-
-
+ggsave("Redband_histogram_facet.png",width=10, height=8, units=c("in"),dpi=600)
+hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
 # NOTE: You can also save the graphics you make by exporting them from the plots
 # tab in RStudio. However, this can be less precise than specifying the graphic
 # attributes using the ggsave function.
