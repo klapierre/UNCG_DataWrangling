@@ -583,24 +583,32 @@ theme_update(axis.title.x = element_text(size = 20, vjust = -0.35, margin = marg
 ggplot(redband, aes(x = Length, y = Weight)) + 
   geom_point() + 
   facet_wrap(~ScaleAge)
-
+ggplot(redband, aes(x = Length, y = Weight)) + 
+  geom_point() + 
+  facet_wrap(~ScaleAge)
 # We can allow the scales to vary and be unique for each graph by adding a
 # statement to the facet_wrap statement:
 ggplot(redband, aes(x = Length, y = Weight)) + 
   geom_point() + 
   facet_wrap(~ScaleAge, scales="free")
-
+ggplot(redband, aes(x = Length, y = Weight)) + 
+  geom_point() + 
+  facet_wrap(~ScaleAge, scales="free")
 # We could also make a grid by faceting one variable by another.
 ggplot(redband, aes(x = Length, y = Weight)) + 
   geom_point() + 
   facet_grid(Year~ScaleAge) 
-
+ggplot(redband, aes(x = Length, y = Weight)) + 
+  geom_point() + 
+  facet_grid(Year~ScaleAge) 
 # TASK: Make a histogram of length faceted by scale age.
 # Keep the x-axis consistent across all subpanels, but allow the y-axis to be 
 # specified uniquely for each subpanel.
 # HINT: Check the help file for facet_wrap if you're unsure. Look under the 
 # Arguments section for scales.
-
+ggplot(redband,aes(x=Length))+
+  geom_histogram()+
+  facet_wrap(~ScaleAge,scales="free_y")
 
 # ---------------------------------------------------------- #
 #### PART 1.11: SAVING YOUR GRAPHICS                      ####
