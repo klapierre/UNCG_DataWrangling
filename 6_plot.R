@@ -375,7 +375,7 @@ ggplot(redbandSummary, aes(x = as.factor(ScaleAge), y = Weight_mean)) +
 # QUESTION: What does the statement width=0.2 do? If you're unsure, try removing
 # it and seeing what happens.
 
-#The top and bottom lines of the error bars will have a width of 0.2. 
+#The top and bottom lines of the error bars will have a width of 0.2 or end caps 20% the bar width. 
 # TASK: Modify the code below to make the bar fill light green, the bar outline 
 # dark green, and the error bars dark orange with end caps 40% the bar width.
 ggplot(redbandSummary, aes(x = as.factor(ScaleAge), y = Weight_mean)) + 
@@ -413,18 +413,23 @@ ggplot(redband, aes(x = Length, y = Weight, color = as.factor(ScaleAge))) +
 # following code:
 ggplot(redband, aes(x = Length, y = Weight)) + 
   geom_point()
-
+ggplot(redband, aes(x = Length, y = Weight)) + 
+  geom_point()
 # We could alter the size and color and shape of the points, as we have done before:
 ggplot(redband, aes(x = Length, y = Weight)) + 
   geom_point(size=1, color="darkblue", shape=1)
-
+ggplot(redband, aes(x = Length, y = Weight)) + 
+  geom_point(size=1, color="darkblue", shape=1)
 # We could add on to alter the x and y axes scales; for example, let's make put 
 # them on a log10 scale by running the following code:
 ggplot(redband, aes(x = Length, y = Weight)) + 
   geom_point(size=1, color="darkblue", shape=1) +
   scale_x_log10() + 
   scale_y_log10()
-
+ggplot(redband, aes(x = Length, y = Weight)) + 
+  geom_point(size=1, color="darkblue", shape=1) +
+  scale_x_log10() + 
+  scale_y_log10()
 # We could customize the x and y axis labels to include species name and units:
 ggplot(redband, aes(x = Length, y = Weight)) + 
   geom_point(size=1, color="darkblue", shape=1) +
@@ -432,12 +437,22 @@ ggplot(redband, aes(x = Length, y = Weight)) +
   scale_y_log10() +
   xlab("Redband trout length (mm)") + 
   ylab("Redband trout weight (g)")
-
+ggplot(redband, aes(x = Length, y = Weight)) + 
+  geom_point(size=1, color="darkblue", shape=1) +
+  scale_x_log10() + 
+  scale_y_log10() +
+  xlab("Redband trout length (mm)") + 
+  ylab("Redband trout weight (g)")
 # TASK: Write code below to make a boxplot of scale age vs length on a linear-log
 # scale (i.e., with scale age on a linear x axis and length on a log y axis).
 # Fill in your boxplots with your favorite color and make the outline your least
 # favorite color. Label the x-axis Scale Age (years) and the y-axis Length (mm).
-
+ggplot(redband,aes(x=ScaleAge, y=Length))+
+  geom_boxplot(color="pink",fill='lightblue')+
+  scale_x_continuous()+
+  scale_y_log10()+
+  xlab("Scale Age (years)")+
+  ylab("Length (mm)")
 
 # ---------------------------------------------------------- #
 #### PART 1.9: SETTING THEMES                             ####
@@ -456,21 +471,31 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 ggplot(redband, aes(x = Length, y = Weight)) + 
   geom_point() +
   theme_bw()
-
+ggplot(redband, aes(x = Length, y = Weight)) + 
+  geom_point() +
+  theme_bw()
 # What about the following code for the minimalistic theme?
 ggplot(redband, aes(x = Length, y = Weight)) + 
   geom_point() +
   theme_minimal()
-
+ggplot(redband, aes(x = Length, y = Weight)) + 
+  geom_point() +
+  theme_minimal()
 # Or the void theme?
 ggplot(redband, aes(x = Length, y = Weight)) + 
   geom_point() +
   theme_void()
-
+ggplot(redband, aes(x = Length, y = Weight)) + 
+  geom_point() +
+  theme_void()
 # TASK: Check out the section on complete themes in the ggplot2 book here:
 # https://ggplot2-book.org/polishing.html#themes.  Try out two more themes below.
-
-
+ggplot(redband, aes(x = Length, y = Weight)) + 
+  geom_point() +
+  theme_dark()
+ggplot(redband, aes(x = Length, y = Weight)) + 
+  geom_point() +
+  theme_light()
 # Rather than using the pre-set themes, we can also create our own! 
 # The theme can be set to modify the text of plot titles, axis titles, axis labels,
 # and legend elements (more about legends next week) to modify things such as
@@ -485,24 +510,27 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 ggplot(redband, aes(x = Length, y = Weight)) + 
   geom_point() +
   theme(panel.grid.minor = element_blank())
-
+#'Length'is labeled on the x-axis. 'Weight' is labeled on the y-axis. The data points are black. 'panel.grid.minor' refers to the scaling of the background with grid lines. 'element_blank" draws and assigns nothing to the space in the background (blank). 
 ggplot(redband, aes(x = Length, y = Weight)) + 
   geom_point() +
   theme(panel.background = element_blank())
-
+#'Length' is labeled on the x-axis and 'Weight' is labeled on the y-axis. The data points are black. 'panel.background' refers to the background of the graph. 'element_blank' draws and assigns nothing to the space in the background (blank). 
 
 # Try running the following code to alter text size:
 ggplot(redband, aes(x = Length, y = Weight)) + 
   geom_point() +
   theme(axis.title.y=element_text(size=100))
-
+ggplot(redband, aes(x = Length, y = Weight)) + 
+  geom_point() +
+  theme(axis.title.y=element_text(size=100))
 # QUESTION: What does element_text() refer to in the code above?
-
-
+#'element_text' refers to the non-data text and how it will be displayed. In the code above, this function modify the text on the y-axis to a size of 100.
 # TASK: Write your own code below to change the size of the x-axis labels
 # (i.e., the numbers along the x-axis) to 50. 
 # HINT: Check out the ggplot cookbook or ggplot2 themes websites for help.
-
+ggplot(redband, aes(x = Length, y = Weight)) + 
+  geom_point() +
+  theme(axis.text.x=element_text(size=50))
 
 # We can set the theme to include all kinds of variations by adding them all to
 # the theme statement for an individual ggplot.
@@ -526,7 +554,7 @@ ggplot(redband, aes(x = Length, y = Weight)) +
         panel.grid.minor=element_blank(),
         legend.title=element_blank(),
         legend.text=element_text(size=20))
-
+#Done.
 # Another great thing is that we can set the theme without specifying a graph.
 # That way the theme is set for all graphics we make throughout the code (unless
 # we later specify a theme update for any given figure). This is handy to unify
@@ -543,7 +571,7 @@ theme_update(axis.title.x = element_text(size = 20, vjust = -0.35, margin = marg
              panel.grid.minor = element_blank(),
              legend.title = element_blank(),
              legend.text = element_text(size = 20))
-
+#Done.
 
 # ---------------------------------------------------------- #
 #### PART 1.10: SPECIFYING FACETS                          ####
