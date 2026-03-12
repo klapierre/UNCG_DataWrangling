@@ -1,13 +1,3 @@
-# Map building in RStudio
-
-# ---------------------------------------------------------------------------- #
-## OBJECTIVES:
-# 1. Understand when and why we may want to use R to build maps
-# 2. Understand that there are many different ways to map spatial data within RStudio framework
-# 3. Use packages such as maps and ggplot to map spatial data 
-# 4. To learn how to find and import environmental spatial data sets
-
-
 # MAPPING SPECIMEN OCCURRENCE DATA ------------------------------------------
 
 # In this section, we are going to learn how to find and plot mammal occurrence
@@ -79,3 +69,7 @@ ggplot() +
 # MAPPING SPECIES RICHNESS ------------------------------------------------
 
 # Using the same csv we used for our map above, we can create a map that colors counties along a gradient based on species richness 
+
+
+
+
