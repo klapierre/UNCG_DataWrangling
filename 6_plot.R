@@ -199,6 +199,9 @@ ggplot(redband, aes(x = Weight)) +
 # What are the aesthetics? What will the resulting graph be plotting?
 ggplot(redband, aes(x=ScaleAge, y=Length))
 
+## We are examining the Redband Trout, where the aesthetics are the ScaleAge in the x-axis and Length in the y-axis. The graph will be plotting the age of the trout by the length of the trout.
+
+
 
 # When we start, we tell ggplot that we want certain aesthetics (x- and y-axis).
 # But without specifying a geometric object (what shape to add to the plot), we won't
@@ -210,9 +213,16 @@ ggplot(redband, aes(x=ScaleAge, y=Length)) +
 # QUESTION: Based on the figure that was generated from the code above, 
 # what would you conclude about the relationship between fish age and length?
 
+## As fish age, they grow longer.
+
+
 
 # TASK: Write your own code to visualize the relationship between Redband 
 # length and weight.
+
+ggplot(redband, aes(x=Weight, y=Length)) + 
+  geom_point()
+
 
 
 # ---------------------------------------------------------- #
