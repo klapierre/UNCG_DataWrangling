@@ -91,6 +91,10 @@ library(tidyverse)
 # (3) Further filter the dataframe to include only fish that have been aged
 #     by removing any observations where ScaleAge is NA.
 
+redband <- read.csv("LowerSpokaneFish.csv") %>%
+           filter(Species == "RB",
+                  !is.na(ScaleAge))
+
 
 
 # ---------------------------------------------------------- #
