@@ -240,9 +240,15 @@ ggplot(redband, aes(x=Length, y=Weight)) +
 # TASK: Copy and paste the code above to make the same graph, but this time remove
 # as.factor() from the part where we color by ScaleAge.
 
+ggplot(redband, aes(x=Length, y=Weight)) + 
+  geom_point()
+
 
 # QUESTION: What differs between the graph where ScaleAge was wrapped in the
 # as.factor() statement and the graph where you removed as.factor()? Why?
+
+## The dots are all black, instead of being color coordinated, and tehre is no legend to tell us what each color represents.
+
 
 
 # TASK: Visit the ggplot Cookbook webpage at http://www.cookbook-r.com/Graphs/
@@ -250,12 +256,23 @@ ggplot(redband, aes(x=Length, y=Weight)) +
 # about the graphs you make. You might want to bookmark this one!
 
 # TASK: Copy and paste the code for our previous graph below. Then modify the
-# aesthetics of the geometric object so that the size of the points varies with 
+# aesthetics of the geometric object so that the size of the points varies with
 # as.factor(ScaleAge).
+
+ggplot(redband, aes(x=Length, y=Weight,
+                    size=as.factor(ScaleAge))) + 
+       geom_point()
+
 
 
 # TASK: Modify the aesthetics of the geometric object from the previous graph
 # so that the size AND color of the points varies with ScaleAge.
+
+ggplot(redband, aes(x=Length, y=Weight,
+                    size=as.factor(ScaleAge),
+                    color=as.factor(ScaleAge))) + 
+       geom_point()
+
 
 
 # It is important to note that different kinds of geometric objects have different
@@ -266,10 +283,16 @@ ggplot(redband, aes(x = as.factor(ScaleAge), y = Weight)) +
 
 # QUESTION: What does color mean for boxplots? What does fill mean for boxplots?
 
+## "color" controls the color of the outline of the boxplot, while "fill" controls the color of the inside of the boxplot.
+
+
 
 # QUESTION: Why did we have to specify as.factor() for ScaleAge in the initial
 # aes() statement? 
 # HINT: Try running the code without that statement, what happens?
+
+## Specifying as.factor() for ScaleAge allows ggplot to treat ScaleAge as individual variables, instead of a continuous group of numbers, separating the colors shown. Without as.factor() is returns as a gradient of the same color, blending the points together more.
+
 
 
 # ---------------------------------------------------------- #
