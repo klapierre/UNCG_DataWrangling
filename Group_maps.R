@@ -79,3 +79,6 @@ ggplot() +
 # MAPPING SPECIES RICHNESS ------------------------------------------------
 
 # Using the same csv we used for our map above, we can create a map that colors counties along a gradient based on species richness 
+
+
+# convert data from the csv to an sf file using st_as_sf() function 
