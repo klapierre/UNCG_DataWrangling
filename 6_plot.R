@@ -481,6 +481,9 @@ ggplot(redband, aes(x = Length, y = Weight, color = as.factor(ScaleAge))) +
 
 # QUESTION: What is different about this graph from before?
 
+## Now the smoothing lines have a color gradient, that blends into the colored points in the plot, making it hard to distinguish them from each other.
+
+
 
 # ---------------------------------------------------------- #
 #### PART 1.8: ALTERING SCALES                            ####
