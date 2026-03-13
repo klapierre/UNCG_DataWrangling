@@ -730,6 +730,8 @@ ggsave("Redband_histogram_facet.png",
 # of a correlation? Which showed deviations from a benchmark or baseline? And which
 # was an example of a distribution?
 
+## The dot plot with a trend line would be an example of a correlation, because it shows how more than one variable moves together. A graph would would show the deviation from a benchmark or baseline, because it's showing change over time. A histogram and boxplot both show examples of distribution, because they show how one variable moves around with frequency or by being spread out.
+
 
 
 # TASK: Import the full SpokaneFish dataset, keeping all observations (i.e., 
@@ -740,8 +742,28 @@ ggsave("Redband_histogram_facet.png",
 # Then save your file as a .png with an informative figure name at a width of 9
 # inches and a height of 7 inches and 450 dpi.
 
+LowerSpokaneFish <- read.csv("LowerSpokaneFish.csv")
+
+ggplot(LowerSpokaneFish, aes(x = Length, y = Weight, color = Species)) +
+  geom_point(shape = 17) +
+  scale_x_log10() +
+  facet_wrap(~ Species) +
+  xlab(" Fish Length (mm)") +
+  ylab("Fish Weight (grams")
+
+ggsave("LowerSpokaneFish_Weight_vs_Length.png",
+       width = 9,
+       height = 7,
+       dpi = 450)
+
+## I wanted to note that I used grams and millimeters because they were the units that made the most sense in the data set, given the large numbers attached to the groups.
+
+
 
 # QUESTION: Why do you think we focused on Redband Trout for most of this assignment?
+
+## We focused on Redband Trout because it was just one species listed within the "LowerSpokaneFish" data set. It made it easier for us to to focus on different variables when we didn't have to account for other species as well.
+
 
 
 # REMEMBER: Save and push your script when you're done with this assignment!
