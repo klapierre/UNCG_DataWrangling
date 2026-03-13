@@ -80,8 +80,8 @@ getwd()
 ## species abundance datafile (CME011). To do so, use the read.csv() function, 
 ## putting the relative file path and file name. Assign the dataframe you import
 ## a name that includes the experiment name (conSME) and the data type (abundance)
-## using '<-' and be sure to carefully consider your naming convention when doing so.
-
+## using '<-' and be sure to carefully consider your naming convention when doing so
+conSME_abundance <- read.csv("~/Desktop/Bio 457 - DATA WRANGLING 2026/UNCG_DataWrangling Public/CME011.csv")
 
 ## After completing the above task, run the following code.
 conSMEcoverAlt <- read.csv("https://pasta.lternet.edu/package/data/eml/knb-lter-knz/148/5/5716ee946efd717292fa3da9241cda7c")
@@ -89,6 +89,7 @@ conSMEcoverAlt <- read.csv("https://pasta.lternet.edu/package/data/eml/knb-lter-
 
 ## QUESTION: What did this code do? What can you say about the two dataframes 
 ## you have created thus far?
+It would appear to have uploaded the data from the internet into the R-studio but i'm unsure' how it works.
 
 
 ## TASK: Check to see if the two dataframes are identical using an R function.
