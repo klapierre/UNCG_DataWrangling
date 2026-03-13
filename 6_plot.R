@@ -562,6 +562,9 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 # TASK: Check out the section on complete themes in the ggplot2 book here:
 # https://ggplot2-book.org/polishing.html#themes.  Try out two more themes below.
 
+## Could not do this, as the site gave a 404 error, as the site did not exist.
+
+
 
 # Rather than using the pre-set themes, we can also create our own! 
 # The theme can be set to modify the text of plot titles, axis titles, axis labels,
@@ -582,6 +585,9 @@ ggplot(redband, aes(x = Length, y = Weight)) +
   geom_point() +
   theme(panel.background = element_blank())
 
+## "panel.grid.minor" controls grid lines for reference to where the ticked markers are, whereas "panel.background" controls the background overall. "element.blank()" refers to either leaving a blank grid line or blank background in this case, which is just white.
+
+
 
 # Try running the following code to alter text size:
 ggplot(redband, aes(x = Length, y = Weight)) + 
@@ -590,10 +596,18 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 
 # QUESTION: What does element_text() refer to in the code above?
 
+## "element_text()" is referring to the y-axis title in this case and how it's being altered.
+
+
 
 # TASK: Write your own code below to change the size of the x-axis labels
 # (i.e., the numbers along the x-axis) to 50. 
 # HINT: Check out the ggplot cookbook or ggplot2 themes websites for help.
+
+ggplot(redband, aes(x = Length, y = Weight)) + 
+  geom_point() +
+  theme(axis.title.x=element_text(size=50))
+
 
 
 # We can set the theme to include all kinds of variations by adding them all to
