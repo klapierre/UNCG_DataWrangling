@@ -701,9 +701,19 @@ ggsave("Redband_histogram_facet.png")
 
 # QUESTION: Where did this file show up? And what was the graph?
 
+## This file showed up under the Git tab.The graph was the last graph I made involving the histogram of Length faceted by Scale Age.
+
+
 
 # TASK: Investigate the ggsave() function through the help files. Then write
 # code to save the file at 600 dpi, 10 inch width and 8 inch height.
+
+ggsave("Redband_histogram_facet.png",
+       dpi = 600,
+       width = 10,
+       height = 8,
+       units = "in")
+
 
 
 # NOTE: You can also save the graphics you make by exporting them from the plots
