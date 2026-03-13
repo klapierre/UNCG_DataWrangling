@@ -94,11 +94,11 @@ It would appear to have uploaded the data from the internet into the R-studio bu
 
 ## TASK: Check to see if the two dataframes are identical using an R function.
 ## (Hint: remember the Week 1 assignment?)
-
+CME011 == conSMEcoverAlt
 
 ## QUESTION: Why might it be better to source data straight from the data portal?
 ## Why might it be worse?
-
+It can be useful to pull the data directly from the web as it can be an easier method to import data. But there is a possiblity that the data does not import well or is incorrect. 
 
 ## TASK: Save your R script. Then stage, commit, and pull/push your
 ## modified code to the branch you created for this week with an appropriate 
