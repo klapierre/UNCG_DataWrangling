@@ -206,7 +206,7 @@ noDuplicates <- unique(duplicates)
 ## tab of RStudio, what do you notice about the number of observations for the 
 ## noDuplicates dataframe compared to the dulpicates dataframe? What about 
 ## compared to the two original dataframes?
-
+Interestingly, the noDuplicates is almost double the totals of the two datframes but it lacks 188 observations. I guess the online version of the data must had an update for the data unlike the downloaded file.
 
 ## TASK: Go back to our repository in GitHub through your web browser. Find the
 ## issue you created and resolve it.
