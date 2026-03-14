@@ -149,12 +149,13 @@ They will likely follow the same structure. I like repetition.
 ## conSME dataframes you have created into one ultimate dataframe using the 
 ## rbind() function.
 ## (Hint: Very similar to the cbind function we used in the Week 1 assignment)
+duplicates <- rbind(CME011, conSMEcoverAlt)
 
 
 ## QUESTION: Looking at the information for each dataframe in the environment tab
 ## of RStudio, what do you notice about the number of observations for the 
 ## duplicates dataframe compared to the two original dataframes?
-
+It's double' the total observations. Meaning that both sets were combined.
 
 ## TASK: Save your R script. Stage, commit, and pull/push your modified code to 
 ## the branch you created for this week with an appropriate commit message.
@@ -169,8 +170,19 @@ duplicates[with(duplicates, order(RecDate, Block, Plot, Taxa)),]
 
 ## QUESTION: What do you notice about the data? Specifically, compare rows 
 ## 4934 and 12173 (if they are sorted correctly, those should be on top).
+I do not have both values, I have 4934 but I do not have 12173 instead I have 14179. Regardless, they are the exact same values. The only difference is that the comments on 1934 is NA and 12173 is not NA. 
 
+duplicates[12173,]
+<chr>      <dbl>   <dbl> <chr>  <chr>    <chr>     <chr> <dbl>  <dbl> <chr>    <dbl>
+CME01          1    2019 spring 6/1/2019 N4B       R         4    327 Malvast…     1
 
+duplicates[4934,]
+<chr>      <dbl>   <dbl> <chr>  <chr>     <chr>     <chr> <dbl>  <dbl> <chr>   <dbl>
+  1 CME01          1    2021 Spring 5/22/2021 N1A       A         2     31 Carex …     1
+
+duplicates[14179,]
+<chr>      <dbl>   <dbl> <chr>  <chr>     <chr>     <chr> <dbl>  <dbl> <chr>     <dbl> <chr>   
+  1 CME01          1    2021 Spring 5/22/2021 N1A       A         2     31 Carex br…     1 "" 
 ## TASK: Save your R script. Stage, commit, and pull/push your modified code to the branch
 ## you created for this week with an appropriate commit message.
 
