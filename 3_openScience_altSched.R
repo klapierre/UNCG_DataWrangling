@@ -113,23 +113,24 @@ It can be useful to pull the data directly from the web as it can be an easier m
 
 ## TASK: Check the names of the columns in the species cover dataset you imported.
 ## (Hint: remember the Week 1 assignment?)
-
+names(conSMEcoverAlt)
 
 ## QUESTION: What naming convention did the dataset creators use for column names?
-
+[1] "Datacode"  "RecType"   "RecYear"   "Season"    "RecDate"   "Watershed"
+[7] "Block"     "Plot"      "Sppnum"    "Taxa"      "Cover"     "Comments" 
 
 ## QUESTION: What naming convention do you plan to use for this course for the
 ## following types of objects in R:
-## R scripts
-## vectors
-## dataframes
-## columns within dataframes
-## homemade functions
+## R scripts ***_script
+## vectors ***_vect
+## dataframes ***_frame
+## columns within dataframes ***_variable
+## homemade functions ***_jv
 
 
 ## QUESTION: Do all of your objects follow the same naming convention or do you
 ## plan to use different naming conventions to reference different object types?
-
+They will likely follow the same structure. I like repetition. 
 
 ## TASK: Save your R script. Stage, commit, and pull/push your modified code to 
 ## the branch you created for this week with an appropriate commit message.
