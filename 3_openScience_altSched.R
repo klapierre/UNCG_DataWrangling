@@ -221,14 +221,15 @@ Interestingly, the noDuplicates is almost double the totals of the two datframes
 # ----------------------------------------------------------
 
 ## TASK: Type a comment below.
-
+This isn't 'as bad as I made it during the first few weeks. I really hope to retain and be able to utlize the knowledge I have learned in this course. I find what I know so far very beneficial and I appreciate the encouragement to utlize the internet and external sources to assist in troubleshooting!
+  --- troubleshooting rn.
 
 ## TASK: Follow these instructions carefully!
 ## Save your R script. Stage and commit with the commit message "learning to 
 ## amend", but this time DON'T pull/push your modified code!
 
 ## TASK: Type another comment below.
-
+I got an error saying I was ahead of a commit. 
 
 ## TASK: Save your R script. Open up the commit window in RStudio.
 
@@ -236,7 +237,7 @@ Interestingly, the noDuplicates is almost double the totals of the two datframes
 ## QUESTION: How many commits are you ahead of your branch on GitHub?
 ## (Hint: look for the message "Your branch is ahead of..." near the top of the 
 ## window.)
-
+it didn't state' any commits that were ahead when I saved but in the previous step I was 1 commit ahead. 
 
 ## TASK: Stage your modified code and check the "Amend previous commit" box.
 ## Then commit your code (still don't pull/push).
