@@ -335,6 +335,9 @@ ggplot(redband, aes(x = as.factor(ScaleAge), y = Weight)) +
 
 # QUESTION: What is the graph output? Note the scale of the y-axis. Does this seem
 # right to you? What do you think happened to result in this graph?
+# The graph output is a bar graph with x-axis being ScaleAge and the y-axis being the
+# weight. This does not seem right, this happened because the code above is using raw weight
+# values instead of summarized values. 
 
 
 # Typically, when plotting a bar graph we want to have the output show the mean
@@ -352,7 +355,12 @@ ggplot(redband, aes(x = as.factor(ScaleAge), y = Weight)) +
 # (4) Mutates to create a new column called Weight_se that includes the standard
 #     error of weight for each group (se=1.96*sd).
 # HINT:Don't forget to remove NAs and ungroup at the appropriate place.
-
+redbandSummary <- redband %>% 
+  filter(!is.na(Weight)) %>% 
+  group_by(ScaleAge) %>% 
+  summarise(Weight_mean = mean(Weight), Weight_sd = sd(Weight)) %>% 
+  mutate(Weight_se = 1.96 * Weight_sd) %>% 
+  ungroup()
 
 # Let's try again to make our bargraph by running the following code:
 ggplot(redbandSummary, aes(x = as.factor(ScaleAge), y = Weight_mean)) + 
