@@ -492,6 +492,13 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 
 # TASK: Check out the section on complete themes in the ggplot2 book here:
 # https://ggplot2-book.org/polishing.html#themes.  Try out two more themes below.
+ggplot(redband, aes(x = Length, y = Weight)) + 
+  geom_point() +
+  theme_grey()
+
+ggplot(redband, aes(x = Length, y = Weight)) + 
+  geom_point() +
+  theme_dark()
 
 
 # Rather than using the pre-set themes, we can also create our own! 
