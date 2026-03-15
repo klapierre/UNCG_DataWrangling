@@ -519,7 +519,9 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 ggplot(redband, aes(x = Length, y = Weight)) + 
   geom_point() +
   theme(panel.background = element_blank())
-
+# Based on the output, panel.grid.minor refers to the minor grid lines in the graph, 
+# element blank removes them. Panel. background refers to the background of the graph, 
+# element blank removed the background fill. 
 
 # Try running the following code to alter text size:
 ggplot(redband, aes(x = Length, y = Weight)) + 
@@ -527,12 +529,14 @@ ggplot(redband, aes(x = Length, y = Weight)) +
   theme(axis.title.y=element_text(size=100))
 
 # QUESTION: What does element_text() refer to in the code above?
-
+# element_text refers to the appearance of the text. The code above specifies the y-axis text. 
 
 # TASK: Write your own code below to change the size of the x-axis labels
 # (i.e., the numbers along the x-axis) to 50. 
 # HINT: Check out the ggplot cookbook or ggplot2 themes websites for help.
-
+ggplot(redband, aes(x = Length, y= Weight)) + 
+  geom_point() + 
+  theme(axis.text.x = element_text(size = 50))
 
 # We can set the theme to include all kinds of variations by adding them all to
 # the theme statement for an individual ggplot.
