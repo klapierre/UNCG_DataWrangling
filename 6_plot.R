@@ -594,11 +594,12 @@ ggplot(redband, aes(x = Length)) +
 ggsave("Redband_histogram_facet.png")
 
 # QUESTION: Where did this file show up? And what was the graph?
-
+##ANSWER: The file is a png of the last plot that I made, it shows up in my UNCG_DataWrangling folder. 
 
 # TASK: Investigate the ggsave() function through the help files. Then write
 # code to save the file at 600 dpi, 10 inch width and 8 inch height.
 
+ggsave("Redband_histogram_facet_600dpi.png", dpi = 600, width = 10, height = 8)
 
 # NOTE: You can also save the graphics you make by exporting them from the plots
 # tab in RStudio. However, this can be less precise than specifying the graphic
@@ -613,7 +614,7 @@ ggsave("Redband_histogram_facet.png")
 # graph, and a dot plot with a trend line. Which of these figures was an example
 # of a correlation? Which showed deviations from a benchmark or baseline? And which
 # was an example of a distribution?
-
+##ANSWER: Thr dot plot with a trans line shows correlation, the box plot and bar graphs show deviations from a baseline, and the histogram shows a distribution. 
 
 
 # TASK: Import the full SpokaneFish dataset, keeping all observations (i.e., 
@@ -624,8 +625,17 @@ ggsave("Redband_histogram_facet.png")
 # Then save your file as a .png with an informative figure name at a width of 9
 # inches and a height of 7 inches and 450 dpi.
 
+SpokaneFish <- read.csv("LowerSpokaneFish.csv")
+
+ggplot(SpokaneFish, aes(x = Length, y = Weight, color = Species)) + 
+  geom_point(shape = 'triangle') +
+  scale_x_log10() +
+  facet_wrap(~Species) +
+  labs(x = "Length (mm)", y = "Weight (g)", title = "Weight vs Length for Spokane Fish by Species")
+  
+ggsave("Spokane_weight_vs_length_by_species.png", dpi = 450, width = 9, height = 7)
 
 # QUESTION: Why do you think we focused on Redband Trout for most of this assignment?
-
+## ANSWER: So that we could learn how to use these functions for a simple dataset before applying them to a more complex dataset with multiple categories. 
 
 # REMEMBER: Save and push your script when you're done with this assignment!
