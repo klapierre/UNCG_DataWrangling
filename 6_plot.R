@@ -177,7 +177,9 @@ ggplot(redband, aes(x= Weight)) +
 # QUESTION: In the code below, what is the dataframe being examined?
 # What are the aesthetics? What will the resulting graph be plotting?
 ggplot(redband, aes(x=ScaleAge, y=Length))
-
+# The data frame that is being examined is redband. The aesthetics are x-axis is ScaleAge
+# and y-axis is Length. The resulting graph will plot ScaleAge on the x-axis and Length for
+# the y-axis. There is no data because we are missing the geometry layer. 
 
 # When we start, we tell ggplot that we want certain aesthetics (x- and y-axis).
 # But without specifying a geometric object (what shape to add to the plot), we won't
@@ -188,11 +190,12 @@ ggplot(redband, aes(x=ScaleAge, y=Length)) +
 
 # QUESTION: Based on the figure that was generated from the code above, 
 # what would you conclude about the relationship between fish age and length?
-
+# When a fish gets older, its length also increases. 
 
 # TASK: Write your own code to visualize the relationship between Redband 
 # length and weight.
-
+ggplot(redband, aes(x = Length, y = Weight)) + 
+  geom_point()
 
 # ---------------------------------------------------------- #
 #### PART 1.4 ADDING AESTHETICS TO GEOMETRIC OBJECTS      ####
