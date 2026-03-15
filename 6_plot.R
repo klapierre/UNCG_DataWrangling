@@ -681,6 +681,8 @@ ggsave("SpokaneFish_Weight_vs_Length_by_Species.png",
 
 
 # QUESTION: Why do you think we focused on Redband Trout for most of this assignment?
-
+# I think we focused on Redband Trout for most of this assignment because it provided us with 
+# a database that helped us learn how to manipulate, summarize and visualize data in a way that 
+# is understandable. 
 
 # REMEMBER: Save and push your script when you're done with this assignment!
