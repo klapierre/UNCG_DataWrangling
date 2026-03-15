@@ -162,7 +162,8 @@ ggplot(redband, aes(x = Weight)) + geom_histogram()
 
 # QUESTION: In the code below, what is the dataframe being examined?
 # What are the aesthetics? What will the resulting graph be plotting?
-ggplot(redband, aes(x=ScaleAge, y=Length))
+ggplot(redband, aes(x=ScaleAge, y=Length)) ##ANSWER: The redband dataframe is being examined.
+## The aesthetics are Scale Age for the x axis and length for the y axis. The resulting graph will be plotting the relationship between age and length of the fish. 
 
 
 # When we start, we tell ggplot that we want certain aesthetics (x- and y-axis).
@@ -174,11 +175,12 @@ ggplot(redband, aes(x=ScaleAge, y=Length)) +
 
 # QUESTION: Based on the figure that was generated from the code above, 
 # what would you conclude about the relationship between fish age and length?
-
+##ANSWER: Fish age and length have a positive correlation. 
 
 # TASK: Write your own code to visualize the relationship between Redband 
 # length and weight.
-
+ggplot(redband, aes(x=Weight, y=Length)) + 
+  geom_point()
 
 # ---------------------------------------------------------- #
 #### PART 1.4 ADDING AESTHETICS TO GEOMETRIC OBJECTS      ####
