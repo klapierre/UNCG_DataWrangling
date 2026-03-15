@@ -388,7 +388,7 @@ ggplot(redband, aes(x = Length, y = Weight, color = as.factor(ScaleAge))) +
   geom_smooth(method='lm', se=F)
 
 # QUESTION: What is different about this graph from before?
-
+##ANSWER: This graph includes linear trend lines for each ScaleAge value. 
 
 # ---------------------------------------------------------- #
 #### PART 1.8: ALTERING SCALES                            ####
