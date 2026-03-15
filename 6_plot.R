@@ -579,6 +579,7 @@ theme_update(axis.title.x = element_text(size = 20, vjust = -0.35, margin = marg
              legend.text = element_text(size = 20))
 
 
+
 # ---------------------------------------------------------- #
 #### PART 1.10: SPECIFYING FACETS                          ####
 # ---------------------------------------------------------- #
