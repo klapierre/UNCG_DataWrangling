@@ -368,31 +368,42 @@ ggplot(redbandSummary, aes(x = as.factor(ScaleAge), y = Weight_mean)) +
 
 # QUESTION: What does the stat='identity' part do in the code above? Check the 
 # geom_bar() help or google to find the answer.
-
+# The stat='identity' part tells ggplot to use the y-values from the data directly, instead of
+# summarizing the data. 
 
 # The above code gave us nice bars.  Now we need to add error bars! We will do this
 # by adding in a second geometric object that specifies errorbars. Try it by
 # running the following code:
 ggplot(redbandSummary, aes(x = as.factor(ScaleAge), y = Weight_mean)) + 
   geom_bar(stat='identity') +
+  # creates bars using the weight mean for each age. 
   geom_errorbar(aes(ymin=Weight_mean-Weight_se,
+  # adds error bars. 
                     ymax=Weight_mean+Weight_se,
+  #sets upper and lower limits. 
                     width=0.2))
-
+  # Sets the width of the error bars to 0.2. 
 # QUESTION: Annotate the code above with what each line does.
 
 
 # QUESTION: What does the statement width=0.2 do? If you're unsure, try removing
 # it and seeing what happens.
+ggplot(redbandSummary, aes(x = as.factor(ScaleAge), y = Weight_mean)) + 
+  geom_bar(stat='identity') +
+  geom_errorbar(aes(ymin=Weight_mean-Weight_se,
+                    ymax=Weight_mean+Weight_se))
+# The statement width=0.2 makes the width of the error bar 0.2. When we remove this 
+# statement the error bar goes back to its default size. 
 
 
 # TASK: Modify the code below to make the bar fill light green, the bar outline 
 # dark green, and the error bars dark orange with end caps 40% the bar width.
 ggplot(redbandSummary, aes(x = as.factor(ScaleAge), y = Weight_mean)) + 
-  geom_bar(stat='identity') +
+  geom_bar(stat='identity', fill = "lightgreen", color = "darkgreen") +
   geom_errorbar(aes(ymin=Weight_mean-Weight_se,
-                    ymax=Weight_mean+Weight_se,
-                    width=0.2))
+                    ymax=Weight_mean+Weight_se),
+                    color = "darkorange", 
+                    width=0.08)
 
 # ---------------------------------------------------------- #
 #### PART 1.7 AESTHETICS PLACEMENT MATTERS!               #### 
