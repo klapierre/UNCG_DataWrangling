@@ -33,7 +33,8 @@
 
 # TASK: Install tidyverse and load the library. HINT: see the end of the week 1 
 # assignment if you forget how to install and load a package.
-
+install.packages("tidyverse")
+library(dplyr)
 
 # ---------------------------------------------------------- #
 #### PART 1.0: LEARNING THE FUNCTIONS                     ####
@@ -52,24 +53,27 @@
 
 
 # TASK: Read in the data by running the following line of code.
-streamTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv", 
-                       stringsAsFactors = TRUE) 
+streamTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv", stringsAsFactors = TRUE) 
 
 
 # QUESTION: What do you think stringsAsFactors mean?
-
+I think it could stand for characters becoming factors like values. 
 
 # TASK: Let's learn a little more about our data. Run the following line of code.
 str(streamTemp)
 
 # QUESTION: What does it look like the str() function does?
-
+I think it provides the variables and the data within the dataframe. Ultizing Copilot, it states that it summarizes the dataframe by providing the type of object, dimensions, each variable name,the data type, and a preview of values. 
 
 # QUESTION: How many rows does our dataframe have? How many columns? 
 # What class of data is in each column?
-
+61100 rows and 5 columns
 
 # TASK: Try reading your data in without the stringsAsFactors argument included.
+nrow(streamTemp)
+= 61100
+ncol(streamTemp)
+= 5
 
 
 # QUESTION: What is the difference? (HINT: rerun the str function to check).
