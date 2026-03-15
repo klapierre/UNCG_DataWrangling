@@ -122,8 +122,7 @@ ggplot(redband, aes(x = Length))
 
 # Now let's add in the data! Run the following code to include a geometric
 # object (geom). In this case, the geometric object is a histogram.
-ggplot(redband, aes(x = Length)) + 
-  geom_histogram()
+ggplot(redband, aes(x = Length)) + geom_histogram()
 # NOTE: When using the ggplot function, we use the + to indicate passing from
 # one aesthetic or geometric object to the next. No pipes here!
 
@@ -137,8 +136,7 @@ ggplot(redband, aes(x = Length)) +
 # bins=30 and that you can pick better values with `binwidth`. Let's try this!
 # Run the code below to make a new graph below where we change binwidth to be 50.
 # HINT: Check out ?geom_histogram to pull up the help page.
-ggplot(redband, aes(x = Length)) + 
-  geom_histogram(binwidth=50)
+ggplot(redband, aes(x = Length)) + geom_histogram(binwidth=50)
 
 # QUESTION: What changed about our output when we asked for binwidth=50?
 
@@ -149,8 +147,7 @@ ggplot(redband, aes(x = Length)) +
 # Make another histogram that plots the distribution of ScaleAge for the redband
 # dataframe.
 
-ggplot(redband, aes(x = ScaleAge)) + 
-  +     geom_histogram()
+ggplot(redband, aes(x = ScaleAge)) + geom_histogram()
 
 
 # QUESTION: If ScaleAge represents how old the fish are in years, what do you notice
@@ -162,8 +159,7 @@ ggplot(redband, aes(x = ScaleAge)) +
 # TASK: Fish weight is also an interesting variable. Make a histogram that plots
 # the distribution of Weight for the redband dataframe.
 
-ggplot(redband, aes(x = Weight)) +
-  geom_histogram()
+ggplot(redband, aes(x = Weight)) +geom_histogram()
 
 # QUESTION: What warning message is generated in the console when you create the 
 # weight histogram? What does this warning message mean? Do you think it is ok 
@@ -182,6 +178,9 @@ ggplot(redband, aes(x = Weight)) +
 # What are the aesthetics? What will the resulting graph be plotting?
 ggplot(redband, aes(x=ScaleAge, y=Length))
 
+#The redband data is being examined and the aesthetics are x= scaleage and y= length
+#the resulting graph will plot the fish age on the x axis and the length of the fish on the y axis
+
 
 # When we start, we tell ggplot that we want certain aesthetics (x- and y-axis).
 # But without specifying a geometric object (what shape to add to the plot), we won't
@@ -193,10 +192,12 @@ ggplot(redband, aes(x=ScaleAge, y=Length)) +
 # QUESTION: Based on the figure that was generated from the code above, 
 # what would you conclude about the relationship between fish age and length?
 
+#The bigger fish are older than the smaller fish.
 
 # TASK: Write your own code to visualize the relationship between Redband 
 # length and weight.
 
+ggplot(redband, aes(x=Length, y=Weight)) + geom_point()
 
 # ---------------------------------------------------------- #
 #### PART 1.4 ADDING AESTHETICS TO GEOMETRIC OBJECTS      ####
