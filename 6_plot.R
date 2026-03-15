@@ -306,7 +306,8 @@ ggplot(redband, aes(x = as.factor(ScaleAge), y=Weight)) +
 # QUESTION: Name another statistical transformation we have already used in this
 # assignment.
 # HINT: It was in the very first part of the assignment.
-
+# Another statistical transformation we have already used in this assignment is 
+# stat_bin(). We used this when creating histograms. 
 
 # TASK: Let's put this all together! Create a graph with the following:
 # (1) redband dataframe,
@@ -314,7 +315,9 @@ ggplot(redband, aes(x = as.factor(ScaleAge), y=Weight)) +
 # (3) points colored by ScaleAge as a factor
 # (4) quadratic line that is black in color and size=2 (HINT: check ggplot
 #     cookbook to help figure out how to change line color and size).
-
+ggplot(redband, aes(x = Length, y = Weight)) + 
+  geom_point(aes(color = as.factor(ScaleAge))) + 
+  geom_smooth(method = "lm", formula= y ~ poly(x, 2), color = "black", size = 2)
 
 # ---------------------------------------------------------- #
 #### PART 1.6 DATA IN VS DATA OUT                         #### 
