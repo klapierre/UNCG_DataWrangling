@@ -418,7 +418,8 @@ ggplot(redband, aes(x = Length, y = Weight, color = as.factor(ScaleAge))) +
   geom_smooth(method='lm', se=F)
 
 # QUESTION: What is different about this graph from before?
-
+# The difference from the previous graphs is that the points and line are now colored. 
+# In the previous graphs, only the points were colored in. 
 
 # ---------------------------------------------------------- #
 #### PART 1.8: ALTERING SCALES                            ####
