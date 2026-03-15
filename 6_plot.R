@@ -138,26 +138,37 @@ ggplot(redband, aes(x = Length)) +
   geom_histogram(binwidth=50)
 
 # QUESTION: What changed about our output when we asked for binwidth=50?
-# The output changed to a binwidth of 50, so the data is now more condensed and
+# The output changed to a bin width of 50, so the data is now more condensed and
 # the histogram has less bars but they are wider. 
 
 # TASK: Some other factors might affect this distribution of redband length?
 # Make another histogram that plots the distribution of ScaleAge for the redband
 # dataframe.
-
+ggplot(redband, aes(x = ScaleAge)) + 
+ geom_histogram()
+# Adjusting binwidth to read the histogram better. 
+ggplot(redband, aes(x= ScaleAge)) + 
+  geom_histogram(binwidth = 1)
 
 # QUESTION: If ScaleAge represents how old the fish are in years, what do you notice
 # about the Redband Trout population based on the figure you generated?
-
+# There are many fish that are one year old, but the number of fish decreases as ScaleAge
+# Increases. 
 
 # TASK: Fish weight is also an interesting variable. Make a histogram that plots
 # the distribution of Weight for the redband dataframe.
+ggplot(redband, aes(x= Weight)) + 
+  geom_histogram()
 
 
 # QUESTION: What warning message is generated in the console when you create the 
 # weight histogram? What does this warning message mean? Do you think it is ok 
 # to proceed or should you alter your code to get rid of this warning?
 
+#The warning message says "Removed 88 rows containing non-finite outside the scale
+# range ('stat_bin()'). This warning message means that there are missing values in our data
+# and they cannot be plotted in the histogram. I think it is ok to proceed, we can alter 
+# the code to filter out the missing values. 
 
 # ---------------------------------------------------------- #
 #### PART 1.3 GEOMETRIC OBJECT: POINTS                    ####
