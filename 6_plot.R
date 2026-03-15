@@ -269,7 +269,10 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 # QUESTION: Using the geom_smooth help page, what type of function is being used 
 # in the above graph for our statistical transformation fit?
 # HINT: What is the default model type for a dataframe of our size?
-
+help("geom_smooth")
+# The function that is being used in the above graph for our statistical transformation fit
+# is gam (generalized additive model). This function is used when the dataset has more than 
+# 1,000 observations. 
 
 # We also can specify a specific model to fit. Try running the following code to
 # specify a linear model:
@@ -280,7 +283,10 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 # TASK: As with most things in R, there are multiple ways to accomplish the same
 # task. Using the geom_smooth help page, write code below to specify a linear
 # model using a method= statement instead of the formula= statement.
-
+help("geom_smooth")
+ggplot(redband, aes(x = Length, y = Weight)) + 
+  geom_point()+ 
+  geom_smooth(method = "lm")
 
 # A linear model does not seem like a good fit to our data. Try running the
 # following code to generate a quadratic model.
