@@ -637,6 +637,7 @@ ggsave("Redband_histogram_facet.png",
        width = 10, 
        height = 8, 
        units = "in")
+
 # NOTE: You can also save the graphics you make by exporting them from the plots
 # tab in RStudio. However, this can be less precise than specifying the graphic
 # attributes using the ggsave function.
