@@ -75,12 +75,11 @@ nrow(streamTemp)
 ncol(streamTemp)
 = 5
 
-
 # QUESTION: What is the difference? (HINT: rerun the str function to check).
 # When would we want to set the stringsAsFactors argument to true?  When would 
 # it be better to make it false?
-
-
+Finding the total rows is difficult due to how far the number points go down the table. 
+I"m not sure" how to make the stringAsFactors work.
 
 # ---------------------------------------------------------- #
 ### PART 1.1: RENAMING COLUMNS                            ####
@@ -93,12 +92,16 @@ colnames(streamTemp)
 
 
 # QUESTION: What output do you get in the console? Why is this useful?
+> colnames(streamTemp)
+[1] "Date"                   "Time"                   "Calispell.Cr.Temp.C."  
+[4] "Smalle.Cr.Temp.C."      "Winchester.Cr.Temp..C."
+I think it only provides the names of the columns/variables. It's 'useful because it'll let you know what'the order of the columns are along with how the name 
 
 
 # QUESTION: What happened to the title of the third column when it was loaded
 # into R?
 # HINT: What happened to the spaces and parenthesis in the R column names?
-
+In the excel sheet there are no dots inbetween words but when the data is transfered to R Studio, they have periods inbetween the words. 
 
 # TASK: Run the following line of code. Note the alignment of the code components.
 streamTempRename <- rename(.data=streamTemp,
@@ -109,14 +112,18 @@ streamTempRename <- rename(.data=streamTemp,
 
 # TASK: Write your own code to find the column names of our new dataframe 
 # (streamTempRename). 
+colnames(streamTempRename)
+[1] "Date"            "Time"            "calispell_temp"  "smalle_temp"    
+[5] "winchester_temp"
+
 
 
 # QUESTION: What differences do you notice from before? In your own words, what 
 # did each line from the rename function do? Why might this function be useful 
 # for wrangling data? In the rename code above, does the new column name come 
 # before or after the =?
-
-
+The space inbetween words are now replaced with underscores. 
+The first line of function states where the data is. Then it list the previous titles = new title.
 # ---------------------------------------------------------- #
 ### PART 1.2: SELECTING COLUMNS                           ####
 # ---------------------------------------------------------- #
@@ -130,6 +137,9 @@ streamTempRename <- rename(.data=streamTemp,
 
 # TASK: Look again at the columns you have in the streamTempRename dataframe by
 # writing the necessary code below.
+select(.data=streamTempRename, calispell_temp)
+?select
+A 2 column list was provided with the number of rows being accounted for and the calispell_temp column.
 
 
 # TASK: Run the following line of code to select our columns of interest.
@@ -141,7 +151,7 @@ calispellTemp <- select(.data=streamTempRename,
 # by coding the appropriate R function of course. What do you notice about the 
 # new dataframe? Which columns are present? Which are absent? Are they in the same 
 # order as before?
-
+The columns that were present are calispell_temp, Date, Time. It is missing Smalle.Cr.Temp.C. and Winchester.Cr.Temp..C. What is interesting is that the order of columns are rearranged as well.
 
 # A nice thing to notice about this code. We didn't have to type 'streamTemp$date'
 # etc to indicate each column as we would outside of the tidyverse. The select()
@@ -152,7 +162,8 @@ calispellTemp <- select(.data=streamTempRename,
 # TASK: Recall that in R, the `:` operator is a compact way to create a sequence 
 # of numbers. For example, write code below to generate a sequence from 1 to 3.
 # HINT: Look back to assignment #1 or the swirl tutorial for help (or google!).
-
+1:3
+[1] 1 2 3
 
 # Normally this notation is just for numbers, but the select() function allows 
 # you to specify a sequence of columns this way. This can save a bunch of typing!
@@ -162,7 +173,8 @@ calispellTemp <- select(.data=streamTempRename,
 # HINT: Replace the code where each column was listed out with a sequence of 
 # column names. Be sure they are listed in the order they exist in the original 
 # dataframe.
-
+calispellTemp2 <- select(.data=streamTemp,
+                        calispell_temp:Time)
 
 # TASK: Write code to check your column names again to see what happened in your
 # new dataframe.
