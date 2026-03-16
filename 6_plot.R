@@ -394,9 +394,10 @@ ggplot(redbandSummary, aes(x = as.factor(ScaleAge), y = Weight_mean)) +
   geom_bar(stat='identity') + geom_errorbar(aes(ymin=Weight_mean-Weight_se, 
                                                 ymax=Weight_mean+Weight_se, width=0.2))
 
-#ggplot(redbandSummary, aes(x = as.factor(ScaleAge), y = Weight_mean)) +
-  + geom_bar(stat = "identity", fill = "lightgreen", color = "darkgreen") + 
-  geom_errorbar(aes(ymin = Weight_mean - Weight_se, ymax = Weight_mean + Weight_se), color = "darkorange", width = 0.4)
+ggplot(redbandSummary, aes(x = as.factor(ScaleAge), y = Weight_mean)) +
+  geom_bar(stat = "identity", fill = "lightgreen", color = "darkgreen") +
+  geom_errorbar(aes(ymin = Weight_mean - Weight_se,
+                    ymax = Weight_mean + Weight_se), color = "darkorange", width = 0.4)
 
 
 
@@ -453,8 +454,7 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 # Fill in your boxplots with your favorite color and make the outline your least
 # favorite color. Label the x-axis Scale Age (years) and the y-axis Length (mm).
 
-ggplot(redband, aes(x = as.factor(ScaleAge), y = Length)) +
-  +     geom_boxplot(fill = "skyblue", color = "yellow") + 
+ggplot(redband, aes(x = as.factor(ScaleAge), y = Length)) + geom_boxplot(fill = "skyblue", color = "yellow") + 
   scale_y_log10() + xlab("Scale Age (years)") + ylab("Length (mm)")
 
 # ---------------------------------------------------------- #
@@ -508,6 +508,9 @@ ggplot(redband, aes(x = Length, y = Weight)) +
   geom_point() +
   theme(panel.background = element_blank())
 
+#panel.grid.minor means there are minor grid lines compared to element_blank which removes
+#the background from the plot. Panel.background is just referring to the background of the plot itself.
+
 
 # Try running the following code to alter text size:
 ggplot(redband, aes(x = Length, y = Weight)) + 
@@ -516,11 +519,14 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 
 # QUESTION: What does element_text() refer to in the code above?
 
+# It controls the font size or just the aspects of the text.
 
 # TASK: Write your own code below to change the size of the x-axis labels
 # (i.e., the numbers along the x-axis) to 50. 
 # HINT: Check out the ggplot cookbook or ggplot2 themes websites for help.
 
+ggplot(redband, aes(x = Length, y = Weight)) +
+  geom_point() + theme(axis.text.x = element_text(size = 50))
 
 # We can set the theme to include all kinds of variations by adding them all to
 # the theme statement for an individual ggplot.
