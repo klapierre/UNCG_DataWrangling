@@ -1,6 +1,45 @@
 # Map building in RStudio
 #mariii
 #pattie
+#Write a code to install the packages ggplot2, maps, dyplr, tigris, and sf
+#Run the following code to load the packages into your library:
+
+library(ggplot2)
+library(maps)
+library(dplyr)
+library(tigris)
+library(sf)
+
+#Run the following code:
+options(tigris_use_cache = TRUE)
+
+
+state_data <- cbind(
+  State = rownames(state.x77),
+  as.data.frame(state.x77)
+)
+
+rownames(state_data) <- NULL
+
+head(state_data)
+
+state_frost_data <- state_data %>% select(State, Frost)
+
+head(state_frost_data)
+
+states <- states(cb = TRUE)
+
+states <- states %>% rename(State = NAME)
+
+us_states_frost <- left_join(states, state_frost_data, by = c("State"))
+
+ggplot(us_states_frost) +
+  geom_sf(aes(fill = Frost), color = "blue") +
+  theme_minimal() +
+  labs(fill = "Number of Frost Days", title = "United States Frost Data")
+
+
+
 # ---------------------------------------------------------------------------- #
 ## OBJECTIVES:
 # 1. Understand when and why we may want to use R to build maps
