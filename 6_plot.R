@@ -304,6 +304,8 @@ ggplot(redband, aes(x = as.factor(ScaleAge), y = Weight)) +
 # QUESTION: What is the graph output? Note the scale of the y-axis. Does this seem
 # right to you? What do you think happened to result in this graph?
 
+the grpah shows bars stacked for fish weight within each ScaleAge category, and the y axis also becomes huge becasue of the individual weight values are being added toghter. it happend because geom_bar(stat="identity") and uses the raw y-vlaues then summarzing them first.
+
 
 # Typically, when plotting a bar graph we want to have the output show the mean
 # and standard error for each category. But unlike when we use the geom_boxplot 
@@ -329,6 +331,8 @@ ggplot(redbandSummary, aes(x = as.factor(ScaleAge), y = Weight_mean)) +
 # QUESTION: What does the stat='identity' part do in the code above? Check the 
 # geom_bar() help or google to find the answer.
 
+the state = "identity" tells geom_bar() to plot the y-values how they appear in the data frame. it uses weight_mean values from redband trout summmary as the hieghts in the bars rather than counting the number of observations in each group 
+
 
 # The above code gave us nice bars.  Now we need to add error bars! We will do this
 # by adding in a second geometric object that specifies errorbars. Try it by
@@ -340,11 +344,19 @@ ggplot(redbandSummary, aes(x = as.factor(ScaleAge), y = Weight_mean)) +
                     width=0.2))
 
 # QUESTION: Annotate the code above with what each line does.
+creates a ggplot using the redbandsummary dataframe and maps the sclae age to the x-axis and weight_mean to the y-axis 
+ggplot(redbandSummary, aes(x = as.factor(ScaleAge), y = Weight_mean)) +
+  creates bars using the acutal vlaues in the weight_mean
+  geom_bar(stat='identity') +
 
-
+ add error bars to each bar    
+    geom_errorbar(aes(ymin=Weight_mean-Weight_se,
+                      ymax=Weight_mean+Weight_se,
+                      width=0.2))
+  
 # QUESTION: What does the statement width=0.2 do? If you're unsure, try removing
 # it and seeing what happens.
-
+controls the width of the horzontial end cpas of the error bars 
 
 # TASK: Modify the code below to make the bar fill light green, the bar outline 
 # dark green, and the error bars dark orange with end caps 40% the bar width.
