@@ -40,14 +40,15 @@
 # is nested within the tidyverse package (along with many others).
 # Start by writing code to load the tidyverse library.
 # HINT: see the end of assignment #1 if you forgot how to load a package.
-
+library(tidyverse)
 
 # TASK: Write code below to set your theme to black and white and both your major
 # AND minor gridlines to element_blank for all plots you'll be making today.
 # HINT: Check back to last week's assignment section 1.9 for setting themes for
 # all plots.
-
-
+theme_set(theme_bw())
+theme(panel.grid.minor=element_blank())
+theme(panel.grid.major=element_blank())
 # ---------------------------------------------------------- #
 #### 1.0 CORRELATION                                      ####
 # ---------------------------------------------------------- #
@@ -57,14 +58,14 @@
 # The mpg dataset looks at the gas efficiency of different cars. Run the following
 # code to load the data:
 data(mpg, package = "ggplot2")
-
+data(mpg, package = "ggplot2")
 # TASK: Create a scatterplot (i.e., a dot plot) to relate city and highway mileage.
 # Color the points by the class of car (class column) and label the x and y axis 
 # to be more informative (City Mileage (MPG) vs Highway Mileage (MPG)).
 # HINT: Refer back to last week's assignment or the ggplot help resources if you 
 # forget how to make a scatterplot.
 
-
+ggplot()
 # Looks alright, but the graph may be hiding some information...
 # QUESTION: How many data points are in the mpg dataframe?
 
