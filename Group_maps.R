@@ -26,10 +26,10 @@ library(maps)
 library(sf)
 library(dplyr)
 
-# Read in the data
+# To read in the data, create an object titled "mammal_data" from the NC_mamm_data csv 
 mammal_data <- read.csv("NC_mamm_data.csv")
 
-# Check data
+# Review your data using the unique() function, pulling from the object mammal_data to see the column names, the unique localities, unique genera, and unique orders
 colnames(mammal_data)
 unique(mammal_data$locality) #238 unique localities
 unique(mammal_data$genus) #50 unique genera
@@ -57,8 +57,7 @@ ggplot() +
                color = "black") +
   geom_point(data = clean_data,
              aes(x = long, y = lat, color = order),
-             size = 1
-             ,
+             size = 1,
              alpha = 0.7) +
   coord_fixed(1.3) +
   theme_classic() +
