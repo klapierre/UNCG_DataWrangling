@@ -385,10 +385,11 @@ ggplot(redbandSummary, aes(x = as.factor(ScaleAge), y = Weight_mean)) +
 # TASK: Modify the code below to make the bar fill light green, the bar outline 
 # dark green, and the error bars dark orange with end caps 40% the bar width.
 ggplot(redbandSummary, aes(x = as.factor(ScaleAge), y = Weight_mean)) + 
-  geom_bar(stat='identity') +
+  geom_bar(stat='identity', color= 'lightgreen', fill='darkgreen') +
   geom_errorbar(aes(ymin=Weight_mean-Weight_se,
                     ymax=Weight_mean+Weight_se,
-                    width=0.2))
+                    width=0.08,
+                    color='darkorange'))
 
 # ---------------------------------------------------------- #
 #### PART 1.7 AESTHETICS PLACEMENT MATTERS!               #### 
