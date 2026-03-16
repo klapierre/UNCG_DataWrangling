@@ -51,6 +51,10 @@ ggplot(us_states_frost) +
 # 4. To learn how to find and import environmental spatial data sets
 
 
+
+#HELLOOOOOO
+
+
 # MAPPING SPECIMEN OCCURRENCE DATA ------------------------------------------
 
 # In this section, we are going to learn how to find and plot mammal occurrence
