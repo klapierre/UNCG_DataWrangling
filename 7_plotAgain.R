@@ -40,12 +40,15 @@
 # is nested within the tidyverse package (along with many others).
 # Start by writing code to load the tidyverse library.
 # HINT: see the end of assignment #1 if you forgot how to load a package.
-
+library(tidyverse)
 
 # TASK: Write code below to set your theme to black and white and both your major
 # AND minor gridlines to element_blank for all plots you'll be making today.
 # HINT: Check back to last week's assignment section 1.9 for setting themes for
 # all plots.
+ggplot(redband, aes(x = Length, y = Weight)) + 
+  geom_point() +
+  theme(panel.grid.minor = element_blank(),panel.grid.major=element_blank())
 
 
 # ---------------------------------------------------------- #
