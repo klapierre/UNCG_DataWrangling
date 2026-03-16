@@ -66,7 +66,8 @@ ggplot() +
                color = "black") +
   geom_point(data = clean_data,
              aes(x = long, y = lat, color = order),
-             size = 2,
+             size = 1
+             ,
              alpha = 0.7) +
   coord_fixed(1.3) +
   theme_classic() +
