@@ -65,33 +65,38 @@ data(mpg, package = "ggplot2")
 # HINT: Refer back to last week's assignment or the ggplot help resources if you 
 # forget how to make a scatterplot.
 
-ggplot()
+ggplot(mpg,aes(x=cty,y=hwy,color=class))+
+  geom_point()+
+  xlab("City Mileage (MPG)")+
+  ylab("Highway Mileage (MPG")
 # Looks alright, but the graph may be hiding some information...
 # QUESTION: How many data points are in the mpg dataframe?
 
-
+#There are 234 observations in the mpg dataframe.
 # QUESTION: Approximately how many dots are in the graph you just made? How does
 # that compare to the number of observations in the dataframe?
-
+#Approximately 78 dots are in the graph. The number of dots is way less than the 234 observations in the dataframe.
 
 # Try another correlation-focused geom that addresses this problem by running
 # the following code:
 ggplot(data=mpg, aes(x=cty, y=hwy)) + 
   geom_jitter()
-
+ggplot(data=mpg, aes(x=cty, y=hwy)) + 
+  geom_jitter()
 
 # QUESTION: What happened when you created the plot with geom_jitter?
-
+#Black and white theme with black dots. X-axis labeled "cty" and y-axis labeled "hwy". Looks like approximately 234 dots.
 
 # QUESTION: Run the code to create a plot using geom_jitter a second time. Then run it
 # again and again. What happens each time? Why is this happening?
-
+#The dots slightly move away from each other in both x and y directions. This happens because of random variation each time I run the code. It is a useful way of handling over plotting caused by discreteness in smaller datasets.
 
 # TASK: The default in geom_jitter is to jitter (or slightly move) the points away
 # from each other in both the x and y directions. Check the help file for geom_jitter
 # and write code below to make a graph where you jitter points in only the x-dimension
 # by 0.5.
-
+ggplot(data=mpg,aes(x=cty, y=hwy))+
+  geom_jitter(width=0.5, height=0)
 
 # ---------------------------------------------------------- #
 #### 1.1 DETOUR! COLORS, COLORS, COLORS                   ####
