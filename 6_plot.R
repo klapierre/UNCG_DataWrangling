@@ -410,6 +410,7 @@ ggplot(redband, aes(x = Length, y = Weight, color = as.factor(ScaleAge))) +
 
 # QUESTION: What is different about this graph from before?
 
+#ANSWER:We get multiple lines instead on one continuous one. 
 
 # ---------------------------------------------------------- #
 #### PART 1.8: ALTERING SCALES                            ####
