@@ -144,24 +144,6 @@ nrow(clean_data)
 # richness?
 # TASK: Join the record counts and richness values together. 
 #-----------------------------------------------------------------------------#
-# CREATE SPATIAL OBJECTS
-#-----------------------------------------------------------------------------#
-# QUESTION: Which mammal genus appears most frequently in the dataset? 
-
-# Convert mammal occurrence data into an sf() function object. Run this code.
-mammal_sf <- st_sf(
-  clean_data,
-  coords = c("long, lat"),
-  crs = 4326
-)
-
-# Verify spatial object. Run this code. 
-print(mammal_sf)
-
-#QUESTION: Are mammal specimens evenly distributed across North Carolina, or are
-#they clustered in certain regions?
-#TASK:Create a map showing specimen locations using longitude coordinates. 
-#-----------------------------------------------------------------------------#
 # IMPORT NORTH CAROLINA COUNTRY MAP
 #-----------------------------------------------------------------------------#
 # QUESTION: What life stages are represented in the dataset?
