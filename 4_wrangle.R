@@ -221,10 +221,13 @@ All compute to being TRUE
 # We might be worried about high water temperatures. Let's filter the the 
 # Calispell dataframe to only include data where the Calispell Creek has 
 # temperature equal or greater than 15 C.
+filter(.streamTemp, Calispell >= 15)
+?filter
 
 # QUESTION: If you remove all of the observations (rows) with temperatures lower
 # than 15 C, would you expect your new dataframe to have more, the same, or fewer
 # observations than the original dataframe?
+We would likely have less observations than the original dataframe as it will be "removing" points from the data set.
 
 
 # TASK: Run the following code to only keep the values greater than or equal to 15C.
@@ -235,11 +238,11 @@ calispellHighTemp <- filter(.data=calispellTemp,
 # TASK: Check the number of observations in your dataframe! You can either do 
 # this using the str() function or by looking next to the dataframe name in the
 # R environment tab.
-
+A new dataframe called calispellHighTemp appeared under my data with 7703 observations. You can also open this dataframe and look at the values. 
 
 # QUESTION: How many observations did the original dataframe (calispellTemp) 
 # have? How many does the new dataframe (calispellHighTemp) have?
-
+calispellTemp has 61100 obs. while the new dataframe calispellHighTemp has 7703 obs.
 
 # REALLY IMPORTANT: Even if the function runs, R can do all kinds of bad things 
 # if you've accidentally coded something incorrectly. It is always very, very 
