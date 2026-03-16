@@ -46,9 +46,9 @@ library(tidyverse)
 # AND minor gridlines to element_blank for all plots you'll be making today.
 # HINT: Check back to last week's assignment section 1.9 for setting themes for
 # all plots.
-ggplot(redband, aes(x = Length, y = Weight)) + 
-  geom_point() +
-  theme(panel.grid.minor = element_blank(),panel.grid.major=element_blank())
+  theme_bw()+
+  theme(panel.grid.minor = element_blank())+
+  theme(panel.grid.major = element_blank())+
 
 
 # ---------------------------------------------------------- #
@@ -66,14 +66,21 @@ data(mpg, package = "ggplot2")
 # to be more informative (City Mileage (MPG) vs Highway Mileage (MPG)).
 # HINT: Refer back to last week's assignment or the ggplot help resources if you 
 # forget how to make a scatterplot.
-
-
+ ggplot(mpg, aes(x = cty, y = hwy)) + 
+   geom_point(aes(color=as.factor(class)))+
+   theme_bw()+
+   theme(panel.grid.minor = element_blank())+
+   theme(panel.grid.major = element_blank())+
+   xlab("City Mileage (MPG)") + 
+   ylab("Highway Mileage (MPG)")
 # Looks alright, but the graph may be hiding some information...
 # QUESTION: How many data points are in the mpg dataframe?
+#Answer: There are 234 observations
 
 
 # QUESTION: Approximately how many dots are in the graph you just made? How does
 # that compare to the number of observations in the dataframe?
+#Anser: There are less than 80 dots, which is significatnly less than the # of observations.
 
 
 # Try another correlation-focused geom that addresses this problem by running
@@ -83,18 +90,21 @@ ggplot(data=mpg, aes(x=cty, y=hwy)) +
 
 
 # QUESTION: What happened when you created the plot with geom_jitter?
+#Answer: There is now a significantly higher amount of dots, of course the graph is alos now black dots since it is not as.factor, and there are gridlines since the theme is not set.
 
 
 # QUESTION: Run the code to create a plot using geom_jitter a second time. Then run it
 # again and again. What happens each time? Why is this happening?
+#Answer: The data points move every time, and sometimes the x-axis change
 
 
 # TASK: The default in geom_jitter is to jitter (or slightly move) the points away
 # from each other in both the x and y directions. Check the help file for geom_jitter
 # and write code below to make a graph where you jitter points in only the x-dimension
 # by 0.5.
-
-
+?geom_jitter
+ggplot(data=mpg, aes(x=cty, y=hwy)) + 
+  geom_jitter(width=0.5)
 # ---------------------------------------------------------- #
 #### 1.1 DETOUR! COLORS, COLORS, COLORS                   ####
 # ---------------------------------------------------------- #
