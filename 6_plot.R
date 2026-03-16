@@ -201,7 +201,7 @@ ggplot(redband, aes(x=Length, y=Weight)) +
 
 # QUESTION: What differs between the graph where ScaleAge was wrapped in the
 # as.factor() statement and the graph where you removed as.factor()? Why?
-
+with ScaleAge it is treated as a categorical variable, so each age gets there own color with out factor ScaleAge is treated as a number that keeps going so the points are colored along a gradeint or somewhat of a smooth color instead of distinct colors 
 
 # TASK: Visit the ggplot Cookbook webpage at http://www.cookbook-r.com/Graphs/
 # This website is a great go-to place to find how to change all kinds of things
@@ -223,12 +223,12 @@ ggplot(redband, aes(x = as.factor(ScaleAge), y = Weight)) +
   geom_boxplot(color = 'purple', fill = 'green')
 
 # QUESTION: What does color mean for boxplots? What does fill mean for boxplots?
-
+it means the outline of the boxplot also including the borders whiskers and also the lines 
 
 # QUESTION: Why did we have to specify as.factor() for ScaleAge in the initial
 # aes() statement? 
 # HINT: Try running the code without that statement, what happens?
-
+we used as.factor(ScaleAge) because boxplots compare distributions acorss categories and the trout should be treated as seperate groups suach as 1 year 2 year etc with out as.factor the ggplot treats ScaleAge as a continous number instead of its own catogeory.
 
 # ---------------------------------------------------------- #
 #### PART 1.5 ADDING A LAYER: STATISTICAL TRANSFORMATIONS #### 
