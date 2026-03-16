@@ -481,11 +481,11 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 # Or the void theme?
 ggplot(redband, aes(x = Length, y = Weight)) + 
   geom_point() +
-  theme_void()
+  theme_void() #ew thats terrible
 
 # TASK: Check out the section on complete themes in the ggplot2 book here:
-# https://ggplot2-book.org/polishing.html#themes.  Try out two more themes below.
-
+# https://ggplot2-book.org/polishing.html #themes.  Try out two more themes below.
+#404 error page not found :(
 
 # Rather than using the pre-set themes, we can also create our own! 
 # The theme can be set to modify the text of plot titles, axis titles, axis labels,
@@ -513,12 +513,15 @@ ggplot(redband, aes(x = Length, y = Weight)) +
   theme(axis.title.y=element_text(size=100))
 
 # QUESTION: What does element_text() refer to in the code above?
-
+#ANSWER: it changes the size of the axis title
 
 # TASK: Write your own code below to change the size of the x-axis labels
 # (i.e., the numbers along the x-axis) to 50. 
 # HINT: Check out the ggplot cookbook or ggplot2 themes websites for help.
 
+ggplot(redband, aes(x = Length, y = Weight)) + 
+  geom_point(aes(color=as.factor(ScaleAge))) + # I like the different colors so i added it in
+  theme(axis.text.x=element_text(size=50))
 
 # We can set the theme to include all kinds of variations by adding them all to
 # the theme statement for an individual ggplot.
