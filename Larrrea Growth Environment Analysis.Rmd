@@ -1,0 +1,332 @@
+BIO 457 - Biological Data Wrangling and Visualization 
+title: "Larrea Growth Enviromental Analysis"
+Author: Mariii Huff 
+Date: March 14, 2026
+output: github_document
+
+###############################################################################
+# OVERVIEW
+This project analyzes a dataset examining variation in growth environment among
+populations of Larrea species. The dataset was obtained from the repository 
+maintained by the Environmental Data Initiative and includes observations 
+collected between 2006 and 2009 from multiple geographic locations across North 
+and South America. The study focuses on two species, Larrea tridentata and Larrea
+divaricata, which are desert shrubs commonly found in arid environments. 
+Data were collected from several sites including the Sevilleta National 
+Wildlife Refuge in New Mexico, locations in Mexico, and sites in Argentina. 
+The dataset includes variables such as species, site location, latitude, and 
+growth environment, which allow researchers to examine how environmental 
+conditions differ across plant populations.
+
+The goal of this project is to investigate how growth environment varies among 
+Larrea populations across species and geographic locations. Specifically, this 
+project will explore whether patterns in growth environment differ between
+species or across different sites. I hypothesize that growth environment will 
+vary among locations because plants growing in different regions experience 
+different environmental conditions such as temperature, soil composition, 
+and water availability. Understanding these patterns may help explain how 
+environmental factors influence plant populations and contribute to processes 
+such as Local Adaptation.
+###############################################################################
+
+###############################################################################
+# WORKFLOW
+First, the dataset will be imported into R from the downloaded CSV file.
+Next, the structure of the dataset will be examined to identify the variables 
+and check for missing values. The data will then be cleaned by filtering out 
+rows with missing values in key variables such as species, latitude, and growth 
+environment. After cleaning the data, summary statistics will be calculated to
+understand the distribution of observations across species and growth
+environments. Several visualizations will then be created, including bar graphs 
+and scatterplots, to explore patterns between species, geographic location, and
+growth environment. Finally, the patterns observed in the graphs will be 
+interpreted to determine whether growth environments vary among Larrea 
+populations across different locations.
+###############################################################################
+
+############################################################
+# SECTION 1: LOAD REQUIRED PACKAGES
+############################################################
+
+library(tidyverse)
+library(ggplot2)
+library(dplyr)
+library(readr)
+library(tidyr)
+library(stringr)
+
+############################################################
+# SECTION 2: IMPORT DATA
+############################################################
+To find an appropriate dataset, I queried the Environmental Data Initiative
+website. Local Adaptation to Freezing in High and Low Latitude Populations 
+of L. tridentata is the title of the dataset. Here is the link to the website: https://portal.edirepository.org/nis/mapbrowse?packageid=knb-lter-sev.227.275475
+
+RUN THIS CODE. Make sure to save this to your working directory. 
+larrea <- read_csv("sev277_larreafreeze_20140107.csv")
+
+############################################################
+# SECTION 3: INSPECT DATA STRUCTURE
+############################################################
+Let's explore this dataset structure. Run these codes. 
+
+head(larrea)
+
+str(larrea)
+
+summary(larrea)
+
+names(larrea)
+
+dim(larrea)
+
+############################################################
+# SECTION 4: CHECK FOR MISSING VALUES
+############################################################
+Most of the time we have missing values in the dataset. Let's run this code to 
+see. 
+
+colSums(is.na(larrea))
+
+############################################################
+# SECTION 5: CLEAN / TIDY DATA
+############################################################
+Time to make our dataset clean and neat for people to read. Run this code. 
+
+clean_data <- larrea %>%
+  filter(!is.na(species)) %>%
+  filter(!is.na(latitude)) %>%
+  filter(!is.na(growth_environment))
+
+############################################################
+# SECTION 6: VERIFY CLEAN DATA
+############################################################
+To make sure we did the clean up process right; run these codes. 
+
+head(clean_data)
+
+nrow(clean_data)
+
+summary(clean_data)
+
+############################################################
+# SECTION 7: UNIQUE VALUES
+############################################################
+Let's explore the unique values of data that is in the two columns - Species &
+Growth Environment. Run this code.
+
+unique(clean_data$species)
+
+unique(clean_data$growth_environment)
+
+############################################################
+# SECTION 8: SUMMARY STATISTICS
+############################################################
+ RUN THIS CODE FOR SPECIES SUMMARY. 
+ 
+species_counts <- clean_data %>%
+  group_by(species) %>%
+  summarise(count = n())
+
+species_counts
+
+RUN THIS CODE FOR GROWTH ENVIRONMENT SUMMARY. 
+
+environment_counts <- clean_data %>%
+  group_by(growth_environment) %>%
+  summarise(count = n())
+
+environment_counts
+
+############################################################
+# SECTION 9: LATITUDE STATISTICS
+############################################################
+Let's get the summary for the latitude on this dataset. Run this code.  
+
+latitude_summary <- clean_data %>%
+  summarise(
+    mean_latitude = mean(latitude),
+    min_latitude = min(latitude),
+    max_latitude = max(latitude),
+    sd_latitude = sd(latitude)
+  )
+
+latitude_summary
+
+############################################################
+# SECTION 10: SPECIES BY ENVIRONMENT
+############################################################
+Let's run this code for cleaning up the species & growth environment. 
+
+species_environment <- clean_data %>%
+  group_by(species, growth_environment) %>%
+  summarise(count = n())
+
+species_environment
+
+############################################################
+# SECTION 11: BAR GRAPH – GROWTH ENVIRONMENT
+############################################################
+
+Let's make a bar graph. RUN THIS CODE. 
+
+ggplot(clean_data, aes(x = growth_environment)) +
+  geom_bar() +
+  labs(
+    title = "Distribution of Growth Environments",
+    x = "Growth Environment",
+    y = "Count"
+  )
+
+############################################################
+# SECTION 12: BAR GRAPH – SPECIES COUNTS
+############################################################
+ Let's make another bar grapht. RUN THIS CODE.
+
+ggplot(clean_data, aes(x = species)) +
+  geom_bar() +
+  labs(
+    title = "Number of Observations per Species",
+    x = "Species",
+    y = "Count"
+  )
+
+############################################################
+# SECTION 13: SPECIES VS ENVIRONMENT
+############################################################
+
+Let's make a scaterplot. RUN THIS CODE. 
+
+ggplot(clean_data, aes(x = species, fill = growth_environment)) +
+  geom_bar(position = "dodge") +
+  labs(
+    title = "Species Distribution Across Growth Environments",
+    x = "Species",
+    y = "Count"
+  )
+
+############################################################
+# SECTION 14: LATITUDE HISTOGRAM
+############################################################
+
+Let's make a histogram. RUN THIS CODE. 
+
+ggplot(clean_data, aes(x = latitude)) +
+  geom_histogram(bins = 20) +
+  labs(
+    title = "Latitude Distribution",
+    x = "Latitude",
+    y = "Count"
+  )
+
+############################################################
+# SECTION 15: LATITUDE BY ENVIRONMENT
+############################################################
+
+Let's add some things to our graph. RUN THIS CODE. 
+
+ggplot(clean_data, aes(x = latitude, fill = growth_environment)) +
+  geom_histogram(bins = 20) +
+  labs(
+    title = "Latitude Distribution by Growth Environment",
+    x = "Latitude",
+    y = "Count"
+  )
+
+############################################################
+# SECTION 16: LATITUDE VS SPECIES
+############################################################
+Let's make a graph showing the latitude vs. species. RUN THIS CODE.
+
+ggplot(clean_data, aes(x = latitude, fill = species)) +
+  geom_histogram(bins = 20) +
+  labs(
+    title = "Latitude Distribution by Species",
+    x = "Latitude",
+    y = "Count"
+  )
+
+############################################################
+# SECTION 17: BOX PLOT LATITUDE BY SPECIES
+############################################################
+Let's make a box plot by the latitude by species. RUN THIS CODE.
+
+ggplot(clean_data, aes(x = species, y = latitude)) +
+  geom_boxplot() +
+  labs(
+    title = "Latitude Range by Species",
+    x = "Species",
+    y = "Latitude"
+  )
+
+############################################################
+# SECTION 18: BOX PLOT LATITUDE BY ENVIRONMENT
+############################################################
+Let's make another box plot but this time for latitude by environment.
+RUN THIS CODE.
+
+ggplot(clean_data, aes(x = growth_environment, y = latitude)) +
+  geom_boxplot() +
+  labs(
+    title = "Latitude Range by Growth Environment",
+    x = "Growth Environment",
+    y = "Latitude"
+  )
+
+############################################################
+# SECTION 19: SORT DATA
+############################################################
+Let's run this code to sort our data. 
+
+sorted_data <- clean_data %>%
+  arrange(latitude)
+
+head(sorted_data)
+
+############################################################
+# SECTION 20: CREATE SUBSETS
+############################################################
+Let's create subsets for our dataset. Run these codes. 
+
+species_tridentata <- clean_data %>%
+  filter(species == "Larrea tridentata")
+
+species_divaricata <- clean_data %>%
+  filter(species == "Larrea divaricata")
+
+############################################################
+# SECTION 21: PLOT SUBSET DATA
+############################################################
+Now we can plot this subsets of dtata. Run these codes.
+
+ggplot(species_tridentata, aes(x = latitude)) +
+  geom_histogram()
+
+ggplot(species_divaricata, aes(x = latitude)) +
+  geom_histogram()
+
+############################################################
+# SECTION 22: EXPORT CLEAN DATA
+############################################################
+Let's export our date and then finally clea up anything that looks untidy.
+RUN THIS CODE. 
+
+write_csv(clean_data, "clean_larrea_data.csv")
+
+############################################################
+# SECTION 23: SAVE SUMMARY TABLES
+############################################################
+Let's save our tables to our working directory. Run these codes. 
+
+write_csv(species_counts, "species_counts.csv")
+
+write_csv(environment_counts, "environment_counts.csv")
+
+############################################################
+# SECTION 24: FINAL CHECKS
+############################################################
+Run this code and we are done. 
+
+print("Analysis Complete")
+
+
