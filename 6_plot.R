@@ -651,8 +651,23 @@ ggsave("Redband_histogram_facet_2.png",
 # Then save your file as a .png with an informative figure name at a width of 9
 # inches and a height of 7 inches and 450 dpi.
 
+SpokaneFish <- read.csv(file = "C:/Users/nsalt/Documents/DataWrangling/UNCG_DataWrangling/LowerSpokaneFish.csv")
+
+ggplot(SpokaneFish, aes(x=Length,y=Weight,color=as.factor(Species))) +
+  geom_point(
+    shape=2
+  ) +
+  scale_x_log10() +
+  xlab("Fish Length(mm)") +
+  ylab("Fish Weight(g)")
+
+ggsave("SpokaneFishSpeciesByLengthAndWeight.png",
+       dpi=450,
+       width=9,
+       height=7
+       )
 
 # QUESTION: Why do you think we focused on Redband Trout for most of this assignment?
-
+# It was the most abundant species in the survey.
 
 # REMEMBER: Save and push your script when you're done with this assignment!
