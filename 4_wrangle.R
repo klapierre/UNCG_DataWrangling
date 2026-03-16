@@ -174,12 +174,12 @@ The columns that were present are calispell_temp, Date, Time. It is missing Smal
 # column names. Be sure they are listed in the order they exist in the original 
 # dataframe.
 calispellTemp2 <- select(.data=streamTemp,
-                        calispell_temp:Time)
+                         Time: Winchester.Cr.Temp..C.)
 
 # TASK: Write code to check your column names again to see what happened in your
 # new dataframe.
-
-
+colnames(calispellTemp2)
+[1] "Time"                   "Calispell.Cr.Temp.C."   "Smalle.Cr.Temp.C."      "Winchester.Cr.Temp..C."
 # We can also specify the columns that we want to discard by selecting them out.
 # TASK: Run the following code to remove the Smalle_temp and Winchester_temp 
 # columns. Note the use of the - sign to remove columns.
