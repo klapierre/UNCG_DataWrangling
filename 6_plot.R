@@ -135,7 +135,7 @@ ggplot(redband, aes(x = Length)) +
   geom_histogram(binwidth=50)
 
 # QUESTION: What changed about our output when we asked for binwidth=50?
-
+the histogram change by making the bars bigger so there where less bars than before 
 
 # TASK: Some other factors might affect this distribution of redband length?
 # Make another histogram that plots the distribution of ScaleAge for the redband
@@ -143,17 +143,21 @@ ggplot(redband, aes(x = Length)) +
 
 
 # QUESTION: If ScaleAge represents how old the fish are in years, what do you notice
-# about the Redband Trout population based on the figure you generated?
+# about the Redband Trout population based on the figure you generated? 
+
+the histograms aims at the most if the redband trouts population is made up of yonger fish becase you can see how there all clustred at the lower age range 
 
 
 # TASK: Fish weight is also an interesting variable. Make a histogram that plots
 # the distribution of Weight for the redband dataframe.
 
 
-# QUESTION: What warning message is generated in the console when you create the 
+# QUESTION: What warning message is generated in the console when you create the  
+
+removed 88 rows containig non-finite outside scalr range 
 # weight histogram? What does this warning message mean? Do you think it is ok 
 # to proceed or should you alter your code to get rid of this warning?
-
+i belive so you are okay to proceed if onlay a small amount of rows where reomeved 
 
 # ---------------------------------------------------------- #
 #### PART 1.3 GEOMETRIC OBJECT: POINTS                    ####
