@@ -569,7 +569,7 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 ggsave("Redband_histogram_facet.png")
 
 # QUESTION: Where did this file show up? And what was the graph?
-
+showed up in the working directory for my R project. the graph that was saved was the lasr plot I created. to save the file at 600 dpi and with a width of 10 inches and hieght of 8 inches.
 
 # TASK: Investigate the ggsave() function through the help files. Then write
 # code to save the file at 600 dpi, 10 inch width and 8 inch height.
