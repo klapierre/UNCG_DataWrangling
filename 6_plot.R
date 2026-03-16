@@ -352,6 +352,8 @@ ggplot(redband, aes(x = as.factor(ScaleAge), y = Weight)) +
 # QUESTION: What is the graph output? Note the scale of the y-axis. Does this seem
 # right to you? What do you think happened to result in this graph?
 
+# This doesn't make sense, and the scale is way too high. It looks like the values
+# were totalled, not averaged.
 
 # Typically, when plotting a bar graph we want to have the output show the mean
 # and standard error for each category. But unlike when we use the geom_boxplot 
@@ -369,6 +371,13 @@ ggplot(redband, aes(x = as.factor(ScaleAge), y = Weight)) +
 #     error of weight for each group (se=1.96*sd).
 # HINT:Don't forget to remove NAs and ungroup at the appropriate place.
 
+redbandSummary <- redband %>% 
+  group_by(ScaleAge) %>% 
+  summarize("Weight_mean" = mean(Weight, na.rm = T),
+            "Weight_sd" = sd(Weight, na.rm = T),
+            "Weight_se" = Weight_sd * 1.96)
+            
+  
 
 # Let's try again to make our bargraph by running the following code:
 ggplot(redbandSummary, aes(x = as.factor(ScaleAge), y = Weight_mean)) + 
@@ -377,15 +386,17 @@ ggplot(redbandSummary, aes(x = as.factor(ScaleAge), y = Weight_mean)) +
 # QUESTION: What does the stat='identity' part do in the code above? Check the 
 # geom_bar() help or google to find the answer.
 
+# The identity section tells the bar graph to plot values instead of counts,
+# like geom_col does.
 
 # The above code gave us nice bars.  Now we need to add error bars! We will do this
 # by adding in a second geometric object that specifies errorbars. Try it by
 # running the following code:
-ggplot(redbandSummary, aes(x = as.factor(ScaleAge), y = Weight_mean)) + 
-  geom_bar(stat='identity') +
-  geom_errorbar(aes(ymin=Weight_mean-Weight_se,
-                    ymax=Weight_mean+Weight_se,
-                    width=0.2))
+ggplot(redbandSummary, aes(x = as.factor(ScaleAge), y = Weight_mean)) + # List df and axes
+  geom_bar(stat='identity') + # Switch from count to value
+  geom_errorbar(aes(ymin=Weight_mean-Weight_se, # Add error bars, set upper range
+                    ymax=Weight_mean+Weight_se, # Set lower error bar range
+                    width=0.2)) # Set error bar width
 
 # QUESTION: Annotate the code above with what each line does.
 
@@ -393,14 +404,18 @@ ggplot(redbandSummary, aes(x = as.factor(ScaleAge), y = Weight_mean)) +
 # QUESTION: What does the statement width=0.2 do? If you're unsure, try removing
 # it and seeing what happens.
 
+# width = 0.2 changes the width of the upper and lower bounds of the confidence interval.
 
 # TASK: Modify the code below to make the bar fill light green, the bar outline 
 # dark green, and the error bars dark orange with end caps 40% the bar width.
 ggplot(redbandSummary, aes(x = as.factor(ScaleAge), y = Weight_mean)) + 
-  geom_bar(stat='identity') +
+  geom_bar(stat='identity',
+           fill = "lightgreen",
+           color = "darkgreen") +
   geom_errorbar(aes(ymin=Weight_mean-Weight_se,
                     ymax=Weight_mean+Weight_se,
-                    width=0.2))
+                    width=0.40,
+                    color = "darkorange"))
 
 # ---------------------------------------------------------- #
 #### PART 1.7 AESTHETICS PLACEMENT MATTERS!               #### 
@@ -416,6 +431,8 @@ ggplot(redband, aes(x = Length, y = Weight, color = as.factor(ScaleAge))) +
 
 # QUESTION: What is different about this graph from before?
 
+# This applies color to all elements unless specified, so ScaleAge is split into
+# 8 smoothed lines.
 
 # ---------------------------------------------------------- #
 #### PART 1.8: ALTERING SCALES                            ####
@@ -454,6 +471,16 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 # Fill in your boxplots with your favorite color and make the outline your least
 # favorite color. Label the x-axis Scale Age (years) and the y-axis Length (mm).
 
+redband %>% 
+  ggplot(aes(x = as.factor(ScaleAge),
+             y = Length)) +
+  geom_boxplot(color = "limegreen",
+                fill = "lavender") +
+  scale_y_log10() +
+  labs(x = "Years",
+       y = "Length (mm)")
+  
+  
 
 # ---------------------------------------------------------- #
 #### PART 1.9: SETTING THEMES                             ####
@@ -471,7 +498,7 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 # black and white theme.
 ggplot(redband, aes(x = Length, y = Weight)) + 
   geom_point() +
-  theme_bw()
+  theme_bw() # best theme <3
 
 # What about the following code for the minimalistic theme?
 ggplot(redband, aes(x = Length, y = Weight)) + 
@@ -486,6 +513,13 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 # TASK: Check out the section on complete themes in the ggplot2 book here:
 # https://ggplot2-book.org/polishing.html#themes.  Try out two more themes below.
 
+ggplot(redband, aes(x = Length, y = Weight)) + 
+  geom_point() +
+  theme_light()
+
+ggplot(redband, aes(x = Length, y = Weight)) + 
+  geom_point() +
+  theme_linedraw()
 
 # Rather than using the pre-set themes, we can also create our own! 
 # The theme can be set to modify the text of plot titles, axis titles, axis labels,
@@ -506,6 +540,7 @@ ggplot(redband, aes(x = Length, y = Weight)) +
   geom_point() +
   theme(panel.background = element_blank())
 
+# element_blank() removes specified elements (e.g.panel background or grid)
 
 # Try running the following code to alter text size:
 ggplot(redband, aes(x = Length, y = Weight)) + 
@@ -514,11 +549,17 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 
 # QUESTION: What does element_text() refer to in the code above?
 
+# element_text pulls the y axis title
 
 # TASK: Write your own code below to change the size of the x-axis labels
 # (i.e., the numbers along the x-axis) to 50. 
 # HINT: Check out the ggplot cookbook or ggplot2 themes websites for help.
 
+redband %>% 
+  ggplot(aes(x= Length,
+             y = Weight)) +
+  geom_point() +
+  theme(axis.text.x = element_text(size = 50))
 
 # We can set the theme to include all kinds of variations by adding them all to
 # the theme statement for an individual ggplot.
@@ -589,6 +630,11 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 # HINT: Check the help file for facet_wrap if you're unsure. Look under the 
 # Arguments section for scales.
 
+redband %>% 
+  ggplot(aes(x = Length)) +
+  geom_histogram() +
+  facet_wrap(~ScaleAge, scales = "free_y")
+
 
 # ---------------------------------------------------------- #
 #### PART 1.11: SAVING YOUR GRAPHICS                      ####
@@ -606,10 +652,15 @@ ggsave("Redband_histogram_facet.png")
 
 # QUESTION: Where did this file show up? And what was the graph?
 
+# It saved the most recent plot to the working directory.
 
 # TASK: Investigate the ggsave() function through the help files. Then write
 # code to save the file at 600 dpi, 10 inch width and 8 inch height.
 
+ggsave("Redband_histogram_facet.png",
+       width = 10,
+       height = 8,
+       units = "in")
 
 # NOTE: You can also save the graphics you make by exporting them from the plots
 # tab in RStudio. However, this can be less precise than specifying the graphic
@@ -625,7 +676,8 @@ ggsave("Redband_histogram_facet.png")
 # of a correlation? Which showed deviations from a benchmark or baseline? And which
 # was an example of a distribution?
 
-
+# Scatter/dot and line plots show correlation, bar graphs with error bars show deviations, 
+# and histograms show distribution.
 
 # TASK: Import the full SpokaneFish dataset, keeping all observations (i.e., 
 # don't filter down to a single species or remove observations without scale age).
@@ -635,8 +687,29 @@ ggsave("Redband_histogram_facet.png")
 # Then save your file as a .png with an informative figure name at a width of 9
 # inches and a height of 7 inches and 450 dpi.
 
+SpokaneFish <- read.csv(file = "LowerSpokaneFish.csv")
+
+SpokaneFish %>% 
+  ggplot(aes(x = Length,
+             y = Weight,
+             color =Species)) +
+  geom_point(shape = "triangle") +
+scale_x_log10() +
+  facet_wrap(~ScaleAge,
+             scales = "free_y") +
+  labs(x = "Length (mm)",
+       y = "Weight (g)")
+  
+ggsave("SpokaneFish_Length_Weight_Facet.png",
+       width = 9,
+       height = 7,
+       units = "in",
+       dpi = 450)
+  
 
 # QUESTION: Why do you think we focused on Redband Trout for most of this assignment?
 
+# We focused on redband trout because the dataset's coverage is massively skewed towards them.
+# There are a lot more data points for redband than every other species.
 
 # REMEMBER: Save and push your script when you're done with this assignment!
