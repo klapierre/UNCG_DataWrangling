@@ -1,12 +1,13 @@
 # Map building in RStudio
-#mariii
-#pattie
+
+
+
 #Write a code to install the packages ggplot2, maps, dyplr, tigris, and sf
 #Run the following code to load the packages into your library:
 
 #Test
-
-
+# LOAD REQUIRED PACKAGES
+library(tidyverse)
 library(ggplot2)
 library(maps)
 library(dplyr)
@@ -52,16 +53,13 @@ ggplot(us_states_frost) +
 
 
 
-#HELLOOOOOO
-
-
 # MAPPING SPECIMEN OCCURRENCE DATA ------------------------------------------
 
 # In this section, we are going to learn how to find and plot mammal occurrence
 # data from North Carolina. First, we need to find a dataset to download. 
 
 # To find an appropriate dataset, I queried the opensource museum data sharing
-# platform Arctos (arctos.org) to gather mammal records North Carolina.
+# platform Arctos to gather mammal records North Carolina.
 # Here is the link to the website: https://arctos.database.museum/
 
 # It is free to make an account and search+download records, but I shared a csv 
@@ -70,17 +68,10 @@ ggplot(us_states_frost) +
 
 # To filter the records, I specified "Mammalia" in the "Any taxon, ID, common name"
 # box within the Identification field, and "North Carolina" in the "state_prov" 
-# within the Place field
+# box within the Place field
 
 # Once we have the csv file saved in our UNCG_DataWrangling folder on our 
 # desktops, we will need to begin cleaning the file to make it easier to work with
-
-# LOAD REQUIRED PACKAGES
-library(tidyverse)
-library(ggplot2)
-library(maps)
-library(sf)
-library(dplyr)
 
 # To read in the data, create an object titled "mammal_data" from the NC_mamm_data csv 
 mammal_data <- read.csv("NC_mamm_data.csv")
