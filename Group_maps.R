@@ -1,4 +1,5 @@
-pattie
+#pattie
+#mariii
 # MAPPING SPECIMEN OCCURRENCE DATA ------------------------------------------
 
 # In this section, we are going to learn how to find and plot mammal occurrence
