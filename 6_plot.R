@@ -379,7 +379,7 @@ ggplot(redband, aes(x = Length, y = Weight, color = as.factor(ScaleAge))) +
   geom_smooth(method='lm', se=F)
 
 # QUESTION: What is different about this graph from before?
-
+ the grpah is differnt becasue moving color = as.factor(ScaleAge) into the intinal ggplot() aesthetics makes the color mapping apply to both the points and the smoothing lines. that how there are differnt color repersation for each scale age group 
 
 # ---------------------------------------------------------- #
 #### PART 1.8: ALTERING SCALES                            ####
