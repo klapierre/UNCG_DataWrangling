@@ -117,7 +117,10 @@ streamTempSummary <- streamTemp %>%
   summarize(across(.cols=c('calispell', 'smalle', 'winchester'), 
                    .fns=list(maximum=max, mean=mean, minimim=min),
                    na.rm=T))
-
+streamTempSummary <- streamTemp %>% 
+  summarize(across(.cols=c('calispell', 'smalle', 'winchester'), 
+                   .fns=list(maximum=max, mean=mean, minimim=min),
+                   na.rm=T))
 # QUESTION: Now what values do you see for the columns when you open up the 
 # dataframe streamTempSummary? What line of the above code removed the NAs from 
 # our data?
@@ -341,8 +344,8 @@ willowFill <- willow %>%
 
 # TASK: Write code to indicate the sequence of columns from w1 through wC. 
 
-cols=(willowFill, w_1:w_C )
-colnames(willowFill) hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
+willowFill %>% 
+  select(w_1:w_C)
 # We can fix this problem using the pivot_longer() function. pivot_longer() takes 
 # multiple columns and condenses them into just two columns, one that indicates 
 # what column the data came from and the other that contains the data itself.
@@ -378,8 +381,8 @@ willowClean <- willowFill %>%
 # QUESTION: What column contains the labels that tell us there are multiple 
 # variables stored in one column? What column contains the corresponding date 
 # for these variables?
+#The 'variable' column contains multiple variables. The 'value' column contains the corresponding data for these variables.
 
-hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
 # Good news, we can fix this problem with the complementary function to pivot_longer().
 # This time we will use the pivot_wider() function to turn one column into multiple.
 willowCleaner  <- willowClean %>%
@@ -529,6 +532,7 @@ cdr<-read.csv("e001_Plant aboveground biomass carbon and nitrogen.csv") %>%
   group_by(Date,Plot,NTrt, Species, Field, Strip, element) %>% 
   summarize(percentage_mean=mean(percentage,na.rm=TRUE),.groups="drop") %>% 
   pivot_wider(names_from= element, values_from = percentage_mean)
+
 
 # ---------------------------------------------------------- #
 ### PART 3.0: SUBMIT YOUR WORK                            ####
