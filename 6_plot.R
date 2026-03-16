@@ -606,6 +606,7 @@ ggsave("Redband_histogram_facet.png")
 
 # TASK: Investigate the ggsave() function through the help files. Then write
 # code to save the file at 600 dpi, 10 inch width and 8 inch height.
+
 ggsave("Redband_histogram_facet2.png", dpi=600, width=10,height=8,units='in')
 
 # NOTE: You can also save the graphics you make by exporting them from the plots
@@ -641,6 +642,7 @@ ggplot(SpokaneFish, aes(x=Weight, y=Length)) +
     ylab("Fish Height (mm)")
 
 ggsave("SpokaneFishPlot.png", width=9,height=7,units="in",dpi=450)
+
 # QUESTION: Why do you think we focused on Redband Trout for most of this assignment?
 # They had far more observations than the other species in the dataframe.
 
