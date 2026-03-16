@@ -202,8 +202,10 @@ calispellTemp5 <- select(.data=streamTempRename,
 # HINT: Unless you want to try to get very fancy with your code, you'll have to 
 # check dataframes two at a time. But you can always google to try to find sample
 # code to do all three at once!
-
-
+identical(calispellTemp3, calispellTemp4)
+identical(calispellTemp4, calispellTemp5)
+identical(calispellTemp3, calispellTemp5)
+All compute to being TRUE
 # ---------------------------------------------------------- #
 ### PART 1.3: FILTERING ROWS                              ####
 # ---------------------------------------------------------- #
