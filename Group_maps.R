@@ -77,14 +77,5 @@ ggplot() +
 
 
 
-# MAPPING SPECIES RICHNESS IN NORTH CAROLINA ---------------------------------
-# This script calculates mammal specie richness by country and maps the result.
-# Make sure to start with tidyverse package first. Let's go ahead and run that.
-#-----------------------------------------------------------------------------#
-# IMPORT DATA 
-#-----------------------------------------------------------------------------# 
-# Make sure run tidyverse before starting this section. 
-library(tidyverse)
-# Read in mammal occurrence data.
-mammal_data <- read.csv("NC_mamm_data.csv")
+
 
