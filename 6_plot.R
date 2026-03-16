@@ -443,7 +443,14 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 # scale (i.e., with scale age on a linear x axis and length on a log y axis).
 # Fill in your boxplots with your favorite color and make the outline your least
 # favorite color. Label the x-axis Scale Age (years) and the y-axis Length (mm).
-
+ggplot(redband, aes(x=ScaleAge,y=Length)) +
+  geom_boxplot(
+    fill='blue',
+    color='yellow'
+  ) +
+  scale_y_log10() +
+  xlab("Scale Age (years)") +
+  ylab("Length (mm)")
 
 # ---------------------------------------------------------- #
 #### PART 1.9: SETTING THEMES                             ####
@@ -475,7 +482,13 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 
 # TASK: Check out the section on complete themes in the ggplot2 book here:
 # https://ggplot2-book.org/polishing.html#themes.  Try out two more themes below.
+ggplot(redband, aes(x = Length, y = Weight)) + 
+  geom_point() +
+  theme_dark()
 
+ggplot(redband, aes(x = Length, y = Weight)) + 
+  geom_point() +
+  theme_classic()
 
 # Rather than using the pre-set themes, we can also create our own! 
 # The theme can be set to modify the text of plot titles, axis titles, axis labels,
@@ -487,7 +500,10 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 
 # QUESTION: Compare the output for each of the following figures.
 # Based on the output, what do you think panel.grid.minor vs panel.background 
-# refer to? What does the aesthetic element_blank() do?
+# refer to? What does the aesthetic element_blank() do? It seems that 
+# panel.grid.minor adds a grid pattern to the figure while panel.background 
+# leaves it blank, meaning both refer to what the panel is doing, while element_blank()
+# seems to remove the gridlines (as they are white here).
 ggplot(redband, aes(x = Length, y = Weight)) + 
   geom_point() +
   theme(panel.grid.minor = element_blank())
@@ -503,12 +519,15 @@ ggplot(redband, aes(x = Length, y = Weight)) +
   theme(axis.title.y=element_text(size=100))
 
 # QUESTION: What does element_text() refer to in the code above?
-
+# element_text() allows one to change things pertaining to the text in that axis
+# title, in this case massively increasing the font size for the y-axis.
 
 # TASK: Write your own code below to change the size of the x-axis labels
 # (i.e., the numbers along the x-axis) to 50. 
 # HINT: Check out the ggplot cookbook or ggplot2 themes websites for help.
-
+ggplot(redband, aes(x=Length,y=Weight)) +
+  geom_point() +
+  theme(axis.title.x=element_text(size=50))
 
 # We can set the theme to include all kinds of variations by adding them all to
 # the theme statement for an individual ggplot.
@@ -578,7 +597,9 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 # specified uniquely for each subpanel.
 # HINT: Check the help file for facet_wrap if you're unsure. Look under the 
 # Arguments section for scales.
-
+ggplot(redband, aes(x=Length)) +
+  geom_histogram() +
+  facet_wrap(~ScaleAge,scales="free_y")
 
 # ---------------------------------------------------------- #
 #### PART 1.11: SAVING YOUR GRAPHICS                      ####
@@ -595,11 +616,15 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 ggsave("Redband_histogram_facet.png")
 
 # QUESTION: Where did this file show up? And what was the graph?
-
+# The file was saved to my working directory. The graph was the most recent one
+# I produced.
 
 # TASK: Investigate the ggsave() function through the help files. Then write
 # code to save the file at 600 dpi, 10 inch width and 8 inch height.
-
+ggsave("Redband_histogram_facet_2.png",
+       dpi = 600,
+       width = 10,
+       height = 8)
 
 # NOTE: You can also save the graphics you make by exporting them from the plots
 # tab in RStudio. However, this can be less precise than specifying the graphic
@@ -614,7 +639,8 @@ ggsave("Redband_histogram_facet.png")
 # graph, and a dot plot with a trend line. Which of these figures was an example
 # of a correlation? Which showed deviations from a benchmark or baseline? And which
 # was an example of a distribution?
-
+# The dot plot with a trend line is an example of a correlation, the boxplot showed
+# deviation from a benchmark, and the histogram/bargraphs showed distributions.
 
 
 # TASK: Import the full SpokaneFish dataset, keeping all observations (i.e., 
