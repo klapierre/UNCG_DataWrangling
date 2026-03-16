@@ -201,11 +201,14 @@ ggplot(redband, aes(x=Length, y=Weight)) +
 
 # TASK: Copy and paste the code above to make the same graph, but this time remove
 # as.factor() from the part where we color by ScaleAge.
-
+ggplot(redband, aes(x=Length, y=Weight)) + 
+  geom_point(aes(color=ScaleAge))
 
 # QUESTION: What differs between the graph where ScaleAge was wrapped in the
 # as.factor() statement and the graph where you removed as.factor()? Why?
-
+# The colors of the two plots are different. The first one uses different colors
+# and the second one uses a gradient of the same color.Because as.factor tells R
+# to treat each age as a distinct category rather than a numeric factor.
 
 # TASK: Visit the ggplot Cookbook webpage at http://www.cookbook-r.com/Graphs/
 # This website is a great go-to place to find how to change all kinds of things
@@ -214,11 +217,13 @@ ggplot(redband, aes(x=Length, y=Weight)) +
 # TASK: Copy and paste the code for our previous graph below. Then modify the
 # aesthetics of the geometric object so that the size of the points varies with 
 # as.factor(ScaleAge).
-
+ggplot(redband, aes(x=Length, y=Weight)) + 
+  geom_point(aes(size=as.factor(ScaleAge)))
 
 # TASK: Modify the aesthetics of the geometric object from the previous graph
 # so that the size AND color of the points varies with ScaleAge.
-
+ggplot(redband, aes(x=Length, y=Weight)) + 
+  geom_point(aes(color=as.factor(ScaleAge), size = as.factor(ScaleAge)))
 
 # It is important to note that different kinds of geometric objects have different
 # types of associated aesthetics. Points and lines have colors, while bars and
@@ -227,13 +232,16 @@ ggplot(redband, aes(x = as.factor(ScaleAge), y = Weight)) +
   geom_boxplot(color = 'purple', fill = 'green')
 
 # QUESTION: What does color mean for boxplots? What does fill mean for boxplots?
-
+# Color refers to the outline color, while fill refers to the interior color of the boxes.
 
 # QUESTION: Why did we have to specify as.factor() for ScaleAge in the initial
 # aes() statement? 
 # HINT: Try running the code without that statement, what happens?
-
-
+ggplot(redband, aes(x = ScaleAge, y = Weight)) + 
+  geom_boxplot(color = 'purple', fill = 'green')
+# Without as.factor, the boxplot appears as one large box rather than individual
+# ones for each age. R needs to be told to treat the ScaleAge data as categorical 
+# rather than numerical.
 # ---------------------------------------------------------- #
 #### PART 1.5 ADDING A LAYER: STATISTICAL TRANSFORMATIONS #### 
 # ---------------------------------------------------------- #
@@ -249,7 +257,8 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 # QUESTION: Using the geom_smooth help page, what type of function is being used 
 # in the above graph for our statistical transformation fit?
 # HINT: What is the default model type for a dataframe of our size?
-
+# The default model type for dataframes with more than 1000 is a generalized 
+# additive model with formula = y ~ s(x, bs = "cs").
 
 # We also can specify a specific model to fit. Try running the following code to
 # specify a linear model:
@@ -260,7 +269,9 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 # TASK: As with most things in R, there are multiple ways to accomplish the same
 # task. Using the geom_smooth help page, write code below to specify a linear
 # model using a method= statement instead of the formula= statement.
-
+ggplot(redband, aes(x = Length, y = Weight)) + 
+  geom_point() + 
+  geom_smooth(method = lm)
 
 # A linear model does not seem like a good fit to our data. Try running the
 # following code to generate a quadratic model.
@@ -280,7 +291,7 @@ ggplot(redband, aes(x = as.factor(ScaleAge), y=Weight)) +
 # QUESTION: Name another statistical transformation we have already used in this
 # assignment.
 # HINT: It was in the very first part of the assignment.
-
+# We filtered the dataframe.
 
 # TASK: Let's put this all together! Create a graph with the following:
 # (1) redband dataframe,
@@ -288,7 +299,9 @@ ggplot(redband, aes(x = as.factor(ScaleAge), y=Weight)) +
 # (3) points colored by ScaleAge as a factor
 # (4) quadratic line that is black in color and size=2 (HINT: check ggplot
 #     cookbook to help figure out how to change line color and size).
-
+ggplot(redband, aes(x=Length, y=Weight)) + 
+  geom_point(aes(color=as.factor(ScaleAge))) +
+  geom_smooth(formula = y ~ poly(x,2), linewidth=2,color='black')
 
 # ---------------------------------------------------------- #
 #### PART 1.6 DATA IN VS DATA OUT                         #### 
