@@ -614,10 +614,15 @@ ggsave("Redband_histogram_facet.png")
 
 # QUESTION: Where did this file show up? And what was the graph?
 
+#ANSWER: The file (histogram) was saved as a PNG in my files where my working directory is set. 
 
 # TASK: Investigate the ggsave() function through the help files. Then write
 # code to save the file at 600 dpi, 10 inch width and 8 inch height.
-
+?ggsave
+ggsave("Redband_histogram2_facet.png", dpi=600,
+       width=10,
+       height=8,
+       units = "in")
 
 # NOTE: You can also save the graphics you make by exporting them from the plots
 # tab in RStudio. However, this can be less precise than specifying the graphic
@@ -633,6 +638,7 @@ ggsave("Redband_histogram_facet.png")
 # of a correlation? Which showed deviations from a benchmark or baseline? And which
 # was an example of a distribution?
 
+#Answer:the dot plot represented the correlation. The bar graph showed the deviation from the benchmark. The histo was an example of the distribution. 
 
 
 # TASK: Import the full SpokaneFish dataset, keeping all observations (i.e., 
@@ -643,8 +649,24 @@ ggsave("Redband_histogram_facet.png")
 # Then save your file as a .png with an informative figure name at a width of 9
 # inches and a height of 7 inches and 450 dpi.
 
+SpokaneFish <- read.csv(file = "LowerSpokaneFish.csv")
+
+fish<- ggplot(SpokaneFish, aes(x=Length, y=Weight, fill = Species)) +
+  geom_point(shape=24, color= 'white', size =3) +
+  scale_x_log10() +
+  facet_wrap(~Species) +
+  xlab('Length (mm)') +
+  ylab('Weight (g)')
+
+ggsave("Fish_plot.png", plot = fish,
+       dpi=450,
+       width=9,
+       height=7,
+       units = "in")
 
 # QUESTION: Why do you think we focused on Redband Trout for most of this assignment?
+
+#ANSWER: Because there was more variation in their data so we could make cooler graphs. 
 
 
 # REMEMBER: Save and push your script when you're done with this assignment!
