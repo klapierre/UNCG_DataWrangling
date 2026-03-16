@@ -1,0 +1,14 @@
+---
+title: "RMarkdown Test"
+output: html_document
+date: "2026-03-11"
+---
+
+This is an example of how you RMarkdown.
+```{r}
+answer <- 2+5
+answer
+my_data <- cars
+cars
+```
+
