@@ -119,8 +119,7 @@ gave me a blank plot frame with the x-axis labled.There is no data yet
 
 # Now let's add in the data! Run the following code to include a geometric
 # object (geom). In this case, the geometric object is a histogram.
-ggplot(redband, aes(x = Length)) + 
-  geom_histogram()
+
 # NOTE: When using the ggplot function, we use the + to indicate passing from
 # one aesthetic or geometric object to the next. No pipes here!
 
