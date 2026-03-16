@@ -265,7 +265,7 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 # QUESTION: Using the geom_smooth help page, what type of function is being used 
 # in the above graph for our statistical transformation fit?
 # HINT: What is the default model type for a dataframe of our size?
-
+# It's running an exponential regression on the graph.
 
 # We also can specify a specific model to fit. Try running the following code to
 # specify a linear model:
@@ -276,7 +276,9 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 # TASK: As with most things in R, there are multiple ways to accomplish the same
 # task. Using the geom_smooth help page, write code below to specify a linear
 # model using a method= statement instead of the formula= statement.
-
+ggplot(redband, aes(x = Length, y = Weight)) +
+  geom_point() +
+  geom_smooth(method = lm)
 
 # A linear model does not seem like a good fit to our data. Try running the
 # following code to generate a quadratic model.
@@ -296,7 +298,7 @@ ggplot(redband, aes(x = as.factor(ScaleAge), y=Weight)) +
 # QUESTION: Name another statistical transformation we have already used in this
 # assignment.
 # HINT: It was in the very first part of the assignment.
-
+# geom_point() would be an example of another statistical transformation.
 
 # TASK: Let's put this all together! Create a graph with the following:
 # (1) redband dataframe,
@@ -304,7 +306,10 @@ ggplot(redband, aes(x = as.factor(ScaleAge), y=Weight)) +
 # (3) points colored by ScaleAge as a factor
 # (4) quadratic line that is black in color and size=2 (HINT: check ggplot
 #     cookbook to help figure out how to change line color and size).
-
+ggplot(redband, aes(x = Length, y = Weight)) +
+  geom_point(aes(color = as.factor(ScaleAge))) +
+  geom_smooth(method = "lm", formula = y ~ x + I(x^2), color = "black", size = 2)
+  
 
 # ---------------------------------------------------------- #
 #### PART 1.6 DATA IN VS DATA OUT                         #### 
