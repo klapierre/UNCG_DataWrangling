@@ -336,6 +336,7 @@ ggplot(redband, aes(x = as.factor(ScaleAge), y = Weight)) +
 # QUESTION: What is the graph output? Note the scale of the y-axis. Does this seem
 # right to you? What do you think happened to result in this graph?
 
+#ANSWER: the graph is compliling all of the fish at a certain age and combining all of their weights. No this does not look right. It looks like R is taking all of the fish with a specific ScaleAge and combining all of their weights. 
 
 # Typically, when plotting a bar graph we want to have the output show the mean
 # and standard error for each category. But unlike when we use the geom_boxplot 
@@ -353,6 +354,13 @@ ggplot(redband, aes(x = as.factor(ScaleAge), y = Weight)) +
 #     error of weight for each group (se=1.96*sd).
 # HINT:Don't forget to remove NAs and ungroup at the appropriate place.
 
+redbandSummary <- redband %>% 
+  drop_na(Weight) %>% 
+  group_by(ScaleAge) %>% 
+  summarize(Weight_mean = mean(Weight), Weight_sd = sd(Weight)) %>% 
+  mutate(Weight_se = 1.96*Weight_sd) %>% 
+  ungroup()
+  
 
 # Let's try again to make our bargraph by running the following code:
 ggplot(redbandSummary, aes(x = as.factor(ScaleAge), y = Weight_mean)) + 
@@ -360,16 +368,17 @@ ggplot(redbandSummary, aes(x = as.factor(ScaleAge), y = Weight_mean)) +
 
 # QUESTION: What does the stat='identity' part do in the code above? Check the 
 # geom_bar() help or google to find the answer.
-
+?geom_bar
+#ANSWER: it leaves the data as is. 
 
 # The above code gave us nice bars.  Now we need to add error bars! We will do this
 # by adding in a second geometric object that specifies errorbars. Try it by
 # running the following code:
-ggplot(redbandSummary, aes(x = as.factor(ScaleAge), y = Weight_mean)) + 
-  geom_bar(stat='identity') +
-  geom_errorbar(aes(ymin=Weight_mean-Weight_se,
-                    ymax=Weight_mean+Weight_se,
-                    width=0.2))
+ggplot(redbandSummary, aes(x = as.factor(ScaleAge), y = Weight_mean)) + #Identifies the dataset and sets the x and y axis parameters also identifying ScaleAge as a categorical variable. 
+  geom_bar(stat='identity') + #telling r what object or type of plot you want and leaving the data as is. 
+  geom_errorbar(aes(ymin=Weight_mean-Weight_se, #adding error bars the min is the difference of the mean weight and the the weight standard error. 
+                    ymax=Weight_mean+Weight_se,#adding error bars the max is the sum of the mean weight and the the weight standard error.
+                    width=0.2)) #telling r how wide you want the error bars. 
 
 # QUESTION: Annotate the code above with what each line does.
 
@@ -377,14 +386,15 @@ ggplot(redbandSummary, aes(x = as.factor(ScaleAge), y = Weight_mean)) +
 # QUESTION: What does the statement width=0.2 do? If you're unsure, try removing
 # it and seeing what happens.
 
+#ANSWER: telling r how wide you want the error bars.
 
 # TASK: Modify the code below to make the bar fill light green, the bar outline 
 # dark green, and the error bars dark orange with end caps 40% the bar width.
 ggplot(redbandSummary, aes(x = as.factor(ScaleAge), y = Weight_mean)) + 
-  geom_bar(stat='identity') +
+  geom_bar(stat='identity', color = 'darkgreen', fill="lightgreen") +
   geom_errorbar(aes(ymin=Weight_mean-Weight_se,
                     ymax=Weight_mean+Weight_se,
-                    width=0.2))
+                    width=0.4))
 
 # ---------------------------------------------------------- #
 #### PART 1.7 AESTHETICS PLACEMENT MATTERS!               #### 
