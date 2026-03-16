@@ -167,7 +167,7 @@ i belive so you are okay to proceed if onlay a small amount of rows where reomev
 # What are the aesthetics? What will the resulting graph be plotting?
 ggplot(redband, aes(x=ScaleAge, y=Length))
 
-
+the data frame is being is the redband trout the asthetics are is the x=sclaeage and the y= length.this means the grpah should be set up to plot the trout length on both axis but there are no data put in yet.
 # When we start, we tell ggplot that we want certain aesthetics (x- and y-axis).
 # But without specifying a geometric object (what shape to add to the plot), we won't
 # see any data! Let's add a new type of geometric object (points!) by running the 
@@ -177,7 +177,7 @@ ggplot(redband, aes(x=ScaleAge, y=Length)) +
 
 # QUESTION: Based on the figure that was generated from the code above, 
 # what would you conclude about the relationship between fish age and length?
-
+the scatter plot shows a postive relationship between the trouts age and length showing older fish tend to be longer than younger but the points are somewhat spread out so the relationship is not perfectly exact.
 
 # TASK: Write your own code to visualize the relationship between Redband 
 # length and weight.
