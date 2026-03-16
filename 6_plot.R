@@ -469,7 +469,7 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 ggplot(redband, aes(x = Length, y = Weight)) + 
   geom_point() +
   theme(panel.background = element_blank())
-
+a panel.grid.minor refers to the samller grid lines shown in the background of the grpah while the pannel background is the overall background aera behind the data . the element_blank() removes the selected things per element so using panel grid minor removes the minor grid lines and panel background removes the panel background
 
 # Try running the following code to alter text size:
 ggplot(redband, aes(x = Length, y = Weight)) + 
@@ -477,7 +477,7 @@ ggplot(redband, aes(x = Length, y = Weight)) +
   theme(axis.title.y=element_text(size=100))
 
 # QUESTION: What does element_text() refer to in the code above?
-
+refers to the text formatinf element in the theme. it lests you change the size colr apperance and style of the text.
 
 # TASK: Write your own code below to change the size of the x-axis labels
 # (i.e., the numbers along the x-axis) to 50. 
