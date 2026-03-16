@@ -639,6 +639,8 @@ ggsave("Redband_histogram_facet.png", dpi = 600, width = 10, height = 8)
 # of a correlation? Which showed deviations from a benchmark or baseline? And which
 # was an example of a distribution?
 
+# the scatterplot was an example of correlation, the bar graph showed deviations
+# and both the histogram and the box plot showed distributions.
 
 
 # TASK: Import the full SpokaneFish dataset, keeping all observations (i.e., 
@@ -649,8 +651,18 @@ ggsave("Redband_histogram_facet.png", dpi = 600, width = 10, height = 8)
 # Then save your file as a .png with an informative figure name at a width of 9
 # inches and a height of 7 inches and 450 dpi.
 
+SpokaneFish <- read.csv("LowerSpokaneFish.csv")
+
+ggplot(SpokaneFish, aes(x = Length, y = Weight, color = Species)) +
+  geom_point(shape = 17) + scale_x_log10() + xlab("Fish Length (mm)") + 
+  ylab("Fish Weight (g)") + facet_wrap(~Species)
+
+ggsave("SpokaneFish_length_weight_by_species.png", width = 9, height = 7, dpi = 450)
 
 # QUESTION: Why do you think we focused on Redband Trout for most of this assignment?
 
+#To get us ready for our own individual projects and because if we were to start off 
+#learning by using more complex data that has multiple species it would be harder to understand.
+#the information.
 
 # REMEMBER: Save and push your script when you're done with this assignment!
