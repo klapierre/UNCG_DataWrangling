@@ -1,5 +1,5 @@
 # Map building in RStudio
-
+#mariii
 # ---------------------------------------------------------------------------- #
 ## OBJECTIVES:
 # 1. Understand when and why we may want to use R to build maps
