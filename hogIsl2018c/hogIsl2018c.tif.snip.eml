@@ -1,0 +1,76 @@
+      <spatialRaster id="hogIsl2018c.tif.vat">
+         <alternateIdentifier>###ReplaceAlternateIdentifier###</alternateIdentifier>
+         <entityName>hogIsl2018c</entityName>
+         <entityDescription>Data type</entityDescription>
+         <physical>
+            <objectName>###ReplaceObjectName###</objectName>
+            <dataFormat>
+               <externallyDefinedFormat>
+                  <formatName>zip file with TIFF or GeoTIFF raster file(s) </formatName>
+               </externallyDefinedFormat>
+            </dataFormat>
+            <replaceDistribution/>
+         </physical>
+         <coverage>
+            <geographicCoverage>
+               <geographicDescription>Hog Island, VA, Northampton County, VA</geographicDescription>
+               <boundingCoordinates>
+                  <westBoundingCoordinate>-75.731751</westBoundingCoordinate>
+                  <eastBoundingCoordinate>-75.653059</eastBoundingCoordinate>
+                  <northBoundingCoordinate>37.466395</northBoundingCoordinate>
+                  <southBoundingCoordinate>37.364526</southBoundingCoordinate>
+               </boundingCoordinates>
+            </geographicCoverage>
+         </coverage>
+         <attributeList/>
+         <spatialReference>
+            <horizCoordSysDef name="GCS_WGS_1984">
+               <geogCoordSys name="GCS_WGS_1984">
+                  <datum name="D_WGS_1984"/>
+                  <spheroid name="WGS_1984" semiAxisMajor="6378137.0" denomFlatRatio="298.257223563"/>
+                  <primeMeridian name="Greenwich" longitude="0.0"/>
+                  <unit name="degree"/>
+               </geogCoordSys>
+            </horizCoordSysDef>
+         </spatialReference>
+         <georeferenceInfo>
+            <cornerPoint>
+               <xCoordinate>-75.731751</xCoordinate>
+               <yCoordinate>37.364526</yCoordinate>
+               <pointInPixel>center</pointInPixel>
+               <corner>Lower Left</corner>
+            </cornerPoint>
+            <cornerPoint>
+               <xCoordinate>-75.731751</xCoordinate>
+               <yCoordinate>37.466395</yCoordinate>
+               <pointInPixel>center</pointInPixel>
+               <corner>Upper Left</corner>
+            </cornerPoint>
+            <cornerPoint>
+               <xCoordinate>-75.653059</xCoordinate>
+               <yCoordinate>37.466395</yCoordinate>
+               <pointInPixel>center</pointInPixel>
+               <corner>Upper Right</corner>
+            </cornerPoint>
+            <cornerPoint>
+               <xCoordinate>-75.653059</xCoordinate>
+               <yCoordinate>37.364526</yCoordinate>
+               <pointInPixel>center</pointInPixel>
+               <corner>Lower Right</corner>
+            </cornerPoint>
+         </georeferenceInfo>
+         <horizontalAccuracy>
+            <accuracyReport>Horizontal Accuracy Report not present</accuracyReport>
+         </horizontalAccuracy>
+         <verticalAccuracy>
+            <accuracyReport>Vertical Accuracy Report not present</accuracyReport>
+         </verticalAccuracy>
+         <cellSizeXDirection>0.000180</cellSizeXDirection>
+         <cellSizeYDirection>0.000180</cellSizeYDirection>
+         <numberOfBands>1</numberOfBands>
+         <rasterOrigin>Upper Left</rasterOrigin>
+         <rows>567</rows>
+         <columns>438</columns>
+         <verticals>1</verticals>
+         <cellGeometry>pixel</cellGeometry>
+      </spatialRaster>
