@@ -588,7 +588,7 @@ showed up in the working directory for my R project. the graph that was saved wa
 # graph, and a dot plot with a trend line. Which of these figures was an example
 # of a correlation? Which showed deviations from a benchmark or baseline? And which
 # was an example of a distribution?
-
+the  histogrmas becasue it shows how vlaues are spread across the bins.the boxplot also summarizes distrubtion acoross the groups 
 
 
 # TASK: Import the full SpokaneFish dataset, keeping all observations (i.e., 
@@ -601,6 +601,6 @@ showed up in the working directory for my R project. the graph that was saved wa
 
 
 # QUESTION: Why do you think we focused on Redband Trout for most of this assignment?
-
+becasue using one speices keeps the data set simpler and makes it easier to learn ggplot without extra varation casued by  differnces amingst the species.
 
 # REMEMBER: Save and push your script when you're done with this assignment!
