@@ -1,7 +1,5 @@
 # Map building in RStudio
 
-
-
 #Write a code to install the packages ggplot2, maps, dyplr, tigris, and sf
 #Run the following code to load the packages into your library:
 
@@ -51,8 +49,6 @@ ggplot(us_states_frost) +
 # 3. Use packages such as maps and ggplot to map spatial data 
 # 4. To learn how to find and import environmental spatial data sets
 
-
-
 # MAPPING SPECIMEN OCCURRENCE DATA ------------------------------------------
 
 # In this section, we are going to learn how to find and plot mammal occurrence
@@ -80,7 +76,7 @@ mammal_data <- read.csv("NC_mamm_data.csv")
 colnames(mammal_data)
 unique(mammal_data$locality) #238 unique localities
 unique(mammal_data$genus) #50 unique genera
-unique(mammal_data$order) #15 unique orders - for the sake of this assignment, we will plot specimens groupped by color 
+unique(mammal_data$order) #15 unique orders - for the sake of this assignment, we will plot specimens grouped by color 
 
 # Remove the 'USE_LICENSE_URL' column because it is not needed for plotting
 mammal_data <- mammal_data %>%
