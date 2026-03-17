@@ -569,11 +569,13 @@ ggplot(redband, aes(x = Length)) + geom_histogram() + facet_wrap(~ScaleAge, scal
 ggsave("Redband_histogram_facet.png")
 
 # QUESTION: Where did this file show up? And what was the graph?
-
+# Answer: This file showed up in my working directory for the R project in my UNCG_DataWrangling file. The last plot/graph I created is what gets saved.
 
 # TASK: Investigate the ggsave() function through the help files. Then write
 # code to save the file at 600 dpi, 10 inch width and 8 inch height.
+?ggsave()
 
+ggsave('redband_histogram_facet.png', dpi = 600, width = 10, height = 8)
 
 # NOTE: You can also save the graphics you make by exporting them from the plots
 # tab in RStudio. However, this can be less precise than specifying the graphic
@@ -588,7 +590,7 @@ ggsave("Redband_histogram_facet.png")
 # graph, and a dot plot with a trend line. Which of these figures was an example
 # of a correlation? Which showed deviations from a benchmark or baseline? And which
 # was an example of a distribution?
-
+# Answer: The scatterplot with geom_smooth was an example of a correlation, the bar graph with error bars showed deviations, the histogram was an example of distribution, and the boxplot is also an example of distribution. 
 
 
 # TASK: Import the full SpokaneFish dataset, keeping all observations (i.e., 
@@ -598,9 +600,14 @@ ggsave("Redband_histogram_facet.png")
 # triangles colored by species, informative x and y axes labels that include units.
 # Then save your file as a .png with an informative figure name at a width of 9
 # inches and a height of 7 inches and 450 dpi.
+SpokaneFish <- read_csv("LowerSpokaneFish.csv")
 
+ggplot(SpokaneFish, aes(x = Length, y = Weight, color = Species)) + geom_point(shape = 17) + scale_x_log10() + facet_wrap(~Species) + xlab("Fish Length (mm)") + ylab("Fish Weight (g)")
+
+ggsave("SpokaneFish_weight_vs_length_by_species.png", width = 9, height = 7, dpi = 450)
 
 # QUESTION: Why do you think we focused on Redband Trout for most of this assignment?
+# Answer: We focused on Redband Trout because they are a subspecies of Rainbow Trout that have experienced population declines because of habitat loss and competition with non-native species. Focusing on one species lets us practice graph making while seeing patterns in age, length, and weight of Redband Trout. 
 
 
 # REMEMBER: Save and push your script when you're done with this assignment!
