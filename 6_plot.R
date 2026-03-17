@@ -375,7 +375,7 @@ ggplot(redband, aes(x = Length, y = Weight, color = as.factor(ScaleAge))) +
   geom_smooth(method='lm', se=F)
 
 # QUESTION: What is different about this graph from before?
-
+# Answer: This graph is different because moving color = as.factor(ScaleAge) into the main ggplot() causes the color to apply to both the data points and the lines. Also instead of one overall line, the graph now shows a separate colored linear regression line for each age group. 
 
 # ---------------------------------------------------------- #
 #### PART 1.8: ALTERING SCALES                            ####
@@ -413,7 +413,7 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 # scale (i.e., with scale age on a linear x axis and length on a log y axis).
 # Fill in your boxplots with your favorite color and make the outline your least
 # favorite color. Label the x-axis Scale Age (years) and the y-axis Length (mm).
-
+ggplot(redband, aes(x = as.factor(ScaleAge), y = Length)) + geom_boxplot(fill = "pink", color = "brown") + scale_y_log10() + xlab("Scale Age (years)") + ylab("length (mm)")
 
 # ---------------------------------------------------------- #
 #### PART 1.9: SETTING THEMES                             ####
@@ -445,7 +445,9 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 
 # TASK: Check out the section on complete themes in the ggplot2 book here:
 # https://ggplot2-book.org/polishing.html#themes.  Try out two more themes below.
+ggplot(redband, aes(x = Length, y = Weight)) + geom_point() + theme_classic()
 
+ggplot(redband, aes(x = Length, y = Weight)) + geom_point() + theme_light()
 
 # Rather than using the pre-set themes, we can also create our own! 
 # The theme can be set to modify the text of plot titles, axis titles, axis labels,
@@ -458,6 +460,8 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 # QUESTION: Compare the output for each of the following figures.
 # Based on the output, what do you think panel.grid.minor vs panel.background 
 # refer to? What does the aesthetic element_blank() do?
+# Answer: panel.grid.minor refers to the minor grid lines in the background of the graph. Panel.background refers to the background area of the plot panel itself. The function element_blank() removes that element from the graph, so the selected part of the theme disappears. 
+
 ggplot(redband, aes(x = Length, y = Weight)) + 
   geom_point() +
   theme(panel.grid.minor = element_blank())
@@ -473,12 +477,12 @@ ggplot(redband, aes(x = Length, y = Weight)) +
   theme(axis.title.y=element_text(size=100))
 
 # QUESTION: What does element_text() refer to in the code above?
-
+# Answer: element_text() is used to change the appearance of text in the plot, like the size. 
 
 # TASK: Write your own code below to change the size of the x-axis labels
 # (i.e., the numbers along the x-axis) to 50. 
 # HINT: Check out the ggplot cookbook or ggplot2 themes websites for help.
-
+ggplot(redband, aes(x = Length, y = Weight)) + geom_point() + theme(axis.text.x = element_text(size = 50))
 
 # We can set the theme to include all kinds of variations by adding them all to
 # the theme statement for an individual ggplot.
@@ -548,7 +552,7 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 # specified uniquely for each subpanel.
 # HINT: Check the help file for facet_wrap if you're unsure. Look under the 
 # Arguments section for scales.
-
+ggplot(redband, aes(x = Length)) + geom_histogram() + facet_wrap(~ScaleAge, scales = "free_y")
 
 # ---------------------------------------------------------- #
 #### PART 1.11: SAVING YOUR GRAPHICS                      ####
