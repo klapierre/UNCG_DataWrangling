@@ -418,7 +418,8 @@ ggplot(redband, aes(x = Length, y = Weight, color = as.factor(ScaleAge))) +
 
 # QUESTION: What is different about this graph from before?
 
-
+##Color aesthetic affects all layers in the plot.
+ 
 # ---------------------------------------------------------- #
 #### PART 1.8: ALTERING SCALES                            ####
 # ---------------------------------------------------------- #
