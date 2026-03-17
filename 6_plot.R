@@ -457,6 +457,11 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 # Fill in your boxplots with your favorite color and make the outline your least
 # favorite color. Label the x-axis Scale Age (years) and the y-axis Length (mm).
 
+ggplot(redband, aes(x = as.factor(ScaleAge), y = Length)) + 
+  geom_boxplot(fill = "blue", color = "red") +
+  scale_y_log10() +
+  xlab("Scale Age (years)") +
+  ylab("Length (mm)")
 
 # ---------------------------------------------------------- #
 #### PART 1.9: SETTING THEMES                             ####
@@ -489,6 +494,13 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 # TASK: Check out the section on complete themes in the ggplot2 book here:
 # https://ggplot2-book.org/polishing.html#themes.  Try out two more themes below.
 
+ggplot(redband, aes(x = Length, y = Weight)) + 
+  geom_point() +
+  theme_classic()
+
+ggplot(redband, aes(x = Length, y = Weight)) + 
+  geom_point() +
+  theme_light()
 
 # Rather than using the pre-set themes, we can also create our own! 
 # The theme can be set to modify the text of plot titles, axis titles, axis labels,
@@ -509,6 +521,9 @@ ggplot(redband, aes(x = Length, y = Weight)) +
   geom_point() +
   theme(panel.background = element_blank())
 
+##panel.grid.minor = grid lines in the background of the plot,
+#panel.background = to the overall background of the plot area. 
+#element_blank() removes it completely.
 
 # Try running the following code to alter text size:
 ggplot(redband, aes(x = Length, y = Weight)) + 
@@ -517,11 +532,15 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 
 # QUESTION: What does element_text() refer to in the code above?
 
+##Chnage the appearance of text
 
 # TASK: Write your own code below to change the size of the x-axis labels
 # (i.e., the numbers along the x-axis) to 50. 
 # HINT: Check out the ggplot cookbook or ggplot2 themes websites for help.
 
+ggplot(redband, aes(x = Length, y = Weight)) + 
+  geom_point() +
+  theme(axis.text.x = element_text(size = 50))
 
 # We can set the theme to include all kinds of variations by adding them all to
 # the theme statement for an individual ggplot.
