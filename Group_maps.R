@@ -19,25 +19,39 @@ library(dplyr)
 library(tigris)
 library(sf)
 
-
-# Part 2: SECTION TITLE  ------------------------------------------------------
-
 #Run the following code:
 options(tigris_use_cache = TRUE)
 
+# Part 2: SECTION TITLE  ------------------------------------------------------
+
+#Task: We will start by loading the state.x77 dataset
+#into R as a dataframe and using the cbind() function to create a column named
+#"State" with all states listed from the row names in the state.x77 dataset.
 
 state_data <- cbind(
   State = rownames(state.x77),
-  as.data.frame(state.x77)
-)
+  as.data.frame(state.x77))
 
+#Run the following code to display your data
+head(state_data)
+
+#Question: What do you notice about the rownames and the data within the "State" 
+#column? 
+
+#Task: Run the following code:
 rownames(state_data) <- NULL
 
-head(state_data)
+#Question: Write code to display your dataset once again. What did the previous
+#code change within our dataset?
+
+#Task: Because we have loaded the dyplr package, we can create a new dataframe
+#with just State and Frost data. Write a code to select the State and Frost columns
+#from the state_data dataframe and name the new dataframe state_frost_data. 
+#View the new dataset and confirm that it is correct.
 
 state_frost_data <- state_data %>% select(State, Frost)
 
-head(state_frost_data)
+
 
 states <- states(cb = TRUE)
 
@@ -49,7 +63,6 @@ ggplot(us_states_frost) +
   geom_sf(aes(fill = Frost), color = "blue") +
   theme_minimal() +
   labs(fill = "Number of Frost Days", title = "United States Frost Data")
-
 
 # Part 3: MAPPING SPECIMEN OCCURRENCE DATA -------------------------------------
 
