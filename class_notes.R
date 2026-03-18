@@ -56,3 +56,5 @@
 # QUESTION: How many specimens are in the mammal dataframe?
 
 # QUESTION: Given the number of species present in this dataframe (what code allows us to easily check a unique variable such as this one?), why are we color by order rather than indivudal species 
+
+# NOTE: t

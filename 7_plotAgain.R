@@ -49,8 +49,7 @@ library(tidyverse)
 # all plots.
 theme_set(theme_bw()) 
 theme_update(panel.grid.major = element_blank(),
-             panel.grid.minor = element_blank(),
-             legend.title = element_blank())
+             panel.grid.minor = element_blank())
 
 # ---------------------------------------------------------- #
 #### 1.0 CORRELATION                                      ####
@@ -124,6 +123,9 @@ ggplot(mpg, aes(x=cty, y=hwy)) +
 # HINT: Refer back to the Transform assignment if you want help with %in% (or 
 # try googling!)
 
+mpgSubset <- mpg %>%
+  filter(class %in% c("compact", "midsize", "suv"))
+
 
 # ggplot has lots of nice (and some not so nice) built-in color palettes that we 
 # can use to fill our bars with color. Try running the following code:
@@ -150,6 +152,7 @@ ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
 # What do you notice about the colors chosen from each of the palettes that we
 # used above? (i.e., does it use the first three colors in the palette? The last
 # three? Some other combination?)
+# when the palette is considered sequential or qualitative, it appears that the colors picked are equidistant from each other along the gradient. The diverging palette just takes the first three colors, because the colors aren't related in any way (along a gradient)
 
 
 # We could also pick out EXACTLY which colors we want for our figure. 
@@ -173,16 +176,23 @@ ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
 
 # You can also chose colors by number, which are assigned in R.
 
+
+ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
+  geom_jitter() +
+  scale_color_manual(values=c(391, 17, 394))
+
 # TASK: Copy and paste the code to make our scatterplot and replace the color names
 # with three numbers of your choice (between 1 and 657). How does your new figure look?
 # HINT: remember to remove the quotation marks when calling numbers.
-
+# it looks kinda ugly now... 
 
 # QUESTION: How do you think you could figure out which color name belongs to
 # each color number?
 # HINT: Try creating a dataframe from color() by passing it into the
 # as.data.frame() function.
+colors_df <- colors()
 
+colors <- as.data.frame(colors_df)
 
 # You can also chose colors by Hex code. A Hex color code is a 6-symbol code made
 # of up to three 2-symbol elements (6 symbols in length all together). Each of 
@@ -201,7 +211,9 @@ ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
 # picker (in addition to a billion other color picking websites). Use this color
 # picker to generate the hex codes for three new colors of your choice. Then copy
 # and paste the above code, replacing the hex codes with your color choices.
-
+ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
+  geom_jitter() +
+  scale_color_manual(values=c('#87db27', '#4287f5', '#fa4869'))
 
 # The second great thing about hex codes is that you can control the transparency
 # of your colors. Transparency is set in a hex code by adding two extra symbols
@@ -215,17 +227,19 @@ ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
 # adding the alpha element to the end of each of your hex codes to make your
 # first color 0% transparent, your second color 50% transparent, and your third
 # color 100% transparent.
-
+ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
+  geom_jitter() +
+  scale_color_manual(values=c('#87db2700',   '#4287f580',  '#fa4869FF'))
 
 # QUESTION: What happened to the point that you set to 100% transparent?
-
+# The compact class points set to 100% transparent are now invisible
 
 # Finally, we can set our colors using the rgb() function. This operates very
 # similarly to the hex code, where you can pick exactly the color and transparency
 # you want. Try it out by running the following code:
 ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
   geom_jitter() +
-  scale_color_manual(values=c(rgb(.10, .10, .44, 1), rgb(.39, .58, .93, 1), rgb(1.0, .39, .28, 1)))
+  scale_color_manual(values=c(rgb(.10, .10, .44, .5), rgb(.39, .58, .93, .5), rgb(1.0, .39, .28, .5)))
 
 # TASK: Modify the above code to make all of your points 50% transparent.
 
@@ -252,18 +266,18 @@ ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
   geom_jitter()
 
 # QUESTION: Where did ggplot get the legend title and values from?
-
+# the color=class section is telling r to assign colors based on the three class variables, and the values are pulled from the pre-existing color palette within ggplot. The legend title is the same as whatever that column is labeled as.
 
 # We could change the title and values in our legend by altering the dataframe
 # we are passing into ggplot. But that seems a bit drastic. Instead, we can 
 # lean on the same code that specifies our color picks to alter the legend text.
 # Try it out by running the following code:
-ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) + 
-  geom_jitter() + 
-  scale_color_manual(values=c('#FCBA03', '#380754', '#496916'),
-                     name='Class of Car', 
-                     breaks=c('suv', 'midsize', 'compact'), 
-                     labels=c('SUV', 'Midsize', 'Compact'))
+ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) + # creating plot using the mpgSubset dataframe, assigning x and y axis variables, and coloring by class
+  geom_jitter() + # spacing out the data points so we can see all overlapping points
+  scale_color_manual(values=c('#FCBA03', '#380754', '#496916'), # assigning colors from hex code
+                     name='Class of Car', # assigning legend title
+                     breaks=c('suv', 'midsize', 'compact'), # telling r what the three characters to color by are
+                     labels=c('SUV', 'Midsize', 'Compact')) # assigning lables to legend key
 
 
 # TASK: Label each line of the code above with what it is doing.
@@ -282,7 +296,7 @@ ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
 
 # QUESTION: What is wrong with the code above? Why is it so important to be
 # careful with the order you pass information into ggplot?
-
+# the legend tells us that compact cars are shown with the yellow color, but the line above orders suv to be connected to the yellow color based on the order in which they appear in the code. We are misrepresenting the data if we don't follow the same order in each line!
 
 # While changing the legend text and factor order takes place in the scale_color_manual
 # step, moving the legend around on the graph page is part of the graph theme. We
@@ -294,9 +308,11 @@ ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
 
 # TASK: Modify the code above to have the legend display along the bottom of
 # the figure.
+ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) + 
+  geom_jitter() + 
+  theme(legend.position='bottom')
 
-
-# We can also have the legend located within the area of the graph itself! We can 
+# We can also have the legend located within the area of the graph itself! We can
 # do this by specifying the coordinates for where the legend should go within the
 # graph axes. First we set the legend position and then we set the anchoring 
 # position by justifying the legend.
@@ -312,19 +328,24 @@ ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
 
 # QUESTION: What happens if you don't include the code for legend justification
 # above?
-
+# the center of the legend is not anchored to the bottom right portion of the figure
 
 # TASK: Copy and paste the code from above. Modify it to place the legend in the
 # upper left part of the graph.
-
+ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) + 
+  geom_jitter() + 
+  theme(legend.position=c(1,1), legend.justification=c(1,1))
 
 # Finally, we might want to remove the legend altogether! We would do so by
 # modifying the theme as well. 
 
 # TASK: Check the ggplot cookbook to find the legends section. Read what it says 
-# about removing the legend. Then copy and paste the graph code from above. Modify
-# the code to remove the legend.
+# about removing the legend. Then copy and paste the graph code from above. 
+# Modify the code to remove the legend.
 
+ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) + 
+  geom_jitter() + 
+  theme(legend.position="none")
 
 # ---------------------------------------------------------- #
 #### 2.0 DEVIATION                                        ####
