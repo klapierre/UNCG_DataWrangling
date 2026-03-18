@@ -405,12 +405,16 @@ ggplot(highwayMPG, aes(x = class, y = hwy_mean, fill = class)) +
 #     statement
 # (3) No legend
 # (4) Informative x- and y-axis labels. 
-
 # HINT: Carefully consider whether your color and/or fill should go within an aes() 
 # statement, the scale_fill_manual or scale_color_manual statements, or neither.
 # If in doubt, try a bunch of ways until it looks how we want it. And consult 
 # your helpful ggplot resources on the web.
 
+ggplot(highwayMPG, aes(x = class, y = hwy_mean, fill = class)) +
+  geom_col(color = "black") + 
+  scale_fill_brewer(palette="Dark2") +
+  theme(legend.position = "none") +
+  labs(x = "Car Class", y = "Average Highway MPG")
 
 # ---------------------------------------------------------- #
 #### 2.2 DETOUR! AXIS MODIFICATIONS                       ####
