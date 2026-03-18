@@ -67,7 +67,7 @@
 # Start by writing code to load the tidyverse library.
 # HINT: see the end of assignment #1 if you forgot how to load a package.
 library(tidyverse)
-
+library(ggplot2)
 # ---------------------------------------------------------- #
 ### PART 1.0: TIDY THE DATA                               ####                                           
 # ---------------------------------------------------------- #
@@ -339,7 +339,11 @@ ggplot(redband, aes(x = as.factor(ScaleAge), y = Weight)) +
 
 # QUESTION: What is the graph output? Note the scale of the y-axis. Does this seem
 # right to you? What do you think happened to result in this graph?
-
+#The graph is a bar graph that plots weight for each age. However these bars 
+#have very large weights with the tallest bar showing a weight of over 80,000. 
+#This is likely incorrect as it summed up all of the weights for each age. This 
+#is because of the 'identity' part of the code which makes R use the y value listed
+#in the column.
 
 # Typically, when plotting a bar graph we want to have the output show the mean
 # and standard error for each category. But unlike when we use the geom_boxplot 
@@ -357,6 +361,11 @@ ggplot(redband, aes(x = as.factor(ScaleAge), y = Weight)) +
 #     error of weight for each group (se=1.96*sd).
 # HINT:Don't forget to remove NAs and ungroup at the appropriate place.
 
+redbandSummary <- redband %>% group_by(ScaleAge) %>%
+  summarise(Weight_mean = mean(Weight, na.rm = TRUE),
+  Weight_sd = sd(Weight, na.rm = TRUE)) %>%
+  mutate(Weight_se = 1.96 * Weight_sd) %>%
+  ungroup()
 
 # Let's try again to make our bargraph by running the following code:
 ggplot(redbandSummary, aes(x = as.factor(ScaleAge), y = Weight_mean)) + 
@@ -364,23 +373,27 @@ ggplot(redbandSummary, aes(x = as.factor(ScaleAge), y = Weight_mean)) +
 
 # QUESTION: What does the stat='identity' part do in the code above? Check the 
 # geom_bar() help or google to find the answer.
-
+#Tells R to use to actual values that are in the column rather than adding up 
+#number of observations in the column.
 
 # The above code gave us nice bars.  Now we need to add error bars! We will do this
 # by adding in a second geometric object that specifies errorbars. Try it by
 # running the following code:
-ggplot(redbandSummary, aes(x = as.factor(ScaleAge), y = Weight_mean)) + 
-  geom_bar(stat='identity') +
-  geom_errorbar(aes(ymin=Weight_mean-Weight_se,
-                    ymax=Weight_mean+Weight_se,
-                    width=0.2))
+ggplot(redbandSummary, aes(x = as.factor(ScaleAge), y = Weight_mean)) + #Tells R
+  #to use the redbandSummary dataframe and ech bar is by categroies of scale age
+  geom_bar(stat='identity') + #Tells R to use value within the Weight_mean columm
+  geom_errorbar(aes(ymin=Weight_mean-Weight_se, #lower bar computed by value in 
+                    #Weight_mean column minus value in Weight_se column
+                    ymax=Weight_mean+Weight_se, #upper bar computed by adding these
+                    #rather than subtracting
+                    width=0.2)) #shows width of cap
 
 # QUESTION: Annotate the code above with what each line does.
 
 
 # QUESTION: What does the statement width=0.2 do? If you're unsure, try removing
 # it and seeing what happens.
-
+#specifies width of cap on errorbars
 
 # TASK: Modify the code below to make the bar fill light green, the bar outline 
 # dark green, and the error bars dark orange with end caps 40% the bar width.
