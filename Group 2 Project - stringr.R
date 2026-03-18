@@ -33,7 +33,8 @@ strlengthtest <- c("This", "is", "to", "test", "stringr", "length", "functions!"
 
 #TASK: Use your knowledge of the filter function to create a new dataframe using
 #the "babyNames" dataframe which only contains names with a length greater than
-#or equal to 6. Name this new dataframe "LongbabyNames".
+#or equal to 6. Name this new dataframe "LongbabyNames". (Note: you will need
+#to load the dplyr package to use the filter function.)
 
 #The function "str_pad" is used to pad out strings to make their lengths or 
 #widths consistent. In this context, "width" refers to display width, the 
@@ -55,3 +56,15 @@ strlengthtrimmed <- str_trim(strlengthtest2)
 #QUESTION: What is a possible practical application of the str_pad and str_trim
 #functions?
 
+#The final length management function we will learn is "str_trunc". This function
+#also serves to make string lengths consistent, but it does this by chopping off
+#portions of any strings that are too long and replacing them with ellipsis. Run
+#the following code.
+
+str_trunc(strlengthtest, 4)
+
+#QUESTION: How long is each string in the vector now?
+
+#TASK: Write code to create a new dataframe called "babyNamesTrunc". In this 
+#dataframe, truncate the "name" column so that each string is at most 5 
+#characters. HINT: The mutate function will be useful here.
