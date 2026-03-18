@@ -380,7 +380,7 @@ ggplot(data=mpg, aes(x=hwy)) +
 # data. Also recall, standard error = 1.96*standard deviation.
 
 highwayMPG <- mpg %>% group_by(class) %>% 
-  summarize(hwy_mean = mean(hwy), hwy_sd = sd(hwy), hwy_se = 1.96 * hwy_sd)
+  summarize(hwy_mean = mean(hwy), hwy_sd = sd(hwy), hwy_se = 1.96 * hwy_sd) %>% ungroup()
 
 # TASK: Create a bar graph showing the average highway MPG on the y-axis and 
 # car class on the x-axis. Fill the bars by class. Add in error bar caps that are 20%
@@ -500,7 +500,9 @@ ggplot(highwayMPG, aes(x = class, y = hwy_mean, fill = class)) +
 # HINT: Look back at the Transform assignment if you forget how to summarize the
 # data. Also, standard error = 1.96*standard deviation.
 
-
+cityMPG <- mpg %>% group_by(class) %>% 
+  summarize(city_mean = mean(cty), city_sd = sd(cty), city_se = 1.96 * sd(cty)) %>% ungroup()
+  
 # Now we want to plot our data in order from smallest to largest city MPG to get
 # a ranking. To do so, we need to use the reorder() function to rearrange the data
 # going into our x-axis.
@@ -515,6 +517,14 @@ ggplot(cityMPG, aes(x=reorder(class, city_mean), y=city_mean)) +
 # (5) y-axis from 0 to 30 with tick marks every 5
 # (6) no legend.
 
+ggplot(cityMPG, aes(x=reorder(class, -city_mean), y=city_mean, fill = class)) + 
+  scale_y_continuous(limits = c(0, 30), breaks = seq(0, 30, 5)) +
+  scale_x_discrete(labels=c('Subcompact', 'Compact', 'Midsize', 'Minivan', 'Sport', 'SUV', 'Pickup')) +
+  geom_col(color = "darkgrey") +
+  scale_fill_brewer(palette = "Set3") +
+  geom_errorbar(aes(ymin = city_mean - city_se, ymax = city_mean + city_se), width = 0.3) +
+  theme(legend.position = "none") +
+  labs(x = "Car Class", y = "Average City MPG")
 
 # ---------------------------------------------------------- #
 #### 4.0 DISTRIBUTION                                     ####
