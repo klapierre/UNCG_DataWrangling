@@ -82,8 +82,14 @@ mammal_data <- mammal_data %>%
   select(-USE_LICENSE_URL)
 
 
-# Rename remaining columns
+# Using the rename() function introduced in assignment 4, rename the remaining 11 columns without
+
 colnames(mammal_data) <- c("country", "state", "locality", "date", "lat", "long", "sex", "life_stage", "genus", "order", "family")
+
+mammal_data <- rename(.data=mammal_data,
+                           COUNTRY=country,
+                           smalle_temp=Smalle.Cr.Temp.C.,
+                           winchester_temp=Winchester.Cr.Temp..C.)
 
 # Clean NA values from specified columns
 clean_data <- mammal_data %>%
