@@ -72,15 +72,15 @@ ggplot(us_states_frost) +
 mammal_data <- read.csv("NC_mamm_data.csv")
 
 
-# Review your data using the unique() function, pulling from the object mammal_data to see the column names, the unique localities, unique genera, and unique orders
+# TASK: Using the colnames() function, review what columns exist in your current dataset
 colnames(mammal_data)
-unique(mammal_data$locality) #238 unique localities
-unique(mammal_data$genus) #50 unique genera
-unique(mammal_data$order) #15 unique orders - for the sake of this assignment, we will plot specimens grouped by color 
 
-# Remove the 'USE_LICENSE_URL' column because it is not needed for plotting
+
+# TASK: Remove the 'USE_LICENSE_URL' column using a pipe and the select(- ) 
+# function because it is not needed for plotting
 mammal_data <- mammal_data %>%
   select(-USE_LICENSE_URL)
+
 
 # Rename remaining columns
 colnames(mammal_data) <- c("country", "state", "locality", "date", "lat", "long", "sex", "life_stage", "genus", "order", "family")
