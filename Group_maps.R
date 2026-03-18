@@ -1,16 +1,26 @@
-# Map building in RStudio
+# MAP BUILDING IN RSTUDIO
 
-#Write a code to install the packages ggplot2, maps, dyplr, tigris, and sf
-#Run the following code to load the packages into your library:
+# ---------------------------------------------------------------------------- #
+# OBJECTIVES:
+# 1. Understand when and why we may want to use R to build maps
+# 2. Understand that there are many different ways to map spatial data within RStudio framework
+# 3. Use packages such as maps and ggplot to map spatial data 
+# 4. To learn how to find and import environmental spatial data sets
 
-#Test
-# LOAD REQUIRED PACKAGES
+
+
+# Part 1: Loading packages ------------------------------------------------
+
+# NOTE: you may need to write the line install.packages(" ") before loading these packages into your library if you have not used them before!
 library(tidyverse)
 library(ggplot2)
 library(maps)
 library(dplyr)
 library(tigris)
 library(sf)
+
+
+# Part 2: SECTION TITLE  ------------------------------------------------------
 
 #Run the following code:
 options(tigris_use_cache = TRUE)
@@ -41,36 +51,26 @@ ggplot(us_states_frost) +
   labs(fill = "Number of Frost Days", title = "United States Frost Data")
 
 
+# Part 3: MAPPING SPECIMEN OCCURRENCE DATA -------------------------------------
 
-# ---------------------------------------------------------------------------- #
-## OBJECTIVES:
-# 1. Understand when and why we may want to use R to build maps
-# 2. Understand that there are many different ways to map spatial data within RStudio framework
-# 3. Use packages such as maps and ggplot to map spatial data 
-# 4. To learn how to find and import environmental spatial data sets
-
-# MAPPING SPECIMEN OCCURRENCE DATA ------------------------------------------
-
-# In this section, we are going to learn how to find and plot mammal occurrence
-# data from North Carolina. First, we need to find a dataset to download. 
+# In this section, we are going to learn how to find and plot specimen (or species) occurrence data from North Carolina. First, we need to find a dataset to download. I want to map mammals collected in North Carolina. 
 
 # To find an appropriate dataset, I queried the opensource museum data sharing
 # platform Arctos to gather mammal records North Carolina.
 # Here is the link to the website: https://arctos.database.museum/
 
+# To filter the records, I specified "Mammalia" in the "Any taxon, ID, common    # name" box within the Identification field, and "North Carolina" in the
+# "state_prov" box within the Place field. 
+
 # It is free to make an account and search+download records, but I shared a csv 
 # file in the the email I sent out for those who do not have an account already 
 # made. 
 
-# To filter the records, I specified "Mammalia" in the "Any taxon, ID, common name"
-# box within the Identification field, and "North Carolina" in the "state_prov" 
-# box within the Place field
+# TASK: Download the NC_mamm_data.csv into your UNCG_DataWrangling folder on your desktop
 
-# Once we have the csv file saved in our UNCG_DataWrangling folder on our 
-# desktops, we will need to begin cleaning the file to make it easier to work with
-
-# To read in the data, create an object titled "mammal_data" from the NC_mamm_data csv 
+# TASK: Create an object titled "mammal_data" from the NC_mamm_data csv 
 mammal_data <- read.csv("NC_mamm_data.csv")
+
 
 # Review your data using the unique() function, pulling from the object mammal_data to see the column names, the unique localities, unique genera, and unique orders
 colnames(mammal_data)
