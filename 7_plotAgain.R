@@ -257,16 +257,21 @@ ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
   geom_jitter()
 
 # QUESTION: Where did ggplot get the legend title and values from?
-
+#Answer: It appears that the legend title is from the color/what is set as the color in the aes function, and the values are from the class column values
 
 # We could change the title and values in our legend by altering the dataframe
 # we are passing into ggplot. But that seems a bit drastic. Instead, we can 
 # lean on the same code that specifies our color picks to alter the legend text.
 # Try it out by running the following code:
+
+#Make a plot, using the mpgSubset data set. The entire graph should use the cty column as the x, the hwy column as the y, and factor colors by the class column
 ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) + 
+#Make the plut a jitter plot
   geom_jitter() + 
+#Set the color to have the colors #FCBA03, #380754, and #496916
   scale_color_manual(values=c('#FCBA03', '#380754', '#496916'),
-                     name='Class of Car', 
+#Name the key "Class of Car", divide colors by suv, midsize, and compact, and label the key with SUV, Midsize, and Compact
+                     name='Class of Car',
                      breaks=c('suv', 'midsize', 'compact'), 
                      labels=c('SUV', 'Midsize', 'Compact'))
 
@@ -287,6 +292,7 @@ ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
 
 # QUESTION: What is wrong with the code above? Why is it so important to be
 # careful with the order you pass information into ggplot?
+#Answer: The issue is that the suv data is now going to be labeled as compact, midsize will be labeled as SUV, and compact will be labeled as Midsize which completely will mess up how the data is interpreted
 
 
 # While changing the legend text and factor order takes place in the scale_color_manual
@@ -299,6 +305,9 @@ ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
 
 # TASK: Modify the code above to have the legend display along the bottom of
 # the figure.
+ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) + 
+  geom_jitter() + 
+  theme(legend.position='bottom')
 
 
 # We can also have the legend located within the area of the graph itself! We can 
@@ -317,11 +326,17 @@ ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
 
 # QUESTION: What happens if you don't include the code for legend justification
 # above?
+#Answer: It is so sad, you can't even see like 3/4 of the legend, I think it is because you need to tell the code where it is so it can properly scale the graph to see it.
+ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) + 
+  geom_jitter() + 
+  theme(legend.position=c(1,0))
 
 
 # TASK: Copy and paste the code from above. Modify it to place the legend in the
 # upper left part of the graph.
-
+ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) + 
+  geom_jitter() + 
+  theme(legend.position=c(0,1), legend.justification=c(0,1))
 
 # Finally, we might want to remove the legend altogether! We would do so by
 # modifying the theme as well. 
@@ -329,7 +344,9 @@ ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
 # TASK: Check the ggplot cookbook to find the legends section. Read what it says 
 # about removing the legend. Then copy and paste the graph code from above. Modify
 # the code to remove the legend.
-
+ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) + 
+  geom_jitter() + 
+  theme(legend.position="none")
 
 # ---------------------------------------------------------- #
 #### 2.0 DEVIATION                                        ####
