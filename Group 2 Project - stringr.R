@@ -12,6 +12,8 @@ babyNames <- babynames
 
 #Load the stringr package.
 library(stringr)
+#This package is also part of tidyverse, so you can also load it by just loading
+#tidyverse. 
 
 #MANAGING LENGTHS
 
@@ -45,5 +47,11 @@ strlengthtest2 <- str_pad(strlengthtest, 15, "left", pad= " ", use_width = FALSE
 #TASK: Run str_length on our new vector. Did we successfully make all the lengths
 #consistent?
 
+#"str_trim" essentially reverses what we did with str_pad; it removes white
+#space from strings. Run this code:
 
+strlengthtrimmed <- str_trim(strlengthtest2)
+
+#QUESTION: What is a possible practical application of the str_pad and str_trim
+#functions?
 
