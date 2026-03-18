@@ -642,8 +642,9 @@ data("economics")
 # lines using geom_line().
 # HINT: use ?economics to get more information about this dataset.
 
-
-
+ggplot(economics, aes(x = unemploy, y = date)) +
+  geom_point()+
+  geom_line()
 
 # ---------------------------------------------------------- #
 #### GROUPS AND MAPS                                      ####
