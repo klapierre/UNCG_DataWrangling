@@ -64,7 +64,7 @@ ggplot(us_states_frost) +
   theme_minimal() +
   labs(fill = "Number of Frost Days", title = "United States Frost Data")
 
-# Part 3: MAPPING SPECIMEN OCCURRENCE DATA -------------------------------------
+# Part 3: MAPPING SPECIMEN OCCURRENCE DATA -----------------------------------
 
 # In this section, we are going to learn how to find and plot specimen (or species) occurrence data from North Carolina. First, we need to find a dataset to download. I want to map mammals collected in North Carolina. 
 
@@ -84,39 +84,71 @@ ggplot(us_states_frost) +
 # TASK: Create an object titled "mammal_data" from the NC_mamm_data csv 
 mammal_data <- read.csv("NC_mamm_data.csv")
 
-
 # TASK: Using the colnames() function, review what columns exist in your current dataset
 colnames(mammal_data)
-
 
 # TASK: Remove the 'USE_LICENSE_URL' column using a pipe and the select(- ) 
 # function because it is not needed for plotting
 mammal_data <- mammal_data %>%
   select(-USE_LICENSE_URL)
 
+# Using the rename() function introduced in assignment 4, rename the remaining 11 columns in the following order: country, state, locality, date, lat, long, sex, life_stage, genus, order, family
 
-# Using the rename() function introduced in assignment 4, rename the remaining 11 columns without
-
-colnames(mammal_data) <- c("country", "state", "locality", "date", "lat", "long", "sex", "life_stage", "genus", "order", "family")
-
-mammal_data <- rename(.data=mammal_data,
-                           COUNTRY=country,
-                           smalle_temp=Smalle.Cr.Temp.C.,
-                           winchester_temp=Winchester.Cr.Temp..C.)
+mammal_data <- rename(.data=mammal_data,                                                             country=COUNTRY,
+                      state=STATE_PROV,
+                      locality=SPEC_LOCALITY,
+                      date=VERBATIM_DATE,
+                      lat=DEC_LAT,
+                      lon=DEC_LONG,
+                      sex=SEX,
+                      life_stage=LIFE_STAGE,
+                      genus=GENUS,
+                      order=PHYLORDER,
+                      family=FAMILY)
 
 # Clean NA values from specified columns
 clean_data <- mammal_data %>%
-  drop_na(long, lat, locality, genus)
+  drop_na(lon, lat, locality, genus)
 
-# Get North Carolina county map
-nc_map <- map_data("county", region = "north carolina")
+# Great, now our data is clean and easier to work with! 
 
-# Create the combined map
+
+# BUILDING THE MAP
+
+# First, using the function map_data() within the maps package we loaded at the start, we can build a dataframe that provides all counties within the United States. 
+
+# TASK: Run this line of code, and look at the dataframe that appears in our environment box
+counties <- map_data("county")
+
+# Great, now we have a very large dataframe that gives us coordinates for every county in the United States. 
+# TASK: To plot this, run the line of code below: 
 ggplot() +
-  geom_polygon(data = nc_map,
+  geom_polygon(data = counties,
                aes(x = long, y = lat, group = group),
                fill = "white",
-               color = "black") +
+               color = "black") 
+
+# QUESTION: What do you think the geom_polygon function is doing here?
+
+
+# TASK: Create a new dataframe that only has North Carolina counties by specifying the region as it appears in the counties dataframe previously built
+nc_map <- map_data("county", region = "north carolina")
+
+
+# plot the map
+ggplot() +
+  geom_polygon(data = counties,
+               aes(x = long, y = lat, group = group),
+               fill = "white",
+               color = "black") 
+
+
+
+
+
+
+
+
   geom_point(data = clean_data,
              aes(x = long, y = lat, color = order),
              size = 1,
