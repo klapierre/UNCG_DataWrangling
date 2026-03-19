@@ -292,7 +292,21 @@ ggplot(mammal_sf) +
 
 
 
-################### this code might need to be fixed, because on my end, it is still plotting the dots in a gradient (presumably based on which genus was more common, which is good) rather than the counties
+
+
+
+
+
+
+
+
+################### this code might need to be fixed, because on my end, it is still plotting the dots in a gradient (presumably based on which genus was more common, which is good) rather than the counties. This is likely a problem because I didnt create the mammal_sf object, because I don't know how you did that 
+# (technically I do know how to do that, but I dont think any other students in the class will)
+
+
+# based on what I can see right now, I also have no state shape or county outlines. this can be fixed by adding my section that maps north carolina + counties, but idk if that would be necesarry if you fix certain parts. 
+
+
 
 
 # QUESTION: What type of color scale is used here?
