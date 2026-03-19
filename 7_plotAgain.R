@@ -99,7 +99,7 @@ ggplot(data=mpg, aes(x=cty, y=hwy)) +
 # from each other in both the x and y directions. Check the help file for geom_jitter
 # and write code below to make a graph where you jitter points in only the x-dimension
 # by 0.5.
-ggplot(data=mpg, aes(x=cty, y=hwy)) +   geom_jitter(width = 0.5, height = 0)
+ggplot(data=mpg, aes(x=cty, y=hwy)) + geom_jitter(width = 0.5, height = 0)
 
 # ---------------------------------------------------------- #
 #### 1.1 DETOUR! COLORS, COLORS, COLORS                   ####
@@ -114,6 +114,7 @@ ggplot(data=mpg, aes(x=cty, y=hwy)) +   geom_jitter(width = 0.5, height = 0)
 # HINT: Refer back to the Transform assignment if you want help with %in% (or 
 # try googling!)
 
+mpgSubset <- mpg %>% filter(class %in% c("compact", "midsize", "suv"))
 
 # ggplot has lots of nice (and some not so nice) built-in color palettes that we 
 # can use to fill our bars with color. Try running the following code:
@@ -141,6 +142,8 @@ ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
 # used above? (i.e., does it use the first three colors in the palette? The last
 # three? Some other combination?)
 
+#Instead if using the first and the last colors, they use randomly spaced colors in the palette
+
 
 # We could also pick out EXACTLY which colors we want for our figure. 
 # There are 4 main ways to specify colors in R:
@@ -167,12 +170,17 @@ ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
 # with three numbers of your choice (between 1 and 657). How does your new figure look?
 # HINT: remember to remove the quotation marks when calling numbers.
 
+ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
+  geom_jitter() +
+  scale_color_manual(values=c(631, 531, 481))
+#The figure looks disgusting (because of the yellow)
 
 # QUESTION: How do you think you could figure out which color name belongs to
 # each color number?
 # HINT: Try creating a dataframe from color() by passing it into the
 # as.data.frame() function.
 
+color_df <- as.data.frame(colors())
 
 # You can also chose colors by Hex code. A Hex color code is a 6-symbol code made
 # of up to three 2-symbol elements (6 symbols in length all together). Each of 
@@ -192,6 +200,9 @@ ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
 # picker to generate the hex codes for three new colors of your choice. Then copy
 # and paste the above code, replacing the hex codes with your color choices.
 
+ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
+  geom_jitter() +
+  scale_color_manual(values=c('#d2fafd', '#ffdbdb', '#c2c3ff'))
 
 # The second great thing about hex codes is that you can control the transparency
 # of your colors. Transparency is set in a hex code by adding two extra symbols
@@ -206,9 +217,12 @@ ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
 # first color 0% transparent, your second color 50% transparent, and your third
 # color 100% transparent.
 
+ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) + geom_jitter() + 
+  scale_color_manual(values=c('#d2fafd00', '#ffdbdb80', '#c2c3ffFF'))
 
 # QUESTION: What happened to the point that you set to 100% transparent?
 
+#It disappeared
 
 # Finally, we can set our colors using the rgb() function. This operates very
 # similarly to the hex code, where you can pick exactly the color and transparency
@@ -227,6 +241,8 @@ ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
 ### Color palettes based on Wes Anderson movies: https://github.com/karthik/wesanderson
 ### Color palettes from famous Dutch paintings: https://github.com/EdwinTh/dutchmasters
 
+ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) + geom_jitter() + 
+  scale_color_manual(values=c(rgb(.10, .10, .44, 0.5), rgb(.39, .58, .93, 0.5), rgb(1.0, .39, .28, 0.5)))
 
 # ---------------------------------------------------------- #
 #### 1.2 DETOUR! LEGENDS                                  ####
