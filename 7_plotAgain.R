@@ -448,10 +448,13 @@ ggplot(data=highwayMPG, aes(x=class, y=hwy_mean, fill=class))+
 
 # Run the following code, feeling free to modify colors as you prefer:
 ggplot(data=highwayMPG, aes(x=class, y=hwy_mean, fill=class)) +
-  geom_bar(stat='identity') 
+  geom_bar(stat='identity')+
+  scale_fill_manual(values=c('#7DCCD3', '#4E7147', '#BE9C9D', '#F7ECD8', 
+  '#376597', '#9888A5', '#DBA662'))
 
 # QUESTION: Where is ggplot getting the x-axis tick labels from?
 
+#Directly from the "class" column. 
 
 # Often our tick labels are not the best. We can modify them to be more informative
 # or visually appealing by directly modifying the dataframe, but again this feels
@@ -473,6 +476,12 @@ ggplot(data=highwayMPG, aes(x=class, y=hwy_mean, fill=class)) +
 # What is surprising about the resulting graph? Based on this result, what do you
 # think the coord_cartesian() statement does?
 
+ggplot(data=highwayMPG, aes(x=class, y=hwy_mean, fill=class)) +
+  geom_bar(stat='identity') +
+  scale_y_continuous(breaks=seq(0, 50, 10))
+#This result is surprising because it essentially looks the same as the original
+#graph without the scale_y_continuous function. I think the coord_caretesian
+#function scales how much of the y-axis we can see. 
 
 # We can also add a statement into the scale discrete or continuous statements
 # to name our axes, rather than putting in a whole separate step of xlab() or ylab().
@@ -499,6 +508,14 @@ ggplot(data=highwayMPG, aes(x=class, y=hwy_mean, fill=class)) +
 # (6) flip your axes
 # (7) remove the legend
 
+ggplot(data=highwayMPG, aes(x=class, y=hwy_mean, fill=class)) +
+  geom_bar(stat='identity') +
+  scale_fill_manual(values=c('#FBE697', '#F3AE6D', '#516888', '#C9DACA', 
+                             '#14232A', '#557780', '#802729'))+
+  scale_y_continuous(breaks=seq(0,30,5), name='Mean Highway MPG')+
+  scale_x_discrete(labels=c('sport', 'compact', 'midsize', 'minivan', 'pickup', 'subcompact', 'SUV'), name='Car Class')+
+  coord_flip()+
+  theme(legend.position = "none")
 
 # ---------------------------------------------------------- #
 #### 3.0 RANKING                                          ####
