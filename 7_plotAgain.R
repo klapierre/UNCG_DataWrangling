@@ -530,6 +530,11 @@ ggplot(data=highwayMPG, aes(x=class, y=hwy_mean, fill=class)) +
 # HINT: Look back at the Transform assignment if you forget how to summarize the
 # data. Also, standard error = 1.96*standard deviation.
 
+cityMPG<-mpg %>% 
+  group_by(class) %>% 
+  summarise(city_mean = mean(cty, na.rm = TRUE),
+            city_sd = sd(cty, na.rm = TRUE),
+            city_se = 1.96*sd(cty, na.rm = TRUE))
 
 # Now we want to plot our data in order from smallest to largest city MPG to get
 # a ranking. To do so, we need to use the reorder() function to rearrange the data
@@ -544,6 +549,17 @@ ggplot(cityMPG, aes(x=reorder(class, city_mean), y=city_mean)) +
 # (4) error bars with end caps 30% the width of the bars
 # (5) y-axis from 0 to 30 with tick marks every 5
 # (6) no legend.
+
+ggplot(cityMPG, aes(x=reorder(class, -city_mean), y=city_mean, fill=class)) + 
+  geom_bar(stat="identity", color="darkgrey")+
+  scale_y_continuous(breaks=seq(0,30,5), name='Mean City MPG')+
+  scale_x_discrete(labels=c('subcompact', 'compact', 'midsize', 'minivan', 'sport', 'SUV', 'pickup'), name='Car Class')+
+  scale_fill_manual(values=c('#B23539', '#FAB57C', '#F7E790', '#73652D', 
+                             '#E79498', '#514289', '#14232A'))+
+  geom_errorbar(aes(ymin=city_mean-city_se,
+                    ymax=city_mean+city_se,
+                    width=0.3))+
+  theme(legend.position = "none")
 
 
 # ---------------------------------------------------------- #
