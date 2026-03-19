@@ -644,9 +644,14 @@ data("economics")
 # over time (unemploy vs date). Make a scatterplot, then connect the points with 
 # lines using geom_line().
 # HINT: use ?economics to get more information about this dataset.
+?economics
+ggplot(economics, aes(x = date, y = unemploy)) +
+  geom_point(color = "violetred") +
+  geom_line(color = "seagreen4") +
+  xlab("Date") +
+  ylab("Number of Unemployed")
 
-
-
+colors()
 
 # ---------------------------------------------------------- #
 #### GROUPS AND MAPS                                      ####
@@ -654,8 +659,7 @@ data("economics")
 
 # Let's save these for group project options, this assignment is really long!
 
-
-
+#Merci Merci Merci!!!
 
 
 
