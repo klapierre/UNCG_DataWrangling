@@ -16,7 +16,7 @@ library(tidyverse)
 library(ggplot2)
 library(maps)
 library(dplyr)
-library(tigris)
+library(tigris) #??????????????????????????????????????????????
 library(sf)
 
 #Run the following code:
@@ -145,60 +145,82 @@ ggplot() +
   theme_bw() +
   coord_fixed(1.5) 
   
+# QUESTION: What do you think the 'coord_fixed' function is doing here? 
+
+# ADDING THE DATA POINTS TO NC MAP---------------------------------------------
+
+# Using the 'clean_data' df we created, we can map these points onto out North Carolina map to see species occurrences! 
+# To do this, we can add the geom_point function to our previous chunk of code.
+
+# TASK: With a plus sign between the sections, add the lines below to the above code:
+geom_point(data = clean_data,
+           aes(x = lon, y = lat, color = order),
+           size = 1,
+           alpha = 0.7)
+
+# From here, you can adjust the theme to your liking. 
+# TASK: With a plus sign between sections, if you begin typing 'theme' on the next line, options will appear that you can browse through! 
 
 
-# ADDING THE DATA POINTS  
-# browse theme options and decide which one you like the most
-# update the graph labeles
-# update the legend title
+# TASK: after adding a theme to the plot, add and title and an x and y axis label with the labs() function. 
 
+
+# In the end, we should have a chunk of code that looks something like this (theme can be your choosing):
+ggplot() +
+  geom_polygon(data = nc_map,
+               aes(x = long, y = lat, group = group),
+               fill = "white",
+               color = "black") +
+  theme_bw() +
+  coord_fixed(1.5) +
   geom_point(data = clean_data,
-             aes(x = long, y = lat, color = order),
+             aes(x = lon, y = lat, color = order),
              size = 1,
              alpha = 0.7) +
-  theme_classic() +
+  theme_bw() +
   labs(title = "Mammal captures in North Carolina",
        x = "Longitude",
-       y = "Latitude",
-       color = "Order")
-  
-# use the unique function to browse the genus, orders, and families within this dataset
-# try coloring the points by each of these variables
-# given the number of unique genera and species, why might it be best to color our data pooints by the family? 
+       y = "Latitude")
 
-#note: if we wanted to, we could subset out dataframe by species, and only plot one species at a time, or the species within one family, etc... 
+# QUESTION: Why did I decide to color the points by species order? What happens if you color the points (within the geom_point section) by genus instead? 
 
-# data cleaning provides many different opportunities for visualization! 
+
+# Note: If we wanted to, we could subset out dataframe by species while still working in the data cleaning section, and only plot one species at a time, or focus on different families, etc.
+
+# This shows us that  data cleaning provides many different opportunities for visualization! 
 
 
 # MAPPING SPECIES RICHNESS ------------------------------------------------
 
-# Using the same csv we used for our map above, we can create a map that colors counties along a gradient based on species richness 
+# Using the same object we used for our map above (clean_data), we can create a map that colors counties along a gradient, based on species richness
 
 # QUESTION: What package allows us to work with spatial vector data in R?
+######### this question should come after you have them convert to sf. without explaining what you are doing, they won't know the answer to this question unless you explain it beforehand 
 
-# Import the dataset. run this code.
-mammal_data <- read.csv("NC_mamm_data.csv")
 
-# Inspect first rows
-head(mammal_data)
-
-# QUESTION: How many columns are in the dataset?
+# QUESTION: How many columns are in the 'clean_data' dataset?
 
 # Examine the structure of the dataset. 
-str(mammal_data)
+str(clean_data)
 
 # QUESTION: Which two columns contain the geographic coordinates?
 
 # Check for missing coordinates. 
 # TASK: Write the code for finding the missing coordinates. 
+################ I think this is a good question to ask, but because I already removed all of the NA coordinates to create the clean_data object that I was plotting with, it wont really make sense. 
 
 #QUESTION: Why is it important to check for missing coordinates? 
+############ this question could still be added, but maybe explain somehow that we already removed NA rows within the lat and lon columns. 
+
+
 
 
 # TASK: Convert data from the csv to an sf file using st_as_sf() function 
+########################## there is no code for how this would be done in your answer key
 
 # QUESTION: What coordinate reference system (CRS) did we assign?
+############## they aren't going to know how to answer this question unless you just provide the code for the task above. you could add a "using this code" section to your comment and then just copy/paste your answer key answer 
+
 
 # Confirm the object is now spatial. Run this code. 
 class(mammal_data)
@@ -208,12 +230,14 @@ class(mammal_data)
 
 # Load up the sf() function. We are going to convert the table to an sf object.
 mammal_sf <- st_as_sf(
-  mammal_data_clean,
-  coords = c("DEC_LONG", "DEC_LAT"),
+  clean_data,
+  coords = c("lon", "lat"),
   crs = 4326
 )
 
-# Check that the object exists.
+###########your previous code was pulling from an object called mammal_clean_data, which does not exist anywhere as far as I can tell, because you did not specify a title to have other people assign to the object they create. I updated the code to just pull from the 'clean_data' object I built in my section
+
+# TASK: Check that the object exists
 class(mammal_sf)
 
 # Now let's plot the spatial points. Run this code. 
@@ -221,15 +245,18 @@ plot(st_geometry(mammal_sf))
 
 # QUESTION: What does each point on the map represent?
 
-# Calculate the species richness by genus. Le't run this code to find out.
+# Calculate the species richness by genus. Let's run this code to find out:
 richness_table <- mammal_sf %>%
-  group_by(GENUS) %>%
+  group_by(genus) %>%
   summarise(count = n())
 
 # QUESTION: What function was used to count observations? 
+######################### you could also ask them what the three most common species were, or something similar to see if they are understanding how that part works
 
 # TASK: Now your turn to try. As we did above, count the number of observations
 # per state. Write the code. 
+
+####################### your answer key does not show how to do this, so I don't know how you got the state_counts object? 
 
 # Inspect results
 print(state_counts)
@@ -239,16 +266,17 @@ print(state_counts)
 # Now we move on to making a simple map using our ggplot() function. Make sure 
 # to load tidyverse and dplyr function before running the code below. 
 ggplot(data = mammal_sf) + 
-  geom_sf(aes(color = FAMILY)) +
+  geom_sf(aes(color = family)) +
   theme_minimal()
 
-library(tidyverse)
-library(dplyr)
 
 # QUESTION: What variable controls the color of points?
 
 # TASK:Let's calculate the richness per family. Write out the code that can do 
 # this for us. (HINT: we just did this above)
+
+####################### once again, answer key needs to show how this is done
+
 
 # View results
 family_richness
@@ -257,9 +285,15 @@ family_richness
 
 # Let's create a gradient map based on richness. Run this code.
 ggplot(mammal_sf) +
-  geom_sf(aes(color = as.numeric(as.factor(GENUS)))) +
+  geom_sf(aes(color = as.numeric(as.factor(genus)))) +
   scale_color_viridis_c() +
   theme_minimal()
+
+
+
+
+################### this code might need to be fixed, because on my end, it is still plotting the dots in a gradient (presumably based on which genus was more common, which is good) rather than the counties
+
 
 # QUESTION: What type of color scale is used here?
 
