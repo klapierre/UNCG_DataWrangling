@@ -583,7 +583,11 @@ manufacturerFreq <- mpg %>%
 
 # TASK: Make a bar graph of the number of cars (frequency) by manufacturer using
 # the dataframe we created above.
-
+ggplot(manufacturerFreq, aes(x = manufacturer, y = frequency, fill = manufacturer)) +
+  geom_bar(stat = "identity", color = "black") +
+  xlab("Manufacturer") +
+  ylab("Number of Cars") +
+  theme(legend.position = "none")
 
 # We can switch the bar chart you created above into a pie chart simply by changing
 # the coordinate system through a series of steps as follows:
@@ -613,10 +617,16 @@ ggplot(manufacturerFreq, aes(x="", y=frequency, fill=manufacturer)) +
         legend.key.size = unit(.75, "lines"))
 
 # TASK: Annotate the code below to describe what each line does:
+
+#Answer: Make a plot using the data set manufacturerFreq with y as frequency, fill as manufacturer and no x
 ggplot(manufacturerFreq, aes(x="", y=frequency, fill=manufacturer)) +
+#Make a bar graph with the stat "identity" and a width of 1
   geom_bar(stat="identity", width=1) +
+#Convert the bar graph into a circular pie form using the y axis as the thickness of the slices
   coord_polar(theta="y", start=0) +
+#Set the theme to void, removing all lines from the plot
   theme_void() +
+#Customize the theme with the font size of the legend title being 12.5, font size of the legend items as 8.5, and size of the legend key boxes as 0.75 with that being in reference to the size of the lines used to make the boxes. 
   theme(legend.title = element_text(size = 12.5), 
         legend.text  = element_text(size = 8.5),
         legend.key.size = unit(.75, "lines"))
