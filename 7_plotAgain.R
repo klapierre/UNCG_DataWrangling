@@ -41,13 +41,22 @@
 # Start by writing code to load the tidyverse library.
 # HINT: see the end of assignment #1 if you forgot how to load a package.
 
+library(tidyverse)
+
+
 
 # TASK: Write code below to set your theme to black and white and both your major
 # AND minor gridlines to element_blank for all plots you'll be making today.
 # HINT: Check back to last week's assignment section 1.9 for setting themes for
 # all plots.
 
+theme_set(theme_bw() +
+          theme(panel.grid.major = element_blank(),
+                panel.grid.minor = element_blank()))
 
+  
+  
+  
 # ---------------------------------------------------------- #
 #### 1.0 CORRELATION                                      ####
 # ---------------------------------------------------------- #
@@ -59,18 +68,30 @@
 data(mpg, package = "ggplot2")
 
 # TASK: Create a scatterplot (i.e., a dot plot) to relate city and highway mileage.
-# Color the points by the class of car (class column) and label the x and y axis 
+# Color the points by the class of car (class column) and label the x and y axis
 # to be more informative (City Mileage (MPG) vs Highway Mileage (MPG)).
-# HINT: Refer back to last week's assignment or the ggplot help resources if you 
+# HINT: Refer back to last week's assignment or the ggplot help resources if you
 # forget how to make a scatterplot.
+
+ggplot(mpg, aes(x = city, y = hwy, color = class)) +
+  geom_point() +
+  xlab("City Mileage (MPG)") +
+  ylab("Highway Mileage (MPG)")
+
 
 
 # Looks alright, but the graph may be hiding some information...
 # QUESTION: How many data points are in the mpg dataframe?
 
+## 234 points are in the data frame.
+
+
 
 # QUESTION: Approximately how many dots are in the graph you just made? How does
 # that compare to the number of observations in the dataframe?
+
+## 78 data points are in the plot. It's a third of the actual data frame.
+
 
 
 # Try another correlation-focused geom that addresses this problem by running
@@ -81,15 +102,25 @@ ggplot(data=mpg, aes(x=cty, y=hwy)) +
 
 # QUESTION: What happened when you created the plot with geom_jitter?
 
+## There are more points added, and the shapes aren't exactly circular.
+
+
 
 # QUESTION: Run the code to create a plot using geom_jitter a second time. Then run it
 # again and again. What happens each time? Why is this happening?
+
+## The points aren't static to one position, but move slightly each time. The only thing I can think, is that a lot of values are the same, so it has to move it slightly to prevent excessive overlap of the points.
+
 
 
 # TASK: The default in geom_jitter is to jitter (or slightly move) the points away
 # from each other in both the x and y directions. Check the help file for geom_jitter
 # and write code below to make a graph where you jitter points in only the x-dimension
 # by 0.5.
+
+ggplot(data=mpg, aes(x=cty, y=hwy)) + 
+  geom_jitter(width = 0.5)
+
 
 
 # ---------------------------------------------------------- #
