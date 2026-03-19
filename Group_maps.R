@@ -106,7 +106,7 @@ mammal_data <- rename(.data=mammal_data,                                        
                       order=PHYLORDER,
                       family=FAMILY)
 
-# Clean NA values from specified columns
+# Using the mammal_data object, clean NA values from columns 'lon', 'lat', 'locality' and 'genus'. Create new object for this cleaned data titled 'clean_data'
 clean_data <- mammal_data %>%
   drop_na(lon, lat, locality, genus)
 
@@ -121,44 +121,54 @@ clean_data <- mammal_data %>%
 counties <- map_data("county")
 
 # Great, now we have a very large dataframe that gives us coordinates for every county in the United States. 
+
 # TASK: To plot this, run the line of code below: 
 ggplot() +
   geom_polygon(data = counties,
                aes(x = long, y = lat, group = group),
                fill = "white",
-               color = "black") 
+               color = "black") +
+  theme_bw()
 
 # QUESTION: What do you think the geom_polygon function is doing here?
 
-
-# TASK: Create a new dataframe that only has North Carolina counties by specifying the region as it appears in the counties dataframe previously built
+# TASK: Create a new dataframe titled 'nc_map' that only has North Carolina counties by specifying the region as it appears in the counties dataframe previously built
 nc_map <- map_data("county", region = "north carolina")
 
-
-# plot the map
+# TASK: plot the map using your new nc_map dataframe using the previous map code as your guide
+# HINT: to adjust the map size, add the function coord_fixed(1.5) to the end of the code
 ggplot() +
-  geom_polygon(data = counties,
+  geom_polygon(data = nc_map,
                aes(x = long, y = lat, group = group),
                fill = "white",
-               color = "black") 
+               color = "black") +
+  theme_bw() +
+  coord_fixed(1.5) 
+  
 
 
-
-
-
-
-
+# ADDING THE DATA POINTS  
+# browse theme options and decide which one you like the most
+# update the graph labeles
+# update the legend title
 
   geom_point(data = clean_data,
              aes(x = long, y = lat, color = order),
              size = 1,
              alpha = 0.7) +
-  coord_fixed(1.3) +
   theme_classic() +
   labs(title = "Mammal captures in North Carolina",
        x = "Longitude",
        y = "Latitude",
        color = "Order")
+  
+# use the unique function to browse the genus, orders, and families within this dataset
+# try coloring the points by each of these variables
+# given the number of unique genera and species, why might it be best to color our data pooints by the family? 
+
+#note: if we wanted to, we could subset out dataframe by species, and only plot one species at a time, or the species within one family, etc... 
+
+# data cleaning provides many different opportunities for visualization! 
 
 
 # MAPPING SPECIES RICHNESS ------------------------------------------------
