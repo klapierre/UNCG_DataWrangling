@@ -408,6 +408,17 @@ ggplot(data = highwayMPG, aes(x = class, y = hwy_mean, fill = class)) +
 # If in doubt, try a bunch of ways until it looks how we want it. And consult 
 # your helpful ggplot resources on the web.
 
+ggplot(data = highwayMPG, aes(x = class, y = hwy_mean, fill = class)) +
+  geom_bar(stat = "identity", color = "black") +
+  scale_fill_manual(values = c('#1B9E77','#D95F02','#7570B3','#E7298A','#66A61E','#E6AB02','#A6761D')) +
+  xlab("Car Class") + 
+  ylab("Average Highway MPG") +
+  theme(legend.position = "none")
+?scale_fill_manual
+
+palette('Dark2')
+#Me trying to figure out scale_fill_manual() by filling in all the arguments
+#, limits=c('2seater','compact','midsize','minivan','pickup','subcompact','suv'), breaks=c('2seater','compact','midsize','minivan','pickup','subcompact','suv'), name='Class of Car', labels=c('Two Seater', 'Compact', 'Midsize','Minivan','Subcompact','SUV'))
 
 # ---------------------------------------------------------- #
 #### 2.2 DETOUR! AXIS MODIFICATIONS                       ####
@@ -418,6 +429,7 @@ ggplot(data=highwayMPG, aes(x=class, y=hwy_mean, fill=class)) +
   geom_bar(stat='identity') 
 
 # QUESTION: Where is ggplot getting the x-axis tick labels from?
+#Answer: ggplot is getting the x-axis labels the key, or the fill argument
 
 
 # Often our tick labels are not the best. We can modify them to be more informative
@@ -439,14 +451,17 @@ ggplot(data=highwayMPG, aes(x=class, y=hwy_mean, fill=class)) +
 # QUESTION: Try running the code above without the coord_cartesian() statement. 
 # What is surprising about the resulting graph? Based on this result, what do you
 # think the coord_cartesian() statement does?
-
+#Answer: Without the coor_cartesian() function it becomes more squat with a larger y range, so I think that coor_cartesian creates how big or how varied the y-axis is
+ggplot(data=highwayMPG, aes(x=class, y=hwy_mean, fill=class)) +
+  geom_bar(stat='identity') +
+  scale_y_continuous(breaks=seq(0, 50, 10))
 
 # We can also add a statement into the scale discrete or continuous statements
 # to name our axes, rather than putting in a whole separate step of xlab() or ylab().
 # Try it out with the following code:
 ggplot(data=highwayMPG, aes(x=class, y=hwy_mean, fill=class)) +
   geom_bar(stat='identity') +
-  scale_x_discrete(name='Class of Car') +
+  scale_x_discrete(name='Class of Car',labels=c('sport', 'compact', 'midsize', 'minivan', 'pickup', 'subcompact', 'SUV')) +
   scale_y_continuous(name='Mean Highway MPG')
 
 
@@ -465,7 +480,16 @@ ggplot(data=highwayMPG, aes(x=class, y=hwy_mean, fill=class)) +
 # (5) set the scale of the highway mpg to run from 0 to 30 with breaks every 5 
 # (6) flip your axes
 # (7) remove the legend
+ggplot(highwayMPG, aes(x = class, y = hwy_mean, fill = class)) +
+  geom_bar(stat = "identity") +
+  scale_fill_manual(values = c('#1B9E77','#D95F02','#7570B3','#E7298A','#66A61E','#E6AB02','#A6761D')) +
+  scale_x_discrete(name='Class of Car',labels=c('Sport', 'Compact', 'Midsize', 'Minivan', 'Pickup', 'Subcompact', 'SUV')) +
+  scale_y_continuous(name="Average Highway MPG",limits = c(0, 30), breaks = seq(0, 30, by = 5)) +
+  coord_flip() +
+  theme(legend.position = "none")
 
+#I made a dataset with the hexcodes in the palette Dark2 to use for this problem and 2.1 since scale_fill_manual requires specific hex codes
+color_names <- as.data.frame(palette('Dark2'))
 
 # ---------------------------------------------------------- #
 #### 3.0 RANKING                                          ####
@@ -479,7 +503,9 @@ ggplot(data=highwayMPG, aes(x=class, y=hwy_mean, fill=class)) +
 # and city_se.
 # HINT: Look back at the Transform assignment if you forget how to summarize the
 # data. Also, standard error = 1.96*standard deviation.
-
+cityMPG <- mpg %>% 
+  group_by(class) %>% 
+  summarise(city_mean=mean(cty),city_sd=sd(cty),city_se=1.96 * city_sd)
 
 # Now we want to plot our data in order from smallest to largest city MPG to get
 # a ranking. To do so, we need to use the reorder() function to rearrange the data
@@ -494,7 +520,13 @@ ggplot(cityMPG, aes(x=reorder(class, city_mean), y=city_mean)) +
 # (4) error bars with end caps 30% the width of the bars
 # (5) y-axis from 0 to 30 with tick marks every 5
 # (6) no legend.
-
+ggplot(cityMPG, aes(x = reorder(class, -city_mean), y = city_mean, fill = class)) + 
+  geom_bar(stat = "identity", color = "darkgrey") +
+  geom_errorbar(aes(ymin = city_mean - city_se, ymax = city_mean + city_se),width = 0.3) +
+  scale_fill_manual(values = c("#1B9E77","#D95F02","#7570B3", "#E7298A","#66A61E","#E6AB02","#A6761D")) +
+  scale_x_discrete(name = "Car Class",labels = c("2seater" = "Two-Seater","compact" = "Compact","midsize" = "Midsize","minivan" = "Minivan","pickup" = "Pickup","subcompact" = "Subcompact","suv" = "SUV")) +
+  scale_y_continuous(name = "Average City MPG",limits = c(0, 30),breaks = seq(0, 30, by = 5)) +
+  theme(legend.position = "none")
 
 # ---------------------------------------------------------- #
 #### 4.0 DISTRIBUTION                                     ####
