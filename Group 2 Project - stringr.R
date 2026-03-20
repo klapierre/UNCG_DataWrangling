@@ -17,6 +17,8 @@ library(stringr)
 #This package is also part of tidyverse, so you can also load it by just loading
 #tidyverse. 
 
+
+
 #MANAGING LENGTHS
 
 #The "str_length" function is a simple function that can tell you the length, in
@@ -70,3 +72,31 @@ str_trunc(strlengthtest, 4)
 #TASK: Write code to create a new dataframe called "babyNamesTrunc". In this 
 #dataframe, truncate the "name" column so that each string is at most 5 
 #characters. HINT: The mutate function will be useful here.
+
+
+
+###CHANGING CASE###
+
+# Sometimes we find our character values aren't synchronized to one format, so we have to modify names individually. However, with these specific stringr functions involving case changes, we can unify character values in one step. 
+
+#TASK: Let's start by identifying some fundamental functions that we can use. Run the code below to create a set of character values.
+
+case_names <- c("layne staley", "JERRY CANTRELL", "MIKE inez", "SeAn KiNnEy")
+
+#TASK: Run the following functions, and answer the question at the end of the list of functions either during or after this process.
+
+str_to_upper(case_names)
+
+str_to_lower(case_names)
+
+str_to_title(case_names)
+
+str_to_sentence(case_names)
+
+str_to_camel(case_names)
+
+str_to_snake(case_names)
+
+str_to_kebab(case_names)
+
+# QUESTION: What happened to the case_names values in reference to each function that you ran?
