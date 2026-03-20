@@ -529,21 +529,24 @@ ggplot(mpg, aes(hwy)) +
 
 # TASK: Recreate the graph above, but using geom_bar() instead
 
+ggplot(mpg, aes(x = hwy)) + geom_bar()
 
 # TASK: Try making a histogram with the categorical variable 'manufacturer'.
 # What error message do you get?
 
+#It says stat_bin() requires a continuous x aesthetic.
 
 # QUESTION: What happens when you follow the advice of the error message and 
 # make stat='count'?
-ggplot(mpg, aes(manufacturer)) + 
-  geom_histogram(stat="count")
+ggplot(mpg, aes(manufacturer)) + geom_histogram(stat="count")
 
+#A bar chart is created instead of a histogram
 
 # TASK: Make a boxplot comparing the distribution of cty (city mileage) for
 # each class of car.
 # HINT: Look back to last week if you forget how to make a boxplot.
 
+ggplot(mpg, aes(x = class, y = cty)) + geom_boxplot()
 
 # We can also make a different type of distribution, a violin plot using the 
 # geom_violin statement as follows:
@@ -552,6 +555,8 @@ ggplot(mpg, aes(x=class, y=cty)) +
 
 # QUESTION: What does a violin plot show? Check google if you're unsure.
 
+#It uses the density of the values and combined a box plot and density, which makes the shape
+#Look like a violin.
 
 # ---------------------------------------------------------- #
 #### 5.0 COMPOSITION                                      ####
