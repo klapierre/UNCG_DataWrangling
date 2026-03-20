@@ -573,6 +573,7 @@ manufacturerFreq <- mpg %>%
 # TASK: Make a bar graph of the number of cars (frequency) by manufacturer using
 # the dataframe we created above.
 
+ggplot(manufacturerFreq, aes(x = manufacturer, y = frequency)) + geom_bar(stat = "identity")
 
 # We can switch the bar chart you created above into a pie chart simply by changing
 # the coordinate system through a series of steps as follows:
@@ -603,13 +604,17 @@ ggplot(manufacturerFreq, aes(x="", y=frequency, fill=manufacturer)) +
 
 # TASK: Annotate the code below to describe what each line does:
 ggplot(manufacturerFreq, aes(x="", y=frequency, fill=manufacturer)) +
+  #Makes a plot using the manufacturer data.
   geom_bar(stat="identity", width=1) +
+  #Circle is filled with the colors.
   coord_polar(theta="y", start=0) +
+  #Bar chart converted to a pie chart and the y values turned into pie slices.
   theme_void() +
-  theme(legend.title = element_text(size = 12.5), 
-        legend.text  = element_text(size = 8.5),
-        legend.key.size = unit(.75, "lines"))
-
+  #All elements for the background are removed.
+  theme(legend.title = element_text(size = 12.5),
+  #Adjusts text size of legend.
+    legend.text  = element_text(size = 8.5), legend.key.size = unit(.75, "lines"))
+    #It adjusts the legends text size and the size of the color boxes.
 
 # ---------------------------------------------------------- #
 #### 6.0 CHANGE                                           ####
@@ -625,20 +630,3 @@ data("economics")
 # HINT: use ?economics to get more information about this dataset.
 
 
-
-
-# ---------------------------------------------------------- #
-#### GROUPS AND MAPS                                      ####
-# ---------------------------------------------------------- #
-
-# Let's save these for group project options, this assignment is really long!
-
-
-
-
-
-
-
-
-
-# REMEMBER: Save and push your script when you're done with this assignment!
