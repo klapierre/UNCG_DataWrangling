@@ -43,7 +43,7 @@ strlengthtest <- c("This", "is", "to", "test", "stringr", "length", "functions!"
 
 strlengthtest2 <- str_pad(strlengthtest, 15, "left", pad= " ", use_width = FALSE)
 
-#QUESTION: Dissect the code above. What is the purpose of each part of it?
+#QUESTION: Dissect the code above. What is the purpose of each argument in it?
 
 #TASK: Run str_length on our new vector. Did we successfully make all the lengths
 #consistent?
