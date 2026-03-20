@@ -1,6 +1,8 @@
-## Group 2 (stringr) Project Test
+#Before beginning: Make sure to pull any changes and work under your own personal branch!
 
-# Test
+#Make sure to load the tidyverse package
+library(tidyverse)
+
 #Begin by installing the babynames packages using the code below.
 install.packages("babynames")
 
