@@ -504,6 +504,9 @@ ggplot(data=highwayMPG, aes(x=class, y=hwy_mean, fill=class)) +
 
 # QUESTION: Where is ggplot getting the x-axis tick labels from?
 
+## ggplot is getting the x-axis ticks from the legend on the right side, which is taken from the "class" column.
+
+
 
 # Often our tick labels are not the best. We can modify them to be more informative
 # or visually appealing by directly modifying the dataframe, but again this feels
@@ -521,9 +524,12 @@ ggplot(data=highwayMPG, aes(x=class, y=hwy_mean, fill=class)) +
   scale_y_continuous(breaks=seq(0, 50, 10)) +
   coord_cartesian(ylim=c(0,50))
 
-# QUESTION: Try running the code above without the coord_cartesian() statement. 
+# QUESTION: Try running the code above without the coord_cartesian() statement.
 # What is surprising about the resulting graph? Based on this result, what do you
 # think the coord_cartesian() statement does?
+
+## The change is that it now automatically assigns where the top of the graph should be based on the highest numbered bar. So, coord_cartesian() manually sets the minimum and maximum for the y-axis no matter how big the numbers are in the graph.
+
 
 
 # We can also add a statement into the scale discrete or continuous statements
@@ -550,6 +556,26 @@ ggplot(data=highwayMPG, aes(x=class, y=hwy_mean, fill=class)) +
 # (5) set the scale of the highway mpg to run from 0 to 30 with breaks every 5 
 # (6) flip your axes
 # (7) remove the legend
+
+ggplot(highwayMPG, aes(x = class, y = hwy_mean, fill = class)) +
+  geom_bar(stat = "identity", color = "black") +
+  geom_errorbar(aes(ymin = hwy_mean - hwy_se, ymax = hwy_mean + hwy_se),
+                width = 0.2) +
+  scale_fill_brewer(palette = "Dark2") +
+  scale_y_continuous(breaks=seq(0, 30, 5)) +
+  coord_cartesian(ylim=c(0, 30)) +
+  scale_x_discrete(labels = c("2seater" = "Two-Seater",
+                              "compact" = "Compact",
+                              "midsize" = "Mid-Size",
+                              "minivan" = "Minivan",
+                              "pickup" = "Pickup Truck",
+                              "subcompact" = "Sub-compact",
+                              "suv" = "SUV")) +
+  xlab("Car Class") +
+  ylab("Average Highway (MPG)") +
+  theme(legend.position= "none") +
+  coord_flip()
+
 
 
 # ---------------------------------------------------------- #
