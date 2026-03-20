@@ -307,8 +307,7 @@ ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
 # TASK: Modify the code above to have the legend display along the bottom of
 # the figure.
 
-ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) + 
-  geom_jitter() + 
+ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) + geom_jitter() + 
   theme(legend.position='bottom')
 
 # We can also have the legend located within the area of the graph itself! We can 
@@ -332,8 +331,7 @@ ggplot(data=mpg, aes(x=hwy)) +
 # TASK: Copy and paste the code from above. Modify it to place the legend in the
 # upper left part of the graph.
 
-ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) + 
-  geom_jitter() + 
+ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) + geom_jitter() + 
   theme(legend.position=c(0,1), legend.justification=c(0,1))
 
 # Finally, we might want to remove the legend altogether! We would do so by
@@ -343,8 +341,7 @@ ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
 # about removing the legend. Then copy and paste the graph code from above. Modify
 # the code to remove the legend.
 
-ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) + 
-  geom_jitter() + 
+ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) + geom_jitter() + 
   theme(legend.position='none')
 
 # ---------------------------------------------------------- #
@@ -377,12 +374,16 @@ ggplot(data=mpg, aes(x=hwy)) +
 # HINT: Look back at the Transform assignment if you forget how to summarize the
 # data. Also recall, standard error = 1.96*standard deviation.
 
+highwayMPG <- mpg %>% group_by(class) %>% summarise(hwy_mean = mean(hwy),hwy_sd = sd(hwy),hwy_se = 1.96 * hwy_sd)
 
 # TASK: Create a bar graph showing the average highway MPG on the y-axis and 
 # car class on the x-axis. Fill the bars by class. Add in error bar caps that are 20%
 # the width pf the bars.
 # HINT: Don't forget to change stat from the default in your geom_bar() statement!
 
+ggplot(data = highwayMPG, aes(x = class, y = hwy_mean, fill = class)) +
+  geom_bar(stat = "identity") + geom_errorbar(aes(ymin = hwy_mean - hwy_se, ymax = hwy_mean + 
+    hwy_se), width = 0.2)
 
 # ---------------------------------------------------------- #
 #### 2.1 DETOUR! COLORS AND LEGENDS, AGAIN                ####
@@ -397,6 +398,12 @@ ggplot(data=mpg, aes(x=hwy)) +
 #     statement
 # (3) No legend
 # (4) Informative x- and y-axis labels. 
+
+ggplot(data = highwayMPG, aes(x = class, y = hwy_mean, fill = class)) + 
+  geom_bar(stat = "identity", color = "black") + 
+  scale_fill_manual(values = c("#1B9E77", "#D95F02", "#7570B3","#E7298A", "#66A61E", "#E6AB02", "#A6761D")) +
+  theme(legend.position = "none") + labs(x = "Car Class", y = "Average Highway Mileage (MPG)")
+
 
 # HINT: Carefully consider whether your color and/or fill should go within an aes() 
 # statement, the scale_fill_manual or scale_color_manual statements, or neither.
