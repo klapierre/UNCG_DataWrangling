@@ -471,6 +471,13 @@ ggplot(data=highwayMPG, aes(x=class, y=hwy_mean, fill=class)) +
 # (6) flip your axes
 # (7) remove the legend
 
+ggplot(data = highwayMPG, aes(x = class, y = hwy_mean, fill = class)) +
+  geom_bar(stat = "identity", color = "black") + scale_fill_manual(values = c(
+    "#b2f7ef", "#ffafcc", "#cdb4db","#E78AC3", "#caffbf", "#abc4ff", "#9381ff")) +
+  scale_x_discrete(name = "Car Class",labels = c("2seater" = "2-Seater", "compact" = "Compact",
+      "midsize" = "Midsize", "minivan" = "Minivan", "pickup" = "Pickup", "subcompact" = "Subcompact",
+      "suv" = "SUV")) + scale_y_continuous(name = "Mean Highway Mileage (MPG)", breaks = seq(0, 30, 5),
+    limits = c(0, 30)) + coord_flip() +theme(legend.position = "none")
 
 # ---------------------------------------------------------- #
 #### 3.0 RANKING                                          ####
@@ -485,6 +492,8 @@ ggplot(data=highwayMPG, aes(x=class, y=hwy_mean, fill=class)) +
 # HINT: Look back at the Transform assignment if you forget how to summarize the
 # data. Also, standard error = 1.96*standard deviation.
 
+cityMPG <- mpg %>% group_by(class) %>%
+  summarise(city_mean = mean(cty), city_sd = sd(cty), city_se = 1.96 * city_sd)
 
 # Now we want to plot our data in order from smallest to largest city MPG to get
 # a ranking. To do so, we need to use the reorder() function to rearrange the data
@@ -500,6 +509,13 @@ ggplot(cityMPG, aes(x=reorder(class, city_mean), y=city_mean)) +
 # (5) y-axis from 0 to 30 with tick marks every 5
 # (6) no legend.
 
+ggplot(cityMPG, aes(x = reorder(class, -city_mean), y = city_mean, fill = class)) +
+  geom_bar(stat = "identity", color = "darkgrey") + geom_errorbar(aes(ymin = city_mean - city_se, ymax = city_mean + city_se),
+    width = 0.3) + scale_fill_manual(values = c("#b2f7ef", "#ffafcc", "#cdb4db","#E78AC3", "#caffbf", "#abc4ff", "#9381ff"
+  )) + scale_x_discrete(name = "Class of Car", labels = c("2seater" = "2-Seater",
+    "compact" = "Compact", "midsize" = "Midsize", "minivan" = "Minivan", "pickup" = "Pickup",
+      "subcompact" = "Subcompact", "suv" = "SUV")) + scale_y_continuous(
+    name = "Mean City Mileage (MPG)", breaks = seq(0, 30, 5), limits = c(0, 30)) + theme(legend.position = "none")
 
 # ---------------------------------------------------------- #
 #### 4.0 DISTRIBUTION                                     ####
