@@ -784,6 +784,11 @@ data("economics")
 # lines using geom_line().
 # HINT: use ?economics to get more information about this dataset.
 
+ggplot(economics, aes(x = date, y = unemploy)) +
+  geom_point(color = "green") +
+  geom_line()
+
+## I think the neon green points mix with the black line and turn into monster energy drink.
 
 
 
