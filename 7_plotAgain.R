@@ -421,6 +421,7 @@ ggplot(data=highwayMPG, aes(x=class, y=hwy_mean, fill=class)) +
 
 # QUESTION: Where is ggplot getting the x-axis tick labels from?
 
+#Its getting them from the values in the class column of the data frame
 
 # Often our tick labels are not the best. We can modify them to be more informative
 # or visually appealing by directly modifying the dataframe, but again this feels
@@ -442,6 +443,8 @@ ggplot(data=highwayMPG, aes(x=class, y=hwy_mean, fill=class)) +
 # What is surprising about the resulting graph? Based on this result, what do you
 # think the coord_cartesian() statement does?
 
+#Without it the graph doesn't go all the way to 50. I thibk the coord_cartesian statement actually
+#Extends the plotting window to what we want.
 
 # We can also add a statement into the scale discrete or continuous statements
 # to name our axes, rather than putting in a whole separate step of xlab() or ylab().
