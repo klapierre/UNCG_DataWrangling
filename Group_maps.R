@@ -192,6 +192,148 @@ ggplot() +
 
 # MAPPING SPECIES RICHNESS ------------------------------------------------
 
-# Using the same object we used for our map above (clean_data), we can create a map that colors counties along a gradient, based on species richness
+# Using the same object we used for our map above (clean_data), we can create a map that colors counties along a gradient, based on species richness.
+
+# In this section, we will build on our previous map by calculating and mapping
+# species richness across North Carolina counties. Species richness refers to
+# the number of unique species (or taxa) observed in a given area.
+
+# Instead of plotting individual points, we will summarize how many different
+# genera occur within each county and display this as a gradient map.
+
+# ---------------------------------------------------------------------------- #
+# PREPARING DATA FOR SPECIES RICHNESS -----------------------------------------
+
+# TASK: Load necessary library for spatial joins
+library(dplyr)
+
+# TASK: Inspect the clean_data dataframe again
+head(clean_data)
+
+# QUESTION: What column could we use to represent "species richness"?
+
+# ---------------------------------------------------------------------------- #
+# ASSIGNING COUNTIES TO EACH POINT --------------------------------------------
+
+# To calculate richness per county, we need to assign each observation point
+# to a county polygon.
+
+# TASK: Install and load the sf package if not already installed
+# install.packages("sf")
+library(sf)
+
+# TASK: Convert clean_data into an sf object using longitude and latitude
+clean_sf <- st_as_sf(clean_data, coords = c("lon", "lat"), crs = 4326)
+
+# TASK: Convert nc_map dataframe into an sf object
+nc_map_sf <- st_as_sf(nc_map, coords = c("long", "lat"), crs = 4326)
+
+# NOTE: The nc_map object is not yet a true polygon sf object, so we will
+# instead use a built-in county shapefile
+
+# TASK: Load US counties map from maps package
+library(maps)
+counties_sf <- st_as_sf(map("county", plot = FALSE, fill = TRUE))
+
+# TASK: Filter only North Carolina counties
+nc_counties_sf <- counties_sf %>%
+  filter(grepl("north carolina", ID))
+
+# ---------------------------------------------------------------------------- #
+# CALCULATING SPECIES RICHNESS ------------------------------------------------
+
+# Make sure both spatial objects use the same CRS
+nc_counties_sf <- st_transform(nc_counties_sf, st_crs(clean_sf))
+
+# TASK: Remove geometry from richness_data before joining 
+richness_df <- st_drop_geometry(richness_data)
+
+# TASK: Join richness values back to all counties 
+nc_richness_map <- nc_counties_sf %>%
+  left_join(richness_df, by = "ID")
+
+# TASK: Replace NA values with 0
+nc_richness_map$richness[is.na(nc_richness_map$richness)] <- 0
 
 
+# ---------------------------------------------------------------------------- #
+# BUILDING THE RICHNESS MAP ---------------------------------------------------
+
+# TASK: Plot the North Carolina counties and fill by richness values
+library(ggplot2)
+
+ggplot() +
+  geom_sf(data = nc_richness_map, aes(fill = richness),  color = "black") +
+  scale_fill_viridis_c(option = "plasma", na.value = "gray90") +
+  theme_bw() +
+  labs(title = "Species Richness of Mammals in North Carolina",
+       fill = "Richness",
+       x = "Longitude",
+       y = "Latitude")
+
+# QUESTION: Why were some counties removed in the original map?
+
+# ---------------------------------------------------------------------------- #
+# IMPROVING THE MAP -----------------------------------------------------------
+
+# Now that we have added a title and labels, we can further improve the map by
+# adjusting the color scale and overall appearance to make patterns easier to see.
+
+# TASK: Customize the color gradient to better highlight differences in richness
+ggplot() +
+  geom_sf(data = nc_richness_map, aes(fill = richness), color = "black") +
+  scale_fill_viridis_c(option = "plasma", direction = -1) +
+  theme_bw() +
+  labs(title = "Species Richness of Mammals in North Carolina",
+       fill = "Richness",
+       x = "Longitude",
+       y = "Latitude")
+
+# QUESTION: What does changing the 'option' in scale_fill_viridis_c() do?
+
+# ---------------------------------------------------------------------------- #
+
+# TASK: Remove county borders to create a smoother, cleaner map appearance
+ggplot() +
+  geom_sf(data = nc_richness_map, aes(fill = richness), color = NA) +
+  scale_fill_viridis_c(option = "plasma") +
+  theme_minimal() +
+  labs(title = "Species Richness of Mammals in North Carolina",
+       fill = "Richness")
+
+# QUESTION: How does removing borders change the look of the map?
+
+
+# ---------------------------------------------------------------------------- #
+
+# TASK: Adjust legend position for better readability
+ggplot() +
+  geom_sf(data = nc_richness_map, aes(fill = richness), color = "black") +
+  scale_fill_viridis_c() +
+  theme_bw() +
+  theme(legend.position = "right") +
+  labs(title = "Species Richness of Mammals in North Carolina",
+       fill = "Richness")
+
+# QUESTION: Why might changing the legend position be useful?
+
+# ---------------------------------------------------------------------------- #
+# INTERPRETING THE MAP --------------------------------------------------------
+
+# QUESTION: What does a darker color indicate on this map?
+
+# QUESTION: Why might some counties have lower richness values?
+
+# ---------------------------------------------------------------------------- #
+# BONUS EXPLORATION -----------------------------------------------------------
+
+# TASK: Modify the richness calculation to use 'family' instead of 'genus'
+richness_family <- joined_data %>%
+  group_by(ID) %>%
+  summarize(richness = n_distinct(family))
+
+# QUESTION: How does mapping richness by family differ from genus?
+
+
+# TASK: Save your most recent plot as an image file to your folder. 
+ggsave("nc_species_richness_map.png",width = 8, height = 6, dpi = 300)
