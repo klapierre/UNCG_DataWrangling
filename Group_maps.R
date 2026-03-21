@@ -1,34 +1,57 @@
-# Map building in RStudio
-#mariii
-#pattie
-#Write a code to install the packages ggplot2, maps, dyplr, tigris, and sf
-#Run the following code to load the packages into your library:
+# MAP BUILDING IN RSTUDIO
 
-#Test
+# ---------------------------------------------------------------------------- #
+# OBJECTIVES:
+# 1. Understand when and why we may want to use R to build maps
+# 2. Understand that there are many different ways to map spatial data within RStudio framework
+# 3. Use packages such as maps and ggplot to map spatial data 
+# 4. To learn how to find and import environmental spatial data sets
 
 
+
+# Part 1: Loading packages ------------------------------------------------
+
+# NOTE: you may need to write the line install.packages(" ") before loading these packages into your library if you have not used them before!
+library(tidyverse)
 library(ggplot2)
 library(maps)
 library(dplyr)
-library(tigris)
+library(tigris) #??????????????????????????????????????????????
 library(sf)
 
 #Run the following code:
 options(tigris_use_cache = TRUE)
 
+# Part 2: SECTION TITLE  ------------------------------------------------------
+
+#Task: We will start by loading the state.x77 dataset
+#into R as a dataframe and using the cbind() function to create a column named
+#"State" with all states listed from the row names in the state.x77 dataset.
 
 state_data <- cbind(
   State = rownames(state.x77),
-  as.data.frame(state.x77)
-)
+  as.data.frame(state.x77))
 
+#Run the following code to display your data
+head(state_data)
+
+#Question: What do you notice about the rownames and the data within the "State" 
+#column? 
+
+#Task: Run the following code:
 rownames(state_data) <- NULL
 
-head(state_data)
+#Question: Write code to display your dataset once again. What did the previous
+#code change within our dataset?
+
+#Task: Because we have loaded the dyplr package, we can create a new dataframe
+#with just State and Frost data. Write a code to select the State and Frost columns
+#from the state_data dataframe and name the new dataframe state_frost_data. 
+#View the new dataset and confirm that it is correct.
 
 state_frost_data <- state_data %>% select(State, Frost)
 
-head(state_frost_data)
+
 
 states <- states(cb = TRUE)
 
@@ -41,89 +64,134 @@ ggplot(us_states_frost) +
   theme_minimal() +
   labs(fill = "Number of Frost Days", title = "United States Frost Data")
 
+# Part 3: MAPPING SPECIMEN OCCURRENCE DATA -----------------------------------
 
-
-# ---------------------------------------------------------------------------- #
-## OBJECTIVES:
-# 1. Understand when and why we may want to use R to build maps
-# 2. Understand that there are many different ways to map spatial data within RStudio framework
-# 3. Use packages such as maps and ggplot to map spatial data 
-# 4. To learn how to find and import environmental spatial data sets
-
-
-
-#HELLOOOOOO
-
-
-# MAPPING SPECIMEN OCCURRENCE DATA ------------------------------------------
-
-# In this section, we are going to learn how to find and plot mammal occurrence
-# data from North Carolina. First, we need to find a dataset to download. 
+# In this section, we are going to learn how to find and plot specimen (or species) occurrence data from North Carolina. First, we need to find a dataset to download. I want to map mammals collected in North Carolina. 
 
 # To find an appropriate dataset, I queried the opensource museum data sharing
-# platform Arctos (arctos.org) to gather mammal records North Carolina.
+# platform Arctos to gather mammal records North Carolina.
 # Here is the link to the website: https://arctos.database.museum/
+
+# To filter the records, I specified "Mammalia" in the "Any taxon, ID, common    # name" box within the Identification field, and "North Carolina" in the
+# "state_prov" box within the Place field. 
 
 # It is free to make an account and search+download records, but I shared a csv 
 # file in the the email I sent out for those who do not have an account already 
 # made. 
 
-# To filter the records, I specified "Mammalia" in the "Any taxon, ID, common name"
-# box within the Identification field, and "North Carolina" in the "state_prov" 
-# within the Place field
+# TASK: Download the NC_mamm_data.csv into your UNCG_DataWrangling folder on your desktop
 
-# Once we have the csv file saved in our UNCG_DataWrangling folder on our 
-# desktops, we will need to begin cleaning the file to make it easier to work with
-
-# LOAD REQUIRED PACKAGES
-library(tidyverse)
-library(ggplot2)
-library(maps)
-library(sf)
-library(dplyr)
-
-# To read in the data, create an object titled "mammal_data" from the NC_mamm_data csv 
+# TASK: Create an object titled "mammal_data" from the NC_mamm_data csv 
 mammal_data <- read.csv("NC_mamm_data.csv")
 
-# Review your data using the unique() function, pulling from the object mammal_data to see the column names, the unique localities, unique genera, and unique orders
+# TASK: Using the colnames() function, review what columns exist in your current dataset
 colnames(mammal_data)
-unique(mammal_data$locality) #238 unique localities
-unique(mammal_data$genus) #50 unique genera
-unique(mammal_data$order) #15 unique orders - for the sake of this assignment, we will plot specimens groupped by color 
 
-# Remove the 'USE_LICENSE_URL' column because it is not needed for plotting
+# TASK: Remove the 'USE_LICENSE_URL' column using a pipe and the select(- ) 
+# function because it is not needed for plotting
 mammal_data <- mammal_data %>%
   select(-USE_LICENSE_URL)
 
-# Rename remaining columns
-colnames(mammal_data) <- c("country", "state", "locality", "date", "lat", "long", "sex", "life_stage", "genus", "order", "family")
+# Using the rename() function introduced in assignment 4, rename the remaining 11 columns in the following order: country, state, locality, date, lat, long, sex, life_stage, genus, order, family
 
-# Clean NA values from specified columns
+mammal_data <- rename(.data=mammal_data,                                                             country=COUNTRY,
+                      state=STATE_PROV,
+                      locality=SPEC_LOCALITY,
+                      date=VERBATIM_DATE,
+                      lat=DEC_LAT,
+                      lon=DEC_LONG,
+                      sex=SEX,
+                      life_stage=LIFE_STAGE,
+                      genus=GENUS,
+                      order=PHYLORDER,
+                      family=FAMILY)
+
+# Using the mammal_data object, clean NA values from columns 'lon', 'lat', 'locality' and 'genus'. Create new object for this cleaned data titled 'clean_data'
 clean_data <- mammal_data %>%
-  drop_na(long, lat, locality, genus)
+  drop_na(lon, lat, locality, genus)
 
-# Get North Carolina county map
+# Great, now our data is clean and easier to work with! 
+
+
+# BUILDING THE MAP
+
+# First, using the function map_data() within the maps package we loaded at the start, we can build a dataframe that provides all counties within the United States. 
+
+# TASK: Run this line of code, and look at the dataframe that appears in our environment box
+counties <- map_data("county")
+
+# Great, now we have a very large dataframe that gives us coordinates for every county in the United States. 
+
+# TASK: To plot this, run the line of code below: 
+ggplot() +
+  geom_polygon(data = counties,
+               aes(x = long, y = lat, group = group),
+               fill = "white",
+               color = "black") +
+  theme_bw()
+
+# QUESTION: What do you think the geom_polygon function is doing here?
+
+# TASK: Create a new dataframe titled 'nc_map' that only has North Carolina counties by specifying the region as it appears in the counties dataframe previously built
 nc_map <- map_data("county", region = "north carolina")
 
-# Create the combined map
+# TASK: plot the map using your new nc_map dataframe using the previous map code as your guide
+# HINT: to adjust the map size, add the function coord_fixed(1.5) to the end of the code
 ggplot() +
   geom_polygon(data = nc_map,
                aes(x = long, y = lat, group = group),
                fill = "white",
                color = "black") +
+  theme_bw() +
+  coord_fixed(1.5) 
+  
+# QUESTION: What do you think the 'coord_fixed' function is doing here? 
+
+# ADDING THE DATA POINTS TO NC MAP---------------------------------------------
+
+# Using the 'clean_data' df we created, we can map these points onto out North Carolina map to see species occurrences! 
+# To do this, we can add the geom_point function to our previous chunk of code.
+
+# TASK: With a plus sign between the sections, add the lines below to the above code:
+geom_point(data = clean_data,
+           aes(x = lon, y = lat, color = order),
+           size = 1,
+           alpha = 0.7)
+
+# From here, you can adjust the theme to your liking. 
+# TASK: With a plus sign between sections, if you begin typing 'theme' on the next line, options will appear that you can browse through! 
+
+
+# TASK: after adding a theme to the plot, add and title and an x and y axis label with the labs() function. 
+
+
+# In the end, we should have a chunk of code that looks something like this (theme can be your choosing):
+ggplot() +
+  geom_polygon(data = nc_map,
+               aes(x = long, y = lat, group = group),
+               fill = "white",
+               color = "black") +
+  theme_bw() +
+  coord_fixed(1.5) +
   geom_point(data = clean_data,
-             aes(x = long, y = lat, color = order),
+             aes(x = lon, y = lat, color = order),
              size = 1,
              alpha = 0.7) +
-  coord_fixed(1.3) +
-  theme_classic() +
+  theme_bw() +
   labs(title = "Mammal captures in North Carolina",
        x = "Longitude",
-       y = "Latitude",
-       color = "Order")
+       y = "Latitude")
+
+# QUESTION: Why did I decide to color the points by species order? What happens if you color the points (within the geom_point section) by genus instead? 
+
+
+# Note: If we wanted to, we could subset out dataframe by species while still working in the data cleaning section, and only plot one species at a time, or focus on different families, etc.
+
+# This shows us that  data cleaning provides many different opportunities for visualization! 
 
 
 # MAPPING SPECIES RICHNESS ------------------------------------------------
 
-# Using the same csv we used for our map above, we can create a map that colors counties along a gradient based on species richness 
+# Using the same object we used for our map above (clean_data), we can create a map that colors counties along a gradient, based on species richness
+
 
