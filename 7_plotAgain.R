@@ -629,4 +629,5 @@ data("economics")
 # lines using geom_line().
 # HINT: use ?economics to get more information about this dataset.
 
-
+ggplot(data = economics, aes(x = date, y = unemploy)) + geom_point() + geom_line() + 
+  labs(x = "Year", y = "Number of Unemployed People", title = "Unemployment Over Time")
