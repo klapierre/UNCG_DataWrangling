@@ -35,6 +35,7 @@
 # Each type of geometric object (geom) accepts only a subset of all aesthetics.
 # Refer to the geom help pages to see what mappings each geom accepts. Aesthetic
 # mappings are set with the aes() function.
+??geom
 
 # TASK: We will be using the ggplot2 package for graphing. Fortunately, ggplot2 
 # is nested within the tidyverse package (along with many others).
@@ -46,7 +47,13 @@ library(tidyverse)
 # AND minor gridlines to element_blank for all plots you'll be making today.
 # HINT: Check back to last week's assignment section 1.9 for setting themes for
 # all plots.
-
+theme_set(
+  theme_bw() +
+    theme(
+      panel.grid.major = element_blank(),
+      panel.grid.minor = element_blank()
+    )
+)
 
 # ---------------------------------------------------------- #
 #### 1.0 CORRELATION                                      ####
