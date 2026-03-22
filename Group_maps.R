@@ -8,21 +8,20 @@
 # 4. To learn how to find and import environmental spatial data sets
 
 
-
-# Part 1: Loading packages ------------------------------------------------
+# Part 1: LOAD PACKAGES --------------------------------------------------------
 
 # NOTE: you may need to write the line install.packages(" ") before loading these packages into your library if you have not used them before!
 library(tidyverse)
 library(ggplot2)
 library(maps)
 library(dplyr)
-library(tigris) #??????????????????????????????????????????????
+library(tigris) #????????????????????????????????????? package does not exist
 library(sf)
 
 #Run the following code:
 options(tigris_use_cache = TRUE)
 
-# Part 2: SECTION TITLE  ------------------------------------------------------
+# Part 2: MAPPING WITH INTERNAL GGPLOT DATASETS --------------------------------
 
 #Task: We will start by loading the state.x77 dataset
 #into R as a dataframe and using the cbind() function to create a column named
@@ -51,9 +50,7 @@ rownames(state_data) <- NULL
 
 state_frost_data <- state_data %>% select(State, Frost)
 
-
-
-states <- states(cb = TRUE)
+states <- states(cb = TRUE) #????????????????????? could not find function states()
 
 states <- states %>% rename(State = NAME)
 
@@ -66,13 +63,15 @@ ggplot(us_states_frost) +
 
 # Part 3: MAPPING SPECIMEN OCCURRENCE DATA -----------------------------------
 
-# In this section, we are going to learn how to find and plot specimen (or species) occurrence data from North Carolina. First, we need to find a dataset to download. I want to map mammals collected in North Carolina. 
+# In this section, we are going to learn how to find and plot specimen (or species) occurrence data from North Carolina. First, we need to find a data set to download.
+# I want to map mammals collected in North Carolina!  
 
-# To find an appropriate dataset, I queried the opensource museum data sharing
-# platform Arctos to gather mammal records North Carolina.
+# To find an appropriate data set, I queried the opensource museum data sharing
+# platform Arctos to gather mammal records from North Carolina.
 # Here is the link to the website: https://arctos.database.museum/
 
-# To filter the records, I specified "Mammalia" in the "Any taxon, ID, common    # name" box within the Identification field, and "North Carolina" in the
+# To filter the records, I specified "Mammalia" in the "Any taxon, ID, common   
+# name" box within the Identification field, and "North Carolina" in the
 # "state_prov" box within the Place field. 
 
 # It is free to make an account and search+download records, but I shared a csv 
@@ -117,10 +116,10 @@ clean_data <- mammal_data %>%
 
 # First, using the function map_data() within the maps package we loaded at the start, we can build a dataframe that provides all counties within the United States. 
 
-# TASK: Run this line of code, and look at the dataframe that appears in our environment box
+# TASK: Run this line of code, and look at the data frame that appears in our environment box
 counties <- map_data("county")
 
-# Great, now we have a very large dataframe that gives us coordinates for every county in the United States. 
+# Great, now we have a very large data frame that gives us coordinates for every county in the United States. 
 
 # TASK: To plot this, run the line of code below: 
 ggplot() +
@@ -182,15 +181,15 @@ ggplot() +
        x = "Longitude",
        y = "Latitude")
 
-# QUESTION: Why did I decide to color the points by species order? What happens if you color the points (within the geom_point section) by genus instead? 
+# QUESTION: Why did I decide to color the points by order? What happens if you color the points (within the geom_point section) by genus instead? 
 
 
 # Note: If we wanted to, we could subset out dataframe by species while still working in the data cleaning section, and only plot one species at a time, or focus on different families, etc.
 
+
 # This shows us that  data cleaning provides many different opportunities for visualization! 
 
-
-# MAPPING SPECIES RICHNESS ------------------------------------------------
+# MAPPING SPECIES RICHNESS ---------------------------------------------------
 
 # Using the same object we used for our map above (clean_data), we can create a map that colors counties along a gradient, based on species richness
 
