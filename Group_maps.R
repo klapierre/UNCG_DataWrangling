@@ -6,7 +6,6 @@
 # 2. Understand that there are many different ways to map spatial data within RStudio framework
 # 3. Use packages such as maps and ggplot to map spatial data 
 # 4. To learn how to find and import environmental spatial data sets
-install.packages("tigris")
 
 # Part 1: LOAD PACKAGES --------------------------------------------------------
 
@@ -93,7 +92,7 @@ mammal_data <- mammal_data %>%
 
 # Using the rename() function introduced in assignment 4, rename the remaining 11 columns in the following order: country, state, locality, date, lat, long, sex, life_stage, genus, order, family
 
-mammal_data <- rename(.data=mammal_data,                                                             country=COUNTRY,
+mammal_data <- rename(.data=mammal_data,                                                                  country=COUNTRY,
                       state=STATE_PROV,
                       locality=SPEC_LOCALITY,
                       date=VERBATIM_DATE,
