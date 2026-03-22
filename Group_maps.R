@@ -6,7 +6,7 @@
 # 2. Understand that there are many different ways to map spatial data within RStudio framework
 # 3. Use packages such as maps and ggplot to map spatial data 
 # 4. To learn how to find and import environmental spatial data sets
-
+install.packages("tigris")
 
 # Part 1: LOAD PACKAGES --------------------------------------------------------
 
@@ -15,7 +15,7 @@ library(tidyverse)
 library(ggplot2)
 library(maps)
 library(dplyr)
-library(tigris) #????????????????????????????????????? package does not exist
+library(tigris)
 library(sf)
 
 #Run the following code:
@@ -50,7 +50,7 @@ rownames(state_data) <- NULL
 
 state_frost_data <- state_data %>% select(State, Frost)
 
-states <- states(cb = TRUE) #????????????????????? could not find function states()
+states <- states(cb = TRUE) 
 
 states <- states %>% rename(State = NAME)
 
@@ -191,7 +191,7 @@ ggplot() +
 
 # MAPPING SPECIES RICHNESS ---------------------------------------------------
 
-# Using the same object we used for our map above (clean_data), we can create a map that colors counties along a gradient, based on species richness.
+# Using the same object we used for our map above (clean_data), we can create a map that colors counties along a gradient, based on species richness from our capture data.
 
 # In this section, we will build on our previous map by calculating and mapping
 # species richness across North Carolina counties. Species richness refers to
@@ -209,7 +209,7 @@ library(dplyr)
 # TASK: Inspect the clean_data dataframe again
 head(clean_data)
 
-# QUESTION: What column could we use to represent "species richness"?
+# QUESTION: What columns could we use to represent "species richness"?
 
 # ---------------------------------------------------------------------------- #
 # ASSIGNING COUNTIES TO EACH POINT --------------------------------------------
