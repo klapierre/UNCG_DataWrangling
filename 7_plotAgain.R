@@ -130,6 +130,9 @@ ggplot(mpg, aes(x = cty, y = hwy, color = class)) +
 # HINT: Refer back to the Transform assignment if you want help with %in% (or 
 # try googling!)
 
+mpgSubset <- mpg %>% 
+  filter(class %in% c("compact", "midsize", "suv"))
+
 
 # ggplot has lots of nice (and some not so nice) built-in color palettes that we 
 # can use to fill our bars with color. Try running the following code:
