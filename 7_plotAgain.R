@@ -460,7 +460,8 @@ ggplot(data=highwayMPG, aes(x=class, y=hwy_mean, fill=class)) +
   geom_bar(stat='identity') 
 
 # QUESTION: Where is ggplot getting the x-axis tick labels from?
-
+# ggplot is getting the x-axis tick labels from the class variable in the highway Mpg
+ # data set. 
 
 # Often our tick labels are not the best. We can modify them to be more informative
 # or visually appealing by directly modifying the dataframe, but again this feels
@@ -481,7 +482,12 @@ ggplot(data=highwayMPG, aes(x=class, y=hwy_mean, fill=class)) +
 # QUESTION: Try running the code above without the coord_cartesian() statement. 
 # What is surprising about the resulting graph? Based on this result, what do you
 # think the coord_cartesian() statement does?
-
+ggplot(data=highwayMPG, aes(x=class, y=hwy_mean, fill=class)) +
+  geom_bar(stat='identity') +
+  scale_y_continuous(breaks=seq(0, 50, 10))
+# What is surprising about the resulting graph is that axis limits are not being enforced.
+# The coord_cartesian() statement zooms in on the data and changes what is displayed 
+# Without this statement we only had a zoomed out version of the data. 
 
 # We can also add a statement into the scale discrete or continuous statements
 # to name our axes, rather than putting in a whole separate step of xlab() or ylab().
@@ -507,7 +513,24 @@ ggplot(data=highwayMPG, aes(x=class, y=hwy_mean, fill=class)) +
 # (5) set the scale of the highway mpg to run from 0 to 30 with breaks every 5 
 # (6) flip your axes
 # (7) remove the legend
-
+ggplot(highwayMPG, aes(x = class, y = hwy_mean, fill = class)) +
+  geom_bar(stat = "identity", color = "black") +
+  geom_errorbar(
+    aes(ymin = hwy_mean - hwy_se, ymax = hwy_mean + hwy_se),
+    width = 0.2
+  ) +
+  scale_fill_manual(
+    values = RColorBrewer::brewer.pal(7, "Dark2"),
+    breaks = c("compact", "midsize", "suv", "2seater", "subcompact", "minivan", "pickup"),
+    labels = c("Compact", "Midsize", "SUV", "2-Seater", "Subcompact", "Minivan", "Pickup")
+  ) +
+  scale_y_continuous(breaks = seq(0, 30, 5), limits = c(0, 30)) +
+  coord_flip() +
+  theme(legend.position = "none") +
+  labs(
+    x = "Car Class",
+    y = "Average Highway MPG"
+  )
 
 # ---------------------------------------------------------- #
 #### 3.0 RANKING                                          ####
