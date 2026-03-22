@@ -110,13 +110,15 @@ ggplot(data=mpg,aes(x=cty, y=hwy))+
 # new dataframe mpgSubset.
 # HINT: Refer back to the Transform assignment if you want help with %in% (or 
 # try googling!)
-
+mpgSubset<-mpg %>%
+  filter(class %in% c("compact","midsize","suv"))
 
 # ggplot has lots of nice (and some not so nice) built-in color palettes that we 
 # can use to fill our bars with color. Try running the following code:
 ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
   geom_jitter()
-
+ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
+  geom_jitter()
 # The code above supplies us with ggplot's default color palette, which I find not
 # so pleasing. Let's try to change this!
 
@@ -126,18 +128,22 @@ ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
 ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
   geom_jitter() +
   scale_color_brewer(palette="Set1")
-
+ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
+  geom_jitter() +
+  scale_color_brewer(palette="Set1")
 # Alternatively, we could use the "RdBu" palette:
 ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
   geom_jitter() +
   scale_color_brewer(palette="RdBu")
-
+.ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
+  geom_jitter() +
+  scale_color_brewer(palette="RdBu")
 # QUESTION: Investigate the color brewer's range of palettes at this website: 
 # https://r-graph-gallery.com/38-rcolorbrewers-palettes.html
 # What do you notice about the colors chosen from each of the palettes that we
 # used above? (i.e., does it use the first three colors in the palette? The last
 # three? Some other combination?)
-
+#In the "Set1" palate, it uses the first three colors (red, blue, and green). In the "RdBu" palette, the colors create a primary visual differences between classes (orange for "compact", white for "midsize", and blue for "suv").
 
 # We could also pick out EXACTLY which colors we want for our figure. 
 # There are 4 main ways to specify colors in R:
@@ -149,14 +155,16 @@ ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
 # By Name: R allows you to call more than 600 colors by name! Run the following
 # code to see a list:
 colors()
-
+colors()
 # We can put in the colors we chose for each variable by adding the 
 # scale_color_manual() function to our plot. Try it out by running the following
 # code:
 ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
   geom_jitter() +
   scale_color_manual(values=c('midnightblue', 'cornflowerblue', 'tomato3'))
-
+ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
+  geom_jitter() +
+  scale_color_manual(values=c('midnightblue', 'cornflowerblue', 'tomato3'))
 
 # You can also chose colors by number, which are assigned in R.
 
@@ -164,13 +172,17 @@ ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
 # with three numbers of your choice (between 1 and 657). How does your new figure look?
 # HINT: remember to remove the quotation marks when calling numbers.
 
-
+ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
+  geom_jitter() +
+  scale_color_manual(values=c(59,69 , 79))
+#The color coloral2 represents "midsize", cyan1 represents "compact", and darkgoldenrod represents "suv".
 # QUESTION: How do you think you could figure out which color name belongs to
 # each color number?
 # HINT: Try creating a dataframe from color() by passing it into the
 # as.data.frame() function.
-
-
+colors<-as.data.frame(colors())
+colors()
+colors<-colors()[c(59,69,79)]
 # You can also chose colors by Hex code. A Hex color code is a 6-symbol code made
 # of up to three 2-symbol elements (6 symbols in length all together). Each of 
 # the 2-symbol elements represents a color value in the Red-Green-Blue (RGB) color
@@ -179,7 +191,9 @@ ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
 ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
   geom_jitter() +
   scale_color_manual(values=c('#191970', '#6495ED', '#FF6347'))
-
+ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
+  geom_jitter() +
+  scale_color_manual(values=c('#191970', '#6495ED', '#FF6347'))
 # There are two great things about hex codes. First, you can call ANY color you 
 # want with a hex code. That is, you're not limited to the 657 colors that are
 # in ggplot. By specifying the color by hex code, you can pick literally anything!
@@ -188,7 +202,9 @@ ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
 # picker (in addition to a billion other color picking websites). Use this color
 # picker to generate the hex codes for three new colors of your choice. Then copy
 # and paste the above code, replacing the hex codes with your color choices.
-
+ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
+  geom_jitter() +
+  scale_color_manual(values=c('#3236a8', '#f54e96', '#4eadf5'))
 
 # The second great thing about hex codes is that you can control the transparency
 # of your colors. Transparency is set in a hex code by adding two extra symbols
@@ -203,9 +219,11 @@ ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
 # first color 0% transparent, your second color 50% transparent, and your third
 # color 100% transparent.
 
-
+ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
+  geom_jitter() +
+  scale_color_manual(values=c('#3236a8FF', '#f54e9680', '#4eadf500'))
 # QUESTION: What happened to the point that you set to 100% transparent?
-
+#The points for "suv" became completely transparent (basically invisible!).
 
 # Finally, we can set our colors using the rgb() function. This operates very
 # similarly to the hex code, where you can pick exactly the color and transparency
@@ -213,9 +231,13 @@ ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
 ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
   geom_jitter() +
   scale_color_manual(values=c(rgb(.10, .10, .44, 1), rgb(.39, .58, .93, 1), rgb(1.0, .39, .28, 1)))
-
+ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
+  geom_jitter() +
+  scale_color_manual(values=c(rgb(.10, .10, .44, 1), rgb(.39, .58, .93, 1), rgb(1.0, .39, .28, 1)))
 # TASK: Modify the above code to make all of your points 50% transparent.
-
+ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
+  geom_jitter() +
+  scale_color_manual(values=c(rgb(.5, .5, .5, .5), rgb(.5, .5, .5, .5), rgb(.5, .5, .5, .5)))
 # There are so many inventive and artistic people in the world who have expanded
 # the offerings for colors in ggplot. Check out some notable ones listed below
 # when choosing colors for this assignment.
