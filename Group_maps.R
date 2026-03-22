@@ -216,50 +216,34 @@ head(clean_data)
 
 # QUESTION: What columns could we use to represent "species richness"?
 
-# ---------------------------------------------------------------------------- #
-# ASSIGNING COUNTIES TO EACH POINT --------------------------------------------
+#TASK: Create NC county map 
+nc_map <- map_data("county", region = "north carolina")
 
-# To calculate richness per county, we need to assign each observation point
-# to a county polygon.
 
-# TASK: Install and load the sf package if not already installed
-# install.packages("sf")
-library(sf)
-
-# TASK: Convert clean_data into an sf object using longitude and latitude
-clean_sf <- st_as_sf(clean_data, coords = c("lon", "lat"), crs = 4326)
-
-# TASK: Convert nc_map dataframe into an sf object
-nc_map_sf <- st_as_sf(nc_map, coords = c("long", "lat"), crs = 4326)
-
-# NOTE: The nc_map object is not yet a true polygon sf object, so we will
-# instead use a built-in county shapefile
-
-# TASK: Load US counties map from maps package
-library(maps)
-counties_sf <- st_as_sf(map("county", plot = FALSE, fill = TRUE))
-
-# TASK: Filter only North Carolina counties
-nc_counties_sf <- counties_sf %>%
-  filter(grepl("north carolina", ID))
 
 # ---------------------------------------------------------------------------- #
 # CALCULATING SPECIES RICHNESS ------------------------------------------------
+# Now we calculate richness based on the number of unique orders per county
 
-# Make sure both spatial objects use the same CRS
-nc_counties_sf <- st_transform(nc_counties_sf, st_crs(clean_sf))
+#TASK: Group data county and calculate richness using 'order' 
+richness_data <- clean_data%>%
+  group_by(locality)%>%
+  summarize(richness = n_distinct(order))
+ 
 
-# TASK: Remove geometry from richness_data before joining 
-richness_df <- st_drop_geometry(richness_data)
+# ---------------------------------------------------------------------------- #
+# ASSIGNING COUNTIES TO EACH POINT--------------------------------------------
 
-# TASK: Join richness values back to all counties 
-nc_richness_map <- nc_counties_sf %>%
-  left_join(richness_df, by = "ID")
+# Make names match 
+clean_data$locality <- tolower(clean_data$locality)
+nc_map$subregion <- tolower(nc_map$subregion)
 
-# TASK: Replace NA values with 0
+# TASK Join richness to map
+nc_richness_map <-nc_map%>%
+  left_join(richness_data, by = c("subregion" = "locality"))
+
+# Replace NA with 0
 nc_richness_map$richness[is.na(nc_richness_map$richness)] <- 0
-
-
 # ---------------------------------------------------------------------------- #
 # BUILDING THE RICHNESS MAP ---------------------------------------------------
 
@@ -267,13 +251,16 @@ nc_richness_map$richness[is.na(nc_richness_map$richness)] <- 0
 library(ggplot2)
 
 ggplot() +
-  geom_sf(data = nc_richness_map, aes(fill = richness),  color = "black") +
-  scale_fill_viridis_c(option = "plasma", na.value = "gray90") +
-  theme_bw() +
-  labs(title = "Species Richness of Mammals in North Carolina",
-       fill = "Richness",
+  geom_polygon(data = nc_richness_map,
+               aes(x = long, y = lat, group = group, fill = richness), 
+               color = "black") +
+ theme_bw() + 
+  coord_fixed(1.5)+ 
+  scale_fill_viridis_c(option = "plasma", na.value = "gray90") + 
+  labs(title = "Order Richness of Mammals in North Carolina", 
+       fill = "Richness", 
        x = "Longitude",
-       y = "Latitude")
+       y = "Latitude" )
 
 # QUESTION: Why were some counties removed in the original map?
 
@@ -285,10 +272,12 @@ ggplot() +
 
 # TASK: Customize the color gradient to better highlight differences in richness
 ggplot() +
-  geom_sf(data = nc_richness_map, aes(fill = richness), color = "black") +
-  scale_fill_viridis_c(option = "plasma", direction = -1) +
+  geom_polygon(data = nc_richness_map,
+               aes(x = long, y = lat, group = group, fill = richness), 
+               color = "black") +
+  scale_fill_viridis_c(option = "inferno", direction = -1) +
   theme_bw() +
-  labs(title = "Species Richness of Mammals in North Carolina",
+  labs(title = " Order Richness of Mammals in North Carolina",
        fill = "Richness",
        x = "Longitude",
        y = "Latitude")
@@ -299,10 +288,12 @@ ggplot() +
 
 # TASK: Remove county borders to create a smoother, cleaner map appearance
 ggplot() +
-  geom_sf(data = nc_richness_map, aes(fill = richness), color = NA) +
-  scale_fill_viridis_c(option = "plasma") +
+  geom_polygon(data = nc_richness_map, 
+               aes(x = long, y = lat, group = group, fill = richness), 
+               color = NA) +
+  scale_fill_viridis_c(option = "magma") +
   theme_minimal() +
-  labs(title = "Species Richness of Mammals in North Carolina",
+  labs(title = "Order Richness of Mammals in North Carolina",
        fill = "Richness")
 
 # QUESTION: How does removing borders change the look of the map?
@@ -312,12 +303,16 @@ ggplot() +
 
 # TASK: Adjust legend position for better readability
 ggplot() +
-  geom_sf(data = nc_richness_map, aes(fill = richness), color = "black") +
+  geom_polygon(data = nc_richness_map,
+               aes(x = long, y = lat, group = group, fill = richness), 
+               color = "black") +
   scale_fill_viridis_c() +
   theme_bw() +
   theme(legend.position = "right") +
-  labs(title = "Species Richness of Mammals in North Carolina",
-       fill = "Richness")
+  labs(title = " Order Richness of Mammals in North Carolina",
+       fill = "Richness",
+       x = "Longitude",
+       y = "Latitude")
 
 # QUESTION: Why might changing the legend position be useful?
 
@@ -326,17 +321,7 @@ ggplot() +
 
 # QUESTION: What does a darker color indicate on this map?
 
-# QUESTION: Why might some counties have lower richness values?
-
-# ---------------------------------------------------------------------------- #
-# BONUS EXPLORATION -----------------------------------------------------------
-
-# TASK: Modify the richness calculation to use 'family' instead of 'genus'
-richness_family <- joined_data %>%
-  group_by(ID) %>%
-  summarize(richness = n_distinct(family))
-
-# QUESTION: How does mapping richness by family differ from genus?
+# QUESTION: Why might some counties have lower richness values? 
 
 
 # TASK: Save your most recent plot as an image file to your folder. 
