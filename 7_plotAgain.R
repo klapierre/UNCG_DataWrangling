@@ -520,7 +520,7 @@ ggplot(highwayMPG, aes(x = class, y = hwy_mean, fill = class)) +
     width = 0.2
   ) +
   scale_fill_manual(
-    values = RColorBrewer::brewer.pal(7, "Dark2"),
+    values = RColorBrewer::brewer.pal(7, "Pastel1"),
     breaks = c("compact", "midsize", "suv", "2seater", "subcompact", "minivan", "pickup"),
     labels = c("Compact", "Midsize", "SUV", "2-Seater", "Subcompact", "Minivan", "Pickup")
   ) +
