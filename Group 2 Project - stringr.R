@@ -131,7 +131,7 @@ str_to_kebab(case_names)
 #### Part 1.3: DETECT MATCHES
 #-----------------------------------------#
 
-## Additionally, stringr can be used to detect specififed character patterns in 
+## Additionally, stringr can be used to detect specified character patterns in 
 ## strings.
 
 ## Note: To discover how this works, we will use a list of fruits. This vector is
@@ -163,7 +163,7 @@ str_detect(fruit,"melon")
 ## and the "\\1" portion refers to a repeat of the previous letter.
 
 ## TASK: Try using the str_detect function with "(.)\\1" as the pattern to find 
-## out if there are any fruits containing double letter.
+## out if there are any fruits containing double letters.
 
 
 ## Another interesting function is str_count.
@@ -176,7 +176,7 @@ str_count(fivefruits, "a")
 ## QUESTION: What does the str_count function do? If needed, use ?str_count.
 
 
-## To get the actual position of the first occurence of the letter "a" in each of
+## To get the actual position of the first occurrence of the letter "a" in each of
 ## these five fruits, we can run the following code.
 str_locate(fivefruits, "a")
 
@@ -188,8 +188,8 @@ str_locate(fivefruits, "a")
 ## QUESTION: Notice that the fifth fruit returns NAs. Why do you think this is?
 
 
-## This tells us only the first occurence of the letter "a" in each of the five 
-## fruits. However, if we wanted to locate the postitions of all of the matches 
+## This tells us only the first occurrence of the letter "a" in each of the five 
+## fruits. However, if we wanted to locate the positions of all of the matches 
 ## for the letter "a" in each of these five fruits, we could use str_locate_all function.
 str_locate_all(fivefruits, "a")
 
@@ -198,7 +198,7 @@ str_locate_all(fivefruits, "a")
 
 
 ## QUESTION: Other functions that are similar to str_detect are str_starts and 
-## str_ends.What do you think each of these does?
+## str_ends. What do you think each of these does?
 
 
 ## TASK: Use the knowledge you've learned in this section to create a code that gives 
@@ -211,4 +211,4 @@ str_locate_all(fivefruits, "a")
 ## Great job! You've learned how to use stringr to detect, count, and locate 
 ## pattern matches in strings of characters. One way that these functions could 
 ## be practical is combining them with the filter function to filter a column in 
-## a dataframe by only those containing a certain letter or string of letters.
+## a data frame by only those containing a certain letter or string of letters.
