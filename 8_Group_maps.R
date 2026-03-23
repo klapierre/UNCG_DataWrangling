@@ -43,6 +43,7 @@ head(state_data)
 
 #Question: What do you notice about the rownames and the data within the "State" 
 #column? 
+the row names and the state column are the same they both list the state names 
 
 #Task: Run the following code:
 
@@ -50,7 +51,7 @@ rownames(state_data) <- NULL
 
 #Question: Write code to display your dataset once again. What did the previous
 #code change within the dataset? What did NULL do to the rownames?
-
+removed the row names form the dataset and null made the coustom row of names disaply
 #Task: Because we have loaded the dyplr package, we can create a new dataframe
 #with just State and Frost data. Write a code to select the State and Frost columns
 #from the state_data dataframe and name the new dataframe state_frost_data. 
