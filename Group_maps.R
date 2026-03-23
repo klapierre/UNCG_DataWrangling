@@ -263,12 +263,10 @@ ggplot() +
   geom_sf(data = nc_richness_map, aes(fill = richness),  color = "black") +
   scale_fill_viridis_c(option = "plasma", na.value = "gray90") +
   theme_bw() +
-  labs(title = "Species Richness of Mammals in North Carolina",
-       fill = "Richness",
+  labs(title = "Richness of Mammals in North Carolina",
+       fill = "Genera count",
        x = "Longitude",
        y = "Latitude")
-
-# QUESTION: Why were some counties removed in the original map?
 
 # ---------------------------------------------------------------------------- #
 # IMPROVING THE MAP -----------------------------------------------------------
@@ -278,13 +276,12 @@ ggplot() +
 
 # TASK: Customize the color gradient to better highlight differences in richness
 ggplot() +
-  geom_polygon(data = nc_richness_map,
-               aes(x = long, y = lat, group = group, fill = richness), 
-               color = "black") +
-  scale_fill_viridis_c(option = "inferno", direction = -1) +
+  geom_sf(data = nc_richness_map, 
+          aes(fill = richness),  color = "black") +
+  scale_fill_viridis_c(option = "inferno", na.value = "gray90") +
   theme_bw() +
-  labs(title = " Order Richness of Mammals in North Carolina",
-       fill = "Richness",
+  labs(title = "Richness of Mammals in North Carolina",
+       fill = "Genera count",
        x = "Longitude",
        y = "Latitude")
 
@@ -292,31 +289,15 @@ ggplot() +
 
 # ---------------------------------------------------------------------------- #
 
-# TASK: Remove county borders to create a smoother, cleaner map appearance
-ggplot() +
-  geom_polygon(data = nc_richness_map, 
-               aes(x = long, y = lat, group = group, fill = richness), 
-               color = NA) +
-  scale_fill_viridis_c(option = "magma") +
-  theme_minimal() +
-  labs(title = "Order Richness of Mammals in North Carolina",
-       fill = "Richness")
-
-# QUESTION: How does removing borders change the look of the map?
-
-
-# ---------------------------------------------------------------------------- #
-
 # TASK: Adjust legend position for better readability
 ggplot() +
-  geom_polygon(data = nc_richness_map,
-               aes(x = long, y = lat, group = group, fill = richness), 
-               color = "black") +
-  scale_fill_viridis_c() +
+  geom_sf(data = nc_richness_map, 
+          aes(fill = richness),  color = "black") +
+  scale_fill_viridis_c(option = "inferno", na.value = "gray90") +
   theme_bw() +
-  theme(legend.position = "right") +
-  labs(title = " Order Richness of Mammals in North Carolina",
-       fill = "Richness",
+  theme(legend.position = "left") +
+  labs(title = "Richness of Mammals in North Carolina",
+       fill = "Genera count",
        x = "Longitude",
        y = "Latitude")
 
