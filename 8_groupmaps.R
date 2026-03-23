@@ -95,15 +95,21 @@ ggplot(us_states_frost) +
   geom_sf(aes(fill = Frost), color = "blue") +
   theme_minimal() +
   labs(fill = "Number of Frost Days", title = "United States Frost Data")
+---- Line 94 = Utlizing a function that would plot the given data set: us_states_frost
+---- Line 95 = fill the geographical coordinates based on the data given in the Frost column, the designated color was blues -- I think "aes" as a short hand for aesthetic is a cool way to describe the visuals.
+---- Line 96 = the theme set for the graph
+---- Line 97 = A legend is set: the title of the legend = "Number of Frost Days"and the title of the actual graph is set to "United States Frost Data"
+
 
 #Question: Do you see a map under the "plots" tab?
+Yes, it looks like a world map with blue gradient.
 
 #Question: What do you notice about the size of this map? Suppose we only want
 #to study frost data of mainland US states. Are there states we could omit from
 #this map to better visualize the data? HINT ** to help determine which states we may 
 #want to omit, check out the us_states_frost_2 tab at the different States included
 #in the dataframe.
-
+--- the map is porportionally very tiny! I belive if we are looking for primarily mainland states, we would exclude Hawaii and Alaska. --- It would appear that Guam, American Samoa, United states Virgin islands, Puerto Rico and the Northern Mariana Islands is also apart of the US according to this data table.
 #To filter out states or islands not connected to the mainland US, we can use the 
 #dplyr function.
 
@@ -119,21 +125,33 @@ us_states_frost_2 <- us_states_frost %>%
 #Write code to show a map of the us_states_frost_2 dataset following the steps
 #used to create the map from the us_states_frost dataset.
 
+ggplot(us_states_frost_2) +
+  geom_sf(aes(fill = Frost), color = "orange") +
+  theme_minimal() +
+  labs(fill = "Number of Frost Days", title = "United States Frost Data")
+
+?geom_sf
+?color
+
 #You should see a new map in the "plots" tab that is much larger than the previous 
 #map making it easier to visualize the data.
 
 #Question: What do dark blue states represent? What do light blue states represent?
 #Question: Does florida or NC have more frost days?
+Dark blue means less frost days. Light blue means means more frost days. North Carolina has more frost days 
 
 #Question: Does there appear to be a relationship between latitude and 
 #number of frost days? Why or why not?
+Yes, there appears that there is a possible relationship between latitude and the number of frost days due to the a concentration of lighter blues towards the top middle of the US and the top right of the US. Although, there are execptions due to Middle western states exhibiting lighter blues. This could be due to the geographical landscapes of the middle of the united states.
 
 #Task: Write code to create a map of the Population data from the state.x77 dataset.
-#You can reference the pevious steps of this assignment
+#You can reference the previous steps of this assignment
 #while you work through this task. make the color of the map any color that is
 #not blue (as we have already used this color) **Make sure to write the code
 #because your code will be viewed for grading, not the map itself!
 
+state_population <- state_data %>% 
+  select(Population)
 
 #Task: write three things you can infer from the map that you created:
 #1
