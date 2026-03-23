@@ -43,6 +43,7 @@ head(state_data)
 
 #Question: What do you notice about the rownames and the data within the "State" 
 #column? 
+# The dataset repeats the names of states in two columns.
 
 #Task: Run the following code:
 
@@ -50,13 +51,19 @@ rownames(state_data) <- NULL
 
 #Question: Write code to display your dataset once again. What did the previous
 #code change within the dataset? What did NULL do to the rownames?
+state_data
+# Now there is only one column with state names. Previously, all the state names
+# were also rownames. Now, the NULL rownames NULL has removed the rownames from 
+# the dataset such that state names only appear in one column.
 
-#Task: Because we have loaded the dyplr package, we can create a new dataframe
+#Task: Because we have loaded the dpylr package, we can create a new dataframe
 #with just State and Frost data. Write a code to select the State and Frost columns
 #from the state_data dataframe and name the new dataframe state_frost_data. 
-
+state_frost_data <- state_data %>% 
+  select (State, Frost)
 
 #View the new dataset and confirm that it is correct.
+state_frost_data 
 
 #Now we need to use the tigris package to download a shapefile called 'states'
 #of all of US states that we would like to plot. We set cb = TRUE 
@@ -83,18 +90,22 @@ us_states_frost <- left_join(states, state_frost_data, by = c("State"))
 #days
 #Task: Run the following code and annotate the significance of each line of code.
 
-ggplot(us_states_frost_2) +
-  geom_sf(aes(fill = Frost), color = "blue") +
-  theme_minimal() +
-  labs(fill = "Number of Frost Days", title = "United States Frost Data")
+ggplot(us_states_frost)+ #Making a ggplot from the dataset us_states_frost
+  geom_sf(aes(fill = Frost), color = "blue") + # it makes US makes filled with Frost data with color blue
+  theme_minimal() + #it sets the theme of the plot to minimal
+  labs(fill = "Number of Frost Days", title = "United States Frost Data") #it assigns United States Frost Data as the main map title and number of frost days as the legend title
 
 #Question: Do you see a map under the "plots" tab?
+# Yes
 
 #Question: What do you notice about the size of this map? Suppose we only want
 #to study frost data of mainland US states. Are there states we could omit from
-#this map to better visualize the data? HINT ** to help determine which states we may 
-#want to omit, check out the us_states_frost_2 tab at the different States included
+#this map to better visualize the data? 
+# HINT ** to help determine whi ch states we may 
+# want to omit, check out the us_states_frost tab at the different States included
 #in the dataframe.
+# We could remove data for Alaska, Hawaii, Guam, American Samoa, United States Virgin Islands,
+# Puerto Rico, and Commonwealth of the Northern Mariana Islands.
 
 #To filter out states or islands not connected to the mainland US, we can use the 
 #dplyr function.
@@ -111,26 +122,57 @@ us_states_frost_2 <- us_states_frost %>%
 #Write code to show a map of the us_states_frost_2 dataset following the steps
 #used to create the map from the us_states_frost dataset.
 
+ggplot(us_states_frost_2)+ 
+  geom_sf(aes(fill = Frost), color = "blue") + 
+  theme_minimal() + 
+  labs(fill = "Number of Frost Days", title = "United States Frost Data")
+
 #You should see a new map in the "plots" tab that is much larger than the previous 
 #map making it easier to visualize the data.
 
 #Question: What do dark blue states represent? What do light blue states represent?
+# The dark blue states have least number of frost days while the light blue states
+# have the high number of frost days.
+
 #Question: Does florida or NC have more frost days?
+# Florida
 
 #Question: Does there appear to be a relationship between latitude and 
 #number of frost days? Why or why not?
+# Yes, in most cases, the higher you go up to the north, higher is the number of
+# frost days.
 
 #Task: Write code to create a map of the Population data from the state.x77 dataset.
-#You can reference the pevious steps of this assignment
+#You can reference the previous steps of this assignment
 #while you work through this task. make the color of the map any color that is
 #not blue (as we have already used this color) **Make sure to write the code
 #because your code will be viewed for grading, not the map itself!
 
+state_population_data <- state_data %>% 
+  select (State, Population)
+
+states <- states(cb = TRUE) 
+
+states <- states %>% rename(State = NAME)
+
+us_states_population <- left_join(states, state_population_data, by = c("State"))
+
+us_states_population_2 <- us_states_population %>%
+  dplyr::filter(State != "Alaska" & State != "Hawaii" & State != "Guam" & State != 
+                  "American Samoa" & State != "United States Virgin Islands" & 
+                  State != "Puerto Rico" 
+                & State != "Commonwealth of the Northern Mariana Islands")
+
+ggplot(us_states_population_2)+ 
+  geom_sf(aes(fill = Population), color = "pink")+ 
+  scale_fill_gradient(low = "white", high = "red")+
+  theme_minimal() + 
+  labs(fill = "Population", title = "US Population Data")
 
 #Task: write three things you can infer from the map that you created:
-#1
-#2
-#3
+#1. There is very low population towards in US mid-west compared to coast.
+#2. California has high population.
+#3. New York also has a very high population. 
 
 # Part 3: MAPPING SPECIMEN OCCURRENCE DATA -----------------------------------
 
@@ -150,18 +192,37 @@ us_states_frost_2 <- us_states_frost %>%
 # made. 
 
 # TASK: Download the NC_mamm_data.csv into your UNCG_DataWrangling folder on your desktop
+#Done
 
 # TASK: Using read.csv(), create an object titled "mammal_data" from the NC_mamm_data csv 
+mammal_data <- read.csv("NC_mamm_data.csv")
 
 # TASK: Using the colnames() function, review what columns exist in your current dataset
+colnames (mammal_data)
 
 # TASK: Remove the 'USE_LICENSE_URL' column using a pipe and the select(- ) 
 # function because it is not needed for plotting. You do not need to create a new object for this; just reassign to the same name 'mammal_data' 
+mammal_data <- mammal_data %>% 
+  select (-USE_LICENSE_URL)
+
+colnames(mammal_data)
 
 # Using the rename() function introduced in assignment 4, rename the remaining 11 columns in the following order: country, state, locality, date, lat, long, sex, life_stage, genus, order, family.
+mammal_data <- rename (.data= mammal_data,
+                       country=COUNTRY, 
+                      state=STATE_PROV,
+                      locality=SPEC_LOCALITY ,
+                    date=VERBATIM_DATE ,
+                     lat=DEC_LAT ,
+                     long=DEC_LONG,
+                     sex=SEX,
+                   life_stage=LIFE_STAGE,
+                      genus=GENUS,
+                   order=PHYLORDER,
+                   family=FAMILY)
 
+colnames (mammal_data)
 # Using the mammal_data object, clean NA values from columns 'lon', 'lat', 'locality' and 'genus'. Create new object for this cleaned data titled 'clean_data'
-
 # Great, now our data is clean and easier to work with! 
 
 # BUILDING THE MAP
