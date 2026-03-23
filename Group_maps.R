@@ -60,6 +60,8 @@ rownames(state_data) <- NULL
 #to specify cartographic boundary type so that we use a simple shapefile that
 #is easier to work with.
 
+state_frost_data <- state_data %>% select(State, Frost)
+
 #Task: Run the following code
 
 states <- states(cb = TRUE) 
@@ -81,7 +83,7 @@ us_states_frost <- left_join(states, state_frost_data, by = c("State"))
 #days
 #Task: Run the following code and annotate the significance of each line of code.
 
-ggplot(us_states_frost) +
+ggplot(us_states_frost_2) +
   geom_sf(aes(fill = Frost), color = "blue") +
   theme_minimal() +
   labs(fill = "Number of Frost Days", title = "United States Frost Data")
@@ -154,13 +156,13 @@ mammal_data <- read.csv("NC_mamm_data.csv")
 colnames(mammal_data)
 
 # TASK: Remove the 'USE_LICENSE_URL' column using a pipe and the select(- ) 
-# function because it is not needed for plotting
+# function because it is not needed for plotting. You do not need to create a new object for this; just reassign to the same name 'mammal_data' 
 mammal_data <- mammal_data %>%
   select(-USE_LICENSE_URL)
 
 # Using the rename() function introduced in assignment 4, rename the remaining 11 columns in the following order: country, state, locality, date, lat, long, sex, life_stage, genus, order, family
 
-mammal_data <- rename(.data=mammal_data,                                               country=COUNTRY,
+mammal_data <- rename(.data=mammal_data,                                                                       country=COUNTRY,
                       state=STATE_PROV,
                       locality=SPEC_LOCALITY,
                       date=VERBATIM_DATE,
@@ -198,7 +200,7 @@ ggplot() +
 
 # QUESTION: What do you think the geom_polygon function is doing here?
 
-# TASK: Create a new dataframe titled 'nc_map' that only has North Carolina counties by specifying the region as it appears in the counties dataframe previously built
+# TASK: Create a new dataframe titled 'nc_map' that only has North Carolina counties by assigning 'north carolina', typed exactly as it is shown in the in the 'counties' dataframe previously built. The code should look like this, with region following county:
 nc_map <- map_data("county", region = "north carolina")
 
 # TASK: plot the map using your new nc_map dataframe using the previous map code as your guide
@@ -226,6 +228,8 @@ geom_point(data = clean_data,
 
 # From here, you can adjust the theme to your liking. 
 # NOTE: With a plus sign between sections, if you begin typing 'theme' on the next line, options will appear that you can browse through! 
+
+# QUESTION: Why might it be useful to have slightly transparent data points (using the alpha() function) when mapping in a small area such as this?  
 
 
 # TASK: after adding a theme to the plot, add and title and an x and y axis label with the labs() function. 
