@@ -193,7 +193,7 @@ unique(clean_data$order)
 
 # This shows us that  data cleaning provides many different opportunities for visualization! 
 
-# MAPPING SPECIES RICHNESS ---------------------------------------------------
+# Part 4: MAPPING SPECIES RICHNESS ---------------------------------------------------
 
 # Using the same object we used for our map above (clean_data), we can create a map that colors counties along a gradient, based on species richness from our capture data.
 
