@@ -425,17 +425,16 @@ ggplot(highwayMPG,aes(x=class, y=hwy_mean, fill=class))+
 # statement, the scale_fill_manual or scale_color_manual statements, or neither.
 # If in doubt, try a bunch of ways until it looks how we want it. And consult 
 # your helpful ggplot resources on the web.
-ggplot(highwayMPG,aes(x=class, y=hwy_mean, fill=class))+
+ggplot(highwayMPG,aes(x=class, y=hwy_mean,fill=class))+
   geom_bar(stat="identity",color="black")+
-  geom_errorbar(
-    aes(
+  geom_errorbar(aes(
       ymin=hwy_mean-hwy_se,
       ymax=hwy_mean+hwy_se),
     width=0.2)+
-  scale_fill_manual(values = 'Dark2')
+  scale_fill_brewer(palette = "Dark2")+
   theme(legend.position = "none")+
-  labs(x="CarClass",y="AverageHighwayMPG")
-hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
+  labs(x="Car Class",y="Average Highway MPG")
+
 
 # ---------------------------------------------------------- #
 #### 2.2 DETOUR! AXIS MODIFICATIONS                       ####
