@@ -335,13 +335,15 @@ ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
   theme(legend.position=c(1,0), legend.justification=c(1,0))
 ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) + 
   geom_jitter() + 
-  theme(legend.position=c(1,0)
+  theme(legend.position=c(1,0))
+        
 # QUESTION: What happens if you don't include the code for legend justification
 # above?
 #Without coding for legend justification, the position will not be anchored
 
 # TASK: Copy and paste the code from above. Modify it to place the legend in the
 # upper left part of the graph.
+
 ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) + 
   geom_jitter() + 
   theme(legend.position=c(0,1), legend.justification=c(0,1))
@@ -373,7 +375,8 @@ ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
 # it with the following code:
 ggplot(data=mpg, aes(x=hwy)) + 
   geom_bar()
-
+ggplot(data=mpg, aes(x=hwy)) + 
+  geom_bar()
 # In order to have the geom create bars and not a histogram, you must:
 # 1) Set stat = identity
 # 2) Provide both an x and a y inside the aes(), where x is either a character 
@@ -385,13 +388,24 @@ ggplot(data=mpg, aes(x=hwy)) +
 # and hwy_se.
 # HINT: Look back at the Transform assignment if you forget how to summarize the
 # data. Also recall, standard error = 1.96*standard deviation.
-
+highwayMPG<-mpg %>% 
+  group_by(class) %>% 
+  summarise(
+    hwy_mean=mean(hwy),
+            hwy_sd=sd(hwy),
+            hwy_se=1.96*hwy_sd)
 
 # TASK: Create a bar graph showing the average highway MPG on the y-axis and 
 # car class on the x-axis. Fill the bars by class. Add in error bar caps that are 20%
 # the width pf the bars.
 # HINT: Don't forget to change stat from the default in your geom_bar() statement!
-
+ggplot(highwayMPG,aes(x=class, y=hwy_mean, fill=class))+
+  geom_bar(stat="identity")+
+  geom_errorbar(
+    aes(
+      ymin=hwy_mean-hwy_se,
+      ymax=hwy_mean+hwy_se),
+    width=0.2)
 
 # ---------------------------------------------------------- #
 #### 2.1 DETOUR! COLORS AND LEGENDS, AGAIN                ####
@@ -411,7 +425,17 @@ ggplot(data=mpg, aes(x=hwy)) +
 # statement, the scale_fill_manual or scale_color_manual statements, or neither.
 # If in doubt, try a bunch of ways until it looks how we want it. And consult 
 # your helpful ggplot resources on the web.
-
+ggplot(highwayMPG,aes(x=class, y=hwy_mean, fill=class))+
+  geom_bar(stat="identity",color="black")+
+  geom_errorbar(
+    aes(
+      ymin=hwy_mean-hwy_se,
+      ymax=hwy_mean+hwy_se),
+    width=0.2)+
+  scale_fill_manual(values = 'Dark2')
+  theme(legend.position = "none")+
+  labs(x="CarClass",y="AverageHighwayMPG"))
+hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
 
 # ---------------------------------------------------------- #
 #### 2.2 DETOUR! AXIS MODIFICATIONS                       ####
@@ -420,9 +444,10 @@ ggplot(data=mpg, aes(x=hwy)) +
 # Run the following code, feeling free to modify colors as you prefer:
 ggplot(data=highwayMPG, aes(x=class, y=hwy_mean, fill=class)) +
   geom_bar(stat='identity') 
-
+ggplot(data=highwayMPG, aes(x=class, y=hwy_mean, fill=class)) +
+  geom_bar(stat='identity') 
 # QUESTION: Where is ggplot getting the x-axis tick labels from?
-
+#The x-axis tick labels are coming from the values of the class legend.
 
 # Often our tick labels are not the best. We can modify them to be more informative
 # or visually appealing by directly modifying the dataframe, but again this feels
@@ -432,19 +457,26 @@ ggplot(data=highwayMPG, aes(x=class, y=hwy_mean, fill=class)) +
 ggplot(data=highwayMPG, aes(x=class, y=hwy_mean, fill=class)) +
   geom_bar(stat='identity') +
   scale_x_discrete(labels=c('sport', 'compact', 'midsize', 'minivan', 'pickup', 'subcompact', 'SUV'))
-
+ggplot(data=highwayMPG, aes(x=class, y=hwy_mean, fill=class)) +
+  geom_bar(stat='identity') +
+  scale_x_discrete(labels=c('sport', 'compact', 'midsize', 'minivan', 'pickup', 'subcompact', 'SUV'))
 # We can also change the scale of the continuous axes, including how large they are
 # and where the tick marks fall as follows:
 ggplot(data=highwayMPG, aes(x=class, y=hwy_mean, fill=class)) +
   geom_bar(stat='identity') +
   scale_y_continuous(breaks=seq(0, 50, 10)) +
   coord_cartesian(ylim=c(0,50))
-
+ggplot(data=highwayMPG, aes(x=class, y=hwy_mean, fill=class)) +
+  geom_bar(stat='identity') +
+  scale_y_continuous(breaks=seq(0, 50, 10)) +
+  coord_cartesian(ylim=c(0,50))
 # QUESTION: Try running the code above without the coord_cartesian() statement. 
 # What is surprising about the resulting graph? Based on this result, what do you
 # think the coord_cartesian() statement does?
-
-
+ggplot(data=highwayMPG, aes(x=class, y=hwy_mean, fill=class)) +
+  geom_bar(stat='identity') +
+  scale_y_continuous(breaks=seq(0, 50, 10))
+#The graph like zooms in and so the bars appear closer and taller. I think the coord_cartesian statement zooms in along the y-axis.
 # We can also add a statement into the scale discrete or continuous statements
 # to name our axes, rather than putting in a whole separate step of xlab() or ylab().
 # Try it out with the following code:
@@ -452,13 +484,18 @@ ggplot(data=highwayMPG, aes(x=class, y=hwy_mean, fill=class)) +
   geom_bar(stat='identity') +
   scale_x_discrete(name='Class of Car') +
   scale_y_continuous(name='Mean Highway MPG')
-
+ggplot(data=highwayMPG, aes(x=class, y=hwy_mean, fill=class)) +
+  geom_bar(stat='identity') +
+  scale_x_discrete(name='Class of Car') +
+  scale_y_continuous(name='Mean Highway MPG')
 
 # Finally, we can flip our axes easily in ggplot as follows:
 ggplot(data=highwayMPG, aes(x=class, y=hwy_mean, fill=class)) +
   geom_bar(stat='identity') +
   coord_flip()
-
+ggplot(data=highwayMPG, aes(x=class, y=hwy_mean, fill=class)) +
+  geom_bar(stat='identity') +
+  coord_flip()
 
 # TASK: Let's put it all together. Make a graph of the mpg summary stats with the
 # following specifications:
@@ -469,7 +506,25 @@ ggplot(data=highwayMPG, aes(x=class, y=hwy_mean, fill=class)) +
 # (5) set the scale of the highway mpg to run from 0 to 30 with breaks every 5 
 # (6) flip your axes
 # (7) remove the legend
-
+ggplot(mpg, aes(x=class, y=hwy, fill=class)) +
+  geom_bar(stat="identity")+
+  scale_fill_brewer(palette="Set6")+
+  scale_y_continuous(limits=c(0,30),breaks=seq(0,30,5))+
+  labs(
+    x="Vehicle Class",
+    y="Highway MPG",
+    title = "Highway MPG by Vehicle Class"
+  )+
+  scale_x_discrete(labels=c(
+    "2seater"="2-Seater",
+    "compact"="Compact",
+    "midsize"="Midsize",
+    "minivan"="Minivan",
+    "pickup"="Pickup",
+    "subcompact"="Subcompact",
+    "suv"="SUV"))+
+  coord_flip()+
+  theme(legend.position = "none")
 
 # ---------------------------------------------------------- #
 #### 3.0 RANKING                                          ####
