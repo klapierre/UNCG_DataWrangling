@@ -1,5 +1,5 @@
 # MAP BUILDING IN RSTUDIO
-
+#hello
 # ---------------------------------------------------------------------------- #
 # OBJECTIVES:
 # 1. Understand when and why we may want to use R to build maps
@@ -28,7 +28,7 @@ options(tigris_use_cache = TRUE)
 
 # Part 2: Using datasets within R to create a map -----------------------------
 
-# We will start by loading the state.x77 dataset
+#Task: We will start by loading the state.x77 dataset
 #into R as a dataframe and using the cbind() function to create a column named
 #"State" with all states listed from the row names in the state.x77 dataset.
 #Task: Run the following code:
@@ -54,6 +54,8 @@ rownames(state_data) <- NULL
 #Task: Because we have loaded the dyplr package, we can create a new dataframe
 #with just State and Frost data. Write a code to select the State and Frost columns
 #from the state_data dataframe and name the new dataframe state_frost_data. 
+
+
 #View the new dataset and confirm that it is correct.
 
 #Now we need to use the tigris package to download a shapefile called 'states'
@@ -62,7 +64,6 @@ rownames(state_data) <- NULL
 #is easier to work with.
 
 #Task: Run the following code
-
 states <- states(cb = TRUE) 
 
 #In order to leftjoin states together we need the 'State' column in the 
@@ -82,7 +83,7 @@ us_states_frost <- left_join(states, state_frost_data, by = c("State"))
 #days
 #Task: Run the following code and annotate the significance of each line of code.
 
-ggplot(us_states_frost) +
+ggplot(us_states_frost_2) +
   geom_sf(aes(fill = Frost), color = "blue") +
   theme_minimal() +
   labs(fill = "Number of Frost Days", title = "United States Frost Data")
@@ -115,7 +116,7 @@ us_states_frost_2 <- us_states_frost %>%
 
 #Question: What do dark blue states represent? What do light blue states represent?
 #Question: Does florida or NC have more frost days?
-#Queston: Does there appear to be a relationship between latitude/longitude and 
+#Queston: Does there appear to be a relationship between latitude and 
 #number of frost days? Why or why not?
 
 #Task: Write code to create a map of the Population data from the state.x77 dataset.
@@ -156,13 +157,13 @@ mammal_data <- read.csv("NC_mamm_data.csv")
 colnames(mammal_data)
 
 # TASK: Remove the 'USE_LICENSE_URL' column using a pipe and the select(- ) 
-# function because it is not needed for plotting
+# function because it is not needed for plotting. You do not need to create a new object for this; just reassign to the same name 'mammal_data' 
 mammal_data <- mammal_data %>%
   select(-USE_LICENSE_URL)
 
 # Using the rename() function introduced in assignment 4, rename the remaining 11 columns in the following order: country, state, locality, date, lat, long, sex, life_stage, genus, order, family
 
-mammal_data <- rename(.data=mammal_data,                                               country=COUNTRY,
+mammal_data <- rename(.data=mammal_data,                                                                       country=COUNTRY,
                       state=STATE_PROV,
                       locality=SPEC_LOCALITY,
                       date=VERBATIM_DATE,
@@ -200,7 +201,7 @@ ggplot() +
 
 # QUESTION: What do you think the geom_polygon function is doing here?
 
-# TASK: Create a new dataframe titled 'nc_map' that only has North Carolina counties by specifying the region as it appears in the counties dataframe previously built
+# TASK: Create a new dataframe titled 'nc_map' that only has North Carolina counties by assigning 'north carolina', typed exactly as it is shown in the in the 'counties' dataframe previously built. The code should look like this, with region following county:
 nc_map <- map_data("county", region = "north carolina")
 
 # TASK: plot the map using your new nc_map dataframe using the previous map code as your guide
@@ -228,6 +229,8 @@ geom_point(data = clean_data,
 
 # From here, you can adjust the theme to your liking. 
 # NOTE: With a plus sign between sections, if you begin typing 'theme' on the next line, options will appear that you can browse through! 
+
+# QUESTION: Why might it be useful to have slightly transparent data points (using the alpha() function) when mapping in a small area such as this?  
 
 
 # TASK: after adding a theme to the plot, add and title and an x and y axis label with the labs() function. 
