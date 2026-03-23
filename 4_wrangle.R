@@ -267,7 +267,7 @@ highTempTributaries <- filter(.data=streamTempRename,
 # water temp >=15 at any site?
 highTempTributaries <- filter(.data=streamTempRename,
                               calispell_temp >= 15 | smalle_temp >= 15 | winchester_temp >= 15)
-
+--- No, the lowest the data got was 15.09.
 
 # Finally, we might want to only get the rows that do not have missing data. We 
 # can detect missing values with the is.na() function. Try it out:
@@ -285,8 +285,9 @@ calispellData <- filter(.data=calispellTemp,
 
 # QUESTION: How many observations are in the datafile calispellData? Write code
 # to determine how many values of calispell_temp were NA.
-
-
+There are 52330 observations in the calispellData datframe. 
+NaDatacalispellTemp <- filter(.data=calispellTemp, is.na(calispell_temp))
+There are 8770 NA observations!
 # ---------------------------------------------------------- #
 ### PART 1.4: CREATING COLUMNS                            ####
 # ---------------------------------------------------------- #
@@ -315,17 +316,19 @@ calispellTempSum <- mutate(.data=calispellTempF,
                            sum=calispell_temp + calispell_temp_F)
 
 # Check the dataframe to see if it worked.
-
+head(calispellTempSum)
 
 # TASK: The column we just created makes no sense (why would you ever want to
 # sum the C and F temperatures?). Write code below to remove it from the dataframe.
-
+calispellTempWOsum <- calispellTempSum %>%
+  select(-sum)
+head(calispellTempWOsum)
 
 # QUESTION: We might also want to add a column that describes the dataset. What 
 # happens when you run the following code?
 calispellTempFaquatic <- mutate(.data=calispellTempF,
                                 type='aquatic')
-
+--- A colum with "type" is created with character values instead of numeric values.
 
 # ---------------------------------------------------------- #
 ### PART 1.5: PASTING AND SEPARATING COLUMNS              ####
@@ -335,7 +338,10 @@ calispellTempFaquatic <- mutate(.data=calispellTempF,
 
 # TASK: Write code to create one more column named ecosystem in the 
 # calispellTempFaquatic dataframe and fill it with the word 'stream'.
+calispellTempFstream <- mutate(.data=calispellTempFaquatic, where='stream')
+?mutate
 
+--- Hey I'm not' sure why there's only'1 column added. If I added additional type=, it just overides. --- I fixed it, I was not understanding the label of the columns within my code!
 
 # Now we might want to create a new column that includes information from both 
 # of the columns we just created. We would do so by running the following lines 
