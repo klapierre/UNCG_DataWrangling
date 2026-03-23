@@ -83,7 +83,11 @@ states <- states %>% rename(State = NAME)
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 us_states_frost_2 <- left_join(states, state_frost_data, by = c("State"))
+=======
+us_states_frost <- left_join(states, frost_data, by = c("State"))
+>>>>>>> Maps assignment up to line 134.
 =======
 us_states_frost <- left_join(states, frost_data, by = c("State"))
 >>>>>>> Maps assignment up to line 134.
@@ -102,6 +106,10 @@ ggplot(us_states_frost) +
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+  ## Creates a plot of the frost days accross the country.
+>>>>>>> Maps assignment up to line 134.
 =======
   ## Creates a plot of the frost days accross the country.
 >>>>>>> Maps assignment up to line 134.
