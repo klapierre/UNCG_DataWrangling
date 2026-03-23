@@ -113,7 +113,7 @@ us_states_frost_2 <- us_states_frost %>%
 
 #Question: What do dark blue states represent? What do light blue states represent?
 #Question: Does florida or NC have more frost days?
-#Queston: Does there appear to be a relationship between latitude/longitude and 
+#Question: Does there appear to be a relationship between latitude/longitude and
 #number of frost days? Why or why not?
 
 #Task: Write code to create a map of your choice using another column of data from
