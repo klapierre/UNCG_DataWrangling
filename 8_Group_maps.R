@@ -393,6 +393,7 @@ ggplot() +
        y = "Latitude")
 
 # QUESTION: What does changing the 'option' in scale_fill_viridis_c() do?
+#Answer: It changes the colors used for the genre count distribution. 
 
 # ---------------------------------------------------------------------------- #
 
@@ -409,13 +410,16 @@ ggplot() +
        y = "Latitude")
 
 # QUESTION: Why might changing the legend position be useful?
+#Answer: When it is on the left we can see the legeng first before interpreting the graph. 
 
 # ---------------------------------------------------------------------------- #
 # INTERPRETING THE MAP --------------------------------------------------------
 
 # QUESTION: What does a lighter color indicate on this map?
+#Answer: A higher genre count.
 
 # QUESTION: Why might some counties have lower richness values? 
+# Answer: This could be due to things like urbanization, deforestation, etc . 
 
 
 # TASK: Save your most recent plot as an image file to your folder. 
