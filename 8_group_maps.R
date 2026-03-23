@@ -142,11 +142,28 @@ ggplot(us_states_frost_2) +
 #not blue (as we have already used this color) **Make sure to write the code
 #because your code will be viewed for grading, not the map itself!
 
+state_population_data <- state_data %>% select(State, Population)
+us_states_pop <- left_join(states, state_population_data, by = c("State"))
 
+us_states_pop_2 <- us_states_pop %>%
+  dplyr::filter(State != "Alaska" & State != "Hawaii" & State != "Guam" & State != 
+                  "American Samoa" & State != "United States Virgin Islands" & 
+                  State != "Puerto Rico" 
+                & State != "Commonwealth of the Northern Mariana Islands")
+
+head(state_pop)
+
+ggplot(us_states_pop_2) +
+  geom_sf(aes(fill = Population)) +
+  scale_fill_gradient(low="lightgreen",high="violet")
+  theme_minimal() +
+  labs(fill = "Population in Thousands", title = "United States Population Data")
+colors()
+?geom_sf
 #Task: write three things you can infer from the map that you created:
-#1
-#2
-#3
+#1:The midwest/central US has the least amount of people in the area per size of state
+#2: California and NY have high populations possible since they are hubs for large industries such as acting/modeling and art
+#3: New york based on the map is quite small, but still is bright purple, so I wonder if it is much more concentrated with people than say California which is also bright purple but larger in size.
 
 # Part 3: MAPPING SPECIMEN OCCURRENCE DATA -----------------------------------
 
