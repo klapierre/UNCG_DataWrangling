@@ -43,6 +43,7 @@ head(state_data)
 
 #Question: What do you notice about the rownames and the data within the "State" 
 #column? 
+--- The data repeats with the row headers. Meaning that you see the state's' name twice. 
 
 #Task: Run the following code:
 
@@ -50,12 +51,15 @@ rownames(state_data) <- NULL
 
 #Question: Write code to display your dataset once again. What did the previous
 #code change within the dataset? What did NULL do to the rownames?
+head(state_data)
+--- It replaced the row label to a numerical value versus the state name so that it doesn't repeat'. 
 
 #Task: Because we have loaded the dyplr package, we can create a new dataframe
 #with just State and Frost data. Write a code to select the State and Frost columns
 #from the state_data dataframe and name the new dataframe state_frost_data. 
-
-
+state_frost_data <- filter(.data=state_data, )
+?filter
+?select
 #View the new dataset and confirm that it is correct.
 
 #Now we need to use the tigris package to download a shapefile called 'states'
