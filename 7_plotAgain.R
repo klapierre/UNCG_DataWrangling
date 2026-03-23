@@ -516,22 +516,26 @@ ggplot(mpg, aes(hwy)) +
   geom_histogram()
 
 # TASK: Recreate the graph above, but using geom_bar() instead
-
+ggplot(mpg, aes(hwy)) +
+  geom_bar()
 
 # TASK: Try making a histogram with the categorical variable 'manufacturer'.
 # What error message do you get?
-
+ggplot(mpg, aes(manufacturer)) +
+  geom_histogram() 
+# Answer: I got an error saying that stat_bin() requires a continuous x variable (aesthetic), and that I might want stat = "count". 
 
 # QUESTION: What happens when you follow the advice of the error message and 
 # make stat='count'?
 ggplot(mpg, aes(manufacturer)) + 
   geom_histogram(stat="count")
-
+# Answer: It makes a bar graph showing the number of observations for each manufacturer. since manufacturer is categorical, R counts how many times each category appears. 
 
 # TASK: Make a boxplot comparing the distribution of cty (city mileage) for
 # each class of car.
 # HINT: Look back to last week if you forget how to make a boxplot.
-
+ggplot(mpg, aes(x = class, y = cty)) +
+  geom_boxplot()
 
 # We can also make a different type of distribution, a violin plot using the 
 # geom_violin statement as follows:
@@ -539,7 +543,7 @@ ggplot(mpg, aes(x=class, y=cty)) +
   geom_violin()
 
 # QUESTION: What does a violin plot show? Check google if you're unsure.
-
+# Answer: A violin plot shows the distribution of the variable across groups. The wider sections means more data points are there and the thinner parts are the less common values. 
 
 # ---------------------------------------------------------- #
 #### 5.0 COMPOSITION                                      ####
@@ -555,7 +559,8 @@ manufacturerFreq <- mpg %>%
 
 # TASK: Make a bar graph of the number of cars (frequency) by manufacturer using
 # the dataframe we created above.
-
+ggplot(manufacturerFreq, aes(x = manufacturer, y = frequency)) +
+  geom_bar(stat = "identity")
 
 # We can switch the bar chart you created above into a pie chart simply by changing
 # the coordinate system through a series of steps as follows:
@@ -592,7 +597,7 @@ ggplot(manufacturerFreq, aes(x="", y=frequency, fill=manufacturer)) +
   theme(legend.title = element_text(size = 12.5), 
         legend.text  = element_text(size = 8.5),
         legend.key.size = unit(.75, "lines"))
-
+# Answer: (ggplot(manufacturerFreq, aes(x="", y=frequency, fill=manufacturer)) +) this line starts the plot using manufacturerFreq, a blank x value, frequency to y, and fills each slice by manufacturer. (geom_bar(stat="identity", width=1) +) this line makes bars using the frequency values, with width 1. (coord_polar(theta="y", start=0) +) this line changes the bar chart into a pie chart by wrapping the bars around a circle, using the y-values to make slice size. (theme_void() +) this line removes axes and background. (theme(legend.title = element_text(size = 12.5),) this line changes the size of the legend title text. (legend.text  = element_text(size = 8.5),) this line changes the labels text size in the legend. (legend.key.size = unit(.75, "lines"))) this line changes the size of the legend color boxes. 
 
 # ---------------------------------------------------------- #
 #### 6.0 CHANGE                                           ####
@@ -606,8 +611,11 @@ data("economics")
 # over time (unemploy vs date). Make a scatterplot, then connect the points with 
 # lines using geom_line().
 # HINT: use ?economics to get more information about this dataset.
+?economics
 
-
+ggplot(economics, aes(x = date, y = unemploy)) +
+  geom_point() +
+  geom_line()
 
 
 # ---------------------------------------------------------- #
