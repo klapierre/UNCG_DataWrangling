@@ -31,13 +31,11 @@ options(tigris_use_cache = TRUE)
 #Task: We will start by loading the state.x77 dataset
 #into R as a dataframe and using the cbind() function to create a column named
 #"State" with all states listed from the row names in the state.x77 dataset.
-
 state_data <- cbind(
   State = rownames(state.x77),
   as.data.frame(state.x77))
 
 #Run the following code to display your data
-
 head(state_data)
 
 #Question: What do you notice about the rownames and the data within the "State" 
@@ -53,6 +51,8 @@ rownames(state_data) <- NULL
 #Task: Because we have loaded the dyplr package, we can create a new dataframe
 #with just State and Frost data. Write a code to select the State and Frost columns
 #from the state_data dataframe and name the new dataframe state_frost_data. 
+state_frost_data <- state_data %>% select(State, Frost)
+
 #View the new dataset and confirm that it is correct.
 
 #Now we need to use the tigris package to download a shapefile called 'states'
@@ -60,10 +60,7 @@ rownames(state_data) <- NULL
 #to specify cartographic boundary type so that we use a simple shapefile that
 #is easier to work with.
 
-state_frost_data <- state_data %>% select(State, Frost)
-
 #Task: Run the following code
-
 states <- states(cb = TRUE) 
 
 #In order to leftjoin states together we need the 'State' column in the 
