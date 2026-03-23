@@ -146,7 +146,7 @@ us_states_frost_2 <- us_states_frost %>%
 
 # TASK: Download the NC_mamm_data.csv into your UNCG_DataWrangling folder on your desktop
 
-# TASK: Create an object titled "mammal_data" from the NC_mamm_data csv 
+# TASK: Using read.csv(), create an object titled "mammal_data" from the NC_mamm_data csv 
 mammal_data <- read.csv("NC_mamm_data.csv")
 
 # TASK: Using the colnames() function, review what columns exist in your current dataset
