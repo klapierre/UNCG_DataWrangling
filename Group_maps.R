@@ -9,7 +9,12 @@
 
 # Part 1: LOAD PACKAGES --------------------------------------------------------
 
-# NOTE: you may need to write the line install.packages(" ") before loading these packages into your library if you have not used them before!
+# NOTE: you may need to write the line install.packages(" ") before loading these
+#packages into your library if you have not used them before!
+#If you run into error messages while trying to install these packages by running 
+#code, go to the tools tab, click on install packages, and type the names of each
+#package to install.
+
 library(tidyverse)
 library(ggplot2)
 library(maps)
