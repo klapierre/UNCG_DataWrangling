@@ -37,6 +37,8 @@ max(Name_Length)
 # QUESTION: What does our output look like?
 # What is the highest number of characters contained in a given name?
 
+
+
 # Of course, str_count() can evaluate the incidence of more specific occurences
 # than the total number of characters in any given string. Here we will use
 # str_count() in order to find the incidence of a specific string of characters
