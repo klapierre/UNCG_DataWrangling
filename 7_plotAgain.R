@@ -434,7 +434,7 @@ ggplot(highwayMPG,aes(x=class, y=hwy_mean, fill=class))+
     width=0.2)+
   scale_fill_manual(values = 'Dark2')
   theme(legend.position = "none")+
-  labs(x="CarClass",y="AverageHighwayMPG"))
+  labs(x="CarClass",y="AverageHighwayMPG")
 hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
 
 # ---------------------------------------------------------- #
@@ -538,14 +538,20 @@ ggplot(mpg, aes(x=class, y=hwy, fill=class)) +
 # and city_se.
 # HINT: Look back at the Transform assignment if you forget how to summarize the
 # data. Also, standard error = 1.96*standard deviation.
-
+cityMPG<-mpg %>% 
+  group_by(class) %>% 
+  summarise(
+    city_mean=mean(cty,na.rm=TRUE),
+    city_sd=sd(cty,na.rm=TRUE),
+    city_se=city_sd/sqrt(n()))
 
 # Now we want to plot our data in order from smallest to largest city MPG to get
 # a ranking. To do so, we need to use the reorder() function to rearrange the data
 # going into our x-axis.
 ggplot(cityMPG, aes(x=reorder(class, city_mean), y=city_mean)) + 
   geom_bar(stat="identity")
-
+ggplot(cityMPG, aes(x=reorder(class, city_mean), y=city_mean)) + 
+  geom_bar(stat="identity")
 # TASK: Recreate the above ranking figure to include the following:
 # (1) class of car on the x-axis with informative axis and tick labels
 # (2) MPG ordered from highest to lowest (hint: try google if you're unsure)
@@ -554,7 +560,19 @@ ggplot(cityMPG, aes(x=reorder(class, city_mean), y=city_mean)) +
 # (5) y-axis from 0 to 30 with tick marks every 5
 # (6) no legend.
 
-
+ggplot(cityMPG, aes(x=reorder(class, -city_mean), y=city_mean,fill=class)) + 
+  geom_bar(stat="identity",color="gray40")+
+  geom_errorbar(aes(ymin=city_mean-city_se,
+                    ymax=city_mean+city_se),
+                width=0.3)+
+  scale_fill_brewer(palette="Set3")+
+  scale_y_continuous(limits=c(0,30),breaks=seq(0,30,5))+
+  labs(
+    x="Car Class",
+    y="Mean City MPG",
+    title="Mean City MPG by Car Class")+
+  coord_flip()+
+  theme(legend.position = "none")
 # ---------------------------------------------------------- #
 #### 4.0 DISTRIBUTION                                     ####
 # ---------------------------------------------------------- #
@@ -564,32 +582,37 @@ ggplot(cityMPG, aes(x=reorder(class, city_mean), y=city_mean)) +
 # Histograms can be accomplished with either geom_bar() or geom_histogram()
 ggplot(mpg, aes(hwy)) + 
   geom_histogram()
-
+ggplot(mpg, aes(hwy)) + 
+  geom_histogram()
 # TASK: Recreate the graph above, but using geom_bar() instead
-
+ggplot(mpg, aes(hwy)) + 
+  geom_bar()
 
 # TASK: Try making a histogram with the categorical variable 'manufacturer'.
 # What error message do you get?
-
-
+ggplot(mpg, aes(manufacturer)) + 
+  geom_histogram()
+#I got a error message caused by error in 'setup_params(). 'stat_bin()' requires a continuous x aesthetic.
 # QUESTION: What happens when you follow the advice of the error message and 
 # make stat='count'?
 ggplot(mpg, aes(manufacturer)) + 
   geom_histogram(stat="count")
-
+#I get a histogram showing manufacture on the x-axis and count on the y-axis.
 
 # TASK: Make a boxplot comparing the distribution of cty (city mileage) for
 # each class of car.
 # HINT: Look back to last week if you forget how to make a boxplot.
 
-
+ggplot(mpg, aes(cty,fill=class)) + 
+  geom_boxplot()
 # We can also make a different type of distribution, a violin plot using the 
 # geom_violin statement as follows:
 ggplot(mpg, aes(x=class, y=cty)) + 
   geom_violin()
-
+ggplot(mpg, aes(x=class, y=cty)) + 
+  geom_violin()
 # QUESTION: What does a violin plot show? Check google if you're unsure.
-
+# A violin plot shows the distribution of the data.The width of the shape shows how common values are (wider=more data points).The center of the data often includes a median.You can see range of values,clusters, and skewness.
 
 # ---------------------------------------------------------- #
 #### 5.0 COMPOSITION                                      ####
@@ -602,10 +625,14 @@ manufacturerFreq <- mpg %>%
   group_by(manufacturer) %>% 
   summarize(frequency=length(manufacturer)) %>% 
   ungroup()
-
+manufacturerFreq <- mpg %>% 
+  group_by(manufacturer) %>% 
+  summarize(frequency=length(manufacturer)) %>% 
+  ungroup()
 # TASK: Make a bar graph of the number of cars (frequency) by manufacturer using
 # the dataframe we created above.
-
+ggplot(manufacturerFreq, aes(x=manufacturer,y=frequency))+
+  geom_bar(stat = "identity")
 
 # We can switch the bar chart you created above into a pie chart simply by changing
 # the coordinate system through a series of steps as follows:
@@ -632,7 +659,7 @@ ggplot(manufacturerFreq, aes(x="", y=frequency, fill=manufacturer)) +
   theme_void() +
   theme(legend.title = element_text(size = 12.5), 
         legend.text  = element_text(size = 8.5),
-        legend.key.size = unit(.75, "lines"))
+        legend.key.size = unit(.75,"lines"))
 
 # TASK: Annotate the code below to describe what each line does:
 ggplot(manufacturerFreq, aes(x="", y=frequency, fill=manufacturer)) +
@@ -642,8 +669,8 @@ ggplot(manufacturerFreq, aes(x="", y=frequency, fill=manufacturer)) +
   theme(legend.title = element_text(size = 12.5), 
         legend.text  = element_text(size = 8.5),
         legend.key.size = unit(.75, "lines"))
-
-
+#In the first line, based on the manufacturerFreq dataset, we are plotting ""vs "frequency, and filled by manufacturer. The second line, codes for a bar graph and a width of 1 for the bars. The third line, converting into polar (circular) coordinates, using the y variable to control the angle, starting at 0. The fourth line will remove almost everything from the plot so only the data remains.
+#In the fifth line, the legend title is resized to 12.5, the legend text is sized to 8.5, and resizes the key to .75.
 # ---------------------------------------------------------- #
 #### 6.0 CHANGE                                           ####
 # ---------------------------------------------------------- #
@@ -656,7 +683,14 @@ data("economics")
 # over time (unemploy vs date). Make a scatterplot, then connect the points with 
 # lines using geom_line().
 # HINT: use ?economics to get more information about this dataset.
-
+ggplot(economics,aes(x=date,y=unemploy))+
+  geom_point()+
+  geom_line()+
+  labs(
+    x="Date",
+    y="Number of Unemployed",
+    title="Unemployment Over Time"
+  )
 
 
 
