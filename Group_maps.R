@@ -306,10 +306,11 @@ ggplot() +
 # ---------------------------------------------------------------------------- #
 # INTERPRETING THE MAP --------------------------------------------------------
 
-# QUESTION: What does a darker color indicate on this map?
+# QUESTION: What does a lighter color indicate on this map?
 
 # QUESTION: Why might some counties have lower richness values? 
 
 
 # TASK: Save your most recent plot as an image file to your folder. 
 ggsave("nc_species_richness_map.png",width = 8, height = 6, dpi = 300)
+
