@@ -43,6 +43,7 @@ head(state_data)
 
 #Question: What do you notice about the rownames and the data within the "State" 
 #column? 
+#Answer: The row names and data are state names. 
 
 #Task: Run the following code:
 
@@ -50,13 +51,19 @@ rownames(state_data) <- NULL
 
 #Question: Write code to display your dataset once again. What did the previous
 #code change within the dataset? What did NULL do to the rownames?
+#Answer: Null changed the state row names into numbers. 
+
+head(state_data)
 
 #Task: Because we have loaded the dyplr package, we can create a new dataframe
 #with just State and Frost data. Write a code to select the State and Frost columns
 #from the state_data dataframe and name the new dataframe state_frost_data. 
 
+state_frost_data <- state_data %>% select(State, Frost)
 
 #View the new dataset and confirm that it is correct.
+
+head(state_frost_data)
 
 #Now we need to use the tigris package to download a shapefile called 'states'
 #of all of US states that we would like to plot. We set cb = TRUE 
@@ -83,18 +90,21 @@ us_states_frost <- left_join(states, state_frost_data, by = c("State"))
 #days
 #Task: Run the following code and annotate the significance of each line of code.
 
-ggplot(us_states_frost_2) +
+ggplot(us_states_frost) +
+  # changed from us_states_frost_2
   geom_sf(aes(fill = Frost), color = "blue") +
   theme_minimal() +
   labs(fill = "Number of Frost Days", title = "United States Frost Data")
 
 #Question: Do you see a map under the "plots" tab?
+#Answer: Yes. 
 
 #Question: What do you notice about the size of this map? Suppose we only want
 #to study frost data of mainland US states. Are there states we could omit from
 #this map to better visualize the data? HINT ** to help determine which states we may 
 #want to omit, check out the us_states_frost_2 tab at the different States included
 #in the dataframe.
+#Answer: The map is small and includes Alaska, Hawaii,Commonwealth of the Northern Mariana Islands, United States Virgin Islands, American Samoa, and Guam, which can all be omitted to better visualize the data. 
 
 #To filter out states or islands not connected to the mainland US, we can use the 
 #dplyr function.
@@ -111,14 +121,22 @@ us_states_frost_2 <- us_states_frost %>%
 #Write code to show a map of the us_states_frost_2 dataset following the steps
 #used to create the map from the us_states_frost dataset.
 
+ggplot(us_states_frost_2) +
+  geom_sf(aes(fill = Frost), color = "blue") +
+  theme_minimal() +
+  labs(fill = "Number of Frost Days", title = "United States Frost Data")
+
 #You should see a new map in the "plots" tab that is much larger than the previous 
 #map making it easier to visualize the data.
 
 #Question: What do dark blue states represent? What do light blue states represent?
+#Answer: States with a higher number of frost days.
 #Question: Does florida or NC have more frost days?
+#Answer: NC. 
 
 #Question: Does there appear to be a relationship between latitude and 
 #number of frost days? Why or why not?
+#Answer: Yes, the farther north the states are there are generally more frost days. 
 
 #Task: Write code to create a map of the Population data from the state.x77 dataset.
 #You can reference the pevious steps of this assignment
@@ -126,6 +144,12 @@ us_states_frost_2 <- us_states_frost %>%
 #not blue (as we have already used this color) **Make sure to write the code
 #because your code will be viewed for grading, not the map itself!
 
+us_states_population <- left_join(states, state_data, by = c("State"))
+
+ggplot(us_states_population) +
+  geom_sf(aes(fill = Population), color = "orange") +
+  theme_minimal() +
+  labs(fill = "Population Count", title = "United States Population Data")
 
 #Task: write three things you can infer from the map that you created:
 #1
