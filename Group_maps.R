@@ -1,5 +1,5 @@
 # MAP BUILDING IN RSTUDIO
-
+#hello
 # ---------------------------------------------------------------------------- #
 # OBJECTIVES:
 # 1. Understand when and why we may want to use R to build maps
@@ -31,11 +31,14 @@ options(tigris_use_cache = TRUE)
 #Task: We will start by loading the state.x77 dataset
 #into R as a dataframe and using the cbind() function to create a column named
 #"State" with all states listed from the row names in the state.x77 dataset.
+#Task: Run the following code:
+
 state_data <- cbind(
   State = rownames(state.x77),
   as.data.frame(state.x77))
 
-#Run the following code to display your data
+#Task: Run the following code to display your data
+
 head(state_data)
 
 #Question: What do you notice about the rownames and the data within the "State" 
@@ -51,12 +54,12 @@ rownames(state_data) <- NULL
 #Task: Because we have loaded the dyplr package, we can create a new dataframe
 #with just State and Frost data. Write a code to select the State and Frost columns
 #from the state_data dataframe and name the new dataframe state_frost_data. 
-state_frost_data <- state_data %>% select(State, Frost)
+
 
 #View the new dataset and confirm that it is correct.
 
 #Now we need to use the tigris package to download a shapefile called 'states'
-#of all of US states that we would like to plaot. We set cb = TRUE 
+#of all of US states that we would like to plot. We set cb = TRUE 
 #to specify cartographic boundary type so that we use a simple shapefile that
 #is easier to work with.
 
@@ -87,7 +90,7 @@ ggplot(us_states_frost_2) +
 
 #Question: Do you see a map under the "plots" tab?
 
-#What do you notice about the size of this map? Suppose we only want
+#Question: What do you notice about the size of this map? Suppose we only want
 #to study frost data of mainland US states. Are there states we could omit from
 #this map to better visualize the data? HINT ** to help determine which states we may 
 #want to omit, check out the us_states_frost_2 tab at the different States included
@@ -113,14 +116,16 @@ us_states_frost_2 <- us_states_frost %>%
 
 #Question: What do dark blue states represent? What do light blue states represent?
 #Question: Does florida or NC have more frost days?
-#Question: Does there appear to be a relationship between latitude/longitude and
+
+#Question: Does there appear to be a relationship between latitude and 
 #number of frost days? Why or why not?
 
-#Task: Write code to create a map of your choice using another column of data from
-#the state.x77 dataset. You can reference the pevious steps of this assignment
+#Task: Write code to create a map of the Population data from the state.x77 dataset.
+#You can reference the pevious steps of this assignment
 #while you work through this task. make the color of the map any color that is
 #not blue (as we have already used this color) **Make sure to write the code
 #because your code will be viewed for grading, not the map itself!
+
 
 #Task: write three things you can infer from the map that you created:
 #1
