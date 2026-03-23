@@ -19,7 +19,9 @@ library(stringr)
 
 
 
-##MANAGING LENGTHS
+#-----------------------------------------#
+#### Part 1.1: MANAGE LENGTHS
+#-----------------------------------------#
 
 ##The "str_length" function is a simple function that can tell you the length, in
 ##characters, of a string. 
