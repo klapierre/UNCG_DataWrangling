@@ -58,11 +58,18 @@ head(state_data)
 #with just State and Frost data. Write a code to select the State and Frost columns
 #from the state_data dataframe and name the new dataframe state_frost_data. 
 <<<<<<< HEAD
+<<<<<<< HEAD
 state_frost_data <- select(state_data, "State", "Frost")
 
 #View the new dataset and confirm that it is correct.
 state_frost_data
 
+=======
+frost_data <- select(state_data, "State", "Frost")
+
+#View the new dataset and confirm that it is correct.
+frost_data
+>>>>>>> Maps assignment up to line 134.
 =======
 frost_data <- select(state_data, "State", "Frost")
 
@@ -95,6 +102,7 @@ states <- states %>% rename(State = NAME)
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 us_states_frost_2 <- left_join(states, state_frost_data, by = c("State"))
 =======
 us_states_frost <- left_join(states, frost_data, by = c("State"))
@@ -123,6 +131,9 @@ us_states_frost <- left_join(states, frost_data, by = c("State"))
 =======
 us_states_frost <- left_join(states, frost_data, by = c("State"))
 >>>>>>> Maps assignment up to line 134.
+>>>>>>> Maps assignment up to line 134.
+=======
+us_states_frost <- left_join(states, frost_data, by = c("State"))
 >>>>>>> Maps assignment up to line 134.
 
 #Next we will use ggplot to construct a map of the US States and number of Frost
@@ -137,6 +148,7 @@ ggplot(us_states_frost) +
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 =======
   ## Creates a plot of the frost days accross the country.
@@ -162,6 +174,9 @@ ggplot(us_states_frost) +
 =======
   ## Creates a plot of the frost days accross the country.
 >>>>>>> Maps assignment up to line 134.
+>>>>>>> Maps assignment up to line 134.
+=======
+  ## Creates a plot of the frost days accross the country.
 >>>>>>> Maps assignment up to line 134.
   geom_sf(aes(fill = Frost), color = "blue") +
   ## Uses the color blue as an indicator of number of frost days.
