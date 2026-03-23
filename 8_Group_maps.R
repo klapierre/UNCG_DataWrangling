@@ -43,6 +43,7 @@ head(state_data)
 
 #Question: What do you notice about the rownames and the data within the "State" 
 #column? 
+## Each row name corresponds to one state, but each name is listed twice.
 
 #Task: Run the following code:
 
@@ -50,6 +51,8 @@ rownames(state_data) <- NULL
 
 #Question: Write code to display your dataset once again. What did the previous
 #code change within the dataset? What did NULL do to the rownames?
+head(state_data)
+## Each state name now only appears once.
 
 #Task: Because we have loaded the dyplr package, we can create a new dataframe
 #with just State and Frost data. Write a code to select the State and Frost columns
