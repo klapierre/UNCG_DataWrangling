@@ -57,11 +57,18 @@ head(state_data)
 #Task: Because we have loaded the dyplr package, we can create a new dataframe
 #with just State and Frost data. Write a code to select the State and Frost columns
 #from the state_data dataframe and name the new dataframe state_frost_data. 
+<<<<<<< HEAD
 state_frost_data <- select(state_data, "State", "Frost")
 
 #View the new dataset and confirm that it is correct.
 state_frost_data
 
+=======
+frost_data <- select(state_data, "State", "Frost")
+
+#View the new dataset and confirm that it is correct.
+frost_data
+>>>>>>> Maps assignment up to line 134.
 #Now we need to use the tigris package to download a shapefile called 'states'
 #of all of US states that we would like to plot. We set cb = TRUE 
 #to specify cartographic boundary type so that we use a simple shapefile that
@@ -86,6 +93,7 @@ states <- states %>% rename(State = NAME)
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 us_states_frost_2 <- left_join(states, state_frost_data, by = c("State"))
 =======
 us_states_frost <- left_join(states, frost_data, by = c("State"))
@@ -102,6 +110,12 @@ us_states_frost <- left_join(states, frost_data, by = c("State"))
 =======
 us_states_frost_2 <- left_join(states, state_frost_data, by = c("State"))
 >>>>>>> Getting rid of some random characters that came out of nowhere.
+=======
+us_states_frost_2 <- left_join(states, state_frost_data, by = c("State"))
+=======
+us_states_frost <- left_join(states, frost_data, by = c("State"))
+>>>>>>> Maps assignment up to line 134.
+>>>>>>> Maps assignment up to line 134.
 
 #Next we will use ggplot to construct a map of the US States and number of Frost
 #days
@@ -113,6 +127,7 @@ ggplot(us_states_frost) +
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
   ## Creates a plot of the frost days accross the country.
 >>>>>>> Maps assignment up to line 134.
@@ -129,6 +144,11 @@ ggplot(us_states_frost) +
 
   ## Creates a plot of the frost days accross the country.
 >>>>>>> Getting rid of some random characters that came out of nowhere.
+=======
+=======
+  ## Creates a plot of the frost days accross the country.
+>>>>>>> Maps assignment up to line 134.
+>>>>>>> Maps assignment up to line 134.
   geom_sf(aes(fill = Frost), color = "blue") +
   ## Uses the color blue as an indicator of number of frost days.
   theme_minimal() +
