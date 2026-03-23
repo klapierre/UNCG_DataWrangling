@@ -57,9 +57,13 @@ head(state_data)
 #Task: Because we have loaded the dyplr package, we can create a new dataframe
 #with just State and Frost data. Write a code to select the State and Frost columns
 #from the state_data dataframe and name the new dataframe state_frost_data. 
-state_frost_data <- filter(.data=state_data, )
-?filter
-?select
+state_frost_data <- state_data %>%
+                       select(State, Frost)
+
+?filter 
+- We are NOT selecting Rows!
+?select 
+- We are selecting Columns!
 #View the new dataset and confirm that it is correct.
 
 #Now we need to use the tigris package to download a shapefile called 'states'
