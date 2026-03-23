@@ -21,11 +21,14 @@ library(maps)
 library(dplyr)
 library(tigris)
 library(sf)
+install.packages("maps")
+install.packages("tigris")
+install.packages("sf")
 
 #Run the following code:
 
 options(tigris_use_cache = TRUE)
-
+options(tigris_use_cache = TRUE)
 # Part 2: Using datasets within R to create a map -----------------------------
 
 #Task: We will start by loading the state.x77 dataset
@@ -36,26 +39,30 @@ options(tigris_use_cache = TRUE)
 state_data <- cbind(
   State = rownames(state.x77),
   as.data.frame(state.x77))
-
+state_data <- cbind(
+  State = rownames(state.x77),
+  as.data.frame(state.x77))
 #Task: Run the following code to display your data
 
 head(state_data)
-
+head(state_data)
 #Question: What do you notice about the rownames and the data within the "State" 
 #column? 
-
+#The row name matches the name of the state under the "State" column.
 #Task: Run the following code:
 
 rownames(state_data) <- NULL
-
+rownames(state_data) <- NULL
 #Question: Write code to display your dataset once again. What did the previous
 #code change within the dataset? What did NULL do to the rownames?
-
+print(state_data)
+head(state_data)
+#The previous code set the names of rows in the state_data dataset. "NULL" removes the existing row names from the state_data dataset.
 #Task: Because we have loaded the dyplr package, we can create a new dataframe
 #with just State and Frost data. Write a code to select the State and Frost columns
 #from the state_data dataframe and name the new dataframe state_frost_data. 
 
-
+state_frost_data<-state_data[,c("State", "Frost")]
 #View the new dataset and confirm that it is correct.
 
 #Now we need to use the tigris package to download a shapefile called 'states'
@@ -65,7 +72,7 @@ rownames(state_data) <- NULL
 
 #Task: Run the following code
 states <- states(cb = TRUE) 
-
+states <- states(cb = TRUE) 
 #In order to leftjoin states together we need the 'State' column in the 
 #state_frost_data to have the same name as the column 'NAME' of states in 
 #the states dataset. 
@@ -73,29 +80,30 @@ states <- states(cb = TRUE)
 #Task: Run the following code to rename the 'NAME' column in the states dataset
 
 states <- states %>% rename(State = NAME)
-
+states <- states %>% rename(State = NAME)
 #Task: Run the following code to leftjoin the states and state_frost_data datasets 
 #by "State" to a new dataframe named us_states_frost
 
 us_states_frost <- left_join(states, state_frost_data, by = c("State"))
-
+us_states_frost <- left_join(states, state_frost_data, by = c("State"))
 #Next we will use ggplot to construct a map of the US States and number of Frost
 #days
 #Task: Run the following code and annotate the significance of each line of code.
 
-ggplot(us_states_frost_2) +
+ggplot(us_states_frost) +
   geom_sf(aes(fill = Frost), color = "blue") +
   theme_minimal() +
   labs(fill = "Number of Frost Days", title = "United States Frost Data")
-
+#The first line codes for data from the us_states_frost data frame. The second line codes for simple features objects such as maps and fills. The color of the map codes for blue and the fill will be filtered by "Frost". The third line sets the theme. The fourth line labels the map "United States Frost Data" and the fill to "Number of Frost Days".
 #Question: Do you see a map under the "plots" tab?
-
+#Yes, I see a small map with coordinate planes and a fill beside.
 #Question: What do you notice about the size of this map? Suppose we only want
 #to study frost data of mainland US states. Are there states we could omit from
 #this map to better visualize the data? HINT ** to help determine which states we may 
 #want to omit, check out the us_states_frost_2 tab at the different States included
 #in the dataframe.
-
+#The map is very zoomed out (small) and difficult to view. Yes, there are a couple non-mainland US states in the dataset such as Guam, Alaska, American Samoa, and Puerto Rico.
+hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
 #To filter out states or islands not connected to the mainland US, we can use the 
 #dplyr function.
 
