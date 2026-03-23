@@ -50,8 +50,6 @@ rownames(state_data) <- NULL
 #from the state_data dataframe and name the new dataframe state_frost_data. 
 #View the new dataset and confirm that it is correct.
 
-state_frost_data <- state_data %>% select(State, Frost)
-
 #Now we need to use the tigris package to download a shapefile called 'states'
 #of all of US states that we would like to plaot. We set cb = TRUE 
 #to specify cartographic boundary type so that we use a simple shapefile that
@@ -84,8 +82,6 @@ ggplot(us_states_frost) +
   labs(fill = "Number of Frost Days", title = "United States Frost Data")
 
 #Question: Do you see a map under the "plots" tab?
-#Question: What do dark blue states represent? What do light blue states represent?
-#Question: Does florida or NC have more frost days? How do you know this?
 
 #What do you notice about the size of this map? Suppose we only want
 #to study frost data of mainland US states. Are there states we could omit from
@@ -108,16 +104,24 @@ us_states_frost_2 <- us_states_frost %>%
 #Write code to show a map of the us_states_frost_2 dataset following the steps
 #used to create the map from the us_states_frost dataset.
 
-ggplot(us_states_frost_2) +
-  geom_sf(aes(fill = Frost), color = "blue") +
-  theme_minimal() +
-  labs(fill = "Number of Frost Days", title = "United States Frost Data")
+#You should see a new map in the "plots" tab that is much larger than the previous 
+#map making it easier to visualize the data.
+
+#Question: What do dark blue states represent? What do light blue states represent?
+#Question: Does florida or NC have more frost days?
+#Queston: Does there appear to be a relationship between latitude/longitude and 
+#number of frost days? Why or why not?
 
 #Task: Write code to create a map of your choice using another column of data from
 #the state.x77 dataset. You can reference the pevious steps of this assignment
 #while you work through this task. make the color of the map any color that is
 #not blue (as we have already used this color) **Make sure to write the code
 #because your code will be viewed for grading, not the map itself!
+
+#Task: write three things you can infer from the map that you created:
+#1
+#2
+#3
 
 # Part 3: MAPPING SPECIMEN OCCURRENCE DATA -----------------------------------
 
