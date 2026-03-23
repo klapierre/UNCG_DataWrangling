@@ -18,9 +18,10 @@ library(tigris)
 library(sf)
 
 #Run the following code:
+
 options(tigris_use_cache = TRUE)
 
-# Part 2: MAPPING WITH INTERNAL GGPLOT DATASETS --------------------------------
+# Part 2: Using datasets within R to create a map -----------------------------
 
 #Task: We will start by loading the state.x77 dataset
 #into R as a dataframe and using the cbind() function to create a column named
@@ -31,16 +32,18 @@ state_data <- cbind(
   as.data.frame(state.x77))
 
 #Run the following code to display your data
+
 head(state_data)
 
 #Question: What do you notice about the rownames and the data within the "State" 
 #column? 
 
 #Task: Run the following code:
+
 rownames(state_data) <- NULL
 
 #Question: Write code to display your dataset once again. What did the previous
-#code change within our dataset?
+#code change within the dataset? What did NULL do to the rownames?
 
 #Task: Because we have loaded the dyplr package, we can create a new dataframe
 #with just State and Frost data. Write a code to select the State and Frost columns
@@ -49,16 +52,64 @@ rownames(state_data) <- NULL
 
 state_frost_data <- state_data %>% select(State, Frost)
 
+#Now we need to use the tigris package to download a shapefile called 'states'
+#of all of US states that we would like to plaot. We set cb = TRUE 
+#to specify cartographic boundary type so that we use a simple shapefile that
+#is easier to work with.
+
+#Task: Run the following code
+
 states <- states(cb = TRUE) 
+
+#In order to leftjoin states together we need the 'State' column in the 
+#state_frost_data to have the same name as the column 'NAME' of states in 
+#the states dataset. 
+
+#Task: Run the following code to rename the 'NAME' column in the states dataset
 
 states <- states %>% rename(State = NAME)
 
+#Task: Run the following code to leftjoin the states and state_frost_data datasets 
+#by "State" to a new dataframe named us_states_frost
+
 us_states_frost <- left_join(states, state_frost_data, by = c("State"))
 
-ggplot(us_states_frost) +
+#Next we will use ggplot to construct a map of the US States and number of Frost
+#days
+#Task: Run the following code and annotate the significance of each line of code.
+
+ggplot(us_states_frost_2) +
   geom_sf(aes(fill = Frost), color = "blue") +
   theme_minimal() +
   labs(fill = "Number of Frost Days", title = "United States Frost Data")
+
+#Question: Do you see a map under the "plots" tab?
+#Question: What do dark blue states represent? What do light blue states represent?
+#Question: Does florida or NC have more frost days? How do you know this?
+
+#What do you notice about the size of this map? Suppose we only want
+#to study frost data of mainland US states. Are there states we could omit from
+#this map to better visualize the data? HINT ** to help determine which states we may 
+#want to omit, check out the us_states_frost_2 tab at the different States included
+#in the dataframe.
+
+#To filter out states or islands not connected to the mainland US, we can use the 
+#dplyr function.
+
+#Task: Run the following code to filter out and omit states that are islands
+#not connected to the mainland US.
+
+us_states_frost_2 <- us_states_frost %>%
+  dplyr::filter(State != "Alaska" & State != "Hawaii" & State != "Guam" & State != 
+                  "American Samoa" & State != "United States Virgin Islands" & 
+                  State != "Puerto Rico" 
+                & State != "Commonwealth of the Northern Mariana Islands")
+
+#Task: Write code to reate a map of your choice using another column of data from
+#the state.x77 dataset. You can reference the pevious steps of this assignment
+#while you work through this task. make the color of the map any color that is
+#not blue (as we have already used this color) **Make sure to write the code
+#because your code will be viewed for grading, not the map itself!
 
 # Part 3: MAPPING SPECIMEN OCCURRENCE DATA -----------------------------------
 
