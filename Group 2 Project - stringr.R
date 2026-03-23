@@ -126,3 +126,89 @@ str_to_kebab(case_names)
 #Good work! You've learned how to use some case changing functions within simple values as well as data frames!
 
 #These examples might not be the most practical, but the option to organize entire data frames within simple functions justifies its use in a more practical sense.
+
+#-----------------------------------------#
+#### Part 1.3: DETECT MATCHES
+#-----------------------------------------#
+
+## Additionally, stringr can be used to detect specififed character patterns in 
+## strings.
+
+## Note: To discover how this works, we will use a list of fruits. This vector is
+## already built into the stringr package so you do not have to worry about 
+## creating it. Begin by calling this vector.
+fruit
+
+## If we wanted to know if there are any fruits in the fruit vector that contain
+## the letter "q", we could use the str_detect function, which will return a 
+## logical statement for each element in the fruit list. Try running the following code.
+str_detect(fruit, "q")
+
+## As you can see, this function returns a true for each fruit that contains the 
+## letter "q", and a false for each fruit that does not. If we needed to know the
+## position of each fruit that returns a true statement, we could use the str_which function.
+str_which(fruit, "q")
+
+## QUESTION: What is the result of running this code?
+
+
+## Not only can we use the str_detect function to detect individual characters in
+## a string, but we can also use it to detect larger patterns of characters. For 
+## example, if we wanted to know if there are fruits that contain the word "melon" 
+## we could run this code.
+str_detect(fruit,"melon")
+
+## In addition, str_detect can be used to find consecutive double letters by 
+## using "(.)\\1" as the pattern! The "(.)" portion signifies any letter, 
+## and the "\\1" portion refers to a repeat of the previous letter.
+
+## TASK: Try using the str_detect function with "(.)\\1" as the pattern to find 
+## out if there are any fruits containing double letter.
+
+
+## Another interesting function is str_count.
+## TASK: Run the following code to create a smaller vector containing only the
+## first five fruits in the original fruit vector.
+fivefruits <- fruit[1:5]
+## TASK: Now run this one.
+str_count(fivefruits, "a")
+
+## QUESTION: What does the str_count function do? If needed, use ?str_count.
+
+
+## To get the actual position of the first occurence of the letter "a" in each of
+## these five fruits, we can run the following code.
+str_locate(fivefruits, "a")
+
+## Note: The output of this code gives two columns per element (a start and end 
+## column). In the case of this specific code, we only looked for one letter so 
+## the starting and ending position of each match looks the same. If we told R to 
+## locate more than one letter (such as "er"), the start and end columns would not match.
+
+## QUESTION: Notice that the fifth fruit returns NAs. Why do you think this is?
+
+
+## This tells us only the first occurence of the letter "a" in each of the five 
+## fruits. However, if we wanted to locate the postitions of all of the matches 
+## for the letter "a" in each of these five fruits, we could use str_locate_all function.
+str_locate_all(fivefruits, "a")
+
+## QUESTION: Which positions contain "a" in the fourth fruit in our vector? 
+## (Hint: There are three.)
+
+
+## QUESTION: Other functions that are similar to str_detect are str_starts and 
+## str_ends.What do you think each of these does?
+
+
+## TASK: Use the knowledge you've learned in this section to create a code that gives 
+## a count of how many fruits in the fruit vector contain the word "berry".
+
+
+## QUESTION: How many did fruits containing the word "berry" are there in the fruit vector?
+
+
+## Great job! You've learned how to use stringr to detect, count, and locate 
+## pattern matches in strings of characters. One way that these functions could 
+## be practical is combining them with the filter function to filter a column in 
+## a dataframe by only those containing a certain letter or string of letters.
