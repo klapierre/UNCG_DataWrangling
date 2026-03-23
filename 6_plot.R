@@ -417,7 +417,8 @@ ggplot(redband, aes(x = Length, y = Weight, color = as.factor(ScaleAge))) +
   geom_smooth(method='lm', se=F)
 
 # QUESTION: What is different about this graph from before?
-
+#This graph has a different color for each age separated by increments of 1 such
+#that it appears as categorical data.
 
 # ---------------------------------------------------------- #
 #### PART 1.8: ALTERING SCALES                            ####
