@@ -78,7 +78,7 @@ us_states_frost <- left_join(states, state_frost_data, by = c("State"))
 #days
 #Task: Run the following code and annotate the significance of each line of code.
 
-ggplot(us_states_frost_2) +
+ggplot(us_states_frost) +
   geom_sf(aes(fill = Frost), color = "blue") +
   theme_minimal() +
   labs(fill = "Number of Frost Days", title = "United States Frost Data")
@@ -105,7 +105,15 @@ us_states_frost_2 <- us_states_frost %>%
                   State != "Puerto Rico" 
                 & State != "Commonwealth of the Northern Mariana Islands")
 
-#Task: Write code to reate a map of your choice using another column of data from
+#Write code to show a map of the us_states_frost_2 dataset following the steps
+#used to create the map from the us_states_frost dataset.
+
+ggplot(us_states_frost_2) +
+  geom_sf(aes(fill = Frost), color = "blue") +
+  theme_minimal() +
+  labs(fill = "Number of Frost Days", title = "United States Frost Data")
+
+#Task: Write code to create a map of your choice using another column of data from
 #the state.x77 dataset. You can reference the pevious steps of this assignment
 #while you work through this task. make the color of the map any color that is
 #not blue (as we have already used this color) **Make sure to write the code
