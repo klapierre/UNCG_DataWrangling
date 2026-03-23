@@ -147,36 +147,17 @@ us_states_frost_2 <- us_states_frost %>%
 # TASK: Download the NC_mamm_data.csv into your UNCG_DataWrangling folder on your desktop
 
 # TASK: Using read.csv(), create an object titled "mammal_data" from the NC_mamm_data csv 
-mammal_data <- read.csv("NC_mamm_data.csv")
 
 # TASK: Using the colnames() function, review what columns exist in your current dataset
-colnames(mammal_data)
 
 # TASK: Remove the 'USE_LICENSE_URL' column using a pipe and the select(- ) 
 # function because it is not needed for plotting. You do not need to create a new object for this; just reassign to the same name 'mammal_data' 
-mammal_data <- mammal_data %>%
-  select(-USE_LICENSE_URL)
 
-# Using the rename() function introduced in assignment 4, rename the remaining 11 columns in the following order: country, state, locality, date, lat, long, sex, life_stage, genus, order, family
-
-mammal_data <- rename(.data=mammal_data,                                                                       country=COUNTRY,
-                      state=STATE_PROV,
-                      locality=SPEC_LOCALITY,
-                      date=VERBATIM_DATE,
-                      lat=DEC_LAT,
-                      lon=DEC_LONG,
-                      sex=SEX,
-                      life_stage=LIFE_STAGE,
-                      genus=GENUS,
-                      order=PHYLORDER,
-                      family=FAMILY)
+# Using the rename() function introduced in assignment 4, rename the remaining 11 columns in the following order: country, state, locality, date, lat, long, sex, life_stage, genus, order, family.
 
 # Using the mammal_data object, clean NA values from columns 'lon', 'lat', 'locality' and 'genus'. Create new object for this cleaned data titled 'clean_data'
-clean_data <- mammal_data %>%
-  drop_na(lon, lat, locality, genus)
 
 # Great, now our data is clean and easier to work with! 
-
 
 # BUILDING THE MAP
 
@@ -201,7 +182,7 @@ ggplot() +
 nc_map <- map_data("county", region = "north carolina")
 
 # TASK: plot the map using your new nc_map dataframe using the previous map code as your guide
-# HINT: to adjust the map size, add the function coord_fixed(1.5) to the end of the code
+# HINT: to adjust the map ratio, add the function coord_fixed(1.5) to the end of the code
 ggplot() +
   geom_polygon(data = nc_map,
                aes(x = long, y = lat, group = group),
@@ -226,8 +207,7 @@ geom_point(data = clean_data,
 # From here, you can adjust the theme to your liking. 
 # NOTE: With a plus sign between sections, if you begin typing 'theme' on the next line, options will appear that you can browse through! 
 
-# QUESTION: Why might it be useful to have slightly transparent data points (using the alpha() function) when mapping in a small area such as this?  
-
+# QUESTION: Why might it be useful to have slightly transparent data points (by setting alpha to a number below 1) when mapping in a small area such as this?  
 
 # TASK: after adding a theme to the plot, add and title and an x and y axis label with the labs() function. 
 
@@ -280,7 +260,7 @@ unique(clean_data$order)
 # install.packages("sf")
 library(sf)
 
-# TASK: Convert clean_data into an sf object using longitude and latitude
+# TASK: Convert clean_data into an sf (simple features) object using longitude and latitude
 clean_sf <- st_as_sf(clean_data, coords = c("lon", "lat"), crs = 4326)
 
 # TASK: Convert nc_map dataframe into an sf object
