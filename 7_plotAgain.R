@@ -67,11 +67,11 @@ data(mpg, package = "ggplot2")
 
 # Looks alright, but the graph may be hiding some information...
 # QUESTION: How many data points are in the mpg dataframe?
-
+I totaled around 234 points on the grpah 
 
 # QUESTION: Approximately how many dots are in the graph you just made? How does
 # that compare to the number of observations in the dataframe?
-
+there are less thatn 234 visble dots or points in this grpah becasue some of the points are stacked on top of each other.
 
 # Try another correlation-focused geom that addresses this problem by running
 # the following code:
@@ -80,11 +80,11 @@ ggplot(data=mpg, aes(x=cty, y=hwy)) +
 
 
 # QUESTION: What happened when you created the plot with geom_jitter?
-
+the points are spread out just a little bit more insteaf of most of them stacked on top of each other so its more visble from what I can see 
 
 # QUESTION: Run the code to create a plot using geom_jitter a second time. Then run it
 # again and again. What happens each time? Why is this happening?
-
+the points move siglthly to different places im guessing jitter moves them in a random small shift.
 
 # TASK: The default in geom_jitter is to jitter (or slightly move) the points away
 # from each other in both the x and y directions. Check the help file for geom_jitter
