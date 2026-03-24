@@ -201,7 +201,8 @@ mammal_data<- rename(.data=mammal_data, country=COUNTRY, state=STATE_PROV, local
 colnames(mammal_data)
 # Using the mammal_data object, clean NA values from columns 'lon', 'lat', 'locality' and 'genus'. Create new object for this cleaned data titled 'clean_data'
 
-clean_data<-drop_na(.data=mammal_data, anyof(long,lat,locality))
+clean_data <- drop_na(mammal_data,long,lat,locality,genus)
+
 ?drop_na
 # Great, now our data is clean and easier to work with! 
 
@@ -223,6 +224,7 @@ ggplot() +
   theme_bw()
 
 # QUESTION: What do you think the geom_polygon function is doing here?
+#Answer: I think that it is shaping the counties
 
 # TASK: Create a new dataframe titled 'nc_map' that only has North Carolina counties by assigning 'north carolina', typed exactly as it is shown in the in the 'counties' dataframe previously built. The code should look like this, with region following county:
 nc_map <- map_data("county", region = "north carolina")
@@ -238,6 +240,7 @@ ggplot() +
   coord_fixed(1.5) 
 
 # QUESTION: What do you think the 'coord_fixed' function is doing here? 
+#Answer: Without the coord_fixed, the map is weirdly elongated upwards, so I think it is setting proportions to make the map look more correct.
 
 # ADDING THE DATA POINTS TO NC MAP---------------------------------------------
 
@@ -245,17 +248,31 @@ ggplot() +
 # To do this, we can add the geom_point function to our previous chunk of code.
 
 # TASK: With a plus sign between the sections, add the lines below to the above code:
-geom_point(data = clean_data,
-           aes(x = lon, y = lat, color = order),
-           size = 1,
-           alpha = 0.7)
+ggplot() +
+  geom_polygon(data = nc_map,
+               aes(x = long, y = lat, group = group),
+               fill = "white",
+               color = "black") +
+  geom_point(data = clean_data,aes(x = long, y = lat, color = order),size = 1,alpha = 0.7)
+  theme_dark() +
+  coord_fixed(1.5)
 
 # From here, you can adjust the theme to your liking. 
 # NOTE: With a plus sign between sections, if you begin typing 'theme' on the next line, options will appear that you can browse through! 
 
-# QUESTION: Why might it be useful to have slightly transparent data points (by setting alpha to a number below 1) when mapping in a small area such as this?  
+# QUESTION: Why might it be useful to have slightly transparent data points (by setting alpha to a number below 1) when mapping in a small area such as this? 
+  #Answer: When you have congested data, having more transparent data points, you can see points through other points. It is very important here when you have orders by colors, so if you have multiple orders in the same area, you can see the multiple dots.
 
 # TASK: after adding a theme to the plot, add and title and an x and y axis label with the labs() function. 
+  ggplot() +
+    geom_polygon(data = nc_map,
+                 aes(x = long, y = lat, group = group),
+                 fill = "white",
+                 color = "black") +
+    geom_point(data = clean_data,aes(x = long, y = lat, color = order),size = 1,alpha = 0.7)
+  theme_dark() +
+    coord_fixed(1.5)+
+    labs(title = "Mammal captures in North Carolina",x = "Longitude",y = "Latitude")
 
 
 # In the end, we should have a chunk of code that looks something like this (theme can be your choosing):
@@ -276,6 +293,7 @@ ggplot() +
        y = "Latitude")
 
 # QUESTION: Why did I decide to color the points by order? What happens if you color the points (within the geom_point section) by genus instead? 
+#Answer: Since you are using the map to see what orders are where in NC, coding by color allows you to differentiate the different orders while looking at the map. If you did it by order instead, then I would guess there would be a lot more colors of dots, and the labels would be different.
 
 # HINT: the unique() function allows us to see how many unique values are in each of our columns 
 unique(clean_data$genus)
