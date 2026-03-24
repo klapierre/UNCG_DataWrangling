@@ -473,7 +473,7 @@ ggplot(mpg, aes(hwy)) +
 ggplot(mpg, aes(manufacturer)) + 
   geom_histogram(stat="count")
 
-
+it makes a bar braph of counts for each manufacter instead of a hisotgram. 
 # TASK: Make a boxplot comparing the distribution of cty (city mileage) for
 # each class of car.
 # HINT: Look back to last week if you forget how to make a boxplot.
@@ -485,7 +485,7 @@ ggplot(mpg, aes(x=class, y=cty)) +
   geom_violin()
 
 # QUESTION: What does a violin plot show? Check google if you're unsure.
-
+a violin plot shows the distribution and density of the data for each group 
 
 # ---------------------------------------------------------- #
 #### 5.0 COMPOSITION                                      ####
