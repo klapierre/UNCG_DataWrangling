@@ -532,13 +532,19 @@ ggplot(manufacturerFreq, aes(x="", y=frequency, fill=manufacturer)) +
 
 # TASK: Annotate the code below to describe what each line does:
 ggplot(manufacturerFreq, aes(x="", y=frequency, fill=manufacturer)) +
+  starts the plot using manfactuerFreq sets x to a blank values so all the bars stack into one column y to frequency and fill color by manfuacter 
   geom_bar(stat="identity", width=1) +
+    makes bars using actual y values in frequency() with the width of 1 bar so the bars fully fill the circle once converted 
   coord_polar(theta="y", start=0) +
+    converts the stacked bar chart into a pie chat by wrapping around the y-axis startig at angle 0 
   theme_void() +
+    removes axis lines and thick marks grid lines etc and background
   theme(legend.title = element_text(size = 12.5), 
+        sets legend tittle and text size
         legend.text  = element_text(size = 8.5),
+        sets the legend label and text size 
         legend.key.size = unit(.75, "lines"))
-
+sets the size of the legend color boxes 
 
 # ---------------------------------------------------------- #
 #### 6.0 CHANGE                                           ####
