@@ -390,7 +390,7 @@ rm(list = ls())
 # SHORTCUT: You can efficiently type the pipe icon '%>%' by using the pipe 
 # shortcut ctl+shift+m (windows) or cmd+shift+m (mac)! Try using the shortcut 
 # to create pipes whenever needed for the rest of the assignment.
-
+%>% 
 # The pipe icon tells R to pass the dataframe it was just working with into 
 # another function. This is how we can get from one function to the next without 
 # creating and naming dozens of new dataframes. This is great for organization!
@@ -407,6 +407,14 @@ calispellHighTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv", stri
   select(Date, Time, calispell_temp) %>% 
   filter(calispell_temp>=15) %>% 
   mutate(calispell_temp_F = calispell_temp*9/5 + 32)
+
+Our expectations based on the code would be:
+  Create a dataframe labeled calispellHighTemp
+Retreive this csv file. determine the incoming data as a stringAsFactors creates all characters (letters) into a value recognized in the dataframe. %>% --> creates subset 1 - the following code will change this subset
+Rename these columns to the following.
+Select these columns, Date, Time, calispell_temp %>% --> creates subset 2 - 
+  Filter selects the rows/values under the condition of >=15 %>% ---> creates subset 3
+Create a new column labled calispell_temp_F with values from the calispell_temp column that go under this equation: 9/5 +32.
 
 
 # ---------------------------------------------------------- #
