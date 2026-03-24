@@ -17,14 +17,15 @@
 
 
 ## QUESTION: Open up the file "knb-lter-knz.148.3.txt". What does this file contain?
-
+## It's basically a text version of the website.
 
 ## QUESTION: From this file or the original website, who are the dataset contributors?
-
+## Kimberly Komatsu, Meghan Avolio, Andrew Hope, Sally Koerner, 
+## Allison Louthan, and Kevin Wilcox.
 
 ## QUESTION: From this file or the original website, what are the start and end 
 ## dates of the dataset?
-
+## Start Date: 01/01/19 End Date: 12/30/22
 
 ## QUESTION: Is the data collection still ongoing?
 ## Confession from Professor Komatsu: despite the dates of data included in the 
