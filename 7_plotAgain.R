@@ -131,7 +131,7 @@ ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
 # What do you notice about the colors chosen from each of the palettes that we
 # used above? (i.e., does it use the first three colors in the palette? The last
 # three? Some other combination?)
-
+set1 use a few clear differnt colirs for the groups, while RuBu uses colors from the whole spectrum 
 
 # We could also pick out EXACTLY which colors we want for our figure. 
 # There are 4 main ways to specify colors in R:
@@ -163,7 +163,7 @@ ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
 # each color number?
 # HINT: Try creating a dataframe from color() by passing it into the
 # as.data.frame() function.
-
+you can figure out which color name matches each color by turning the list of built in colors into a dataframe. 
 
 # You can also chose colors by Hex code. A Hex color code is a 6-symbol code made
 # of up to three 2-symbol elements (6 symbols in length all together). Each of 
@@ -199,7 +199,7 @@ ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
 
 
 # QUESTION: What happened to the point that you set to 100% transparent?
-
+the 100% trnasparent diddnt disappear because i change the opque so it shows up completely solid 
 
 # Finally, we can set our colors using the rgb() function. This operates very
 # similarly to the hex code, where you can pick exactly the color and transparency
