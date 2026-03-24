@@ -373,7 +373,7 @@ ggplot(data=highwayMPG, aes(x=class, y=hwy_mean, fill=class)) +
   geom_bar(stat='identity') 
 
 # QUESTION: Where is ggplot getting the x-axis tick labels from?
-
+x=class ggplot uses the values of the varibale as the catogery lables on the x-axis 
 
 # Often our tick labels are not the best. We can modify them to be more informative
 # or visually appealing by directly modifying the dataframe, but again this feels
@@ -394,7 +394,7 @@ ggplot(data=highwayMPG, aes(x=class, y=hwy_mean, fill=class)) +
 # QUESTION: Try running the code above without the coord_cartesian() statement. 
 # What is surprising about the resulting graph? Based on this result, what do you
 # think the coord_cartesian() statement does?
-
+the coord_cartesian() is what controls the visble viewing window of the grpah. it display shwoing on the y-axis 0 to 50 
 
 # We can also add a statement into the scale discrete or continuous statements
 # to name our axes, rather than putting in a whole separate step of xlab() or ylab().
