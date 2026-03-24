@@ -405,6 +405,15 @@ ggplot(highwayMPG, aes(x = as.factor(class), y = hwy_mean)) +
 # (3) No legend
 # (4) Informative x- and y-axis labels. 
 
+ggplot(highwayMPG, aes(x = as.factor(class), y = hwy_mean)) + 
+  geom_bar(stat='identity',
+           color="black") +
+  xlab("Class of Car") +
+  ylab("Average Highway MPG") +
+  theme(legend.position="none")
+
+
+
 # HINT: Carefully consider whether your color and/or fill should go within an aes() 
 # statement, the scale_fill_manual or scale_color_manual statements, or neither.
 # If in doubt, try a bunch of ways until it looks how we want it. And consult 
@@ -420,7 +429,8 @@ ggplot(data=highwayMPG, aes(x=class, y=hwy_mean, fill=class)) +
   geom_bar(stat='identity') 
 
 # QUESTION: Where is ggplot getting the x-axis tick labels from?
-
+# It would seem they're determined by the width of the bars, although the bars
+# are centered on the ticks.
 
 # Often our tick labels are not the best. We can modify them to be more informative
 # or visually appealing by directly modifying the dataframe, but again this feels
@@ -441,7 +451,8 @@ ggplot(data=highwayMPG, aes(x=class, y=hwy_mean, fill=class)) +
 # QUESTION: Try running the code above without the coord_cartesian() statement. 
 # What is surprising about the resulting graph? Based on this result, what do you
 # think the coord_cartesian() statement does?
-
+# It doesn't modify the height of the y-axis without the function. So it likely 
+# specifies where the y-axis should end.
 
 # We can also add a statement into the scale discrete or continuous statements
 # to name our axes, rather than putting in a whole separate step of xlab() or ylab().
@@ -467,6 +478,16 @@ ggplot(data=highwayMPG, aes(x=class, y=hwy_mean, fill=class)) +
 # (5) set the scale of the highway mpg to run from 0 to 30 with breaks every 5 
 # (6) flip your axes
 # (7) remove the legend
+
+ggplot(data=highwayMPG, aes(x=class, y=hwy_mean, fill=class)) +
+  geom_bar(stat='identity') +
+  xlab("Class Of Car") +
+  ylab("Average Highway MPG") +
+  scale_x_discrete(labels=c('Sport', 'Compact', 'Midsize', 'Minivan', 'Pickup', 'Subcompact', 'SUV')) +
+  theme(legend.position="none") +
+  scale_y_continuous(breaks=seq(0, 30, 5)) +
+  coord_cartesian(ylim=c(0,30)) +
+  coord_flip()
 
 
 # ---------------------------------------------------------- #
