@@ -7,10 +7,10 @@ library(lubridate)
 
 # A Unix, or Epoch, timestamp measures the number of seconds that have passed since January 1st, 1970 at 00:00:00 UTC. The Unix system is useful for computing systems because it stores all time measurements as one large number, rather than more complex formats such as month/day/year. The date-times functions in lubridate allow users to quickly convert Unix measurements to more user-friendly formats.  
 
-dt_practice <- as_datetime(946684800)
+dt_practice <- as_datetime(946684860)
 
 # QUESTION: Run the code above to convert the Unix measurement to ymd_hms format using the ‘as_datetime’ function. What date does the timestamp correspond to?
-# ANSWER: "2000-01-01 UTC"
+# ANSWER: "2000-01-01 00:01:00 UTC"
 
 # Unix timestamps are also measured in days since January 1st, 1970. The ‘as_date’ function, like the ‘as_datetime’ function, can be used to convert these measurements to ymd format.
 
@@ -66,3 +66,24 @@ mdy("07-04-12") #Answer
 
 mdy("November 22nd, 2001") #Example
 
+# Parsing data is super convenient, but it's not convenient to parse each date individually! What if we want to parse an entire column at once?
+
+#TASK: Load the nycflights13 dataset, and run the code to create a date-time table. 
+
+install.packages("nycflights13")
+library(nycflights13)
+
+broken_flights <- flights %>%
+  mutate(
+    flight_date = format(time_hour, "%B %d, %Y"), 
+    flight_time = format(time_hour, "%I: %M: %S %p"))
+
+#TASK: Run the following code to convert flight times back to Unix format.
+
+flight_data_parsed <- broken_flights %>% mutate(flight_time = as_datetime(flight_time))
+
+#TASK: In the same flight_data_parsed dataframe, parse the flight_date column. 
+
+flight_data_parsed <- broken_flights %>% mutate(flight_date = mdy(flight_date))
+
+class(flight_data_parsed$flight_time)
