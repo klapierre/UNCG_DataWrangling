@@ -342,7 +342,7 @@ unique(clean_data$order)
 library(sf)
 
 # TASK: Convert clean_data into an sf (simple features) object using longitude and latitude
-clean_sf <- st_as_sf(clean_data, coords = c("lon", "lat"), crs = 4326)
+clean_sf <- st_as_sf(clean_data, coords = c("long", "lat"), crs = 4326)
 
 # TASK: Convert nc_map dataframe into an sf object
 nc_map_sf <- st_as_sf(nc_map, coords = c("long", "lat"), crs = 4326)
@@ -417,6 +417,8 @@ ggplot() +
 
 # QUESTION: What does changing the 'option' in scale_fill_viridis_c() do?
 
+#It changes the map's color palette.
+
 # ---------------------------------------------------------------------------- #
 
 # TASK: Adjust legend position for better readability
@@ -433,13 +435,20 @@ ggplot() +
 
 # QUESTION: Why might changing the legend position be useful?
 
+#It might be useful to make the map look cleaner or to make it more readable.
+
 # ---------------------------------------------------------------------------- #
 # INTERPRETING THE MAP --------------------------------------------------------
 
 # QUESTION: What does a lighter color indicate on this map?
 
+#Higher genera count.
+
 # QUESTION: Why might some counties have lower richness values? 
 
+#There are many possibilities. Maybe these counties are more urban, maybe their
+#ecosystems are dominated by non-mammal species, maybe they are simply more
+#barren, etc.
 
 # TASK: Save your most recent plot as an image file to your folder. 
 ggsave("nc_species_richness_map.png",width = 8, height = 6, dpi = 300)
