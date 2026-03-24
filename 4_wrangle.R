@@ -338,7 +338,7 @@ calispellTempFaquatic <- mutate(.data=calispellTempF,
 
 # TASK: Write code to create one more column named ecosystem in the 
 # calispellTempFaquatic dataframe and fill it with the word 'stream'.
-calispellTempFstream <- mutate(.data=calispellTempFaquatic, where='stream')
+calispellTempFaquatic <- mutate(.data=calispellTempFaquatic, ecosystem='stream')
 ?mutate
 
 --- Hey I'm not' sure why there's only'1 column added. If I added additional type=, it just overides. --- I fixed it, I was not understanding the label of the columns within my code!
@@ -354,7 +354,7 @@ calispellTempF4 <- unite(data=calispellTempFaquatic,
 # QUESTION: Describe in your own words what the code above does. What part 
 # creates a new column? What part tells R which columns to combine? What does 
 # the sep= argument do?
-
+it combined both the type and ecosystem column together. Ultimately creating a colon inbetween both values.
 
 # Another very useful function is separate, which takes apart a column into two
 # or more pieces.
@@ -366,10 +366,10 @@ calispellTempF5 <- separate(data=calispellTempF4,
                             sep='::')
 
 # QUESTION: Why isn't the column name in quotes this time?
-
+I believe it's due to'the lack of seperation required in the column since they are 2 different values now.
 
 # QUESTION: Describe in your own words what the code above does.
-
+Create a dataframe named calispellTempF5. Seperate the following from the dataframe calispellTempF4. Choose the column "type_ecosystem" Create into the colums of 'type', 'ecosystem'. seperate the values when the value has '::'
 
 # ---------------------------------------------------------- #
 ### PART 1.6: PIPES                                       ####
