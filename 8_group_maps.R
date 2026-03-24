@@ -325,7 +325,7 @@ unique(clean_data$order)
 library(sf)
 
 # TASK: Convert clean_data into an sf (simple features) object using longitude and latitude
-clean_sf <- st_as_sf(clean_data, coords = c("lon", "lat"), crs = 4326)
+clean_sf <- st_as_sf(clean_data, coords = c("long", "lat"), crs = 4326)
 
 # TASK: Convert nc_map dataframe into an sf object
 nc_map_sf <- st_as_sf(nc_map, coords = c("long", "lat"), crs = 4326)
@@ -391,7 +391,7 @@ ggplot() +
 ggplot() +
   geom_sf(data = nc_richness_map, 
           aes(fill = richness),  color = "black") +
-  scale_fill_viridis_c(option = "inferno", na.value = "gray90") +
+  scale_fill_viridis_c(option = "mako", na.value = "gray90") +
   theme_bw() +
   labs(title = "Richness of Mammals in North Carolina",
        fill = "Genera count",
@@ -399,6 +399,7 @@ ggplot() +
        y = "Latitude")
 
 # QUESTION: What does changing the 'option' in scale_fill_viridis_c() do?
+#Answer: the scale_fill_viridis_c() function has a few color scales that can be added to the option argument in the function. By changing the option, you are changing the color gradient that is used through the map.
 
 # ---------------------------------------------------------------------------- #
 
@@ -415,13 +416,16 @@ ggplot() +
        y = "Latitude")
 
 # QUESTION: Why might changing the legend position be useful?
+# Answer: Changing the legend is helpful because depending on the person, the location of the key makes it easier to read the map. For me, it is easier to have the key on the right because I tend to look at figures like I read from left to right. So, I find a point of interest on the left and find what it means on the right.
 
 # ---------------------------------------------------------------------------- #
 # INTERPRETING THE MAP --------------------------------------------------------
 
 # QUESTION: What does a lighter color indicate on this map?
+#Answer: The lighter color on this map means a higher # of genera.
 
 # QUESTION: Why might some counties have lower richness values? 
+# Answer: Some might have lower richness values because of them being more urban areas, or more agricultural areas.
 
 
 # TASK: Save your most recent plot as an image file to your folder. 
