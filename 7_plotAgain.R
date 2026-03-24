@@ -370,11 +370,25 @@ ggplot(data=mpg, aes(x=hwy)) +
 # HINT: Look back at the Transform assignment if you forget how to summarize the
 # data. Also recall, standard error = 1.96*standard deviation.
 
+highwayMPG <- mpg %>%
+  group_by(class) %>%
+  summarize(
+    hwy_mean=mean(hwy, na.rm=TRUE),
+    hwy_sd=sd(hwy, na.rm=TRUE),
+    hwy_se=(sd(hwy, na.rm=TRUE))*1.96) %>%
+  ungroup()
+
 
 # TASK: Create a bar graph showing the average highway MPG on the y-axis and 
 # car class on the x-axis. Fill the bars by class. Add in error bar caps that are 20%
 # the width pf the bars.
 # HINT: Don't forget to change stat from the default in your geom_bar() statement!
+
+ggplot(highwayMPG, aes(x = as.factor(class), y = hwy_mean)) + 
+  geom_bar(stat='identity') +
+  geom_errorbar(aes(ymin=hwy_mean-hwy_sd,ymax=hwy_mean+hwy_sd),
+                width=0.2)
+
 
 
 # ---------------------------------------------------------- #
