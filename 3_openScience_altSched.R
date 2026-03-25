@@ -88,15 +88,16 @@ conSMEcoverAlt <- read.csv("https://pasta.lternet.edu/package/data/eml/knb-lter-
 
 ## QUESTION: What did this code do? What can you say about the two dataframes 
 ## you have created thus far?
-
+## It put a fie under the Git tab and basically I could commit it.
 
 ## TASK: Check to see if the two dataframes are identical using an R function.
 ## (Hint: remember the Week 1 assignment?)
-
+conSMEcoverAlt == conSMEcoverAlt
 
 ## QUESTION: Why might it be better to source data straight from the data portal?
 ## Why might it be worse?
-
+## It might be better for the sake of getting all the data rather than only part of
+## it, but might be worse since it could be massive.
 
 ## TASK: Save your R script. Then stage, commit, and pull/push your
 ## modified code to the branch you created for this week with an appropriate 
