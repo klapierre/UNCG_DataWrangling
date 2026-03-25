@@ -492,8 +492,13 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 
 # TASK: Check out the section on complete themes in the ggplot2 book here:
 # https://ggplot2-book.org/polishing.html#themes.  Try out two more themes below.
+ggplot(redband, aes(x = Length, y = Weight)) + 
+  geom_point() +
+  theme_grey()
 
-
+ggplot(redband, aes(x = Length, y = Weight)) + 
+  geom_point() +
+  theme_light()
 # Rather than using the pre-set themes, we can also create our own! 
 # The theme can be set to modify the text of plot titles, axis titles, axis labels,
 # and legend elements (more about legends next week) to modify things such as
@@ -505,10 +510,13 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 # QUESTION: Compare the output for each of the following figures.
 # Based on the output, what do you think panel.grid.minor vs panel.background 
 # refer to? What does the aesthetic element_blank() do?
+
+#panel.grid.minor controls minor gridlines and element_blank removes them
 ggplot(redband, aes(x = Length, y = Weight)) + 
   geom_point() +
   theme(panel.grid.minor = element_blank())
 
+#panel.background controls the background of the panel and removes the panel background
 ggplot(redband, aes(x = Length, y = Weight)) + 
   geom_point() +
   theme(panel.background = element_blank())
@@ -520,11 +528,16 @@ ggplot(redband, aes(x = Length, y = Weight)) +
   theme(axis.title.y=element_text(size=100))
 
 # QUESTION: What does element_text() refer to in the code above?
-
+#element_text refers to how the y axis title text is displayed such as text
+#size 100.
 
 # TASK: Write your own code below to change the size of the x-axis labels
 # (i.e., the numbers along the x-axis) to 50. 
 # HINT: Check out the ggplot cookbook or ggplot2 themes websites for help.
+ggplot(redband, aes(x = Length, y = Weight)) + 
+  geom_point() +
+  theme(axis.title.y=element_text(size=100)) +
+  theme(axis.text.x=element_text(size=50))
 
 
 # We can set the theme to include all kinds of variations by adding them all to
