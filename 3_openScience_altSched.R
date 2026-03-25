@@ -29,13 +29,14 @@
 
 ## QUESTION: Is the data collection still ongoing?
 ## Confession from Professor Komatsu: despite the dates of data included in the 
-## file, the answer here is yes.We're just behind in getting the data cleaned 
+## file, the answer here is yes. We're just behind in getting the data cleaned 
 ## and uploaded :(
-
+## Uh, I guess yes according to the confession. Also, that's such a mood because
+## things happen. :)
 
 ## QUESTION: Given your answer to the previous question, why might it be good to
 ## have a reproducible script for data analysis related to this dataset?
-
+## To allow other people to possibly recreate the data.
 
 # ----------------------------------------------------------
 #### 2) Preventing GitHub from syncing the data files.####
@@ -44,10 +45,12 @@
 ## We can use the .gitignore file to tell git what files not to sync to GitHub!
 
 ## QUESTION: What are two reasons why we wouldn't want GitHub to sync this data?
-
-
+## 1. It might be too big for GitHub.
+## 2. Maybe someone in the repository is disorganized and has everything in one
+## folder and they don't want their private files shared with everyone else.
 
 ## TASK: Check the Git tab in RStudio. Do you see your data folder listed?
+## Yes
 ## Now, open the .gitignore file from the files tab in RStudio.
 ## Tell git to ignore the entire folder containing the data you just downloaded.
 ## Save the .gitignore file.
