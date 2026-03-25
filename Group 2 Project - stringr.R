@@ -207,7 +207,7 @@ str_locate_all(fivefruits, "a")
 ## a count of how many fruits in the fruit vector contain the word "berry".
 
 
-## QUESTION: How many did fruits containing the word "berry" are there in the fruit vector?
+## QUESTION: How many fruits containing the word "berry" are there in the fruit vector?
 
 
 ## Great job! You've learned how to use stringr to detect, count, and locate 
