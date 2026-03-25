@@ -600,7 +600,8 @@ manufacturerFreq <- mpg %>%
 
 # TASK: Make a bar graph of the number of cars (frequency) by manufacturer using
 # the dataframe we created above.
-
+ggplot(manufacturerFreq,aes(x=manufacturer,y=frequency)) +
+  geom_bar(stat='identity')
 
 # We can switch the bar chart you created above into a pie chart simply by changing
 # the coordinate system through a series of steps as follows:
@@ -630,13 +631,13 @@ ggplot(manufacturerFreq, aes(x="", y=frequency, fill=manufacturer)) +
         legend.key.size = unit(.75, "lines"))
 
 # TASK: Annotate the code below to describe what each line does:
-ggplot(manufacturerFreq, aes(x="", y=frequency, fill=manufacturer)) +
-  geom_bar(stat="identity", width=1) +
-  coord_polar(theta="y", start=0) +
-  theme_void() +
-  theme(legend.title = element_text(size = 12.5), 
-        legend.text  = element_text(size = 8.5),
-        legend.key.size = unit(.75, "lines"))
+ggplot(manufacturerFreq, aes(x="", y=frequency, fill=manufacturer)) + #Simple part of gathering data for a plot
+  geom_bar(stat="identity", width=1) + #Determines it's a bar graph with a specific width
+  coord_polar(theta="y", start=0) + #makes the plot radial rather than up a single y-axis, tells the plot to come out from the center
+  theme_void() + #themes the plot
+  theme(legend.title = element_text(size = 12.5), #determines size of legend title
+        legend.text  = element_text(size = 8.5), #determines font size of legend text
+        legend.key.size = unit(.75, "lines")) #determines total size of the legend
 
 
 # ---------------------------------------------------------- #
