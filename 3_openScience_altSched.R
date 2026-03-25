@@ -120,15 +120,21 @@ conSMEcoverAlt == conSMEcoverAlt
 ## QUESTION: What naming convention do you plan to use for this course for the
 ## following types of objects in R:
 ## R scripts
+## Underscores replacing spaces.
 ## vectors
+## Underscores replacing spaces.
 ## dataframes
+## Underscores replacing spaces.
 ## columns within dataframes
+## Underscores replacing spaces.
 ## homemade functions
+## Underscores replacing spaces.
 
 
 ## QUESTION: Do all of your objects follow the same naming convention or do you
 ## plan to use different naming conventions to reference different object types?
-
+## They'll all follow the same naming convention because I don't trust myself
+## to maintain consistency otherwise.
 
 ## TASK: Save your R script. Stage, commit, and pull/push your modified code to 
 ## the branch you created for this week with an appropriate commit message.
