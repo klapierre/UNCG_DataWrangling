@@ -432,6 +432,12 @@ ggplot(data = highwayMPG, aes(x = class, y = hwy_mean, fill = class)) +
 # If in doubt, try a bunch of ways until it looks how we want it. And consult 
 # your helpful ggplot resources on the web.
 
+ggplot(data = highwayMPG, aes(x = class, y = hwy_mean, fill = class)) +
+  geom_bar(stat = "identity", color = "black") +
+  scale_fill_brewer(palette = "Dark2") +
+  theme(legend.position = "none") +
+  xlab("Class of Car") +
+  ylab("Average Highway MPG")
 
 # ---------------------------------------------------------- #
 #### 2.2 DETOUR! AXIS MODIFICATIONS                       ####
