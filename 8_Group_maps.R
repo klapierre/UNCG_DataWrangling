@@ -326,12 +326,47 @@ geom_point(data = clean_data,
            size = 1,
            alpha = 0.7)
 
+ggplot() +
+  geom_polygon(data = nc_map,
+               aes(x = long, y = lat, group = group),
+               fill = "white",
+               color = "black") +
+  theme_bw() +
+  coord_fixed(1.5) +
+  geom_point(data = clean_data,
+             aes(x = lon, y = lat, color = order),
+             size = 1,
+             alpha = 0.7)
+
+
+
 # From here, you can adjust the theme to your liking. 
 # NOTE: With a plus sign between sections, if you begin typing 'theme' on the next line, options will appear that you can browse through! 
 
 # QUESTION: Why might it be useful to have slightly transparent data points (by setting alpha to a number below 1) when mapping in a small area such as this?  
 
+## When you have a small/dense area, overlap may occur. With some transparency, you can see where overlapping occurs. This helps us keep the map structure stable too, since we know where everything is supposed to belong.
+
+
+
 # TASK: after adding a theme to the plot, add and title and an x and y axis label with the labs() function. 
+
+ggplot() +
+  geom_polygon(data = nc_map,
+               aes(x = long, y = lat, group = group),
+               fill = "white",
+               color = "black") +
+  theme_bw() +
+  coord_fixed(1.5) +
+  geom_point(data = clean_data,
+             aes(x = long, y = lat, color = order),
+             size = 1,
+             alpha = 0.7) +
+  theme_minimal() +
+  labs(title = "Mammals in North Carolina",
+       x = "Long",
+       y = "Lat")
+
 
 
 # In the end, we should have a chunk of code that looks something like this (theme can be your choosing):
@@ -352,6 +387,10 @@ ggplot() +
        y = "Latitude")
 
 # QUESTION: Why did I decide to color the points by order? What happens if you color the points (within the geom_point section) by genus instead? 
+
+## Coloring by order will only show us the few order names, so you have an organized map and legend. Coloring by genus gives us many genus names, causing the map to get really small and the legend to heavily overlap with the map.
+
+
 
 # HINT: the unique() function allows us to see how many unique values are in each of our columns 
 unique(clean_data$genus)
