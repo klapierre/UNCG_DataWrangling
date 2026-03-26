@@ -570,21 +570,30 @@ ggplot(mpg, aes(hwy)) +
 
 # TASK: Recreate the graph above, but using geom_bar() instead
 
+ggplot(mpg, aes(x = hwy)) + 
+  geom_bar()
 
 # TASK: Try making a histogram with the categorical variable 'manufacturer'.
 # What error message do you get?
 
+ggplot(mpg, aes(x = manufacturer)) + 
+  geom_histogram()
+
+##Error in geom_histogram - needs continous variable.
 
 # QUESTION: What happens when you follow the advice of the error message and 
 # make stat='count'?
 ggplot(mpg, aes(manufacturer)) + 
   geom_histogram(stat="count")
 
+##bar chart created that shows car count for each manufacturer. 
 
 # TASK: Make a boxplot comparing the distribution of cty (city mileage) for
 # each class of car.
 # HINT: Look back to last week if you forget how to make a boxplot.
 
+ggplot(mpg, aes(x = class, y = cty)) + 
+  geom_boxplot()
 
 # We can also make a different type of distribution, a violin plot using the 
 # geom_violin statement as follows:
@@ -593,6 +602,7 @@ ggplot(mpg, aes(x=class, y=cty)) +
 
 # QUESTION: What does a violin plot show? Check google if you're unsure.
 
+##Shows the distribution of data including how dense or spread out they are.   
 
 # ---------------------------------------------------------- #
 #### 5.0 COMPOSITION                                      ####
