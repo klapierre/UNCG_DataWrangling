@@ -422,7 +422,7 @@ unique(clean_data$order)
 library(sf)
 
 # TASK: Convert clean_data into an sf (simple features) object using longitude and latitude
-clean_sf <- st_as_sf(clean_data, coords = c("lon", "lat"), crs = 4326)
+clean_sf <- st_as_sf(clean_data, coords = c("long", "lat"), crs = 4326)
 
 # TASK: Convert nc_map dataframe into an sf object
 nc_map_sf <- st_as_sf(nc_map, coords = c("long", "lat"), crs = 4326)
@@ -497,6 +497,10 @@ ggplot() +
 
 # QUESTION: What does changing the 'option' in scale_fill_viridis_c() do?
 
+## 'option' is referring to choosing a color palette manually. In this case, we used the "inferno" color palette. 
+
+
+
 # ---------------------------------------------------------------------------- #
 
 # TASK: Adjust legend position for better readability
@@ -513,12 +517,23 @@ ggplot() +
 
 # QUESTION: Why might changing the legend position be useful?
 
+## Changing the legend position might help if it improves the layout. Sometimes a legend can get in the way in one position but not the other. Sometimes it can save space. It can also be cleaner in a presentation sense.
+
+
+
 # ---------------------------------------------------------------------------- #
 # INTERPRETING THE MAP --------------------------------------------------------
 
 # QUESTION: What does a lighter color indicate on this map?
 
+## A lighter color indicates a higher species richness count.
+
+
+
 # QUESTION: Why might some counties have lower richness values? 
+
+## Some counties may have lower richness if there is a less diverse habitat, more urban environments, and overall human disturbance with (ex. deforestation). I also know that some diversity comes from elevation. I can back this up by the graph showing much more diversity in the western mountains compared the easern coastline. 
+
 
 
 # TASK: Save your most recent plot as an image file to your folder. 
