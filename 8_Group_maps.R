@@ -227,14 +227,49 @@ ggplot(us_states_population_2) +
 
 # TASK: Using read.csv(), create an object titled "mammal_data" from the NC_mamm_data csv 
 
+mammal_data <- read.csv("NC_mamm_data.csv")
+
+
+
 # TASK: Using the colnames() function, review what columns exist in your current dataset
+
+colnames(mammal_data)
+[1] "USE_LICENSE_URL" "COUNTRY"         "STATE_PROV"      "SPEC_LOCALITY"  
+[5] "VERBATIM_DATE"   "DEC_LAT"         "DEC_LONG"        "SEX"            
+[9] "LIFE_STAGE"      "GENUS"           "PHYLORDER"       "FAMILY" 
+
+
 
 # TASK: Remove the 'USE_LICENSE_URL' column using a pipe and the select(- ) 
 # function because it is not needed for plotting. You do not need to create a new object for this; just reassign to the same name 'mammal_data' 
 
 # Using the rename() function introduced in assignment 4, rename the remaining 11 columns in the following order: country, state, locality, date, lat, long, sex, life_stage, genus, order, family.
 
+mammal_data <- mammal_data %>%
+  select(-USE_LICENSE_URL) %>%
+  rename(country = COUNTRY,
+         state = STATE_PROV,
+         locality = SPEC_LOCALITY,
+         date = VERBATIM_DATE,
+         lat = DEC_LAT,
+         long = DEC_LONG,
+         sex = SEX,
+         life_stage = LIFE_STAGE,
+         genus = GENUS,
+         order = PHYLORDER,
+         family = FAMILY)
+
+
+
 # Using the mammal_data object, clean NA values from columns 'lon', 'lat', 'locality' and 'genus'. Create new object for this cleaned data titled 'clean_data'
+
+clean_data <- mammal_data %>%
+  filter(!is.na(long),
+         !is.na(lat),
+         !is.na(locality),
+         !is.na(genus))
+
+
 
 # Great, now our data is clean and easier to work with! 
 
