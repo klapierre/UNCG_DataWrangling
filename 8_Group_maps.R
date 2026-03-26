@@ -292,6 +292,10 @@ ggplot() +
 
 # QUESTION: What do you think the geom_polygon function is doing here?
 
+## geom_polygon is creating the shape for each county line in the US.
+
+
+
 # TASK: Create a new dataframe titled 'nc_map' that only has North Carolina counties by assigning 'north carolina', typed exactly as it is shown in the in the 'counties' dataframe previously built. The code should look like this, with region following county:
 nc_map <- map_data("county", region = "north carolina")
 
@@ -306,6 +310,10 @@ ggplot() +
   coord_fixed(1.5) 
 
 # QUESTION: What do you think the 'coord_fixed' function is doing here? 
+
+## coord_fixed is making sure the plotted map fits the window given.
+
+
 
 # ADDING THE DATA POINTS TO NC MAP---------------------------------------------
 
