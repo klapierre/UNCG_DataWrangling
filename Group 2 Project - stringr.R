@@ -281,8 +281,7 @@ NYC_Baby_Names_2021_List <- split(NYC_Baby_Names_2021,NYC_Baby_Names$Gender)
 
 Male_ia <- str_count(NYC_Baby_Names_2021_List[["MALE"]]$Childs_First_Name,"ia")
 
-# QUESTION: What is the total incidences of the string "ia" among male names?
-# Do any individual names have more than one instance of the string "ia"?
+# QUESTION: Do any individual names have more than one instance of the string "ia"?
 
 # Now, this data doesn't tell us much as it exists at the moment, as a list of
 # values. In order to measure the total incidence of the string among names,
