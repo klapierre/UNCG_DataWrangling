@@ -439,6 +439,33 @@ Create a new column labled calispell_temp_F with values from the calispell_temp 
 # (4) Remove any observations that were not obtained from Strip 1.
 # (5) Create a new column called NTrtInfo that include the information from both 
 # NTrt and NAdd, separated by an underscore.
+
+cdr <- read.csv("e001_Plant aboveground biomass carbon and nitrogen.csv", stringsAsFactors = TRUE) %>% 
+  mutate(Exp = 001) %>% 
+  rename('% Carbon' = C, '% Nitrogen'= N) %>% 
+  filter(Strip 1) %>% 
+  unite(col='NTrtInfo', c('NTrt','NAdd'), sep = '_') %>% 
+  seperate(col= NTrtInfo, into = c('genus', 'species'))
+
+  
+  calispellTempF5 <- separate(data=calispellTempF4,
+                              col=type_ecosystem,
+                              into=c('type', 'ecosystem'),
+                              sep='::')
+  
+unite(data=calispellTempFaquatic,
+      col='type_ecosystem',
+      c('type', 'ecosystem'),
+      sep='::')
+
+
+calispellHighTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv", stringsAsFactors = TRUE) %>% 
+  rename(calispell_temp=Calispell.Cr.Temp.C.,
+         smalle_temp=Smalle.Cr.Temp.C.,
+         winchester_temp=Winchester.Cr.Temp..C.) %>% 
+  select(Date, Time, calispell_temp) %>% 
+  filter(calispell_temp>=15) %>% 
+  mutate(calispell_temp_F = calispell_temp*9/5 + 32)
 # (6) Split the Species column into two columns, one named 'genus' and one named 
 # 'species'.
 # (7) Create a column called CN that contains the ratio of C to N for each 
