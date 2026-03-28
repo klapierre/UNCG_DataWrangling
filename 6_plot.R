@@ -609,6 +609,9 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 # HINT: Check the help file for facet_wrap if you're unsure. Look under the 
 # Arguments section for scales.
 
+ggplot(redband, aes(x = Length)) + 
+  geom_histogram() + 
+  facet_wrap(~ScaleAge, scales = "free_y")
 
 # ---------------------------------------------------------- #
 #### PART 1.11: SAVING YOUR GRAPHICS                      ####
@@ -622,14 +625,23 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 # customize this output.
 
 # Try running the following code:
+
 ggsave("Redband_histogram_facet.png")
 
 # QUESTION: Where did this file show up? And what was the graph?
-
+#This file showed up in my working directory for this class. It is the histogram 
+#we made in the previous task.
 
 # TASK: Investigate the ggsave() function through the help files. Then write
 # code to save the file at 600 dpi, 10 inch width and 8 inch height.
 
+ggsave("Redband_histogram_facet.png",
+       units = "in",
+       dpi = 600,
+       width = 10,
+       height = 8)
+
+help(ggsave)
 
 # NOTE: You can also save the graphics you make by exporting them from the plots
 # tab in RStudio. However, this can be less precise than specifying the graphic
