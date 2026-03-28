@@ -396,6 +396,8 @@ ggplot() +
 
 # QUESTION: What does changing the 'option' in scale_fill_viridis_c() do?
 
+#It changes the color gradient of the map
+
 # ---------------------------------------------------------------------------- #
 
 # TASK: Adjust legend position for better readability
@@ -412,13 +414,19 @@ ggplot() +
 
 # QUESTION: Why might changing the legend position be useful?
 
+#For better readability.
+
 # ---------------------------------------------------------------------------- #
 # INTERPRETING THE MAP --------------------------------------------------------
 
 # QUESTION: What does a lighter color indicate on this map?
 
+#The lighter color indicates higher mammal richness
+
 # QUESTION: Why might some counties have lower richness values? 
 
+# May be lower richness because of urbanization and big areas with lots of people
+#meaning there is less habitats for mammals to live.
 
 # TASK: Save your most recent plot as an image file to your folder. 
 ggsave("nc_species_richness_map.png",width = 8, height = 6, dpi = 300)
