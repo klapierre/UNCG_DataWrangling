@@ -184,16 +184,28 @@ states %>% left_join(state_data %>% select(State, Population), by = "State") %>%
 
 # TASK: Download the NC_mamm_data.csv into your UNCG_DataWrangling folder on your desktop
 
-# TASK: Using read.csv(), create an object titled "mammal_data" from the NC_mamm_data csv 
+# TASK: Using read.csv(), create an object titled "mammal_data" from the NC_mamm_data csv
+
+mammal_data <- read.csv("NC_mamm_data.csv")
 
 # TASK: Using the colnames() function, review what columns exist in your current dataset
+
+colnames(mammal_data)
 
 # TASK: Remove the 'USE_LICENSE_URL' column using a pipe and the select(- ) 
 # function because it is not needed for plotting. You do not need to create a new object for this; just reassign to the same name 'mammal_data' 
 
+mammal_data <- mammal_data %>% select(-USE_LICENSE_URL)
+
 # Using the rename() function introduced in assignment 4, rename the remaining 11 columns in the following order: country, state, locality, date, lat, long, sex, life_stage, genus, order, family.
 
+mammal_data <- mammal_data %>% rename(country = COUNTRY, state = STATE_PROV, locality = SPEC_LOCALITY,
+date = VERBATIM_DATE, lat = DEC_LAT, long = DEC_LONG, sex = SEX, life_stage = LIFE_STAGE,
+genus = GENUS, order = PHYLORDER, family = FAMILY)
+
 # Using the mammal_data object, clean NA values from columns 'lon', 'lat', 'locality' and 'genus'. Create new object for this cleaned data titled 'clean_data'
+
+clean_data <- mammal_data %>% drop_na(long, lat, locality, genus)
 
 # Great, now our data is clean and easier to work with! 
 
@@ -216,6 +228,8 @@ ggplot() +
 
 # QUESTION: What do you think the geom_polygon function is doing here?
 
+#It probably helps with making the shapes for the counties
+
 # TASK: Create a new dataframe titled 'nc_map' that only has North Carolina counties by assigning 'north carolina', typed exactly as it is shown in the in the 'counties' dataframe previously built. The code should look like this, with region following county:
 nc_map <- map_data("county", region = "north carolina")
 
@@ -231,23 +245,29 @@ ggplot() +
   
 # QUESTION: What do you think the 'coord_fixed' function is doing here? 
 
+#It keeps the map proportional
+
 # ADDING THE DATA POINTS TO NC MAP---------------------------------------------
 
 # Using the 'clean_data' df we created, we can map these points onto out North Carolina map to see species occurrences! 
 # To do this, we can add the geom_point function to our previous chunk of code.
 
 # TASK: With a plus sign between the sections, add the lines below to the above code:
-geom_point(data = clean_data,
-           aes(x = lon, y = lat, color = order),
-           size = 1,
-           alpha = 0.7)
+ggplot() + geom_polygon(data = nc_map, aes(x = long, y = lat, group = group),
+fill = "white", color = "black") + theme_bw() + coord_fixed(1.5) +
+geom_point(data = clean_data, aes(x = long, y = lat, color = order), size = 1,
+alpha = 0.7)
 
 # From here, you can adjust the theme to your liking. 
 # NOTE: With a plus sign between sections, if you begin typing 'theme' on the next line, options will appear that you can browse through! 
 
 # QUESTION: Why might it be useful to have slightly transparent data points (by setting alpha to a number below 1) when mapping in a small area such as this?  
 
+#They can help with overlap and also make it easier to see where data points are
+
 # TASK: after adding a theme to the plot, add and title and an x and y axis label with the labs() function. 
+
+labs(title = "Mammal occurrences in NC", x = "Longitude", y = "Latitude")
 
 
 # In the end, we should have a chunk of code that looks something like this (theme can be your choosing):
@@ -259,7 +279,7 @@ ggplot() +
   theme_bw() +
   coord_fixed(1.5) +
   geom_point(data = clean_data,
-             aes(x = lon, y = lat, color = order),
+             aes(x = long, y = lat, color = order),
              size = 1,
              alpha = 0.7) +
   theme_bw() +
@@ -268,6 +288,8 @@ ggplot() +
        y = "Latitude")
 
 # QUESTION: Why did I decide to color the points by order? What happens if you color the points (within the geom_point section) by genus instead? 
+
+#The color can help to distinguish them, if we did the genus instead then there would be lots of colors on the map. 
 
 # HINT: the unique() function allows us to see how many unique values are in each of our columns 
 unique(clean_data$genus)
