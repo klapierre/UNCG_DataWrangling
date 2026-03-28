@@ -135,7 +135,7 @@ ggplot(us_states_frost_2)+
 # have the high number of frost days.
 
 #Question: Does florida or NC have more frost days?
-# Florida
+# NC
 
 #Question: Does there appear to be a relationship between latitude and 
 #number of frost days? Why or why not?
@@ -210,19 +210,25 @@ colnames(mammal_data)
 # Using the rename() function introduced in assignment 4, rename the remaining 11 columns in the following order: country, state, locality, date, lat, long, sex, life_stage, genus, order, family.
 mammal_data <- rename (.data= mammal_data,
                        country=COUNTRY, 
-                      state=STATE_PROV,
-                      locality=SPEC_LOCALITY ,
-                    date=VERBATIM_DATE ,
-                     lat=DEC_LAT ,
-                     long=DEC_LONG,
-                     sex=SEX,
-                   life_stage=LIFE_STAGE,
-                      genus=GENUS,
-                   order=PHYLORDER,
-                   family=FAMILY)
+                       state=STATE_PROV,
+                       locality=SPEC_LOCALITY ,
+                       date=VERBATIM_DATE ,
+                       lat=DEC_LAT ,
+                       long=DEC_LONG,
+                       sex=SEX,
+                       life_stage=LIFE_STAGE,
+                       genus=GENUS,
+                       order=PHYLORDER,
+                       family=FAMILY)
 
 colnames (mammal_data)
 # Using the mammal_data object, clean NA values from columns 'lon', 'lat', 'locality' and 'genus'. Create new object for this cleaned data titled 'clean_data'
+clean_data <- mammal_data %>% 
+  filter (!is.na(long),
+          !is.na(lat),
+          !is.na(locality),
+          !is.na(genus))
+
 # Great, now our data is clean and easier to work with! 
 
 # BUILDING THE MAP
@@ -243,6 +249,8 @@ ggplot() +
   theme_bw()
 
 # QUESTION: What do you think the geom_polygon function is doing here?
+# It is using longitude, latitude, and group data from counties dataframe
+# to make each US county as a polygon in the map.
 
 # TASK: Create a new dataframe titled 'nc_map' that only has North Carolina counties by assigning 'north carolina', typed exactly as it is shown in the in the 'counties' dataframe previously built. The code should look like this, with region following county:
 nc_map <- map_data("county", region = "north carolina")
@@ -258,6 +266,7 @@ ggplot() +
   coord_fixed(1.5) 
 
 # QUESTION: What do you think the 'coord_fixed' function is doing here? 
+# It defines the ratio of x-axis length vs y-axis length being displayed on the map.
 
 # ADDING THE DATA POINTS TO NC MAP---------------------------------------------
 
@@ -265,18 +274,51 @@ ggplot() +
 # To do this, we can add the geom_point function to our previous chunk of code.
 
 # TASK: With a plus sign between the sections, add the lines below to the above code:
-geom_point(data = clean_data,
-           aes(x = lon, y = lat, color = order),
-           size = 1,
-           alpha = 0.7)
+ggplot() +
+  geom_polygon(data = nc_map,
+               aes(x = long, y = lat, group = group),
+               fill = "white",
+               color = "black") +
+  theme_bw() +
+  coord_fixed(1.5)+
+  geom_point(data = clean_data,
+             aes(x = long, y = lat, color = order),
+             size = 1,
+             alpha = 0.7)
 
 # From here, you can adjust the theme to your liking. 
 # NOTE: With a plus sign between sections, if you begin typing 'theme' on the next line, options will appear that you can browse through! 
+ggplot() +
+  geom_polygon(data = nc_map,
+               aes(x = long, y = lat, group = group),
+               fill = "white",
+               color = "black") +
+  theme_minimal() +
+  coord_fixed(1.5)+
+  geom_point(data = clean_data,
+             aes(x = long, y = lat, color = order),
+             size = 1,
+             alpha = 0.7)
 
 # QUESTION: Why might it be useful to have slightly transparent data points (by setting alpha to a number below 1) when mapping in a small area such as this?  
+# It helps view points overlapping on top of each other as well the county
+# boundaries.
 
 # TASK: after adding a theme to the plot, add and title and an x and y axis label with the labs() function. 
-
+ggplot() +
+  geom_polygon(data = nc_map,
+               aes(x = long, y = lat, group = group),
+               fill = "white",
+               color = "black") +
+  coord_fixed(1.5)+
+  geom_point(data = clean_data,
+             aes(x = long, y = lat, color = order),
+             size = 1,
+             alpha = 0.7)+
+  theme_minimal() +
+  labs(title = "Mammals in North Carolina",
+       x = "Longitude",
+       y = "Latitude")
 
 # In the end, we should have a chunk of code that looks something like this (theme can be your choosing):
 ggplot() +
@@ -287,7 +329,7 @@ ggplot() +
   theme_bw() +
   coord_fixed(1.5) +
   geom_point(data = clean_data,
-             aes(x = lon, y = lat, color = order),
+             aes(x = long, y = lat, color = order),
              size = 1,
              alpha = 0.7) +
   theme_bw() +
@@ -296,12 +338,30 @@ ggplot() +
        y = "Latitude")
 
 # QUESTION: Why did I decide to color the points by order? What happens if you color the points (within the geom_point section) by genus instead? 
+# It would show genus of different mammals in North Carolina rather than order.
+# Maybe colored by order previously because there was only handful order of 
+# mammals so it wouldn't crowd the map while there are many genus of mammals in 
+# NC and it would be lot of information on the map.
+ggplot() +
+  geom_polygon(data = nc_map,
+               aes(x = long, y = lat, group = group),
+               fill = "white",
+               color = "black") +
+  theme_bw() +
+  coord_fixed(1.5) +
+  geom_point(data = clean_data,
+             aes(x = long, y = lat, color = genus),
+             size = 1,
+             alpha = 0.7) +
+  theme_bw() +
+  labs(title = "Mammal captures in North Carolina",
+       x = "Longitude",
+       y = "Latitude")
 
 # HINT: the unique() function allows us to see how many unique values are in each of our columns 
 unique(clean_data$genus)
 unique(clean_data$family)
 unique(clean_data$order)
-
 
 # Note: If we wanted to, we could subset out dataframe by species while still working in the data cleaning section, and only plot one species at a time, or focus on different families, etc.
 
@@ -327,7 +387,7 @@ unique(clean_data$order)
 library(sf)
 
 # TASK: Convert clean_data into an sf (simple features) object using longitude and latitude
-clean_sf <- st_as_sf(clean_data, coords = c("lon", "lat"), crs = 4326)
+clean_sf <- st_as_sf(clean_data, coords = c("long", "lat"), crs = 4326)
 
 # TASK: Convert nc_map dataframe into an sf object
 nc_map_sf <- st_as_sf(nc_map, coords = c("long", "lat"), crs = 4326)
@@ -401,6 +461,7 @@ ggplot() +
        y = "Latitude")
 
 # QUESTION: What does changing the 'option' in scale_fill_viridis_c() do?
+# It defines what color map option to use. 
 
 # ---------------------------------------------------------------------------- #
 
@@ -417,14 +478,17 @@ ggplot() +
        y = "Latitude")
 
 # QUESTION: Why might changing the legend position be useful?
+# It depends on style of the authors and readability of the maps.
 
 # ---------------------------------------------------------------------------- #
 # INTERPRETING THE MAP --------------------------------------------------------
 
 # QUESTION: What does a lighter color indicate on this map?
+# Lighter color on the map indicates higher genera count or high species richness.
 
 # QUESTION: Why might some counties have lower richness values? 
-
+# It may depend on longitude. 84˚W and 82˚W longitude seems to have high genera
+# count.
 
 # TASK: Save your most recent plot as an image file to your folder. 
 ggsave("nc_species_richness_map.png",width = 8, height = 6, dpi = 300)
