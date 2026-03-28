@@ -44,6 +44,8 @@ head(state_data)
 #Question: What do you notice about the rownames and the data within the "State" 
 #column? 
 
+#There are two columns with the state names
+
 #Task: Run the following code:
 
 rownames(state_data) <- NULL
@@ -51,10 +53,14 @@ rownames(state_data) <- NULL
 #Question: Write code to display your dataset once again. What did the previous
 #code change within the dataset? What did NULL do to the rownames?
 
+state_data
+#Null took away the extra row names with the state name and changed them to numbers
+
 #Task: Because we have loaded the dyplr package, we can create a new dataframe
 #with just State and Frost data. Write a code to select the State and Frost columns
 #from the state_data dataframe and name the new dataframe state_frost_data. 
 
+state_frost_data <- state_data %>% select(State, Frost)
 
 #View the new dataset and confirm that it is correct.
 
@@ -83,18 +89,27 @@ us_states_frost <- left_join(states, state_frost_data, by = c("State"))
 #days
 #Task: Run the following code and annotate the significance of each line of code.
 
-ggplot(us_states_frost) +
-  geom_sf(aes(fill = Frost), color = "blue") +
+ggplot(us_states_frost) + geom_sf(aes(fill = Frost), color = "blue") +
+  #Makes a plot and fills each state based on frost and colors them by the frost level
+  
   theme_minimal() +
+  #Gives a minimal theme
+  
   labs(fill = "Number of Frost Days", title = "United States Frost Data")
+  #Adds labels and legends
 
 #Question: Do you see a map under the "plots" tab?
+
+#well yes!
 
 #Question: What do you notice about the size of this map? Suppose we only want
 #to study frost data of mainland US states. Are there states we could omit from
 #this map to better visualize the data? HINT ** to help determine which states we may 
 #want to omit, check out the us_states_frost_2 tab at the different States included
 #in the dataframe.
+
+#The map is very tiny because its showing all of the U.S states frost data. if we want mainland data of frost we can omit areas
+#and territories like probably Hawaii, Puerto Rico and Guam
 
 #To filter out states or islands not connected to the mainland US, we can use the 
 #dplyr function.
@@ -111,14 +126,25 @@ us_states_frost_2 <- us_states_frost %>%
 #Write code to show a map of the us_states_frost_2 dataset following the steps
 #used to create the map from the us_states_frost dataset.
 
+ggplot(us_states_frost_2) + geom_sf(aes(fill = Frost), color = "blue") +
+  theme_minimal() + labs(fill = "Number of Frost Days", title = "Mainland United States Frost Data")
+
 #You should see a new map in the "plots" tab that is much larger than the previous 
 #map making it easier to visualize the data.
 
 #Question: What do dark blue states represent? What do light blue states represent?
 #Question: Does florida or NC have more frost days?
 
+#The dark blue represents lower numbers of frost days whereas light blue has higher
+#number of frost dates
+
+#Florida has less frost days than NC 
+
 #Question: Does there appear to be a relationship between latitude and 
 #number of frost days? Why or why not?
+
+#Yes, the states closer to the water and equator tend to have less frost days compared to those higher
+#and closer to the top/away from the equator have a higher number of frost days.
 
 #Task: Write code to create a map of the Population data from the state.x77 dataset.
 #You can reference the pevious steps of this assignment
@@ -126,11 +152,18 @@ us_states_frost_2 <- us_states_frost %>%
 #not blue (as we have already used this color) **Make sure to write the code
 #because your code will be viewed for grading, not the map itself!
 
+states %>% left_join(state_data %>% select(State, Population), by = "State") %>%
+  ggplot() + geom_sf(aes(fill = Population), color = "black") +
+  scale_fill_gradient(low = "pink", high = "purple") + theme_minimal() +
+  labs(fill = "Population", title = "United States Population Map")
+
+
 
 #Task: write three things you can infer from the map that you created:
-#1
-#2
-#3
+#1. Texas, California and Florida have some of the highest population numbers
+#2. The central states have lower populations than some of the coast states
+#3. The more rural areas have lower populations compared to areas that are more urban and 
+#have more city areas.
 
 # Part 3: MAPPING SPECIMEN OCCURRENCE DATA -----------------------------------
 
