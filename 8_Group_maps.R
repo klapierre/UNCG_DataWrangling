@@ -394,7 +394,7 @@ unique(clean_data$order)
 library(sf)
 
 # TASK: Convert clean_data into an sf (simple features) object using longitude and latitude
-clean_sf <- st_as_sf(clean_data, coords = c("lon", "lat"), crs = 4326)
+clean_sf <- st_as_sf(mammal_clean, coords = c("long", "lat"), crs = 4326)
 
 # TASK: Convert nc_map dataframe into an sf object
 nc_map_sf <- st_as_sf(nc_map, coords = c("long", "lat"), crs = 4326)
