@@ -106,6 +106,9 @@ ggplot(us_states_frost) +
 #this map to better visualize the data? HINT ** to help determine which states we may 
 #want to omit, check out the us_states_frost_2 tab at the different States included
 #in the dataframe.
+# The size of the map is small. The states we can remove are Alaska, Hawaii, Guam, 
+# America Samoa, United States Virgin Islands, Puerto Rico and lastly Commonwealth of the
+# Northen Mariana Islands. 
 
 #To filter out states or islands not connected to the mainland US, we can use the 
 #dplyr function.
@@ -121,27 +124,46 @@ us_states_frost_2 <- us_states_frost %>%
 
 #Write code to show a map of the us_states_frost_2 dataset following the steps
 #used to create the map from the us_states_frost dataset.
+ggplot(us_states_frost_2) +
+  geom_sf(aes(fill = Frost), color = "blue") +
+  theme_minimal()+
+  labs(fill = "Number of Frost Days", title = "United states Frost Data")
 
 #You should see a new map in the "plots" tab that is much larger than the previous 
 #map making it easier to visualize the data.
 
 #Question: What do dark blue states represent? What do light blue states represent?
 #Question: Does florida or NC have more frost days?
+# Dark blue states represent less frost days, light blue states represent more frost days.
+# NC has more frost days than Florida. 
 
 #Question: Does there appear to be a relationship between latitude and 
 #number of frost days? Why or why not?
+# Yes, there is a relationship between the latitude and number of frost days because the more
+# north the states are the more frost days are present. States in the south have fewer frost days.
 
 #Task: Write code to create a map of the Population data from the state.x77 dataset.
 #You can reference the pevious steps of this assignment
 #while you work through this task. make the color of the map any color that is
 #not blue (as we have already used this color) **Make sure to write the code
 #because your code will be viewed for grading, not the map itself!
-
+state_population_data <- state_data %>%
+  select(State, Population)
+us_states_population <- left_join(states, state_population_data, by = "State")
+us_states_population_2 <- us_states_population %>%
+  dplyr::filter(State != "Alaska" & State != "Hawaii" & State != "Guam" & 
+                  State != "American Samoa" & State != "United States Virgin Islands" & 
+                  State != "Puerto Rico" & 
+                  State != "Commonwealth of the Northern Mariana Islands")
+ggplot(us_states_population_2) +
+  geom_sf(aes(fill = Population), color = "pink") +
+  theme_minimal() +
+  labs(fill = "Population", title = "United States Population Data")
 
 #Task: write three things you can infer from the map that you created:
-#1
-#2
-#3
+#1 The color is still blue, but the outline is pink, because the default fill is blue.
+#2 California has a big population count. 
+#3 Maine has a low population count. 
 
 # Part 3: MAPPING SPECIMEN OCCURRENCE DATA -----------------------------------
 
