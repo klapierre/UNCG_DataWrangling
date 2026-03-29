@@ -477,7 +477,7 @@ ggplot() +
 ggplot() +
   geom_sf(data = nc_richness_map, 
           aes(fill = richness),  color = "black") +
-  scale_fill_viridis_c(option = "inferno", na.value = "gray90") +
+  scale_fill_gradient(low = "#006d77", high = "#e29578") +
   theme_bw() +
   theme(legend.position = "left") +
   labs(title = "Richness of Mammals in North Carolina",
@@ -486,6 +486,8 @@ ggplot() +
        y = "Latitude")
 
 # QUESTION: Why might changing the legend position be useful?
+
+#ANSWER: so you can read all the words on the map.
 
 # ---------------------------------------------------------------------------- #
 # INTERPRETING THE MAP --------------------------------------------------------
