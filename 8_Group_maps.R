@@ -243,10 +243,18 @@ ggplot() +
 # To do this, we can add the geom_point function to our previous chunk of code.
 
 # TASK: With a plus sign between the sections, add the lines below to the above code:
-geom_point(data = clean_data,
-           aes(x = lon, y = lat, color = order),
-           size = 1,
-           alpha = 0.7)
+
+ggplot() +
+  geom_polygon(data = nc_map,
+               aes(x = long, y = lat, group = group),
+               fill = "white",
+               color = "black") +
+  geom_point(data = clean_data,
+             aes(x = long, y = lat, color = order),
+             size = 1,
+             alpha = 0.7) +
+  theme_bw() +
+  coord_fixed(1.5)
 
 # From here, you can adjust the theme to your liking. 
 # NOTE: With a plus sign between sections, if you begin typing 'theme' on the next line, options will appear that you can browse through! 
@@ -254,6 +262,22 @@ geom_point(data = clean_data,
 # QUESTION: Why might it be useful to have slightly transparent data points (by setting alpha to a number below 1) when mapping in a small area such as this?  
 
 # TASK: after adding a theme to the plot, add and title and an x and y axis label with the labs() function. 
+ggplot() +
+  geom_polygon(data = nc_map,
+               aes(x = long, y = lat, group = group),
+               fill = "white",
+               color = "black") +
+  geom_point(data = clean_data,
+             aes(x = long, y = lat, color = order),
+             size = 1,
+             alpha = 0.7) +
+  theme_bw() +
+  coord_fixed(1.5) +
+  labs(
+    title = "Mammal captures in North Carolina",
+    x = "Longitude",
+    y = "Latitude"
+  )
 
 
 # In the end, we should have a chunk of code that looks something like this (theme can be your choosing):
