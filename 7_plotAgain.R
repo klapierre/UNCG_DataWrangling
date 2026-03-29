@@ -678,7 +678,9 @@ data("economics")
 # lines using geom_line().
 # HINT: use ?economics to get more information about this dataset.
 
-
+ggplot(economics, aes(x = date, y = unemploy)) +
+  geom_point(size = 2, color = "#2c4b61") +
+  geom_line(color = "#e691db")
 
 
 # ---------------------------------------------------------- #
