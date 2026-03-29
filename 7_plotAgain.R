@@ -423,7 +423,14 @@ ggplot(data = highwayMPG, aes(x = class, y = hwy_mean, fill = class)) +
 # (2) Bars filled with the color brewer palette "Dark2" using the scale_fill_manual
 #     statement
 # (3) No legend
-# (4) Informative x- and y-axis labels. 
+# (4) Informative x- and y-axis labels.
+
+ggplot(data = highwayMPG, aes(x= class, y = hwy_mean, fill = class)) +
+  geom_bar(stat = "identity", color = "black") +
+  scale_fill_brewer(palette = "Dark2") +
+  labs(x ="Car Class",
+       y = "Average Highway Mileage (MPG)") +
+   theme(legend.position = "none")
 
 # HINT: Carefully consider whether your color and/or fill should go within an aes() 
 # statement, the scale_fill_manual or scale_color_manual statements, or neither.
