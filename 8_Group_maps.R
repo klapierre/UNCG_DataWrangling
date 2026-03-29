@@ -406,7 +406,7 @@ ggplot() +
        y = "Latitude")
 
 # QUESTION: What does changing the 'option' in scale_fill_viridis_c() do?
-
+ # It changes the color gradient to a dark purple, red and yellow color palette. 
 # ---------------------------------------------------------------------------- #
 
 # TASK: Adjust legend position for better readability
@@ -422,14 +422,16 @@ ggplot() +
        y = "Latitude")
 
 # QUESTION: Why might changing the legend position be useful?
-
+# Changing the legend position might be useful because it makes the map and legend 
+# easier to read. 
 # ---------------------------------------------------------------------------- #
 # INTERPRETING THE MAP --------------------------------------------------------
 
 # QUESTION: What does a lighter color indicate on this map?
-
+# A lighter color indicates a lower richness value, this means there are fewer types of mammals in 
+# that county. 
 # QUESTION: Why might some counties have lower richness values? 
-
+# Some counties might have lower richness values because of the environment, climate or higher levels of urbanization. 
 
 # TASK: Save your most recent plot as an image file to your folder. 
 ggsave("nc_species_richness_map.png",width = 8, height = 6, dpi = 300)
