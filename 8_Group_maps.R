@@ -260,7 +260,8 @@ ggplot() +
 # NOTE: With a plus sign between sections, if you begin typing 'theme' on the next line, options will appear that you can browse through! 
 
 # QUESTION: Why might it be useful to have slightly transparent data points (by setting alpha to a number below 1) when mapping in a small area such as this?  
-
+#It might be useful to have slightly transparent data points because if you have a lot of data overlapping you will be
+# able to see all your data better than if it was not transparent. 
 # TASK: after adding a theme to the plot, add and title and an x and y axis label with the labs() function. 
 ggplot() +
   geom_polygon(data = nc_map,
@@ -296,9 +297,9 @@ ggplot() +
   labs(title = "Mammal captures in North Carolina",
        x = "Longitude",
        y = "Latitude")
-
+#(code does not work)
 # QUESTION: Why did I decide to color the points by order? What happens if you color the points (within the geom_point section) by genus instead? 
-
+# If i colored the points by genus there would be more groups on the map and it would be more detailed compared to order. 
 # HINT: the unique() function allows us to see how many unique values are in each of our columns 
 unique(clean_data$genus)
 unique(clean_data$family)
@@ -330,6 +331,8 @@ library(sf)
 
 # TASK: Convert clean_data into an sf (simple features) object using longitude and latitude
 clean_sf <- st_as_sf(clean_data, coords = c("lon", "lat"), crs = 4326)
+# correction 
+clean_sf <- st_as_sf(clean_data, coords = c("long", "lat"), crs = 4326)
 
 # TASK: Convert nc_map dataframe into an sf object
 nc_map_sf <- st_as_sf(nc_map, coords = c("long", "lat"), crs = 4326)
