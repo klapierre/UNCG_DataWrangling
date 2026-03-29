@@ -311,3 +311,8 @@ Male_Vowelless <- str_count(NYC_Baby_Names_2021_List[["MALE"]]$Childs_First_Name
 
 # QUESTION: What do you think the ^ signifies in this variant of str_count?
 # Why do you think that an upper and lower case variant of each vowel is included?
+
+#-------------------------------------------------------#
+# PART 1.5: MODIFYING CHARACTER VECTORS
+#-------------------------------------------------------#
+
