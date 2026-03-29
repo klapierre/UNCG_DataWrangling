@@ -537,6 +537,11 @@ ggplot(data = highwayMPG, aes(x = class, y = hwy_mean, fill = class)) +
 # HINT: Look back at the Transform assignment if you forget how to summarize the
 # data. Also, standard error = 1.96*standard deviation.
 
+cityMPG <- mpg %>% 
+  group_by(class) %>%
+  summarize(city_mean = mean(cty, na.rm = TRUE),
+    city_sd = sd(cty, na.rm = TRUE),
+    city_se = 1.96 * city_sd)
 
 # Now we want to plot our data in order from smallest to largest city MPG to get
 # a ranking. To do so, we need to use the reorder() function to rearrange the data
@@ -552,7 +557,14 @@ ggplot(cityMPG, aes(x=reorder(class, city_mean), y=city_mean)) +
 # (5) y-axis from 0 to 30 with tick marks every 5
 # (6) no legend.
 
-
+ggplot(cityMPG, aes(x = reorder(class, -city_mean), y = city_mean, fill = class)) +
+  geom_bar(stat = "identity", color = "darkgrey") +
+  geom_errorbar(aes(ymin = city_mean - city_sd, ymax = city_mean + city_sd), width = 0.3) +
+  scale_y_continuous(limits = c(0, 30), breaks = seq(0, 30, 5)) +
+  labs(x = "Vehicle Class",
+       y = "Mean City MPG") +
+  theme_minimal()+
+  theme(legend.position = "none")
 # ---------------------------------------------------------- #
 #### 4.0 DISTRIBUTION                                     ####
 # ---------------------------------------------------------- #
@@ -565,21 +577,29 @@ ggplot(mpg, aes(hwy)) +
 
 # TASK: Recreate the graph above, but using geom_bar() instead
 
+ggplot(mpg, aes(x = hwy)) +
+  geom_bar(stat = "bin")
 
 # TASK: Try making a histogram with the categorical variable 'manufacturer'.
 # What error message do you get?
 
+ggplot(mpg, aes(x = manufacturer)) +
+  geom_histogram()
+#ANSWER: the variable in the aes needs to be continuous
 
 # QUESTION: What happens when you follow the advice of the error message and 
 # make stat='count'?
 ggplot(mpg, aes(manufacturer)) + 
   geom_histogram(stat="count")
 
+#ANSWER: it will give you a bin for every manufacturer
 
 # TASK: Make a boxplot comparing the distribution of cty (city mileage) for
 # each class of car.
 # HINT: Look back to last week if you forget how to make a boxplot.
 
+ggplot(mpg, aes(x = class, y = cty)) +
+  geom_boxplot(fill= c("#4477AA", "#228833", "#AA3377", "#BBBBBB", "#66CCEE", "#CCBB44", "#EE6677"))
 
 # We can also make a different type of distribution, a violin plot using the 
 # geom_violin statement as follows:
@@ -588,6 +608,7 @@ ggplot(mpg, aes(x=class, y=cty)) +
 
 # QUESTION: What does a violin plot show? Check google if you're unsure.
 
+#ANSWER: it tells you the full distribution instead of just the medians and the quartiles.
 
 # ---------------------------------------------------------- #
 #### 5.0 COMPOSITION                                      ####
