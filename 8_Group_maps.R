@@ -494,8 +494,11 @@ ggplot() +
 
 # QUESTION: What does a lighter color indicate on this map?
 
+#ANSWER: A higher genera count.
+
 # QUESTION: Why might some counties have lower richness values? 
 
+#ANSWER: It looks like the most richness is in the mountain. Either sampling is incomplete, or there are fewer genera in the peidmont and coast. 
 
 # TASK: Save your most recent plot as an image file to your folder. 
 ggsave("nc_species_richness_map.png",width = 8, height = 6, dpi = 300)
