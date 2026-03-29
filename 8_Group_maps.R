@@ -218,6 +218,7 @@ ggplot() +
   theme_bw()
 
 # QUESTION: What do you think the geom_polygon function is doing here?
+# The geom_polygon function is connecting the coordinate points to form shapes so we can visualize the map. 
 
 # TASK: Create a new dataframe titled 'nc_map' that only has North Carolina counties by assigning 'north carolina', typed exactly as it is shown in the in the 'counties' dataframe previously built. The code should look like this, with region following county:
 nc_map <- map_data("county", region = "north carolina")
@@ -233,6 +234,8 @@ ggplot() +
   coord_fixed(1.5) 
   
 # QUESTION: What do you think the 'coord_fixed' function is doing here? 
+# The 'coord_fixed' function helps keep the map proportionally correct. This function 
+# controls the aspect ratio of the map. 
 
 # ADDING THE DATA POINTS TO NC MAP---------------------------------------------
 
