@@ -444,10 +444,12 @@ ggplot(data = highwayMPG, aes(x= class, y = hwy_mean, fill = class)) +
 
 # Run the following code, feeling free to modify colors as you prefer:
 ggplot(data=highwayMPG, aes(x=class, y=hwy_mean, fill=class)) +
-  geom_bar(stat='identity') 
+  geom_bar(stat='identity') +
+  scale_fill_manual(values=c("#009E73", "#785EF0", "#DC267F", "#FE6100", "#FFB000", "#CC79A7", "#000000"))
 
 # QUESTION: Where is ggplot getting the x-axis tick labels from?
 
+#ANSWER: when we identified class in the aes. 
 
 # Often our tick labels are not the best. We can modify them to be more informative
 # or visually appealing by directly modifying the dataframe, but again this feels
@@ -466,9 +468,14 @@ ggplot(data=highwayMPG, aes(x=class, y=hwy_mean, fill=class)) +
   coord_cartesian(ylim=c(0,50))
 
 # QUESTION: Try running the code above without the coord_cartesian() statement. 
+ggplot(data=highwayMPG, aes(x=class, y=hwy_mean, fill=class)) +
+  geom_bar(stat='identity') +
+  scale_y_continuous(breaks=seq(0, 50, 10))
+
 # What is surprising about the resulting graph? Based on this result, what do you
 # think the coord_cartesian() statement does?
 
+#ANSWER: Without the coord_cartesian() it autosets the y axis limits. 
 
 # We can also add a statement into the scale discrete or continuous statements
 # to name our axes, rather than putting in a whole separate step of xlab() or ylab().
@@ -495,6 +502,27 @@ ggplot(data=highwayMPG, aes(x=class, y=hwy_mean, fill=class)) +
 # (6) flip your axes
 # (7) remove the legend
 
+# install.packages("nationalparkcolors")  
+# install.packages("dutchmasters")
+## Not available for this version??? :'(
+
+
+ggplot(data = highwayMPG, aes(x = class, y = hwy_mean, fill = class)) +
+  geom_bar(stat = "identity", color = "black") +
+  scale_fill_manual(values = c("#4477AA", "#228833", "#AA3377", "#BBBBBB", "#66CCEE", "#CCBB44", "#EE6677")) +
+  scale_x_discrete(name = "Car Class",
+    labels = c("2seater" = "2-Seater",
+      "compact" = "Compact",
+      "midsize" = "Midsize",
+      "minivan" = "Minivan",
+      "pickup" = "Pickup",
+      "subcompact" = "Subcompact",
+      "suv" = "SUV")) +
+  scale_y_continuous(name = "Average Highway MPG",
+    limits = c(0, 30),
+    breaks = seq(0, 30, 5)) +
+  coord_flip() +
+  theme(legend.position = "none")
 
 # ---------------------------------------------------------- #
 #### 3.0 RANKING                                          ####
