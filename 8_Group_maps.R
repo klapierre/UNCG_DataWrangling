@@ -460,7 +460,7 @@ ggplot() +
 ggplot() +
   geom_sf(data = nc_richness_map, 
           aes(fill = richness),  color = "black") +
-  scale_fill_viridis_c(option = "inferno", na.value = "gray90") +
+  scale_fill_gradient(low = "#006d77", high = "#e29578") +
   theme_bw() +
   labs(title = "Richness of Mammals in North Carolina",
        fill = "Genera count",
@@ -468,6 +468,8 @@ ggplot() +
        y = "Latitude")
 
 # QUESTION: What does changing the 'option' in scale_fill_viridis_c() do?
+
+#ANSWER: it changes the color palette
 
 # ---------------------------------------------------------------------------- #
 
