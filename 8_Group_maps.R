@@ -261,6 +261,7 @@ ggplot() +
   theme_bw()
 
 # QUESTION: What do you think the geom_polygon function is doing here?
+#ANSWER: telling ggplot to map the us with all the counties.
 
 # TASK: Create a new dataframe titled 'nc_map' that only has North Carolina counties by assigning 'north carolina', typed exactly as it is shown in the in the 'counties' dataframe previously built. The code should look like this, with region following county:
 nc_map <- map_data("county", region = "north carolina")
@@ -276,6 +277,8 @@ ggplot() +
   coord_fixed(1.5) 
   
 # QUESTION: What do you think the 'coord_fixed' function is doing here? 
+
+#ANSWER: It's fixing the ratio so the map doesn't look funky.
 
 # ADDING THE DATA POINTS TO NC MAP---------------------------------------------
 
