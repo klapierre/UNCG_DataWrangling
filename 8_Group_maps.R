@@ -43,8 +43,7 @@ head(state_data)
 
 #Question: What do you notice about the rownames and the data within the "State" 
 #column? 
-I noyiced 
-
+# They both contain the same information, the state names. 
 
 #Task: Run the following code:
 
@@ -52,13 +51,17 @@ rownames(state_data) <- NULL
 
 #Question: Write code to display your dataset once again. What did the previous
 #code change within the dataset? What did NULL do to the rownames?
+head(state_data)
+# NULL removed the state names and replaced it with numbers or the default arrangement 
 
 #Task: Because we have loaded the dyplr package, we can create a new dataframe
 #with just State and Frost data. Write a code to select the State and Frost columns
 #from the state_data dataframe and name the new dataframe state_frost_data. 
-
+state_frost_data <- state_data %>% 
+  select(State, Frost)
 
 #View the new dataset and confirm that it is correct.
+head(state_frost_data)
 
 #Now we need to use the tigris package to download a shapefile called 'states'
 #of all of US states that we would like to plot. We set cb = TRUE 
@@ -86,11 +89,17 @@ us_states_frost <- left_join(states, state_frost_data, by = c("State"))
 #Task: Run the following code and annotate the significance of each line of code.
 
 ggplot(us_states_frost) +
+  # creates a ggplot object with the us_states_frost data
   geom_sf(aes(fill = Frost), color = "blue") +
+  # creates a map with the geom_sf comand
+  # aes(fill=Frost) colors each state based on the amount of frost days 
+  # color sets the border of the each state to blue. 
   theme_minimal() +
+  # applies the minimal theme
   labs(fill = "Number of Frost Days", title = "United States Frost Data")
-
+  # creates a legend for the map and title. 
 #Question: Do you see a map under the "plots" tab?
+# yes ! 
 
 #Question: What do you notice about the size of this map? Suppose we only want
 #to study frost data of mainland US states. Are there states we could omit from
