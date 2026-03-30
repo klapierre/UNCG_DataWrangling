@@ -93,27 +93,34 @@ flight_data_parsed <- broken_flights %>% mutate(flight_date = mdy(flight_date)) 
 class(flight_data_parsed$flight_time) #Check
 class(flight_data_parsed$flight_date) #Check
 
+# ---------------------------------------------------------- #
+### GETTING AND SETTING DATES AND TIMES ####                        
+# ---------------------------------------------------------- #
 
-# ---------------------------------------------------------- #
-### GETTING AND SETTING DATES AND TIMES ####                                  
-# ---------------------------------------------------------- #
+# Before exploring the rounding functions in lubridate, lets check out one more useful function for setting a date-time value.
+
+# The 'now()' function allows us to find the date-time value for this exact moment in time. 
+
+#TASK: Run the following code to create the 'todays_timestamp' object with the 'now()' function.
+
+todays_timestamp <- now()
 
 # Lubridate is also helpful for finding specific components of date-time data.
 
-#TASK: Run the following lines of code to find the specific components of the date-time value. 
+#TASK: Run the following lines of code to isolate specific components of the date-time value. 
 
-date("2026-04-14 14:00:00")
-year("2026-04-14 14:00:00")
-month("2026-04-14 14:00:00")
-day("2026-04-14 14:00:00")
-hour("2026-04-14 14:00:00")
-minute("2026-04-14 14:00:00")
-second("2026-04-14 14:00:00")
+date(todays_timestamp)
+year(todays_timestamp)
+month(todays_timestamp)
+day(todays_timestamp)
+hour(todays_timestamp)
+minute(todays_timestamp)
+second(todays_timestamp)
 
 #QUESTION: Run the following lines of code. What do you think each function is finding?
 
-week("2026-04-14 14:00:00") 
-wday("2026-04-14 14:00:00")
+week(todays_timestamp) 
+wday(todays_timestamp)
 
 #ANSWER: week of the year and day of the week
 
@@ -129,7 +136,7 @@ flight_data_parsed <- flight_data_parsed %>% mutate(flight_day = wday(flight_dat
 
 flight_data_parsed <- flight_data_parsed %>% mutate(flight_month = month(flight_date, label = TRUE, abbr = FALSE))
 
-#What if we only wanted to look at flights leaving in the AM? Run the following code to create a new column that lists whether flights are AM or PM.
+#TASK: What if we only wanted to look at flights leaving in the AM? Run the following code to create a new column that lists whether flights are AM or PM.
 
 flight_data_parsed <- flight_data_parsed %>% mutate(flight_AMPM = am(flight_time))
 
@@ -137,12 +144,26 @@ flight_data_parsed <- flight_data_parsed %>% mutate(flight_AMPM = am(flight_time
 ### ROUNDING DATES AND TIMES ####                                  
 # ---------------------------------------------------------- #
 
-# Rounding data can be useful
+# There might be times where you want to round your data. For example, what if you wanted to round to the nearest month? 
 
-# TASK: Run the following lines of code to round dates. 
+# TASK: The functions 'floor_date' and 'ceiling_date' will round down and up to the nearest unit, respectively. Run the following lines of code and take note of the output values.
 
-today <- now()
+floor_date(mdy("April 15 2026"), "month")
+ceiling_date(mdy("April 15 2026"), "month")
 
-floor_date(today, "months")
-round_date(today, "months")
-ceiling_date(today, "months")
+# QUESTION: The 'round_date' function is a general rounding function. Run the following line of code. Does 'round_date' round up or down?
+# HINT: April has 30 days. 
+# ANSWER: 'round_date' rounds up by default. 
+
+round_date(mdy("April 15 2026"), "month")
+
+# QUESTION: Run the following line of code. What do you think the 'rollback' function does? What do you think the 'roll_to_first' and  'preserve_hms' arguments do?
+# HINT: Try running the code with different 'roll_to_first' and  'preserve_hms' arguments.
+# ANSWER: It rounds back to the last day of the previous month ('roll_to_first' = FALSE) or the first day of the current month ('roll_to_first' = TRUE).'preserve_hms' tells R whether or not to save the timestamp of the date-time value. 
+
+rollback(todays_timestamp, roll_to_first = FALSE, preserve_hms = TRUE)
+
+# TASK: Create a dataframe names 'flight_data_cleaned' that includes a column named 'rounded_flight_data' that rounds the flight date to the nearest month. 
+
+flight_data_final <- flight_data_parsed %>% 
+  mutate(rounded_flight_date = round_date(mdy(flight_date), "month"))
