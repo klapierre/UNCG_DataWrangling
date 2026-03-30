@@ -6,6 +6,12 @@
 ## Branch from a GitHub repository and practice staging, committing, and pull/pushing code. 
 ## Create a resource to refer back to.
 
+install.packages("stringr")
+library("stringr")
+taco_ingredients
+taco_ingredients <- str_c("beans","tortilla", "lettuce", "gummy bears", "cheese", "salsa", sep = ", ")
+taco_ingredients <- str_replace(taco_ingredients, "gummy bears", "guacamole")
+
 # ----------------------------------------------------------
 #### 1) Finding and interpreting open data.####
 # ----------------------------------------------------------
