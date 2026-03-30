@@ -186,7 +186,7 @@ str_detect(fruit, "q")
 str_which(fruit, "q")
 
 ## QUESTION: What is the result of running this code?
-
+#Answer: The result is a vector of three numbers which I believe are the order the fruit is in the fruit vector.
 
 ## Not only can we use the str_detect function to detect individual characters in
 ## a string, but we can also use it to detect larger patterns of characters. For 
@@ -200,7 +200,7 @@ str_detect(fruit,"melon")
 
 ## TASK: Try using the str_detect function with "(.)\\1" as the pattern to find 
 ## out if there are any fruits containing double letters.
-
+str_detect(fruit,"(.)\\1")
 
 ## Another interesting function is str_count.
 ## TASK: Run the following code to create a smaller vector containing only the
@@ -210,7 +210,7 @@ fivefruits <- fruit[1:5]
 str_count(fivefruits, "a")
 
 ## QUESTION: What does the str_count function do? If needed, use ?str_count.
-
+#Answer: The string count function appears to tell us how many of the specified character are in each string in the vector
 
 ## To get the actual position of the first occurrence of the letter "a" in each of
 ## these five fruits, we can run the following code.
@@ -222,7 +222,7 @@ str_locate(fivefruits, "a")
 ## locate more than one letter (such as "er"), the start and end columns would not match.
 
 ## QUESTION: Notice that the fifth fruit returns NAs. Why do you think this is?
-
+#Answer: The fifth fruit returns NAs becuase it contains no 'a's
 
 ## This tells us only the first occurrence of the letter "a" in each of the five 
 ## fruits. However, if we wanted to locate the positions of all of the matches 
@@ -231,19 +231,27 @@ str_locate_all(fivefruits, "a")
 
 ## QUESTION: Which positions contain "a" in the fourth fruit in our vector? 
 ## (Hint: There are three.)
+#Answer: The fourth fruit has as in the 2nd, 4th, and 6th positions
 
 
 ## QUESTION: Other functions that are similar to str_detect are str_starts and 
 ## str_ends. What do you think each of these does?
+#Answer: I believe that these functions can determine what strings either start with a given set of characters, or in the other one, which strings end with the given set of characters.
 
 
 ## TASK: Use the knowledge you've learned in this section to create a code that gives 
 ## a count of how many fruits in the fruit vector contain the word "berry". (Hint:
 ## You will need to use a dplyr function.)
 
+data.frame(fruit = fruit) %>%
+  filter(str_detect(fruit, "berry")) %>%
+  nrow()
+
+
+#I have zero idea if I did this correctly, but this is what I could figure out considering fruit is just a vector
 
 ## QUESTION: How many fruits containing the word "berry" are there in the fruit vector?
-
+#Answer: There are 14 fruits with berry
 
 ## Great job! You've learned how to use stringr to detect, count, and locate 
 ## pattern matches in strings of characters. One way that these functions could 
