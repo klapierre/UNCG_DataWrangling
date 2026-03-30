@@ -32,6 +32,9 @@ strlengthtest <- c("This", "is", "to", "test", "stringr", "length", "functions!"
 ##TASK: using str_length, determine the amount of characters in each string. If
 ##you need help, check the help file for this function.
 
+str_length(strlengthtest)
+# [1]  4  2  2  4  7  6 10
+
 ##The str_length function is useful if we only want to see strings of a certain 
 ##character count. It can be combined with the filter function to accomplish this
 ##in a dataframe.Suppose we want to pick a baby name, but only want names of a 
@@ -42,6 +45,11 @@ strlengthtest <- c("This", "is", "to", "test", "stringr", "length", "functions!"
 ##or equal to 6. Name this new dataframe "LongbabyNames". (Note: you will need
 ##to load the dplyr package to use the filter function.)
 
+library(dplyr)
+
+LongbabyNames <- babyNames %>% 
+  filter(str_length(name) >= 6)
+
 ##The function "str_pad" is used to pad out strings to make their lengths or 
 ##widths consistent. In this context, "width" refers to display width, the 
 ##amount of space the characters actually take on the screen. Here, we'll focus
@@ -50,9 +58,12 @@ strlengthtest <- c("This", "is", "to", "test", "stringr", "length", "functions!"
 strlengthtest2 <- str_pad(strlengthtest, 15, "left", pad= " ", use_width = FALSE)
 
 ##QUESTION: Dissect the code above. What is the purpose of each argument in it?
+#ANSWER: The '15' argument specifies the length of the string, the "left" argument specifies where the padding will be relative to the string, the paf argument specifies what the padding will be, and the use_width function tells r not to consider the width of the string,
 
 ##TASK: Run str_length on our new vector. Did we successfully make all the lengths
 ##consistent?
+
+str_length(strlengthtest2) #yes
 
 ##"str_trim" essentially reverses what we did with str_pad; it removes white
 ##space from strings. Run this code:
@@ -61,6 +72,7 @@ strlengthtrimmed <- str_trim(strlengthtest2)
 
 ##QUESTION: What is a possible practical application of the str_pad and str_trim
 ##functions?
+#ANSWER: str_pad would be useful to make changes to a large number of strings without having to worry about the difference in character count altering the data, while the str_trim function could be usedul for reverting the data back to its original form. 
 
 ##The final length management function we will learn is "str_trunc". This function
 ##also serves to make string lengths consistent, but it does this by chopping off
