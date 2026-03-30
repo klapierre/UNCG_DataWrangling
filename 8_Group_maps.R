@@ -87,7 +87,7 @@ states <- states %>% rename(State = NAME)
 #Task: Run the following code to leftjoin the states and state_frost_data datasets 
 #by "State" to a new dataframe named us_states_frost
 
-us_states_frost <- left_join(states, state_frost_data, by = c("State"))
+us_states_frost_2 <- left_join(states, state_frost_data, by = c("State"))
 
 #Next we will use ggplot to construct a map of the US States and number of Frost
 #days
