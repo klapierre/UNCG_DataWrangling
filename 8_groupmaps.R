@@ -195,16 +195,26 @@ ggplot(bind_state_population_2) +
 # TASK: Download the NC_mamm_data.csv into your UNCG_DataWrangling folder on your desktop
 
 # TASK: Using read.csv(), create an object titled "mammal_data" from the NC_mamm_data csv 
-
+mammal_data <- read.csv("NC_mamm_data.csv")
+  
+  
 # TASK: Using the colnames() function, review what columns exist in your current dataset
-
+colnames(mammal_data)
+  
+  
 # TASK: Remove the 'USE_LICENSE_URL' column using a pipe and the select(- ) 
 # function because it is not needed for plotting. You do not need to create a new object for this; just reassign to the same name 'mammal_data' 
+mammal_data <- mammal_data %>% 
+  select(-USE_LICENSE_URL)
 
 # Using the rename() function introduced in assignment 4, rename the remaining 11 columns in the following order: country, state, locality, date, lat, long, sex, life_stage, genus, order, family.
+mammal_data_1 <- mammal_data %>% 
+  rename( country = COUNTRY,state = STATE_PROV, locality = SPEC_LOCALITY,date = VERBATIM_DATE, lat = DEC_LAT,long = DEC_LONG, sex = SEX, life_stage = LIFE_STAGE,genus = GENUS, order = PHYLORDER, family = FAMILY)
 
-# Using the mammal_data object, clean NA values from columns 'lon', 'lat', 'locality' and 'genus'. Create new object for this cleaned data titled 'clean_data'
-
+# Using the mammal_data object, clean NA values from columns 'long', 'lat', 'locality' and 'genus'. Create new object for this cleaned data titled 'clean_data'
+clean_data <- mammal_data_1 %>% 
+  tidyr::drop_na(long, lat, locality, genus)
+  
 # Great, now our data is clean and easier to work with! 
 
 # BUILDING THE MAP
@@ -225,6 +235,8 @@ ggplot() +
   theme_bw()
 
 # QUESTION: What do you think the geom_polygon function is doing here?
+I believe the geom_polygon function is emphasizing the coordinates on the map 
+
 
 # TASK: Create a new dataframe titled 'nc_map' that only has North Carolina counties by assigning 'north carolina', typed exactly as it is shown in the in the 'counties' dataframe previously built. The code should look like this, with region following county:
 nc_map <- map_data("county", region = "north carolina")
