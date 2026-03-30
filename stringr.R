@@ -64,15 +64,18 @@ strlengthtest2 <- str_pad(strlengthtest, 15, "left", pad= " ", use_width = FALSE
 ##TASK: Run str_length on our new vector. Did we successfully make all the lengths
 ##consistent?
 str_length(strlengthtest2)
-# yes
+# yes, using spaces
 
 ##"str_trim" essentially reverses what we did with str_pad; it removes white
 ##space from strings. Run this code:
 
 strlengthtrimmed <- str_trim(strlengthtest2)
+strlengthtrimmed
 
 ##QUESTION: What is a possible practical application of the str_pad and str_trim
 ##functions?
+
+
 
 ##The final length management function we will learn is "str_trunc". This function
 ##also serves to make string lengths consistent, but it does this by chopping off
@@ -82,6 +85,8 @@ strlengthtrimmed <- str_trim(strlengthtest2)
 str_trunc(strlengthtest, 4)
 
 ##QUESTION: How long is each string in the vector now?
+
+
 
 ##TASK: Write code to create a new dataframe called "babyNamesTrunc". In this 
 ##dataframe, truncate the "name" column so that each string is at most 5 
@@ -114,14 +119,32 @@ str_to_snake(case_names)
 str_to_kebab(case_names)
 
 ## QUESTION: What happened to the case_names values in reference to each function that you ran?
+# str_to_upper makes all characters capital letters
+# str_to_lower makes all characters lowercase letters
+# str_to_title capitalizes the first letter of each word
+# str_to_sentence capitalizes the first letter of the first word
+# str_to_camel removes the space between the words, makes the first word lowercase and the second word uppercase
+# str_to_snake adds an underscore between each word
+# str_to_kebab adds a dash between each word
+
 
 ## When just doing the camel, snake, and kebab functions, the last name came out weird, right? Let's fix that.
 
 ## TASK: Put the uppercase function within the camel function and run the code. Then, instead of the uppercase function, put the lowercase function within the camel function and run the code.
+str_to_camel(str_to_upper(case_names))
+str_to_camel(str_to_lower(case_names))
 
 ## QUESTION: What do you notice about the two results?
+# both codes return the same result
 
 ## QUESTION: Since the last name in case_names had problems with the camel, snake, and kebab functions, is it possible to also fix the name with the snake and kebab functions as we did with the camel function in the previous task?
+str_to_snake(str_to_upper(case_names))
+str_to_snake(str_to_lower(case_names))
+
+str_to_kebab(str_to_upper(case_names))
+str_to_kebab(str_to_lower(case_names))
+
+# yes but idk why the str_to_upper doesnt seem to have an affect? 
 
 ## Now that you've completed some examples using case_names, lets use our babyNames data frame to modify something a little more complex.
 
@@ -130,6 +153,9 @@ str_to_kebab(case_names)
 #(2) Select by name and year.
 #(3) Mutate the name column to be labelled name_upper and use the                   uppercase function on the name column.
 #(4) Select the name column once again, removing it, leaving only the               name_upper column.
+
+
+
 
 ## TASK: Using the babyNames data frame, complete the following:
 #(1) Create a new data frame named oldBabyNames.
