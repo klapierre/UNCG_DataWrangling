@@ -171,32 +171,32 @@ T2_date_summary <- T2 %>%
    ggplot(aes(x = date,
               y = flower_count,
               color = site,
-              group = site))) +
+              group = site)) +
   geom_line(alpha = 0.9) +
   theme_bw() +
   labs(title = "Flowering Abundance over Time",
        x = "Date",
        y = "Flower Count",
        color = "Site") +
-  transition_reveal(date)
+  transition_reveal(date))
 
 # Visualize the relationship between flower abundance and bee visitation
 (plot_T1_visitation <- T1 %>% 
   ggplot(aes(x = flower_count,
              y = log1p(visitation_rate),
-             color = site))) +
+             color = site)) +
   geom_jitter(alpha = 0.4, height = 0.01, width = 5) +
   theme_bw() +
   labs(title = "Flower Abundance versus Bee Visitation",
        x = "Flower Count",
        y = "log(Visitation Rate + 1)",
-       color = "Site")
+       color = "Site"))
 
 # Visualize bee abundance over time
 (plot_T2 <- T2 %>% 
     ggplot(aes(x = week,
                y = bee_abundance,
-               color = site))) +
+               color = site)) +
   geom_line() + 
   geom_point(size = 0.8, alpha = 0.8) +
   theme_bw() +
@@ -204,43 +204,60 @@ T2_date_summary <- T2 %>%
   labs(title = "Weekly Bee Abundance Across Sites",
        x = "Week",
        y  = "Bee Abundance",
-       color = "Site")
+       color = "Site"))
 
 # Visualize the relationship between Bee Visitation and Seed Set %
 (plot_T3 <- T3 %>% 
     ggplot(aes(x = bee_visits,
                y = seed_set,
-               color = site))) +
+               color = site)) +
   geom_point(alpha = 0.4) +
   geom_smooth(method = "lm", se = F, linetype = "dashed") + 
   theme_bw() +
   labs(title = "Bee Visits versus Seed Set",
        x = "Bee Visits",
        y = "Seed Set (%)",
-       color = "Site")
+       color = "Site"))
 
 # Visualize the relationship between Pollen Limitation and Seed Set %
 (plot_T4 <- T4 %>% 
     ggplot(aes(x = pollen_limitation,
-               y = seed_set))) +
+               y = seed_set)) +
   geom_jitter(alpha = 0.5, width = 0.2) +
   geom_smooth(method = "lm", se = F) +
   theme_bw() +
   labs(title = "Pollen Limitation Effect on Seed Set",
        x = "Pollen Limitation",
-       y = "Seed Set (%)")
+       y = "Seed Set (%)"))
 
 # Visualize the results of each pollination treatment on Seed Set %
 (plot_T5 <- T5 %>% 
     ggplot(aes(x = treatment,
                y = seed_set,
-               fill = treatment))) +
+               fill = treatment)) +
     geom_boxplot() +
   theme_bw() +
   labs(title = "Seed Set by Pollination Treatment",
        x = "Treatment",
        y = "Seed Set (%)") +
-  theme(legend.position = "none")
+  theme(legend.position = "none"))
 
 
+# Export ------------------------------------------------------------------
 
+# Export summary statistics as csv files
+write_csv(T1_date_summary, "T1_date_summary.csv")
+write_csv(T1_site_summary, "T1_site_summary.csv")
+write_csv(T2_date_summary, "T2_date_summary.csv")
+write_csv(T2_site_summary, "T2_site_summary.csv")
+write_csv(T3_site_summary, "T3_site_summary.csv")
+write_csv(T4_site_summary, "T4_site_summary.csv")
+write_csv(T5_site_summary, "T5_site_summary.csv")
+
+# Export figures as .png and .gif files
+anim_save("T1_FlowerAbundance.gif", plot_T1_time, width = 1600, height = 1000)
+ggsave("T1_VisitationRate.png", plot_T1_visitation, height = 5, width = 8)
+ggsave("T2_BeeAbundance.png", plot_T2, height = 5, width = 8)
+ggsave("T3_BeePollination.png", plot_T3, height = 5, width = 8)
+ggsave("T4_PollenLimitation.png", plot_T4, height = 5, width = 8)
+ggsave("T5_PollinationTreatment.png", plot_T5, height = 5, width = 8)
