@@ -57,6 +57,7 @@ streamTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv", stringsAsFa
 
 
 # QUESTION: What do you think stringsAsFactors mean?
+# To change the factors.
 
 # To change the factors.
 
@@ -128,7 +129,11 @@ colnames(streamTempRename)
 # before or after the =?
 
 #It cleaned up the names of the columns and added underscores where the spaces 
+<<<<<<< HEAD
 #would be.
+=======
+#would be 
+>>>>>>> bb95795 (Set up tidyverse, did part 1.0 and 1.1)
 
 
 # ---------------------------------------------------------- #
