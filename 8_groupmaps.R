@@ -169,19 +169,6 @@ ggplot(bind_state_population_2) +
   theme_minimal() +
   labs(fill = "Population per State", title = "United States Population")
 
-----
-  
-  us_states_frost_2 <- us_states_frost %>%
-  dplyr::filter(State != "Alaska" & State != "Hawaii" & State != "Guam" & State != 
-                  "American Samoa" & State != "United States Virgin Islands" & 
-                  State != "Puerto Rico" 
-                & State != "Commonwealth of the Northern Mariana Islands")
-
-ggplot(us_states_frost_2) +
-  geom_sf(aes(fill = Frost), color = "orange") +
-  theme_minimal() +
-  labs(fill = "Number of Frost Days", title = "United States Frost Data")
-
 
 #Task: write three things you can infer from the map that you created:
 #1 California,Texas, and New York are heavily populated as their gradients are heavily saturated in the "high" end of the color scheme.
