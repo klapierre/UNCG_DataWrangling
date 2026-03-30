@@ -73,6 +73,8 @@ mdy("November 22nd, 2001") #Example
 install.packages("nycflights13")
 library(nycflights13)
 
+flights_data <- flights
+
 broken_flights <- flights %>%
   mutate(
     flight_date = format(time_hour, "%B %d, %Y"), 
@@ -96,5 +98,51 @@ class(flight_data_parsed$flight_date) #Check
 ### GETTING AND SETTING DATES AND TIMES ####                                  
 # ---------------------------------------------------------- #
 
+# Lubridate is also helpful for finding specific components of date-time data.
 
+#TASK: Run the following lines of code to find the specific components of the date-time value. 
 
+date("2026-04-14 14:00:00")
+year("2026-04-14 14:00:00")
+month("2026-04-14 14:00:00")
+day("2026-04-14 14:00:00")
+hour("2026-04-14 14:00:00")
+minute("2026-04-14 14:00:00")
+second("2026-04-14 14:00:00")
+
+#QUESTION: Run the following lines of code. What do you think each function is finding?
+
+week("2026-04-14 14:00:00") 
+wday("2026-04-14 14:00:00")
+
+#ANSWER: week of the year and day of the week
+
+#TASK: What if we wanted to create new column in our flights dataset listing the day of the week of the flight? Run the following code to create a flight_day column in out flight_data_parsed dataset.
+
+flight_data_parsed <- flight_data_parsed %>% mutate(flight_day = wday(flight_date, label = TRUE, abbr = FALSE))
+
+#QUESTION: What do 'label' and 'abbr' mean in the code above?
+# HINT: Try running the code without the 'label' and 'abbr' arguments.
+#ANSWER: Label = displaying the day of the week as a name (not number). Abbr = abbreviation.
+
+#TASK: Create a new column called 'flight_month' in the flight_data_parsed dataset that lists the names of the month the flight took place. 
+
+flight_data_parsed <- flight_data_parsed %>% mutate(flight_month = month(flight_date, label = TRUE, abbr = FALSE))
+
+#What if we only wanted to look at flights leaving in the AM? Run the following code to create a new column that lists whether flights are AM or PM.
+
+flight_data_parsed <- flight_data_parsed %>% mutate(flight_AMPM = am(flight_time))
+
+# ---------------------------------------------------------- #
+### ROUNDING DATES AND TIMES ####                                  
+# ---------------------------------------------------------- #
+
+# Rounding data can be useful
+
+# TASK: Run the following lines of code to round dates. 
+
+today <- now()
+
+floor_date(today, "months")
+round_date(today, "months")
+ceiling_date(today, "months")
