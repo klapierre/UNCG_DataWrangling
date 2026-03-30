@@ -656,7 +656,8 @@ help(ggsave)
 # graph, and a dot plot with a trend line. Which of these figures was an example
 # of a correlation? Which showed deviations from a benchmark or baseline? And which
 # was an example of a distribution?
-
+#Dot plot is correlation, bar graph is deviations from a benchmark or baseline, 
+#distribution is historgram and boxplot
 
 
 # TASK: Import the full SpokaneFish dataset, keeping all observations (i.e., 
@@ -667,8 +668,23 @@ help(ggsave)
 # Then save your file as a .png with an informative figure name at a width of 9
 # inches and a height of 7 inches and 450 dpi.
 
+SpokaneFish <- read.csv(file = "LowerSpokaneFish.csv")
+
+SpokaneFishSpecies_Weight_vs_Length <- ggplot(SpokaneFish, aes(x = Length, y = Weight, color = Species)) + 
+  geom_point(size=2, shape=17) +
+  scale_x_log10() + 
+  facet_wrap(~Species, scales = "free") + 
+  xlab("Length (mm)") + 
+  ylab("Weight (g)")
+
+ggsave("SpokaneFishSpecies_Weight_vs_Length_plot_facet.png",
+       units = "in",
+       dpi = 450,
+       width = 9,
+       height = 7)
 
 # QUESTION: Why do you think we focused on Redband Trout for most of this assignment?
-
+#So we can learn how to create many different plots from the same data to show 
+#data can be displayed in many different ways.
 
 # REMEMBER: Save and push your script when you're done with this assignment!
