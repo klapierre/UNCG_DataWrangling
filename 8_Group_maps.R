@@ -104,7 +104,7 @@ ggplot(us_states_frost) +
 #this map to better visualize the data? HINT ** to help determine which states we may 
 #want to omit, check out the us_states_frost_2 tab at the different States included
 #in the dataframe.
-#Answer: The map is small and includes Alaska, Hawaii,Commonwealth of the Northern Mariana Islands, United States Virgin Islands, American Samoa, and Guam, which can all be omitted to better visualize the data. 
+#Answer: The map is small and includes Alaska, Hawaii, Commonwealth of the Northern Mariana Islands, United States Virgin Islands, American Samoa, and Guam, which can all be omitted to better visualize the data. 
 
 #To filter out states or islands not connected to the mainland US, we can use the 
 #dplyr function.
@@ -130,7 +130,7 @@ ggplot(us_states_frost_2) +
 #map making it easier to visualize the data.
 
 #Question: What do dark blue states represent? What do light blue states represent?
-#Answer: States with a higher number of frost days.
+#Answer: The dark blue states are states with a smaller number of frost days, while the light blue states have a higher number of frost days.
 #Question: Does florida or NC have more frost days?
 #Answer: NC. 
 
@@ -410,7 +410,7 @@ ggplot() +
        y = "Latitude")
 
 # QUESTION: Why might changing the legend position be useful?
-#Answer: When it is on the left we can see the legeng first before interpreting the graph. 
+#Answer: When it is on the left we can see the legend first before interpreting the graph. 
 
 # ---------------------------------------------------------------------------- #
 # INTERPRETING THE MAP --------------------------------------------------------
