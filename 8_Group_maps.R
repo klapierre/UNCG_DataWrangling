@@ -64,7 +64,7 @@ head(state_data)
 
 state_frost_data<-state_data[,c("State", "Frost")]
 #View the new dataset and confirm that it is correct.
-
+#Done.
 #Now we need to use the tigris package to download a shapefile called 'states'
 #of all of US states that we would like to plot. We set cb = TRUE 
 #to specify cartographic boundary type so that we use a simple shapefile that
@@ -94,6 +94,10 @@ ggplot(us_states_frost) +
   geom_sf(aes(fill = Frost), color = "blue") +
   theme_minimal() +
   labs(fill = "Number of Frost Days", title = "United States Frost Data")
+ggplot(us_states_frost) +
+  geom_sf(aes(fill = Frost), color = "blue") +
+  theme_minimal() +
+  labs(fill = "Number of Frost Days", title = "United States Frost Data")
 #The first line codes for data from the us_states_frost data frame. The second line codes for simple features objects such as maps and fills. The color of the map codes for blue and the fill will be filtered by "Frost". The third line sets the theme. The fourth line labels the map "United States Frost Data" and the fill to "Number of Frost Days".
 #Question: Do you see a map under the "plots" tab?
 #Yes, I see a small map with coordinate planes and a fill beside.
@@ -102,8 +106,8 @@ ggplot(us_states_frost) +
 #this map to better visualize the data? HINT ** to help determine which states we may 
 #want to omit, check out the us_states_frost_2 tab at the different States included
 #in the dataframe.
-#The map is very zoomed out (small) and difficult to view. Yes, there are a couple non-mainland US states in the dataset such as Guam, Alaska, American Samoa, and Puerto Rico.
-hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
+#The map is very zoomed out (small) and difficult to view. Yes, there are a couple non-mainland US states in the dataset, to name a few: Guam, Alaska, American Samoa, and Puerto Rico.
+
 #To filter out states or islands not connected to the mainland US, we can use the 
 #dplyr function.
 
@@ -160,8 +164,8 @@ print(state.x77)
 state.x77<-state.x77
 #Task: write three things you can infer from the map that you created:
 #1:California has the highest population (>20000) compared to other states.
-#2:Many US states are dark blue with populations less than 5000.
-#3:Texas has a population between 10000 and 15000.
+#2:New York (lighter blue) has a higher population than Texas (darker blue).
+#3:Texas (lighter blue) has a higher population than North Carolina (darker blue).
 
 # Part 3: MAPPING SPECIMEN OCCURRENCE DATA -----------------------------------
 
@@ -181,18 +185,49 @@ state.x77<-state.x77
 # made. 
 
 # TASK: Download the NC_mamm_data.csv into your UNCG_DataWrangling folder on your desktop
-
+#Downloaded 
 # TASK: Using read.csv(), create an object titled "mammal_data" from the NC_mamm_data csv 
-
+mammal_data<-read.csv("NC_mamm_data.csv")
+mammal_data<-read.csv("NC_mamm_data.csv")
 # TASK: Using the colnames() function, review what columns exist in your current dataset
-
+colnames(mammal_data)
+colnames(mammal_data)
 # TASK: Remove the 'USE_LICENSE_URL' column using a pipe and the select(- ) 
 # function because it is not needed for plotting. You do not need to create a new object for this; just reassign to the same name 'mammal_data' 
-
+mammal_data<-mammal_data %>% 
+  select(-USE_LICENSE_URL)
+mammal_data<-mammal_data %>% 
+  select(-USE_LICENSE_URL)
 # Using the rename() function introduced in assignment 4, rename the remaining 11 columns in the following order: country, state, locality, date, lat, long, sex, life_stage, genus, order, family.
-
+mammal_data<-mammal_data %>% 
+  rename(country=COUNTRY,
+         state=STATE_PROV,
+         locality=SPEC_LOCALITY,
+         date=VERBATIM_DATE,
+         lat=DEC_LAT,
+         long=DEC_LONG,
+         sex=SEX,
+         life_stage=LIFE_STAGE,
+         genus=GENUS,
+         order=PHYLORDER,
+         family=FAMILY)
+mammal_data<-mammal_data %>% 
+  rename(country=COUNTRY,
+         state=STATE_PROV,
+         locality=SPEC_LOCALITY,
+         date=VERBATIM_DATE,
+         lat=DEC_LAT,
+         long=DEC_LONG,
+         sex=SEX,
+         life_stage=LIFE_STAGE,
+         genus=GENUS,
+         order=PHYLORDER,
+         family=FAMILY)
 # Using the mammal_data object, clean NA values from columns 'lon', 'lat', 'locality' and 'genus'. Create new object for this cleaned data titled 'clean_data'
-
+clean_data<-mammal_data %>% 
+  drop_na('long','lat','locality','genus')
+clean_data<-mammal_data %>% 
+  drop_na('long','lat','locality','genus')
 # Great, now our data is clean and easier to work with! 
 
 # BUILDING THE MAP
@@ -201,7 +236,7 @@ state.x77<-state.x77
 
 # TASK: Run this line of code, and look at the data frame that appears in our environment box
 counties <- map_data("county")
-
+counties <- map_data("county")
 # Great, now we have a very large data frame that gives us coordinates for every county in the United States. 
 
 # TASK: To plot this, run the line of code below: 
@@ -211,12 +246,17 @@ ggplot() +
                fill = "white",
                color = "black") +
   theme_bw()
-
+ggplot() +
+  geom_polygon(data = counties,
+               aes(x = long, y = lat, group = group),
+               fill = "white",
+               color = "black") +
+  theme_bw()
 # QUESTION: What do you think the geom_polygon function is doing here?
-
+#The geom_polygon function is used to draw filled polygons on a plot. It connects the x and y coordinates to form a closed shape, filled with white in a specific order provided by the data.
 # TASK: Create a new dataframe titled 'nc_map' that only has North Carolina counties by assigning 'north carolina', typed exactly as it is shown in the in the 'counties' dataframe previously built. The code should look like this, with region following county:
 nc_map <- map_data("county", region = "north carolina")
-
+nc_map <- map_data("county", region = "north carolina")
 # TASK: plot the map using your new nc_map dataframe using the previous map code as your guide
 # HINT: to adjust the map ratio, add the function coord_fixed(1.5) to the end of the code
 ggplot() +
@@ -226,25 +266,38 @@ ggplot() +
                color = "black") +
   theme_bw() +
   coord_fixed(1.5) 
-  
+ggplot() +
+  geom_polygon(data = nc_map,
+               aes(x = long, y = lat, group = group),
+               fill = "white",
+               color = "black") +
+  theme_bw() +
+  coord_fixed(1.5)
 # QUESTION: What do you think the 'coord_fixed' function is doing here? 
-
+#The coord_fixed function makes units on the y-axis longer by 1.5 than units on the x-axis. Adjusts the 'aspect ratio' of the figure we are creating.
 # ADDING THE DATA POINTS TO NC MAP---------------------------------------------
 
 # Using the 'clean_data' df we created, we can map these points onto out North Carolina map to see species occurrences! 
 # To do this, we can add the geom_point function to our previous chunk of code.
 
 # TASK: With a plus sign between the sections, add the lines below to the above code:
-geom_point(data = clean_data,
-           aes(x = lon, y = lat, color = order),
+ggplot() +
+  geom_polygon(data = nc_map,
+               aes(x = long, y = lat, group = group),
+               fill = "white",
+               color = "black") +
+  geom_point(data = clean_data,
+           aes(x = long, y = lat, color = order),
            size = 1,
-           alpha = 0.7)
+           alpha = 0.7) +
+  theme_classic() +
+  coord_fixed(1.5)
 
 # From here, you can adjust the theme to your liking. 
 # NOTE: With a plus sign between sections, if you begin typing 'theme' on the next line, options will appear that you can browse through! 
 
 # QUESTION: Why might it be useful to have slightly transparent data points (by setting alpha to a number below 1) when mapping in a small area such as this?  
-
+#So we can see in which state does the data point fall in.
 # TASK: after adding a theme to the plot, add and title and an x and y axis label with the labs() function. 
 
 
@@ -254,24 +307,40 @@ ggplot() +
                aes(x = long, y = lat, group = group),
                fill = "white",
                color = "black") +
-  theme_bw() +
+  theme_light() +
   coord_fixed(1.5) +
   geom_point(data = clean_data,
-             aes(x = lon, y = lat, color = order),
+             aes(x = long, y = lat, color = order),
              size = 1,
              alpha = 0.7) +
-  theme_bw() +
+  theme_minimal() +
   labs(title = "Mammal captures in North Carolina",
        x = "Longitude",
        y = "Latitude")
-
+ggplot() +
+  geom_polygon(data = nc_map,
+               aes(x = long, y = lat, group = group),
+               fill = "white",
+               color = "black") +
+  theme_light() +
+  coord_fixed(1.5) +
+  geom_point(data = clean_data,
+             aes(x = long, y = lat, color = order),
+             size = 1,
+             alpha = 0.7) +
+  theme_minimal() +
+  labs(title = "Mammal captures in North Carolina",
+       x = "Longitude",
+       y = "Latitude")
 # QUESTION: Why did I decide to color the points by order? What happens if you color the points (within the geom_point section) by genus instead? 
-
+#Coloring by order gives a more specific data point and few under this category. Coloring by genus makes the map difficult to view because there are so many under this category.
 # HINT: the unique() function allows us to see how many unique values are in each of our columns 
 unique(clean_data$genus)
 unique(clean_data$family)
 unique(clean_data$order)
-
+unique(clean_data$genus)
+unique(clean_data$family)
+unique(clean_data$order)
 
 # Note: If we wanted to, we could subset out dataframe by species while still working in the data cleaning section, and only plot one species at a time, or focus on different families, etc.
 
@@ -295,55 +364,62 @@ unique(clean_data$order)
 # TASK: Install and load the sf package if not already installed
 # install.packages("sf")
 library(sf)
-
+install.packages("sf")
+library(sf)
 # TASK: Convert clean_data into an sf (simple features) object using longitude and latitude
-clean_sf <- st_as_sf(clean_data, coords = c("lon", "lat"), crs = 4326)
-
+clean_sf <- st_as_sf(clean_data, coords = c("long", "lat"), crs = 4326)
+clean_sf <- st_as_sf(clean_data, coords = c("long", "lat"), crs = 4326)
 # TASK: Convert nc_map dataframe into an sf object
 nc_map_sf <- st_as_sf(nc_map, coords = c("long", "lat"), crs = 4326)
-
+nc_map_sf <- st_as_sf(nc_map, coords = c("long", "lat"), crs = 4326)
 # NOTE: The nc_map object is not yet a true polygon sf object, so we will
 # instead use a built-in county shapefile
 
 # TASK: Load US counties map from maps package
 library(maps)
 counties_sf <- st_as_sf(map("county", plot = FALSE, fill = TRUE))
-
+library(maps)
+counties_sf <- st_as_sf(map("county", plot = FALSE, fill = TRUE))
 # TASK: Filter only North Carolina counties
 nc_counties_sf <- counties_sf %>%
   filter(grepl("north carolina", ID))
-
+nc_counties_sf <- counties_sf %>%
+  filter(grepl("north carolina", ID))
 # ---------------------------------------------------------------------------- #
 # CALCULATING SPECIES RICHNESS ------------------------------------------------
 
 # Make sure both spatial objects use the same CRS
 nc_counties_sf <- st_transform(nc_counties_sf, st_crs(clean_sf))
-
+nc_counties_sf <- st_transform(nc_counties_sf, st_crs(clean_sf))
 # Spatial join: assign each point to a county
 points_with_county <- st_join(clean_sf, nc_counties_sf)
-
+points_with_county <- st_join(clean_sf, nc_counties_sf)
 # Calculate richness per county using the 'genus' column of our dataframe
 richness_data <- points_with_county %>%
   st_drop_geometry() %>%
   group_by(ID) %>%
   summarise(richness = n_distinct(genus))
-
+richness_data <- points_with_county %>%
+  st_drop_geometry() %>%
+  group_by(ID) %>%
+  summarise(richness = n_distinct(genus))
 # TASK: Remove geometry from richness_data before joining 
 richness_df <- st_drop_geometry(richness_data)
-
+richness_df <- st_drop_geometry(richness_data)
 # TASK: Join richness values back to all counties 
 nc_richness_map <- nc_counties_sf %>%
   left_join(richness_df, by = "ID")
-
+nc_richness_map <- nc_counties_sf %>%
+  left_join(richness_df, by = "ID")
 # TASK: Replace NA values with 0
 nc_richness_map$richness[is.na(nc_richness_map$richness)] <- 0
-
+nc_richness_map$richness[is.na(nc_richness_map$richness)] <- 0
 # ---------------------------------------------------------------------------- #
 # BUILDING THE RICHNESS MAP ---------------------------------------------------
 
 # TASK: Plot the North Carolina counties and fill by richness values
 library(ggplot2)
-
+library(ggplot2)
 ggplot() +
   geom_sf(data = nc_richness_map, aes(fill = richness),  color = "black") +
   scale_fill_viridis_c(option = "plasma", na.value = "gray90") +
@@ -352,7 +428,14 @@ ggplot() +
        fill = "Genera count",
        x = "Longitude",
        y = "Latitude")
-
+ggplot() +
+  geom_sf(data = nc_richness_map, aes(fill = richness),  color = "black") +
+  scale_fill_viridis_c(option = "plasma", na.value = "gray90") +
+  theme_bw() +
+  labs(title = "Richness of Mammals in North Carolina",
+       fill = "Genera count",
+       x = "Longitude",
+       y = "Latitude")
 # ---------------------------------------------------------------------------- #
 # IMPROVING THE MAP -----------------------------------------------------------
 
@@ -369,9 +452,17 @@ ggplot() +
        fill = "Genera count",
        x = "Longitude",
        y = "Latitude")
-
+ggplot() +
+  geom_sf(data = nc_richness_map, 
+          aes(fill = richness),  color = "black") +
+  scale_fill_viridis_c(option = "inferno", na.value = "gray90") +
+  theme_bw() +
+  labs(title = "Richness of Mammals in North Carolina",
+       fill = "Genera count",
+       x = "Longitude",
+       y = "Latitude")
 # QUESTION: What does changing the 'option' in scale_fill_viridis_c() do?
-
+#Changing the 'option' in scale_fill_viridis_c will use a different color gradient to highlight species richness. In this example, the counties with a "Genera count" of 0, were filled with the color 'black'.
 # ---------------------------------------------------------------------------- #
 
 # TASK: Adjust legend position for better readability
@@ -385,17 +476,26 @@ ggplot() +
        fill = "Genera count",
        x = "Longitude",
        y = "Latitude")
-
+ggplot() +
+  geom_sf(data = nc_richness_map, 
+          aes(fill = richness),  color = "black") +
+  scale_fill_viridis_c(option = "inferno", na.value = "gray90") +
+  theme_bw() +
+  theme(legend.position = "left") +
+  labs(title = "Richness of Mammals in North Carolina",
+       fill = "Genera count",
+       x = "Longitude",
+       y = "Latitude")
 # QUESTION: Why might changing the legend position be useful?
-
+#Changing the legend position makes patterns easier to interpret by placing it closer. Making the map quickly to understand what each color represents. Also, sometimes the legend can cover data points, moving it prevents hiding important patterns.
 # ---------------------------------------------------------------------------- #
 # INTERPRETING THE MAP --------------------------------------------------------
 
 # QUESTION: What does a lighter color indicate on this map?
-
+#A lighter color indicates a high "Genera count", meaning there are many different genus in these regions (high specie richness).
 # QUESTION: Why might some counties have lower richness values? 
-
+#Some counties have lower richness values because of unstable environmental conditions for some species. Some counties reach higher temperatures that can affect species migration and survival.
 
 # TASK: Save your most recent plot as an image file to your folder. 
 ggsave("nc_species_richness_map.png",width = 8, height = 6, dpi = 300)
-
+ggsave("nc_species_richness_map.png",width = 8, height = 6, dpi = 300)
