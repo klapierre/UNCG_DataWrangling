@@ -163,3 +163,84 @@ T2_date_summary <- T2 %>%
     mean_visitation = mean(visitation_rate, na.rm = T)) %>% 
   ungroup()
 
+
+# Visualization -----------------------------------------------------------
+
+# Visualize flowering abundance over time using gganimate
+(plot_T1_time <- T1 %>% 
+   ggplot(aes(x = date,
+              y = flower_count,
+              color = site,
+              group = site))) +
+  geom_line(alpha = 0.9) +
+  theme_bw() +
+  labs(title = "Flowering Abundance over Time",
+       x = "Date",
+       y = "Flower Count",
+       color = "Site") +
+  transition_reveal(date)
+
+# Visualize the relationship between flower abundance and bee visitation
+(plot_T1_visitation <- T1 %>% 
+  ggplot(aes(x = flower_count,
+             y = log1p(visitation_rate),
+             color = site))) +
+  geom_jitter(alpha = 0.4, height = 0.01, width = 5) +
+  theme_bw() +
+  labs(title = "Flower Abundance versus Bee Visitation",
+       x = "Flower Count",
+       y = "log(Visitation Rate + 1)",
+       color = "Site")
+
+# Visualize bee abundance over time
+(plot_T2 <- T2 %>% 
+    ggplot(aes(x = week,
+               y = bee_abundance,
+               color = site))) +
+  geom_line() + 
+  geom_point(size = 0.8, alpha = 0.8) +
+  theme_bw() +
+  scale_x_binned(expand = c(0, 0)) +
+  labs(title = "Weekly Bee Abundance Across Sites",
+       x = "Week",
+       y  = "Bee Abundance",
+       color = "Site")
+
+# Visualize the relationship between Bee Visitation and Seed Set %
+(plot_T3 <- T3 %>% 
+    ggplot(aes(x = bee_visits,
+               y = seed_set,
+               color = site))) +
+  geom_point(alpha = 0.4) +
+  geom_smooth(method = "lm", se = F, linetype = "dashed") + 
+  theme_bw() +
+  labs(title = "Bee Visits versus Seed Set",
+       x = "Bee Visits",
+       y = "Seed Set (%)",
+       color = "Site")
+
+# Visualize the relationship between Pollen Limitation and Seed Set %
+(plot_T4 <- T4 %>% 
+    ggplot(aes(x = pollen_limitation,
+               y = seed_set))) +
+  geom_jitter(alpha = 0.5, width = 0.2) +
+  geom_smooth(method = "lm", se = F) +
+  theme_bw() +
+  labs(title = "Pollen Limitation Effect on Seed Set",
+       x = "Pollen Limitation",
+       y = "Seed Set (%)")
+
+# Visualize the results of each pollination treatment on Seed Set %
+(plot_T5 <- T5 %>% 
+    ggplot(aes(x = treatment,
+               y = seed_set,
+               fill = treatment))) +
+    geom_boxplot() +
+  theme_bw() +
+  labs(title = "Seed Set by Pollination Treatment",
+       x = "Treatment",
+       y = "Seed Set (%)") +
+  theme(legend.position = "none")
+
+
+
