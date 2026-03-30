@@ -32,6 +32,8 @@ strlengthtest <- c("This", "is", "to", "test", "stringr", "length", "functions!"
 ##TASK: using str_length, determine the amount of characters in each string. If
 ##you need help, check the help file for this function.
 
+# 4  2  2  4  7  6 10
+
 ##The str_length function is useful if we only want to see strings of a certain 
 ##character count. It can be combined with the filter function to accomplish this
 ##in a dataframe.Suppose we want to pick a baby name, but only want names of a 
@@ -42,6 +44,8 @@ strlengthtest <- c("This", "is", "to", "test", "stringr", "length", "functions!"
 ##or equal to 6. Name this new dataframe "LongbabyNames". (Note: you will need
 ##to load the dplyr package to use the filter function.)
 
+LongbabyNames <- babyNames %>% filter(str_length(name) >= 6)
+
 ##The function "str_pad" is used to pad out strings to make their lengths or 
 ##widths consistent. In this context, "width" refers to display width, the 
 ##amount of space the characters actually take on the screen. Here, we'll focus
@@ -50,6 +54,8 @@ strlengthtest <- c("This", "is", "to", "test", "stringr", "length", "functions!"
 strlengthtest2 <- str_pad(strlengthtest, 15, "left", pad= " ", use_width = FALSE)
 
 ##QUESTION: Dissect the code above. What is the purpose of each argument in it?
+
+#The strlengthtest is the vector we are using 
 
 ##TASK: Run str_length on our new vector. Did we successfully make all the lengths
 ##consistent?
