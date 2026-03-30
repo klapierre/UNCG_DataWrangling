@@ -15,7 +15,7 @@ babyNames <- babynames
 ##Load the stringr package.
 library(stringr)
 ##This package is also part of tidyverse, so you can also load it by just loading
-##tidyverse. 
+##tidyverse 
 
 
 
@@ -31,6 +31,7 @@ strlengthtest <- c("This", "is", "to", "test", "stringr", "length", "functions!"
 
 ##TASK: using str_length, determine the amount of characters in each string. If
 ##you need help, check the help file for this function.
+str_length (strlengthtest)
 
 ##The str_length function is useful if we only want to see strings of a certain 
 ##character count. It can be combined with the filter function to accomplish this
@@ -41,6 +42,10 @@ strlengthtest <- c("This", "is", "to", "test", "stringr", "length", "functions!"
 ##the "babyNames" dataframe which only contains names with a length greater than
 ##or equal to 6. Name this new dataframe "LongbabyNames". (Note: you will need
 ##to load the dplyr package to use the filter function.)
+library(dplyr)
+colnames(babyNames)
+LongbabyNames <-  babyNames %>% 
+  filter(str_length(name)>=6)
 
 ##The function "str_pad" is used to pad out strings to make their lengths or 
 ##widths consistent. In this context, "width" refers to display width, the 
@@ -50,9 +55,17 @@ strlengthtest <- c("This", "is", "to", "test", "stringr", "length", "functions!"
 strlengthtest2 <- str_pad(strlengthtest, 15, "left", pad= " ", use_width = FALSE)
 
 ##QUESTION: Dissect the code above. What is the purpose of each argument in it?
+strlengthtest2 
+# strlengthtest was the data str_pad took
+# 15 was length of final string specified by the author
+# left was to pad to the left of the input string.
+# pad =" " specified that the string be padded with spaces.
+# use_width = FALSE ignored the with padding and only padded the length.
 
 ##TASK: Run str_length on our new vector. Did we successfully make all the lengths
 ##consistent?
+str_length(strlengthtest2)
+#Yes it is consistent.
 
 ##"str_trim" essentially reverses what we did with str_pad; it removes white
 ##space from strings. Run this code:
@@ -61,6 +74,11 @@ strlengthtrimmed <- str_trim(strlengthtest2)
 
 ##QUESTION: What is a possible practical application of the str_pad and str_trim
 ##functions?
+# str_pad can be used to make input length uniform, for example by adding "20" in 
+# front of all dates that only have last two digits of the year in YY format"26"
+# to get year 2026 in YYYY format.
+# For example, str_trim can be used to remove the spaces around strings that were
+# accidentally or unnecessarily input by users when entering data.
 
 ##The final length management function we will learn is "str_trunc". This function
 ##also serves to make string lengths consistent, but it does this by chopping off
@@ -70,10 +88,13 @@ strlengthtrimmed <- str_trim(strlengthtest2)
 str_trunc(strlengthtest, 4)
 
 ##QUESTION: How long is each string in the vector now?
+# 4
 
 ##TASK: Write code to create a new dataframe called "babyNamesTrunc". In this 
 ##dataframe, truncate the "name" column so that each string is at most 5 
 ##characters. HINT: The mutate function will be useful here.
+babyNamesTrunc <- babyNames %>% 
+  mutate(name = str_trunc(name, 5))
 
 #-----------------------------------------#
 #### PART 1.2: CHANGING CASE
@@ -102,22 +123,42 @@ str_to_snake(case_names)
 str_to_kebab(case_names)
 
 ## QUESTION: What happened to the case_names values in reference to each function that you ran?
+# str_to_upper() all strings uppercase
+# str_to_lower() all strings lowercase
+# str_to_title() all strings titlecase (first letter of all string uppercase)
+# str_to_sentence() first letter of the entire sentence only uppercase
+# str_to_camel() makes all of the first string lowercase, removes the space between two strings and makes the first letter of second string uppercase in most of the cases but it was weird for Sean Kinney.
+# str_to_snake() joins two strings with an underscore but it was weird for Sean Kinney.
+# str_to_kebab() joins two strings with a dash but it was weird for Sean Kinney.
 
 ## When just doing the camel, snake, and kebab functions, the last name came out weird, right? Let's fix that.
 
 ## TASK: Put the uppercase function within the camel function and run the code. Then, instead of the uppercase function, put the lowercase function within the camel function and run the code.
+str_to_camel(str_to_upper(case_names))
+str_to_camel(str_to_lower(case_names))
 
 ## QUESTION: What do you notice about the two results?
+#They produced same results.
 
 ## QUESTION: Since the last name in case_names had problems with the camel, snake, and kebab functions, is it possible to also fix the name with the snake and kebab functions as we did with the camel function in the previous task?
+str_to_snake(str_to_upper(case_names))
+str_to_snake(str_to_lower(case_names))
+
+str_to_kebab(str_to_upper(case_names))
+str_to_kebab(str_to_lower(case_names))
 
 ## Now that you've completed some examples using case_names, lets use our babyNames data frame to modify something a little more complex.
 
 ## TASK: Using the babyNames data frame, complete the following:
 #(1) Create a new data frame named uppercaseBabyNames.
 #(2) Select by name and year.
-#(3) Mutate the name column to be labelled name_upper and use the                   uppercase function on the name column.
-#(4) Select the name column once again, removing it, leaving only the               name_upper column.
+#(3) Mutate the name column to be labelled name_upper and use the uppercase function on the name column.
+#(4) Select the name column once again, removing it, leaving only the name_upper column.
+uppercaseBabyNames <- babyNames %>% 
+  select(name, year) %>% 
+  mutate (name_upper = str_to_upper(name)) %>% 
+  select (-name)
+
 
 ## TASK: Using the babyNames data frame, complete the following:
 #(1) Create a new data frame named oldBabyNames.
