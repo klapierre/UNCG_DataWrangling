@@ -213,7 +213,8 @@ noDuplicates <- unique(duplicates)
 
 ## TASK: Save your R script. Open up the commit window in RStudio.
 
-
+taco_ingredients <- str_c("beans", "cheese", "lettuce", "salsa", sep = ", ")
+taco_ingredients
 ## QUESTION: How many commits are you ahead of your branch on GitHub?
 ## (Hint: look for the message "Your branch is ahead of..." near the top of the 
 ## window.)

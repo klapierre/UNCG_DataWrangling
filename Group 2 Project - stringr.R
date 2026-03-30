@@ -316,3 +316,7 @@ Male_Vowelless <- str_count(NYC_Baby_Names_2021_List[["MALE"]]$Childs_First_Name
 # PART 1.5: MODIFYING CHARACTER VECTORS
 #-------------------------------------------------------#
 
+## Stringr also has various functions that can be used to modify
+## character vectors.
+
+## 
