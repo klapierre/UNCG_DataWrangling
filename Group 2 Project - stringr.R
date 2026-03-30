@@ -204,7 +204,8 @@ str_locate_all(fivefruits, "a")
 
 
 ## TASK: Use the knowledge you've learned in this section to create a code that gives 
-## a count of how many fruits in the fruit vector contain the word "berry".
+## a count of how many fruits in the fruit vector contain the word "berry". (Hint:
+## You will need to use a dplyr function.)
 
 
 ## QUESTION: How many fruits containing the word "berry" are there in the fruit vector?
