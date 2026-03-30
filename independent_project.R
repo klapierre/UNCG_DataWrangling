@@ -62,3 +62,104 @@ T5 <- read_excel(file, sheet = "T5") %>%
     seed_set = seed_set_percent
   )
 
+# Convert Julian dates to Date objects
+### if j_day = 1, date should = 2015-01-01
+# Factorize categorical variables
+# Fix incorrectly assigned numerical values (NAs as characters)
+
+T1 <- T1 %>% 
+  mutate(date = as.Date(j_day - 1, origin = "2015-01-01"),
+         site = as.factor(site),
+         visitation_rate = as.numeric(visitation_rate),
+         temperature = as.numeric(temperature))
+
+T2 <- T2 %>% 
+  mutate(site = as.factor(site),
+         bee_abundance = as.numeric(bee_abundance),
+         visitation_rate = as.numeric(visitation_rate),
+         competitor_count = as.numeric(competitor_count))
+
+T3 <- T3 %>% 
+  mutate(date_open = as.Date(j_open - 1 , origin = "2015-01-01"),
+         site = as.factor(site),
+         flower_id = as.factor(flower_id))
+
+T4 <- T4 %>% 
+  mutate(date_open = as.Date(j_open - 1, origin = "2015-01-01"),
+         site = as.factor(site),
+         pollen_limitation = as.numeric(pollen_limitation))
+
+T5 <- T5 %>% 
+  mutate(date_open = as.Date(j_open - 1, origin = "2015-01-01"),
+         site = as.factor(site),
+         treatment = as.factor(treatment))
+
+# Verify data structure before proceeding
+glimpse(c(T1, T2, T3, T4, T5))
+
+
+# Data Transformation -----------------------------------------------------
+
+# Summarize statistics across sites
+T1_site_summary <- T1 %>% 
+  group_by(site) %>% 
+  summarize(
+    mean_flowers = mean(flower_count, na.rm = TRUE),
+    mean_visitation = mean(visitation_rate, na.rm = TRUE),
+    mean_temp = mean(temperature, na.rm = TRUE),
+    total_competitors = sum(competitor_count, na.rm = TRUE)
+  ) %>% 
+  ungroup()
+
+T2_site_summary <- T2 %>% 
+  group_by(site) %>% 
+  summarize(
+    mean_flowers = mean(flower_count, na.rm = T),
+    mean_bees = mean(bee_abundance, na.rm = T),
+    mean_visitation = mean(visitation_rate, na.rm = T)) %>% 
+  ungroup()
+
+T3_site_summary <- T3 %>% 
+  group_by(site) %>% 
+  summarize(
+    mean_longevity = mean(longevitiy, na.rm = T),
+    mean_pollinator_hours = mean(pollinator_hours, na.rm = T),
+    mean_seed_set = mean(seed_set, na.rm = T)
+  ) %>% 
+  ungroup()
+
+T4_site_summary <- T4 %>% 
+  group_by(site) %>% 
+  summarize(
+    mean_pollen_limitation <- mean(pollen_limitation, na.rm = T),
+    mean_seed_set = mean(seed_set, na.rm = T)
+  ) %>% 
+  ungroup()
+
+T5_site_summary <- T5 %>% 
+  group_by(site,treatment) %>% 
+  summarize(
+    mean_open_date = mean(j_open, na.rm = T),
+    mean_seed_set = mean(seed_set, na.rm = T)
+  ) %>% 
+  ungroup()
+
+# Summarize statistics across dates
+T1_date_summary <- T1 %>% 
+  group_by(date) %>% 
+  summarize(
+    mean_flowers = mean(flower_count, na.rm = TRUE),
+    mean_visitation = mean(visitation_rate, na.rm = TRUE),
+    mean_temp = mean(temperature, na.rm = TRUE),
+    total_competitors = sum(competitor_count, na.rm = TRUE)
+  ) %>% 
+  ungroup()
+
+T2_date_summary <- T2 %>% 
+  group_by(week) %>% 
+  summarize(
+    mean_flowers = mean(flower_count, na.rm = T),
+    mean_bees = mean(bee_abundance, na.rm = T),
+    mean_visitation = mean(visitation_rate, na.rm = T)) %>% 
+  ungroup()
+
