@@ -60,6 +60,7 @@ head(state_data)
 state_frost_data <- state_data %>%
                        select(State, Frost)
 
+
 ?filter 
 - We are NOT selecting Rows!
 ?select 
@@ -81,6 +82,7 @@ states <- states(cb = TRUE)
 #Task: Run the following code to rename the 'NAME' column in the states dataset
 
 states <- states %>% rename(State = NAME)
+
 
 #Task: Run the following code to leftjoin the states and state_frost_data datasets 
 #by "State" to a new dataframe named us_states_frost
@@ -151,12 +153,40 @@ Yes, there appears that there is a possible relationship between latitude and th
 #because your code will be viewed for grading, not the map itself!
 
 state_population <- state_data %>% 
-  select(Population)
+  select(State, Population)
+
+bind_state_population <- left_join(states, state_population, by = c("State"))
+
+bind_state_population_2 <-bind_state_population %>% 
+  dplyr::filter(State != "Alaska" & State != "Hawaii" & State != "Guam" & State != 
+                  "American Samoa" & State != "United States Virgin Islands" & 
+                  State != "Puerto Rico" 
+                & State != "Commonwealth of the Northern Mariana Islands")
+
+ggplot(bind_state_population_2) + 
+  geom_sf(aes(fill = Population), color = "red") +
+  scale_fill_gradient(low = "pink", high = "green")
+  theme_minimal() +
+  labs(fill = "Population per State", title = "United States Population")
+
+----
+  
+  us_states_frost_2 <- us_states_frost %>%
+  dplyr::filter(State != "Alaska" & State != "Hawaii" & State != "Guam" & State != 
+                  "American Samoa" & State != "United States Virgin Islands" & 
+                  State != "Puerto Rico" 
+                & State != "Commonwealth of the Northern Mariana Islands")
+
+ggplot(us_states_frost_2) +
+  geom_sf(aes(fill = Frost), color = "orange") +
+  theme_minimal() +
+  labs(fill = "Number of Frost Days", title = "United States Frost Data")
+
 
 #Task: write three things you can infer from the map that you created:
-#1
-#2
-#3
+#1 California,Texas, and New York are heavily populated as their gradients are heavily saturated in the "high" end of the color scheme.
+#2 The coasts of the USA are more populated than the middle of the USA.
+#3 Opposing colors help discern map values than a 1 color palette as it discerns large differences.
 
 # Part 3: MAPPING SPECIMEN OCCURRENCE DATA -----------------------------------
 
