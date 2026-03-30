@@ -9,7 +9,7 @@ library(lubridate)
 
 dt_practice <- as_datetime(946684860)
 
-# QUESTION: Run the code above to convert the Unix measurement to ymd_hms format using the ‘as_datetime’ function. What date does the timestamp correspond to?
+# QUESTION: Run the code above to convert the Unix measurement to ymd_hms format using the ‘as_datetime’ function. What date and time does the timestamp correspond to?
 # ANSWER: "2000-01-01 00:01:00 UTC"
 
 # Unix timestamps are also measured in days since January 1st, 1970. The ‘as_date’ function, like the ‘as_datetime’ function, can be used to convert these measurements to ymd format.
@@ -38,14 +38,14 @@ print(dt_time_86 <- hms::as_hms(86400))
 
 # You can parse date-times with several different functions, so it's important to use the function that corresponds to the order of your data!
 
-# TASK: Run the following lines of codes to view several functions for parsing date and time.
+# TASK: Run the following lines of code to view how lubridate handles different date-time formats.
 
 ymd_hms("2026-04-14 14:00:00")
 ydm_hms("2026-14-04 14:00:00")
 mdy_hms("04/14/2026 14:00:00")
 dmy_hms("14 Apr 2026 14:00:00")
 
-# TIP: If your data doesn’t include certain values, you can use the same functions by removing the corresponding parts of the function. 
+# TIP: If your data only includes dates without timestamsp, you can use the same functions by removing '_hms' from the function. 
 
 #TASK: Run the following lines of code to convert these dates that lack time values.
 
@@ -60,15 +60,15 @@ ydm("07-04-12")
 
 # QUESTION: Is the output value correct? Why not? Rewrite the code with the same input using the correct function below. 
 
-mdy("07-04-12") #Answer
+mdy("07-04-12") #ANSWER: The output from 'ydm' is incorrect because the input is in mdy format. It can be corrected by using 'mdy' instead. 
 
-#TASK: Use a parsing function to convert your birthday into standard date-time format in the space below. 
+#TASK: Use any of the parsing functions to convert your birthday into standard Unix format in the space below. 
 
 mdy("November 22nd, 2001") #Example
 
-# Parsing data is super convenient, but it's not convenient to parse each date individually! What if we want to parse an entire column at once?
+# Parsing data is super convenient, but what if we want to parse an entire column at once?
 
-#TASK: Load the nycflights13 dataset, and run the code to create a date-time table. 
+#TASK: Load the nycflights13 dataset. This dataset already uses Unix format; run the following code to "break" the dataset so we can practice parsing date-times.
 
 install.packages("nycflights13")
 library(nycflights13)
@@ -76,14 +76,25 @@ library(nycflights13)
 broken_flights <- flights %>%
   mutate(
     flight_date = format(time_hour, "%B %d, %Y"), 
-    flight_time = format(time_hour, "%I: %M: %S %p"))
+    flight_time = format(time_hour, "%I: %M: %S %p")) %>% 
+  select(flight, tailnum, origin, dest, flight_date, flight_time)
 
 #TASK: Run the following code to convert flight times back to Unix format.
 
-flight_data_parsed <- broken_flights %>% mutate(flight_time = as_datetime(flight_time))
+flight_data_parsed <- broken_flights %>% mutate(flight_time = hms::as_hms(flight_time))
 
 #TASK: In the same flight_data_parsed dataframe, parse the flight_date column. 
+#HINT: Use the mutate function with the appropriate parsing function form the previous section.
 
-flight_data_parsed <- broken_flights %>% mutate(flight_date = mdy(flight_date))
+flight_data_parsed <- broken_flights %>% mutate(flight_date = mdy(flight_date)) #Example
 
-class(flight_data_parsed$flight_time)
+class(flight_data_parsed$flight_time) #Check
+class(flight_data_parsed$flight_date) #Check
+
+
+# ---------------------------------------------------------- #
+### GETTING AND SETTING DATES AND TIMES ####                                  
+# ---------------------------------------------------------- #
+
+
+
