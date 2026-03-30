@@ -97,7 +97,11 @@ ggplot(us_states_frost) +
   theme_minimal() +
   # applies the minimal theme
   labs(fill = "Number of Frost Days", title = "United States Frost Data")
+<<<<<<< HEAD
 # creates a legend for the map and title. 
+=======
+  # creates a legend for the map and title. 
+>>>>>>> 077fcf4c811ca067b749ae9a59b5bec02780d614
 #Question: Do you see a map under the "plots" tab?
 # yes ! 
 
@@ -232,7 +236,11 @@ ggplot() +
                color = "black") +
   theme_bw() +
   coord_fixed(1.5) 
+<<<<<<< HEAD
 
+=======
+  
+>>>>>>> 077fcf4c811ca067b749ae9a59b5bec02780d614
 # QUESTION: What do you think the 'coord_fixed' function is doing here? 
 # The 'coord_fixed' function helps keep the map proportionally correct. This function 
 # controls the aspect ratio of the map. 
@@ -406,7 +414,11 @@ ggplot() +
        y = "Latitude")
 
 # QUESTION: What does changing the 'option' in scale_fill_viridis_c() do?
+<<<<<<< HEAD
 # It changes the color gradient to a dark purple, red and yellow color palette. 
+=======
+ # It changes the color gradient to a dark purple, red and yellow color palette. 
+>>>>>>> 077fcf4c811ca067b749ae9a59b5bec02780d614
 # ---------------------------------------------------------------------------- #
 
 # TASK: Adjust legend position for better readability
@@ -435,3 +447,7 @@ ggplot() +
 
 # TASK: Save your most recent plot as an image file to your folder. 
 ggsave("nc_species_richness_map.png",width = 8, height = 6, dpi = 300)
+<<<<<<< HEAD
+=======
+
+>>>>>>> 077fcf4c811ca067b749ae9a59b5bec02780d614

@@ -285,7 +285,7 @@ ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
 ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) + 
   # creates a base for the graph and grabs data from the mpgSubset, the aestheics
   # are x= cty, y= hwy and the color is determined by class.
-  geom_jitter() .+ 
+  geom_jitter() + 
   # a layer where the points are scattered
   scale_color_manual(values=c('#FCBA03', '#380754', '#496916'),
                      # manually sets colors using hex codes. 
@@ -443,7 +443,7 @@ highwayMPG <- mpg %>%
      aes(ymin = hwy_mean - hwy_se, ymax = hwy_mean + hwy_se),
      width = 0.2
    ) +
-   scale_fill_manual(values = RColorBrewer::brewer.pal(7, "Dark2")) +
+   scale_fill_brewer(palette = "Dark2") +
    theme(legend.position = "none") +
    labs(
      x = "Car Class",
@@ -577,7 +577,7 @@ ggplot(cityMPG, aes(x = reorder(class, -city_mean), y= city_mean, fill = class))
     x = "Car Class",
     y = "Average City MPG"
   ) + 
-  theme(legend.postion = "none")
+  theme(legend.position = "none")
 
   
 
@@ -645,7 +645,8 @@ manufacturerFreq <- mpg %>%
 
 # TASK: Make a bar graph of the number of cars (frequency) by manufacturer using
 # the dataframe we created above.
-
+ggplot(manufacturerFreq, aes(x = manufacturer, y = frequency)) +
+  geom_bar(stat = "identity")
 
 # We can switch the bar chart you created above into a pie chart simply by changing
 # the coordinate system through a series of steps as follows:
@@ -676,12 +677,19 @@ ggplot(manufacturerFreq, aes(x="", y=frequency, fill=manufacturer)) +
 
 # TASK: Annotate the code below to describe what each line does:
 ggplot(manufacturerFreq, aes(x="", y=frequency, fill=manufacturer)) +
+  # Creates a base using the manufacturerFreq data, x is set to empty so all data will be in one
+  # category, y= determines the size of each slice in each  section, fill determines a color for each section.
   geom_bar(stat="identity", width=1) +
+  # creates a bar with the width of 1
   coord_polar(theta="y", start=0) +
+  #converts bar graph to pie chart, theta= y determines the size of the slices and start = 0 
+  # means 0 is the start of the angle. 
   theme_void() +
+  # removes background elements for a clean chart 
   theme(legend.title = element_text(size = 12.5), 
         legend.text  = element_text(size = 8.5),
         legend.key.size = unit(.75, "lines"))
+# customizes the appearance of the legend 
 
 
 # ---------------------------------------------------------- #
@@ -696,8 +704,10 @@ data("economics")
 # over time (unemploy vs date). Make a scatterplot, then connect the points with 
 # lines using geom_line().
 # HINT: use ?economics to get more information about this dataset.
-
-
+?economics
+ggplot(economics, aes( x= date, y = unemploy)) +
+  geom_point() +
+  geom_line()
 
 
 # ---------------------------------------------------------- #
