@@ -141,7 +141,7 @@ state_pop_data <- state_data %>% select(State,Population)
 states <- states(cb = TRUE)
 states <- states %>% rename(State = NAME)
 us_states_pop <- left_join(states, state_pop_data, by = c("State"))
- ggplot(us_states_pop_2) +
+ggplot(us_states_pop_2) +
   geom_sf(aes(fill = Population), color = "black")+ 
   scale_fill_gradient(high="red",low="pink")+
   theme_minimal() +
@@ -160,19 +160,19 @@ us_states_pop <- left_join(states, state_pop_data, by = c("State"))
 # To find an appropriate data set, I queried the opensource museum data sharing
 # platform Arctos to gather mammal records from North Carolina.
 # Here is the link to the website:https://arctos.database.museum/
- 
- # To filter the records, I specified "Mammalia" in the "Any taxon, ID, common   
- # name" box within the Identification field, and "North Carolina" in the
- # "state_prov" box within the Place field. 
- 
- # It is free to make an account and search+download records, but I shared a csv 
- # file in the the email I sent out for those who do not have an account already 
- # made. 
- 
- # TASK: Download the NC_mamm_data.csv into your UNCG_DataWrangling folder on your desktop
- 
- # TASK: Using read.csv(), create an object titled "mammal_data" from the NC_mamm_data csv 
- mammal_data <- read.csv("NC_mamm_data.csv")
+
+# To filter the records, I specified "Mammalia" in the "Any taxon, ID, common   
+# name" box within the Identification field, and "North Carolina" in the
+# "state_prov" box within the Place field. 
+
+# It is free to make an account and search+download records, but I shared a csv 
+# file in the the email I sent out for those who do not have an account already 
+# made. 
+
+# TASK: Download the NC_mamm_data.csv into your UNCG_DataWrangling folder on your desktop
+
+# TASK: Using read.csv(), create an object titled "mammal_data" from the NC_mamm_data csv 
+mammal_data <- read.csv("NC_mamm_data.csv")
 # TASK: Using the colnames() function, review what columns exist in your current dataset
 colnames(mammal_data)
 # TASK: Remove the 'USE_LICENSE_URL' column using a pipe and the select(- ) 
@@ -181,7 +181,7 @@ mammal_data <- mammal_data %>%
   select(-USE_LICENSE_URL)
 # Using the rename() function introduced in assignment 4, rename the remaining 11 columns in the following order: country, state, locality, date, lat, long, sex, life_stage, genus, order, family.
 mammal_data <- mammal_data %>% 
-rename(country = COUNTRY, state = STATE_PROV, locality = SPEC_LOCALITY, date = VERBATIM_DATE, lat = DEC_LAT, long = DEC_LONG, sex = SEX, life_stage = LIFE_STAGE, genus = GENUS, order = PHYLORDER, family = FAMILY)
+  rename(country = COUNTRY, state = STATE_PROV, locality = SPEC_LOCALITY, date = VERBATIM_DATE, lat = DEC_LAT, long = DEC_LONG, sex = SEX, life_stage = LIFE_STAGE, genus = GENUS, order = PHYLORDER, family = FAMILY)
 # Using the mammal_data object, clean NA values from columns 'lon', 'lat', 'locality' and 'genus'. Create new object for this cleaned data titled 'clean_data'
 clean_data <- mammal_data %>% 
   drop_na(long,lat,locality,genus)
@@ -236,16 +236,17 @@ ggplot() +
                color = "black") +
   theme_bw() +
   coord_fixed(1.5) +
-geom_point(data = clean_data,
-           aes(x = long, y = lat, color = order),
-           size = 1,
-           alpha = 0.7)
+  geom_point(data = clean_data,
+             aes(x = long, y = lat, color = order),
+             size = 1,
+             alpha = 0.7)
 
 # From here, you can adjust the theme to your liking. 
 # NOTE: With a plus sign between sections, if you begin typing 'theme' on the next line, options will appear that you can browse through! 
 
 # QUESTION: Why might it be useful to have slightly transparent data points (by setting alpha to a number below 1) when mapping in a small area such as this?  
 # So that you can see through them and still see the outlines of the counties.
+
 # TASK: after adding a theme to the plot, add and title and an x and y axis label with the labs() function. 
 ggplot() +
   geom_polygon(data = nc_map,
@@ -412,4 +413,3 @@ ggplot() +
 
 # TASK: Save your most recent plot as an image file to your folder. 
 ggsave("nc_species_richness_map.png",width = 8, height = 6, dpi = 300)
-
