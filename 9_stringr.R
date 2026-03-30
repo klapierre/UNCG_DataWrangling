@@ -159,12 +159,16 @@ uppercaseBabyNames <- babyNames %>%
   mutate (name_upper = str_to_upper(name)) %>% 
   select (-name)
 
-
 ## TASK: Using the babyNames data frame, complete the following:
 #(1) Create a new data frame named oldBabyNames.
 #(2) Filter by the year 1880
-#(3) Mutate the name column to be labelled name_title and use the title             function on the name column.
-#(4) Select the name column once again, removing it, leaving only the               name_title column.
+#(3) Mutate the name column to be labelled name_title and use the title function on the name column.
+#(4) Select the name column once again, removing it, leaving only the  name_title column.
+
+oldBabyNames <- babyNames %>% 
+  filter( year == "1880") %>% 
+  mutate (name_title = str_to_title(name)) %>% 
+  select (-name)
 
 ## Good work! You've learned how to use some case changing functions within simple values as well as data frames!
 
