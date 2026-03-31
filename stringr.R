@@ -42,12 +42,11 @@ str_length(strlengthtest)
 ##the "babyNames" dataframe which only contains names with a length greater than
 ##or equal to 6. Name this new dataframe "LongbabyNames". (Note: you will need
 ##to load the dplyr package to use the filter function.)
-install.packages("dplyr")
+# install.packages("dplyr")
 library(dplyr)
 
 LongbabyNames <- babyNames %>%
-  filter(.data = babyNames,
-         chr <= 6)
+  filter(nchar(name) >= 6)
 
 
 ##The function "str_pad" is used to pad out strings to make their lengths or 
@@ -58,7 +57,11 @@ LongbabyNames <- babyNames %>%
 strlengthtest2 <- str_pad(strlengthtest, 15, "left", pad= " ", use_width = FALSE)
 
 ##QUESTION: Dissect the code above. What is the purpose of each argument in it?
-
+# strlengthtest is the object we are applying changes to
+# 15 is the number of characters we want in each word
+# left is assigning which side of the word to apply the padding to
+# pad is specifying that we want a space to be used to fill each word to 15 characters
+# use_width determines how string length is calculated ? 
 
 
 ##TASK: Run str_length on our new vector. Did we successfully make all the lengths
@@ -75,6 +78,8 @@ strlengthtrimmed
 ##QUESTION: What is a possible practical application of the str_pad and str_trim
 ##functions?
 
+# the str_trim seems slightly more useful, because it can remove any accidental spaces in data that could cause issues in the future. 
+# the str_pad could help with alignment if you are working with a lot of numerical data
 
 
 ##The final length management function we will learn is "str_trunc". This function
@@ -85,12 +90,14 @@ strlengthtrimmed
 str_trunc(strlengthtest, 4)
 
 ##QUESTION: How long is each string in the vector now?
-
-
+# 4, 2, 2, 4, 4, 4, 4
 
 ##TASK: Write code to create a new dataframe called "babyNamesTrunc". In this 
 ##dataframe, truncate the "name" column so that each string is at most 5 
 ##characters. HINT: The mutate function will be useful here.
+
+babyNamesTrunc <- babyNames %>%
+  mutate(str_trunc(name) <= 5)
 
 #-----------------------------------------#
 #### PART 1.2: CHANGING CASE
@@ -153,8 +160,10 @@ str_to_kebab(str_to_lower(case_names))
 #(2) Select by name and year.
 #(3) Mutate the name column to be labelled name_upper and use the                   uppercase function on the name column.
 #(4) Select the name column once again, removing it, leaving only the               name_upper column.
-
-
+uppercaseBabyNames <- babyNames %>%
+  select(name, year) %>%
+  mutate(str_to_upper(name)) %>%
+  select(-name)
 
 
 ## TASK: Using the babyNames data frame, complete the following:
@@ -162,6 +171,10 @@ str_to_kebab(str_to_lower(case_names))
 #(2) Filter by the year 1880
 #(3) Mutate the name column to be labelled name_title and use the title             function on the name column.
 #(4) Select the name column once again, removing it, leaving only the               name_title column.
+oldBabyNames <- babyNames %>%
+  filter(year==1880) %>%
+  mutate(name_title = str_to_title(name)) %>%
+  select(-name)
 
 ## Good work! You've learned how to use some case changing functions within simple values as well as data frames!
 
@@ -190,7 +203,7 @@ str_detect(fruit, "q")
 str_which(fruit, "q")
 
 ## QUESTION: What is the result of running this code?
-
+# 43 46 67
 
 ## Not only can we use the str_detect function to detect individual characters in
 ## a string, but we can also use it to detect larger patterns of characters. For 
@@ -204,7 +217,7 @@ str_detect(fruit,"melon")
 
 ## TASK: Try using the str_detect function with "(.)\\1" as the pattern to find 
 ## out if there are any fruits containing double letters.
-
+str_detect(fruit, "(.)\\1")
 
 ## Another interesting function is str_count.
 ## TASK: Run the following code to create a smaller vector containing only the
@@ -214,6 +227,7 @@ fivefruits <- fruit[1:5]
 str_count(fivefruits, "a")
 
 ## QUESTION: What does the str_count function do? If needed, use ?str_count.
+# counts the number of times the letter indicated inside the quotations shows up in each word within the data
 
 
 ## To get the actual position of the first occurrence of the letter "a" in each of
@@ -226,7 +240,7 @@ str_locate(fivefruits, "a")
 ## locate more than one letter (such as "er"), the start and end columns would not match.
 
 ## QUESTION: Notice that the fifth fruit returns NAs. Why do you think this is?
-
+# there are no a's in the fifth fruit
 
 ## This tells us only the first occurrence of the letter "a" in each of the five 
 ## fruits. However, if we wanted to locate the positions of all of the matches 
@@ -235,16 +249,20 @@ str_locate_all(fivefruits, "a")
 
 ## QUESTION: Which positions contain "a" in the fourth fruit in our vector? 
 ## (Hint: There are three.)
+# second, fourth and sixth positions
 
 
 ## QUESTION: Other functions that are similar to str_detect are str_starts and 
 ## str_ends. What do you think each of these does?
+# matches the beginning (str_starts) or end (str_ends) of a string
 
 
 ## TASK: Use the knowledge you've learned in this section to create a code that gives 
 ## a count of how many fruits in the fruit vector contain the word "berry". (Hint:
 ## You will need to use a dplyr function.)
+str_count(fruit, "berry")
 
+### ??????????
 
 ## QUESTION: How many fruits containing the word "berry" are there in the fruit vector?
 
