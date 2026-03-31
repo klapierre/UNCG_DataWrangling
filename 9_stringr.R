@@ -1,4 +1,5 @@
 ##Before beginning: Make sure to pull any changes and work under your own personal branch!
+setwd("/Users/a_pandey2/Desktop/github/Data Analysis and Visualization/UNCG_DataWrangling")
 
 ##Make sure to load the tidyverse package
 library(tidyverse)
@@ -166,7 +167,7 @@ uppercaseBabyNames <- babyNames %>%
 #(4) Select the name column once again, removing it, leaving only the  name_title column.
 
 oldBabyNames <- babyNames %>% 
-  filter( year == "1880") %>% 
+  filter( year == 1880) %>% 
   mutate (name_title = str_to_title(name)) %>% 
   select (-name)
 
@@ -285,7 +286,10 @@ sum(str_detect(fruit, "berry"))
 # function's help file if you need to refresh yourself on how it works.
 
 NYC_Baby_Names <- read.csv("Popular_Baby_Names_20260331.csv") %>% 
-  
+  rename(Childs_First_Name = Child.s.First.Name,
+         Year_of_Birth = Year.of.Birth)
+
+colnames(NYC_Baby_Names)
 
 # GOAL: Learn the general functionality of the function str_count()
 
@@ -301,8 +305,8 @@ NYC_Baby_Names <- read.csv("Popular_Baby_Names_20260331.csv") %>%
 Name_Length <- str_count(NYC_Baby_Names$Childs_First_Name)
 max(Name_Length)
 
-# QUESTION: What does our output look like?
-# What is the highest number of characters contained in a given name?
+# QUESTION: What does our output look like? Gives me a number
+# What is the highest number of characters contained in a given name? 14
 
 # Of course, str_count() can evaluate the incidence of more specific occurences
 # than the total number of characters in any given string. Here we will use
@@ -313,7 +317,10 @@ max(Name_Length)
 # data from the most recent year, that being 2021. Create an additional dataframe
 # called "NYC_Baby_Names_2021" using the filter function to limit the year of birth
 # to 2021.
+NYC_Baby_Names_2021 <- NYC_Baby_Names %>% 
+  filter(Year_of_Birth == 2021)
 
+NYC_Baby_Names_2021 
 
 
 # In order to do find the difference by gender however we will have to let stringr 
@@ -333,6 +340,7 @@ NYC_Baby_Names_2021_List <- split(NYC_Baby_Names_2021,NYC_Baby_Names$Gender)
 Male_ia <- str_count(NYC_Baby_Names_2021_List[["MALE"]]$Childs_First_Name,"ia")
 
 # QUESTION: Do any individual names have more than one instance of the string "ia"?
+#Yes
 
 # Now, this data doesn't tell us much as it exists at the moment, as a list of
 # values. In order to measure the total incidence of the string among names,
@@ -340,18 +348,21 @@ Male_ia <- str_count(NYC_Baby_Names_2021_List[["MALE"]]$Childs_First_Name,"ia")
 # Access the help file for sum if it is unclear and create a new object called
 # "Male_ia_Total" which will contain our sum of the incidence.
 
-
+sum(Male_ia)
 
 # QUESTION: What is the value of "Male_ia_Total"?
+# 60
 
 # TASK: We now have half of what we need, as we do not have the data for girls born
 # in 2021, so analogous to what we have done for the males, create an object titled
 # "Female_ia" which uses str_count() to see how often the string "ia" appears among
 # girls' first names. Then sum this data in order to have a total count.
 
-
+Female_ia <- str_count(NYC_Baby_Names_2021_List[["FEMALE"]]$Childs_First_Name,"ia")
 
 # QUESTION: How many female names in 2021 contained the string "ia"?
+sum(Female_ia)
+#118
 
 # An additional thing that str_count() allows us to do is to count characters
 # in a string, but excluding some characters, for instance we could count the
@@ -361,7 +372,11 @@ Male_ia <- str_count(NYC_Baby_Names_2021_List[["MALE"]]$Childs_First_Name,"ia")
 Male_Vowelless <- str_count(NYC_Baby_Names_2021_List[["MALE"]]$Childs_First_Name,pattern="[^aeiouAEIOU]")
 
 # QUESTION: What do you think the ^ signifies in this variant of str_count?
+#  it is any character that is not vowel.
+
 # Why do you think that an upper and lower case variant of each vowel is included?
+# Because str_count is case sensitive and the authors wanted to include both uppercase
+# and lowercase characters.
 
 #-------------------------------------------------------#
 # PART 1.5: MODIFYING VECTORS
@@ -375,23 +390,27 @@ Male_Vowelless <- str_count(NYC_Baby_Names_2021_List[["MALE"]]$Childs_First_Name
 
 ## TASK: Create the following vector with stringr to list out your taco ingredients.
 
-taco_ingredients <- str_c("tortilla","beans", "lettuce", "guacamole", "cheese", "salsa")
+taco_ingredients <- str_c("tortilla","beans", "lettuce", "cheese", "salsa", "cilantro")
 
 ## QUESTION: Print the vector below. Is it legible? Why or why not?
+taco_ingredients
+# No. str_c concatenated all of those strings in the list into single string.
 
 
 ## TASK: Now make the same vector, but formatted as a list (as in with ", "
 ## after each word).
-
+taco_ingredients <- str_c("tortilla",", ", "beans", ", ", "lettuce",", ", "cheese",", ", "salsa", " , ", "cilantro")
 
 ## TASK: Not everyone likes cilantro, so use the replace function to
 ## replace it with guacamole and save it as taco_ingredients_2
-
+taco_ingredients2 <- str_replace (taco_ingredients, "cilantro", "guacamole")
 
 ## TASK: Now, it appears that we have forgotten to include meat in the list.
 ## Add meat to the list after the tortilla, but before the beans.
+str_sub(taco_ingredients2, start = 10, end = 10 ) <- " meat, "
 
+taco_ingredients2
 
 ## TASK: Now remove one ingredient of choice without replacing it with anything.
 ## Save this as taco_ingredients_3 without any empty strings.
-
+taco_ingredients_3  <- str_remove (taco_ingredients2, ", lettuce")
