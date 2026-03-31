@@ -277,6 +277,8 @@ data.frame(fruit = fruit) %>%
 # Write the code necessary to do so below, and if necessary check the rename()
 # function's help file if you need to refresh yourself on how it works.
 
+NYC_Baby_Names<-read.csv("Popular_Baby_Names_20260330.csv")%>%
+  rename("Childs_First_Name"=Child.s.First.Name, "Year_of_Birth"=Year.of.Birth)
 
 
 # GOAL: Learn the general functionality of the function str_count()
@@ -295,6 +297,7 @@ max(Name_Length)
 
 # QUESTION: What does our output look like?
 # What is the highest number of characters contained in a given name?
+#Answer: The output is both a dataset vector that is a list with all of the string character lists, and a console output that is a single object vector that tells us that the highest number of characters is 14
 
 # Of course, str_count() can evaluate the incidence of more specific occurences
 # than the total number of characters in any given string. Here we will use
@@ -305,6 +308,8 @@ max(Name_Length)
 # data from the most recent year, that being 2021. Create an additional dataframe
 # called "NYC_Baby_Names_2021" using the filter function to limit the year of birth
 # to 2021.
+
+NYC_Baby_Names_2021<-filter(.data=NYC_Baby_Names, Year_of_Birth=="2021")
 
 
 
@@ -324,7 +329,10 @@ NYC_Baby_Names_2021_List <- split(NYC_Baby_Names_2021,NYC_Baby_Names$Gender)
 
 Male_ia <- str_count(NYC_Baby_Names_2021_List[["MALE"]]$Childs_First_Name,"ia")
 
+Male_ia
+
 # QUESTION: Do any individual names have more than one instance of the string "ia"?
+#Answer: It is very hard to read, but it does not look like there is
 
 # Now, this data doesn't tell us much as it exists at the moment, as a list of
 # values. In order to measure the total incidence of the string among names,
@@ -332,18 +340,21 @@ Male_ia <- str_count(NYC_Baby_Names_2021_List[["MALE"]]$Childs_First_Name,"ia")
 # Access the help file for sum if it is unclear and create a new object called
 # "Male_ia_Total" which will contain our sum of the incidence.
 
-
+Male_ia_Total <- sum(Male_ia)
+Male_ia_Total
 
 # QUESTION: What is the value of "Male_ia_Total"?
+#Answer: 60
 
 # TASK: We now have half of what we need, as we do not have the data for girls born
 # in 2021, so analogous to what we have done for the males, create an object titled
 # "Female_ia" which uses str_count() to see how often the string "ia" appears among
 # girls' first names. Then sum this data in order to have a total count.
-
-
-
+Female_ia <- str_count(NYC_Baby_Names_2021_List[["FEMALE"]]$Childs_First_Name,"ia")
+Female_ia_Total<-sum(Female_ia)
+Female_ia_Total
 # QUESTION: How many female names in 2021 contained the string "ia"?
+#Answer: 118
 
 # An additional thing that str_count() allows us to do is to count characters
 # in a string, but excluding some characters, for instance we could count the
@@ -352,8 +363,11 @@ Male_ia <- str_count(NYC_Baby_Names_2021_List[["MALE"]]$Childs_First_Name,"ia")
 
 Male_Vowelless <- str_count(NYC_Baby_Names_2021_List[["MALE"]]$Childs_First_Name,pattern="[^aeiouAEIOU]")
 
+Male_Vowelless
+
 # QUESTION: What do you think the ^ signifies in this variant of str_count?
 # Why do you think that an upper and lower case variant of each vowel is included?
+#Answer: I think that the ^ is sort of like using a ! so it is saying to look for what is not there, and then becuase stringr is case sensitive there is one of each value so that the code looks for both capital and lowercase
 
 #-------------------------------------------------------#
 # PART 1.5: MODIFYING VECTORS
