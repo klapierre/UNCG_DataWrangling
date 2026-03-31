@@ -384,20 +384,24 @@ Male_Vowelless
 taco_ingredients <- str_c("tortilla","beans", "lettuce", "guacamole", "cheese", "salsa")
 
 ## QUESTION: Print the vector below. Is it legible? Why or why not?
-
+#Answer: It is not legible becuase there are no spaces between the ingredients
+taco_ingredients
 
 ## TASK: Now make the same vector, but formatted as a list (as in with ", "
 ## after each word).
-
+taco_ingredients<-str_c("tortilla, ", "beans, ","lettuce, ","guacamole, ","cheese, ","salsa")
+taco_ingredients
 
 ## TASK: Not everyone likes cilantro, so use the replace function to
 ## replace it with guacamole and save it as taco_ingredients_2
-
-
+taco_ingredients_2 <- str_replace(taco_ingredients, "cilantro", "guacamole")
+taco_ingredients_2
 ## TASK: Now, it appears that we have forgotten to include meat in the list.
 ## Add meat to the list after the tortilla, but before the beans.
-
+str_sub(taco_ingredients_2, start=10, end=10)<-" meat, "
+taco_ingredients_2
 
 ## TASK: Now remove one ingredient of choice without replacing it with anything.
 ## Save this as taco_ingredients_3 without any empty strings.
-
+taco_ingredients_3 <- str_remove(taco_ingredients, "cheese,?\\s*")
+taco_ingredients_3
