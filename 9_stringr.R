@@ -313,6 +313,8 @@ NYC_Baby_Names_2021 <- NYC_Baby_Names %>%
 
 NYC_Baby_Names_2021_List <- split(NYC_Baby_Names_2021, NYC_Baby_Names_2021$Gender)
 
+
+
 # Now in order to find the the incidence of a character string in our new dataframe
 # we will use the function str_count(). Which can search a given column for 
 # occurences of a character or a specified string of characters. In this case
