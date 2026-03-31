@@ -44,17 +44,21 @@ head(state_data)
 #Question: What do you notice about the rownames and the data within the "State" 
 #column? 
 
+# The rownames and the "State" column are the same.
+
 #Task: Run the following code:
 
 rownames(state_data) <- NULL
 
 #Question: Write code to display your dataset once again. What did the previous
 #code change within the dataset? What did NULL do to the rownames?
+# The rownames have been changed to numbers rather than being states.
 
 #Task: Because we have loaded the dyplr package, we can create a new dataframe
 #with just State and Frost data. Write a code to select the State and Frost columns
 #from the state_data dataframe and name the new dataframe state_frost_data. 
-
+state_frost_data <- state_data %>%
+  select(State,Frost)
 
 #View the new dataset and confirm that it is correct.
 
@@ -89,12 +93,16 @@ ggplot(us_states_frost) +
   labs(fill = "Number of Frost Days", title = "United States Frost Data")
 
 #Question: Do you see a map under the "plots" tab?
+# Yes I do.
 
 #Question: What do you notice about the size of this map? Suppose we only want
 #to study frost data of mainland US states. Are there states we could omit from
 #this map to better visualize the data? HINT ** to help determine which states we may 
 #want to omit, check out the us_states_frost_2 tab at the different States included
 #in the dataframe.
+
+# The map seems to include Alaska Hawaii and some overseas US territories, which
+# makes it rather hard to read the map for the Lower 48.
 
 #To filter out states or islands not connected to the mainland US, we can use the 
 #dplyr function.
@@ -111,14 +119,24 @@ us_states_frost_2 <- us_states_frost %>%
 #Write code to show a map of the us_states_frost_2 dataset following the steps
 #used to create the map from the us_states_frost dataset.
 
+ggplot(us_states_frost_2) +
+  geom_sf(aes(fill = Frost), color = "blue") +
+  theme_minimal() +
+  labs(fill = "Number of Frost Days", title = "United States Frost Data")
+
 #You should see a new map in the "plots" tab that is much larger than the previous 
 #map making it easier to visualize the data.
 
 #Question: What do dark blue states represent? What do light blue states represent?
 #Question: Does florida or NC have more frost days?
+# The darker colors represent fewer frost days, while lighter colors represent having
+# more frost days. Florida fewer frost days than North Carolina.
 
 #Question: Does there appear to be a relationship between latitude and 
 #number of frost days? Why or why not?
+# There is a relationship albeit it doesn't seem to be the sole explanatory variable
+# continental vs. costal data also seems to matter, with states in the interior
+# of the continent experiencing more frost days when controlled for latitude.
 
 #Task: Write code to create a map of the Population data from the state.x77 dataset.
 #You can reference the pevious steps of this assignment
@@ -126,11 +144,35 @@ us_states_frost_2 <- us_states_frost %>%
 #not blue (as we have already used this color) **Make sure to write the code
 #because your code will be viewed for grading, not the map itself!
 
+state_population_data <- state_data %>%
+  select(State,Population)
+
+states <- states(cb = TRUE) 
+
+states <- states %>% rename(State = NAME)
+
+us_states_population <- left_join(states, state_population_data, by = c("State"))
+
+ggplot(us_states_population) +
+  geom_sf(aes(fill = Population), color = "red") +
+  theme_minimal() +
+  labs(fill = "Population in Thousands", title = "United States Population")
+
+us_states_population_2 <- us_states_population %>%
+  dplyr::filter(State != "Alaska" & State != "Hawaii" & State != "Guam" & State != 
+                  "American Samoa" & State != "United States Virgin Islands" & 
+                  State != "Puerto Rico" 
+                & State != "Commonwealth of the Northern Mariana Islands")
+
+ggplot(us_states_population_2) +
+  geom_sf(aes(fill = Population), color = "red") +
+  theme_minimal() +
+  labs(fill = "Population in Thousands", title = "United States Population")
 
 #Task: write three things you can infer from the map that you created:
-#1
-#2
-#3
+#1: California is clearly the most populous state.
+#2: The interior west is the least populated region of the Lower 48.
+#3: New York and Texas are populous states ranking close behind California.
 
 # Part 3: MAPPING SPECIMEN OCCURRENCE DATA -----------------------------------
 
