@@ -93,10 +93,10 @@ us_states_frost <- left_join(states, state_frost_data, by = c("State"))
 #days
 #Task: Run the following code and annotate the significance of each line of code.
 
-ggplot(us_states_frost) +
-  geom_sf(aes(fill = Frost), color = "blue") +
-  theme_minimal() +
-  labs(fill = "Number of Frost Days", title = "United States Frost Data")
+ggplot(us_states_frost) + ##starts the plot using us_states_frost
+  geom_sf(aes(fill = Frost), color = "blue") + ##draws the map and fills each state based on Frost values - blue
+  theme_minimal() + ##simple minimal theme
+  labs(fill = "Number of Frost Days", title = "United States Frost Data") ##legend label and map title
 
 #Question: Do you see a map under the "plots" tab?
 
@@ -240,6 +240,8 @@ ggplot() +
 
 # QUESTION: What do you think the geom_polygon function is doing here?
 
+##Drawing the county shapes 
+
 # TASK: Create a new dataframe titled 'nc_map' that only has North Carolina counties by assigning 'north carolina', typed exactly as it is shown in the in the 'counties' dataframe previously built. The code should look like this, with region following county:
 nc_map <- map_data("county", region = "north carolina")
 
@@ -251,9 +253,15 @@ ggplot() +
                fill = "white",
                color = "black") +
   theme_bw() +
-  coord_fixed(1.5) 
+  coord_fixed(1.5) + 
+  geom_point(data = clean_data,
+             aes(x = long, y = lat, color = order),
+             size = 1,
+             alpha = 0.7)
   
 # QUESTION: What do you think the 'coord_fixed' function is doing here? 
+
+##Keeps the proper proportions instead of stretching or squeezing things
 
 # ADDING THE DATA POINTS TO NC MAP---------------------------------------------
 
@@ -261,18 +269,17 @@ ggplot() +
 # To do this, we can add the geom_point function to our previous chunk of code.
 
 # TASK: With a plus sign between the sections, add the lines below to the above code:
-geom_point(data = clean_data,
-           aes(x = lon, y = lat, color = order),
-           size = 1,
-           alpha = 0.7)
+
+##Added above
 
 # From here, you can adjust the theme to your liking. 
 # NOTE: With a plus sign between sections, if you begin typing 'theme' on the next line, options will appear that you can browse through! 
 
 # QUESTION: Why might it be useful to have slightly transparent data points (by setting alpha to a number below 1) when mapping in a small area such as this?  
 
-# TASK: after adding a theme to the plot, add and title and an x and y axis label with the labs() function. 
+##Helps when there are many overlapping points so we can still see places that have a higher concenstration 
 
+# TASK: after adding a theme to the plot, add and title and an x and y axis label with the labs() function. 
 
 # In the end, we should have a chunk of code that looks something like this (theme can be your choosing):
 ggplot() +
@@ -283,7 +290,7 @@ ggplot() +
   theme_bw() +
   coord_fixed(1.5) +
   geom_point(data = clean_data,
-             aes(x = lon, y = lat, color = order),
+             aes(x = long, y = lat, color = order),
              size = 1,
              alpha = 0.7) +
   theme_bw() +
@@ -292,6 +299,9 @@ ggplot() +
        y = "Latitude")
 
 # QUESTION: Why did I decide to color the points by order? What happens if you color the points (within the geom_point section) by genus instead? 
+
+##Coloring by order makes things easier to analyze. 
+#If ordered by genus there would be many more categories 
 
 # HINT: the unique() function allows us to see how many unique values are in each of our columns 
 unique(clean_data$genus)
