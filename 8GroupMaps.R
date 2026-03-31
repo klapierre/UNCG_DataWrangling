@@ -195,14 +195,37 @@ ggplot(us_states_population_2) +
 
 # TASK: Using read.csv(), create an object titled "mammal_data" from the NC_mamm_data csv 
 
+mammal_data <- read.csv("C:/Users/nsalt/Documents/NC_mamm_data.csv")
+
 # TASK: Using the colnames() function, review what columns exist in your current dataset
+
+colnames(mammal_data)
 
 # TASK: Remove the 'USE_LICENSE_URL' column using a pipe and the select(- ) 
 # function because it is not needed for plotting. You do not need to create a new object for this; just reassign to the same name 'mammal_data' 
 
+mammal_data <- mammal_data %>%
+  select(-USE_LICENSE_URL)
+
 # Using the rename() function introduced in assignment 4, rename the remaining 11 columns in the following order: country, state, locality, date, lat, long, sex, life_stage, genus, order, family.
 
+mammal_data <- rename(.data = mammal_data,
+                      country=COUNTRY,
+                      state=STATE_PROV,
+                      locality=SPEC_LOCALITY,
+                      date=VERBATIM_DATE,
+                      lat=DEC_LAT,
+                      long=DEC_LONG,
+                      sex=SEX,
+                      life_state=LIFE_STAGE,
+                      genus=GENUS,
+                      order=PHYLORDER,
+                      family=FAMILY)
+
 # Using the mammal_data object, clean NA values from columns 'lon', 'lat', 'locality' and 'genus'. Create new object for this cleaned data titled 'clean_data'
+clean_data <- mammal_data %>%
+  drop_na(long,lat,locality,genus)
+
 
 # Great, now our data is clean and easier to work with! 
 
@@ -225,6 +248,8 @@ ggplot() +
 
 # QUESTION: What do you think the geom_polygon function is doing here?
 
+# It's creating a plot that's drawing polygons, with the shapefile being counties.
+
 # TASK: Create a new dataframe titled 'nc_map' that only has North Carolina counties by assigning 'north carolina', typed exactly as it is shown in the in the 'counties' dataframe previously built. The code should look like this, with region following county:
 nc_map <- map_data("county", region = "north carolina")
 
@@ -236,9 +261,15 @@ ggplot() +
                fill = "white",
                color = "black") +
   theme_bw() +
-  coord_fixed(1.5) 
+  coord_fixed(1.5) +
+  geom_point(data = clean_data,
+             aes(x = long, y = lat, color = order),
+             size = 1,
+             alpha = 0.7)
 
 # QUESTION: What do you think the 'coord_fixed' function is doing here? 
+# Sets the aspect ratio, such that the map is not overly compressed horizontally
+# or vertically.
 
 # ADDING THE DATA POINTS TO NC MAP---------------------------------------------
 
@@ -246,18 +277,33 @@ ggplot() +
 # To do this, we can add the geom_point function to our previous chunk of code.
 
 # TASK: With a plus sign between the sections, add the lines below to the above code:
+
 geom_point(data = clean_data,
-           aes(x = lon, y = lat, color = order),
-           size = 1,
-           alpha = 0.7)
+                aes(x = long, y = lat, color = order),
+                size = 1,
+                alpha = 0.7)
 
 # From here, you can adjust the theme to your liking. 
 # NOTE: With a plus sign between sections, if you begin typing 'theme' on the next line, options will appear that you can browse through! 
 
 # QUESTION: Why might it be useful to have slightly transparent data points (by setting alpha to a number below 1) when mapping in a small area such as this?  
+# It's possible points may overlap, so it's useful to see all points.
 
 # TASK: after adding a theme to the plot, add and title and an x and y axis label with the labs() function. 
-
+ggplot() +
+  geom_polygon(data = nc_map,
+               aes(x = long, y = lat, group = group),
+               fill = "white",
+               color = "black") +
+  theme_bw() +
+  coord_fixed(1.5) +
+  geom_point(data = clean_data,
+             aes(x = long, y = lat, color = order),
+             size = 1,
+             alpha = 0.7) +
+  labs(title = "Mammals Sampled in North Carolina",
+       x = "Longitude",
+       y = "Latitude")
 
 # In the end, we should have a chunk of code that looks something like this (theme can be your choosing):
 ggplot() +
@@ -268,7 +314,7 @@ ggplot() +
   theme_bw() +
   coord_fixed(1.5) +
   geom_point(data = clean_data,
-             aes(x = lon, y = lat, color = order),
+             aes(x = long, y = lat, color = genus),
              size = 1,
              alpha = 0.7) +
   theme_bw() +
@@ -277,6 +323,7 @@ ggplot() +
        y = "Latitude")
 
 # QUESTION: Why did I decide to color the points by order? What happens if you color the points (within the geom_point section) by genus instead? 
+# There's a rather large number of orders which makes the data a bit hard to parse.
 
 # HINT: the unique() function allows us to see how many unique values are in each of our columns 
 unique(clean_data$genus)
@@ -304,11 +351,11 @@ unique(clean_data$order)
 # PREPARING DATA FOR SPECIES RICHNESS -----------------------------------------
 
 # TASK: Install and load the sf package if not already installed
-# install.packages("sf")
+install.packages("sf")
 library(sf)
 
 # TASK: Convert clean_data into an sf (simple features) object using longitude and latitude
-clean_sf <- st_as_sf(clean_data, coords = c("lon", "lat"), crs = 4326)
+clean_sf <- st_as_sf(clean_data, coords = c("long", "lat"), crs = 4326)
 
 # TASK: Convert nc_map dataframe into an sf object
 nc_map_sf <- st_as_sf(nc_map, coords = c("long", "lat"), crs = 4326)
@@ -383,6 +430,8 @@ ggplot() +
 
 # QUESTION: What does changing the 'option' in scale_fill_viridis_c() do?
 
+# Selects the color gradient.
+
 # ---------------------------------------------------------------------------- #
 
 # TASK: Adjust legend position for better readability
@@ -399,13 +448,18 @@ ggplot() +
 
 # QUESTION: Why might changing the legend position be useful?
 
+# Makes it easier for the reader to read the key / more noticable.
+
 # ---------------------------------------------------------------------------- #
 # INTERPRETING THE MAP --------------------------------------------------------
 
 # QUESTION: What does a lighter color indicate on this map?
 
-# QUESTION: Why might some counties have lower richness values? 
+# A higher richness in genera in that county.
 
+# QUESTION: Why might some counties have lower richness values? 
+# Less sampling has been done or perhaps there are legitimately fewer types 
+# of mammals living there.
 
 # TASK: Save your most recent plot as an image file to your folder. 
 ggsave("nc_species_richness_map.png",width = 8, height = 6, dpi = 300)
