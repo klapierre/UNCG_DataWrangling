@@ -311,7 +311,6 @@ unique(clean_data$order)
 
 # Note: If we wanted to, we could subset out dataframe by species while still working in the data cleaning section, and only plot one species at a time, or focus on different families, etc.
 
-
 # This shows us that  data cleaning provides many different opportunities for visualization! 
 
 # Part 4: MAPPING SPECIES RICHNESS ---------------------------------------------------
@@ -333,7 +332,7 @@ unique(clean_data$order)
 library(sf)
 
 # TASK: Convert clean_data into an sf (simple features) object using longitude and latitude
-clean_sf <- st_as_sf(clean_data, coords = c("lon", "lat"), crs = 4326)
+clean_sf <- st_as_sf(clean_data, coords = c("long", "lat"), crs = 4326)
 
 # TASK: Convert nc_map dataframe into an sf object
 nc_map_sf <- st_as_sf(nc_map, coords = c("long", "lat"), crs = 4326)
@@ -408,6 +407,8 @@ ggplot() +
 
 # QUESTION: What does changing the 'option' in scale_fill_viridis_c() do?
 
+##Changes color palette.
+
 # ---------------------------------------------------------------------------- #
 
 # TASK: Adjust legend position for better readability
@@ -424,13 +425,18 @@ ggplot() +
 
 # QUESTION: Why might changing the legend position be useful?
 
+##Could make it easier to read - stop it from covering anything important
+
 # ---------------------------------------------------------------------------- #
 # INTERPRETING THE MAP --------------------------------------------------------
 
 # QUESTION: What does a lighter color indicate on this map?
 
+##Higher species richness
+
 # QUESTION: Why might some counties have lower richness values? 
 
+##Fewer species were recorded there or less sampling done in those counties
 
 # TASK: Save your most recent plot as an image file to your folder. 
 ggsave("nc_species_richness_map.png",width = 8, height = 6, dpi = 300)
