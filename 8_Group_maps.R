@@ -220,7 +220,7 @@ geom_point(data = clean_data,
 # NOTE: With a plus sign between sections, if you begin typing 'theme' on the next line, options will appear that you can browse through! 
 
 # QUESTION: Why might it be useful to have slightly transparent data points (by setting alpha to a number below 1) when mapping in a small area such as this?  
-
+so transparency helps pevent the map from looking to crowed and makes the dense areas so there easier to notice 
 # TASK: after adding a theme to the plot, add and title and an x and y axis label with the labs() function. 
 
 
@@ -242,6 +242,7 @@ ggplot() +
        y = "Latitude")
 
 # QUESTION: Why did I decide to color the points by order? What happens if you color the points (within the geom_point section) by genus instead? 
+that happens becasue there are usually far more genera than orders, so the plot becomes visually messy.coloring makes patterns easier to see 
 
 # HINT: the unique() function allows us to see how many unique values are in each of our columns 
 unique(clean_data$genus)
