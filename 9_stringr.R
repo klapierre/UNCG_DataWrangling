@@ -372,7 +372,7 @@ sum(Female_ia)
 Male_Vowelless <- str_count(NYC_Baby_Names_2021_List[["MALE"]]$Childs_First_Name,pattern="[^aeiouAEIOU]")
 
 # QUESTION: What do you think the ^ signifies in this variant of str_count?
-#  it is any character that is not vowel.
+#  It means any character that is not vowel.
 
 # Why do you think that an upper and lower case variant of each vowel is included?
 # Because str_count is case sensitive and the authors wanted to include both uppercase
