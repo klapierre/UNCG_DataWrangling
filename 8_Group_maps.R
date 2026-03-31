@@ -189,7 +189,7 @@ ggplot() +
   theme_bw()
 
 # QUESTION: What do you think the geom_polygon function is doing here?
-
+i belive actually creates the county shapes on the map from the coordinate data 
 # TASK: Create a new dataframe titled 'nc_map' that only has North Carolina counties by assigning 'north carolina', typed exactly as it is shown in the in the 'counties' dataframe previously built. The code should look like this, with region following county:
 nc_map <- map_data("county", region = "north carolina")
 
@@ -204,7 +204,7 @@ ggplot() +
   coord_fixed(1.5) 
   
 # QUESTION: What do you think the 'coord_fixed' function is doing here? 
-
+makes the north carolina map in a more realistic shape by controlling the x-axis and y-axis. the 1.5 sets that ratio 
 # ADDING THE DATA POINTS TO NC MAP---------------------------------------------
 
 # Using the 'clean_data' df we created, we can map these points onto out North Carolina map to see species occurrences! 
