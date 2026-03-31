@@ -44,6 +44,8 @@ head(state_data)
 #Question: What do you notice about the rownames and the data within the "State" 
 #column? 
 
+##Row names and State column both have state names
+
 #Task: Run the following code:
 
 rownames(state_data) <- NULL
@@ -51,12 +53,20 @@ rownames(state_data) <- NULL
 #Question: Write code to display your dataset once again. What did the previous
 #code change within the dataset? What did NULL do to the rownames?
 
+head(state_data)
+##Removed row names from data set
+#NULL deleted the row names
+
 #Task: Because we have loaded the dyplr package, we can create a new dataframe
 #with just State and Frost data. Write a code to select the State and Frost columns
 #from the state_data dataframe and name the new dataframe state_frost_data. 
 
+state_frost_data <- state_data %>%
+  select(State, Frost)
 
 #View the new dataset and confirm that it is correct.
+
+head(state_frost_data)
 
 #Now we need to use the tigris package to download a shapefile called 'states'
 #of all of US states that we would like to plot. We set cb = TRUE 
@@ -83,18 +93,22 @@ us_states_frost <- left_join(states, state_frost_data, by = c("State"))
 #days
 #Task: Run the following code and annotate the significance of each line of code.
 
-ggplot(us_states_frost_2) +
+ggplot(us_states_frost) +
   geom_sf(aes(fill = Frost), color = "blue") +
   theme_minimal() +
   labs(fill = "Number of Frost Days", title = "United States Frost Data")
 
 #Question: Do you see a map under the "plots" tab?
 
+##Yes
+
 #Question: What do you notice about the size of this map? Suppose we only want
 #to study frost data of mainland US states. Are there states we could omit from
 #this map to better visualize the data? HINT ** to help determine which states we may 
 #want to omit, check out the us_states_frost_2 tab at the different States included
 #in the dataframe.
+
+##The map is pretty spread out and the size of the U.S mainland is almost the same size as Alaska. 
 
 #To filter out states or islands not connected to the mainland US, we can use the 
 #dplyr function.
@@ -111,14 +125,26 @@ us_states_frost_2 <- us_states_frost %>%
 #Write code to show a map of the us_states_frost_2 dataset following the steps
 #used to create the map from the us_states_frost dataset.
 
+ggplot(us_states_frost_2) +
+  geom_sf(aes(fill = Frost), color = "blue") +
+  theme_minimal() +
+  labs(fill = "Number of Frost Days", title = "United States Frost Data")
+
 #You should see a new map in the "plots" tab that is much larger than the previous 
 #map making it easier to visualize the data.
 
 #Question: What do dark blue states represent? What do light blue states represent?
 #Question: Does florida or NC have more frost days?
 
+##Dark blue shows lower number of frost days.
+#Light blue shows higher number of frost days.
+#NC has more frost days than Florida.
+
 #Question: Does there appear to be a relationship between latitude and 
 #number of frost days? Why or why not?
+
+##There is a bit of a relationship as generally the higher the latitude there seems to be an increase
+#in number of frost days but this rule is not set in stone on this map either.
 
 #Task: Write code to create a map of the Population data from the state.x77 dataset.
 #You can reference the pevious steps of this assignment
@@ -126,11 +152,28 @@ us_states_frost_2 <- us_states_frost %>%
 #not blue (as we have already used this color) **Make sure to write the code
 #because your code will be viewed for grading, not the map itself!
 
+state_population_data <- state_data %>%
+  select(State, Population)
+
+us_states_population <- left_join(states, state_population_data, by = "State")
+
+us_states_population_2 <- us_states_population %>%
+  dplyr::filter(State != "Alaska" & State != "Hawaii" & 
+                  State != "Guam" & State != "American Samoa" & 
+                  State != "United States Virgin Islands" & 
+                  State != "Puerto Rico" & 
+                  State != "Commonwealth of the Northern Mariana Islands")
+
+ggplot(us_states_population_2) +
+  geom_sf(aes(fill = Population), color = "black") +
+  theme_minimal() +
+  labs(fill = "Population", title = "US Population by State") +
+  scale_fill_gradient(low = "lightgreen", high = "darkgreen")
 
 #Task: write three things you can infer from the map that you created:
-#1
-#2
-#3
+#1 Population in the Midwest states is not very high
+#2 California has the highest population out of all states
+#3 Populations generally higher in areas with big cities 
 
 # Part 3: MAPPING SPECIMEN OCCURRENCE DATA -----------------------------------
 
