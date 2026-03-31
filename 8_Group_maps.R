@@ -122,10 +122,11 @@ us_states_frost_2 <- us_states_frost %>%
 
 #Question: What do dark blue states represent? What do light blue states represent?
 #Question: Does florida or NC have more frost days?
-
+dark blue states represent states with more frostier days light blue states represent less frost days
+north carolina has more forst days than flotdia 
 #Question: Does there appear to be a relationship between latitude and 
 #number of frost days? Why or why not?
-
+yes there does appear to be a relationship between latitude and there number of frost days
 #Task: Write code to create a map of the Population data from the state.x77 dataset.
 #You can reference the pevious steps of this assignment
 #while you work through this task. make the color of the map any color that is
@@ -134,9 +135,9 @@ us_states_frost_2 <- us_states_frost %>%
 
 
 #Task: write three things you can infer from the map that you created:
-#1
-#2
-#3
+#1 states with darker shading have larger poulations 
+#2 some coastal states appear to have higher populations than many inland states
+#3 population is not evenly distributed across the united sates 
 
 # Part 3: MAPPING SPECIMEN OCCURRENCE DATA -----------------------------------
 
