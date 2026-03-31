@@ -85,17 +85,22 @@ us_states_frost <- left_join(states, state_frost_data, by = c("State"))
 #Task: Run the following code and annotate the significance of each line of code.
 
 ggplot(us_states_frost) +
+  starts ggplot grph using us_states_frost data sheet ehich contains state map sheet 
   geom_sf(aes(fill = Frost), color = "blue") +
+    adds the map layer using simple features
   theme_minimal() +
+    removes extra background clutter 
   labs(fill = "Number of Frost Days", title = "United States Frost Data")
-
+adds lables to the plot 
 #Question: Do you see a map under the "plots" tab?
+yes i do see map 
 
 #Question: What do you notice about the size of this map? Suppose we only want
 #to study frost data of mainland US states. Are there states we could omit from
 #this map to better visualize the data? HINT ** to help determine which states we may 
 #want to omit, check out the us_states_frost_2 tab at the different States included
 #in the dataframe.
+you would not show alaska and hawaii
 
 #To filter out states or islands not connected to the mainland US, we can use the 
 #dplyr function.
