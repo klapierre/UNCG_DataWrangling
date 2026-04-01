@@ -364,14 +364,15 @@ ggplot() +
        y = "Latitude")
 
 # QUESTION: Why might changing the legend position be useful?
-
+changing the legend postion can be useful becasue it can make the map easier to read and keep the legend from blocking important parts of the data.it thelps imporve the overall layout 
 # ---------------------------------------------------------------------------- #
 # INTERPRETING THE MAP --------------------------------------------------------
 
 # QUESTION: What does a lighter color indicate on this map?
-
+a lighter color indicates a lower richness value, meaning that county has fewer unique mammal genera recorded 
 # QUESTION: Why might some counties have lower richness values? 
-
+fewer mammals were collected or recorded there 
+the county may have less habitat diversity or less sampling effort in than the other counties 
 
 # TASK: Save your most recent plot as an image file to your folder. 
 ggsave("nc_species_richness_map.png",width = 8, height = 6, dpi = 300)
