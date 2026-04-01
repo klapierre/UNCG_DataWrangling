@@ -348,7 +348,7 @@ ggplot() +
        y = "Latitude")
 
 # QUESTION: What does changing the 'option' in scale_fill_viridis_c() do?
-
+the data stays the same,but the map uses a differnt set of colors to show low and high richness values.they can make patterns easier to see.
 # ---------------------------------------------------------------------------- #
 
 # TASK: Adjust legend position for better readability
