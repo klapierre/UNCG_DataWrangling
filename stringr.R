@@ -49,7 +49,6 @@ library(dplyr)
 LongbabyNames <- babyNames %>%
   filter(nchar(name) >= 6)
 
-
 ##The function "str_pad" is used to pad out strings to make their lengths or 
 ##widths consistent. In this context, "width" refers to display width, the 
 ##amount of space the characters actually take on the screen. Here, we'll focus
@@ -58,11 +57,12 @@ LongbabyNames <- babyNames %>%
 strlengthtest2 <- str_pad(strlengthtest, 15, "left", pad= " ", use_width = FALSE)
 
 ##QUESTION: Dissect the code above. What is the purpose of each argument in it?
+
 # strlengthtest is the object we are applying changes to
 # 15 is the number of characters we want in each word
 # left is assigning which side of the word to apply the padding to
 # pad is specifying that we want a space to be used to fill each word to 15 characters
-# use_width determines how string length is calculated ? 
+# use_width determines how string length is calculated (?)
 
 
 ##TASK: Run str_length on our new vector. Did we successfully make all the lengths
@@ -98,7 +98,8 @@ str_trunc(strlengthtest, 4)
 ##characters. HINT: The mutate function will be useful here.
 
 babyNamesTrunc <- babyNames %>%
-  mutate(str_trunc(name) <= 5)
+  mutate(name = str_trunc(name, 5, side = c("right")))
+
 
 #-----------------------------------------#
 #### PART 1.2: CHANGING CASE
@@ -152,7 +153,7 @@ str_to_snake(str_to_lower(case_names))
 str_to_kebab(str_to_upper(case_names))
 str_to_kebab(str_to_lower(case_names))
 
-# yes but idk why the str_to_upper doesnt seem to have an affect? 
+# yes but I don't understand why the str_to_upper doesnt seem to have an affect? 
 
 ## Now that you've completed some examples using case_names, lets use our babyNames data frame to modify something a little more complex.
 
@@ -223,12 +224,12 @@ str_detect(fruit, "(.)\\1")
 ## TASK: Run the following code to create a smaller vector containing only the
 ## first five fruits in the original fruit vector.
 fivefruits <- fruit[1:5]
+
 ## TASK: Now run this one.
 str_count(fivefruits, "a")
 
 ## QUESTION: What does the str_count function do? If needed, use ?str_count.
 # counts the number of times the letter indicated inside the quotations shows up in each word within the data
-
 
 ## To get the actual position of the first occurrence of the letter "a" in each of
 ## these five fruits, we can run the following code.
@@ -260,9 +261,7 @@ str_locate_all(fivefruits, "a")
 ## TASK: Use the knowledge you've learned in this section to create a code that gives 
 ## a count of how many fruits in the fruit vector contain the word "berry". (Hint:
 ## You will need to use a dplyr function.)
-str_count(fruit, "berry")
-
-### ??????????
+str_count(fruit, "berry") 
 
 ## QUESTION: How many fruits containing the word "berry" are there in the fruit vector?
 
@@ -354,7 +353,7 @@ Male_ia_Total <- Male_ia %>%
   sum(Male_ia)
 
 # QUESTION: What is the value of "Male_ia_Total"?
-# 120 (?) 
+# 120L (?) 
 
 # TASK: We now have half of what we need, as we do not have the data for girls born
 # in 2021, so analogous to what we have done for the males, create an object titled
@@ -388,23 +387,31 @@ Male_Vowelless <- str_count(NYC_Baby_Names_2021_List[["MALE"]]$Childs_First_Name
 
 ## TASK: Create the following vector with stringr to list out your taco ingredients.
 
-taco_ingredients <- str_c("tortilla","beans", "lettuce", "guacamole", "cheese", "salsa")
+taco_ingredients <- str_c("tortilla","beans", "lettuce", "cilantro", "cheese", "salsa")
 
 ## QUESTION: Print the vector below. Is it legible? Why or why not?
-
+taco_ingredients
+# sort of, but spaces between each word would help
 
 ## TASK: Now make the same vector, but formatted as a list (as in with ", "
 ## after each word).
+taco_ingredients <- str_c("tortilla, ","beans, ", "lettuce, ", "cilantro, ", "cheese, ", "salsa")
 
+taco_ingredients
 
 ## TASK: Not everyone likes cilantro, so use the replace function to
 ## replace it with guacamole and save it as taco_ingredients_2
 
+taco_ingredients_2 <- taco_ingredients %>%
+  str_replace_all(taco_ingredients, "cilantro, ", "guacamole, ")
+
+# taco_ingredients_2 ??? not working
 
 ## TASK: Now, it appears that we have forgotten to include meat in the list.
 ## Add meat to the list after the tortilla, but before the beans.
-
+taco_ingredients <- str_c("tortilla, ", "meat, ", "beans, ", "lettuce, ", "cilantro, ", "cheese, ", "salsa")
 
 ## TASK: Now remove one ingredient of choice without replacing it with anything.
 ## Save this as taco_ingredients_3 without any empty strings.
+taco_ingredients_3 <- str_c("tortilla, ", "meat, ", "beans, ", "cilantro, ", "cheese, ", "salsa")
 
