@@ -261,10 +261,10 @@ str_locate_all(fivefruits, "a")
 ## TASK: Use the knowledge you've learned in this section to create a code that gives 
 ## a count of how many fruits in the fruit vector contain the word "berry". (Hint:
 ## You will need to use a dplyr function.)
-str_count(fruit, "berry") 
+sum(str_detect(fruit, "berry"))
 
 ## QUESTION: How many fruits containing the word "berry" are there in the fruit vector?
-
+# 14
 
 ## Great job! You've learned how to use stringr to detect, count, and locate 
 ## pattern matches in strings of characters. One way that these functions could 
@@ -349,11 +349,10 @@ Male_ia
 # we will have to take a sum of "Male_ia", do this by using the sum() function.
 # Access the help file for sum if it is unclear and create a new object called
 # "Male_ia_Total" which will contain our sum of the incidence.
-Male_ia_Total <- Male_ia %>%
   sum(Male_ia)
 
 # QUESTION: What is the value of "Male_ia_Total"?
-# 120L (?) 
+# 60
 
 # TASK: We now have half of what we need, as we do not have the data for girls born
 # in 2021, so analogous to what we have done for the males, create an object titled
@@ -362,7 +361,8 @@ Male_ia_Total <- Male_ia %>%
 Female_ia <- str_count(NYC_Baby_Names_2021_List[["FEMALE"]]$Childs_First_Name,"ia")
 
 # QUESTION: How many female names in 2021 contained the string "ia"?
-# 893
+sum(Female_ia)
+# 118
 
 # An additional thing that str_count() allows us to do is to count characters
 # in a string, but excluding some characters, for instance we could count the
@@ -373,7 +373,7 @@ Male_Vowelless <- str_count(NYC_Baby_Names_2021_List[["MALE"]]$Childs_First_Name
 
 # QUESTION: What do you think the ^ signifies in this variant of str_count?
 # Why do you think that an upper and lower case variant of each vowel is included?
-# the ^ signifies NOT to count these letters; there is an upper and lower case variant because some names nay begin with the vowel we are trying to exclued 
+# the ^ signifies NOT to count these letters; there is an upper and lower case variant because some names nay begin with the vowel we are trying to exclued, and stringr is case sensitive
 
 #-------------------------------------------------------#
 # PART 1.5: MODIFYING VECTORS
@@ -402,10 +402,7 @@ taco_ingredients
 ## TASK: Not everyone likes cilantro, so use the replace function to
 ## replace it with guacamole and save it as taco_ingredients_2
 
-taco_ingredients_2 <- taco_ingredients %>%
-  str_replace_all(taco_ingredients, "cilantro, ", "guacamole, ")
-
-# taco_ingredients_2 ??? not working
+taco_ingredients_2 <- str_replace(taco_ingredients, "cilantro, ", "guacamole, ")
 
 ## TASK: Now, it appears that we have forgotten to include meat in the list.
 ## Add meat to the list after the tortilla, but before the beans.
@@ -413,5 +410,4 @@ taco_ingredients <- str_c("tortilla, ", "meat, ", "beans, ", "lettuce, ", "cilan
 
 ## TASK: Now remove one ingredient of choice without replacing it with anything.
 ## Save this as taco_ingredients_3 without any empty strings.
-taco_ingredients_3 <- str_c("tortilla, ", "meat, ", "beans, ", "cilantro, ", "cheese, ", "salsa")
-
+taco_ingredients_3 <- str_remove(taco_ingredients_2, "lettuce, ")
