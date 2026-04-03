@@ -55,10 +55,15 @@ strlengthtest2 <- str_pad(strlengthtest, 15, "left", pad= " ", use_width = FALSE
 
 ##QUESTION: Dissect the code above. What is the purpose of each argument in it?
 
-#The strlengthtest is the vector we are using 
+#The strlengthtest is the vector we are using, 15 is the length we want, pads is 
+#spaces between the words on the left side and usewidth was for counting characters
 
 ##TASK: Run str_length on our new vector. Did we successfully make all the lengths
 ##consistent?
+
+str_length(strlengthtest2)
+
+#yes
 
 ##"str_trim" essentially reverses what we did with str_pad; it removes white
 ##space from strings. Run this code:
@@ -67,6 +72,8 @@ strlengthtrimmed <- str_trim(strlengthtest2)
 
 ##QUESTION: What is a possible practical application of the str_pad and str_trim
 ##functions?
+
+#pad is used to make sure everything is aligned together, and trim cleans and removes the extra spaces
 
 ##The final length management function we will learn is "str_trunc". This function
 ##also serves to make string lengths consistent, but it does this by chopping off
@@ -77,9 +84,13 @@ str_trunc(strlengthtest, 4)
 
 ##QUESTION: How long is each string in the vector now?
 
+#At most 4 characters
+
 ##TASK: Write code to create a new dataframe called "babyNamesTrunc". In this 
 ##dataframe, truncate the "name" column so that each string is at most 5 
 ##characters. HINT: The mutate function will be useful here.
+
+babyNamesTrunc <- babyNames %>% mutate(name = str_trunc(name, 5))
 
 #-----------------------------------------#
 #### PART 1.2: CHANGING CASE
@@ -109,27 +120,45 @@ str_to_kebab(case_names)
 
 ## QUESTION: What happened to the case_names values in reference to each function that you ran?
 
+#With each function it changed the way the first and last name were put together. 
+#The upper made everything uppercase, the lower made everything lowercase, the title made the first
+#letter of the first and last name capital, sentence made the first letter in the first name capital,
+#the camel put the first and last name together with random upper case letters, the snake 
+#put an underscore in between the last and first name, the kebab puts a hyphen in between the words
+
 ## When just doing the camel, snake, and kebab functions, the last name came out weird, right? Let's fix that.
 
 ## TASK: Put the uppercase function within the camel function and run the code. Then, instead of the uppercase function, put the lowercase function within the camel function and run the code.
 
+str_to_camel(str_to_upper(case_names))
+str_to_camel(str_to_lower(case_names))
+
+
 ## QUESTION: What do you notice about the two results?
 
+#They both guve the same clean results withe the firts and lst name together and the last name capitalized
+
 ## QUESTION: Since the last name in case_names had problems with the camel, snake, and kebab functions, is it possible to also fix the name with the snake and kebab functions as we did with the camel function in the previous task?
+
+#yes
 
 ## Now that you've completed some examples using case_names, lets use our babyNames data frame to modify something a little more complex.
 
 ## TASK: Using the babyNames data frame, complete the following:
 #(1) Create a new data frame named uppercaseBabyNames.
 #(2) Select by name and year.
-#(3) Mutate the name column to be labelled name_upper and use the                   uppercase function on the name column.
-#(4) Select the name column once again, removing it, leaving only the               name_upper column.
+#(3) Mutate the name column to be labelled name_upper and use the uppercase function on the name column.
+#(4) Select the name column once again, removing it, leaving only the name_upper column.
+
+uppercaseBabyNames <- babyNames %>% select(name, year) %>% mutate(name_upper = str_to_upper(name)) %>% select(-name)
 
 ## TASK: Using the babyNames data frame, complete the following:
 #(1) Create a new data frame named oldBabyNames.
 #(2) Filter by the year 1880
-#(3) Mutate the name column to be labelled name_title and use the title             function on the name column.
-#(4) Select the name column once again, removing it, leaving only the               name_title column.
+#(3) Mutate the name column to be labelled name_title and use the title function on the name column.
+#(4) Select the name column once again, removing it, leaving only the name_title column.
+
+oldBabyNames <- babyNames %>% filter(year == 1880) %>% mutate(name_title = str_to_title(name)) %>% select(-name)
 
 ## Good work! You've learned how to use some case changing functions within simple values as well as data frames!
 
