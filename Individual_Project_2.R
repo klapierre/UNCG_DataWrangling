@@ -69,8 +69,32 @@ return(temp_c)
     drop_na() %>% 
     mutate(Region = "Palaearctic")
   
-  # ---------------------------
-  # PART TWO: Bar Graphs
-  # ---------------------------
+# ---------------------------
+# PART TWO: Bar Graphs
+# ---------------------------
   
+  # 2.1 wnv_corr dataframe shows the overall correlation between 
+  # WNV frequency and different variables for both regions and 
+  # assigns each value a type (ecological vs population).
   
+  wnv_corr <- bind_rows(afro_clean, pala_clean) 
+  
+  wnv_corr <- wnv_corr %>% 
+    group_by(Region) %>% 
+    summarize(
+      corr_mean_temp = cor(Temp_Mean, WNV_Frequency, use = "complete.obs"),
+      corr_max_temp  = cor(Temp_Max, WNV_Frequency, use = "complete.obs"),
+      corr_min_temp  = cor(Temp_Min, WNV_Frequency, use = "complete.obs"),
+      corr_precip = cor(Annual_Precipitation, WNV_Frequency, use = "complete.obs"),
+      corr_pop = cor(Population_Density, WNV_Frequency, use = "complete.obs"),
+      corr_cities = cor(Distance_Cities, WNV_Frequency, use = "complete.obs"),
+      corr_roads = cor(Distance_Roads, WNV_Frequency, use = "complete.obs"),
+      corr_railroads = cor(Distance_Railroals, WNV_Frequency, use = "complete.obs")) %>% 
+    pivot_longer(cols = -Region, names_to = "Variable", values_to = "Correlation") %>% 
+    mutate(Type = case_when(
+      Variable %in% c("corr_mean_temp", "corr_max_temp", "corr_min_temp", "corr_precip") ~ "Ecological",
+      Variable %in% c("corr_pop", "corr_cities", "corr_roads", "corr_railroads") ~ "Population")) %>% 
+    ungroup()
+    
+    
+ 
