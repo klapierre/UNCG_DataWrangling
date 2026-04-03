@@ -231,7 +231,16 @@ return(temp_c)
                 "corr_pop" = "#a83d3d", 
                 "corr_cities" = "#db6476",
                 "corr_roads" = "#ff8fb5", 
-                "corr_railroads" = "#ffbff8")) +
+                "corr_railroads" = "#ffbff8"),
+      labels = c(
+        "corr_mean_temp" = "Avgerage Temp", 
+        "corr_max_temp" = "Maximum Temp", 
+        "corr_min_temp" = "Minimum Temp", 
+        "corr_precip" = "Annual Precipitation",
+        "corr_pop" = "Population Density", 
+        "corr_cities" = "Distance to Cities",
+        "corr_roads" = "Distance to Roads", 
+        "corr_railroads" = "Distance to Railroads")) +
     theme_void() + 
     theme(plot.title = element_text(hjust = 0.5, face = "bold", size = 14,
                                           margin = margin(b = 40, t = 5)),
@@ -240,7 +249,7 @@ return(temp_c)
           legend.text = element_text(size = 9, face = "bold", color = "#2b428f", 
                                      margin = margin(t = 1)),
           strip.text = element_text(face = "bold", size = 10, color = "#324ea8")) +
-    labs(title = "Relative Contribution of Ecological & Population Factors",
+    labs(title = "Estimated Contribution of Ecological & Population Factors\nto WNV Incidence Across Regions",
          fill = "Ecological and\nPopulation Factors") 
  
   
