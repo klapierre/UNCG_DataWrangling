@@ -33,7 +33,7 @@ kelvin_to_celsius <- function(temp_k)
 return(temp_c)
 }
 
-# 1.1: making tidy afrotropical and palaearctic dataframes.
+# 1.1: Making tidy afrotropical and palaearctic dataframes.
 
  # Tidy afrotropical dataframe
  afro_clean <- afrotropical %>% 
@@ -73,9 +73,9 @@ return(temp_c)
 # PART TWO: Bar Graphs
 # ---------------------------
   
-  # 2.0: wnv_corr dataframe shows the overall correlation between 
-  # WNV frequency and different variables for both regions and 
-  # assigns each value a type (ecological vs population).
+  # 2.0: The wnv_corr dataframe shows the overall correlation between 
+  # WNV frequency and different variables for both regions; it also
+  # assigns each value a "Type" ("Ecological" or "Population").
   
   wnv_corr <- bind_rows(afro_clean, pala_clean) 
   
@@ -96,7 +96,7 @@ return(temp_c)
       Variable %in% c("corr_pop", "corr_cities", "corr_roads", "corr_railroads") ~ "Population")) %>% 
     ungroup()
     
-  # 2.1: using ggplot to create bar graphs showing the correlation between 
+  # 2.1: Using ggplot to create bar graphs showing the correlation between 
   # ecological variables and WNV incidence in afrotropical vs palaearctic regions. 
   
   ggplot(wnv_corr, aes(x = reorder(Variable, Correlation), y = Correlation, fill = Region)) +
@@ -135,9 +135,11 @@ return(temp_c)
 # PART THREE: Maps
 # ---------------------------
  
-  # 3.0: wnv_avg_corr dataframe shows the overall average correlation between 
+  # 3.0: The wnv_avg_corr dataframe shows the overall average correlation between 
   # WNV frequency and all ecological/population variables for both regions. It
-  # also calculates z score, which will show a clearer relationship in the data.
+  # also calculates Z-score, which will standardize the data for clearer comparison.
+  # The wnv_continent_corr dataframe assigns continents to regions so that the data
+  # can be mapped using the sf package. 
   
   wnv_avg_corr <- wnv_corr %>% 
     group_by(Region, Type) %>%
@@ -152,17 +154,19 @@ return(temp_c)
       Region == "Palaearctic" ~ "Europe", 
       TRUE ~ NA_character_))
     
-  # 3.1: joining wnv_avg_corr with map data.
+  # 3.1: Joining wnv_continent_corr with map data.
   
   world <- ne_countries(scale = "medium", returnclass = "sf")
   
-  map_data_cont <- left_join(world, wnv_continent_corr, 
+  map_data <- left_join(world, wnv_continent_corr, 
                    by = "continent", relationship = "many-to-many") %>% 
                     filter(!is.na(zscore))
   
-  # 3.2: plotting
+  # 3.2: Using ggplot to create a map that compares the relative correlation
+  # (Z-score) of ecological and population factors on WNV incidence in both
+  # regions. 
   
-  ggplot(data = map_data_cont) +
+  ggplot(data = map_data) +
     geom_sf(aes(fill = zscore), color = "white", size = 0.1) +
     facet_wrap(~Type, ncol = 1, 
                labeller = 
@@ -192,8 +196,11 @@ return(temp_c)
 # PART FOUR: Pie Charts
 # ---------------------------
   
-  # 4.0 pie_normalized dataframe to calculate the percent contribution of each 
-  # variable. 
+  # 4.0: The pie_normalized dataframe calculates the estimated percent contribution 
+  # of each variable by squaring the correlation value (to make positive) 
+  # and dividing that number by the sum of all contributing variables for each
+  # contributing factor. The combined_pie dataframe summarizes the percent
+  # contribution data across each region for the "both" pie chart. 
   
   pie_normalized <- wnv_corr %>%
     mutate(Contribution = Correlation^2) %>% 
@@ -208,7 +215,9 @@ return(temp_c)
   
   final_pie_data <- bind_rows(pie_normalized, combined_pie)
   
-  # 4.1: plotting
+  # 4.1: Using ggplot to create pie charts that compare the estimated 
+  # contribution of each ecological and population factor on WNV incidence
+  # in each region and across both regions. 
   
   ggplot(final_pie_data, aes(x = "", y = Percentage, fill = Variable)) +
     geom_col(width = 1, color = "white") +
