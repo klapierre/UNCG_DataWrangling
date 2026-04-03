@@ -130,5 +130,62 @@ return(temp_c)
     Demographic Factors on WNV Incidence in Afrotropical and Palaearctic Regions",
       x = NULL, 
       y = "Correlation Coefficient")
-    
+
+# ---------------------------
+# PART THREE: Maps
+# ---------------------------
  
+  # 3.0: wnv_avg_corr dataframe shows the overall average correlation between 
+  # WNV frequency and all ecological/population variables for both regions. It
+  # also calculates z score, which will show a clearer relationship in the data.
+  
+  wnv_avg_corr <- wnv_corr %>% 
+    group_by(Region, Type) %>%
+    summarize(mean_corr = mean(Correlation)) %>% 
+    ungroup() %>% 
+    mutate(zscore = 
+    (mean_corr - (mean(wnv_avg_corr$mean_corr)))/ (sd(wnv_avg_corr$mean_corr)))
+  
+  wnv_continent_corr <- wnv_avg_corr %>%
+    mutate(continent = case_when(
+      Region == "Afrotropical" ~ "Africa",
+      Region == "Palaearctic" ~ "Europe", 
+      TRUE ~ NA_character_))
+    
+  # 3.1: joining wnv_avg_corr with map data.
+  
+  world <- ne_countries(scale = "medium", returnclass = "sf")
+  
+  map_data_cont <- left_join(world, wnv_continent_corr, 
+                   by = "continent", relationship = "many-to-many") %>% 
+                    filter(!is.na(zscore))
+  
+  # 3.2: plotting
+  
+  ggplot(data = map_data_cont) +
+    geom_sf(aes(fill = zscore), color = "white", size = 0.1) +
+    facet_wrap(~Type, ncol = 1, 
+               labeller = 
+               as_labeller(c("Ecological" = "Ecological Factors",
+                             "Population" = "Population Factors"))) +
+    coord_sf(xlim = c(-20, 145), ylim = c(-35, 75), expand = FALSE) +
+    scale_fill_gradient2(low = "#5097da", 
+                         mid = "#e38fc6", 
+                         high = "#a83232", 
+                         midpoint = 0,
+                         limits = c(-1.5, 1.5),
+                         name = "Relative Correlation\n(Z-score)") +
+    theme_void() +
+    theme(plot.title = element_text(hjust = 0.5, face = "bold", size = 14,
+                                    margin = margin(b = 15, t = 15)),
+          strip.text = element_text(face = "bold", size = 12, 
+                                    margin = margin(b = 10, t = 10),
+                                    color = "#2b428f"),
+          legend.title = element_text(face = "bold", size = 10),
+          legend.position = "left",
+          legend.text = element_text(size = 9, face = "bold", color = "#2b428f"),
+          plot.margin = margin(t = 10, r = 5, l = 5, b = 30, unit = "pt")) +
+    labs(title = "Correlation of Ecological and Population Demographic Factors\non WNV Incidence in Afrotropical and Palaearctic Regions") 
+  
+  
+  
