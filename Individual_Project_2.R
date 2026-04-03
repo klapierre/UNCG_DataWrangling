@@ -185,7 +185,8 @@ return(temp_c)
           legend.position = "left",
           legend.text = element_text(size = 9, face = "bold", color = "#2b428f"),
           plot.margin = margin(t = 10, r = 5, l = 5, b = 30, unit = "pt")) +
-    labs(title = "Correlation of Ecological and Population Demographic Factors\non WNV Incidence in Afrotropical and Palaearctic Regions") 
+    labs(title = "Correlation of Ecological and Population Demographic Factors
+    \non WNV Incidence in Afrotropical and Palaearctic Regions") 
   
   
   
