@@ -188,5 +188,50 @@ return(temp_c)
     labs(title = "Correlation of Ecological and Population Demographic Factors
     \non WNV Incidence in Afrotropical and Palaearctic Regions") 
   
+# ---------------------------
+# PART FOUR: Pie Charts
+# ---------------------------
   
+  # 4.0 pie_normalized dataframe to calculate the percent contribution of each 
+  # variable. 
+  
+  pie_normalized <- wnv_corr %>%
+    mutate(Contribution = Correlation^2) %>% 
+    group_by(Region) %>%
+    mutate(Percentage = Contribution / sum(Contribution, na.rm = TRUE) * 100) %>%
+    ungroup() 
+  
+  combined_pie <- pie_normalized %>%
+    group_by(Variable) %>%
+    summarize(Percentage = mean(Percentage), .groups = "drop") %>%
+    mutate(Region = "Both")  
+  
+  final_pie_data <- bind_rows(pie_normalized, combined_pie)
+  
+  # 4.1: plotting
+  
+  ggplot(final_pie_data, aes(x = "", y = Percentage, fill = Variable)) +
+    geom_col(width = 1, color = "white") +
+    coord_polar("y", start = 0) +
+    facet_wrap(~Region) + 
+    scale_fill_manual(
+      values = c("corr_mean_temp" = "#32a86f", 
+                "corr_max_temp" = "#7cbe6d", 
+                "corr_min_temp" = "#b9d272", 
+                "corr_precip" = "#f4e482",
+                "corr_pop" = "#a83d3d", 
+                "corr_cities" = "#db6476",
+                "corr_roads" = "#ff8fb5", 
+                "corr_railroads" = "#ffbff8")) +
+    theme_void() + 
+    theme(plot.title = element_text(hjust = 0.5, face = "bold", size = 14,
+                                          margin = margin(b = 40, t = 5)),
+          legend.title = element_text(face = "bold", size = 10),
+          legend.position = "left",
+          legend.text = element_text(size = 9, face = "bold", color = "#2b428f", 
+                                     margin = margin(t = 1)),
+          strip.text = element_text(face = "bold", size = 10, color = "#324ea8")) +
+    labs(title = "Relative Contribution of Ecological & Population Factors",
+         fill = "Ecological and\nPopulation Factors") 
+ 
   
