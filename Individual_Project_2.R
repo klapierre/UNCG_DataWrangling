@@ -144,7 +144,9 @@ return(temp_c)
   wnv_avg_corr <- wnv_corr %>% 
     group_by(Region, Type) %>%
     summarize(mean_corr = mean(Correlation)) %>% 
-    ungroup() %>% 
+    ungroup()
+  
+  wnv_avg_corr <- wnv_avg_corr %>% 
     mutate(zscore = 
     (mean_corr - (mean(wnv_avg_corr$mean_corr)))/ (sd(wnv_avg_corr$mean_corr)))
   
