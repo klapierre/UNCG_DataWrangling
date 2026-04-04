@@ -3,10 +3,16 @@ title: "Individual_Project"
 output: html_document
 ---
 
-# Amaliya Brown Doyoyo
-# BIO 456
-# May 4 2026
-# Individual Project
+Amaliya Brown Doyoyo
+BIO 456
+May 4 2026
+Individual Project
+
+West Nile Virus (WNV) is an enveloped, single-stranded, RNA virus that causes West Nile fever; an infection that can range from mild, flu-like symptoms to life-threatening central nervous system effects. Mosquitoes, particularly those of the Culex species, are the primary vectors for WNV, with birds acting as the primary reservoir. WNV is considered a tropical disease; however, rising global temperatures have coincided with its increased incidence in the northern hemisphere. Because humans are almost exclusively infected with WNV through mosquito bites, ecological factors play an important role in the epidemiology of the disease. Environmental conditions such as temperature and precipitation can determine mosquito abundance in certain regions, while human demographic factors, like population density and proximity to travel infrastructure like railways, influence the frequency of vector-human contact and the spread of the virus to new regions.  
+
+My project will use data from the 2024 dataset “Database of present and future situation of West Nile virus in the Afro-Palaearctic Pathogeographic System,” to compare the relationships between climate variables (temperature and precipitation) and population demographics (population density, access to travel) to WNV incidence across both afrotropic (subsaharan African) and palaearctic (European) regions. I hypothesize that environmental variables will have a stronger association with WNV incidence in both regions.
+
+```{r, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
 
 # -----------------------------------------------------------------------
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -16,21 +22,16 @@ output: html_document
 # -----------------------------------------------------------------------
 
 # I. Preparing Workspace
-
-```{r}
 library(tidyverse)
 library(ggplot2)
 library(sf)
 library(rnaturalearth)
-```
 
+setwd("/Users/amaliya/Desktop/IndividualProject/wnv_data")
 
 # II. Downloading Data
-```{r}
 afrotropical <- read.csv("Afrotropical_region.csv")
 palaearctic <- read.csv("Palaearctic_region.csv")
-```
-
 
 # ---------------------------
 # PART ONE: Tidying the Data
@@ -38,19 +39,13 @@ palaearctic <- read.csv("Palaearctic_region.csv")
 
 # 1.0: kelvin_to_celsius converts Kelvins * 10 to Celsius.
 
-```{r}
 kelvin_to_celsius <- function(temp_k) 
 {temp_c <- (temp_k/10) - 273.15
 return(temp_c)
 }
-```
-
 
 # 1.1: Making tidy afrotropical and palaearctic dataframes.
 
- 
- 
-```{r}
  # Tidy afrotropical dataframe
  afro_clean <- afrotropical %>% 
     select(BIO1, BIO5_MEAN, BIO6_MEAN, BIO12, DENS_POB, 
@@ -146,22 +141,18 @@ return(temp_c)
     Demographic Factors on WNV Incidence in Afrotropical and Palaearctic Regions",
       x = NULL, 
       y = "Correlation Coefficient")
-```
-
 
 # ---------------------------
 # PART THREE: Maps
 # ---------------------------
  
-  
-```{r}
-# 3.0: The wnv_avg_corr dataframe shows the overall average correlation between 
+  # 3.0: The wnv_avg_corr dataframe shows the overall average correlation between 
   # WNV frequency and all ecological/population variables for both regions. It
   # also calculates Z-score, which will standardize the data for clearer comparison.
   # The wnv_continent_corr dataframe assigns continents to regions so that the data
   # can be mapped using the sf package. 
-
-wnv_avg_corr <- wnv_corr %>% 
+  
+  wnv_avg_corr <- wnv_corr %>% 
     group_by(Region, Type) %>%
     summarize(mean_corr = mean(Correlation)) %>% 
     ungroup()
@@ -213,16 +204,11 @@ wnv_avg_corr <- wnv_corr %>%
           plot.margin = margin(t = 10, r = 5, l = 5, b = 30, unit = "pt")) +
     labs(title = "Correlation of Ecological and Population Demographic Factors
     \non WNV Incidence in Afrotropical and Palaearctic Regions") 
-
-```
-  
   
 # ---------------------------
 # PART FOUR: Pie Charts
 # ---------------------------
   
-```{r}
-
   # 4.0: The pie_normalized dataframe calculates the estimated percent contribution 
   # of each variable by squaring the correlation value (to make positive) 
   # and dividing that number by the sum of all contributing variables for each
@@ -280,4 +266,3 @@ wnv_avg_corr <- wnv_corr %>%
          fill = "Ecological and\nPopulation Factors") 
 ```
 
- 
