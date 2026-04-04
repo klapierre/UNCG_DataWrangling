@@ -166,9 +166,9 @@ round_date(mdy("April 15 2026"), "month")
 
 rollback(todays_timestamp, roll_to_first = FALSE, preserve_hms = TRUE)
 
-# TASK: Create a dataframe named 'flight_data_cleaned' that includes a column named 'rounded_flight_data' that rounds the flight date to the nearest month. 
+# TASK: Create a dataframe named 'flight_data_rounded' from our 'flight_data_parsed' dataframe that includes a column named 'rounded_flight_date' that rounds the flight date to the nearest month. 
 
-flight_data_cleaned <- flight_data_parsed %>% 
+flight_data_rounded <- flight_data_parsed %>% 
   mutate(rounded_flight_date = round_date(ymd(flight_date), "month")) # ANSWER
 
 # ---------------------------------------------------------- #
