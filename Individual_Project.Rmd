@@ -38,13 +38,19 @@ palaearctic <- read.csv("Palaearctic_region.csv")
 
 # 1.0: kelvin_to_celsius converts Kelvins * 10 to Celsius.
 
+```{r}
 kelvin_to_celsius <- function(temp_k) 
 {temp_c <- (temp_k/10) - 273.15
 return(temp_c)
 }
+```
+
 
 # 1.1: Making tidy afrotropical and palaearctic dataframes.
 
+ 
+ 
+```{r}
  # Tidy afrotropical dataframe
  afro_clean <- afrotropical %>% 
     select(BIO1, BIO5_MEAN, BIO6_MEAN, BIO12, DENS_POB, 
@@ -140,21 +146,27 @@ return(temp_c)
     Demographic Factors on WNV Incidence in Afrotropical and Palaearctic Regions",
       x = NULL, 
       y = "Correlation Coefficient")
+```
+
 
 # ---------------------------
 # PART THREE: Maps
 # ---------------------------
  
-  # 3.0: The wnv_avg_corr dataframe shows the overall average correlation between 
+  
+```{r}
+# 3.0: The wnv_avg_corr dataframe shows the overall average correlation between 
   # WNV frequency and all ecological/population variables for both regions. It
   # also calculates Z-score, which will standardize the data for clearer comparison.
   # The wnv_continent_corr dataframe assigns continents to regions so that the data
   # can be mapped using the sf package. 
-  
-  wnv_avg_corr <- wnv_corr %>% 
+
+wnv_avg_corr <- wnv_corr %>% 
     group_by(Region, Type) %>%
     summarize(mean_corr = mean(Correlation)) %>% 
-    ungroup() %>% 
+    ungroup()
+  
+  wnv_avg_corr <- wnv_avg_corr %>% 
     mutate(zscore = 
     (mean_corr - (mean(wnv_avg_corr$mean_corr)))/ (sd(wnv_avg_corr$mean_corr)))
   
@@ -201,11 +213,16 @@ return(temp_c)
           plot.margin = margin(t = 10, r = 5, l = 5, b = 30, unit = "pt")) +
     labs(title = "Correlation of Ecological and Population Demographic Factors
     \non WNV Incidence in Afrotropical and Palaearctic Regions") 
+
+```
+  
   
 # ---------------------------
 # PART FOUR: Pie Charts
 # ---------------------------
   
+```{r}
+
   # 4.0: The pie_normalized dataframe calculates the estimated percent contribution 
   # of each variable by squaring the correlation value (to make positive) 
   # and dividing that number by the sum of all contributing variables for each
@@ -261,4 +278,6 @@ return(temp_c)
           strip.text = element_text(face = "bold", size = 10, color = "#324ea8")) +
     labs(title = "Estimated Contribution of Ecological & Population Factors\nto WNV Incidence Across Regions",
          fill = "Ecological and\nPopulation Factors") 
+```
+
  
