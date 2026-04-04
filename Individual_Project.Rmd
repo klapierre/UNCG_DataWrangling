@@ -1,16 +1,19 @@
 ---
-title: "Individual_Project"
+title: "Individual Project"
 output: html_document
 ---
 
-Amaliya Brown Doyoyo
-BIO 456
-May 4 2026
-Individual Project
+Amaliya Brown Doyoyo<br>
+BIO 456<br>
+May 4 2026<br>
+Individual Project<br>
+
+
+**Overview**
 
 West Nile Virus (WNV) is an enveloped, single-stranded, RNA virus that causes West Nile fever; an infection that can range from mild, flu-like symptoms to life-threatening central nervous system effects. Mosquitoes, particularly those of the Culex species, are the primary vectors for WNV, with birds acting as the primary reservoir. WNV is considered a tropical disease; however, rising global temperatures have coincided with its increased incidence in the northern hemisphere. Because humans are almost exclusively infected with WNV through mosquito bites, ecological factors play an important role in the epidemiology of the disease. Environmental conditions such as temperature and precipitation can determine mosquito abundance in certain regions, while human demographic factors, like population density and proximity to travel infrastructure like railways, influence the frequency of vector-human contact and the spread of the virus to new regions.  
 
-My project will use data from the 2024 dataset “Database of present and future situation of West Nile virus in the Afro-Palaearctic Pathogeographic System,” to compare the relationships between climate variables (temperature and precipitation) and population demographics (population density, access to travel) to WNV incidence across both afrotropic (subsaharan African) and palaearctic (European) regions. I hypothesize that environmental variables will have a stronger association with WNV incidence in both regions.
+My project will use data from the 2024 dataset “Database of present and future situation of West Nile virus in the Afro-Palaearctic Pathogeographic System,” to compare the relationships between climate variables (temperature and precipitation) and population demographics (population density, access to travel) to WNV incidence across both afrotropic (Africa) and palaearctic (Europe and Asia) regions. I hypothesize that environmental variables will have a stronger association with WNV incidence in both regions.
 
 ```{r, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
 
@@ -146,12 +149,6 @@ return(temp_c)
 # PART THREE: Maps
 # ---------------------------
  
-  # 3.0: The wnv_avg_corr dataframe shows the overall average correlation between 
-  # WNV frequency and all ecological/population variables for both regions. It
-  # also calculates Z-score, which will standardize the data for clearer comparison.
-  # The wnv_continent_corr dataframe assigns continents to regions so that the data
-  # can be mapped using the sf package. 
-  
   wnv_avg_corr <- wnv_corr %>% 
     group_by(Region, Type) %>%
     summarize(mean_corr = mean(Correlation)) %>% 
@@ -166,6 +163,12 @@ return(temp_c)
       Region == "Afrotropical" ~ "Africa",
       Region == "Palaearctic" ~ "Europe", 
       TRUE ~ NA_character_))
+  
+  asia_data <- wnv_avg_corr %>%
+    filter(Region == "Palaearctic") %>%
+    mutate(continent = "Asia")
+  
+  wnv_continent_corr <- bind_rows(wnv_continent_corr, asia_data)
     
   # 3.1: Joining wnv_continent_corr with map data.
   
@@ -265,4 +268,11 @@ return(temp_c)
     labs(title = "Estimated Contribution of Ecological & Population Factors\nto WNV Incidence Across Regions",
          fill = "Ecological and\nPopulation Factors") 
 ```
+
+
+**References**<br>
+
+CDC. (2024, May 17). West Nile: Symptoms, Diagnosis, & Treatment. West Nile Virus. https://www.cdc.gov/west-nile-virus/symptoms-diagnosis-treatment/index.html<br>
+
+José‐María García‐Carrasco, Souviron‐Priego, L., Antonio‐Román Muñoz, Olivero, J., Fa, J. E., & Real, R. (2024). Present and future situation of West Nile virus in the Afro‐Palaearctic pathogeographic system. Ecography. https://doi.org/10.1111/ecog.06941
 
