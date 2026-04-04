@@ -3,3 +3,262 @@ title: "Individual_Project"
 output: html_document
 ---
 
+# Amaliya Brown Doyoyo
+# BIO 456
+# May 4 2026
+# Individual Project
+
+# -----------------------------------------------------------------------
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+##### Comparing the Effects of Ecological vs Population Factors on West 
+#### Nile Virus Incidence in Afrotropical vs Palaearctic Regions 
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# -----------------------------------------------------------------------
+
+# I. Preparing Workspace
+
+```{r}
+library(tidyverse)
+library(ggplot2)
+library(sf)
+library(rnaturalearth)
+```
+
+
+# II. Downloading Data
+```{r}
+afrotropical <- read.csv("Afrotropical_region.csv")
+palaearctic <- read.csv("Palaearctic_region.csv")
+```
+
+
+# ---------------------------
+# PART ONE: Tidying the Data
+# ---------------------------
+
+# 1.0: kelvin_to_celsius converts Kelvins * 10 to Celsius.
+
+kelvin_to_celsius <- function(temp_k) 
+{temp_c <- (temp_k/10) - 273.15
+return(temp_c)
+}
+
+# 1.1: Making tidy afrotropical and palaearctic dataframes.
+
+ # Tidy afrotropical dataframe
+ afro_clean <- afrotropical %>% 
+    select(BIO1, BIO5_MEAN, BIO6_MEAN, BIO12, DENS_POB, 
+           DISTCENPOB, DISRT_RAIL, DIST_ROAD, FWNVetio, Region) %>% 
+    rename(Temp_Mean = BIO1, Temp_Max = BIO5_MEAN, 
+           Temp_Min = BIO6_MEAN,
+           Annual_Precipitation = BIO12, Population_Density = DENS_POB, 
+           Distance_Cities = DISTCENPOB,
+           Distance_Railroals = DISRT_RAIL, 
+           Distance_Roads = DIST_ROAD, WNV_Frequency = FWNVetio) %>% 
+    mutate(across(c(Temp_Mean, Temp_Max, Temp_Min), kelvin_to_celsius)) %>% 
+    mutate(across(c(Population_Density, Distance_Cities, 
+                    Distance_Railroals, Distance_Roads, 
+                    WNV_Frequency), as.numeric)) %>% 
+    drop_na() %>% 
+    mutate(Region = "Afrotropical")
+
+  # Tidy palaearctic dataframe
+  pala_clean <- palaearctic %>% 
+    select(BIO1, BIO5_MEAN, BIO6_MEAN, BIO12, DENS_POB, 
+           DISTCENPOB, DISRT_RAIL, DIST_ROAD, FWNVpal, Region) %>% 
+    rename(Temp_Mean = BIO1, Temp_Max = BIO5_MEAN, 
+           Temp_Min = BIO6_MEAN,
+           Annual_Precipitation = BIO12, Population_Density = DENS_POB, 
+           Distance_Cities = DISTCENPOB,
+           Distance_Railroals = DISRT_RAIL, 
+           Distance_Roads = DIST_ROAD, WNV_Frequency = FWNVpal) %>% 
+    mutate(across(c(Temp_Mean, Temp_Max, Temp_Min), kelvin_to_celsius)) %>% 
+    mutate(across(c(Population_Density, Distance_Cities, 
+                    Distance_Railroals, Distance_Roads, 
+                    WNV_Frequency), as.numeric)) %>% 
+    drop_na() %>% 
+    mutate(Region = "Palaearctic")
+  
+# ---------------------------
+# PART TWO: Bar Graphs
+# ---------------------------
+  
+  # 2.0: The wnv_corr dataframe shows the overall correlation between 
+  # WNV frequency and different variables for both regions; it also
+  # assigns each value a "Type" ("Ecological" or "Population").
+  
+  wnv_corr <- bind_rows(afro_clean, pala_clean) 
+  
+  wnv_corr <- wnv_corr %>% 
+    group_by(Region) %>% 
+    summarize(
+      corr_mean_temp = cor(Temp_Mean, WNV_Frequency, use = "complete.obs"),
+      corr_max_temp  = cor(Temp_Max, WNV_Frequency, use = "complete.obs"),
+      corr_min_temp  = cor(Temp_Min, WNV_Frequency, use = "complete.obs"),
+      corr_precip = cor(Annual_Precipitation, WNV_Frequency, use = "complete.obs"),
+      corr_pop = cor(Population_Density, WNV_Frequency, use = "complete.obs"),
+      corr_cities = cor(Distance_Cities, WNV_Frequency, use = "complete.obs"),
+      corr_roads = cor(Distance_Roads, WNV_Frequency, use = "complete.obs"),
+      corr_railroads = cor(Distance_Railroals, WNV_Frequency, use = "complete.obs")) %>% 
+    pivot_longer(cols = -Region, names_to = "Variable", values_to = "Correlation") %>% 
+    mutate(Type = case_when(
+      Variable %in% c("corr_mean_temp", "corr_max_temp", "corr_min_temp", "corr_precip") ~ "Ecological",
+      Variable %in% c("corr_pop", "corr_cities", "corr_roads", "corr_railroads") ~ "Population")) %>% 
+    ungroup()
+    
+  # 2.1: Using ggplot to create bar graphs showing the correlation between 
+  # ecological variables and WNV incidence in afrotropical vs palaearctic regions. 
+  
+  ggplot(wnv_corr, aes(x = reorder(Variable, Correlation), y = Correlation, fill = Region)) +
+    geom_col(position = position_dodge(width = 0.9)) +
+    coord_flip() +
+    geom_text(aes(label = round(Correlation, 2), hjust = ifelse(Correlation >= 0, -0.5, 1.3)), 
+              position = position_dodge(width = 0.9),
+              fontface = "bold",size = 3.5, color = "#5b6482") +
+    facet_wrap(~Type, scales = "free_y", labeller = 
+                 as_labeller(c("Ecological" = "Ecological Factors",
+                               "Population" = "Population Factors"))) + 
+    scale_y_continuous(expand = expansion(mult = c(0.1, 0.2))) +
+    scale_fill_manual(values = c("Afrotropical" = "#ffbe5d", "Palaearctic" = "#a650a8")) +
+    theme_minimal() +
+    theme(plot.title = element_text(hjust = 0.5, face = "bold", size = 14,
+                                    margin = margin(b = 15, t = 15)),
+      axis.title.x = element_text(face = "bold", size = 12,
+                                  margin = margin(t = 15)),
+      axis.text.y = element_text(face = "bold", color = "black", size = 10), 
+      axis.text.x = element_text(face = "bold", color = "black"),
+      strip.text = element_text(face = "bold", size = 12, color = "#324ea8"),
+      legend.title = element_text(face = "bold", size = 12),
+      legend.text = element_text(face = "bold", size = 10),
+      legend.position = "bottom") + 
+    scale_x_discrete(labels = c(
+      "corr_mean_temp" = "Avgerage Temp", "corr_max_temp" = "Maximum Temp", 
+      "corr_min_temp" = "Minimum Temp", "corr_precip" = "Annual Precipitation",
+      "corr_pop" = "Population Density", "corr_cities" = "Distance to Cities",
+      "corr_roads" = "Distance to Roads", "corr_railroads" = "Distance to Railroads")) +
+    labs(title = "Correlation of Select Ecological and Population 
+    Demographic Factors on WNV Incidence in Afrotropical and Palaearctic Regions",
+      x = NULL, 
+      y = "Correlation Coefficient")
+
+# ---------------------------
+# PART THREE: Maps
+# ---------------------------
+ 
+  # 3.0: The wnv_avg_corr dataframe shows the overall average correlation between 
+  # WNV frequency and all ecological/population variables for both regions. It
+  # also calculates Z-score, which will standardize the data for clearer comparison.
+  # The wnv_continent_corr dataframe assigns continents to regions so that the data
+  # can be mapped using the sf package. 
+  
+  wnv_avg_corr <- wnv_corr %>% 
+    group_by(Region, Type) %>%
+    summarize(mean_corr = mean(Correlation)) %>% 
+    ungroup() %>% 
+    mutate(zscore = 
+    (mean_corr - (mean(wnv_avg_corr$mean_corr)))/ (sd(wnv_avg_corr$mean_corr)))
+  
+  wnv_continent_corr <- wnv_avg_corr %>%
+    mutate(continent = case_when(
+      Region == "Afrotropical" ~ "Africa",
+      Region == "Palaearctic" ~ "Europe", 
+      TRUE ~ NA_character_))
+    
+  # 3.1: Joining wnv_continent_corr with map data.
+  
+  world <- ne_countries(scale = "medium", returnclass = "sf")
+  
+  map_data <- left_join(world, wnv_continent_corr, 
+                   by = "continent", relationship = "many-to-many") %>% 
+                    filter(!is.na(zscore))
+  
+  # 3.2: Using ggplot to create a map that compares the relative correlation
+  # (Z-score) of ecological and population factors on WNV incidence in both
+  # regions. 
+  
+  ggplot(data = map_data) +
+    geom_sf(aes(fill = zscore), color = "white", size = 0.1) +
+    facet_wrap(~Type, ncol = 1, 
+               labeller = 
+               as_labeller(c("Ecological" = "Ecological Factors",
+                             "Population" = "Population Factors"))) +
+    coord_sf(xlim = c(-20, 145), ylim = c(-35, 75), expand = FALSE) +
+    scale_fill_gradient2(low = "#5097da", 
+                         mid = "#e38fc6", 
+                         high = "#a83232", 
+                         midpoint = 0,
+                         limits = c(-1.5, 1.5),
+                         name = "Relative Correlation\n(Z-score)") +
+    theme_void() +
+    theme(plot.title = element_text(hjust = 0.5, face = "bold", size = 14,
+                                    margin = margin(b = 15, t = 15)),
+          strip.text = element_text(face = "bold", size = 12, 
+                                    margin = margin(b = 10, t = 10),
+                                    color = "#2b428f"),
+          legend.title = element_text(face = "bold", size = 10),
+          legend.position = "left",
+          legend.text = element_text(size = 9, face = "bold", color = "#2b428f"),
+          plot.margin = margin(t = 10, r = 5, l = 5, b = 30, unit = "pt")) +
+    labs(title = "Correlation of Ecological and Population Demographic Factors
+    \non WNV Incidence in Afrotropical and Palaearctic Regions") 
+  
+# ---------------------------
+# PART FOUR: Pie Charts
+# ---------------------------
+  
+  # 4.0: The pie_normalized dataframe calculates the estimated percent contribution 
+  # of each variable by squaring the correlation value (to make positive) 
+  # and dividing that number by the sum of all contributing variables for each
+  # contributing factor. The combined_pie dataframe summarizes the percent
+  # contribution data across each region for the "both" pie chart. 
+  
+  pie_normalized <- wnv_corr %>%
+    mutate(Contribution = Correlation^2) %>% 
+    group_by(Region) %>%
+    mutate(Percentage = Contribution / sum(Contribution, na.rm = TRUE) * 100) %>%
+    ungroup() 
+  
+  combined_pie <- pie_normalized %>%
+    group_by(Variable) %>%
+    summarize(Percentage = mean(Percentage), .groups = "drop") %>%
+    mutate(Region = "Both")  
+  
+  final_pie_data <- bind_rows(pie_normalized, combined_pie)
+  
+  # 4.1: Using ggplot to create pie charts that compare the estimated 
+  # contribution of each ecological and population factor on WNV incidence
+  # in each region and across both regions. 
+  
+  ggplot(final_pie_data, aes(x = "", y = Percentage, fill = Variable)) +
+    geom_col(width = 1, color = "white") +
+    coord_polar("y", start = 0) +
+    facet_wrap(~Region) + 
+    scale_fill_manual(
+      values = c("corr_mean_temp" = "#32a86f", 
+                "corr_max_temp" = "#7cbe6d", 
+                "corr_min_temp" = "#b9d272", 
+                "corr_precip" = "#f4e482",
+                "corr_pop" = "#a83d3d", 
+                "corr_cities" = "#db6476",
+                "corr_roads" = "#ff8fb5", 
+                "corr_railroads" = "#ffbff8"),
+      labels = c(
+        "corr_mean_temp" = "Avgerage Temp", 
+        "corr_max_temp" = "Maximum Temp", 
+        "corr_min_temp" = "Minimum Temp", 
+        "corr_precip" = "Annual Precipitation",
+        "corr_pop" = "Population Density", 
+        "corr_cities" = "Distance to Cities",
+        "corr_roads" = "Distance to Roads", 
+        "corr_railroads" = "Distance to Railroads")) +
+    theme_void() + 
+    theme(plot.title = element_text(hjust = 0.5, face = "bold", size = 14,
+                                          margin = margin(b = 40, t = 5)),
+          legend.title = element_text(face = "bold", size = 10),
+          legend.position = "left",
+          legend.text = element_text(size = 9, face = "bold", color = "#2b428f", 
+                                     margin = margin(t = 1)),
+          strip.text = element_text(face = "bold", size = 10, color = "#324ea8")) +
+    labs(title = "Estimated Contribution of Ecological & Population Factors\nto WNV Incidence Across Regions",
+         fill = "Ecological and\nPopulation Factors") 
+ 
