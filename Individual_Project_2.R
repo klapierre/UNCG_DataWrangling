@@ -16,8 +16,6 @@ library(ggplot2)
 library(sf)
 library(rnaturalearth)
 
-setwd("/Users/amaliya/Desktop/IndividualProject/wnv_data")
-
 # II. Downloading Data
 afrotropical <- read.csv("Afrotropical_region.csv")
 palaearctic <- read.csv("Palaearctic_region.csv")
@@ -77,9 +75,9 @@ return(temp_c)
   # WNV frequency and different variables for both regions; it also
   # assigns each value a "Type" ("Ecological" or "Population").
   
-  wnv_corr <- bind_rows(afro_clean, pala_clean) 
+  wnv_combined <- bind_rows(afro_clean, pala_clean) 
   
-  wnv_corr <- wnv_corr %>% 
+  wnv_corr <- wnv_combined %>% 
     group_by(Region) %>% 
     summarize(
       corr_mean_temp = cor(Temp_Mean, WNV_Frequency, use = "complete.obs"),
@@ -218,7 +216,7 @@ return(temp_c)
   
   combined_pie <- pie_normalized %>%
     group_by(Variable) %>%
-    summarize(Percentage = mean(Percentage), .groups = "drop") %>%
+    summarize(Percentage = mean(Percentage)) %>%
     mutate(Region = "Both")  
   
   final_pie_data <- bind_rows(pie_normalized, combined_pie)
