@@ -155,6 +155,12 @@ return(temp_c)
       Region == "Afrotropical" ~ "Africa",
       Region == "Palaearctic" ~ "Europe", 
       TRUE ~ NA_character_))
+  
+  asia_data <- wnv_avg_corr %>%
+    filter(Region == "Palaearctic") %>%
+    mutate(continent = "Asia")
+  
+  wnv_continent_corr <- bind_rows(wnv_continent_corr, asia_data)
     
   # 3.1: Joining wnv_continent_corr with map data.
   
