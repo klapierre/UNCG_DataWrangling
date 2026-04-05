@@ -84,7 +84,7 @@ mdy("07-04-12") #ANSWER: The output from 'ydm' is incorrect because the input is
 mdy("November 22nd, 2001") #Example
 
 # Parsing data is super convenient, but what if we want to parse an entire column at once?
-#TASK: Load the nycflights13 dataset. Run the following code to "break" the dataset so we can practice parsing date-times.
+#TASK: Load the nycflights13 dataset. Run the following code to "break" the dataset (turning the timestamps into strings) so we can practice parsing date-times.
 
 install.packages("nycflights13")
 library(nycflights13)
