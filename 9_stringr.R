@@ -31,7 +31,9 @@ strlengthtest <- c("This", "is", "to", "test", "stringr", "length", "functions!"
 
 ##TASK: using str_length, determine the amount of characters in each string. If
 ##you need help, check the help file for this function.
-
+help(str_length)
+str_length(strlengthtest)
+# [1]  4  2  2  4  7  6 10 
 ##The str_length function is useful if we only want to see strings of a certain 
 ##character count. It can be combined with the filter function to accomplish this
 ##in a dataframe.Suppose we want to pick a baby name, but only want names of a 
