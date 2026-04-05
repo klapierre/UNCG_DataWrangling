@@ -209,9 +209,30 @@ library(lubridate)
 library(dplyr)
 library(nycflights13)
 
+## First, we'll produce a date time object in UTC.
+## UTC is a standard world time that is widely used in datasets and computers.
 
+time_utc <- ymd_hms("2026-04-14 18:00:00", tz = "UTC")
+time_utc
 
+## QUESTION: What does the 'tz' argument produce?
 
+## TASK: Determine the time zone of 
+tz(time_utc)
+
+## The with_tz() function shows the exact same moment in a different timezone.
+time_ny <- with_tz(time_utc, tzone = "America/New_York")
+time_ny
+
+## QUESTION: Has the actual moment in time changed?
+
+##TASK: Convert time_UTC to Los Angeles time.
+time_la <- with_tz(time_utc, tzone = "America/Los_Angeles")
+time_la
+
+## TASK: Convert time_UTC to Chicago time.
+time_chicago <- with_tz(time_utc, tzone = "America/Chicago")
+time_chicago
 
 # ---------------------------------------------------------- #
 #### Part 2.0: Practing your skills                       ####
