@@ -280,6 +280,8 @@ max(Name_Length)
 
 # QUESTION: What does our output look like?
 # What is the highest number of characters contained in a given name?
+# The output is one number and that number is the highest number of characters contained
+# in a given name. The max number of characters is 14.
 
 # Of course, str_count() can evaluate the incidence of more specific occurences
 # than the total number of characters in any given string. Here we will use
@@ -290,7 +292,8 @@ max(Name_Length)
 # data from the most recent year, that being 2021. Create an additional dataframe
 # called "NYC_Baby_Names_2021" using the filter function to limit the year of birth
 # to 2021.
-
+NYC_Baby_Names_2021 <- NYC_Baby_Names %>% 
+  filter(Year_of_Birth == 2021)
 
 
 # In order to do find the difference by gender however we will have to let stringr 
@@ -310,26 +313,26 @@ NYC_Baby_Names_2021_List <- split(NYC_Baby_Names_2021,NYC_Baby_Names$Gender)
 Male_ia <- str_count(NYC_Baby_Names_2021_List[["MALE"]]$Childs_First_Name,"ia")
 
 # QUESTION: Do any individual names have more than one instance of the string "ia"?
-
+# No
 # Now, this data doesn't tell us much as it exists at the moment, as a list of
 # values. In order to measure the total incidence of the string among names,
 # we will have to take a sum of "Male_ia", do this by using the sum() function.
 # Access the help file for sum if it is unclear and create a new object called
 # "Male_ia_Total" which will contain our sum of the incidence.
-
-
+Male_ia_Total <-sum(Male_ia)
 
 # QUESTION: What is the value of "Male_ia_Total"?
-
+60
 # TASK: We now have half of what we need, as we do not have the data for girls born
 # in 2021, so analogous to what we have done for the males, create an object titled
 # "Female_ia" which uses str_count() to see how often the string "ia" appears among
 # girls' first names. Then sum this data in order to have a total count.
-
+Female_ia <- str_count(NYC_Baby_Names_2021_List[["FEMALE"]]$Childs_First_Name,"ia")
+Female_ia_Total <-(sum(Female_ia))
 
 
 # QUESTION: How many female names in 2021 contained the string "ia"?
-
+118
 # An additional thing that str_count() allows us to do is to count characters
 # in a string, but excluding some characters, for instance we could count the
 # number of characters in each male name in 2021 excluding any vowels
@@ -339,7 +342,8 @@ Male_Vowelless <- str_count(NYC_Baby_Names_2021_List[["MALE"]]$Childs_First_Name
 
 # QUESTION: What do you think the ^ signifies in this variant of str_count?
 # Why do you think that an upper and lower case variant of each vowel is included?
-
+# ^ signifies to exclude these characters. Upper and lower case variants of each vowel is included
+# to include all vowels regardless of capitalization. 
 #-------------------------------------------------------#
 # PART 1.5: MODIFYING VECTORS
 #-------------------------------------------------------#
