@@ -234,6 +234,35 @@ time_la
 time_chicago <- with_tz(time_utc, tzone = "America/Chicago")
 time_chicago
 
+## TASK: Convert time_UTC to Tokyo time.
+time_tokyo <- with_tz(time_utc, tzone = "Asia/Tokyo")
+time_tokyo
+
+## TASK: Print all converted times.
+time_utc
+time_ny
+time_la
+time_chicago
+time_tokyo
+
+##QUESTION: Why do the shown clock times appear different?
+
+##QUESTION: Are these different moments?
+
+## Force_tz() is a handy function.
+## With_tz() keeps the current moment in time.
+## force_tz() maintains the same clock time while changing the attached zone.
+## Force_tz() is a handy function.
+time_with_tz <- with_tz(time_utc, tzone = "America/New_York")
+time_force_tz <- force_tz(time_utc, tzone = "America/New_York")
+
+## TASK: Run the two objects below.
+time_with_tz
+time_force_tz
+
+## QUESTION: What's the main difference between with_tz() and force_tz()?
+
+##TASK: Determine the time zone for both items.
 # ---------------------------------------------------------- #
 #### Part 2.0: Practing your skills                       ####
 # ---------------------------------------------------------- #
