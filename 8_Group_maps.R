@@ -44,17 +44,24 @@ head(state_data)
 #Question: What do you notice about the rownames and the data within the "State" 
 #column? 
 
+##The row names and the State column contain the same state names
+
 #Task: Run the following code:
 
 rownames(state_data) <- NULL
 
 #Question: Write code to display your dataset once again. What did the previous
 #code change within the dataset? What did NULL do to the rownames?
+head(state_data)
+##The code removed the row names. Setting them to NULL got rid of the row names, but the State column stayed in the dataset.
 
 #Task: Because we have loaded the dyplr package, we can create a new dataframe
 #with just State and Frost data. Write a code to select the State and Frost columns
 #from the state_data dataframe and name the new dataframe state_frost_data. 
+state_frost_data <- state_data %>%
+  select(State, Frost)
 
+head(state_frost_data)
 
 #View the new dataset and confirm that it is correct.
 
@@ -83,12 +90,14 @@ us_states_frost_2 <- left_join(states, state_frost_data, by = c("State"))
 #days
 #Task: Run the following code and annotate the significance of each line of code.
 
-ggplot(us_states_frost) +
+ggplot(us_states_frost_2) +
   geom_sf(aes(fill = Frost), color = "blue") +
   theme_minimal() +
   labs(fill = "Number of Frost Days", title = "United States Frost Data")
 
 #Question: Do you see a map under the "plots" tab?
+
+##yes
 
 #Question: What do you notice about the size of this map? Suppose we only want
 #to study frost data of mainland US states. Are there states we could omit from
@@ -96,13 +105,16 @@ ggplot(us_states_frost) +
 #want to omit, check out the us_states_frost_2 tab at the different States included
 #in the dataframe.
 
+##The map looks smaller because Alaska, Hawaii, and territories are included. 
+#These could be removed to better view the mainland US.
+
 #To filter out states or islands not connected to the mainland US, we can use the 
 #dplyr function.
 
 #Task: Run the following code to filter out and omit states that are islands
 #not connected to the mainland US.
 
-us_states_frost_2 <- us_states_frost %>%
+us_states_frost_2 <- us_states_frost_2 %>%
   dplyr::filter(State != "Alaska" & State != "Hawaii" & State != "Guam" & State != 
                   "American Samoa" & State != "United States Virgin Islands" & 
                   State != "Puerto Rico" 
@@ -111,26 +123,40 @@ us_states_frost_2 <- us_states_frost %>%
 #Write code to show a map of the us_states_frost_2 dataset following the steps
 #used to create the map from the us_states_frost dataset.
 
+ggplot(us_states_frost_2) +
+  geom_sf(aes(fill = Frost), color = "blue") +
+  theme_minimal() +
+  labs(fill = "Number of Frost Days", title = "Mainland United States Frost Data")
+
 #You should see a new map in the "plots" tab that is much larger than the previous 
 #map making it easier to visualize the data.
 
 #Question: What do dark blue states represent? What do light blue states represent?
+##Dark blue states have more frost days, while light blue states have fewer.
+
 #Question: Does florida or NC have more frost days?
+##NC has more frost days.
 
 #Question: Does there appear to be a relationship between latitude and 
 #number of frost days? Why or why not?
 
+##Yes, because northern states are colder so they have more frost days, while southern states are warmer and have fewer.
+
 #Task: Write code to create a map of the Population data from the state.x77 dataset.
-#You can reference the pevious steps of this assignment
+#You can reference the previous steps of this assignment
 #while you work through this task. make the color of the map any color that is
 #not blue (as we have already used this color) **Make sure to write the code
 #because your code will be viewed for grading, not the map itself!
-
+ggplot(us_states_population) +
+  geom_sf(aes(fill = Population), color = "darkgreen") +
+  theme_minimal() +
+  labs(fill = "Population", title = "Mainland United States Population Data")
 
 #Task: write three things you can infer from the map that you created:
-#1
-#2
-#3
+
+#1 Population is unevenly distributed across the US.
+#2 Some states have much larger populations than others.
+#3 Some highly populated states are in major regions or urban areas.
 
 # Part 3: MAPPING SPECIMEN OCCURRENCE DATA -----------------------------------
 
@@ -153,15 +179,39 @@ us_states_frost_2 <- us_states_frost %>%
 
 # TASK: Using read.csv(), create an object titled "mammal_data" from the NC_mamm_data csv 
 
+mammal_data <- read.csv("NC_mamm_data.csv")
+
 # TASK: Using the colnames() function, review what columns exist in your current dataset
+
+colnames(mammal_data)
 
 # TASK: Remove the 'USE_LICENSE_URL' column using a pipe and the select(- ) 
 # function because it is not needed for plotting. You do not need to create a new object for this; just reassign to the same name 'mammal_data' 
 
+mammal_data <- mammal_data %>%
+  select(-USE_LICENSE_URL)
+
 # Using the rename() function introduced in assignment 4, rename the remaining 11 columns in the following order: country, state, locality, date, lat, long, sex, life_stage, genus, order, family.
-
+mammal_data <- mammal_data %>%
+  rename(
+    country = 1,
+    state = 2,
+    locality = 3,
+    date = 4,
+    lat = 5,
+    long = 6,
+    sex = 7,
+    life_stage = 8,
+    genus = 9,
+    order = 10,
+    family = 11
+  )
 # Using the mammal_data object, clean NA values from columns 'lon', 'lat', 'locality' and 'genus'. Create new object for this cleaned data titled 'clean_data'
-
+clean_data <- mammal_data %>%
+  filter(!is.na(long),
+         !is.na(lat),
+         !is.na(locality),
+         !is.na(genus))
 # Great, now our data is clean and easier to work with! 
 
 # BUILDING THE MAP
@@ -183,6 +233,8 @@ ggplot() +
 
 # QUESTION: What do you think the geom_polygon function is doing here?
 
+##It is drawing the shapes of the counties by connecting the coordinate points to form polygons.
+
 # TASK: Create a new dataframe titled 'nc_map' that only has North Carolina counties by assigning 'north carolina', typed exactly as it is shown in the in the 'counties' dataframe previously built. The code should look like this, with region following county:
 nc_map <- map_data("county", region = "north carolina")
 
@@ -197,6 +249,7 @@ ggplot() +
   coord_fixed(1.5) 
   
 # QUESTION: What do you think the 'coord_fixed' function is doing here? 
+##It fixes the aspect ratio of the map so it doesn’t look stretched and keeps the proportions accurate.
 
 # ADDING THE DATA POINTS TO NC MAP---------------------------------------------
 
@@ -204,15 +257,29 @@ ggplot() +
 # To do this, we can add the geom_point function to our previous chunk of code.
 
 # TASK: With a plus sign between the sections, add the lines below to the above code:
-geom_point(data = clean_data,
-           aes(x = lon, y = lat, color = order),
-           size = 1,
-           alpha = 0.7)
+
+ggplot() +
+  geom_polygon(data = nc_map,
+               aes(x = long, y = lat, group = group),
+               fill = "white",
+               color = "black") +
+  theme_bw() +
+  coord_fixed(1.5) +
+  geom_point(data = clean_data,
+             aes(x = long, y = lat, color = order),
+             size = 1,
+             alpha = 0.7) +
+  theme_minimal() +
+  labs(title = "Mammal captures in North Carolina",
+       x = "Longitude",
+       y = "Latitude")
 
 # From here, you can adjust the theme to your liking. 
 # NOTE: With a plus sign between sections, if you begin typing 'theme' on the next line, options will appear that you can browse through! 
 
 # QUESTION: Why might it be useful to have slightly transparent data points (by setting alpha to a number below 1) when mapping in a small area such as this?  
+
+##It helps show overlapping points so areas with more data are easier to see.
 
 # TASK: after adding a theme to the plot, add and title and an x and y axis label with the labs() function. 
 
@@ -235,6 +302,8 @@ ggplot() +
        y = "Latitude")
 
 # QUESTION: Why did I decide to color the points by order? What happens if you color the points (within the geom_point section) by genus instead? 
+
+##Order has fewer groups so it is easier to read. Genus has too many groups and makes the graph messy.
 
 # HINT: the unique() function allows us to see how many unique values are in each of our columns 
 unique(clean_data$genus)
@@ -266,7 +335,7 @@ unique(clean_data$order)
 library(sf)
 
 # TASK: Convert clean_data into an sf (simple features) object using longitude and latitude
-clean_sf <- st_as_sf(clean_data, coords = c("lon", "lat"), crs = 4326)
+clean_sf <- st_as_sf(clean_data, coords = c("long", "lat"), crs = 4326)
 
 # TASK: Convert nc_map dataframe into an sf object
 nc_map_sf <- st_as_sf(nc_map, coords = c("long", "lat"), crs = 4326)
@@ -340,7 +409,7 @@ ggplot() +
        y = "Latitude")
 
 # QUESTION: What does changing the 'option' in scale_fill_viridis_c() do?
-
+##It changes the color palette of the map, making it easier to see differences in richness.
 # ---------------------------------------------------------------------------- #
 
 # TASK: Adjust legend position for better readability
@@ -356,14 +425,15 @@ ggplot() +
        y = "Latitude")
 
 # QUESTION: Why might changing the legend position be useful?
-
+## It helps by putting it in a better location so it doesn’t block the map.
 # ---------------------------------------------------------------------------- #
 # INTERPRETING THE MAP --------------------------------------------------------
 
 # QUESTION: What does a lighter color indicate on this map?
+##A lighter color indicates lower species richness 
 
 # QUESTION: Why might some counties have lower richness values? 
-
+##Some counties may have fewer observations or they may have fewer suitable habitats for different species.
 
 # TASK: Save your most recent plot as an image file to your folder. 
 ggsave("nc_species_richness_map.png",width = 8, height = 6, dpi = 300)
