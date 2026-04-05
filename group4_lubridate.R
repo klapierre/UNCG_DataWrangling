@@ -263,6 +263,35 @@ time_force_tz
 ## QUESTION: What's the main difference between with_tz() and force_tz()?
 
 ##TASK: Determine the time zone for both items.
+tz(time_with_tz)
+tz(time_force_tz)
+
+## Time zones are helpful for meetings, flights, and scheduling.
+## Let us create a short array of meeting times in UTC.
+meeting_times_utc <- ymd_hms(c("2026-04-14 13:00:00",
+                               "2026-04-14 16:30:00",
+                               "2026-04-14 20:45:00"), tz = "UTC")
+meeting_times_utc
+
+## TASK: Convert the meeting times to New York time.
+meeting_times_ny <- with_tz(meeting_times_utc, tzone = "America/New_York")
+meeting_times_ny
+
+## TASK: Add the meeting timings to a dataframe.
+meeting_data <- data.frame(
+  meeting_id = 1:3,
+  utc_time = meeting_times_utc,
+  ny_time = meeting_times_ny)
+meeting_data
+
+## TASK: Determine the hour and weekday of the New York meeting times.
+meeting_data <- meeting_data %>%
+  mutate(ny_hour = hour(ny_time),
+         ny_day = wday(ny_time, label = TRUE, abbr = FALSE))
+
+meeting_data
+
+## QUESTION: How is this useful?
 # ---------------------------------------------------------- #
 #### Part 2.0: Practing your skills                       ####
 # ---------------------------------------------------------- #
