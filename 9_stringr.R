@@ -32,6 +32,8 @@ strlengthtest <- c("This", "is", "to", "test", "stringr", "length", "functions!"
 ##TASK: using str_length, determine the amount of characters in each string. If
 ##you need help, check the help file for this function.
 
+str_length(strlengthtest)
+
 ##The str_length function is useful if we only want to see strings of a certain 
 ##character count. It can be combined with the filter function to accomplish this
 ##in a dataframe.Suppose we want to pick a baby name, but only want names of a 
@@ -41,7 +43,11 @@ strlengthtest <- c("This", "is", "to", "test", "stringr", "length", "functions!"
 ##the "babyNames" dataframe which only contains names with a length greater than
 ##or equal to 6. Name this new dataframe "LongbabyNames". (Note: you will need
 ##to load the dplyr package to use the filter function.)
+library(dplyr)
+library(stringr)
 
+LongbabyNames <- babyNames %>%
+  filter(str_length(name) >= 6)
 ##The function "str_pad" is used to pad out strings to make their lengths or 
 ##widths consistent. In this context, "width" refers to display width, the 
 ##amount of space the characters actually take on the screen. Here, we'll focus
@@ -50,9 +56,16 @@ strlengthtest <- c("This", "is", "to", "test", "stringr", "length", "functions!"
 strlengthtest2 <- str_pad(strlengthtest, 15, "left", pad= " ", use_width = FALSE)
 
 ##QUESTION: Dissect the code above. What is the purpose of each argument in it?
+# 15 = makes all strings length 15
+# "left" = adds padding to the left side
+# pad = " " = uses spaces as padding
+# use_width = FALSE = counts characters, not display width
 
 ##TASK: Run str_length on our new vector. Did we successfully make all the lengths
 ##consistent?
+
+## Yes, all strings are now the same length 
+str_length(strlengthtest2)
 
 ##"str_trim" essentially reverses what we did with str_pad; it removes white
 ##space from strings. Run this code:
@@ -61,6 +74,8 @@ strlengthtrimmed <- str_trim(strlengthtest2)
 
 ##QUESTION: What is a possible practical application of the str_pad and str_trim
 ##functions?
+
+## They can be used to format text so it lines up evenly and to remove extra spaces from messy data.
 
 ##The final length management function we will learn is "str_trunc". This function
 ##also serves to make string lengths consistent, but it does this by chopping off
@@ -71,10 +86,13 @@ str_trunc(strlengthtest, 4)
 
 ##QUESTION: How long is each string in the vector now?
 
+## Each string is now at most 4 characters long
+
 ##TASK: Write code to create a new dataframe called "babyNamesTrunc". In this 
 ##dataframe, truncate the "name" column so that each string is at most 5 
 ##characters. HINT: The mutate function will be useful here.
-
+babyNamesTrunc <- babyNames %>%
+  mutate(name = str_trunc(name, 5))
 #-----------------------------------------#
 #### PART 1.2: CHANGING CASE
 #-----------------------------------------#
@@ -102,14 +120,24 @@ str_to_snake(case_names)
 str_to_kebab(case_names)
 
 ## QUESTION: What happened to the case_names values in reference to each function that you ran?
+## Each function changed the capitalization or formatting of the text.
+# Upper made everything uppercase, lower made everything lowercase,
+# title capitalized each word, sentence capitalized the first word,
+# and the others changed the format to camelCase, snake_case, and kebab-case.
 
 ## When just doing the camel, snake, and kebab functions, the last name came out weird, right? Let's fix that.
 
 ## TASK: Put the uppercase function within the camel function and run the code. Then, instead of the uppercase function, put the lowercase function within the camel function and run the code.
+str_to_camel(str_to_upper(case_names))
 
+str_to_camel(str_to_lower(case_names))
 ## QUESTION: What do you notice about the two results?
 
+## The result is the same for both because str_to_camel converts everything into camel case, so the original case doesn't matter.
+
 ## QUESTION: Since the last name in case_names had problems with the camel, snake, and kebab functions, is it possible to also fix the name with the snake and kebab functions as we did with the camel function in the previous task?
+
+## Yes, using str_to_lower first helps fix formatting issues before applying snake or kebab, similar to how we used it with camel.
 
 ## Now that you've completed some examples using case_names, lets use our babyNames data frame to modify something a little more complex.
 
@@ -119,11 +147,21 @@ str_to_kebab(case_names)
          #(3) Mutate the name column to be labelled name_upper and use the                   uppercase function on the name column.
          #(4) Select the name column once again, removing it, leaving only the               name_upper column.
 
+uppercaseBabyNames <- babyNames %>%
+  select(name, year) %>%
+  mutate(name_upper = str_to_upper(name)) %>%
+  select(year, name_upper)
+
 ## TASK: Using the babyNames data frame, complete the following:
         #(1) Create a new data frame named oldBabyNames.
         #(2) Filter by the year 1880
         #(3) Mutate the name column to be labelled name_title and use the title             function on the name column.
         #(4) Select the name column once again, removing it, leaving only the               name_title column.
+
+oldBabyNames <- babyNames %>%
+  filter(year == 1880) %>%
+  mutate(name_title = str_to_title(name)) %>%
+  select(name_title)
 
 ## Good work! You've learned how to use some case changing functions within simple values as well as data frames!
 
@@ -152,7 +190,7 @@ str_detect(fruit, "q")
 str_which(fruit, "q")
 
 ## QUESTION: What is the result of running this code?
-
+# It returns the positions of the fruits that contain the letter "q".
 
 ## Not only can we use the str_detect function to detect individual characters in
 ## a string, but we can also use it to detect larger patterns of characters. For 
@@ -166,7 +204,7 @@ str_detect(fruit,"melon")
 
 ## TASK: Try using the str_detect function with "(.)\\1" as the pattern to find 
 ## out if there are any fruits containing double letters.
-
+str_detect(fruit, "(.)\\1")
 
 ## Another interesting function is str_count.
 ## TASK: Run the following code to create a smaller vector containing only the
@@ -176,7 +214,7 @@ fivefruits <- fruit[1:5]
 str_count(fivefruits, "a")
 
 ## QUESTION: What does the str_count function do? If needed, use ?str_count.
-
+# It counts how many times a pattern appears in each string
 
 ## To get the actual position of the first occurrence of the letter "a" in each of
 ## these five fruits, we can run the following code.
@@ -188,7 +226,7 @@ str_locate(fivefruits, "a")
 ## locate more than one letter (such as "er"), the start and end columns would not match.
 
 ## QUESTION: Notice that the fifth fruit returns NAs. Why do you think this is?
-
+# The fifth fruit has no "a", so there is no position to return, which gives NA
 
 ## This tells us only the first occurrence of the letter "a" in each of the five 
 ## fruits. However, if we wanted to locate the positions of all of the matches 
@@ -197,19 +235,20 @@ str_locate_all(fivefruits, "a")
 
 ## QUESTION: Which positions contain "a" in the fourth fruit in our vector? 
 ## (Hint: There are three.)
-
+# The positions are 2,4,6
 
 ## QUESTION: Other functions that are similar to str_detect are str_starts and 
 ## str_ends. What do you think each of these does?
 
+# str_starts checks if a string begins with a pattern nd str_ends checks if a string ends with a pattern.
 
 ## TASK: Use the knowledge you've learned in this section to create a code that gives 
 ## a count of how many fruits in the fruit vector contain the word "berry". (Hint:
 ## You will need to use a dplyr function.)
-
+sum(str_detect(fruit, "berry"))
 
 ## QUESTION: How many fruits containing the word "berry" are there in the fruit vector?
-
+### There are 14 
 
 ## Great job! You've learned how to use stringr to detect, count, and locate 
 ## pattern matches in strings of characters. One way that these functions could 
@@ -234,6 +273,26 @@ str_locate_all(fivefruits, "a")
 # i.e. Childs_First_Name instead of Child.s.First.Name
 # Write the code necessary to do so below, and if necessary check the rename()
 # function's help file if you need to refresh yourself on how it works.
+# First things first, for this question you will need access to a different 
+# data set of Baby Names, this one covering births in New York City from 2011 to
+# 2021. The relevant .csv is located at the following link.
+
+# https://data.cityofnewyork.us/Health/Popular-Baby-Names/25th-nujf/about_data
+
+# TASK: As always, place the .csv into your local working directory and create a 
+# dataframe using the read.csv function called "NYC_Baby_Names" additionally
+# when creating this dataframe, create a pipeline and use the rename function to
+# change the columns "Child.s.First.Name" and "Year.of.Birth" to replace the 
+# periods with underscores (and remove the period after the d in the first case)
+# i.e. Childs_First_Name instead of Child.s.First.Name
+# Write the code necessary to do so below, and if necessary check the rename()
+# function's help file if you need to refresh yourself on how it works.
+NYC_Baby_Names <- read.csv("Popular_Baby_Names.csv") %>%
+  rename(
+    Childs_First_Name = Child.s.First.Name,
+    Year_of_Birth = Year.of.Birth
+  )
+
 
 
 
@@ -254,6 +313,9 @@ max(Name_Length)
 # QUESTION: What does our output look like?
 # What is the highest number of characters contained in a given name?
 
+## It shows the maximum number of characters in any name.
+# The highest number of characters is 14
+
 # Of course, str_count() can evaluate the incidence of more specific occurences
 # than the total number of characters in any given string. Here we will use
 # str_count() in order to find the incidence of a specific string of characters
@@ -263,7 +325,8 @@ max(Name_Length)
 # data from the most recent year, that being 2021. Create an additional dataframe
 # called "NYC_Baby_Names_2021" using the filter function to limit the year of birth
 # to 2021.
-
+NYC_Baby_Names_2021 <- NYC_Baby_Names %>%
+  filter(Year_of_Birth == 2021)
 
 
 # In order to do find the difference by gender however we will have to let stringr 
@@ -283,6 +346,7 @@ NYC_Baby_Names_2021_List <- split(NYC_Baby_Names_2021,NYC_Baby_Names$Gender)
 Male_ia <- str_count(NYC_Baby_Names_2021_List[["MALE"]]$Childs_First_Name,"ia")
 
 # QUESTION: Do any individual names have more than one instance of the string "ia"?
+### Yes, some names can have more than one instance of "ia".
 
 # Now, this data doesn't tell us much as it exists at the moment, as a list of
 # values. In order to measure the total incidence of the string among names,
@@ -290,18 +354,22 @@ Male_ia <- str_count(NYC_Baby_Names_2021_List[["MALE"]]$Childs_First_Name,"ia")
 # Access the help file for sum if it is unclear and create a new object called
 # "Male_ia_Total" which will contain our sum of the incidence.
 
-
+Male_ia_Total <- sum(Male_ia)
 
 # QUESTION: What is the value of "Male_ia_Total"?
+##60L
 
 # TASK: We now have half of what we need, as we do not have the data for girls born
 # in 2021, so analogous to what we have done for the males, create an object titled
 # "Female_ia" which uses str_count() to see how often the string "ia" appears among
 # girls' first names. Then sum this data in order to have a total count.
+Female_ia <- str_count(NYC_Baby_Names_2021_List[["FEMALE"]]$Childs_First_Name, "ia")
 
+Female_ia_Total <- sum(Female_ia)
 
 
 # QUESTION: How many female names in 2021 contained the string "ia"?
+##118L
 
 # An additional thing that str_count() allows us to do is to count characters
 # in a string, but excluding some characters, for instance we could count the
@@ -313,6 +381,8 @@ Male_Vowelless <- str_count(NYC_Baby_Names_2021_List[["MALE"]]$Childs_First_Name
 # QUESTION: What do you think the ^ signifies in this variant of str_count?
 # Why do you think that an upper and lower case variant of each vowel is included?
 
+## The ^ means "not", so it counts everything except the vowels.
+# names can have both uppercase and lowercase letters, so we need to include both to count correctly.
 #-------------------------------------------------------#
 # PART 1.5: MODIFYING VECTORS
 #-------------------------------------------------------#
@@ -328,20 +398,23 @@ Male_Vowelless <- str_count(NYC_Baby_Names_2021_List[["MALE"]]$Childs_First_Name
 taco_ingredients <- str_c("tortilla","beans", "lettuce", "guacamole", "cheese", "salsa")
 
 ## QUESTION: Print the vector below. Is it legible? Why or why not?
-
+taco_ingredients
+# It is not very legible because all the words are combined into one string with no spaces.
 
 ## TASK: Now make the same vector, but formatted as a list (as in with ", "
 ## after each word).
-
+taco_ingredients <- str_c("tortilla","beans", "lettuce", "guacamole", "cheese", "salsa", sep = ", ")
 
 ## TASK: Not everyone likes cilantro, so use the replace function to
 ## replace it with guacamole and save it as taco_ingredients_2
 
+taco_ingredients_2 <- str_replace(taco_ingredients, "cilantro", "guacamole")
 
 ## TASK: Now, it appears that we have forgotten to include meat in the list.
 ## Add meat to the list after the tortilla, but before the beans.
 
+taco_ingredients_2 <- str_replace(taco_ingredients_2, "tortilla", "tortilla, meat")
 
 ## TASK: Now remove one ingredient of choice without replacing it with anything.
 ## Save this as taco_ingredients_3 without any empty strings.
-
+taco_ingredients_3 <- str_remove(taco_ingredients_2, ", salsa")
