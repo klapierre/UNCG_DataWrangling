@@ -43,6 +43,8 @@ str_length(strlengthtest)
 ##the "babyNames" dataframe which only contains names with a length greater than
 ##or equal to 6. Name this new dataframe "LongbabyNames". (Note: you will need
 ##to load the dplyr package to use the filter function.)
+LongbabyNames <- babynames %>% 
+  filter(str_length(name) >= 6)
 
 ##The function "str_pad" is used to pad out strings to make their lengths or 
 ##widths consistent. In this context, "width" refers to display width, the 
@@ -52,9 +54,14 @@ str_length(strlengthtest)
 strlengthtest2 <- str_pad(strlengthtest, 15, "left", pad= " ", use_width = FALSE)
 
 ##QUESTION: Dissect the code above. What is the purpose of each argument in it?
-
+# strlengthtest is our values that will be modified, 15 is the final length, left is where 
+# the padding will occur so it will add spaces before the text. Pad is what character is added. Lastly use_width  controls how the width is calculated, since the statement is false 
+# it is counting the raw numbers. 
 ##TASK: Run str_length on our new vector. Did we successfully make all the lengths
 ##consistent?
+str_length(strlengthtest2)
+# 15 15 15 15 15 15 15
+# yes 
 
 ##"str_trim" essentially reverses what we did with str_pad; it removes white
 ##space from strings. Run this code:
@@ -63,6 +70,8 @@ strlengthtrimmed <- str_trim(strlengthtest2)
 
 ##QUESTION: What is a possible practical application of the str_pad and str_trim
 ##functions?
+# A possible practical application of the str_pad and str_trim is to clean and format 
+# data to make it easier to manipulate and work with. 
 
 ##The final length management function we will learn is "str_trunc". This function
 ##also serves to make string lengths consistent, but it does this by chopping off
@@ -72,10 +81,12 @@ strlengthtrimmed <- str_trim(strlengthtest2)
 str_trunc(strlengthtest, 4)
 
 ##QUESTION: How long is each string in the vector now?
-
+# Each string is 4 characters long or less. 
 ##TASK: Write code to create a new dataframe called "babyNamesTrunc". In this 
 ##dataframe, truncate the "name" column so that each string is at most 5 
 ##characters. HINT: The mutate function will be useful here.
+babyNamesTrunc <- babyNames %>% 
+  mutate(name = str_trunc(name, 5))
 
 #-----------------------------------------#
 #### PART 1.2: CHANGING CASE
