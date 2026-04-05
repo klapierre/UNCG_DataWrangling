@@ -257,7 +257,11 @@ sum(str_detect(fruit, "berry"))
 # i.e. Childs_First_Name instead of Child.s.First.Name
 # Write the code necessary to do so below, and if necessary check the rename()
 # function's help file if you need to refresh yourself on how it works.
-
+NYC_Baby_Names <-read.csv("Popular_Baby_Names_20260405.csv") %>% 
+  rename(
+    Childs_First_Name = Child.s.First.Name,
+    Year_of_Birth = Year.of.Birth
+  )
 
 
 # GOAL: Learn the general functionality of the function str_count()
