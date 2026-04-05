@@ -23,9 +23,9 @@
 
 ## AMALIYA'S SECTION
 
-# -------------------------------------- #
+# ---------------------------------------------------------- #
 ### 1.0 CONVERTING DATES AND TIMES ####                                           
-# -------------------------------------- #
+# ---------------------------------------------------------- #
 
 # A Unix timestamp measures the number of seconds that have passed since January 1st, 1970 at 00:00:00 UTC; this is referred to as the 'Epoch'. This is useful for computing systems because it stores all time measurements as one large number, rather than more complex formats such as month/day/year. The date-times functions in lubridate allow users to quickly convert Unix measurements to more user-friendly formats.  
 
@@ -143,9 +143,9 @@ flight_data_parsed <- flight_data_parsed %>% mutate(flight_day = wday(flight_dat
 
 flight_data_parsed <- flight_data_parsed %>% mutate(flight_month = month(flight_date, label = TRUE, abbr = FALSE)) #Answer
 
-# ------------------------------------ #
+# ---------------------------------------------------------- #
 ### 1.3 ROUNDING DATES AND TIMES ####                                  
-# ------------------------------------ #
+# ---------------------------------------------------------- #
 
 # There might be times where you want to round your data. For example, what if you wanted to round to the nearest month? 
 
