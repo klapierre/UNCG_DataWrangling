@@ -32,7 +32,7 @@ print(dt_time_86 <- hms::as_hms(86400))
 ### 1.1 PARSING DATES AND TIMES ####                                           
 # ---------------------------------------------------------- #
 
-# Parsing is the process of converting strings or numbers to into standard date-time format (ymd_hms). This can be done one value at a time, or for an entire column. 
+# Parsing is the process of converting strings or numbers to into standard R date-time format (ymd_hms). This can be done one value at a time, or for an entire column. 
 # You can parse date-times with several different functions, so it's important to use the function that corresponds to your input value!
 # TASK: Run the following lines of code to view how lubridate converts different date-time formats.
 
@@ -57,12 +57,12 @@ ydm("07-04-12")
 
 mdy("07-04-12") #ANSWER: The output from 'ydm' is incorrect because the input is in mdy format. It can be corrected by using 'mdy' instead. 
 
-#TASK: Use any of the parsing functions to convert your birthday into standard Unix format in the space below. 
+#TASK: Use any of the parsing functions to convert your birthday into standard date format in the space below. 
 
 mdy("November 22nd, 2001") #Example
 
 # Parsing data is super convenient, but what if we want to parse an entire column at once?
-#TASK: Load the nycflights13 dataset. This dataset already uses Unix format; run the following code to "break" the dataset so we can practice parsing date-times.
+#TASK: Load the nycflights13 dataset. Run the following code to "break" the dataset so we can practice parsing date-times.
 
 install.packages("nycflights13")
 library(nycflights13)
@@ -73,14 +73,14 @@ broken_flights <- flights %>%
     flight_time = format(time_hour, "%I: %M: %S %p")) %>% 
   select(flight, tailnum, origin, dest, flight_date, flight_time)
 
-#TASK: Run the following code to convert flight times back to Unix format in the flight_data_parsed dataframe.
+#TASK: Run the following code to convert flight times back to formal time objects in the flight_data_parsed dataframe.
 
 flight_data_parsed <- broken_flights %>% mutate(flight_time = hms::as_hms(flight_time))
 
 #TASK: In the same flight_data_parsed dataframe, parse the flight_date column. 
 #HINT: Use the mutate function with the appropriate parsing function form the previous section.
 
-flight_data_parsed <- broken_flights %>% mutate(flight_date = mdy(flight_date)) #Example
+flight_data_parsed <- flight_data_parsed %>% mutate(flight_date = mdy(flight_date)) #Example
 
 # ---------------------------------------------------------- #
 ### 1.2 GETTING AND SETTING DATES AND TIMES ####                        
