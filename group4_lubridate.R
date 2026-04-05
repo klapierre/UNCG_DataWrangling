@@ -199,6 +199,15 @@ flight_data_rounded <- flight_data_parsed %>%
 
 ## MARK'S SECTION
 
+## Knowledge of time zones is important as the same clock time can have different meanings globally.
+## Lubridate provides tools for checking, assigning, and converting time zones.
+## In this section, we'll practice
+## 1) Using tz() to check a time zone ## 2) Converting a time with with_tz() ## 3) Assigning a zone with force_tz() ## 4) Extracting date time elements  
+## 5: Using Time Zones in NYC Flights13 dataset
+
+library(lubridate)
+library(dplyr)
+library(nycflights13)
 
 
 
