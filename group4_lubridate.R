@@ -79,12 +79,12 @@ ydm("07-04-12")
 
 mdy("07-04-12") #ANSWER: The output from 'ydm' is incorrect because the input is in mdy format. It can be corrected by using 'mdy' instead. 
 
-#TASK: Use any of the parsing functions to convert your birthday into standard Unix format in the space below. 
+#TASK: Use any of the parsing functions to convert your birthday into standard date format in the space below. 
 
 mdy("November 22nd, 2001") #Example
 
 # Parsing data is super convenient, but what if we want to parse an entire column at once?
-#TASK: Load the nycflights13 dataset. This dataset already uses Unix format; run the following code to "break" the dataset so we can practice parsing date-times.
+#TASK: Load the nycflights13 dataset. Run the following code to "break" the dataset so we can practice parsing date-times.
 
 install.packages("nycflights13")
 library(nycflights13)
@@ -95,18 +95,18 @@ broken_flights <- flights %>%
     flight_time = format(time_hour, "%I: %M: %S %p")) %>% 
   select(flight, tailnum, origin, dest, flight_date, flight_time)
 
-#TASK: Run the following code to convert flight times back to Unix format in the flight_data_parsed dataframe.
+#TASK: Run the following code to convert flight times back to formal time objects in the flight_data_parsed dataframe.
 
 flight_data_parsed <- broken_flights %>% mutate(flight_time = hms::as_hms(flight_time))
 
 #TASK: In the same flight_data_parsed dataframe, parse the flight_date column. 
 #HINT: Use the mutate function with the appropriate parsing function form the previous section.
 
-flight_data_parsed <- broken_flights %>% mutate(flight_date = mdy(flight_date)) #Example
+flight_data_parsed <- flight_data_parsed %>% mutate(flight_date = mdy(flight_date)) #Example
 
-# ----------------------------------------------- #
+# ---------------------------------------------------------- #
 ### 1.2 GETTING AND SETTING DATES AND TIMES ####                        
-# ----------------------------------------------- #
+# ---------------------------------------------------------- #
 
 # Before exploring more functions in lubridate, lets check out one more useful function for setting a date-time value.The 'now()' function allows us to find the date-time value for this exact moment in time. 
 #TASK: Run the following code to create the 'todays_timestamp' object with the 'now()' function.
