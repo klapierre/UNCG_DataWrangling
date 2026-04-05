@@ -292,6 +292,52 @@ meeting_data <- meeting_data %>%
 meeting_data
 
 ## QUESTION: How is this useful?
+
+## The nycflights13 dataset includes flight data from New York City flights.
+
+## Lubridate can be used to create date time columns and practice time zones.
+
+## TASK: Review the first few rows of the flights dataset.
+
+## TASK: Create a smaller practice dataframe by selecting flight columns.
+flight_timezones <- flights %>%
+  select(year, month, day, hour, minute, carrier, flight, origin, dest) %>%
+  slice(1:10)
+
+flight_timezones
+
+## Because these flights depart from New York, the mentioned times are New York local time.
+## TASK: Add a New York departure time column.
+flight_timezones <- flight_timezones %>%
+  mutate(dep_time_ny = make_datetime(year, month, day, hour, minute,
+                                     tz = "America/New_York"))
+
+flight_timezones
+## TASK: Convert dep_time_ny into UTC and Los Angeles time.
+flight_timezones <- flight_timezones %>%
+  mutate(dep_time_utc = with_tz(dep_time_ny, tzone = "UTC"),
+         dep_time_la = with_tz(dep_time_ny, tzone = "America/Los_Angeles"))
+
+flight_timezones
+
+
+
+## QUESTION: Why do dep_time_ny, dep_time_utc, and dep_time_la display different hours?
+
+## TASK: Determine the departure hour and weekday in New York Time.
+flight_timezones <- flight_timezones %>%
+  mutate(dep_hour_ny = hour(dep_time_ny),
+         dep_day_ny = wday(dep_time_ny, label = TRUE, abbr = FALSE))
+
+flight_timezones
+
+## TASK: Determine how many of these practice flights depart during the course of each New York hour.
+flight_timezones %>%
+  count(dep_hour_ny)
+
+## QUESTION: Why is local time better than UTC for human scheduling?
+
+##QUESTION: In one senetece, explain time zone conversion in lubridate.
 # ---------------------------------------------------------- #
 #### Part 2.0: Practing your skills                       ####
 # ---------------------------------------------------------- #
