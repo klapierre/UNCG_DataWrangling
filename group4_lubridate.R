@@ -3,18 +3,18 @@
 # ---------------------------------------------------------- #
 
 ## OBJECTIVE:
-# 1. 
-# 2. 
+# 1. Using the lubridate package to parse, manipulate, and extract info from time and date data. 
+# 2. Apply lubridate functions to datasets to analyze and transform time variables including time zones, rounding dates, and working with intervals and durations. 
 
 # ---------------------------------------------------------- #
 #### SET UP:                                              ####
 # ---------------------------------------------------------- #
-
 ## KELLY'S SECTION
 
+# Make sure you are starting with a clean environment by running "rm(list = ls())"
 
-
-
+# Install the "lubridate" package and load it in your library. 
+# HINT: look at past assignments to compete these steps.
 
 
 # ---------------------------------------------------------- #
@@ -23,9 +23,9 @@
 
 ## AMALIYA'S SECTION
 
-# -------------------------------------- #
+# ---------------------------------------------------------- #
 ### 1.0 CONVERTING DATES AND TIMES ####                                           
-# -------------------------------------- #
+# ---------------------------------------------------------- #
 
 # A Unix timestamp measures the number of seconds that have passed since January 1st, 1970 at 00:00:00 UTC; this is referred to as the 'Epoch'. This is useful for computing systems because it stores all time measurements as one large number, rather than more complex formats such as month/day/year. The date-times functions in lubridate allow users to quickly convert Unix measurements to more user-friendly formats.  
 
@@ -79,12 +79,12 @@ ydm("07-04-12")
 
 mdy("07-04-12") #ANSWER: The output from 'ydm' is incorrect because the input is in mdy format. It can be corrected by using 'mdy' instead. 
 
-#TASK: Use any of the parsing functions to convert your birthday into standard Unix format in the space below. 
+#TASK: Use any of the parsing functions to convert your birthday into standard date format in the space below. 
 
 mdy("November 22nd, 2001") #Example
 
 # Parsing data is super convenient, but what if we want to parse an entire column at once?
-#TASK: Load the nycflights13 dataset. This dataset already uses Unix format; run the following code to "break" the dataset so we can practice parsing date-times.
+#TASK: Load the nycflights13 dataset. Run the following code to "break" the dataset (turning the timestamps into strings) so we can practice parsing date-times.
 
 install.packages("nycflights13")
 library(nycflights13)
@@ -95,18 +95,18 @@ broken_flights <- flights %>%
     flight_time = format(time_hour, "%I: %M: %S %p")) %>% 
   select(flight, tailnum, origin, dest, flight_date, flight_time)
 
-#TASK: Run the following code to convert flight times back to Unix format in the flight_data_parsed dataframe.
+#TASK: Run the following code to convert flight times back to formal time objects in the flight_data_parsed dataframe.
 
 flight_data_parsed <- broken_flights %>% mutate(flight_time = hms::as_hms(flight_time))
 
 #TASK: In the same flight_data_parsed dataframe, parse the flight_date column. 
 #HINT: Use the mutate function with the appropriate parsing function form the previous section.
 
-flight_data_parsed <- broken_flights %>% mutate(flight_date = mdy(flight_date)) #Example
+flight_data_parsed <- flight_data_parsed %>% mutate(flight_date = mdy(flight_date)) #Example
 
-# ----------------------------------------------- #
+# ---------------------------------------------------------- #
 ### 1.2 GETTING AND SETTING DATES AND TIMES ####                        
-# ----------------------------------------------- #
+# ---------------------------------------------------------- #
 
 # Before exploring more functions in lubridate, lets check out one more useful function for setting a date-time value.The 'now()' function allows us to find the date-time value for this exact moment in time. 
 #TASK: Run the following code to create the 'todays_timestamp' object with the 'now()' function.
@@ -143,9 +143,9 @@ flight_data_parsed <- flight_data_parsed %>% mutate(flight_day = wday(flight_dat
 
 flight_data_parsed <- flight_data_parsed %>% mutate(flight_month = month(flight_date, label = TRUE, abbr = FALSE)) #Answer
 
-# ------------------------------------ #
+# ---------------------------------------------------------- #
 ### 1.3 ROUNDING DATES AND TIMES ####                                  
-# ------------------------------------ #
+# ---------------------------------------------------------- #
 
 # There might be times where you want to round your data. For example, what if you wanted to round to the nearest month? 
 
@@ -158,7 +158,7 @@ ceiling_date(mdy("April 15 2026"), "month")
 # HINT: April has 30 days. 
 # ANSWER: 'round_date' rounds up by default. 
 
-round_date(mdy("April 15 2026"), "month")
+round_date(mdy("April 16 2026"), "month")
 
 # QUESTION: Run the following line of code. What do you think the 'rollback' function does? What do you think the 'roll_to_first' and  'preserve_hms' arguments do?
 # HINT: Try running the code with different 'roll_to_first' and  'preserve_hms' arguments.
@@ -299,9 +299,8 @@ days_minus_30 <- today_date - days(30)
 ## 1) Using tz() to check a time zone ## 2) Converting a time with with_tz() ## 3) Assigning a zone with force_tz() ## 4) Extracting date time elements  
 ## 5: Using Time Zones in NYC Flights13 dataset
 
-library(lubridate)
 library(dplyr)
-library(nycflights13)
+
 
 ## First, we'll produce a date time object in UTC.
 ## UTC is a standard world time that is widely used in datasets and computers.
@@ -386,8 +385,54 @@ meeting_data <- meeting_data %>%
 meeting_data
 
 ## QUESTION: How is this useful?
+
+## The nycflights13 dataset includes flight data from New York City flights.
+
+## Lubridate can be used to create date time columns and practice time zones.
+
+## TASK: Review the first few rows of the flights dataset.
+
+## TASK: Create a smaller practice dataframe by selecting flight columns.
+flight_timezones <- flights %>%
+  select(year, month, day, hour, minute, carrier, flight, origin, dest) %>%
+  slice(1:10)
+
+flight_timezones
+
+## Because these flights depart from New York, the mentioned times are New York local time.
+## TASK: Add a New York departure time column.
+flight_timezones <- flight_timezones %>%
+  mutate(dep_time_ny = make_datetime(year, month, day, hour, minute,
+                                     tz = "America/New_York"))
+
+flight_timezones
+## TASK: Convert dep_time_ny into UTC and Los Angeles time.
+flight_timezones <- flight_timezones %>%
+  mutate(dep_time_utc = with_tz(dep_time_ny, tzone = "UTC"),
+         dep_time_la = with_tz(dep_time_ny, tzone = "America/Los_Angeles"))
+
+flight_timezones
+
+
+
+## QUESTION: Why do dep_time_ny, dep_time_utc, and dep_time_la display different hours?
+
+## TASK: Determine the departure hour and weekday in New York Time.
+flight_timezones <- flight_timezones %>%
+  mutate(dep_hour_ny = hour(dep_time_ny),
+         dep_day_ny = wday(dep_time_ny, label = TRUE, abbr = FALSE))
+
+flight_timezones
+
+## TASK: Determine how many of these practice flights depart during the course of each New York hour.
+flight_timezones %>%
+  count(dep_hour_ny)
+
+## QUESTION: Why is local time better than UTC for human scheduling?
+
+##QUESTION: In one sentence, explain time zone conversion in lubridate.
 # ---------------------------------------------------------- #
-#### Part 2.0: Practing your skills                       ####
+#### Part 2.0: Practicing your skills                       ####
 # ---------------------------------------------------------- #
 
 ## KELLY'S SECTION
