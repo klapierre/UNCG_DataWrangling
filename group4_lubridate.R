@@ -431,6 +431,7 @@ flight_timezones %>%
 ## QUESTION: Why is local time better than UTC for human scheduling?
 
 ##QUESTION: In one sentence, explain time zone conversion in lubridate.
+
 # ---------------------------------------------------------- #
 #### Part 2.0: Practicing your skills                       ####
 # ---------------------------------------------------------- 
@@ -465,3 +466,52 @@ arthropods <- beneficials %>%
 
 #Great! Now we can start using the lubridate package!
 
+#TASK: Parse out the data 
+# (1) make a new dataframe and label it "arthropods_clean" from the arthropods data. 
+# (2) using the mutate function make a two new columns called "start_datetime" and "end_datetime". Use the "make_datetime()" function to do this. Add the startYear, startMonth, startDay, startHour, startMinute to make the "start_datetime". Add the endYear, endMonth, endDay, endHour, endMinute to make the "end_datetime".
+
+#ANSWER
+arthropods_clean <- arthropods %>% 
+  mutate(start_datetime = make_datetime(startYear, startMonth, startDay, startHour, startMinute),
+         end_datetime   = make_datetime(endYear, endMonth, endDay, endHour, endMinute))
+
+
+# Great! Now we want to parse out the columns that we just made. 
+
+# TASK: First in order to do this, we will need to mess up the columns then put them back together. This dataset was already cleaned before it was uploaded. We We will "mess" up the data, so we can clean it again. By using "format(start_datetime, "%B %d, %Y")" and "format(start_datetime, "%I:%M:%S %p")" we are purposefully changing the clean data so we can practice more!
+# (1) using the arthropods_clean data, call this new dataframe "arthropods_broken"
+# (2) use the format function on the "start_datetime" and make new columns for "start_date". "start_time", "end_date" and "end_time" and format the dates using " = format(x, "%B %d, %Y")" and for the times use " = format(x, "%I:%M:%S %p")"
+#HINT: Example of part of the code: new data name <- arthropod_clean %>% mutate(start_date = format(start_datetime, "%B %d, %Y"))...
+
+
+#ANSWER
+arthropods_broken <- arthropods_clean %>%
+  mutate(start_date = format(start_datetime, "%B %d, %Y"),
+    start_time = format(start_datetime, "%I:%M:%S %p"),
+    end_date   = format(end_datetime, "%B %d, %Y"),
+    end_time   = format(end_datetime, "%I:%M:%S %p")) 
+
+# TASK: Now we want to parse them back together.
+# (1) call this new dataframe "arthropods_parsed" but pull data from the arthropods_broken dataframe. 
+# (2) make two new columns using the mutate function. Name these new columns "start_datetime_parsed" and "end_datetime_parsed"
+# (3) mutate the columns to parse out the data in the mdy_hms format using "mdy_hms()" 
+# HINT: you will need yo use "paste()" within the mdy_hms() function. 
+
+#ANSWER
+arthropods_parsed <- arthropods_broken %>%
+  mutate(start_datetime_parsed = mdy_hms(paste(start_date, start_time)),
+    end_datetime_parsed   = mdy_hms(paste(end_date, end_time)))
+
+#TASK: Let's determine how my months each Order of insect was trapped for. Annotate each line of the code below to describe what we are telling R to do. 
+
+total_trap_time <- arthropods %>%
+  mutate(start_datetime = make_datetime(startYear, startMonth, startDay, startHour, startMinute),
+    end_datetime   = make_datetime(endYear, endMonth, endDay, endHour, endMinute)) %>%
+  group_by(order) %>%
+  summarize(first_trap = min(start_datetime, na.rm = TRUE),
+    last_trap  = max(end_datetime, na.rm = TRUE),
+    time_trapped = interval(first_trap, last_trap) %/% months(1))
+
+#QUESTION: How many months were the traps set for each order?
+
+#ANSWER: (total_trap_time) Aeaneae = 14, Coleoptera = 15, Diptera = 1, Hymenoptera = 49, Opiliones = 14
