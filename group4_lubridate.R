@@ -504,14 +504,35 @@ arthropods_parsed <- arthropods_broken %>%
 
 #TASK: Let's determine how my months each Order of insect was trapped for. Annotate each line of the code below to describe what we are telling R to do. 
 
-total_trap_time <- arthropods %>%
+total_trap_time <- arthropods %>% 
   mutate(start_datetime = make_datetime(startYear, startMonth, startDay, startHour, startMinute),
     end_datetime   = make_datetime(endYear, endMonth, endDay, endHour, endMinute)) %>%
   group_by(order) %>%
   summarize(first_trap = min(start_datetime, na.rm = TRUE),
-    last_trap  = max(end_datetime, na.rm = TRUE),
-    time_trapped = interval(first_trap, last_trap) %/% months(1))
+    last_trap  = max(end_datetime, na.rm = TRUE), 
+    time_trapped = interval(first_trap, last_trap) %/% months(1)) %>% # HINT: "%/% months(1)" is counting whole months
+  ungroup()
+
+#ANSWER: 
+total_trap_time <- arthropods %>% #naming the new dataframe and calling the data we will use
+  mutate(start_datetime = make_datetime(startYear, startMonth, startDay, startHour, startMinute),#parsing the data to make the start_datetime
+         end_datetime   = make_datetime(endYear, endMonth, endDay, endHour, endMinute)) %>% #parsing the data to make the end_dattime column
+  group_by(order) %>% #grouping to summarize by order
+  summarize(first_trap = min(start_datetime, na.rm = TRUE),#summarizing data. first_trap is the first (or min) date a trap was set for each order. 
+            last_trap  = max(end_datetime, na.rm = TRUE), #summarizing data. last_trap is the last (or max) date a trap was collected for each order.
+            time_trapped = interval(first_trap, last_trap) %/% months(1)) %>% # calculating how many whole months (%/%) the traps were set.
+  ungroup() #ungrouping so we don't run future analyses on only the grouped orders. 
 
 #QUESTION: How many months were the traps set for each order?
 
 #ANSWER: (total_trap_time) Aeaneae = 14, Coleoptera = 15, Diptera = 1, Hymenoptera = 49, Opiliones = 14
+
+#TASK: Plot the total_trap time for each order using geom_col. Color fill the bars by order. Label each axis, use theme_bw(), and position the legend on the bottom right of the graph. 
+
+#ANSWER:
+ggplot(total_trap_time, aes(x = time_trapped, y = order, fill = order)) +
+  geom_col() +
+  theme_bw() +
+  labs(x ="Total Trap Time (months)",
+    y =  "Order") +
+  theme(legend.position = c(0.85, 0.18)) 
