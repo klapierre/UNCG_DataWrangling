@@ -2,6 +2,12 @@
 title: "Individual Project"
 output: html_document
 ---
+<style>
+body {
+  font-family: "Times New Roman", Times, serif;
+  font-size: 12pt;
+}
+</style>
 
 Amaliya Brown Doyoyo<br>
 BIO 456<br>
@@ -338,7 +344,8 @@ Part Four: Make pie charts comparing the estimated contribution of each variable
     theme_void() + 
     theme(plot.title = element_text(hjust = 0.5, face = "bold", size = 14,
                                     margin = margin(b = 2, t = 1)),
-          plot.subtitle = element_text(hjust = 0.5, face = "italic", 
+          plot.subtitle = element_text(hjust = 0.5, face = "italic",
+                                       size = 13
                                        margin = margin(b = 10, t = 5)),
           legend.title = element_text(hjust = 0, face = "bold", size = 12),
           plot.margin = margin(r = 10, l = 10),
@@ -349,8 +356,9 @@ Part Four: Make pie charts comparing the estimated contribution of each variable
           strip.text = element_text(face = "bold", size = 14, 
                                     color = "#324ea8", 
                                     margin = margin(t = 5, b = 1))) +
-          labs(title = str_wrap("Estimated Contribution of Ecological & Population 
-                                Factors to WNV Incidence Across Regions"), 
+          labs(title = str_wrap("Estimated Percent Contribution of Ecological 
+                                & Population 
+                                Factors to WNV Incidence"), 
                subtitle = str_wrap("Population factors, primarily distance to 
                                     infrastructure, have the highest contribution 
                                     to WNV incidence across all regions, with more 
