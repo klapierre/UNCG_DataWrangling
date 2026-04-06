@@ -305,8 +305,8 @@
           strip.text = element_text(face = "bold", size = 14, 
                                     color = "#324ea8", 
                                     margin = margin(t = 5, b = 1))) +
-          labs(title = str_wrap("Estimated Contribution of Ecological & Population 
-                                Factors to WNV Incidence Across Regions"), 
+          labs(title = str_wrap("Estimated Percent Contribution of Ecological 
+                                & Population Factors to WNV Incidence"), 
                subtitle = str_wrap("Population factors, primarily distance to 
                                     infrastructure, have the highest contribution 
                                     to WNV incidence across all regions, with more 

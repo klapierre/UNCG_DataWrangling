@@ -45,7 +45,7 @@ Part Four: Make pie charts comparing the estimated contribution of each variable
 
 
 
-```{r, echo=TRUE, results='hide', message=FALSE, warning=FALSE}
+```{r, echo=TRUE, results='hide', message=FALSE, warning=FALSE, fig.width = 12, fig.height = 7, out.width = NULL, dpi = 300}
 
 # -----------------------------------------------------------------------
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
