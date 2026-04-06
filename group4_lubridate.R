@@ -175,12 +175,142 @@ flight_data_rounded <- flight_data_parsed %>%
 #### Part 1.1: Duration & Intervals                       ####
 # ---------------------------------------------------------- #
 
-## CAROLINE'S SECTION
+# Durations and intervals are both ways to measure spans of time in lubridate.
+# In this section, we will practice creating durations, adding durations to times, creating intervals, and measuring how long an interval lasts.
 
+library(lubridate)
+library(dplyr)
+library(nycflights13)
 
+# TASK: Create a smaller dataframe called 'flight_timespans'using the first 20 rows of flights.
 
+# The time_hour column already contains a date-time value.
+# We will use this as a simple starting time for each flight.
+# TASK: Create a new column called departure_time from the time_hour column.
 
+# ----------------------------------- #
+### 1.4.1 Durations ###
+# ----------------------------------- #
 
+# A duration is an exact amount of time.
+# Lubridate creates durations with functions like dseconds(), dminutes(), dhours(), and ddays().
+# Question: What does the "d' stand for in these functions? 
+
+# TASK: Run the following examples.
+dseconds(30)
+dminutes(10)
+dhours(2)
+ddays(1)
+
+# In our flights data, air_time is measured in minutes.
+# We can convert those minute values into durations with dminutes().
+# EXAMPLE: Run this line to turn air_time into a duration.
+flight_timespans <- flight_timespans %>%
+  mutate(flight_duration = dminutes(air_time))
+
+# TASK: Look at only the air_time and flight_duration columns.
+
+# QUESTION: What does dminutes(air_time) do?
+
+# Since durations are exact spans of time, we can add them to a date-time.
+# For example, adding 2 hours to a date-time moves it forward by exactly 2 hours.
+# EXAMPLE: Run the following lines.
+departure_time_example <- dmy_hms("01-01-2013 05:00:00")
+
+departure_time_example + dhours(2)
+
+# TASK: Add 1 hour to departure_time_example.
+
+# TASK: Add 90 minutes to departure_time_example.
+
+# We can do the same thing with the flight data.
+# If we add flight_duration to departure_time, we get an estimated arrival time.
+
+# EXAMPLE: Run the following code to create arrival_time_estimate.
+flight_timespans <- flight_timespans %>%
+  mutate(arrival_time_estimate = departure_time + flight_duration)
+
+# TASK: View just these columns (carrier, flight, departure_time, flight_duration, arrival_time_estimate).
+
+# QUESTION: What happens when we add flight_duration to departure_time?
+
+# TASK: Which flight in this data has the longest duration?
+# Only view these columns (carrier, flight, origin, dest, air_time).
+# HINT: Arrange the table from largest to smallest air_time.
+
+# ----------------------------------- #
+### 1.4.2 INTERVALS ####
+# ----------------------------------- #
+
+# An interval is different from a duration.
+# A duration is only a length of time.
+# An interval stores both a starting date-time and an ending date-time.
+# We create an interval with interval(start, end).
+
+# EXAMPLE: Run the following code.
+practice_interval <- interval(dmy_hms("01-01-2013 08:00:00"),
+                              dmy_hms("01-01-2013 11:30:00"))
+
+# QUESTION: What two things do you need to make an interval?
+
+# We can also check the start and end of an interval with int_start() and int_end().
+# EXAMPLE: Run the following lines.
+int_start(practice_interval)
+int_end(practice_interval)
+
+# TASK: Create an interval from 2:00 PM to 4:50 PM on April 13th, 2026. Use 24-hour (military) time with dmy_hms(). Name the dataframe 'class_interval'.
+
+# TASK: Check the start and end of class_interval.
+
+# Now let us make intervals for our flight data.
+# We already have a departure_time and an arrival_time_estimate.
+# That means we can create an interval for each flight.
+# EXAMPLE: Run the following code.
+flight_timespans <- flight_timespans %>%
+  mutate(flight_interval = interval(departure_time, arrival_time_estimate))
+
+# TASK: View only the interval-related columns (carrier, flight, departure_time, arrival_time_estimate, flight_interval).
+
+# QUESTION: What does flight_interval represent?
+
+# ----------------------------------- #
+### 1.4.3 MEASURING INTERVAL LENGTH ####
+# ----------------------------------- #
+
+# We can measure the length of an interval by converting it to a duration.
+# Then we can use time_length() to look at that duration in hours or minutes.
+# EXAMPLE: Run the following lines on practice_interval.
+time_length(as.duration(practice_interval), "hour")
+
+time_length(as.duration(practice_interval), "minute")
+
+# TASK: Find the length of class_interval in hours.
+
+# TASK: Find the length of class_interval in minutes.
+
+# We can do the same thing for every flight in our dataframe.
+# EXAMPLE: Run the following code to measure each flight interval.
+flight_timespans <- flight_timespans %>%
+  mutate(duration_hours = time_length(as.duration(flight_interval), "hour"),
+         duration_minutes = time_length(as.duration(flight_interval), "minute"))
+
+# TASK: View the most useful columns to compare flight times.
+flight_timespans %>%
+  select(carrier, flight, origin, dest, air_time, duration_minutes, duration_hours)
+
+# QUESTION: Why are the columns air_time and duration_minutes the same?
+
+# TASK: Find the longest flight interval in this dataframe.
+
+# TASK: Create a new column called short_or_long.
+# Label a flight as "long" if duration_minutes is 180 or more. Otherwise label it "short".
+# Hint: Use the if_else() function to create values based on a condition. 
+
+# TASK: Count how many flights are short and how many are long.
+
+# QUESTION: What is the difference between a duration and an interval?
+
+# QUESTION: Explain why intervals are useful.
 
 # ---------------------------------------------------------- #
 #### Part 1.2: Date Arithmetic                            ####
