@@ -3,18 +3,18 @@
 # ---------------------------------------------------------- #
 
 ## OBJECTIVE:
-# 1. 
-# 2. 
+# 1. Using the lubridate package to parse, manipulate, and extract info from time and date data. 
+# 2. Apply lubridate functions to datasets to analyze and transform time variables including time zones, rounding dates, and working with intervals and durations. 
 
 # ---------------------------------------------------------- #
 #### SET UP:                                              ####
 # ---------------------------------------------------------- #
-
 ## KELLY'S SECTION
 
+# Make sure you are starting with a clean environment by running "rm(list = ls())"
 
-
-
+# Install the "lubridate" package and load it in your library. 
+# HINT: look at past assignments to compete these steps.
 
 
 # ---------------------------------------------------------- #
@@ -205,9 +205,8 @@ flight_data_rounded <- flight_data_parsed %>%
 ## 1) Using tz() to check a time zone ## 2) Converting a time with with_tz() ## 3) Assigning a zone with force_tz() ## 4) Extracting date time elements  
 ## 5: Using Time Zones in NYC Flights13 dataset
 
-library(lubridate)
 library(dplyr)
-library(nycflights13)
+
 
 ## First, we'll produce a date time object in UTC.
 ## UTC is a standard world time that is widely used in datasets and computers.
@@ -337,9 +336,9 @@ flight_timezones %>%
 
 ## QUESTION: Why is local time better than UTC for human scheduling?
 
-##QUESTION: In one senetece, explain time zone conversion in lubridate.
+##QUESTION: In one sentence, explain time zone conversion in lubridate.
 # ---------------------------------------------------------- #
-#### Part 2.0: Practing your skills                       ####
+#### Part 2.0: Practicing your skills                       ####
 # ---------------------------------------------------------- #
 
 ## KELLY'S SECTION
