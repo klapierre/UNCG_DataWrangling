@@ -86,11 +86,20 @@ my_birthday_this_year <- ymd(paste0(year(today_date), "-07-20"))
 birthday_time <- my_birthday_this_year - today_date
 ## TASK: View this dataset you just create ? what does this value mean?
 View(birthday_time)
-
-
-
-
-
+## Okay now lets figure out what day it is gonna be 60 days from now
+# TASK - Add 30 days to today_date and rename the dataset to days_30
+days_30 <- today_date + days(30)
+# question: what is the day 30 days from now? 
+## 2026-05-06
+## Task: create another data set with today_date but subtract 30 days and rename
+# to days_minus_30
+days_minus_30 <- today_date - days(30)
+## what is the date ?
+#2026-03-07 
+## question: How is lubridate and arithmetic useful? 
+#Track time-based events 
+#Clean messy date data
+#Analyze trends over time
 
 
 
