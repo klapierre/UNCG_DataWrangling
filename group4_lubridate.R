@@ -188,10 +188,6 @@ library(nycflights13)
 # We will use this as a simple starting time for each flight.
 # TASK: Create a new column called departure_time from the time_hour column.
 
-# ----------------------------------- #
-### 1.4.1 Durations ###
-# ----------------------------------- #
-
 # A duration is an exact amount of time.
 # Lubridate creates durations with functions like dseconds(), dminutes(), dhours(), and ddays().
 # Question: What does the "d' stand for in these functions? 
@@ -238,10 +234,6 @@ flight_timespans <- flight_timespans %>%
 # Only view these columns (carrier, flight, origin, dest, air_time).
 # HINT: Arrange the table from largest to smallest air_time.
 
-# ----------------------------------- #
-### 1.4.2 INTERVALS ####
-# ----------------------------------- #
-
 # An interval is different from a duration.
 # A duration is only a length of time.
 # An interval stores both a starting date-time and an ending date-time.
@@ -272,10 +264,6 @@ flight_timespans <- flight_timespans %>%
 # TASK: View only the interval-related columns (carrier, flight, departure_time, arrival_time_estimate, flight_interval).
 
 # QUESTION: What does flight_interval represent?
-
-# ----------------------------------- #
-### 1.4.3 MEASURING INTERVAL LENGTH ####
-# ----------------------------------- #
 
 # We can measure the length of an interval by converting it to a duration.
 # Then we can use time_length() to look at that duration in hours or minutes.
