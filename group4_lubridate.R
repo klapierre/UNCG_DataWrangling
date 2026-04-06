@@ -339,11 +339,35 @@ flight_timezones %>%
 ##QUESTION: In one sentence, explain time zone conversion in lubridate.
 # ---------------------------------------------------------- #
 #### Part 2.0: Practicing your skills                       ####
-# ---------------------------------------------------------- #
+# ---------------------------------------------------------- 
 
-## KELLY'S SECTION
+# Great! Now that you have learned many of the functions that lubridate has to offer, let's put your skills to the test!
 
+# We will be using a different dataset for this section. If you haven' already done so, download the "beneficials_unified.csv" from canvas. 
+# Remember to save the file where your working directory is. 
+# HINT: use "getwd()" to check your working directory to determine where to save the file. 
 
+# We will need to tidy this data before we can start practicing with lubridate.
 
+#TASK: You will notice that this data has a lot of redundant observations. Load the "beneficials_unified.csv" into R using the read.csv function and name the dataframe "beneficials".
 
+# TASK: Using the same workflow, lets make a dataframe of only the data that we will be using for lubridate. 
+# (1) name the new dataframe "arthropods" and use the beneficials data
+# (2) there is a lot of redundant data and again, we want to make a dataframe that only has the data we will need. For this dataframe, we will only be using the columns "arthOrder" through "deployedhours". Use the select function to select all columns between (and including) "arthOrder" and "deployedhours". Hint: you should have a total of 27 columns after this is done. Revisit previous assignments to select for large chunks without having to type all the column names you wish to include. 
+# (3) unite the genus and species names and name this new column "species". Separate the obsevations with a single space (" ")
+# (4) using the select function, remove "family", "genus", "subgenus", "longTrap", "latTrap", and "elevTrap"
+# (5) rename "arthOrder" to "order"
+
+#ANSWER:
+arthropods <- beneficials %>% 
+  select(arthOrder:deployedhours) %>% 
+  unite("species", genus, species, sep = " ", remove = FALSE) %>% 
+  select(-family, -genus, -subgenus, -lonTrap, -latTrap, -elevTrap) %>% 
+  rename("order" = arthOrder)
+
+#QUESTION: How many variables does the "arthropods" dataset have? Why does this number differ from the "beneficials" dataset? 
+
+#ANSWER: Arthropods = 21 variables compared to Beneficials which has 46. Because we removed the columns we weren't going to use. 
+
+#Great! Now we can start using the lubridate package!
 
