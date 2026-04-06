@@ -126,13 +126,31 @@ str_to_kebab(case_names)
 
 ## QUESTION: What happened to the case_names values in reference to each function that you ran?
 
+#ANSWER:str_to_upper(case_names) capitalized all letters
+# str_to_lower(case_names) changed all letters to lowercase
+# str_to_title(case_names) capitalized the first letter of each word
+# str_to_sentence(case_names) capitalized only the first letter of the first word
+# str_to_camel(case_names) combined the words and capitalized the first letter of the second word
+# str_to_snake(case_names) combined the words and separated them with an underscore
+# str_to_kebab(case_names)combined the words and separated them with a hyphen
+
+
 ## When just doing the camel, snake, and kebab functions, the last name came out weird, right? Let's fix that.
 
 ## TASK: Put the uppercase function within the camel function and run the code. Then, instead of the uppercase function, put the lowercase function within the camel function and run the code.
 
+str_to_camel(str_to_upper(case_names))
+
 ## QUESTION: What do you notice about the two results?
 
+#ANSWER: the results for the first three names are the same as str_camel, but the last one, instead of looking funky, looks how it should using this function. all lowercase but the first letter of the second name capitalized 
+
 ## QUESTION: Since the last name in case_names had problems with the camel, snake, and kebab functions, is it possible to also fix the name with the snake and kebab functions as we did with the camel function in the previous task?
+
+#Probably...
+str_to_snake(str_to_upper(case_names))
+str_to_snake(str_to_lower(case_names))
+#ANSWER: yes, but why can str_to_upper and str_to_lower but used and get the same result?
 
 ## Now that you've completed some examples using case_names, lets use our babyNames data frame to modify something a little more complex.
 
@@ -142,11 +160,22 @@ str_to_kebab(case_names)
          #(3) Mutate the name column to be labelled name_upper and use the                   uppercase function on the name column.
          #(4) Select the name column once again, removing it, leaving only the               name_upper column.
 
+uppercaseBabyNames <- babyNames %>% #1
+  select(name, year) %>% #2
+  mutate(name_upper = str_to_upper(name)) %>% #3
+  select(-name) #4
+
 ## TASK: Using the babyNames data frame, complete the following:
         #(1) Create a new data frame named oldBabyNames.
         #(2) Filter by the year 1880
         #(3) Mutate the name column to be labelled name_title and use the title             function on the name column.
         #(4) Select the name column once again, removing it, leaving only the               name_title column.
+
+oldBabyNames <- babynames %>% #1
+  filter(year == 1880) %>% #2
+  mutate(name_title = str_to_title(name)) %>% #3
+  select(-name) #4
+
 
 ## Good work! You've learned how to use some case changing functions within simple values as well as data frames!
 
