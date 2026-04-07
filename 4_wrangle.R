@@ -70,13 +70,14 @@ str(streamTemp)
 ## There are 61,100 rows and 5 columns. Each column represents each variable.
 
 # TASK: Try reading your data in without the stringsAsFactors argument included.
-
+streamTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv")
 
 # QUESTION: What is the difference? (HINT: rerun the str function to check).
 # When would we want to set the stringsAsFactors argument to true?  When would 
 # it be better to make it false?
-
-
+## The two factor with lines are missing the second time around.
+## If you want the factor with portion done then set it to true.
+## If not, set it to false.
 
 # ---------------------------------------------------------- #
 ### PART 1.1: RENAMING COLUMNS                            ####
@@ -89,12 +90,12 @@ colnames(streamTemp)
 
 
 # QUESTION: What output do you get in the console? Why is this useful?
-
+## The different column names are given.
 
 # QUESTION: What happened to the title of the third column when it was loaded
 # into R?
 # HINT: What happened to the spaces and parenthesis in the R column names?
-
+## It replaced the spaces with periods.
 
 # TASK: Run the following line of code. Note the alignment of the code components.
 streamTempRename <- rename(.data=streamTemp,
