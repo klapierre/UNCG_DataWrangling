@@ -478,6 +478,7 @@ time_utc <- ymd_hms("2026-04-14 18:00:00", tz = "UTC")
 time_utc
 
 ## QUESTION: What does the 'tz' argument produce?
+It tells R what time zone the date-time belongs to.
 
 ## TASK: Determine the time zone of 
 tz(time_utc)
@@ -487,6 +488,7 @@ time_ny <- with_tz(time_utc, tzone = "America/New_York")
 time_ny
 
 ## QUESTION: Has the actual moment in time changed?
+No. It is the same exact moment, just displayed in a different time zone.
 
 ##TASK: Convert time_UTC to Los Angeles time.
 time_la <- with_tz(time_utc, tzone = "America/Los_Angeles")
@@ -508,9 +510,9 @@ time_chicago
 time_tokyo
 
 ##QUESTION: Why do the shown clock times appear different?
-
+Because each time zone has a different offset from UTC, so the same moment is shown with different local clock times.
 ##QUESTION: Are these different moments?
-
+No. They are the same moment shown in different time zones.
 ## Force_tz() is a handy function.
 ## With_tz() keeps the current moment in time.
 ## force_tz() maintains the same clock time while changing the attached zone.
@@ -523,7 +525,8 @@ time_with_tz
 time_force_tz
 
 ## QUESTION: What's the main difference between with_tz() and force_tz()?
-
+with_tz() keeps the same actual moment and changes the display.
+force_tz() keeps the same clock time and changes the zone label
 ##TASK: Determine the time zone for both items.
 tz(time_with_tz)
 tz(time_force_tz)
@@ -554,7 +557,7 @@ meeting_data <- meeting_data %>%
 meeting_data
 
 ## QUESTION: How is this useful?
-
+It helps us understand when an event happens in local time.
 ## The nycflights13 dataset includes flight data from New York City flights.
 
 ## Lubridate can be used to create date time columns and practice time zones.
@@ -585,7 +588,7 @@ flight_timezones
 
 
 ## QUESTION: Why do dep_time_ny, dep_time_utc, and dep_time_la display different hours?
-
+Because they are displayed in different time zones.
 ## TASK: Determine the departure hour and weekday in New York Time.
 flight_timezones <- flight_timezones %>%
   mutate(dep_hour_ny = hour(dep_time_ny),
@@ -598,8 +601,9 @@ flight_timezones %>%
   count(dep_hour_ny)
 
 ## QUESTION: Why is local time better than UTC for human scheduling?
-
+People usually plan around their local clock time, not UTC.
 ##QUESTION: In one sentence, explain time zone conversion in lubridate.
+Lubridate lets us keep the same moment in time while displaying it correctly for different locations using functions like with_tz().
 
 # ---------------------------------------------------------- #
 #### Part 2.0: Practicing your skills                       ####
