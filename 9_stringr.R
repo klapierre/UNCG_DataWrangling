@@ -405,22 +405,35 @@ Male_Vowelless <- str_count(NYC_Baby_Names_2021_List[["MALE"]]$Childs_First_Name
 ## TASK: Create the following vector with stringr to list out your taco ingredients.
 
 taco_ingredients <- str_c("tortilla","beans", "lettuce", "guacamole", "cheese", "salsa")
+taco_ingredients
 
 ## QUESTION: Print the vector below. Is it legible? Why or why not?
 
+##No, it is not separated
 
 ## TASK: Now make the same vector, but formatted as a list (as in with ", "
 ## after each word).
 
+taco_ingredients <- str_c("tortilla", "beans", "lettuce", "guacamole", "cheese", "salsa", sep = ", ")
+taco_ingredients
 
 ## TASK: Not everyone likes cilantro, so use the replace function to
 ## replace it with guacamole and save it as taco_ingredients_2
 
+taco_ingredients <- str_c("tortilla", "beans", "lettuce", "cilantro", "cheese", "salsa", sep = ", ")
+taco_ingredients_2 <- str_replace(taco_ingredients, "cilantro", "guacamole")
 
-## TASK: Now, it appears that we have forgotten to include meat in the list.
+taco_ingredients_2
+
+  ## TASK: Now, it appears that we have forgotten to include meat in the list.
 ## Add meat to the list after the tortilla, but before the beans.
 
+taco_ingredients_2 <- str_c("tortilla", "meat", "beans", "lettuce", "guacamole", "cheese", "salsa", sep = ", ")
+taco_ingredients_2
 
 ## TASK: Now remove one ingredient of choice without replacing it with anything.
 ## Save this as taco_ingredients_3 without any empty strings.
+
+taco_ingredients_2 <- str_c("tortilla", "meat", "beans", "lettuce", "guacamole", "cheese", "salsa", sep = ", ")
+taco_ingredients_2
 
