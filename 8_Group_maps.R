@@ -98,6 +98,11 @@ ggplot(us_states_frost) + ##starts the plot using us_states_frost
   theme_minimal() + ##simple minimal theme
   labs(fill = "Number of Frost Days", title = "United States Frost Data") ##legend label and map title
 
+ggplot(us_states_frost) +
+  geom_sf(aes(fill = Frost), color = "blue") +
+  theme_minimal() +
+  labs(fill = "Number of Frost Days", title = "United States Frost Data")
+
 #Question: Do you see a map under the "plots" tab?
 
 ##Yes
@@ -422,7 +427,7 @@ ggplot() +
        fill = "Genera count",
        x = "Longitude",
        y = "Latitude")
-
+  
 # QUESTION: Why might changing the legend position be useful?
 
 ##Could make it easier to read - stop it from covering anything important
