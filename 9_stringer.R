@@ -396,20 +396,23 @@ Male_Vowelless <- str_count(NYC_Baby_Names_2021_List[["MALE"]]$Childs_First_Name
 taco_ingredients <- str_c("tortilla","beans", "lettuce", "guacamole", "cheese", "salsa")
 
 ## QUESTION: Print the vector below. Is it legible? Why or why not?
-
+print(taco_ingredients)
+#it is not very legible because it is one combined word
 
 ## TASK: Now make the same vector, but formatted as a list (as in with ", "
 ## after each word).
+taco_ingredients2 <- str_c("tortilla","beans", "lettuce", "guacamole", "cheese", "salsa", sep= ", ")
 
-
+print(taco_ingredients2)
 ## TASK: Not everyone likes cilantro, so use the replace function to
 ## replace it with guacamole and save it as taco_ingredients_2
-
+taco_ingredients2 <- str_c("tortilla","beans", "lettuce", "guacamole", "cheese", "salsa", sep = ", ") %>% 
+  str_replace("guacamole", "cilantro")
 
 ## TASK: Now, it appears that we have forgotten to include meat in the list.
 ## Add meat to the list after the tortilla, but before the beans.
-
+taco_ingredients2 <- str_replace(taco_ingredients2, "tortilla", "tortilla, meat")
 
 ## TASK: Now remove one ingredient of choice without replacing it with anything.
 ## Save this as taco_ingredients_3 without any empty strings.
-
+taco_ingredients3 <-str_remove(taco_ingredients2, "meat")
