@@ -213,7 +213,7 @@ identical(calispellTemp3, calispellTemp5)
 # QUESTION: If you remove all of the observations (rows) with temperatures lower
 # than 15 C, would you expect your new dataframe to have more, the same, or fewer
 # observations than the original dataframe?
-
+## It would have fewer.
 
 # TASK: Run the following code to only keep the values greater than or equal to 15C.
 calispellHighTemp <- filter(.data=calispellTemp,
@@ -223,11 +223,11 @@ calispellHighTemp <- filter(.data=calispellTemp,
 # TASK: Check the number of observations in your dataframe! You can either do 
 # this using the str() function or by looking next to the dataframe name in the
 # R environment tab.
-
+str(calispellHighTemp)
 
 # QUESTION: How many observations did the original dataframe (calispellTemp) 
 # have? How many does the new dataframe (calispellHighTemp) have?
-
+## The original had 61,100 observations while the high temp one has 7,703 observations.
 
 # REALLY IMPORTANT: Even if the function runs, R can do all kinds of bad things 
 # if you've accidentally coded something incorrectly. It is always very, very 
@@ -252,7 +252,8 @@ highTempTributaries <- filter(.data=streamTempRename,
 # water temp >=15 at any site?
 highTempTributaries <- filter(.data=streamTempRename,
                               calispell_temp >= 15 | smalle_temp >= 15 | winchester_temp >= 15)
-
+str(highTempTributaries)
+## Yes, there's 8,093 observations.
 
 # Finally, we might want to only get the rows that do not have missing data. We 
 # can detect missing values with the is.na() function. Try it out:
@@ -270,7 +271,9 @@ calispellData <- filter(.data=calispellTemp,
 
 # QUESTION: How many observations are in the datafile calispellData? Write code
 # to determine how many values of calispell_temp were NA.
-
+str(calispellData)
+## 52,330 observations are in calispellData
+sum(is.na(calispellData))
 
 # ---------------------------------------------------------- #
 ### PART 1.4: CREATING COLUMNS                            ####
