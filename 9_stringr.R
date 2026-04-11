@@ -103,15 +103,16 @@ str_to_snake(case_names)
 str_to_kebab(case_names)
 
 ## QUESTION: What happened to the case_names values in reference to each function that you ran?
-
+the values stayed the same but thheir letter case and word seprator changed depending on the function 
 ## When just doing the camel, snake, and kebab functions, the last name came out weird, right? Let's fix that.
 
 ## TASK: Put the uppercase function within the camel function and run the code. Then, instead of the uppercase function, put the lowercase function within the camel function and run the code.
 
-## QUESTION: What do you notice about the two results?
+## QUESTION: What do you notice about the two results? 
+the two results are differnt becasue str_to_camel handles the starting letter based on the case of the orginal text. when str_to_upper is used first, the result can still look a little werid. 
 
 ## QUESTION: Since the last name in case_names had problems with the camel, snake, and kebab functions, is it possible to also fix the name with the snake and kebab functions as we did with the camel function in the previous task?
-
+yes you can fix it the same way by putting dtr_to_lower() inside the snake and kebab fucntions first 
 ## Now that you've completed some examples using case_names, lets use our babyNames data frame to modify something a little more complex.
 
 ## TASK: Using the babyNames data frame, complete the following:
