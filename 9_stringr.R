@@ -154,7 +154,7 @@ str_detect(fruit, "q")
 str_which(fruit, "q")
 
 ## QUESTION: What is the result of running this code?
-
+gives the index numbers of the fruit names that contain the letter q so it tells you which postion in the vector has a match 
 
 ## Not only can we use the str_detect function to detect individual characters in
 ## a string, but we can also use it to detect larger patterns of characters. For 
@@ -178,7 +178,7 @@ fivefruits <- fruit[1:5]
 str_count(fivefruits, "a")
 
 ## QUESTION: What does the str_count function do? If needed, use ?str_count.
-
+counts how many times a pattern appears in each string 
 
 ## To get the actual position of the first occurrence of the letter "a" in each of
 ## these five fruits, we can run the following code.
@@ -190,7 +190,7 @@ str_locate(fivefruits, "a")
 ## locate more than one letter (such as "er"), the start and end columns would not match.
 
 ## QUESTION: Notice that the fifth fruit returns NAs. Why do you think this is?
-
+the fifth fruit returned as NA becasue that fruit does not contain the letter being searched for. So R cannot give a start and end postion for a match is not there 
 
 ## This tells us only the first occurrence of the letter "a" in each of the five 
 ## fruits. However, if we wanted to locate the positions of all of the matches 
@@ -199,11 +199,12 @@ str_locate_all(fivefruits, "a")
 
 ## QUESTION: Which positions contain "a" in the fourth fruit in our vector? 
 ## (Hint: There are three.)
-
+in the fourth fruit, the letter a is in postion 2,4 and 6 
 
 ## QUESTION: Other functions that are similar to str_detect are str_starts and 
 ## str_ends. What do you think each of these does?
-
+str_starts() checks wether a string beings with a certain letter or parttern 
+Str_ends() checks wether a string ends with a certain lettern or even pattern 
 
 ## TASK: Use the knowledge you've learned in this section to create a code that gives 
 ## a count of how many fruits in the fruit vector contain the word "berry". (Hint:
@@ -211,7 +212,7 @@ str_locate_all(fivefruits, "a")
 
 
 ## QUESTION: How many fruits containing the word "berry" are there in the fruit vector?
-
+8
 
 ## Great job! You've learned how to use stringr to detect, count, and locate 
 ## pattern matches in strings of characters. One way that these functions could 
