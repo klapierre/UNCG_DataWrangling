@@ -331,7 +331,7 @@ it tells R to count any character that is not a vowel
 taco_ingredients <- str_c("tortilla","beans", "lettuce", "guacamole", "cheese", "salsa")
 
 ## QUESTION: Print the vector below. Is it legible? Why or why not?
-
+no it is not verey legible becusae str_c() joined all the words together into one long string with no spaces 
 
 ## TASK: Now make the same vector, but formatted as a list (as in with ", "
 ## after each word).
