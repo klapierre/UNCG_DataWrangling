@@ -252,15 +252,25 @@ ggplot() +
   coord_fixed(1.5) 
 
 # QUESTION: What do you think the 'coord_fixed' function is doing here? 
+It fixed the United states map into a state map of north carolina. 
+
 
 # ADDING THE DATA POINTS TO NC MAP---------------------------------------------
 
 # Using the 'clean_data' df we created, we can map these points onto out North Carolina map to see species occurrences! 
 # To do this, we can add the geom_point function to our previous chunk of code.
 
+ggplot() +
+  geom_polygon(data = nc_map,
+               aes(x = long, y = lat, group = group),
+               fill = "lightblue",
+               color = "black") +
+  theme_bw() +
+  coord_fixed(1.5) 
+
 # TASK: With a plus sign between the sections, add the lines below to the above code:
 geom_point(data = clean_data,
-           aes(x = lon, y = lat, color = order),
+           aes(x = long, y = lat, color = order),
            size = 1,
            alpha = 0.7)
 
@@ -268,9 +278,25 @@ geom_point(data = clean_data,
 # NOTE: With a plus sign between sections, if you begin typing 'theme' on the next line, options will appear that you can browse through! 
 
 # QUESTION: Why might it be useful to have slightly transparent data points (by setting alpha to a number below 1) when mapping in a small area such as this?  
+By having transparent data points, You can still have a reference point on the map without it being covered. Additionally, it aids in it's' ability to see how many points overlap at a given area.
 
 # TASK: after adding a theme to the plot, add and title and an x and y axis label with the labs() function. 
 
+ggplot() +
+  geom_polygon(data = nc_map,
+               aes(x = long, y = lat, group = group),
+               fill = "lightblue",
+               color = "black") +
+  theme_bw() +
+  coord_fixed(1.5) +
+  geom_point(data = clean_data,
+             aes(x = long, y = lat, color = order),
+             size = 1,
+             alpha = 0.7) +
+  theme_bw() +
+  labs(title = "Mammal captures in North Carolina",
+       x = "Longitude",
+       y = "Latitude")
 
 # In the end, we should have a chunk of code that looks something like this (theme can be your choosing):
 ggplot() +
@@ -281,7 +307,7 @@ ggplot() +
   theme_bw() +
   coord_fixed(1.5) +
   geom_point(data = clean_data,
-             aes(x = lon, y = lat, color = order),
+             aes(x = long, y = lat, color = order),
              size = 1,
              alpha = 0.7) +
   theme_bw() +
@@ -290,6 +316,24 @@ ggplot() +
        y = "Latitude")
 
 # QUESTION: Why did I decide to color the points by order? What happens if you color the points (within the geom_point section) by genus instead? 
+By coloring the points by order, you have a more cohesive identification of the types of mammals that are expected per area. 
+Labeling by genus pulls out more colors per point along with more sporatic labeling. 
+
+ggplot() +
+  geom_polygon(data = nc_map,
+               aes(x = long, y = lat, group = group),
+               fill = "lightblue",
+               color = "black") +
+  theme_bw() +
+  coord_fixed(1.5) +
+  geom_point(data = clean_data,
+             aes(x = long, y = lat, color = genus),
+             size = 1,
+             alpha = 0.7) +
+  theme_bw() +
+  labs(title = "Mammal captures in North Carolina",
+       x = "Longitude",
+       y = "Latitude")
 
 # HINT: the unique() function allows us to see how many unique values are in each of our columns 
 unique(clean_data$genus)
