@@ -271,7 +271,233 @@ You can also nest subitems within an item. If you want a nested list as such, ju
 4. Papaya
 
 Note: If you want to use Roman Numerals, you may have to leave an empty line between items on list.
+------------------------------------------------------------------------
+## Section 4: Add Visualizations and Tables to Your Report
 
+### Goal
+
+In this section, you will create graphs and a summary table using the
+mtcars data set. You will also practice describing patterns that you
+observe in the output.
+
+### Instructions
+
+Complete each task below. For each graph or table: write the code, run
+the code, answer the questions in complete sentences.
+
+Before beginning, make sure you can access the mtcars dataset. Run the
+line below to preview the first few rows.
+
+head(mtcars)
+
+------------------------------------------------------------------------
+
+## Part A: Create a Scatterplot
+
+The variables wt and mpg in the mtcars data set can help us explore the
+relationship between car weight and fuel efficiency.
+
+### Task
+
+Create a scatter plot with wt on the x-axis and mpg on the y-axis.
+
+**Hint:** use the plot() function
+
+```{r scatterplot}
+# Write your code below this line
+
+
+
+```
+
+### Task
+
+Modify your scatterplot so that it includes: a title, an x-axis label, a
+y-axis label, a point color of your choice
+
+**Hint:** Think back to previous assignments(main=, xlab= ,ylab=, and
+col=)
+
+```{r scatterplot_labeled}
+# Write your updated scatterplot code below this line
+
+
+
+```
+
+### Question
+
+What does each point in this scatterplot represent?
+
+**Your answer:** [Write your response here.]
+
+### Question
+
+What relationship do you observe between weight and mpg?
+
+**Your answer:** [Write your response here.]
+
+### Question
+
+Does the graph suggest a positive relationship, a negative relationship,
+or no relationship? Explain your answer.
+
+**Your answer:** [Write your response here.]
+
+------------------------------------------------------------------------
+
+## Part B: Create a Boxplot
+
+The variable cyl shows the number of cylinders in each car. A boxplot
+can help compare fuel efficiency across cylinder groups.
+
+### Task 
+
+Create a boxplot of mpg by cyl using the boxplot function
+
+```{r boxplot1}
+# Write your code below this line
+
+
+
+```
+
+### Task 
+
+Modify your boxplot so that it includes: a title, an x-axis label, a
+y-axis label, and a fill color of your choice
+
+```{r boxplot2}
+# Write your updated boxplot code below this line
+
+
+
+```
+
+### Question
+
+What does each box in this plot represent?
+
+**Your answer:** [Write your response here.]
+
+### Question
+
+Which cylinder group appears to have the highest fuel efficiency?
+
+**Your answer:** [Write your response here.]
+
+### Question
+
+Which cylinder group appears to have the lowest fuel efficiency?
+
+**Your answer:** [Write your response here.]
+
+### Question
+
+Based on the boxplot, how does fuel efficiency seem to change as the
+number of cylinders increases?
+
+**Your answer:** [Write your response here.]
+
+------------------------------------------------------------------------
+
+## Part C: Create a Summary Table
+
+You will now create a table showing the average miles per gallon for
+each cylinder group.
+
+### Task 
+
+Use dplyr to calculate the average mpg for each value of cyl. Rename the
+data avg_mpg_by_cyl
+
+**Hint:** you need to group the data by cyl then summarize the mean of
+mpg.
+
+Use the space below to write your code:
+
+```{r summary_table}
+# Write your code below this line
+
+
+
+```
+
+### Task 
+
+Display your results as a clean table.
+
+Use the space below to write your code:
+
+```{r formatted_table}
+# Write your code below this line
+
+
+
+```
+
+### Question
+
+What does this table show?
+
+**Your answer:** [Write your response here.]
+
+### Question
+
+Which cylinder group has the highest average mpg?
+
+**Your answer:** [Write your response here.]
+
+### Question
+
+Which cylinder group has the lowest average mpg?
+
+**Your answer:** [Write your response here.]
+
+------------------------------------------------------------------------
+
+## Part D: Compare the Visuals
+
+Now that you have created both graphs and the table, compare the
+information they provide.
+
+### Question 
+
+How does the scatterplot help you understand the relationship between
+weight and fuel efficiency?
+
+**Your answer:** [Write your response here.]
+
+### Question 
+
+How does the boxplot help you compare different groups of cars?
+
+**Your answer:** [Write your response here.]
+
+------------------------------------------------------------------------
+
+## Part E: Now you try
+
+1.  Use a different variable from mtcars to make an additional scatter
+    plot.
+2.  Change the color of your scatterplot.
+
+Write your code below:
+
+```{r Now_you_try}
+# Write your code below this line
+
+
+
+```
+
+### Question
+
+What did you change, and how did it affect the output?
+
+**Your answer:** [Write your response here.]
+
+------------------------------------------------------------------------
 
 
 
