@@ -195,11 +195,10 @@ mamm_vect <- vect(sf_mamm)
 crs(mamm_vect) <- crs(nv_elevation)
 
 
-# Now plot together: ----------------------------------------------------------
+# Now plot together and save as JPEG: ---------------------------------------------------------
 
-# Make custom elevation color pallete: 
-# elev_cols <- colorRampPalette(c("#26A63A", "#A3B40A", "#FFC9B6", "#F39BA4", "#F9F1F1"))
-# I wanted to make the sky islands pop better, but I realized that the colors I was initially using were not colorblind friendly, so I decided to stick with the built-in terrain colors option
+# Open a high-quality JPEG device
+jpeg("nv_target_map.jpg", width = 3000, height = 3000, res = 375)
 
 # Plot elevation
 plot(nv_elevation, col = terrain.colors(215))
@@ -207,7 +206,7 @@ plot(nv_elevation, col = terrain.colors(215))
 # Add county boundaries
 lines(NV_county, alpha = .3)
 
-# Assign custom species point colors: 
+# Assign custom species point colors
 species_colors <- c("Tamias minimus" = "#0293C7",
                     "Tamias umbrinus" = "white",
                     "Urocitellus beldingi" = "#CD0000",
@@ -222,24 +221,16 @@ points(mamm_vect,
        cex = 1,
        alpha = 0.7)
 
+# Add legend
+legend("bottomleft",
+       inset = c(0.20, 0.05), 
+       legend = names(species_colors),
+       col = species_colors,
+       pch = 16,
+       title = "Species")
 
-
-
-
-
-
-
-
-#  SAVE HIGH RESOLUTION ??????????????????????????????????????????????????????
-png("target_captures.png", width = 166, height = 130, units = "mm", res = 600)
-
-
-
-
-
-
-
-
+# Close the device 
+dev.off()
 
 
 
@@ -312,13 +303,16 @@ crs(UNCG_mamm_vect) <- crs(nv_elevation)
 
 # Now plot together: ----------------------------------------------------------
 
+# Open a high-quality JPEG device
+jpeg("UNCG_target_map.jpg", width = 3000, height = 3000, res = 375)
+
 # Plot elevation
 plot(nv_elevation, col = terrain.colors(215))
 
 # Add county boundaries
 lines(NV_county, alpha = .3)
 
-# Assign custom species point colors (changing from previous map because we have no mollis so the colors here look a little worse)
+# Assign custom species point colors
 species_colors <- c("Tamias minimus" = "#0293C7",
                     "Tamias umbrinus" = "white",
                     "Urocitellus beldingi" = "#CD0000")
@@ -332,33 +326,71 @@ points(UNCG_mamm_vect,
        cex = 1,
        alpha = 0.7)
 
+# Add legend
+legend("bottomleft",
+       inset = c(0.20, 0.05), 
+       legend = names(species_colors),
+       col = species_colors,
+       pch = 16,
+       title = "Species")
+
+# Close the device 
+dev.off()
 
 
+# Maps built with  Arctos data ------------------------------------------------
+arctos_data <- read.csv("arctos_target_species.csv")
 
+colnames(arctos_data)
 
+# cleaning data: removing columns
+arctos_data <- arctos_data %>%
+  select(-USE_LICENSE_URL,
+         -MINIMUM_ELEVATION)
 
+# changing column names
+arctos_data <- rename(.data=arctos_data,                                                              country=COUNTRY,
+                      state=STATE_PROV,
+                      locality=SPEC_LOCALITY,
+                      date=VERBATIM_DATE,
+                      lat=DEC_LAT,
+                      lon=DEC_LONG,
+                      elevation=MAXIMUM_ELEVATION,
+                      sex=SEX,
+                      life_stage=LIFE_STAGE,
+                      genus=GENUS,
+                      order=PHYLORDER,
+                      family=FAMILY,
+                      species=SPECIES)
 
+# removing rows without elevation data
+arctos_data <- arctos_data %>%
+  drop_na(elevation)
 
+# subset tamias genus data 
+tamias <- arctos_data %>%
+  filter(species == "Tamias minimus" | species == "Tamias umbrinus")
 
+# subset urocitellus genus data
+urocitellus <- arctos_data %>%
+  filter(species == "Urocitellus mollis" | species == "Urocitellus beldingi")
 
+# creating Tamias histogram based on elevation 
+ggplot(tamias, aes(x = elevation,
+                   fill = species)) + 
+  scale_fill_manual(values = c("#88bc5e", "#364b25")) +
+  geom_histogram(binwidth=100) +
+  xlim(1500, 10000) +
+  theme_classic() +
+  labs(title = "Tamias elevation")
 
-
-
-#  SAVE HIGH RESOLUTION ??????????????????????????????????????????????????????
-png("UNCG_target_captures.png", width = 166, height = 130, units = "mm", res = 600)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+# creating Urocitellus histogram based on elevation 
+# fix mollis beldingi order on legend
+ggplot(urocitellus, aes(x = elevation,
+                        fill = species)) + 
+  scale_fill_manual(values = c("#812c1f", "#d74a35")) +
+  geom_histogram(binwidth=100) +
+  xlim(1500, 10000) +
+  theme_classic() +
+  labs(title = "Urocitellus elevation")
 
