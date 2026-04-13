@@ -73,18 +73,22 @@ dmy("14th of April '26")
 ydm("07-04-12")
 
 # QUESTION: Is the output value correct? Why not? Rewrite the code with the same input using the correct function below. 
-
+#No
 mdy("07-04-12") 
 
 #TASK: Use any of the parsing functions to convert your birthday into standard date format in the space below. 
 
-mdy("November 22nd, 2001") #Example
+mdy("January 29th, 2005")
 
 # Parsing data is super convenient, but what if we want to parse an entire column at once?
 #TASK: Load the nycflights13 dataset. Run the following code to "break" the dataset (turning the timestamps into strings) so we can practice parsing date-times.
 
+
 install.packages("nycflights13")
 library(nycflights13)
+
+library(dplyr)
+
 
 broken_flights <- flights %>%
   mutate(
@@ -99,7 +103,10 @@ flight_data_parsed <- broken_flights %>% mutate(flight_time = hms::as_hms(flight
 #TASK: In the same flight_data_parsed dataframe, parse the flight_date column. 
 #HINT: Use the mutate function with the appropriate parsing function form the previous section.
 
-flight_data_parsed <- flight_data_parsed %>% mutate(flight_date = mdy(flight_date)) #Example
+flight_data_parsed <- flight_data_parsed %>% mutate(flight_date = mdy(flight_date))
+
+help(package = "lubridate")
+  
 
 # ---------------------------------------------------------- #
 ### 1.2 GETTING AND SETTING DATES AND TIMES ####                        
