@@ -170,24 +170,33 @@ flight_data_parsed<-flight_data_parsed %>% mutate(flight_month=month(flight_date
 # There might be times where you want to round your data. For example, what if you wanted to round to the nearest month? 
 
 # TASK: The functions 'floor_date' and 'ceiling_date' will round down and up to the nearest unit, respectively. Run the following lines of code and take note of the output values.
-
 floor_date(mdy("April 15 2026"), "month")
+floor_date(mdy("April 15 2026"), "month")
+#I got "2026-04-01"
+
 ceiling_date(mdy("April 15 2026"), "month")
+ceiling_date(mdy("April 15 2026"), "month")
+#I got "2026-05-01"
 
 # QUESTION: The 'round_date' function is a general rounding function. Run the following line of code. Does 'round_date' round up or down?
 # HINT: April has 30 days. 
 
 
 round_date(mdy("April 16 2026"), "month")
-
+round_date(mdy("April 16 2026"), "month")
+#I got "2026-05-01". So the 'round_date' function rounds up to the nearest month.
 # QUESTION: Run the following line of code. What do you think the 'rollback' function does? What do you think the 'roll_to_first' and  'preserve_hms' arguments do?
 # HINT: Try running the code with different 'roll_to_first' and  'preserve_hms' arguments.
 
 
 rollback(todays_timestamp, roll_to_first = FALSE, preserve_hms = TRUE)
+rollback(todays_timestamp, roll_to_first = FALSE, preserve_hms = TRUE)
+#I got "2026-03-31 15:00:30 EDT"
+#I think the rollback function list the last day of the previous month. When 'roll_to_first' is set to "TRUE", it rolls to the first day of the month ("2026-04-01"). 'preserve_hms' lists the hours, minutes, and seconds for that date in EDT. 
+rollback(todays_timestamp, roll_to_first = TRUE, preserve_hms = TRUE)
 
 # TASK: Create a dataframe named 'flight_data_rounded' from our 'flight_data_parsed' dataframe that includes a column named 'rounded_flight_date' that rounds the flight date to the nearest month. 
-
+flight_data_rounded<-flight_data_parsed %>% mutate(rounded_flight_date=round_date(ymd(flight_date),"month" ))
 
 # ---------------------------------------------------------- #
 #### Part 1.1: Duration & Intervals                       ####
