@@ -4,36 +4,6 @@ author: "Arnav Pandey"
 date: "2026-04-07"
 output: pdf_document
 ---
----
-title: "How to format in RMarkdown"
-author: "Arnav Pandey"
-date: "2026-04-02"
-output: html_document
----
-
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
-## R Markdown
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
-```
-
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
-```
-
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
 
 --------------------------------------------------------------------------------  
 
@@ -260,15 +230,16 @@ III. Raspberry
 
 You can also nest subitems within an item. If you want a nested list as such, just indent the subitem that you want within an item with three spaces. You can use different order format for your subitems than your primary item as well. Below is an example of it.  
 
-1. Apple  
-2. Banana  
-3. Berries  
-   A. Blueberries  
-   B. Strawberries   
-   C. Raspberries   
-   D. Blackberries  
-   E. Cranberries  
-4. Papaya
+A. Apple  
+B. Banana  
+C. Berries  
+   1. Blueberries  
+   2. Strawberries   
+   3. Raspberries   
+   4. Blackberries  
+   5. Cranberries  
+D. Papaya  
+
 
 Note: If you want to use Roman Numerals, you may have to leave an empty line between items on list.
 ------------------------------------------------------------------------
