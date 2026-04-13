@@ -181,14 +181,19 @@ flight_data_rounder <-flight_data_parsed %>% mutate(rounded_flight_date = round_
 # In this section, we will practice creating durations, adding durations to times, creating intervals, and measuring how long an interval lasts.
 
 # TASK: Create a smaller dataframe called 'flight_timespans'using the first 20 rows of flights.
+flight_timespans <- head(flights, 20)
 
 # The time_hour column already contains a date-time value.
 # We will use this as a simple starting time for each flight.
 # TASK: Create a new column called departure_time from the time_hour column.
+flight_timespans <- flight_timespans %>% 
+  mutate(time_hour = force_tz(time_hour, "EST")) %>% 
+  mutate(departure_time = hms::as_hms(time_hour))
 
 # A duration is an exact amount of time.
 # Lubridate creates durations with functions like dseconds(), dminutes(), dhours(), and ddays().
 # Question: What does the "d' stand for in these functions? 
+## Duration?
 
 # TASK: Run the following examples.
 dseconds(30)
@@ -205,6 +210,7 @@ flight_timespans <- flight_timespans %>%
 # TASK: Look at only the air_time and flight_duration columns.
 
 # QUESTION: What does dminutes(air_time) do?
+## It specifies that the given duration is in minutes.
 
 # Since durations are exact spans of time, we can add them to a date-time.
 # For example, adding 2 hours to a date-time moves it forward by exactly 2 hours.
@@ -214,8 +220,10 @@ departure_time_example <- dmy_hms("01-01-2013 05:00:00")
 departure_time_example + dhours(2)
 
 # TASK: Add 1 hour to departure_time_example.
+departure_time_example + dhours(1)
 
 # TASK: Add 90 minutes to departure_time_example.
+departure_time_example + dminutes(90)
 
 # We can do the same thing with the flight data.
 # If we add flight_duration to departure_time, we get an estimated arrival time.
@@ -227,10 +235,12 @@ flight_timespans <- flight_timespans %>%
 # TASK: View just these columns (carrier, flight, departure_time, flight_duration, arrival_time_estimate).
 
 # QUESTION: What happens when we add flight_duration to departure_time?
+## It gives us the time thingy in seconds.
 
 # TASK: Which flight in this data has the longest duration?
 # Only view these columns (carrier, flight, origin, dest, air_time).
 # HINT: Arrange the table from largest to smallest air_time.
+## Flight 1124 has the longest duration.
 
 # An interval is different from a duration.
 # A duration is only a length of time.
