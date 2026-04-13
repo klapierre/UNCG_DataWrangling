@@ -125,6 +125,7 @@ minute(todays_timestamp)
 second(todays_timestamp)
 
 #QUESTION: Run the following lines of code. What do you think each function is finding?
+#Answer: I think that the week function is stating what week of the year we are on, which appears to be 15, and then wday is what number day of the week, which is 2 or monday. It appears that wday gives a number 1-7 with 1 being sunday and saturday being 7.
 
 week(todays_timestamp) 
 wday(todays_timestamp)
@@ -136,10 +137,12 @@ flight_data_parsed <- flight_data_parsed %>% mutate(flight_day = wday(flight_dat
 
 #QUESTION: What do 'label' and 'abbr' mean in the code above?
 # HINT: Try running the code without the 'label' and 'abbr' arguments.
+#Answer: It appears that label determines if you have the 1-7 number or the name of the week day, and abbr stands for abreviation, so do you want it to say monday or mon.
 
+flight_data_parsed_missing <- flight_data_parsed %>% mutate(flight_day = wday(flight_date))
 
 #TASK: Create a new column called 'flight_month' in the flight_data_parsed dataset that lists the names of the months that the flights took place. 
-
+flight_data_parsed <- flight_data_parsed %>% mutate(flight_month = month(flight_date, label = TRUE, abbr = FALSE))
 
 
 # ---------------------------------------------------------- #
