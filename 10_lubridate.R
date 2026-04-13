@@ -188,7 +188,11 @@ flight_timespans <- head(flights, 20)
 # TASK: Create a new column called departure_time from the time_hour column.
 flight_timespans <- flight_timespans %>% 
   mutate(time_hour = force_tz(time_hour, "EST")) %>% 
+<<<<<<< HEAD
   mutate(departure_time = ymd_hms(time_hour))
+=======
+  mutate(departure_time = hms::as_hms(time_hour))
+>>>>>>> brian hurts battery almost daed
 
 # A duration is an exact amount of time.
 # Lubridate creates durations with functions like dseconds(), dminutes(), dhours(), and ddays().
