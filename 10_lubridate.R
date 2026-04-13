@@ -469,15 +469,18 @@ time_utc <- ymd_hms("2026-04-14 18:00:00", tz = "UTC")
 time_utc
 
 ## QUESTION: What does the 'tz' argument produce?
+# timezone
 
 ## TASK: Determine the time zone of 
 tz(time_utc)
+# UTC
 
 ## The with_tz() function shows the exact same moment in a different timezone.
 time_ny <- with_tz(time_utc, tzone = "America/New_York")
 time_ny
 
 ## QUESTION: Has the actual moment in time changed?
+# No
 
 ##TASK: Convert time_UTC to Los Angeles time.
 time_la <- with_tz(time_utc, tzone = "America/Los_Angeles")
@@ -492,11 +495,18 @@ time_tokyo <- with_tz(time_utc, tzone = "Asia/Tokyo")
 time_tokyo
 
 ## TASK: Print all converted times.
+time_utc
+time_ny
+time_la
+time_chicago
+time_tokyo
 
 ##QUESTION: Why do the shown clock times appear different?
-
+# Because different timezones have different time based on Earth's rotation and geography
+# for the same moment of time.
 
 ##QUESTION: Are these different moments?
+# No
 
 
 ## Force_tz() is a handy function.
