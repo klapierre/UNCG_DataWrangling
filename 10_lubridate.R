@@ -75,18 +75,20 @@ dmy("14th of April '26")
 ydm("07-04-12")
 
 # QUESTION: Is the output value correct? Why not? Rewrite the code with the same input using the correct function below. 
+# It could be, if you had intended to list it as year day month, but that's a rare way of ordering dates so likely not.
 
 mdy("07-04-12") 
 
 #TASK: Use any of the parsing functions to convert your birthday into standard date format in the space below. 
 
-mdy("November 22nd, 2001") #Example
+mdy("October 2nd, 1999")
 
 # Parsing data is super convenient, but what if we want to parse an entire column at once?
 #TASK: Load the nycflights13 dataset. Run the following code to "break" the dataset (turning the timestamps into strings) so we can practice parsing date-times.
 
 install.packages("nycflights13")
 library(nycflights13)
+library(dplyr)
 
 broken_flights <- flights %>%
   mutate(
