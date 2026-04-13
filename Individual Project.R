@@ -13,6 +13,8 @@ minimum_conductance<-read.csv("Minimal Conductance (Gmin).csv")
 dataset<-read.xlsx
 this_one<-read.csv("SA02601_v6.csv")
 
+data("airquality")
+
 #Link to data: https://portal.edirepository.org/nis/mapbrowse?packageid=edi.1629.1
 # Citation: Anders, E., S. Gotsch, M. Vadeboncoeur, H. Asbjornsen, D. Metcalfe, D. Bartholomew, and A. Horwath. 2025. Leaf traits plus growth and dieback data for cloud forest epiphytes in a cloud exclusion treatment at Wayqecha Biological Station, Peru ver 1. Environmental Data Initiative. https://doi.org/10.6073/pasta/4eb85bc373653c42053b3f38f394cf4e (Accessed 2026-03-15).
 
