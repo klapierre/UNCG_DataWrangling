@@ -130,6 +130,8 @@ second(todays_timestamp)
 week(todays_timestamp) 
 wday(todays_timestamp)
 
+# What week of the year it is as of now and what day of the week it is (starting with Sunday as 1)
+
 
 #TASK: What if we wanted to create new column in our flights dataset listing the day of the week of the flight? Run the following code to create a flight_day column in our flight_data_parsed dataset.
 
@@ -137,11 +139,11 @@ flight_data_parsed <- flight_data_parsed %>% mutate(flight_day = wday(flight_dat
 
 #QUESTION: What do 'label' and 'abbr' mean in the code above?
 # HINT: Try running the code without the 'label' and 'abbr' arguments.
+# It says that flight_date is the label of the column
 
+#TASK: Label means the day of the week is displayed as the name rather than the numeric value of the day of the week.
 
-#TASK: Create a new column called 'flight_month' in the flight_data_parsed dataset that lists the names of the months that the flights took place. 
-
-
+flight_data_parsed <- flight_data_parsed %>% mutate(flight_month = month(flight_date, label = TRUE, abbr = FALSE))
 
 # ---------------------------------------------------------- #
 ### 1.3 ROUNDING DATES AND TIMES ####                                  
@@ -156,18 +158,21 @@ ceiling_date(mdy("April 15 2026"), "month")
 
 # QUESTION: The 'round_date' function is a general rounding function. Run the following line of code. Does 'round_date' round up or down?
 # HINT: April has 30 days. 
+# For April 16th it rounds up.
+
+round_date(mdy("April 15 2026"), "month")
 
 
 round_date(mdy("April 16 2026"), "month")
 
 # QUESTION: Run the following line of code. What do you think the 'rollback' function does? What do you think the 'roll_to_first' and  'preserve_hms' arguments do?
 # HINT: Try running the code with different 'roll_to_first' and  'preserve_hms' arguments.
-
+# It rolls back to the first timestamp taken.
 
 rollback(todays_timestamp, roll_to_first = FALSE, preserve_hms = TRUE)
 
 # TASK: Create a dataframe named 'flight_data_rounded' from our 'flight_data_parsed' dataframe that includes a column named 'rounded_flight_date' that rounds the flight date to the nearest month. 
-
+flight_data_rounded <- flight_data_parsed %>% mutate(rounded_flight_date = round_date(flight_date))
 
 # ---------------------------------------------------------- #
 #### Part 1.1: Duration & Intervals                       ####
