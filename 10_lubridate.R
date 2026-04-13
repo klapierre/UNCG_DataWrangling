@@ -17,6 +17,7 @@
 
 # We will also have to do some other data cleaning, to do this load tidyverse as well.
 library(tidyverse)
+library(lubridate)
 # ---------------------------------------------------------- #
 ### 1.0 CONVERTING DATES AND TIMES ####                                           
 # ---------------------------------------------------------- #
@@ -26,11 +27,11 @@ library(tidyverse)
 dt_practice <- as_datetime(946684860)
 
 # QUESTION: Run the code above to convert the Unix measurement to ymd_hms format using the ‘as_datetime’ function. What date and time does the timestamp correspond to?
-
+## It corresponds to January 1, 2000 at 1am UTC time.
 
 # Unix timestamps are also measured in days since January 1st, 1970. The ‘as_date’ function can be used to convert these measurements to ymd format.
 # QUESTION: What holiday does the 20392 Unix days timestamp correspond to? What year? HINT: Use the ‘as_date’ function to convert days to ymd format. 
-
+## It corresponds to Halloween in 2025.
 dt_holiday <- as_date(20392)
 
 
@@ -42,7 +43,7 @@ print(dt_time <- hms::as_hms(10000))
 #QUESTION: How many hours are 86,400 seconds? HINT: Use the ‘as_hms’ function to convert seconds to hms format.
 
 print(dt_time_86 <- hms::as_hms(86400))
-
+## There's 24 hours.
 
 # ----------------------------------- #
 ### 1.1 PARSING DATES AND TIMES ####                                           
@@ -70,12 +71,12 @@ dmy("14th of April '26")
 ydm("07-04-12")
 
 # QUESTION: Is the output value correct? Why not? Rewrite the code with the same input using the correct function below. 
-
+## The above output gave me December 4, 2007 because the numbers were in the wrong order.
 mdy("07-04-12") 
 
 #TASK: Use any of the parsing functions to convert your birthday into standard date format in the space below. 
 
-mdy("November 22nd, 2001") #Example
+mdy("October 4, 2003") #Example
 
 # Parsing data is super convenient, but what if we want to parse an entire column at once?
 #TASK: Load the nycflights13 dataset. Run the following code to "break" the dataset (turning the timestamps into strings) so we can practice parsing date-times.
