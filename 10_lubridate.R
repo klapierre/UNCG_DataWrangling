@@ -141,6 +141,9 @@ second(todays_timestamp)
 week(todays_timestamp) 
 wday(todays_timestamp)
 
+## week() is looking at the week number for the entire year. For instance, we are in the 15th week of the year. wday() is looking at the specific day within the seven days of the week. For instance, we are in the 2nd day of the week.
+
+
 
 #TASK: What if we wanted to create new column in our flights dataset listing the day of the week of the flight? Run the following code to create a flight_day column in our flight_data_parsed dataset.
 
@@ -149,8 +152,14 @@ flight_data_parsed <- flight_data_parsed %>% mutate(flight_day = wday(flight_dat
 #QUESTION: What do 'label' and 'abbr' mean in the code above?
 # HINT: Try running the code without the 'label' and 'abbr' arguments.
 
+## "label" and "abbr" refer to "flight_day" in this case. With "label" set to true we get the name of the day in the week, instead of the number of the day in the week. With "abbr" set to false, we get the full name, instead of an abbreviation of the name.
+
+
 
 #TASK: Create a new column called 'flight_month' in the flight_data_parsed dataset that lists the names of the months that the flights took place. 
+
+flight_data_parsed <- flight_data_parsed %>% 
+  mutate(flight_month = month(flight_date, label = TRUE, abbr = FALSE))
 
 
 
