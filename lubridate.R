@@ -124,7 +124,7 @@ flight_data_parsed <- flight_data_parsed %>% mutate(flight_date = mdy(flight_dat
 #TASK: Run the following code to create the 'todays_timestamp' object with the 'now()' function.
 
 todays_timestamp <- now()
-
+todays_timestamp <- now()
 # Lubridate helpful for finding specific components of date-time data.
 # TASK: Run the following lines of code to isolate specific components of the date-time value. 
 
@@ -136,22 +136,31 @@ hour(todays_timestamp)
 minute(todays_timestamp)
 second(todays_timestamp)
 
+date(todays_timestamp)
+year(todays_timestamp)
+month(todays_timestamp)
+day(todays_timestamp)
+hour(todays_timestamp)
+minute(todays_timestamp)
+second(todays_timestamp)
 #QUESTION: Run the following lines of code. What do you think each function is finding?
-
+week(todays_timestamp)
 week(todays_timestamp) 
+#This function finds the number of week of today's date (week of the year), since the start of the year.
 wday(todays_timestamp)
-
+wday(todays_timestamp)
+#This function find what day of the week are we in (1=Sunday, 2=Monday, 3=Tuesday, etc.)
 
 #TASK: What if we wanted to create new column in our flights dataset listing the day of the week of the flight? Run the following code to create a flight_day column in our flight_data_parsed dataset.
 
 flight_data_parsed <- flight_data_parsed %>% mutate(flight_day = wday(flight_date, label = TRUE, abbr = FALSE))
-
+flight_data_parsed <- flight_data_parsed %>% mutate(flight_day = wday(flight_date, label = TRUE, abbr = FALSE))
 #QUESTION: What do 'label' and 'abbr' mean in the code above?
 # HINT: Try running the code without the 'label' and 'abbr' arguments.
-
-
+flight_data_parsed <- flight_data_parsed %>% mutate(flight_day = wday(flight_date))
+#'label' will provide the full name for the day of the week (example "Tuesday"). When 'abbr' is set to "TRUE", it provides the shorten version (abbreviated name) for the day of the week (such as "Tue"). 
 #TASK: Create a new column called 'flight_month' in the flight_data_parsed dataset that lists the names of the months that the flights took place. 
-
+flight_data_parsed<-flight_data_parsed %>% mutate(flight_month=month(flight_date, label=TRUE, abbr=FALSE))
 
 
 # ---------------------------------------------------------- #
