@@ -435,7 +435,7 @@ today_date <- today ()
 ## hint ymd 
 my_birthday <- ymd("2002-09-05")
 # now we will create data set called my birthday this year 
-my_birthday_this_year <- ymd(paste0(year(today_date), "-07-20"))
+my_birthday_this_year <- ymd(paste0(year(today_date), "-09-05"))
 ## create a dataset called birthday_time and subtract my_birthday_this_year and 
 ## today_data
 birthday_time <- my_birthday_this_year - today_date
