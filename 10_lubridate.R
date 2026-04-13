@@ -15,6 +15,9 @@
 # Install the "lubridate" package and load it in your library. 
 # HINT: look at past assignments to compete these steps.
 
+install.packages("lubridate")
+library(lubridate)
+
 # We will also have to do some other data cleaning, to do this load tidyverse as well.
 library(tidyverse)
 # ---------------------------------------------------------- #
@@ -26,13 +29,13 @@ library(tidyverse)
 dt_practice <- as_datetime(946684860)
 
 # QUESTION: Run the code above to convert the Unix measurement to ymd_hms format using the ‘as_datetime’ function. What date and time does the timestamp correspond to?
-
+# 2000-01-01 00:01:00 UTC
 
 # Unix timestamps are also measured in days since January 1st, 1970. The ‘as_date’ function can be used to convert these measurements to ymd format.
 # QUESTION: What holiday does the 20392 Unix days timestamp correspond to? What year? HINT: Use the ‘as_date’ function to convert days to ymd format. 
 
 dt_holiday <- as_date(20392)
-
+# 2025-10-31 Halloween
 
 # Unix timestamps can also measure seconds passed since 00:00:00 (with no corresponding date or time zone). The ‘as_hms' function can be used to convert these measurements to hms format. 
 # TASK: Run the following code to convert 10,000 seconds to hours. 
@@ -42,7 +45,7 @@ print(dt_time <- hms::as_hms(10000))
 #QUESTION: How many hours are 86,400 seconds? HINT: Use the ‘as_hms’ function to convert seconds to hms format.
 
 print(dt_time_86 <- hms::as_hms(86400))
-
+#24
 
 # ----------------------------------- #
 ### 1.1 PARSING DATES AND TIMES ####                                           
@@ -70,12 +73,13 @@ dmy("14th of April '26")
 ydm("07-04-12")
 
 # QUESTION: Is the output value correct? Why not? Rewrite the code with the same input using the correct function below. 
-
+#No, because the year, day, and month in the input were 2007, 04, and 12, respectively.
 mdy("07-04-12") 
 
 #TASK: Use any of the parsing functions to convert your birthday into standard date format in the space below. 
 
 mdy("November 22nd, 2001") #Example
+dmy("29th of June 2001")
 
 # Parsing data is super convenient, but what if we want to parse an entire column at once?
 #TASK: Load the nycflights13 dataset. Run the following code to "break" the dataset (turning the timestamps into strings) so we can practice parsing date-times.
@@ -96,7 +100,7 @@ flight_data_parsed <- broken_flights %>% mutate(flight_time = hms::as_hms(flight
 #TASK: In the same flight_data_parsed dataframe, parse the flight_date column. 
 #HINT: Use the mutate function with the appropriate parsing function form the previous section.
 
-flight_data_parsed <- flight_data_parsed %>% mutate(flight_date = mdy(flight_date)) #Example
+flight_data_parsed <- flight_data_parsed %>% mutate(flight_date = mdy(flight_date))
 
 # ---------------------------------------------------------- #
 ### 1.2 GETTING AND SETTING DATES AND TIMES ####                        
@@ -120,20 +124,23 @@ second(todays_timestamp)
 
 #QUESTION: Run the following lines of code. What do you think each function is finding?
 
-week(todays_timestamp) 
-wday(todays_timestamp)
+week(todays_timestamp) # It tells me which week of the year it is.
+wday(todays_timestamp) # It tells me which day of the week it is.
 
 
-#TASK: What if we wanted to create new column in our flights dataset listing the day of the week of the flight? Run the following code to create a flight_day column in our flight_data_parsed dataset.
+#TASK: What if we wanted to create new column in our flights dataset listing the day of the week of the flight? 
+# Run the following code to create a flight_day column in our flight_data_parsed dataset.
 
 flight_data_parsed <- flight_data_parsed %>% mutate(flight_day = wday(flight_date, label = TRUE, abbr = FALSE))
 
 #QUESTION: What do 'label' and 'abbr' mean in the code above?
 # HINT: Try running the code without the 'label' and 'abbr' arguments.
-
+flight_data_parsed <- flight_data_parsed %>% mutate(flight_day = wday(flight_date))
+# "label = FALSE" means it returns numbers corresponding to the days of the week. Otherwise it would give us names of the days. 
+# "abbr" abbreviates the name of the day.
 
 #TASK: Create a new column called 'flight_month' in the flight_data_parsed dataset that lists the names of the months that the flights took place. 
-
+flight_data_parsed <- flight_data_parsed %>% mutate(flight_month = month(flight_date, label = TRUE, abbr = FALSE))
 
 
 # ---------------------------------------------------------- #
