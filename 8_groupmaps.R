@@ -365,7 +365,7 @@ unique(clean_data$order)
 library(sf)
 
 # TASK: Convert clean_data into an sf (simple features) object using longitude and latitude
-clean_sf <- st_as_sf(clean_data, coords = c("lon", "lat"), crs = 4326)
+clean_sf <- st_as_sf(clean_data, coords = c("long", "lat"), crs = 4326)
 
 # TASK: Convert nc_map dataframe into an sf object
 nc_map_sf <- st_as_sf(nc_map, coords = c("long", "lat"), crs = 4326)
@@ -455,14 +455,15 @@ ggplot() +
        y = "Latitude")
 
 # QUESTION: Why might changing the legend position be useful?
-
+It's'position have a natural reading postion, allowing us to observe the map and then be able to understand what the gradient colors are referring to in the map. If we put it to the left, that would begin the sentence or under would allow us to associate the understanding as we scan the map.
 # ---------------------------------------------------------------------------- #
 # INTERPRETING THE MAP --------------------------------------------------------
 
 # QUESTION: What does a lighter color indicate on this map?
+The light color signifys a higher richness in mamals in north carolina. 
 
 # QUESTION: Why might some counties have lower richness values? 
-
+The lower richness value may be due to the urbanization in those areas. 
 
 # TASK: Save your most recent plot as an image file to your folder. 
 ggsave("nc_species_richness_map.png",width = 8, height = 6, dpi = 300)
