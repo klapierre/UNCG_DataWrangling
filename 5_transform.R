@@ -297,7 +297,9 @@ July at JFK with a mean delay of 20.4094828.
 # ---------------------------------------------------------- #
 
 # QUESTION: What are three characteristics of tidy data?
-
+1) each variable forms a column
+2) each observation froms a row
+3) each cell is a single measurement
 
 # There are five common problems associated with messy data:
 # 1. Column headers are values, not variable names
@@ -315,7 +317,7 @@ willow <- read_csv("Niwot_Salix_2014_WillowSeedlingSurvey.csv", skip = 10)
 # QUESTION: What do you think the statement 'skip = 10' means in the code above?
 # HINT: Compare the csv file on your computer and the dataframe that you loaded 
 # into R.
-
+When comparing the csv file to the dataframe in R, it looks like it dropped the first page with the description and general data. 
 
 # ---------------------------------------------------------- #
 ### PART 2.1: FILL MISSING DATA                           ####
