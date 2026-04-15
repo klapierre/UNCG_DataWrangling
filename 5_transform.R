@@ -38,12 +38,15 @@
 
 # Let's go back to our dataset of water temperature in Calispell Creek and its 
 # tributaries from eastern Washington State.
+library(dplyr)
+library(tidyr)
+
 
 # TASK: Read in the CalispellCreekandTributaryTemperatures.csv file and assign 
 # it to a dataframe named streamTemp. Clean up the column names to the following:
 # data, time, calispell, smalle, winchester
 # HINT: Check last week's assignment if you forget how to read data into R.
-
+streamTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv")
 
 # ---------------------------------------------------------- #
 ### PART 1.1: SUMMARIZING DATA                            ####
@@ -52,32 +55,39 @@
 # We can use the summarize() function to get a lot of quick stats on our data!
 # Let's try out the length function by running the following code:
 streamTempLength <- streamTemp %>% 
-  summarize(calispell_length = length(calispell),
-            smalle_length = length(smalle),
-            winchester_length = length(winchester))
+  summarize(calispell_length = length(Calispell.Cr.Temp.C.),
+            smalle_length = length(Smalle.Cr.Temp.C.),
+            winchester_length = length(Winchester.Cr.Temp..C.))
+
+names(streamTemp)
 
 # QUESTION: When you open the streamTempLength dataframe, what value is in each 
 # column?
-
+view(streamtemp)
+61100 observations per variable.
 
 # QUESTION: How does this number compare to the number of observations listed by
 # the dataframe in the R environment tab?
-
+  It appears to be 61100 obersavations despite have 3 columns restating this value.
 
 # QUESTION: Based on your previous answers, what do you think the length 
 # function does?
-
+length would provide the number of observations in the following dataframe.
 
 # It can be a bit tedious to type out all the column names and the length 
 # function multiple times. The across() function within the summarize() step can
 # help us to identify multiple columns to summarize the data for. Try running 
 # the following code:
 streamTempLength <- streamTemp %>% 
-  summarize(across(.cols=c('calispell', 'smalle', 'winchester'), 
+  summarize(across(.cols=c('Calispell.Cr.Temp.C.', 'Smalle.Cr.Temp.C.', 'Winchester.Cr.Temp..C.'), 
                    .fns=length))
 
+names(streamTemp)
 # TASK: Using comments in the code above, describe what each line is doing.
-
+# summarize = a signle-row summary table
+# across = Apply a function to multiple columns
+# .cols = the following columns
+# .fns = length(), applies the length function to all three columns.
 
 # We might also want to know some other statistics about our data, such as the 
 # max, min, and mean values. The across() function is useful for this too, by 
@@ -86,6 +96,10 @@ streamTempLength <- streamTemp %>%
 streamTempSummary <- streamTemp %>% 
   summarize(across(.cols=c('calispell', 'smalle', 'winchester'), 
                    .fns=list(maximum=max, mean=mean, minimim=min)))
+
+StreamTemp <- streamTemp %>% 
+  rename( calispell = Calispell.Cr.Temp.C.,
+          smalle = )
 
 # TASK: Write code to view the column names of the streamTempSummary dataframe.
 
