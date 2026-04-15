@@ -93,24 +93,26 @@ names(streamTemp)
 # max, min, and mean values. The across() function is useful for this too, by 
 # letting you set multiple functions to summarize each column by. Try running 
 # the following code:
-streamTempSummary <- streamTemp %>% 
+stream_Temp <- streamTemp %>% 
+  rename(calispell = Calispell.Cr.Temp.C.,
+         smalle = Smalle.Cr.Temp.C.,
+         winchester = Winchester.Cr.Temp..C.)
+
+streamTempSummary <- stream_Temp %>% 
   summarize(across(.cols=c('calispell', 'smalle', 'winchester'), 
                    .fns=list(maximum=max, mean=mean, minimim=min)))
 
-StreamTemp <- streamTemp %>% 
-  rename( calispell = Calispell.Cr.Temp.C.,
-          smalle = )
 
 # TASK: Write code to view the column names of the streamTempSummary dataframe.
-
+View(StreamTemp)
 
 # QUESTION: How does R know what to name each column when we use the summarize 
 # function above?
-
+The function part of the code had names given to them which allowed the dataframe create columns ultizing the max, mean, and, min. 
 
 # QUESTION: What values do you see for the columns when you open up the 
 # dataframe streamTempSummary? Why do you think this is?
-
+In my streamTempSummary, It has multiple columns labled calispell_maximum, calispell_mean, calispell_minimum and so on.
 
 # Recall that our data had a lot of missing values. R doesn't know how to find 
 # the mean, max, or min of a group of observations that include NAs.
@@ -124,11 +126,12 @@ streamTempSummary <- streamTemp %>%
 # QUESTION: Now what values do you see for the columns when you open up the 
 # dataframe streamTempSummary? What line of the above code removed the NAs from 
 # our data?
-
+N/A but I have no idea if that's'the expected value out of this dataframe.
+drop_na() can remove the NAs from the streamTemp summary.
 
 # QUESTION: What happened to the column we created in the beginning called 
 # data_type? Where did the date and time columns go?
-
+I believe they disappeared due to a summary row being created. That merged the data meaning that time or date may not be primary target for the data. 
 
 # RECOMMENDED: Take a look at the summarize help file, particularly the "Useful 
 # functions" section to see all of the different ways you can summarize your 
