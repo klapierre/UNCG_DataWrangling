@@ -229,9 +229,19 @@ flightData <- nycflights13::flights
 # (4) ungroup the dataframe;
 # (5) assign the output to a dataframe named airportDelaySummary.
 
+airportDelaySummary <- flightData %>%
+  filter(dest == "RDU") %>% 
+  group_by(origin) %>% 
+  summarize(mean_arr_delay = mean(arr_delay, na.rm = TRUE)) %>% 
+  ungroup()
 
 # QUESTION: Which airport should you avoid if you want the shortest delays?
-
+EWR
+12.661256
+JFK
+10.661079
+LGA
+8.416617
 
 # TASK: Write a pipeline to figure out which month of the year to avoid when 
 # flying to Raleigh  by taking the original flight dataframe (flightData) and 
@@ -243,14 +253,22 @@ flightData <- nycflights13::flights
 # (4) ungroup the dataframe;
 # (5) assign the output to a dataframe named timeDelaySummary
 
+timeDelaySummary <- flightData %>%
+  filter(dest == "RDU") %>% 
+  group_by(hour) %>% 
+  summarize(
+    mean_arr_delay = mean(arr_delay, na.rm = TRUE),
+    max_arr_delay  = max(arr_delay, na.rm = TRUE)
+  ) %>% 
+  ungroup()
 
 # QUESTION: What is the earliest hour of the day that flights leave New York for 
 # Raleigh?
-
+6am
 
 # QUESTION: Which hour of the day has the longest mean delay? What about the 
 # longest maximum delay?
-
+Hour 22 has the longest mean delay, while the longest maximum delay hour would be hour 7.
 
 # TASK: Write a pipeline to figure out which month of the year and airport to 
 # avoid when flying to Raleigh by taking the original flight dataframe 
@@ -262,9 +280,17 @@ flightData <- nycflights13::flights
 # (4) ungroup the dataframe;
 # (5) assign the output to a dataframe named monthlyDelaySummary
 
+monthlyDelaySummary <- flightData %>%
+  filter(dest == "RDU") %>% 
+  group_by(month, origin) %>% 
+  summarize(
+    mean_arr_delay = mean(arr_delay, na.rm = TRUE)
+  ) %>% 
+  ungroup()
+
 
 # QUESTION: Which month and airport has the longest mean delay?
-
+July at JFK with a mean delay of 20.4094828.
 
 # ---------------------------------------------------------- #
 ### PART 2.0: INTRO TO TIDY DATA                          ####
