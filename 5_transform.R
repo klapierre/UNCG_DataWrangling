@@ -328,7 +328,7 @@ When comparing the csv file to the dataframe in R, it looks like it dropped the 
 
 # QUESTION: To clean up the willow dataframe, where do we want to fill in values? 
 # That is, which columns have lots of NAs.
-
+All the columns have a significant amount of NAs.
 
 # We can fix our missing value problem using the fill() function (try it by 
 # running the following code):
@@ -337,11 +337,11 @@ willowFill <- willow %>%
 
 # QUESTION: What does the code 'block:temp' mean when passed to the fill() 
 # function above?
-
+These two values appear to be column headers, so I imagine fill() goes throughout the range of block -> temp and fills with what appears to be the previous data point. 
 
 # QUESTION: Looking at the dataframe willowFill, describe what happened compared 
 # to our initial dataframe.
-
+All columns between block and temp are now filled without NAs. This would appear to have multiple values replicated from previous data points down the line. 
 
 # ---------------------------------------------------------- #
 ### PART 2.2: PIVOT LONGER                                ####
