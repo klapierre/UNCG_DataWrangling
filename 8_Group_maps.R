@@ -176,18 +176,29 @@ ggplot(us_states_frost_2) +
 
 #Question: Does there appear to be a relationship between latitude and 
 #number of frost days? Why or why not?
+## For the most part, the further north the state, the more frost days.
 
 #Task: Write code to create a map of the Population data from the state.x77 dataset.
 #You can reference the pevious steps of this assignment
 #while you work through this task. make the color of the map any color that is
 #not blue (as we have already used this color) **Make sure to write the code
 #because your code will be viewed for grading, not the map itself!
-
+state_population_data <- select(state_data, "State", "Population")
+states_population <- left_join(states, state_population_data, by = c("State"))
+us_states_population <- states_population %>%
+  dplyr::filter(State != "Alaska" & State != "Hawaii" & State != "Guam" & State != 
+                  "American Samoa" & State != "United States Virgin Islands" & 
+                  State != "Puerto Rico" 
+                & State != "Commonwealth of the Northern Mariana Islands")
+ggplot(us_states_population) +
+  geom_sf(aes(fill = Population), color = "pink") +
+  theme_minimal() +
+  labs(fill = "Population", title = "Mainland United States Population Data")
 
 #Task: write three things you can infer from the map that you created:
-#1
-#2
-#3
+## There's a lot of people concentrated in a few states rather than being spread out.
+## The north kind of has more states with higher population.
+## California has lots of people.
 
 # Part 3: MAPPING SPECIMEN OCCURRENCE DATA -----------------------------------
 
