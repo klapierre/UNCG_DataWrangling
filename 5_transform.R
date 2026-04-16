@@ -352,7 +352,8 @@ All columns between block and temp are now filled without NAs. This would appear
 # that were sampled repeatedly.
 
 # TASK: Write code to indicate the sequence of columns from w1 through wC. 
-
+willow_seedling <- willowFill %>% 
+  pivot_longer(cols = w_1:w_C)
 
 # We can fix this problem using the pivot_longer() function. pivot_longer() takes 
 # multiple columns and condenses them into just two columns, one that indicates 
@@ -369,6 +370,13 @@ willowClean <- willowFill %>%
            sep = "_") %>%
   select(-remove)
 
+# Create a new dataset called willowClean with the dataset called willowFill.
+# select all columns from w_1 to w_C
+# Combine the w_1 to w_C under a new column name called "willow_id"
+# take the measurement values and put them in a new column called "value"
+# Then using the new dataframe, seperate the two new columns and pick one to drop from the dataset and keep the other for the dataframe.
+# Seperate the willow_id by looking for a "_"
+# drop the "remove" column from the dataframe.
 
 # TASK: Annotate (add comments) the code above to indicate what each line does.
 
