@@ -447,6 +447,10 @@ clean_time_data2 <- clean_time_data %>%
   )
 ## Question: why did we do this step? 
 
+## To specify dates in each individual column, I suppose. Although it seems redundant, as the only difference between the previous data set and the new data set is the weekday portion.
+
+
+
 # Okay, now that we have cleaned up our data we are ready for the math!
 ## lubridate can help you calculate time in the past and present--
 
@@ -463,7 +467,6 @@ clean_time_data2 <- clean_time_data2 %>%
 ## TASK: View the dataset clean_time_data2- what do you see?
 # 2 new columns with information
 ## why is this useful ?
-
 ## lets us check the difference between the end and start 
 clean_time_data2 <- clean_time_data %>%
   mutate(
@@ -472,12 +475,16 @@ clean_time_data2 <- clean_time_data %>%
 ## what is the difference in column one #hint look at the end last column in the
 # dataset 
 
+## I'm not sure I understand the question, but I suppose the years are not in order, as it goes from 2016 to 2017 then to 2015.
+
+
+
 ## okay lets work with real time, first we are gonna look at the today's date
 today_date <- today ()
 ## now create a new dataset called my_birthday and include your own birthday. 
 ## if your birthday as already passed use another date- 
 ## hint ymd 
-my_birthday <- ymd("2002-09-05")
+my_birthday <- ymd("2003-08-03")
 # now we will create data set called my birthday this year 
 my_birthday_this_year <- ymd(paste0(year(today_date), "-07-20"))
 ## create a dataset called birthday_time and subtract my_birthday_this_year and 
@@ -490,12 +497,24 @@ birthday_time <- my_birthday_this_year - today_date
 days_30 <- today_date + days(30)
 # question: what is the day 30 days from now? 
 
+## May 17
+
+
+
 ## Task: create another data set with today_date but subtract 30 days and rename
 # to days_minus_30
 days_minus_30 <- today_date - days(30)
 ## what is the date ?
 
+## March 18
+
+
+
 ## question: How is lubridate and arithmetic useful? 
+
+## We are able to calculate times and dates easily. I imagine this probably works well with leap year and daylight savings stuff too.
+
+
 
 # ---------------------------------------------------------- #
 #### Part 1.3: Time Zones                                 ####
