@@ -251,15 +251,14 @@ In this section, you will create graphs and a summary table using the
 mtcars data set. You will also practice describing patterns that you
 observe in the output.
 
-### Instructions
-
-Complete each task below. For each graph or table: write the code, run
-the code, answer the questions in complete sentences.
-
 Before beginning, make sure you can access the mtcars dataset. Run the
 line below to preview the first few rows.
 
 head(mtcars)
+
+Also make sure you have Tidyverse installed! Run the line of code below.
+
+library(tidyverse)
 
 ------------------------------------------------------------------------
 
