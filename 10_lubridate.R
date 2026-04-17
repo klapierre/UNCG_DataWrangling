@@ -719,6 +719,10 @@ flight_timezones %>%
 
 #TASK: You will notice that this data has a lot of redundant observations. Load the "beneficials_unified.csv" into R using the read.csv function and name the dataframe "beneficials".
 
+beneficials <-read_excel("beneficials_unified.xlsx")
+
+
+
 # TASK: Using the same workflow, lets make a dataframe of only the data that we will be using for lubridate. 
 # (1) name the new dataframe "arthropods" and use the beneficials data
 # (2) there is a lot of redundant data and again, we want to make a dataframe that only has the data we will need. For this dataframe, we will only be using the columns "arthOrder" through "deployedhours". Use the select function to select all columns between (and including) "arthOrder" and "deployedhours". Hint: you should have a total of 27 columns after this is done. Revisit previous assignments to select for large chunks without having to type all the column names you wish to include. 
@@ -726,8 +730,18 @@ flight_timezones %>%
 # (4) using the select function, remove "family", "genus", "subgenus", "longTrap", "latTrap", and "elevTrap"
 # (5) rename "arthOrder" to "order"
 
+arthropods <- beneficials %>%
+  select(arthOrder:deployedhours) %>%
+  unite(col = "species", genus, species, sep = " ", remove = TRUE) %>%
+  select(-c(family, subgenus, lonTrap, latTrap, elevTrap)) %>%
+  rename(order = arthOrder)
+
+
 
 #QUESTION: How many variables does the "arthropods" dataset have? Why does this number differ from the "beneficials" dataset? 
+
+## The arthropods data set has 21 variables, while the beneficials data set has 46 variables. This number differs because we selected for specific columns and removed other ones as well.
+
 
 
 #Great! Now we can start using the lubridate package!
@@ -735,6 +749,18 @@ flight_timezones %>%
 #TASK: Parse out the data 
 # (1) make a new dataframe and label it "arthropods_clean" from the arthropods data. 
 # (2) using the mutate function make a two new columns called "start_datetime" and "end_datetime". Use the "make_datetime()" function to do this. Add the startYear, startMonth, startDay, startHour, startMinute to make the "start_datetime". Add the endYear, endMonth, endDay, endHour, endMinute to make the "end_datetime".
+
+arthropods_clean <- arthropods %>%
+  mutate(start_datetime = make_datetime(year = startYear,
+                                        month = startMonth,
+                                        day = startDay,
+                                        hour = startHour,
+                                        min = startMinute),
+         end_datetime = make_datetime(year = endYear,
+                                      month = endMonth,
+                                      day = endDay,
+                                      hour = endHour,
+                                      min = endMinute))
 
 
 
@@ -745,13 +771,24 @@ flight_timezones %>%
 # (2) use the format function on the "start_datetime" and make new columns for "start_date". "start_time", "end_date" and "end_time" and format the dates using " = format(x, "%B %d, %Y")" and for the times use " = format(x, "%I:%M:%S %p")"
 #HINT: Example of part of the code: new data name <- arthropod_clean %>% mutate(start_date = format(start_datetime, "%B %d, %Y"))...
 
+arthropods_broken <- arthropods_clean %>%
+  mutate(start_date = format(start_datetime, "%B %d, %Y"),
+         start_time = format(start_datetime, "%I:%M:%S %p"),
+         end_date = format(end_datetime, "%B %d, %Y"),
+         end_time = format(end_datetime, "%I:%M:%S %p"))
 
+  
 
 # TASK: Now we want to parse them back together.
 # (1) call this new dataframe "arthropods_parsed" but pull data from the arthropods_broken dataframe. 
 # (2) make two new columns using the mutate function. Name these new columns "start_datetime_parsed" and "end_datetime_parsed"
 # (3) mutate the columns to parse out the data in the mdy_hms format using "mdy_hms()" 
 # HINT: you will need yo use "paste()" within the mdy_hms() function. 
+
+arthropods_parsed <- arthropods_broken %>%
+  mutate(start_datetime_parsed = mdy_hms(paste(start_date, start_time)),
+         end_datetime_parsed = mdy_hms(paste(end_date, end_time)))
+
 
 
 #TASK: Let's determine how my months each Order of insect was trapped for. Annotate each line of the code below to describe what we are telling R to do. 
@@ -768,6 +805,17 @@ total_trap_time <- arthropods %>%
 
 #QUESTION: How many months were the traps set for each order?
 
+## 14, 15, 1, 49, 14
+
+
 
 #TASK: Plot the total_trap time for each order using geom_col. Color fill the bars by order. Label each axis, use theme_bw(), and position the legend on the bottom right of the graph. 
 
+ggplot(total_trap_time, aes(x = order, y = time_trapped, fill = order)) +
+  geom_col() +
+  labs(x = "Anthropod Order",
+       y = "Total Trap Time (Months)",
+       title = "Total Trap Time by Anthropod Order") +
+  theme_bw() +
+  theme(legend.position = c(1,0),
+        legend.justification = c(1,0))
