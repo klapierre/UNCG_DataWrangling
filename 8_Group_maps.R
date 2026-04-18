@@ -301,15 +301,16 @@ unique(clean_data$order)
 # Instead of plotting individual points, we will summarize how many different
 # genera occur within each county and display this as a gradient map.
 
-# ---------------------------------------------------------------------------- #
-# PREPARING DATA FOR SPECIES RICHNESS -----------------------------------------
+# -----------------------------------------#
+# PREPARING DATA FOR SPECIES RICHNESS 
+# -----------------------------------------#
 
 # TASK: Install and load the sf package if not already installed
 # install.packages("sf")
 library(sf)
 
 # TASK: Convert clean_data into an sf (simple features) object using longitude and latitude
-clean_sf <- st_as_sf(clean_data, coords = c("lon", "lat"), crs = 4326)
+clean_sf <- st_as_sf(clean_data, coords = c("long", "lat"), crs = 4326)
 
 # TASK: Convert nc_map dataframe into an sf object
 nc_map_sf <- st_as_sf(nc_map, coords = c("long", "lat"), crs = 4326)
@@ -325,8 +326,9 @@ counties_sf <- st_as_sf(map("county", plot = FALSE, fill = TRUE))
 nc_counties_sf <- counties_sf %>%
   filter(grepl("north carolina", ID))
 
-# ---------------------------------------------------------------------------- #
-# CALCULATING SPECIES RICHNESS ------------------------------------------------
+# ------------------------------------------------#
+# CALCULATING SPECIES RICHNESS 
+# ------------------------------------------------#
 
 # Make sure both spatial objects use the same CRS
 nc_counties_sf <- st_transform(nc_counties_sf, st_crs(clean_sf))
@@ -350,8 +352,9 @@ nc_richness_map <- nc_counties_sf %>%
 # TASK: Replace NA values with 0
 nc_richness_map$richness[is.na(nc_richness_map$richness)] <- 0
 
-# ---------------------------------------------------------------------------- #
-# BUILDING THE RICHNESS MAP ---------------------------------------------------
+# ---------------------------------------------------#
+# BUILDING THE RICHNESS MAP 
+# ---------------------------------------------------#
 
 # TASK: Plot the North Carolina counties and fill by richness values
 library(ggplot2)
@@ -365,8 +368,9 @@ ggplot() +
        x = "Longitude",
        y = "Latitude")
 
-# ---------------------------------------------------------------------------- #
-# IMPROVING THE MAP -----------------------------------------------------------
+# -----------------------------------------------------------#
+# IMPROVING THE MAP 
+# -----------------------------------------------------------#
 
 # Now that we have added a title and labels, we can further improve the map by
 # adjusting the color scale and overall appearance to make patterns easier to see.
@@ -383,6 +387,7 @@ ggplot() +
        y = "Latitude")
 
 # QUESTION: What does changing the 'option' in scale_fill_viridis_c() do?
+## It determines the colors used.
 
 # ---------------------------------------------------------------------------- #
 
@@ -399,14 +404,17 @@ ggplot() +
        y = "Latitude")
 
 # QUESTION: Why might changing the legend position be useful?
+## Make the map easier to read/interpret.
 
-# ---------------------------------------------------------------------------- #
-# INTERPRETING THE MAP --------------------------------------------------------
+# --------------------------------------------------------#
+# INTERPRETING THE MAP 
+# --------------------------------------------------------#
 
 # QUESTION: What does a lighter color indicate on this map?
+## The lighter color means more mammal variety found.
 
 # QUESTION: Why might some counties have lower richness values? 
-
+## Less species live in that specific region.
 
 # TASK: Save your most recent plot as an image file to your folder. 
 ggsave("nc_species_richness_map.png",width = 8, height = 6, dpi = 300)
