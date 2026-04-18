@@ -181,16 +181,20 @@ ggplot(us_states_population) +
 # TASK: Download the NC_mamm_data.csv into your UNCG_DataWrangling folder on your desktop
 
 # TASK: Using read.csv(), create an object titled "mammal_data" from the NC_mamm_data csv 
+mamal_data <- read.csv("NC_mamm_data.csv")
 
 # TASK: Using the colnames() function, review what columns exist in your current dataset
+colnames(mamal_data)
 
 # TASK: Remove the 'USE_LICENSE_URL' column using a pipe and the select(- ) 
 # function because it is not needed for plotting. You do not need to create a new object for this; just reassign to the same name 'mammal_data' 
+mamal_data <- select(mamal_data, -"USE_LICENSE_URL")
 
 # Using the rename() function introduced in assignment 4, rename the remaining 11 columns in the following order: country, state, locality, date, lat, long, sex, life_stage, genus, order, family.
+mamal_data <- rename(mamal_data, "country" = "COUNTRY", "state" = "STATE_PROV", "locality" = "SPEC_LOCALITY", "date" = "VERBATIM_DATE", "lat" = "DEC_LAT", "long" = "DEC_LONG", "sex" = "SEX", "life_stage" = "LIFE_STAGE", "genus" = "GENUS", "order" = "PHYLORDER", "family" = "FAMILY")
 
 # Using the mammal_data object, clean NA values from columns 'lon', 'lat', 'locality' and 'genus'. Create new object for this cleaned data titled 'clean_data'
-
+clean_data <- drop_na(mamal_data, "long", "lat", "locality", "genus")
 # Great, now our data is clean and easier to work with! 
 
 # BUILDING THE MAP
@@ -211,6 +215,7 @@ ggplot() +
   theme_bw()
 
 # QUESTION: What do you think the geom_polygon function is doing here?
+## It's telling ggplot what to make the lines based on.
 
 # TASK: Create a new dataframe titled 'nc_map' that only has North Carolina counties by assigning 'north carolina', typed exactly as it is shown in the in the 'counties' dataframe previously built. The code should look like this, with region following county:
 nc_map <- map_data("county", region = "north carolina")
@@ -222,10 +227,16 @@ ggplot() +
                aes(x = long, y = lat, group = group),
                fill = "white",
                color = "black") +
-  theme_bw() +
-  coord_fixed(1.5) 
+  coord_fixed(1.5) +
+  geom_point(data = clean_data,
+             aes(x = long, y = lat, color = order),
+             size = 1,
+             alpha = 0.7)+
+  labs(title = "NC Mamal Captures by County", x = "Longitude", y = "Lattitude")+
+  theme_void()
   
 # QUESTION: What do you think the 'coord_fixed' function is doing here? 
+## It determines how big the map is?
 
 # ADDING THE DATA POINTS TO NC MAP---------------------------------------------
 
@@ -242,6 +253,7 @@ geom_point(data = clean_data,
 # NOTE: With a plus sign between sections, if you begin typing 'theme' on the next line, options will appear that you can browse through! 
 
 # QUESTION: Why might it be useful to have slightly transparent data points (by setting alpha to a number below 1) when mapping in a small area such as this?  
+## Possible to keep the lines visible.
 
 # TASK: after adding a theme to the plot, add and title and an x and y axis label with the labs() function. 
 
@@ -264,6 +276,8 @@ ggplot() +
        y = "Latitude")
 
 # QUESTION: Why did I decide to color the points by order? What happens if you color the points (within the geom_point section) by genus instead? 
+## Probably becausse order is much broader than genus. It would be chaotic if you
+## did color by genus.
 
 # HINT: the unique() function allows us to see how many unique values are in each of our columns 
 unique(clean_data$genus)
