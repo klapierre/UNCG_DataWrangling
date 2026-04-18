@@ -521,11 +521,12 @@ time_with_tz
 time_force_tz
 
 ## QUESTION: What's the main difference between with_tz() and force_tz()?
-
+# with_tz keeps the same moment of time while force_tz keeps the clock time same
+# but changes the timezone.
 
 ##TASK: Determine the time zone for both items.
-tz(time_with_tz)
-tz(time_force_tz)
+tz(time_with_tz) # America/New_York
+tz(time_force_tz) # America/New_York
 
 ## Time zones are helpful for meetings, flights, and scheduling.
 ## Let us create a short array of meeting times in UTC.
@@ -552,13 +553,14 @@ meeting_data <- meeting_data %>%
 
 meeting_data
 
-## QUESTION: How is this useful?
+## QUESTION: How is this useful? It helos us determine date and time so it helps!
 
 ## The nycflights13 dataset includes flight data from New York City flights.
 
 ## Lubridate can be used to create date time columns and practice time zones.
 
 ## TASK: Review the first few rows of the flights dataset.
+head(flights)
 
 ## TASK: Create a smaller practice dataframe by selecting flight columns.
 flight_timezones <- flights %>%
@@ -582,9 +584,9 @@ flight_timezones <- flight_timezones %>%
 flight_timezones
 
 
-
 ## QUESTION: Why do dep_time_ny, dep_time_utc, and dep_time_la display different hours?
-
+#Because it is displaying different clock time at different cities while it is the
+#same moment of time.
 
 ## TASK: Determine the departure hour and weekday in New York Time.
 flight_timezones <- flight_timezones %>%
@@ -598,9 +600,11 @@ flight_timezones %>%
   count(dep_hour_ny)
 
 ## QUESTION: Why is local time better than UTC for human scheduling?
-
+# It is more relatable to our bodily clock, sleep schedules, working hours, etc.
 
 ##QUESTION: In one sentence, explain time zone conversion in lubridate.
+# Helps convert actual moment of time or keep the clock time and just change
+# the time zone.
 
 # ---------------------------------------------------------- #
 #### Part 2.0: Practicing your skills                       ####
@@ -615,6 +619,8 @@ flight_timezones %>%
 # We will need to tidy this data before we can start practicing with lubridate.
 
 #TASK: You will notice that this data has a lot of redundant observations. Load the "beneficials_unified.csv" into R using the read.csv function and name the dataframe "beneficials".
+beneficials <-read_excel("beneficials_unified.xlsx")
+ncol(beneficials)
 
 # TASK: Using the same workflow, lets make a dataframe of only the data that we will be using for lubridate. 
 # (1) name the new dataframe "arthropods" and use the beneficials data
@@ -623,9 +629,15 @@ flight_timezones %>%
 # (4) using the select function, remove "family", "genus", "subgenus", "longTrap", "latTrap", and "elevTrap"
 # (5) rename "arthOrder" to "order"
 
+arthropods <- beneficials %>% 
+  select (arthOrder:deployedhours) %>% 
+  unite("species", genus, species, sep = " ", remove = FALSE) %>% 
+  select (-family, -genus, -subgenus, -lonTrap, -latTrap, -elevTrap) %>% 
+  rename (order = arthOrder)
 
 #QUESTION: How many variables does the "arthropods" dataset have? Why does this number differ from the "beneficials" dataset? 
-
+# Because we removed columns "family", "genus", "subgenus", "longTrap", "latTrap", and "elevTrap" from  beneficials 
+# to create this arthropods dataset.
 
 #Great! Now we can start using the lubridate package!
 
@@ -633,7 +645,9 @@ flight_timezones %>%
 # (1) make a new dataframe and label it "arthropods_clean" from the arthropods data. 
 # (2) using the mutate function make a two new columns called "start_datetime" and "end_datetime". Use the "make_datetime()" function to do this. Add the startYear, startMonth, startDay, startHour, startMinute to make the "start_datetime". Add the endYear, endMonth, endDay, endHour, endMinute to make the "end_datetime".
 
-
+arthropods_clean <- arthropods %>% 
+  mutate(start_datetime = make_datetime(startYear, startMonth, startDay, startHour, startMinute),
+          end_datetime = make_datetime(endYear, endMonth, endDay, endHour, endMinute))
 
 # Great! Now we want to parse out the columns that we just made. 
 
@@ -641,8 +655,11 @@ flight_timezones %>%
 # (1) using the arthropods_clean data, call this new dataframe "arthropods_broken"
 # (2) use the format function on the "start_datetime" and make new columns for "start_date". "start_time", "end_date" and "end_time" and format the dates using " = format(x, "%B %d, %Y")" and for the times use " = format(x, "%I:%M:%S %p")"
 #HINT: Example of part of the code: new data name <- arthropod_clean %>% mutate(start_date = format(start_datetime, "%B %d, %Y"))...
-
-
+arthropods_broken <- arthropods_clean %>% 
+ mutate(start_date = format(start_datetime, "%B %d, %Y"),
+        start_time = format(start_datetime, "%I, %M, %S, %p"),
+        end_date = format(end_datetime, "%B %d, %Y"),
+        end_time = format(end_datetime, "%I, %M, %S, %p"))
 
 # TASK: Now we want to parse them back together.
 # (1) call this new dataframe "arthropods_parsed" but pull data from the arthropods_broken dataframe. 
@@ -650,21 +667,40 @@ flight_timezones %>%
 # (3) mutate the columns to parse out the data in the mdy_hms format using "mdy_hms()" 
 # HINT: you will need yo use "paste()" within the mdy_hms() function. 
 
+arthropods_parsed <- arthropods_broken %>% 
+  mutate (start_datetime_parsed = mdy_hms(paste(start_date, start_time)),
+          end_datetime_parsed = mdy_hms(paste (end_date, end_time)))
 
 #TASK: Let's determine how my months each Order of insect was trapped for. Annotate each line of the code below to describe what we are telling R to do. 
 
-total_trap_time <- arthropods %>% 
-  mutate(start_datetime = make_datetime(startYear, startMonth, startDay, startHour, startMinute),
-         end_datetime   = make_datetime(endYear, endMonth, endDay, endHour, endMinute)) %>%
-  group_by(order) %>%
-  summarize(first_trap = min(start_datetime, na.rm = TRUE),
-            last_trap  = max(end_datetime, na.rm = TRUE), 
-            time_trapped = interval(first_trap, last_trap) %/% months(1)) %>% # HINT: "%/% months(1)" is counting whole months
+total_trap_time <- arthropods %>%  #creating new dataframe total_trap_time from arthropods
+  mutate(start_datetime = make_datetime(startYear, startMonth, startDay, startHour, startMinute), # creating start_datetime
+         end_datetime   = make_datetime(endYear, endMonth, endDay, endHour, endMinute)) %>% # creating end_datetime
+  group_by(order) %>% # grouping data by insect order 
+  summarize(first_trap = min(start_datetime, na.rm = TRUE), # it is finding the earliest trap date time using minimum function on start_datetime
+            last_trap  = max(end_datetime, na.rm = TRUE),  # it is finding the last trap date time using maxium function on end_datetime
+            time_trapped = interval(first_trap, last_trap) %/% months(1)) %>% # HINT: "%/% months(1)" is counting whole months # it is counting full months trapped
   ungroup()
 
 
 #QUESTION: How many months were the traps set for each order?
-
+total_trap_time 
+# Araneae = 14
+# Coleoptera = 15
+# Diptera = 1
+# Hymenoptera = 49
+# Opiliones = 14
 
 #TASK: Plot the total_trap time for each order using geom_col. Color fill the bars by order. Label each axis, use theme_bw(), and position the legend on the bottom right of the graph. 
-
+total_trap_time %>% 
+  ggplot(aes(x = order, y = time_trapped, fill = order)) +
+  geom_col() +
+  labs(
+    x = "Insect Order",
+    y = "Total Months Trapped",
+    title = "Total Trap Time by Insect Order"
+  ) +
+  theme_bw() +
+  theme(legend.position = "bottom",
+        legend.justification = "right",
+        legend.direction = "vertical")
