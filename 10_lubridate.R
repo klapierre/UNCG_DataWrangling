@@ -276,6 +276,7 @@ flight_timespans <- flight_timespans %>%
 # TASK: View only the interval-related columns (carrier, flight, departure_time, arrival_time_estimate, flight_interval).
 
 # QUESTION: What does flight_interval represent?
+## It represents the start and end time estimates for the flights.
 
 # We can measure the length of an interval by converting it to a duration.
 # Then we can use time_length() to look at that duration in hours or minutes.
@@ -299,18 +300,24 @@ flight_timespans %>%
   select(carrier, flight, origin, dest, air_time, duration_minutes, duration_hours)
 
 # QUESTION: Why are the columns air_time and duration_minutes the same?
+## It's because they both measure how long the plane is in the air in minutes.
 
 # TASK: Find the longest flight interval in this dataframe.
+## It's flight 1124.
 
 # TASK: Create a new column called short_or_long.
 # Label a flight as "long" if duration_minutes is 180 or more. Otherwise label it "short".
 # Hint: Use the if_else() function to create values based on a condition. 
+flight_timespans <- mutate("short_or_long" = if_else("duration_minutes" >= 180, "long", "short"))
 
 # TASK: Count how many flights are short and how many are long.
+## 7 long, 13 short
 
 # QUESTION: What is the difference between a duration and an interval?
+## Duration is an amount of time elapsed and interval is two timestamps.
 
 # QUESTION: Explain why intervals are useful.
+## Intervals can be useful for things like scheduling.
 
 # ---------------------------------------------------------- #
 #### Part 1.2: Date Arithmetic                            ####
