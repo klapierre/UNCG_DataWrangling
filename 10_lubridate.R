@@ -166,7 +166,7 @@ rollback(todays_timestamp, roll_to_first = FALSE, preserve_hms = TRUE)
 rollback(todays_timestamp, roll_to_first = TRUE, preserve_hms = TRUE)
 rollback(todays_timestamp, roll_to_first = FALSE, preserve_hms = FALSE)
 
-# roll_to_first = false, rolls back to the last day of the previous month, while roll_to_first = TRUE rolls to the first day of the current month.
+# roll_to_first = false, rolls back to the last day of the previous month, while roll_to_first = TRUE rolls to the first day of the next month after rollback.
 # preserve_hms = true does not remove the time aspect from the timestamp.
 
 # TASK: Create a dataframe named 'flight_data_rounded' from our 'flight_data_parsed' dataframe that includes a column named 'rounded_flight_date' that rounds the flight date to the nearest month. 
@@ -212,7 +212,7 @@ flight_timespans %>%
   select(air_time, flight_duration)
 
 # QUESTION: What does dminutes(air_time) do?
-# It converted the air_time in minutes to seconds.
+# It converted the air_time in minutes to duration in seconds.
 
 # Since durations are exact spans of time, we can add them to a date-time.
 # For example, adding 2 hours to a date-time moves it forward by exactly 2 hours.
@@ -636,7 +636,7 @@ arthropods <- beneficials %>%
   rename (order = arthOrder)
 
 #QUESTION: How many variables does the "arthropods" dataset have? Why does this number differ from the "beneficials" dataset? 
-# Because we removed columns "family", "genus", "subgenus", "longTrap", "latTrap", and "elevTrap" from  beneficials 
+# 21. Because we removed columns "family", "genus", "subgenus", "longTrap", "latTrap", and "elevTrap" from  beneficials 
 # to create this arthropods dataset.
 
 #Great! Now we can start using the lubridate package!
@@ -657,9 +657,9 @@ arthropods_clean <- arthropods %>%
 #HINT: Example of part of the code: new data name <- arthropod_clean %>% mutate(start_date = format(start_datetime, "%B %d, %Y"))...
 arthropods_broken <- arthropods_clean %>% 
  mutate(start_date = format(start_datetime, "%B %d, %Y"),
-        start_time = format(start_datetime, "%I, %M, %S, %p"),
+        start_time = format(start_datetime, "%I:%M:%S %p"),
         end_date = format(end_datetime, "%B %d, %Y"),
-        end_time = format(end_datetime, "%I, %M, %S, %p"))
+        end_time = format(end_datetime, "%I:%M,:%S %p"))
 
 # TASK: Now we want to parse them back together.
 # (1) call this new dataframe "arthropods_parsed" but pull data from the arthropods_broken dataframe. 
