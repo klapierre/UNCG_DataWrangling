@@ -188,7 +188,7 @@ flight_timespans <- head(flights, 20)
 # TASK: Create a new column called departure_time from the time_hour column.
 flight_timespans <- flight_timespans %>% 
   mutate(time_hour = force_tz(time_hour, "EST")) %>% 
-  mutate(departure_time = hms::as_hms(time_hour))
+  mutate(departure_time = ymd_hms(time_hour))
 
 # A duration is an exact amount of time.
 # Lubridate creates durations with functions like dseconds(), dminutes(), dhours(), and ddays().
@@ -252,6 +252,7 @@ practice_interval <- interval(dmy_hms("01-01-2013 08:00:00"),
                               dmy_hms("01-01-2013 11:30:00"))
 
 # QUESTION: What two things do you need to make an interval?
+## A start and an end time.
 
 # We can also check the start and end of an interval with int_start() and int_end().
 # EXAMPLE: Run the following lines.
@@ -259,8 +260,11 @@ int_start(practice_interval)
 int_end(practice_interval)
 
 # TASK: Create an interval from 2:00 PM to 4:50 PM on April 13th, 2026. Use 24-hour (military) time with dmy_hms(). Name the dataframe 'class_interval'.
+class_interval <- interval(dmy_hms("13-04-2026 14:00:00", tz = "America/New_York"), dmy_hms("13-04-2026 16:50:00", tz = "America/New_York"))
 
 # TASK: Check the start and end of class_interval.
+int_start(class_interval)
+int_end(class_interval)
 
 # Now let us make intervals for our flight data.
 # We already have a departure_time and an arrival_time_estimate.
