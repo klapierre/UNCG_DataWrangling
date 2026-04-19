@@ -1,10 +1,17 @@
 # Setup -------------------------------------------------------------------
 ## Load Packages, Files, Directories
 
+# Pacman is a really convenient package for installing and  loading other packages
+# install it if you haven't already
+# install.packages("pacman")
 pacman::p_load(tidyverse,
               gganimate,
               gapminder,
-              gifski)
+              gifski,
+              sf,
+              rnaturalearth,
+              rnaturalearthdata,
+              countrycode)
 
 
 # gg animate fundamentals -------------------------------------------------####
@@ -169,6 +176,162 @@ anim_save("temperature_discrete2.gif", animate(airquality_discrete, renderer = g
 
 ##Reminder to reset your working directory
 
+
+# Expanding on gganimate use cases ----------------------------------------
+
+## Task: Load datasets used in this section
+
+data("gapminder")
+data("iris")
+
+## These are the two datasets we'll be using for this section! Check them out using
+## head() or glimpse()
+## Question: Which dataset is inherently time-based and why does that matter for animation?
+
+## Task: Create a filtered gapminder dataset for North America only
+
+## Task: Build a scatterplot of GDP vs life expectancy. Set size to population and
+## group by country. Apply a log transform to the x-axis.
+## Add transparency, labels, and a theme of your choice. Save this as an object named gap_plot.
+
+## Question: Why is grouping important when animating repeated entities like countries?
+
+## Task: Animate by year using transition_time(). Save this as gap_anim.
+
+
+## We've already investigated the ease_aes() function using linear easing. This
+## changes the ways that our frames are animated together. This is called tweening.
+## Let's explore some other tweening use cases!
+## Task: Run the code below and descriptively annotate which each function does. 
+
+# -in applies the easing function without any modification
+gap_anim + ease_aes('cubic-in')
+
+gap_anim + ease_aes('elastic-in')
+
+gap_anim + ease_aes('circular-in')
+
+gap_anim + ease(aes("bounce-in")
+                
+# -out applies the easing function in reverse
+gap_anim + ease_aes('elastic-in')
+
+gap_anim + ease_aes('circular-in')
+
+gap_anim + ease(aes("bounce-in")
+                
+# we can combine them into -in-out
+gap_anim + ease_aes('circular-in-out')
+
+gap_anim + ease(aes("bounce-in-out")
+
+## QUESTION: What does the -in-out easing argument do to our animation? 
+## Hint: Check ?ease_aes().
+                
+## Question: How does easing change the perception of movement over time?
+
+## gganimate also has view functions to change the framing of our animation
+## over our data. 
+
+## Task: Add view_follow() to gap_anim to track evolving clusters
+
+## Question: What does view_follow() do? Why might this be useful?
+
+## Task: Try to apply view_step() to gap_anim.
+
+## This gives us an animation, but something is wrong.
+## Question: What is wrong with your animation? Why do you think this is happening
+## HINT: Remember that transition_time is continuous. Check out ?view_step()
+
+## Remember that iris dataset we loaded earlier? Now we're gonna switch to it!
+
+## Task: Using iris, plot Petal Length (x) vs Petal Width (y), colored by species.
+## Save this as iris_anim. Add the appropiate labels, title, and transition. 
+## Remove the legend.
+## Hint: For your title, remember that your data are discrete, not continuous.
+
+## We looked at enter_fade() and exit_shrink() previously, let's explore some more 
+## animation effects. This, like easing, falls under the umbrella of Tweening!
+
+## Task: Add enter_fade() and exit_fade() effects
+
+## Task: Run the lines of code below and descriptively annotate what each function does.
+## Hint: If you're unsure, run them piece-by-piece!
+
+iris_anim + enter_fly(x_loc = 0) + exit_fly(x_loc = 1)
+
+iris_anim + enter_drift(y_mod = 1) + exit_drift(x_mod = 1) 
+
+iris_anim + enter_recolor(color = "pink") + exit_recolor(color = "brown")
+
+iris_anim + enter_grow(size = 10) + exit_shrink(size = 0.1)
+
+iris_anim + enter_grow(size = 0.1) + exit_shrink(size = 10)
+
+iris_ease <- iris_base +
+  transition_states(Species) +
+  ease_aes("bounce-in-out")
+
+## We can actually combine several transitions together. Let's take iris_anim,
+## which has discrete transition_states and apply transition_reveal() by Petal.Length.
+## TASK: Run the code below
+
+(iris_reveal <- iris_anim + transition_reveal(Petal.Length))
+
+## Question: What does your animation look like? Why do you think this is the case?
+## Hint: Look at the usage for transition_reveal().
+
+## Task: Write 3 lines of code using different shadows to display point trajectories.
+## Do not use shadow_null()
+
+iris_reveal + shadow_trail()
+
+iris_reveal + shadow_wake()
+
+iris_reveal + shadow_mark()
+
+## gganimate can also be used to represent spatial data. We're going to bounce back
+## to gapminder now! (You could say this section has bounce-in-out easing)
+
+## Task: Run the code below to setup our spatial data.
+world_sf <- ne_countries(scale = "medium", returnclass = "sf")
+europe_sf <- filter(world_sf, continent == "Europe")
+gap_europe <- gapminder %>%
+  filter(continent == "Europe",
+         year >= 1965) %>%
+  mutate(iso_a3 = countrycode::countrycode(country,
+                                           "country.name",
+                                           "iso3c"))
+europe_life <- europe_sf %>%
+  left_join(gap_europe, by = "iso_a3")
+
+## Task: Run the code to create an animation of European life expectancy over time.
+(europe_anim <- ggplot(europe_life) +
+  
+  geom_sf(aes(fill = lifeExp),
+          color = "white",
+          linewidth = 0.2) +
+  
+  coord_sf(
+    xlim = c(-15, 35),
+    ylim = c(35, 72),
+    expand = FALSE
+  ) +
+  
+  scale_fill_viridis_c(option = "plasma",
+                       na.value = "grey90") +
+  
+  labs(title = "European Life Expectancy Over Time: {frame_time}",
+       fill = "Life Expectancy") +
+  
+  transition_time(year) +
+  ease_aes("linear"))
+
+## Question: Why might animations be useful for visualizing spatial data?
+
+## Question: What are some potential weaknesses of animating. 
+## Hint: Think about how slow your computer probably ran!
+             
 
 # other useful packages ---------------------------------------------------
 # gifski, magick, gapminder
