@@ -390,7 +390,7 @@ willowClean <- willowFill %>%
 # QUESTION: What column contains the labels that tell us there are multiple 
 # variables stored in one column? What column contains the corresponding date 
 # for these variables?
-
+Variable and values. 
 
 # Good news, we can fix this problem with the complementary function to pivot_longer().
 # This time we will use the pivot_wider() function to turn one column into multiple.
@@ -401,7 +401,7 @@ willowCleaner  <- willowClean %>%
 
 # TASK: Take a look at our new dataframe. How does it differ from the previous?
 # Annotate (add comments) the code above to indicate what each line does.
-
+Variables and value have been broken into 5 new columns.
 
 # ---------------------------------------------------------- #
 ### PART 2.4: IF ELSE                                     ####
@@ -415,7 +415,7 @@ willowCleaner  <- willowClean %>%
 
 # TASK: Verbally describe how you would want to change this problem 
 # (i.e., pseudocode).
-
+I suppose you could put all matching values into their own individual columns?
 
 # ifelse() is a very powerful function that helps us with this problem!
 
@@ -428,16 +428,17 @@ willowCleaner  <- willowClean %>%
 # another if the logical statement is FALSE. Run the following code to try it 
 # out to help fix our first problem (ht1 column has information on both plant 
 # status and actual height values).
-willowClean3 <- willowClean2 %>%
+willowClean3 <- willowCleaner %>%
   mutate(status = ifelse(ht1 == 'dead', 'dead', 'alive')) %>% 
   mutate(ht1 = ifelse(status == 'dead', NA, ht1))
 
 # TASK: Annotate the previous lines of code to indicate what each is doing.
-
+Create a new dataframe using the data called "willowCleaner". Create a column called status and if ht1 values are consider dead, label it dead. Anything else is defaulted to alive. Create a new column and locate the dead values and replace the height value to "NA". Anything else, will remain the same.
 
 # QUESTION: This is a good time to make sure the relevant columns are numeric. 
 # Run the str() function on this dataframe. What class is the ht1 column?
-
+str(willowClean3)
+$ ht1      : chr [1:637] "8.7" NA NA "13.9" ...
 
 # Let's make the ht1 column numeric. And while we're at it, the columns ht2, 
 # cnpy1, and cnpy2 should also be made numeric. We can do so by running the 
@@ -451,7 +452,8 @@ willowClean4 <- willowClean3 %>%
 # TASK: Run the str() function again to view the classes for each column in 
 # willowClean4. Did we succeed in making the columns we wanted into numeric 
 # classes?
-
+str(willowClean4)
+$ ht1      : num [1:637] 8.7 NA NA 13.9 NA NA NA NA NA NA ...
 
 # %in% is another powerful function! With %in% we can use logical statements on 
 # a whole bunch of stuff at once, instead of making a billion ifelse statements. 
@@ -464,7 +466,7 @@ willowClean5 <- willowClean4 %>%
 # seedlings with identifiers that were letters versus numbers? That is, what 
 # year were willow seedlings that were identified with letters planted? What year 
 # were willow seedlings that were identified with numbers planted?
-
+It looks like the plot number has 10 different plants. And that the LETTER corresponds with the year/plot it was in.
 
 # ---------------------------------------------------------- #
 ### PART 2.5: RELATIONAL DATA                             ####
