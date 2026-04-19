@@ -211,19 +211,19 @@ gap_anim + ease_aes('elastic-in')
 
 gap_anim + ease_aes('circular-in')
 
-gap_anim + ease(aes("bounce-in")
+gap_anim + ease_aes("bounce-in")
                 
 # -out applies the easing function in reverse
 gap_anim + ease_aes('elastic-in')
 
 gap_anim + ease_aes('circular-in')
 
-gap_anim + ease(aes("bounce-in")
+gap_anim + ease_aes("bounce-in")
                 
 # we can combine them into -in-out
 gap_anim + ease_aes('circular-in-out')
 
-gap_anim + ease(aes("bounce-in-out")
+gap_anim + ease_aes("bounce-in-out")
 
 ## QUESTION: What does the -in-out easing argument do to our animation? 
 ## Hint: Check ?ease_aes().
