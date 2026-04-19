@@ -478,6 +478,7 @@ It looks like the plot number has 10 different plants. And that the LETTER corre
 # and the other willowData.
 
 # QUESTION: What columns would go in each of our two relational databases?
+Maybe plots and the number of plants from each. I feel like this would be strong in relationship.
 
 # Let's do it! Run the following code:
 plotInfo <- willowClean5 %>%
@@ -492,7 +493,8 @@ willowData <- willowClean5 %>%
 
 # TASK: Write code to join these two dataframes back together into a new 
 # dataframe called willowDataTrt using the left_join() function.
-
+willowDataTrt <- willowData %>%
+  left_join(plotInfo, by = "plot")
 
 # ON YOUR OWN: There are so many ways to join databases! Think through when you 
 # might want to use each type. We will practice more with joining data in the 
@@ -522,6 +524,18 @@ willowData <- willowClean5 %>%
 #     Don't forget to ungroup at the end!
 # (6) pivot_wider so that the values of percentage_mean are contained in 
 #     different columns
+cdr <- read.csv("e001_Plant aboveground biomass carbon and nitrogen.csv") %>% 
+  rename(C = "% Carbon",
+         N = "% Nitrogen" ) %>% 
+  filter(Strip %in% c(1, 2)) %>% 
+  pivot_longer(cols = c(C, N),
+               names_to = "element",
+               values_to = "percentage") %>% 
+  group_by(Date, Plot, NTrt, Species, Field, Strip) %>% 
+  summarize(percentage_mean = mean(percentage, na.rm = TRUE)) %>% 
+  ungroup() %>% 
+  pivot_wider(names_from = element,
+              values_from = percentage_mean)
 
 
 # ---------------------------------------------------------- #
