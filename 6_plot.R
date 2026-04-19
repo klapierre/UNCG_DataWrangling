@@ -332,7 +332,7 @@ ggplot(redband, aes(x = as.factor(ScaleAge), y = Weight)) +
 
 # QUESTION: What is the graph output? Note the scale of the y-axis. Does this seem
 # right to you? What do you think happened to result in this graph?
-
+A bar graph. The scale of the x-axis is from 0-7 and it labeled as.factor(ScaleAge). The y-axis is scaled from 0-80,000, intervals by 20,000. 
 
 # Typically, when plotting a bar graph we want to have the output show the mean
 # and standard error for each category. But unlike when we use the geom_boxplot 
@@ -350,6 +350,15 @@ ggplot(redband, aes(x = as.factor(ScaleAge), y = Weight)) +
 #     error of weight for each group (se=1.96*sd).
 # HINT:Don't forget to remove NAs and ungroup at the appropriate place.
 
+redbandSummary <- redband %>% 
+  group_by(ScaleAge) %>% 
+  summarize(
+    Weight_mean = mean(Weight, na.rm = TRUE),
+    Weight_sd   = sd(Weight, na.rm = TRUE)) %>% 
+  ungroup() %>% 
+  mutate(Weight_se = 1.96 * Weight_sd)
+
+
 
 # Let's try again to make our bargraph by running the following code:
 ggplot(redbandSummary, aes(x = as.factor(ScaleAge), y = Weight_mean)) + 
@@ -357,7 +366,8 @@ ggplot(redbandSummary, aes(x = as.factor(ScaleAge), y = Weight_mean)) +
 
 # QUESTION: What does the stat='identity' part do in the code above? Check the 
 # geom_bar() help or google to find the answer.
-
+?stat
+It loojs like it's 'asking to use the values that have already been calculated for the graph.
 
 # The above code gave us nice bars.  Now we need to add error bars! We will do this
 # by adding in a second geometric object that specifies errorbars. Try it by
@@ -369,19 +379,31 @@ ggplot(redbandSummary, aes(x = as.factor(ScaleAge), y = Weight_mean)) +
                     width=0.2))
 
 # QUESTION: Annotate the code above with what each line does.
-
+# Create a graph with the dataframe "redbandSummary".
+# Use ScaleAge as the x-axis, Weight_mean as y-axis
+# Use weight_mean as the bar heights.
+# Use y-values
+# Add error bars
+# ymin is the minimum and ymax is maximum of the error bars.
+# Keep the error bar width at 0.2.
 
 # QUESTION: What does the statement width=0.2 do? If you're unsure, try removing
 # it and seeing what happens.
-
+It looks like it determines the width of the error bars!
 
 # TASK: Modify the code below to make the bar fill light green, the bar outline 
 # dark green, and the error bars dark orange with end caps 40% the bar width.
+
 ggplot(redbandSummary, aes(x = as.factor(ScaleAge), y = Weight_mean)) + 
-  geom_bar(stat='identity') +
-  geom_errorbar(aes(ymin=Weight_mean-Weight_se,
-                    ymax=Weight_mean+Weight_se,
-                    width=0.2))
+  geom_bar(stat = 'identity',
+           fill = "lightgreen",
+           color = "darkgreen") +
+  geom_errorbar(aes(ymin = Weight_mean - Weight_se,
+                    ymax = Weight_mean + Weight_se),
+                color = "darkorange",
+                width = 0.4)
+
+
 
 # ---------------------------------------------------------- #
 #### PART 1.7 AESTHETICS PLACEMENT MATTERS!               #### 
@@ -396,7 +418,7 @@ ggplot(redband, aes(x = Length, y = Weight, color = as.factor(ScaleAge))) +
   geom_smooth(method='lm', se=F)
 
 # QUESTION: What is different about this graph from before?
-
+The color overlaps and just becomes a bit messy.
 
 # ---------------------------------------------------------- #
 #### PART 1.8: ALTERING SCALES                            ####
@@ -434,6 +456,12 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 # scale (i.e., with scale age on a linear x axis and length on a log y axis).
 # Fill in your boxplots with your favorite color and make the outline your least
 # favorite color. Label the x-axis Scale Age (years) and the y-axis Length (mm).
+
+ggplot(redband, aes(x = as.factor(ScaleAge), y = Length)) +
+  geom_boxplot(fill = "lightblue", color = "brown") +
+  scale_y_log10() +
+  labs(x = "Scale Age (years)",
+       y = "Length (mm)")
 
 
 # ---------------------------------------------------------- #
@@ -487,6 +515,9 @@ ggplot(redband, aes(x = Length, y = Weight)) +
   geom_point() +
   theme(panel.background = element_blank())
 
+panel.grid.minor creates a panel background but it is light grey, helping to define the the edge of the graphics.(These technially the gridlines to express interval changes) While panel.background is the background of the graph.
+Element_blank leaves the background of the graph blank.
+
 
 # Try running the following code to alter text size:
 ggplot(redband, aes(x = Length, y = Weight)) + 
@@ -494,11 +525,14 @@ ggplot(redband, aes(x = Length, y = Weight)) +
   theme(axis.title.y=element_text(size=100))
 
 # QUESTION: What does element_text() refer to in the code above?
-
+It refers to the size of labels
 
 # TASK: Write your own code below to change the size of the x-axis labels
 # (i.e., the numbers along the x-axis) to 50. 
 # HINT: Check out the ggplot cookbook or ggplot2 themes websites for help.
+ggplot(redband, aes(x = Length, y = Weight)) + 
+  geom_point() +
+  theme(axis.title.x = element_text(size = 50))
 
 
 # We can set the theme to include all kinds of variations by adding them all to
@@ -569,6 +603,9 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 # specified uniquely for each subpanel.
 # HINT: Check the help file for facet_wrap if you're unsure. Look under the 
 # Arguments section for scales.
+ggplot(redband, aes(x = Length)) +
+  geom_histogram() +
+  facet_wrap(~ ScaleAge, scales = "free_y")
 
 
 # ---------------------------------------------------------- #
@@ -586,10 +623,15 @@ ggplot(redband, aes(x = Length, y = Weight)) +
 ggsave("Redband_histogram_facet.png")
 
 # QUESTION: Where did this file show up? And what was the graph?
-
+Under files in R-studio. it is a facet of scaleAge.
 
 # TASK: Investigate the ggsave() function through the help files. Then write
 # code to save the file at 600 dpi, 10 inch width and 8 inch height.
+ggsave("Redband_histogram_facet.png",
+       dpi = 600,
+       width = 10,
+       height = 8,
+       units = "in")
 
 
 # NOTE: You can also save the graphics you make by exporting them from the plots
@@ -605,7 +647,7 @@ ggsave("Redband_histogram_facet.png")
 # graph, and a dot plot with a trend line. Which of these figures was an example
 # of a correlation? Which showed deviations from a benchmark or baseline? And which
 # was an example of a distribution?
-
+The dot plot likely is for correlation since a line of best fit works well with the graph. Deviations were explored in the error bar graphs. I feel like both histograms and boxplots are distrubitions examples as they show data visualy throughout the entire set. 
 
 
 # TASK: Import the full SpokaneFish dataset, keeping all observations (i.e., 
@@ -616,8 +658,25 @@ ggsave("Redband_histogram_facet.png")
 # Then save your file as a .png with an informative figure name at a width of 9
 # inches and a height of 7 inches and 450 dpi.
 
+SpokaneFish <- read.csv("SpokaneFish.csv")
+
+p <- ggplot(SpokaneFish, aes(x = Length, y = Weight, color = Species)) +
+  geom_point(shape = 17) +
+  scale_x_log10() +
+  facet_wrap(~ Species) +
+  labs(x = "Length (mm)",
+       y = "Weight (g)",
+       color = "Species")
+
+ggsave("SpokaneFish_LengthWeight_Faceted.png",
+       plot = p,
+       dpi = 450,
+       width = 9,
+       height = 7,
+       units = "in")
+
 
 # QUESTION: Why do you think we focused on Redband Trout for most of this assignment?
-
+I think it may be because the redband trout is a fun bright species but it can also have a ecological effect within NC as well. 
 
 # REMEMBER: Save and push your script when you're done with this assignment!
