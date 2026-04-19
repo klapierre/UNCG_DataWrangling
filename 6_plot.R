@@ -23,7 +23,6 @@
 # REMINDER: Ideally, you'll commit your answers a bit at a time as you work 
 # through this assignment, rather than committing all at once at the end.
 
-
 # ---------------------------------------------------------- #
 #### UNDERSTANDING A GRAMMER OF GRAPHICS                  ####
 # ---------------------------------------------------------- #
@@ -88,6 +87,11 @@
 # (3) Further filter the dataframe to include only fish that have been aged
 #     by removing any observations where ScaleAge is NA.
 
+library(tidyverse)
+
+redband <- read_csv("LowerSpokaneFish.csv") %>%
+  filter(str_detect(Species, "RB")) %>%     
+  filter(!is.na(ScaleAge))               
 
 
 # ---------------------------------------------------------- #
