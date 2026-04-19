@@ -176,7 +176,7 @@ Pick better value `binwidth`. The binwidth is the range of data points captured 
 # QUESTION: In the code below, what is the dataframe being examined?
 # What are the aesthetics? What will the resulting graph be plotting?
 ggplot(redband, aes(x=ScaleAge, y=Length))
-
+The dataframe is looking at the scaleAge vs the length within Redband trouts. The aesthetics is describing the relawtionship to age and length. --- It ended up being empty but I think it was due to no function beyond aes.
 
 # When we start, we tell ggplot that we want certain aesthetics (x- and y-axis).
 # But without specifying a geometric object (what shape to add to the plot), we won't
@@ -187,10 +187,15 @@ ggplot(redband, aes(x=ScaleAge, y=Length)) +
 
 # QUESTION: Based on the figure that was generated from the code above, 
 # what would you conclude about the relationship between fish age and length?
-
+It would appear to be a scatterplot that generated with all values plotted on a scaleAge. The older the fishscale, the long the fish was. 
 
 # TASK: Write your own code to visualize the relationship between Redband 
 # length and weight.
+ggplot(redband, aes(x = Length, y = Weight)) +
+  geom_point() +
+  labs(x = "Length (mm)",
+       y = "Weight",
+       title = "Relationship Between Redband Length and Weight")
 
 
 # ---------------------------------------------------------- #
