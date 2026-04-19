@@ -17,15 +17,9 @@ pacman::p_load(tidyverse,
 # gg animate fundamentals -------------------------------------------------####
 ##Section 1.0: Fundamentals of gganimate
 
-##Task: First, gganimate is integrated into tidyverse, but just in case load the packages below to ensure you have what you need
+##gganimate is integrated into tidyverse, but just in case load it manually to ensure you have what you need
 
 ##Although we will talk about gifski indepth later, it is the easiest way to render and view our animations, so we will need to use it here as well
-
-install.packages("ggplot2")
-install.packages("gganimate")
-install.packages("gifski")
-
-##Task: Now write code to load all the packages so that we can use them
 
 ##Task: For this assignment we are going to use a dataset built into R, Load it usingthe code below
 
