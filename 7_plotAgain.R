@@ -119,6 +119,8 @@ ggplot(redband, aes(x = ScaleAge, y = Length)) +
 # new dataframe mpgSubset.
 # HINT: Refer back to the Transform assignment if you want help with %in% (or 
 # try googling!)
+mpgSubset <- mpg %>% 
+  filter(class %in% c("compact", "midsize", "suv"))
 
 
 # ggplot has lots of nice (and some not so nice) built-in color palettes that we 
@@ -146,7 +148,11 @@ ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
 # What do you notice about the colors chosen from each of the palettes that we
 # used above? (i.e., does it use the first three colors in the palette? The last
 # three? Some other combination?)
+ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
+  geom_jitter() +
+  scale_color_brewer(palette="PuRd")
 
+It picks one accent then goes down two TWICE. 
 
 # We could also pick out EXACTLY which colors we want for our figure. 
 # There are 4 main ways to specify colors in R:
@@ -172,13 +178,16 @@ ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
 # TASK: Copy and paste the code to make our scatterplot and replace the color names
 # with three numbers of your choice (between 1 and 657). How does your new figure look?
 # HINT: remember to remove the quotation marks when calling numbers.
-
+ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
+  geom_jitter() +
+  scale_color_manual(values=c('246', '3', '90'))
 
 # QUESTION: How do you think you could figure out which color name belongs to
 # each color number?
 # HINT: Try creating a dataframe from color() by passing it into the
 # as.data.frame() function.
-
+as.data.frame(colors())
+It would appear that the each color is connected to a number from 1 to 657
 
 # You can also chose colors by Hex code. A Hex color code is a 6-symbol code made
 # of up to three 2-symbol elements (6 symbols in length all together). Each of 
@@ -211,10 +220,12 @@ ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
 # adding the alpha element to the end of each of your hex codes to make your
 # first color 0% transparent, your second color 50% transparent, and your third
 # color 100% transparent.
-
+ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
+  geom_jitter() +
+  scale_color_manual(values=c('#3FA7D600', '#B94CE880', '#F2A13CFF'))
 
 # QUESTION: What happened to the point that you set to 100% transparent?
-
+It disappeared but its likely related to the transparency.
 
 # Finally, we can set our colors using the rgb() function. This operates very
 # similarly to the hex code, where you can pick exactly the color and transparency
@@ -224,6 +235,10 @@ ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
   scale_color_manual(values=c(rgb(.10, .10, .44, 1), rgb(.39, .58, .93, 1), rgb(1.0, .39, .28, 1)))
 
 # TASK: Modify the above code to make all of your points 50% transparent.
+ggplot(data = mpgSubset, aes(x = cty, y = hwy, color = class)) +
+  geom_jitter() +
+  scale_color_manual(values = c(rgb(.10, .10, .44, 0.5),rgb(.39, .58, .93, 0.5),rgb(1.0, .39, .28, 0.5)))
+
 
 # There are so many inventive and artistic people in the world who have expanded
 # the offerings for colors in ggplot. Check out some notable ones listed below
@@ -245,10 +260,11 @@ ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
 # Run the following code to create a scatter plot. Feel free to modify the colors
 # as you prefer!
 ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
-  geom_jitter()
+  geom_jitter() +
+  scale_color_brewer(palette="YlOrBr")
 
 # QUESTION: Where did ggplot get the legend title and values from?
-
+the legend title and values are both from the mpg data. It just has the orginial label name and the data.
 
 # We could change the title and values in our legend by altering the dataframe
 # we are passing into ggplot. But that seems a bit drastic. Instead, we can 
@@ -264,7 +280,13 @@ ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
 
 # TASK: Label each line of the code above with what it is doing.
 # HINT: Check the scale_color_manual help file or ggplot Cookbook for more info.
+?scale_color_manual
 
+# create a graph using mpgsubset comparing cty vs hwy with car class as the colors.
+# Add jitter
+# Using Hex codes, determine the color of the graph.
+# Set the legend title to "Class of Car".
+# rearrange the order of the legend.
 
 # IMPORTANT: It is important to pay attention to the order you provide ggplot with 
 # your color choices and legend labels! Try running the following code:
@@ -278,7 +300,7 @@ ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
 
 # QUESTION: What is wrong with the code above? Why is it so important to be
 # careful with the order you pass information into ggplot?
-
+As you alluded to before, the breaks and labels function are out of order. It would appear the color and the names of the legend are not accurate.
 
 # While changing the legend text and factor order takes place in the scale_color_manual
 # step, moving the legend around on the graph page is part of the graph theme. We
@@ -290,6 +312,9 @@ ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
 
 # TASK: Modify the code above to have the legend display along the bottom of
 # the figure.
+ggplot(data = mpgSubset, aes(x = cty, y = hwy, color = class)) + 
+  geom_jitter() + 
+  theme(legend.position = "bottom")
 
 
 # We can also have the legend located within the area of the graph itself! We can 
@@ -308,10 +333,16 @@ ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) +
 
 # QUESTION: What happens if you don't include the code for legend justification
 # above?
+ggplot(data=mpgSubset, aes(x=cty, y=hwy, color=class)) + 
+  geom_jitter() + 
+  theme(legend.position=c(1,0), )
 
-
+The legend appears at the bottom right corner of the graph (falling off the page) and slightly overlaps on the graph itself.
 # TASK: Copy and paste the code from above. Modify it to place the legend in the
 # upper left part of the graph.
+ggplot(data = mpgSubset, aes(x = cty, y = hwy, color = class)) + 
+  geom_jitter() + 
+  theme(legend.position = c(0, 1), legend.justification = c(0, 1))
 
 
 # Finally, we might want to remove the legend altogether! We would do so by
