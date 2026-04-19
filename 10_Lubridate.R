@@ -161,17 +161,21 @@ ceiling_date(mdy("April 15 2026"), "month")
 # QUESTION: The 'round_date' function is a general rounding function. Run the following line of code. Does 'round_date' round up or down?
 # HINT: April has 30 days. 
 
+#It rounds up
 
 round_date(mdy("April 16 2026"), "month")
 
 # QUESTION: Run the following line of code. What do you think the 'rollback' function does? What do you think the 'roll_to_first' and  'preserve_hms' arguments do?
 # HINT: Try running the code with different 'roll_to_first' and  'preserve_hms' arguments.
 
+#rollback moves the date to the previous month, roll to first can either go to the 
+#last day of the month or the first day of the month, and preserve keeps the hour, minute, and second.
 
 rollback(todays_timestamp, roll_to_first = FALSE, preserve_hms = TRUE)
 
 # TASK: Create a dataframe named 'flight_data_rounded' from our 'flight_data_parsed' dataframe that includes a column named 'rounded_flight_date' that rounds the flight date to the nearest month. 
 
+flight_data_rounded <- flight_data_parsed %>% mutate(rounded_flight_date = round_date(flight_date, "month"))
 
 # ---------------------------------------------------------- #
 #### Part 1.1: Duration & Intervals                       ####
