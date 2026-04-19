@@ -304,7 +304,7 @@ crs(UNCG_mamm_vect) <- crs(nv_elevation)
 # Now plot together: ----------------------------------------------------------
 
 # Open a high-quality JPEG device
-jpeg("UNCG_target_map.jpg", width = 3000, height = 3000, res = 375)
+jpeg("UNCG_target_map.jpg", width = 3000, height = 3000, res = 275)
 
 # Plot elevation
 plot(nv_elevation, col = terrain.colors(215))
@@ -324,7 +324,7 @@ points(UNCG_mamm_vect,
        col = point_cols,
        pch = 16,
        cex = 1,
-       alpha = 0.7)
+       alpha = 0.6)
 
 # Add legend
 legend("bottomleft",

@@ -164,16 +164,20 @@ ceiling_date(mdy("April 15 2026"), "month")
 # QUESTION: The 'round_date' function is a general rounding function. Run the following line of code. Does 'round_date' round up or down?
 # HINT: April has 30 days. 
 
-
 round_date(mdy("April 16 2026"), "month")
+# round_date rounds up to the closest month (May) based on the day
 
 # QUESTION: Run the following line of code. What do you think the 'rollback' function does? What do you think the 'roll_to_first' and  'preserve_hms' arguments do?
 # HINT: Try running the code with different 'roll_to_first' and  'preserve_hms' arguments.
 
-
 rollback(todays_timestamp, roll_to_first = FALSE, preserve_hms = TRUE)
 
+# rollback allows you to change the date to the last day of the previous month, or the first day of the indicated month. roll to first would change the date to the first day, and preserve_hms retains the hour, minute, and second
+
 # TASK: Create a dataframe named 'flight_data_rounded' from our 'flight_data_parsed' dataframe that includes a column named 'rounded_flight_date' that rounds the flight date to the nearest month. 
+
+flight_data_rounded <- flight_data_parsed %>%
+  mutate(rounded_flight_date = round_date(flight_date))
 
 
 # ---------------------------------------------------------- #
@@ -183,7 +187,9 @@ rollback(todays_timestamp, roll_to_first = FALSE, preserve_hms = TRUE)
 # Durations and intervals are both ways to measure spans of time in lubridate.
 # In this section, we will practice creating durations, adding durations to times, creating intervals, and measuring how long an interval lasts.
 
-# TASK: Create a smaller dataframe called 'flight_timespans'using the first 20 rows of flights.
+# TASK: Create a smaller dataframe called 'flight_timespans' using the first 20 rows of flights.
+
+flight_timespans <- head(flights, 20)
 
 # The time_hour column already contains a date-time value.
 # We will use this as a simple starting time for each flight.
@@ -192,6 +198,9 @@ rollback(todays_timestamp, roll_to_first = FALSE, preserve_hms = TRUE)
 # A duration is an exact amount of time.
 # Lubridate creates durations with functions like dseconds(), dminutes(), dhours(), and ddays().
 # Question: What does the "d' stand for in these functions? 
+
+
+# duration
 
 # TASK: Run the following examples.
 dseconds(30)
