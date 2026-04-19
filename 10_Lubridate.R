@@ -74,9 +74,12 @@ ydm("07-04-12")
 
 # QUESTION: Is the output value correct? Why not? Rewrite the code with the same input using the correct function below. 
 
+#This isnt correct because the function used doesnt correspond to the order of the date.
 mdy("07-04-12") 
 
 #TASK: Use any of the parsing functions to convert your birthday into standard date format in the space below. 
+
+mdy("11132004")
 
 mdy("November 22nd, 2001") #Example
 
@@ -100,6 +103,9 @@ flight_data_parsed <- broken_flights %>% mutate(flight_time = hms::as_hms(flight
 #HINT: Use the mutate function with the appropriate parsing function form the previous section.
 
 flight_data_parsed <- flight_data_parsed %>% mutate(flight_date = mdy(flight_date)) #Example
+
+flight_data_parsed <- broken_flights %>% mutate(flight_time = hms::as_hms(flight_time),
+flight_date = mdy(flight_date))
 
 # ---------------------------------------------------------- #
 ### 1.2 GETTING AND SETTING DATES AND TIMES ####                        
