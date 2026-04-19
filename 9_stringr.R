@@ -279,10 +279,8 @@ sum(str_detect(fruit, "berry"))
 # i.e. Childs_First_Name instead of Child.s.First.Name
 # Write the code necessary to do so below, and if necessary check the rename()
 # function's help file if you need to refresh yourself on how it works.
-NYC_Baby_Names <- read.csv("NYC_Baby_Names.csv") %>% 
+NYC_Baby_Names <- read.csv("Popular_Baby_Names.csv") %>% 
   rename(Childs_First_Name = Child.s.First.Name,Year_of_Birth = Year.of.Birth)
-
-
 
 # GOAL: Learn the general functionality of the function str_count()
 
@@ -300,6 +298,7 @@ max(Name_Length)
 
 # QUESTION: What does our output look like?
 # What is the highest number of characters contained in a given name?
+[1] 14, 14 characters long is the longest
 
 # Of course, str_count() can evaluate the incidence of more specific occurences
 # than the total number of characters in any given string. Here we will use
@@ -310,7 +309,8 @@ max(Name_Length)
 # data from the most recent year, that being 2021. Create an additional dataframe
 # called "NYC_Baby_Names_2021" using the filter function to limit the year of birth
 # to 2021.
-
+NYC_Baby_Names_2021 <- NYC_Baby_Names %>% 
+  filter(Year_of_Birth == 2021)
 
 
 # In order to do find the difference by gender however we will have to let stringr 
@@ -330,6 +330,9 @@ NYC_Baby_Names_2021_List <- split(NYC_Baby_Names_2021,NYC_Baby_Names$Gender)
 Male_ia <- str_count(NYC_Baby_Names_2021_List[["MALE"]]$Childs_First_Name,"ia")
 
 # QUESTION: Do any individual names have more than one instance of the string "ia"?
+view(Male_ia)
+sum(Male_ia > 1) = [1] 0
+No, there are not any baby names with more than 1 "ia"
 
 # Now, this data doesn't tell us much as it exists at the moment, as a list of
 # values. In order to measure the total incidence of the string among names,
@@ -340,15 +343,23 @@ Male_ia <- str_count(NYC_Baby_Names_2021_List[["MALE"]]$Childs_First_Name,"ia")
 
 
 # QUESTION: What is the value of "Male_ia_Total"?
+Male_ia_Total <- sum(Male_ia)
+Male_ia_Total = 60
+
 
 # TASK: We now have half of what we need, as we do not have the data for girls born
 # in 2021, so analogous to what we have done for the males, create an object titled
 # "Female_ia" which uses str_count() to see how often the string "ia" appears among
 # girls' first names. Then sum this data in order to have a total count.
 
+Female_ia <- str_count(NYC_Baby_Names_2021_List[["FEMALE"]]$Childs_First_Name,"ia")
+
+Female_ia_Total <- sum(Female_ia)
+Female_ia_Total = 118
 
 
 # QUESTION: How many female names in 2021 contained the string "ia"?
+There are 118 female names from 2021 that contain the string "ia".
 
 # An additional thing that str_count() allows us to do is to count characters
 # in a string, but excluding some characters, for instance we could count the
@@ -359,6 +370,7 @@ Male_Vowelless <- str_count(NYC_Baby_Names_2021_List[["MALE"]]$Childs_First_Name
 
 # QUESTION: What do you think the ^ signifies in this variant of str_count?
 # Why do you think that an upper and lower case variant of each vowel is included?
+^ means to exclude the following, which would be aeiouAEIOU in this example.
 
 #-------------------------------------------------------#
 # PART 1.5: MODIFYING VECTORS
@@ -375,20 +387,27 @@ Male_Vowelless <- str_count(NYC_Baby_Names_2021_List[["MALE"]]$Childs_First_Name
 taco_ingredients <- str_c("tortilla","beans", "lettuce", "guacamole", "cheese", "salsa")
 
 ## QUESTION: Print the vector below. Is it legible? Why or why not?
-
+print(taco_ingredients)
+[1] "tortillabeanslettuceguacamolecheesesalsa"
+Everything is combined together so it is illegible.
 
 ## TASK: Now make the same vector, but formatted as a list (as in with ", "
 ## after each word).
-
+taco_ingredients <- str_c("tortilla", "beans", "lettuce", "guacamole", "cheese", "salsa", sep = ", ")
+taco_ingredients
+[1] "tortilla, beans, lettuce, guacamole, cheese, salsa"
 
 ## TASK: Not everyone likes cilantro, so use the replace function to
 ## replace it with guacamole and save it as taco_ingredients_2
+taco_ingredients_2 <- str_replace(taco_ingredients, "cilantro", "guacamole")
 
 
 ## TASK: Now, it appears that we have forgotten to include meat in the list.
 ## Add meat to the list after the tortilla, but before the beans.
+taco_ingredients_2 <- c("tortilla", "meat", "beans", "lettuce", "guacamole", "cheese", "salsa")
 
 
 ## TASK: Now remove one ingredient of choice without replacing it with anything.
 ## Save this as taco_ingredients_3 without any empty strings.
+taco_ingredients_3 <- taco_ingredients_2[taco_ingredients_2 != "lettuce"]
 
