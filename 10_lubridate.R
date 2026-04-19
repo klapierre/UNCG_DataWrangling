@@ -324,10 +324,11 @@ flight_timespans <- mutate("short_or_long" = if_else("duration_minutes" >= 180, 
 # ---------------------------------------------------------- #
 
 ## TASK: load in beneficials_unified.csv and rename it data_set
-data_set <-read.csv("beneficials_unified.csv")
+data_set <-read.csv("beneficials_unified.xlsx.pdf")
 ## Now we will clean the data set to only contain data with time 
 clean_time_data <- data_set %>% ## keep in assignmet 
   select(-(1:26), -(38:43)) ## keep in assignment 
+## https://youtu.be/MJdAgKV-tt8
 ## now we will create a start datetime ##
 clean_time_data <- clean_time_data %>%
   mutate(
