@@ -363,6 +363,7 @@ clean_time_data2 <- clean_time_data %>%
     start_weekday = wday(start_datetime, label = TRUE)
   )
 ## Question: why did we do this step? 
+## It adds ub the start year, month, day, and weekday columns.
 
 # Okay, now that we have cleaned up our data we are ready for the math!
 ## lubridate can help you calculate time in the past and present--
@@ -372,14 +373,22 @@ clean_time_data2 <- clean_time_data2 %>%
   mutate(start_plus_7 = start_datetime + days(7))
 ## Task- check the data set which column changed ? 
 start_day 
+## Probably the start_datetime column.
+
 ##  question why would this be helpful ? 
+## Allows us to change the dates.
+
 #  it can help us predict future dates and can help us compare a time window 
 ## TASK: Subtract month from clean_time_data2 
 clean_time_data2 <- clean_time_data2 %>%
   mutate(start_minus_1month = start_datetime - months(1))
 ## TASK: View the dataset clean_time_data2- what do you see?
+## Theoretically, there's a new column that's the same as the start date, 
+## except it's a month earlier.
+
 # 2 new columns with information
 ## why is this useful ?
+## Gives us new dates related to the ones we started with..?
 
 ## lets us check the difference between the end and start 
 clean_time_data2 <- clean_time_data %>%
@@ -388,31 +397,39 @@ clean_time_data2 <- clean_time_data %>%
   )
 ## what is the difference in column one #hint look at the end last column in the
 # dataset 
+## It's the duration between the end date and the start date.
 
 ## okay lets work with real time, first we are gonna look at the today's date
 today_date <- today ()
 ## now create a new dataset called my_birthday and include your own birthday. 
 ## if your birthday as already passed use another date- 
 ## hint ymd 
-my_birthday <- ymd("2002-09-05")
+my_birthday <- ymd("2003-10-04")
 # now we will create data set called my birthday this year 
-my_birthday_this_year <- ymd(paste0(year(today_date), "-07-20"))
+my_birthday_this_year <- ymd(paste0(year(today_date), "-10-04"))
 ## create a dataset called birthday_time and subtract my_birthday_this_year and 
 ## today_data
 birthday_time <- my_birthday_this_year - today_date
 ## TASK: View this dataset you just create ? what does this value mean?
+birthday_time
+## It says how many days there are before my birthday this year.
 
 ## Okay now lets figure out what day it is gonna be 60 days from now
 # TASK - Add 30 days to today_date and rename the dataset to days_30
 days_30 <- today_date + days(30)
 # question: what is the day 30 days from now? 
+days_30
+## May 18, 2026
 
 ## Task: create another data set with today_date but subtract 30 days and rename
 # to days_minus_30
 days_minus_30 <- today_date - days(30)
 ## what is the date ?
+days_minus_30
+## March 19, 2026
 
 ## question: How is lubridate and arithmetic useful? 
+## Allows us to adjust dates.
 
 # ---------------------------------------------------------- #
 #### Part 1.3: Time Zones                                 ####
