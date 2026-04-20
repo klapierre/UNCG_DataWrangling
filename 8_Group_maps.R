@@ -113,6 +113,7 @@ ggplot(us_states_frost) +
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
   ## Creates a plot of the frost days accross the country.
 >>>>>>> Maps assignment up to line 134.
@@ -129,6 +130,10 @@ ggplot(us_states_frost) +
 
   ## Creates a plot of the frost days accross the country.
 >>>>>>> Getting rid of some random characters that came out of nowhere.
+=======
+
+  ## Creates a plot of the frost days accross the country.
+>>>>>>> 2cb9105e304065718f40c672be7468f069dc11b2
   geom_sf(aes(fill = Frost), color = "blue") +
   ## Uses the color blue as an indicator of number of frost days.
   theme_minimal() +
