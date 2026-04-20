@@ -10,7 +10,7 @@
 
 # Pacman is a really convenient package for installing and  loading other packages
 # install it if you haven't already
-# install.packages("pacman")
+install.packages("pacman")
 pacman::p_load(tidyverse,
                gganimate,
                gapminder,
@@ -40,6 +40,7 @@ data("airquality")
 ##TASK: To prevent clutter, make a new folder in your current working directory 
 ##and call it "gganimate", then set that folder as your working directory. (We 
 ##will delete this folder, and change working directory at the end)
+setwd("/Users/a_pandey2/Desktop/github/UNCG_DataWrangling/gganimate")
 
 ##TASK: Write code using the head() function to get a glimpse of the dataset
 
