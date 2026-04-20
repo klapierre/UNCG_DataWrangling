@@ -120,7 +120,7 @@ todays_timestamp <- now()
 # Lubridate helpful for finding specific components of date-time data.
 # TASK: Run the following lines of code to isolate specific components of the date-time value. 
 
-date(todays_timestamp)
+date(todays_timestamp) 
 year(todays_timestamp)
 month(todays_timestamp)
 day(todays_timestamp)
@@ -130,8 +130,8 @@ second(todays_timestamp)
 
 #QUESTION: Run the following lines of code. What do you think each function is finding?
 
-week(todays_timestamp) 
-wday(todays_timestamp)
+week(todays_timestamp)#Number of weeks so far in the year 2026
+wday(todays_timestamp) #What weekday it is, and it returns 2, so Monday
 
 
 #TASK: What if we wanted to create new column in our flights dataset listing the day of the week of the flight? Run the following code to create a flight_day column in our flight_data_parsed dataset.
@@ -140,10 +140,10 @@ flight_data_parsed <- flight_data_parsed %>% mutate(flight_day = wday(flight_dat
 
 #QUESTION: What do 'label' and 'abbr' mean in the code above?
 # HINT: Try running the code without the 'label' and 'abbr' arguments.
-
+#Label=true makes the actual name of the weekday shown and abbr=false does not abbreviate the name of the weekday
 
 #TASK: Create a new column called 'flight_month' in the flight_data_parsed dataset that lists the names of the months that the flights took place. 
-
+flight_data_parsed <- flight_data_parsed %>% mutate(flight_month = month(flight_date, label = TRUE, abbr = FALSE))
 
 
 # ---------------------------------------------------------- #
