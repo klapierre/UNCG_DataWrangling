@@ -1,6 +1,6 @@
 #Objectives ---------------------------------------------------------------####
 
-# 1.Understand the core parts of an animation
+# 1. Understand the core parts of an animation
 # 2. Learn how to make a simple animation
 # 3. Get fancy with it! How to further customize animations
 # 4. Learn how to use packages to improve animations, and make them easier to #create
