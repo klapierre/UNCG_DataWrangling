@@ -81,59 +81,16 @@ states <- states %>% rename(State = NAME)
 #Task: Run the following code to leftjoin the states and state_frost_data datasets 
 #by "State" to a new dataframe named us_states_frost
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
 us_states_frost_2 <- left_join(states, state_frost_data, by = c("State"))
-=======
-us_states_frost <- left_join(states, frost_data, by = c("State"))
->>>>>>> Maps assignment up to line 134.
-=======
-us_states_frost <- left_join(states, frost_data, by = c("State"))
->>>>>>> Maps assignment up to line 134.
-=======
-us_states_frost <- left_join(states, frost_data, by = c("State"))
->>>>>>> Maps assignment up to line 134.
-=======
-us_states_frost <- left_join(states, frost_data, by = c("State"))
->>>>>>> Maps assignment up to line 134.
-=======
-us_states_frost_2 <- left_join(states, state_frost_data, by = c("State"))
->>>>>>> Getting rid of some random characters that came out of nowhere.
+
 
 #Next we will use ggplot to construct a map of the US States and number of Frost
 #days
 #Task: Run the following code and annotate the significance of each line of code.
 
 ggplot(us_states_frost) +
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
   ## Creates a plot of the frost days accross the country.
->>>>>>> Maps assignment up to line 134.
-=======
-  ## Creates a plot of the frost days accross the country.
->>>>>>> Maps assignment up to line 134.
-=======
-  ## Creates a plot of the frost days accross the country.
->>>>>>> Maps assignment up to line 134.
-=======
-  ## Creates a plot of the frost days accross the country.
->>>>>>> Maps assignment up to line 134.
-=======
 
-  ## Creates a plot of the frost days accross the country.
->>>>>>> Getting rid of some random characters that came out of nowhere.
-=======
-
-  ## Creates a plot of the frost days accross the country.
->>>>>>> 2cb9105e304065718f40c672be7468f069dc11b2
   geom_sf(aes(fill = Frost), color = "blue") +
   ## Uses the color blue as an indicator of number of frost days.
   theme_minimal() +
