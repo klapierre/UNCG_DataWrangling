@@ -440,7 +440,7 @@ library(hms)
 # Create a new column with the months.
 rangeTemp <- tempData %>%
   mutate(time = hms::as_hms(time), hour = hour(time),
-         month = month(date, label = TRUE, abbr = TRUE)
+         month = month(date, label = TRUE, abbr = TRUE))
          
          # Why would it be a good idea to average the hourly temperatures instead of 
          # plotting each hour for this graph? 
@@ -451,7 +451,7 @@ rangeTemp <- tempData %>%
          # the mean Air. temperature. We will double check if there are any NA's we
          # missed.Then ungroup to have 3 columns/variables in a dataframe
          # called hourMonthAvg.
-         hourMonthAvg <- rangeTemp %>%
+        hourMonthAvg <- rangeTemp %>%
            group_by(month, hour) %>%
            summarize(mean_temp = mean(Air.temperature, na.rm = TRUE)) %>%
            ungroup()
@@ -487,6 +487,12 @@ rangeTemp <- tempData %>%
            ungroup()
          # Use this code to guide you to creating the "f_hourMonthAvg" dataframe. If we
          # are creating a new column, what is the function to do that?
+         
+         f_hourMonthAvg <- rangeTemp %>%
+           group_by(month, hour) %>%
+           summarize(mean_temp = mean(Air.temperature, na.rm = TRUE)) %>%
+           mutate(mean_temp_F = (mean_temp * 9/5) + 32) %>% 
+           ungroup()
          
          # With the new dataframe and the code before this, change the y label to "Average Temperature (°F)". What are the ranges for the y-axis now? 
          ggplot(f_hourMonthAvg, aes(x = hour,y = mean_temp_F,color = month,size = mean_temp_F)) +
@@ -630,13 +636,13 @@ logo_small <- image_scale(logo, "150x150")
 
 # This will overlay it onto the graph.
 watermarked <- lapply(img_list, function(frame) {
-  image_composite(frame, logo_faded, offset = "+20+20") })
+  image_composite(frame, logo_small, offset = "+20+20") })
 
 # This will combine the frames into a compressed GIF.
 animation <- image_animate(image_join(watermarked), fps = 10)
 
 # Lastly, this will save your GIF into your files!
-image_write(animation, "dailyAvg_bubble_watermarked.gif")
+image_write(animation, "2dailyAvg_bubble_watermarked.gif")
 
 # In your animation, what month has the highest temperature? 
 

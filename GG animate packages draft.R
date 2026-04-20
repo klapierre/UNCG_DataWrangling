@@ -96,7 +96,8 @@ library(hms)
 # Create a new column with the months.
 rangeTemp <- tempData %>%
   mutate(time = hms::as_hms(time), hour = hour(time),
-    month = month(date, label = TRUE, abbr = TRUE)
+    month = month(date, label = TRUE, abbr = TRUE)) 
+    
     
 # Why would it be a good idea to average the hourly temperatures instead of 
 # plotting each hour for this graph? 
@@ -286,7 +287,7 @@ logo_small <- image_scale(logo, "150x150")
 
 # This will overlay it onto the graph.
 watermarked <- lapply(img_list, function(frame) {
-  image_composite(frame, logo_faded, offset = "+20+20") })
+  image_composite(frame, logo_small, offset = "+20+20") })
 
 # This will combine the frames into a compressed GIF.
 animation <- image_animate(image_join(watermarked), fps = 10)
