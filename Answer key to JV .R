@@ -161,6 +161,7 @@ rangeTemp <- tempData %>%
            ungroup()
          
          # With the new dataframe and the code before this, change the y label to "Average Temperature (°F)". What are the ranges for the y-axis now? 
+         ---> It should be 0-100 since it's in (°F)'.
          ggplot(f_hourMonthAvg, aes(x = hour,y = mean_temp_F,color = month,size = mean_temp_F)) +
            geom_point(alpha = 0.7) +
            scale_size(range = c(3, 12)) +
@@ -193,12 +194,15 @@ rangeTemp <- tempData %>%
          
          # For this section, we are using the dataframe "dailyAvg", why do you think this 
          # is an easier dataframe to animate versus the hourMonthAvg?
-         
+         --->  dailyAvg's easier to animate due' to it having only 2 variables.
+         hourMonthAvg has 3 variables. 
          ~~~~~~
            # To start the animation process, we want to make a function that allows for 
            # flexibility so that the dataframe/graph can be adjusted if need to.
            # Take a look at the code below, what do you think ggplot is doing here? Does the
            # coding look familiar?
+           --->  ggplot is here to make a graph! And yes, the data should be familiar
+         as this is our time series coding from earlier!
            
            make_timeseries_plot <- function(data, day_index) {
              ggplot(data[1:day_index, ], aes(x = date,y = mean_temp)) +
@@ -218,13 +222,19 @@ rangeTemp <- tempData %>%
          dir.create("frames_timeseries", showWarnings = FALSE)
          
          # What does dir.create stand for? And where do you expect this folder to end up?
+         --->  Directory create, it makes a folder and expect to find in files
+         within R-studios or the designated folder on your computer
          
          # Now we instruct R how we want the Frame-generation loop to work.
          
          # Why do you think we are start on day 2 and why may it be more useful?
          # HINT: We are making a time series graph, what makes it different from a 
          # scatter plot?
-         
+         --->  This is due to the line that connects datapoints in a time series.
+         That is why we need start the line at day 2 so that there is 2 reference 
+         points to draw a line. It is more beneficial to start off at day 2, than
+         to ignore it as it may disrupt the display of data. 
+           
          # The value p creates a plot for day 1, which begins the data or the start
          # of the animation.
          for (i in 2:nrow(dailyAvg)) {
@@ -258,6 +268,8 @@ gifski(png_files,gif_file = "dailyAvg_timeseries.gif",width = 900,height = 600,d
 # making graph have essential markings that would be difficult to add to GIFs.
 
 # What are some examples that Magick can be useful in animating a graph? 
+--->  MagicK can add watermarks for universities on a animated graph. It can 
+Change a image that did not have a favorable title. It can rescale the image or gif
 
 # We will start with a function, that will plot our dataframe into a adjustable graph.
 
@@ -313,6 +325,9 @@ animation <- image_animate(image_join(watermarked), fps = 10)
 image_write(animation, "dailyAvg_bubble_watermarked.gif")
 
 # In your animation, what month has the highest temperature? 
+--->  This should be July, even if they have a hard time getting the GIF 
+from their files. They should still be able to reference back to the dataframe.
+
 
 # Magick appears to take longer than Gifski to create the GIF in your files so 
 # as I stated before, feel free to rerun the code to wake R-studio up. 
