@@ -21,7 +21,7 @@ pacman::p_load(tidyverse,
               countrycode)
 
 
-# gg animate fundamentals -------------------------------------------------####
+# 1.0 gg animate fundamentals -------------------------------------------------####
 ##Section 1.0: Fundamentals of gganimate
 
 ##gganimate is integrated into tidyverse, but just in case load it manually to ensure you have what you need
