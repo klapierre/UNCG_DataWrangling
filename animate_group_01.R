@@ -51,7 +51,7 @@ airquality_temp <- ggplot(airquality, aes(x = Day, y = Temp)) +
   geom_line() +
   labs(title = "Temperature Over Days") +
   transition_time(Month)
-anim_save("temperature.gif", animate(airquality_temp, renderer = gifski_renderer()))
+animate(airquality_temp)
 
 #Question: What is the difference in saved outcome between the two codes?
 
