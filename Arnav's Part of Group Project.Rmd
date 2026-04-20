@@ -23,8 +23,8 @@ Task: Read the question below, click **Knit** to render the document and return 
 Question: What difference do you notice about the above line that starts with
 `# Section 2: Formatting a Report Using RMarkdown Syntax` compared to the line
 `Objective: learn to format how your document appears in the output of your choice`?  
-Answer:
-
+Answer: The font is large and bold in line starting with `# section 2.` while the other line
+seems to be normal.
 
 \
 
@@ -45,7 +45,7 @@ Task: Click Knit to observe how different heading levels below appear in the ren
 
 
 Question: What happens to the size of text when you increase the number of hashtags (#)?  
-Answer: 
+Answer: Increasing numbers of hashtags decreases the font size.
 
 \
 
@@ -53,20 +53,20 @@ Answer:
 In the example above, the higher the number of hashtags, the lower the heading level (smaller font).  
 
 Question: How many hashtags would you use if you wanted highest level heading (largest font)?  
-Answer: 
+Answer: 1
 
 \
 
 
 Question: In the rendered output, do Line 5 and Line 6 from above example appear in the same line?  
-Answer:
+Answer: Yes
 
 \
 
 
 Task: Go to the metadata for this assignment and change the output from `pdf_document` to `html_document`.  
 Question: Did your Line 5 and Line 6 appear in different lines?  
-Answer:
+Answer: No
 
 \
 
@@ -88,7 +88,7 @@ To make your text italics, you can enclose it within single asterisk `*[text]*`.
 \
 
 Task: Rewrite Line 1 below and only italicize the word "italics." Leave two spaces at the end of sentence for a line break.  
-Answer:
+Answer: Line 1: This is an example to show how to make text *italics*.
 
 \
 
@@ -98,10 +98,9 @@ You can also enclose your text within single underscore `_[text]_`.
 \
 
 
-Task: In the paragraph below, make "Arnav," "Biological Data Wrangling and Visualization" and "RMarkdown" italics in the following paragraph using
-both the methods (asterisks and underscore) mentioned above at least once. 
-My name is Arnav Pandey. I am currently enrolled in Biological Data Wrangling and Visualization (BIO 457/657).
-This is a task to use RMarkdown to make a text output italics.  
+Task: In the paragraph below, make "Arnav," "Biological Data Wrangling and Visualization" and "RMarkdown" italics in the following paragraph using both the methods (asterisks and underscore) mentioned above at least once. 
+My name is *Arnav* Pandey. I am currently enrolled in _Biological Data Wrangling and Visualization_ (BIO 457/657).
+This is a task to use *RMarkdown* to make a text output italics.  
 
 \
 
@@ -116,7 +115,7 @@ Task: Read the question below, click Knit, and return to answer the question bel
 Question: Which of the following lines gives you bold text?  
 Line 1. This is an example to show how to make text bold.  
 **Line 2: This is an example to show how to make text bold.**  
-Answer:  
+Answer:  Line 2
 
 \
 
@@ -137,8 +136,8 @@ Line 4: This is an __example__ to show how to make text bold.
 
 Task: In the paragraph below, make "Arnav," "Biological Data Wrangling and Visualization" and "RMarkdown" bold in the following paragraph using
 both the methods (asterisks and underscores) mentioned above at least once.   
-My name is Arnav Pandey. I am currently enrolled in Biological Data Wrangling and Visualization (BIO 457/657).
-This is a task to use RMarkdown to make a text output bold.  
+My name is **Arnav** Pandey. I am currently enrolled in __Biological Data Wrangling and Visualization__(BIO 457/657).
+This is a task to use __RMarkdown__ to make a text output bold.  
 
 \
 
@@ -154,8 +153,8 @@ You can enclose your text within three asterisks (`***[text]***`). or underscore
 \
 
 Task: In the paragraph below, make "Arnav," "Biological Data Wrangling and Visualization" and "RMarkdown" bold italics using both the methods mentioned above at least once.   
-My name is Arnav Pandey. I am currently enrolled in Biological Data Wrangling and Visualization (BIO 457/657).
-This is a task to use RMarkdown to make a text output bold.  
+My name is ***Arnav*** Pandey. I am currently enrolled in ___Biological Data Wrangling and Visualization___ (BIO 457/657).
+This is a task to use ***RMarkdown*** to make a text output bold.  
 
 
 \
@@ -207,6 +206,22 @@ Task: Hit Knit to look at the output of the lines below:
 
 Task: Copy the above list below, add an item "Melon" and nest different types of melons as its subitems.
 Hit Knit to see your output.  
+
+- Apple
+- Banana
+- Berries 
+  - Blueberries
+  - Strawberries 
+  - Raspberries 
+  - Blackberries
+  - Cranberries
+- Papaya
+- Melon
+  - Watermelon
+  - Cantaloupe
+  - Honeydew
+  - Canary Melon
+\
 
 
 
