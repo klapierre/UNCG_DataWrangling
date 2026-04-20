@@ -617,21 +617,19 @@ arthropods <- beneficials
 
 # (2) there is a lot of redundant data and again, we want to make a dataframe that only has the data we will need. For this dataframe, we will only be using the columns "arthOrder" through "deployedhours". Use the select function to select all columns between (and including) "arthOrder" and "deployedhours". Hint: you should have a total of 27 columns after this is done. Revisit previous assignments to select for large chunks without having to type all the column names you wish to include. 
 arthropods <- mutate(select(arthropods, 1:27))
-## From this point and beyond I have no way of testing the code since the data
-## is glitched somehow to only be one column.
 
 # (3) unite the genus and species names and name this new column "species". Separate the obsevations with a single space (" ")
-arthropods <- unite("species", "genus", "species", sep = " ")
+arthropods <- unite(arthropods, "species", "genus", "species", sep = " ")
 
 # (4) using the select function, remove "family", "genus", "subgenus", "longTrap", "latTrap", and "elevTrap"
-arthropods <- select(arthropods, -c("family", "genus", "subgenus", "longTrap", "latTrap", "elevTrap"))
+arthropods <- select(arthropods, -c("family", "subgenus", "lon", "lat", "elevation"))
 
 # (5) rename "arthOrder" to "order"
-arthropods <- rename(arthropods, "order" = "arth0rder")
+arthropods <- rename(arthropods, "order" = "arthOrder")
 
 #QUESTION: How many variables does the "arthropods" dataset have? Why does this number differ from the "beneficials" dataset? 
-## It likely has less variables than the beneficials dataset due to
-## theoretically removing columns.
+## It has only 21 variables, which is less than the beneficials dataset due to
+## removing columns.
 
 #Great! Now we can start using the lubridate package!
 
@@ -640,8 +638,7 @@ arthropods <- rename(arthropods, "order" = "arth0rder")
 arthropods_clean <- arthropods
 
 # (2) using the mutate function make a two new columns called "start_datetime" and "end_datetime". Use the "make_datetime()" function to do this. Add the startYear, startMonth, startDay, startHour, startMinute to make the "start_datetime". Add the endYear, endMonth, endDay, endHour, endMinute to make the "end_datetime".
-arthropods_clean <- mutate(arthropods_clean, "start_datetime" = make_datetime(year = "startYear", month = "startMonth", day = "startDay", hour = "startHour", minute = "startMinute"), "end_datetime" = make_datetime(year = "endYear", month = "endMonth", day = "endDay", hour = "endHour", minute = "endMinute"))
-
+arthropods_clean <- mutate(arthropods_clean, "start_datetime" = make_datetime(year = "startYear", month = "startMonth", day = "startDay", hour = "startHour"), "end_datetime" = make_datetime(year = "endYear", month = "endMonth", day = "endDay", hour = "endHour"))
 
 # Great! Now we want to parse out the columns that we just made. 
 
