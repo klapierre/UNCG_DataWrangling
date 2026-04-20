@@ -203,8 +203,6 @@ ddays(1)
 # In our flights data, air_time is measured in minutes.
 # We can convert those minute values into durations with dminutes().
 # EXAMPLE: Run this line to turn air_time into a duration.
-flight_timespans <- flight_timespans %>%
-  mutate(flight_duration = dminutes(flight_time))
 
 # TASK: Look at only the air_time and flight_duration columns.
 
