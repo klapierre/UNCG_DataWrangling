@@ -607,7 +607,9 @@ flight_timezones %>%
 # We will need to tidy this data before we can start practicing with lubridate.
 
 #TASK: You will notice that this data has a lot of redundant observations. Load the "beneficials_unified.csv" into R using the read.csv function and name the dataframe "beneficials".
-beneficials <- data_set <-read.csv("beneficials_unified.xlsx.pdf")
+install.packages("readxls")
+library(readxl)
+beneficials <-read_excel("beneficials_unified.xlsx")
 
 # TASK: Using the same workflow, lets make a dataframe of only the data that we will be using for lubridate. 
 # (1) name the new dataframe "arthropods" and use the beneficials data
