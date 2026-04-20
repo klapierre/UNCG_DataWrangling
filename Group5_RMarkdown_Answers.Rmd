@@ -2,7 +2,7 @@
 title: "Group5_RMarkdown_Answers"
 author: "Arnav Pandey"
 date: "2026-04-20"
-output: html_document
+output: pdf_document
 ---
 
 --------------------------------------------------------------------------------  
