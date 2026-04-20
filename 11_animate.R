@@ -142,13 +142,16 @@ anim_save("temperature_mark.gif", animate(airquality_temp, renderer = gifski_ren
 
 ##QUESTION: What is the difference between shadow_trail and shadow_mark?
 #Shadow_trail shows evenly spaced trails of past data points as the animation proceeds.
-#Shadow_mark shows 
+#Shadow_mark shows the past, present, and future trails of data in the animation at the
+#same time.
 
 ##transition_time gives us continuous animations, but we can also use 
 ##transition_states to make discrete ones instead
 
 ##Quesion: Considering what you know about different graphs in ggplot, what 
 ##types of graph should you use transition_states() instead of transition_time()?
+# transition_states() would be used for discrete, categorical data like in bar graphs 
+# instead of continuous time data.
 
 ##Below is an example of using transition_states()
 
@@ -160,6 +163,8 @@ anim_save("temperature_states.gif", animate(airquality_discrete, renderer = gifs
 
 ##QUESTION: Other than the type of graph, what is the main difference in the code 
 ##when using transition_states() instead of transition_time()?
+airquality_discrete 
+#the code used closest_state in the label rather than frame_time.
 
 ##Below is an example using a 3rd transition, transition_reveal()
 
@@ -169,6 +174,8 @@ airquality_reveal <- ggplot(airquality, aes(x = Day, y = Temp)) +
 anim_save("temperature_reveal.gif", animate(airquality_reveal, renderer = gifski_renderer()))
 
 ##TASK/QUESTION: Use the the help tab and the animation above to describe what transition_reveal does.
+?transition_reveal 
+# It makes the data points appear/reveal gradually rather than doing it all at once.
 
 ##If you have more complicated data, you can also use transition_components to animate by group, see below
 
@@ -185,6 +192,8 @@ anim_save("temperature_group.gif", animate(airquality_group, renderer = gifski_r
 #still see how each month moves independently from eachother
 
 ##QUESTION: When would using transition_components be the most beneficial in visualizing data?
+# It would be beneficial when we want to animate single data points or the components at a time
+# rather than entire plot at once.
 
 ##Just like when you are animating a slideshow, often having elements disapear in
 ##in interesting ways helps draw people to your visual. In gganimate you can do 
@@ -197,10 +206,17 @@ airquality_discrete +
 ##TASK: rewrite the code above to utilize alternative enter and exit functions: 
 ##https://gganimate.com/reference/enter_exit.html
 
+airquality_discrete +
+  enter_grow()+
+  exit_drift()
+
 ##QUESTION: Take a look at the help for the animate() function, what other arguments can be used?
+?animate()
+#duration, detail, device, ref_frame, start_pause, end_pause, rewind
 
 ##TASK: Using the airquality_temp animation, adjust the animation to have a 
 ##height of ##400, a width of 600, 100 frames, and have a speed of 10 frames per second
+animate(airquality_temp, renderer = gifski_renderer(),  nframes = 100,fps = 10,width = 600,height = 400)
 
 ##TASK: Fix the code below, and insert comments to to inform on the changes you made
 ##There are 3 mistakes, hint, it should not be a line graph, and all other functions 
@@ -209,12 +225,21 @@ airquality_discrete +
 airquality_discrete <- ggplot(airquality, aes(x = Day, y = Temp)) +
   geom_line() +
   transition_states(Month) +
-  labs(title = "Day: {frame_time}")
+  labs(title = "Day: {closest_state}") #changed to closest state
 anim_save("temperature_discrete2.gif", animate(airquality_discrete, renderer = gifski_renderer()))
 
 ##Now it is time to test your skills. Make a new animation that shows ozone levels 
 #overtime. Call it airquality_ozone. Use a shadow functions, an ease_aes() function, 
 #and either an enter or exit function.
+airquality_ozone <- ggplot(airquality_clean,aes(x = Day, y = Ozone))+
+  geom_line() +
+  ease_aes("linear") +
+  labs(title = "Month: {frame_time}") +
+  transition_time(Month)+
+  shadow_trail(alpha=0.3)+
+  enter_grow()+
+anim_save("ozone_time.gif", animate(airquality_ozone, renderer = gifski_renderer(),  nframes = 150,fps = 15,width = 600,height = 400))
+
 
 ##GREAT JOB!!!
 
@@ -231,16 +256,43 @@ data("iris")
 ## These are the two datasets we'll be using for this section! Check them out using
 ## head() or glimpse()
 ## QUESTION: Which dataset is inherently time-based and why does that matter for animation?
+head (gapminder)
+head (iris)
+# Gapminder is inherently time-based and it matters for animation because we have been
+# looking at rate of change in an independent variable through time. In addition, we have
+# also used time to make variations in the speed of animation as well.
 
 ## TASK: Create a filtered gapminder dataset for North America only
+# There is no north america but Americas
+gapminder_americas <- gapminder %>% 
+  filter (continent == "Americas")
 
 ## TASK: Build a scatterplot of GDP vs life expectancy. Set size to population and
 ## group by country. Apply a log transform to the x-axis.
 ## Add transparency, labels, and a theme of your choice. Save this as an object named gap_plot.
 
+gap_plot <- ggplot(gapminder_americas,
+                   aes(x=gdpPercap,
+                       y=lifeExp,
+                       size=pop,
+                       group=country))+
+  geom_point(alpha = 0.5)+
+  scale_x_log10()+
+  labs(title = "GDP vs Life Expectancy in Americas",
+       x = "GDP Per capita",
+       y = "Life Expectancy",
+       size = "Population")+
+  theme_dark()
+
+gap_plot                                    
+
+
 ## QUESTION: Why is grouping important when animating repeated entities like countries?
+# So that it is consistently tracked over time.
 
 ## TASK: Animate by year using transition_time(). Save this as gap_anim.
+gap_anim <- gap_plot+
+  transition_time(year)
 
 
 ## We've already investigated the ease_aes() function using linear easing. This
@@ -249,43 +301,53 @@ data("iris")
 ## TASK: Run the code below and descriptively annotate which each function does. 
 
 # -in applies the easing function without any modification
-gap_anim + ease_aes('cubic-in')
+gap_anim + ease_aes('cubic-in') # animation starts slow, accelerates, stops, repeats
 
-gap_anim + ease_aes('elastic-in')
+gap_anim + ease_aes('elastic-in') # animation has stretching effect
 
-gap_anim + ease_aes('circular-in')
+gap_anim + ease_aes('circular-in') #starts slow, accelerates in circular motion
 
-gap_anim + ease_aes("bounce-in")
+gap_anim + ease_aes("bounce-in") # starts with a bouncing effect
 
 # -out applies the easing function in reverse
-gap_anim + ease_aes('elastic-in')
+gap_anim + ease_aes('elastic-in') #these have same arguments as above? animation has stretching effect
 
-gap_anim + ease_aes('circular-in')
+gap_anim + ease_aes('circular-in') #starts slow, accelerates in circular motion
 
-gap_anim + ease_aes("bounce-in")
+gap_anim + ease_aes("bounce-in") # starts with a bouncing effect 
 
 # we can combine them into -in-out
-gap_anim + ease_aes('circular-in-out')
+gap_anim + ease_aes('circular-in-out') # slow start and end
 
-gap_anim + ease_aes("bounce-in-out")
+gap_anim + ease_aes("bounce-in-out") # bounce the beginning and the end
 
 ## QUESTION: What does the -in-out easing argument do to our animation? 
 ## Hint: Check ?ease_aes().
+# First half of the transition it is applied as it is, while in the last half it is reversed.
+
 
 ## QUESTION: How does easing change the perception of movement over time?
+# If it is bounce in, it makes me think of fluctuating within the same time period.
+# If it is elastic, it makes me think of very flexible and dymnamic throughout time.
 
 ## gganimate also has view functions to change the framing of our animation
 ## over our data. 
 
 ## TASK: Add view_follow() to gap_anim to track evolving clusters
+gap_anim+
+  view_follow() 
 
 ## QUESTION: What does view_follow() do? Why might this be useful?
+#It adjusts the plot dimensions so that we can follow the data.
 
 ## TASK: Try to apply view_step() to gap_anim.
+gap_anim+
+  view_step() 
 
 ## This gives us an animation, but something is wrong.
 ## QUESTION: What is wrong with your animation? Why do you think this is happening
 ## HINT: Remember that transition_time is continuous. Check out ?view_step()
+?view_step
 
 ## Remember that iris dataset we loaded earlier? Now we're gonna switch to it!
 
@@ -478,7 +540,7 @@ library(hms)
 # Create a new column with the months.
 rangeTemp <- tempData %>%
   mutate(time = hms::as_hms(time), hour = hour(time),
-         month = month(date, label = TRUE, abbr = TRUE)
+         month = month(date, label = TRUE, abbr = TRUE))
          
          # QUESTION: Why would it be a good idea to average the hourly temperatures 
          # instead of plotting each hour for this graph? 
@@ -594,7 +656,7 @@ rangeTemp <- tempData %>%
            p <- make_timeseries_plot(dailyAvg, i)
            ggsave(filename = sprintf("frames_timeseries/frame_%04d.png", i),plot = p,width = 8,height = 5) }
          
-         ggsave(filename = sprintf("frames_daily/frame_%04d.png", i),plot = p,width = 8, height = 5) }
+         ggsave(filename = sprintf("frames_daily/frame_%04d.png", i),plot = p,width = 8, height = 5))
 
 # lastly, with ggsave(), we save the data as a PNG file. the frames will come 
 # out with the name frames_001, frames_002 and so on. 
