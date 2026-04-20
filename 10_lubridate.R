@@ -324,11 +324,10 @@ flight_timespans <- mutate("short_or_long" = if_else("duration_minutes" >= 180, 
 # ---------------------------------------------------------- #
 
 ## TASK: load in beneficials_unified.csv and rename it data_set
-data_set <-read.csv("beneficials_unified.xlsx.pdf")
+data_set <- beneficials
 ## Now we will clean the data set to only contain data with time 
 clean_time_data <- data_set %>% ## keep in assignmet 
   select(-(1:26), -(38:43)) ## keep in assignment 
-## https://youtu.be/MJdAgKV-tt8
 ## now we will create a start datetime ##
 clean_time_data <- clean_time_data %>%
   mutate(
@@ -354,6 +353,7 @@ clean_time_data <- clean_time_data %>%
 ## TASK: check each new dataset what do you see? ##
 #there should be a new column added in the end of the data set with the year,
 #month, day, hour and minute together. 
+
 ## Type in the following code below --
 clean_time_data2 <- clean_time_data %>%
   mutate(
@@ -363,7 +363,7 @@ clean_time_data2 <- clean_time_data %>%
     start_weekday = wday(start_datetime, label = TRUE)
   )
 ## Question: why did we do this step? 
-## It adds ub the start year, month, day, and weekday columns.
+## It adds up the start year, month, day, and weekday columns.
 
 # Okay, now that we have cleaned up our data we are ready for the math!
 ## lubridate can help you calculate time in the past and present--
@@ -372,7 +372,7 @@ clean_time_data2 <- clean_time_data %>%
 clean_time_data2 <- clean_time_data2 %>%
   mutate(start_plus_7 = start_datetime + days(7))
 ## Task- check the data set which column changed ? 
-start_day 
+
 ## Probably the start_datetime column.
 
 ##  question why would this be helpful ? 
