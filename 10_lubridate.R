@@ -29,7 +29,7 @@ library(tidyverse)
 dt_practice <- as_datetime(946684860)
 
 # QUESTION: Run the code above to convert the Unix measurement to ymd_hms format using the ‘as_datetime’ function. What date and time does the timestamp correspond to?
-1/1/2001 at 12:01 AM
+#1/1/2001 at 12:01 AM
 
 # Unix timestamps are also measured in days since January 1st, 1970. The ‘as_date’ function can be used to convert these measurements to ymd format.
 # QUESTION: What holiday does the 20392 Unix days timestamp correspond to? What year? HINT: Use the ‘as_date’ function to convert days to ymd format. 
