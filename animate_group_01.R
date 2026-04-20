@@ -138,12 +138,12 @@ anim_save("temperature_reveal.gif", animate(airquality_reveal, renderer = gifski
 
 ##If you have more complicated data, you can also use transition_components to animate by group, see below
 
-airquality_group <- ggplot(airquality, aes(x = Day, y = Temp)) +
-  geom_col() +
+airquality_group <- ggplot(airquality, aes(x = Temp, y = Ozone, color = factor(Day))) +
+  geom_point() +
   ease_aes("linear") +
-  labs(title = "Month: {frame_time}") +
-  transition_time(Month)
-anim_save("temperature_components.gif", animate(airquality_group, renderer = gifski_renderer()))
+  labs(title = "Temperature vs Ozone by Month") +
+  transition_components(Month)
+anim_save("temperature_group.gif", animate(airquality_group, renderer = gifski_renderer()))
 
 ##Question: When would using transition_components be the most beneficial in visualizing data?
 
