@@ -30,29 +30,29 @@ pacman::p_load(tidyverse,
 ##Although we will talk about gifski indepth later, it is the easiest way to render 
 ##and view our animations, so we will need to use it here as well
 
-##Task: For this assignment we are going to use a dataset built into R, Load it 
+##TASK: For this assignment we are going to use a dataset built into R, Load it 
 ##using the code below
 
 data("airquality")
 
 ##IMPORTANT: gganimate saves your animation as individual frames in your working directory
 
-##Task: To prevent clutter, make a new folder in your current working directory 
+##TASK: To prevent clutter, make a new folder in your current working directory 
 ##and call it "gganimate", then set that folder as your working directory. (We 
 ##will delete this folder, and change working directory at the end)
 
-##Task: Write code using the head() function to get a glimpse of the dataset
+##TASK: Write code using the head() function to get a glimpse of the dataset
 
-##Question: One of the most basic animations is showing change overtime, what 
+##QUESTION: One of the most basic animations is showing change overtime, what 
 ##columns in could we use to show this?
 
-##Task: Below is the skeleton of a line plot, rewrite the code to have Day as the 
+##TASK: Below is the skeleton of a line plot, rewrite the code to have Day as the 
 ##x axis and temp as the y axis, then give the plot a descriptive title
 
 ggplot(airquality, aes(x = ?, y = ?)) +
   geom_line()
 
-##Task: Run the code below
+##TASK: Run the code below
 
 airquality_temp <- ggplot(airquality, aes(x = Day, y = Temp)) +
   geom_line() +
@@ -60,7 +60,7 @@ airquality_temp <- ggplot(airquality, aes(x = Day, y = Temp)) +
   transition_time(Month)
 anim_save("temperature.gif", animate(airquality_temp, renderer = gifski_renderer()))
 
-##Task: Now run this code
+##TASK: Now run this code
 
 airquality_temp <- ggplot(airquality, aes(x = Day, y = Temp)) +
   geom_line() +
@@ -68,16 +68,16 @@ airquality_temp <- ggplot(airquality, aes(x = Day, y = Temp)) +
   transition_time(Month)
 animate(airquality_temp)
 
-#Question: What is the difference in saved outcome between the two codes?
+#QUESTION: What is the difference in saved outcome between the two codes?
 
-##Question: What is the animate() function doing?
+##QUESTION: What is the animate() function doing?
 
-##Question: What happens if we take out the transition_time() function?
+##QUESTION: What happens if we take out the transition_time() function?
 
 ##Now that we have a simple animation we can apply other functions to make the
 ##Animation easier to view and understand
 
-##Task: The transition_time function can be integrated into labs to create 
+##TASK: The transition_time function can be integrated into labs to create 
 ##descriptive titles for your animation: See by running the code below
 
 airquality_temp <- ggplot(airquality, aes(x = Day, y = Temp)) +
@@ -86,12 +86,12 @@ airquality_temp <- ggplot(airquality, aes(x = Day, y = Temp)) +
   transition_time(Month)
 anim_save("temperature_titles.gif", animate(airquality_temp, renderer = gifski_renderer()))
 
-##Question: What is the new title of the graph?
+##QUESTION: What is the new title of the graph?
 
-##Question: Why would someone choose to use the {frame_time} argument instead of 
+##QUESTION: Why would someone choose to use the {frame_time} argument instead of 
 ##just typing a whole new title?
 
-##Question: Transitions can be used to control how smooth the animation plays
+##QUESTION: Transitions can be used to control how smooth the animation plays
 ##What are some characteristics of the animation that might be helpful to modify?
 
 ##Run the code below
@@ -102,7 +102,7 @@ airquality_temp <- ggplot(airquality, aes(x = Day, y = Temp)) +
   transition_time(Month)
 anim_save("temperature_ease.gif", animate(airquality_temp, renderer = gifski_renderer()))
 
-##Task: Annotate the code above with descriptive comments
+##TASK: Annotate the code above with descriptive comments
 
 ##Not only can speed be adjusted, but you can also add motion effects
 airquality_temp <- ggplot(airquality, aes(x = Day, y = Temp)) +
@@ -121,7 +121,7 @@ airquality_temp <- ggplot(airquality, aes(x = Day, y = Temp)) +
   transition_time(Month)
 anim_save("temperature_mark.gif", animate(airquality_temp, renderer = gifski_renderer()))
 
-##Question: What is the difference between shadow_trail and shadow_mark?
+##QUESTION: What is the difference between shadow_trail and shadow_mark?
 
 ##transition_time gives us continuous animations, but we can also use 
 ##transition_states to make discrete ones instead
@@ -137,7 +137,7 @@ airquality_discrete <- ggplot(airquality, aes(x = Day, y = Temp)) +
   labs(title = "Month: {closest_state}")
 anim_save("temperature_states.gif", animate(airquality_discrete, renderer = gifski_renderer()))
 
-##Question: Other than the type of graph, what is the main difference in the code 
+##QUESTION: Other than the type of graph, what is the main difference in the code 
 ##when using transition_states() instead of transition_time()?
 
 ##Below is an example using a 3rd transition, transition_reveal()
@@ -147,7 +147,7 @@ airquality_reveal <- ggplot(airquality, aes(x = Day, y = Temp)) +
   transition_reveal(Day)
 anim_save("temperature_reveal.gif", animate(airquality_reveal, renderer = gifski_renderer()))
 
-##Task/Question: Use the the help tab and the animation above to describe what transition_reveal does.
+##TASK/QUESTION: Use the the help tab and the animation above to describe what transition_reveal does.
 
 ##If you have more complicated data, you can also use transition_components to animate by group, see below
 
@@ -163,7 +163,7 @@ anim_save("temperature_group.gif", animate(airquality_group, renderer = gifski_r
 #Airquality is not the ideal data set to use with components, but you can 
 #still see how each month moves independently from eachother
 
-##Question: When would using transition_components be the most beneficial in visualizing data?
+##QUESTION: When would using transition_components be the most beneficial in visualizing data?
 
 ##Just like when you are animating a slideshow, often having elements disapear in
 ##in interesting ways helps draw people to your visual. In gganimate you can do 
@@ -173,15 +173,15 @@ airquality_discrete +
   enter_fade()+
   exit_shrink()
 
-##Task: rewrite the code above to utilize alternative enter and exit functions: 
+##TASK: rewrite the code above to utilize alternative enter and exit functions: 
 ##https://gganimate.com/reference/enter_exit.html
 
-##Question: Take a look at the help for the animate() function, what other arguments can be used?
+##QUESTION: Take a look at the help for the animate() function, what other arguments can be used?
 
-##Task: Using the airquality_temp animation, adjust the animation to have a 
+##TASK: Using the airquality_temp animation, adjust the animation to have a 
 ##height of ##400, a width of 600, 100 frames, and have a speed of 10 frames per second
 
-##Task: Fix the code below, and insert comments to to inform on the changes you made
+##TASK: Fix the code below, and insert comments to to inform on the changes you made
 ##There are 3 mistakes, hint, it should not be a line graph, and all other functions 
 ##are correct, only the arguments may be incorrect
 
@@ -202,30 +202,30 @@ anim_save("temperature_discrete2.gif", animate(airquality_discrete, renderer = g
 
 # 1.1 Expanding on gganimate use cases ----------------------------------------####
 
-## Task: Load datasets used in this section
+## TASK: Load datasets used in this section
 
 data("gapminder")
 data("iris")
 
 ## These are the two datasets we'll be using for this section! Check them out using
 ## head() or glimpse()
-## Question: Which dataset is inherently time-based and why does that matter for animation?
+## QUESTION: Which dataset is inherently time-based and why does that matter for animation?
 
-## Task: Create a filtered gapminder dataset for North America only
+## TASK: Create a filtered gapminder dataset for North America only
 
-## Task: Build a scatterplot of GDP vs life expectancy. Set size to population and
+## TASK: Build a scatterplot of GDP vs life expectancy. Set size to population and
 ## group by country. Apply a log transform to the x-axis.
 ## Add transparency, labels, and a theme of your choice. Save this as an object named gap_plot.
 
-## Question: Why is grouping important when animating repeated entities like countries?
+## QUESTION: Why is grouping important when animating repeated entities like countries?
 
-## Task: Animate by year using transition_time(). Save this as gap_anim.
+## TASK: Animate by year using transition_time(). Save this as gap_anim.
 
 
 ## We've already investigated the ease_aes() function using linear easing. This
 ## changes the ways that our frames are animated together. This is called tweening.
 ## Let's explore some other tweening use cases!
-## Task: Run the code below and descriptively annotate which each function does. 
+## TASK: Run the code below and descriptively annotate which each function does. 
 
 # -in applies the easing function without any modification
 gap_anim + ease_aes('cubic-in')
@@ -251,24 +251,24 @@ gap_anim + ease_aes("bounce-in-out")
 ## QUESTION: What does the -in-out easing argument do to our animation? 
 ## Hint: Check ?ease_aes().
                 
-## Question: How does easing change the perception of movement over time?
+## QUESTION: How does easing change the perception of movement over time?
 
 ## gganimate also has view functions to change the framing of our animation
 ## over our data. 
 
-## Task: Add view_follow() to gap_anim to track evolving clusters
+## TASK: Add view_follow() to gap_anim to track evolving clusters
 
-## Question: What does view_follow() do? Why might this be useful?
+## QUESTION: What does view_follow() do? Why might this be useful?
 
-## Task: Try to apply view_step() to gap_anim.
+## TASK: Try to apply view_step() to gap_anim.
 
 ## This gives us an animation, but something is wrong.
-## Question: What is wrong with your animation? Why do you think this is happening
+## QUESTION: What is wrong with your animation? Why do you think this is happening
 ## HINT: Remember that transition_time is continuous. Check out ?view_step()
 
 ## Remember that iris dataset we loaded earlier? Now we're gonna switch to it!
 
-## Task: Using iris, plot Petal Length (x) vs Petal Width (y), colored by species.
+## TASK: Using iris, plot Petal Length (x) vs Petal Width (y), colored by species.
 ## Save this as iris_anim. Add the appropiate labels, title, and transition. 
 ## Remove the legend.
 ## Hint: For your title, remember that your data are discrete, not continuous.
@@ -276,9 +276,9 @@ gap_anim + ease_aes("bounce-in-out")
 ## We looked at enter_fade() and exit_shrink() previously, let's explore some more 
 ## animation effects. This, like easing, falls under the umbrella of Tweening!
 
-## Task: Add enter_fade() and exit_fade() effects
+## TASK: Add enter_fade() and exit_fade() effects
 
-## Task: Run the lines of code below and descriptively annotate what each function does.
+## TASK: Run the lines of code below and descriptively annotate what each function does.
 ## Hint: If you're unsure, run them piece-by-piece!
 
 iris_anim + enter_fly(x_loc = 0) + exit_fly(x_loc = 1)
@@ -301,10 +301,10 @@ iris_ease <- iris_base +
 
 (iris_reveal <- iris_anim + transition_reveal(Petal.Length))
 
-## Question: What does your animation look like? Why do you think this is the case?
+## QUESTION: What does your animation look like? Why do you think this is the case?
 ## Hint: Look at the usage for transition_reveal().
 
-## Task: Write 3 lines of code using different shadows to display point trajectories.
+## TASK: Write 3 lines of code using different shadows to display point trajectories.
 ## Do not use shadow_null()
 
 iris_reveal + shadow_trail()
@@ -316,7 +316,7 @@ iris_reveal + shadow_mark()
 ## gganimate can also be used to represent spatial data. We're going to bounce back
 ## to gapminder now! (You could say this section has bounce-in-out easing)
 
-## Task: Run the code below to setup our spatial data.
+## TASK: Run the code below to setup our spatial data.
 world_sf <- ne_countries(scale = "medium", returnclass = "sf")
 europe_sf <- filter(world_sf, continent == "Europe")
 gap_europe <- gapminder %>%
@@ -328,7 +328,7 @@ gap_europe <- gapminder %>%
 europe_life <- europe_sf %>%
   left_join(gap_europe, by = "iso_a3")
 
-## Task: Run the code to create an animation of European life expectancy over time.
+## TASK: Run the code to create an animation of European life expectancy over time.
 (europe_anim <- ggplot(europe_life) +
   
   geom_sf(aes(fill = lifeExp),
@@ -350,9 +350,9 @@ europe_life <- europe_sf %>%
   transition_time(year) +
   ease_aes("linear"))
 
-## Question: Why might animations be useful for visualizing spatial data?
+## QUESTION: Why might animations be useful for visualizing spatial data?
 
-## Question: What are some potential weaknesses of animating. 
+## QUESTION: What are some potential weaknesses of animating. 
 ## Hint: Think about how slow your computer probably ran!
              
 
@@ -426,11 +426,11 @@ ggplot(dailyAvg, aes(x = date, y = mean_temp)) +
   geom_smooth(method = "loess", se = FALSE, color = "red") +
   theme_bw()
 
-# Task: Create a new scatter plot by changing the labels of the y-axis to 
+# TASK: Create a new scatter plot by changing the labels of the y-axis to 
 # "Daily Average Temperature" and the x-axis to "Months". Give it a title 
 # called:"Daily Average Temp. in 2003".
 
-# Question: Between these two graphs, which graph would be better represent the
+# QUESTION: Between these two graphs, which graph would be better represent the
 # dailyAvg dataframe? Why?
 # Hint: The graph is comparing Date vs mean Temperature. 
 
@@ -446,7 +446,7 @@ library(hms)
 # For this part, we would be focusing on "Bubble graphs" but Gapminder does 
 # cover time-series across countries and continent color comparisons. 
 
-# Question: What are your initial thoughts on what bubble graphs measure and their general
+# QUESTION: What are your initial thoughts on what bubble graphs measure and their general
 # purpose?
 
 # We will be using 3 variables: months, hour, and mean_temperature.
@@ -459,7 +459,7 @@ rangeTemp <- tempData %>%
   mutate(time = hms::as_hms(time), hour = hour(time),
          month = month(date, label = TRUE, abbr = TRUE)
          
-         # Question: Why would it be a good idea to average the hourly temperatures 
+         # QUESTION: Why would it be a good idea to average the hourly temperatures 
          # instead of plotting each hour for this graph? 
          # HINT: Take a look at datapoints within rangeTemp and visualize the graph
          # it would make. 
@@ -486,7 +486,7 @@ rangeTemp <- tempData %>%
            theme_bw() +
            theme(plot.title = element_text(size = 14, face = "bold"),legend.position = "bottom")
          
-         # Question: When reviewing the data, the temperature is very low, why is that?
+         # QUESTION: When reviewing the data, the temperature is very low, why is that?
          # HINT: How do we measure temperature in science?
          
          # Correct this by changing the y label to "Average Temperature (°C)"!
@@ -541,7 +541,7 @@ rangeTemp <- tempData %>%
         
            # To start the animation process, we want to make a function that allows for 
            # flexibility so that the dataframe/graph can be adjusted if need to.
-           # Question: Take a look at the code below, what do you think ggplot is doing here? Does the
+           # QUESTION: Take a look at the code below, what do you think ggplot is doing here? Does the
            # coding look familiar?
            
            make_timeseries_plot <- function(data, day_index) {
@@ -559,11 +559,11 @@ rangeTemp <- tempData %>%
          # our workspace tidy.
          dir.create("frames_timeseries", showWarnings = FALSE)
          
-         # Question: What does dir.create stand for? And where do you expect this folder to end up?
+         # QUESTION: What does dir.create stand for? And where do you expect this folder to end up?
          
          # Now we instruct R how we want the Frame-generation loop to work.
          
-         # Question: Why do you think we are start on day 2 and why may it be more useful?
+         # QUESTION: Why do you think we are start on day 2 and why may it be more useful?
          # HINT: We are making a time series graph, what makes it different from a 
          # scatter plot?
          
@@ -599,7 +599,7 @@ gifski(png_files,gif_file = "dailyAvg_timeseries.gif",width = 900,height = 600,d
 # Although it's not intended for animation, it is a essential backbone to 
 # making graph have essential markings that would be difficult to add to GIFs.
 
-# Question: What are some examples that Magick can be useful in animating a graph? 
+# QUESTION: What are some examples that Magick can be useful in animating a graph? 
 
 # We will start with a function, that will plot our dataframe into a adjustable graph.
 
@@ -654,7 +654,7 @@ animation <- image_animate(image_join(watermarked), fps = 10)
 # Lastly, this will save your GIF into your files!
 image_write(animation, "dailyAvg_bubble_watermarked.gif")
 
-# Question: In your animation, what month has the highest temperature? 
+# QUESTION: In your animation, what month has the highest temperature? 
 
 # Magick appears to take longer than Gifski to create the GIF in your files so 
 # as I stated before, feel free to rerun the code to wake R-studio up. 
