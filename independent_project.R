@@ -229,6 +229,7 @@ T2_date_summary <- T2 %>%
   labs(title = "Pollen Limitation Effect on Seed Set",
        x = "Pollen Limitation",
        y = "Seed Set (%)"))
+## Remove outlier
 
 # Visualize the results of each pollination treatment on Seed Set %
 (plot_T5 <- T5 %>% 
