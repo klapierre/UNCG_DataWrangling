@@ -171,7 +171,7 @@ anim_save("temperature_discrete2.gif", animate(airquality_discrete, renderer = g
 ##Reminder to reset your working directory
 
 
-# Expanding on gganimate use cases ----------------------------------------
+# 1.1 Expanding on gganimate use cases ----------------------------------------####
 
 ## Task: Load datasets used in this section
 
@@ -327,7 +327,7 @@ europe_life <- europe_sf %>%
 ## Hint: Think about how slow your computer probably ran!
              
 
-# other useful packages ---------------------------------------------------
+# 1.2: FINALE: Other useful packages ---------------------------------------------------####
 # gifski, magick, gapminder
 
 
