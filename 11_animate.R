@@ -43,14 +43,18 @@ data("airquality")
 setwd("/Users/a_pandey2/Desktop/github/UNCG_DataWrangling/gganimate")
 
 ##TASK: Write code using the head() function to get a glimpse of the dataset
+head(airquality)
 
 ##QUESTION: One of the most basic animations is showing change overtime, what 
 ##columns in could we use to show this?
+# All the environmental variables like Ozone, Solar.R., Wind, Temp., can be
+# used to show changes overtime when combined with time variables like month and
+# day.
 
 ##TASK: Below is the skeleton of a line plot, rewrite the code to have Day as the 
 ##x axis and temp as the y axis, then give the plot a descriptive title
 
-ggplot(airquality, aes(x = ?, y = ?)) +
+ggplot(airquality, aes(x = Day, y = Temp)) +
   geom_line()
 
 ##TASK: Run the code below
@@ -61,6 +65,7 @@ airquality_temp <- ggplot(airquality, aes(x = Day, y = Temp)) +
   transition_time(Month)
 anim_save("temperature.gif", animate(airquality_temp, renderer = gifski_renderer()))
 
+
 ##TASK: Now run this code
 
 airquality_temp <- ggplot(airquality, aes(x = Day, y = Temp)) +
@@ -70,10 +75,18 @@ airquality_temp <- ggplot(airquality, aes(x = Day, y = Temp)) +
 animate(airquality_temp)
 
 #QUESTION: What is the difference in saved outcome between the two codes?
+# The first one saved as one single gif file while the second lines of code had it
+# as multiple files.
 
 ##QUESTION: What is the animate() function doing?
+# Animate() function is animating the different files as one.
 
 ##QUESTION: What happens if we take out the transition_time() function?
+airquality_temp <- ggplot(airquality, aes(x = Day, y = Temp)) +
+  geom_line() +
+  labs(title = "Temperature Over Days")
+animate(airquality_temp)
+# It only provided one single graph.
 
 ##Now that we have a simple animation we can apply other functions to make the
 ##Animation easier to view and understand
@@ -86,22 +99,27 @@ airquality_temp <- ggplot(airquality, aes(x = Day, y = Temp)) +
   labs(title = "Month: {frame_time}") +
   transition_time(Month)
 anim_save("temperature_titles.gif", animate(airquality_temp, renderer = gifski_renderer()))
+ 
+airquality_temp
 
 ##QUESTION: What is the new title of the graph?
+# It displays different months.
 
 ##QUESTION: Why would someone choose to use the {frame_time} argument instead of 
 ##just typing a whole new title?
+# Because it would be a lot of work to add title every time manually.
 
 ##QUESTION: Transitions can be used to control how smooth the animation plays
 ##What are some characteristics of the animation that might be helpful to modify?
+# Based on what the frames are generated, speed of the frame.
 
 ##Run the code below
-airquality_temp <- ggplot(airquality, aes(x = Day, y = Temp)) +
-  geom_line() +
-  ease_aes('linear')+
-  labs(title = "Month: {frame_time}") +
-  transition_time(Month)
-anim_save("temperature_ease.gif", animate(airquality_temp, renderer = gifski_renderer()))
+airquality_temp <- ggplot(airquality, aes(x = Day, y = Temp)) + # it created a new file to save whatever we do with ggplot from airquality data with Day as x-axis and temp as y-axis
+  geom_line() + # it is making a line with those data points
+  ease_aes('linear')+ # it makes the animation move with uniform speed
+  labs(title = "Month: {frame_time}") + # it makes the title of each month as title as it is animating
+  transition_time(Month) # the animation transitioned based on month
+anim_save("temperature_ease.gif", animate(airquality_temp, renderer = gifski_renderer())) # airquality_temp is stored as temperature_ease.gif using renderer gifski
 
 ##TASK: Annotate the code above with descriptive comments
 
@@ -123,6 +141,8 @@ airquality_temp <- ggplot(airquality, aes(x = Day, y = Temp)) +
 anim_save("temperature_mark.gif", animate(airquality_temp, renderer = gifski_renderer()))
 
 ##QUESTION: What is the difference between shadow_trail and shadow_mark?
+#Shadow_trail shows evenly spaced trails of past data points as the animation proceeds.
+#Shadow_mark shows 
 
 ##transition_time gives us continuous animations, but we can also use 
 ##transition_states to make discrete ones instead
