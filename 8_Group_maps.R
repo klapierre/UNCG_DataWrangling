@@ -119,6 +119,7 @@ states <- states %>% rename(State = NAME)
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 us_states_frost_2 <- left_join(states, state_frost_data, by = c("State"))
 =======
 us_states_frost <- left_join(states, frost_data, by = c("State"))
@@ -157,6 +158,10 @@ us_states_frost <- left_join(states, frost_data, by = c("State"))
 =======
 us_states_frost_2 <- left_join(states, state_frost_data, by = c("State"))
 >>>>>>> Getting rid of some random characters that came out of nowhere.
+=======
+us_states_frost_2 <- left_join(states, state_frost_data, by = c("State"))
+
+>>>>>>> Fixing the assignment 4 and assignment 8 code once again.
 
 #Next we will use ggplot to construct a map of the US States and number of Frost
 #days
@@ -173,6 +178,7 @@ ggplot(us_states_frost) +
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 =======
   ## Creates a plot of the frost days accross the country.
@@ -209,6 +215,10 @@ ggplot(us_states_frost) +
 
   ## Creates a plot of the frost days accross the country.
 >>>>>>> Getting rid of some random characters that came out of nowhere.
+=======
+  ## Creates a plot of the frost days accross the country.
+
+>>>>>>> Fixing the assignment 4 and assignment 8 code once again.
   geom_sf(aes(fill = Frost), color = "blue") +
   ## Uses the color blue as an indicator of number of frost days.
   theme_minimal() +

@@ -112,12 +112,16 @@ streamTempRename <- rename(.data=streamTemp,
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
-colnames(streamTempRename)
+<<<<<<< HEAD
 =======
+
+>>>>>>> Fixing the assignment 4 and assignment 8 code once again.
+colnames(streamTempRename)
+
 streamTempRename
->>>>>>> Renaming techincal difficulteis.
-=======
+
 colnames(streamTempRename)
+<<<<<<< HEAD
 >>>>>>> Section 1.1 of assignment 4 done.
 =======
 streamTempRename
@@ -131,6 +135,11 @@ streamTempRename
 =======
 colnames(streamTempRename)
 >>>>>>> Section 1.1 of assignment 4 done.
+=======
+
+colnames(streamTempRename)
+
+>>>>>>> Fixing the assignment 4 and assignment 8 code once again.
 
 # QUESTION: What differences do you notice from before? In your own words, what 
 # did each line from the rename function do? Why might this function be useful 
