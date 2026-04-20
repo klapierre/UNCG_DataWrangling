@@ -477,7 +477,8 @@ rangeTemp <- tempData %>%
          # Create a new dataframe called "f_hourMonthAvg" with a column labeled " 
          # mean_temp_F from the "mean_temp" column. Alter the data to go from celsius to 
          # fahrenheit.
-         # HINT: Conversion rate of "F -> C" is [ C = (F - 32)*(5/9) ]
+         # HINT: Conversion rate of "F -> C" is would look something like this 
+         # (mean_temp * 9/5) + 32)
          
          hourMonthAvg <- rangeTemp %>%
            group_by(month, hour) %>%
