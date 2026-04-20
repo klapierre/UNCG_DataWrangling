@@ -10,7 +10,7 @@
 
 # Pacman is a really convenient package for installing and  loading other packages
 # install it if you haven't already
-# install.packages("pacman")
+ install.packages("pacman")
 pacman::p_load(tidyverse,
               gganimate,
               gapminder,
@@ -49,7 +49,7 @@ data("airquality")
 ##TASK: Below is the skeleton of a line plot, rewrite the code to have Day as the 
 ##x axis and temp as the y axis, then give the plot a descriptive title
 
-ggplot(airquality, aes(x = ?, y = ?)) +
+ggplot(airquality, aes(x = "Day", y = "Temp")) +
   geom_line()
 
 ##TASK: Run the code below
@@ -69,10 +69,18 @@ airquality_temp <- ggplot(airquality, aes(x = Day, y = Temp)) +
 animate(airquality_temp)
 
 #QUESTION: What is the difference in saved outcome between the two codes?
+## The first one saves the animation without viewing it while the second
+## one lets me view the animation without saving it.
 
 ##QUESTION: What is the animate() function doing?
+## It plays the animation.
 
 ##QUESTION: What happens if we take out the transition_time() function?
+airquality_temp <- ggplot(airquality, aes(x = Day, y = Temp)) +
+  geom_line() +
+  labs(title = "Temperature Over Days")
+animate(airquality_temp)
+## It gives me an objects not supposrted error.
 
 ##Now that we have a simple animation we can apply other functions to make the
 ##Animation easier to view and understand
@@ -85,22 +93,33 @@ airquality_temp <- ggplot(airquality, aes(x = Day, y = Temp)) +
   labs(title = "Month: {frame_time}") +
   transition_time(Month)
 anim_save("temperature_titles.gif", animate(airquality_temp, renderer = gifski_renderer()))
+animate(airquality_temp)
 
 ##QUESTION: What is the new title of the graph?
+## It's whatever month the current frame is showing.
 
 ##QUESTION: Why would someone choose to use the {frame_time} argument instead of 
 ##just typing a whole new title?
+## So that the title adjusts automatically rather than having to manually
+## type a new title for each section.
 
 ##QUESTION: Transitions can be used to control how smooth the animation plays
 ##What are some characteristics of the animation that might be helpful to modify?
+## Possibly how much of the data is shown on each frame.
 
 ##Run the code below
 airquality_temp <- ggplot(airquality, aes(x = Day, y = Temp)) +
+  ## Sets what variable is the x and y axis.
   geom_line() +
+  ## Graphs the line?
   ease_aes('linear')+
+  ## Makes the line linear.
   labs(title = "Month: {frame_time}") +
+  ## Makes the main title dependent on the frame.
   transition_time(Month)
+## Sets the transition time to be based on the month.
 anim_save("temperature_ease.gif", animate(airquality_temp, renderer = gifski_renderer()))
+animate(airquality_temp)
 
 ##TASK: Annotate the code above with descriptive comments
 
@@ -112,6 +131,7 @@ airquality_temp <- ggplot(airquality, aes(x = Day, y = Temp)) +
   shadow_trail()+
   transition_time(Month)
 anim_save("temperature_trail.gif", animate(airquality_temp, renderer = gifski_renderer()))
+animate(airquality_temp)
 
 airquality_temp <- ggplot(airquality, aes(x = Day, y = Temp)) +
   geom_line() +
@@ -120,6 +140,7 @@ airquality_temp <- ggplot(airquality, aes(x = Day, y = Temp)) +
   shadow_mark()+
   transition_time(Month)
 anim_save("temperature_mark.gif", animate(airquality_temp, renderer = gifski_renderer()))
+animate(airquality_temp)
 
 ##QUESTION: What is the difference between shadow_trail and shadow_mark?
 
