@@ -485,15 +485,18 @@ time_utc <- ymd_hms("2026-04-14 18:00:00", tz = "UTC")
 time_utc
 
 ## QUESTION: What does the 'tz' argument produce?
+Time zone; it'll provide' the time zone the date provided is likely in. 
 
 ## TASK: Determine the time zone of 
 tz(time_utc)
+UTC
 
 ## The with_tz() function shows the exact same moment in a different timezone.
 time_ny <- with_tz(time_utc, tzone = "America/New_York")
 time_ny
 
 ## QUESTION: Has the actual moment in time changed?
+it has switched to military time at 14 EDT on it. 
 
 ##TASK: Convert time_UTC to Los Angeles time.
 time_la <- with_tz(time_utc, tzone = "America/Los_Angeles")
@@ -508,12 +511,24 @@ time_tokyo <- with_tz(time_utc, tzone = "Asia/Tokyo")
 time_tokyo
 
 ## TASK: Print all converted times.
+> time_ny <- with_tz(time_utc, tzone = "America/New_York")
+> time_ny
+[1] "2026-04-14 14:00:00 EDT"
+> time_la <- with_tz(time_utc, tzone = "America/Los_Angeles")
+> time_la
+[1] "2026-04-14 11:00:00 PDT"
+> time_chicago <- with_tz(time_utc, tzone = "America/Chicago")
+> time_chicago
+[1] "2026-04-14 13:00:00 CDT"
+> time_tokyo <- with_tz(time_utc, tzone = "Asia/Tokyo")
+> time_tokyo
+[1] "2026-04-15 03:00:00 JST"
 
 ##QUESTION: Why do the shown clock times appear different?
-
+The time zones indicated by the function take a reference interval and convert into the time zone. 
 
 ##QUESTION: Are these different moments?
-
+No, they are in different places on the Earth but time wise, it is the same moment. 
 
 ## Force_tz() is a handy function.
 ## With_tz() keeps the current moment in time.
@@ -527,11 +542,17 @@ time_with_tz
 time_force_tz
 
 ## QUESTION: What's the main difference between with_tz() and force_tz()?
+There is a 4 hour difference between the two.
 
+> time_with_tz
+[1] "2026-04-14 14:00:00 EDT"
+> time_force_tz
+[1] "2026-04-14 18:00:00 EDT"
 
 ##TASK: Determine the time zone for both items.
 tz(time_with_tz)
 tz(time_force_tz)
+American/new york
 
 ## Time zones are helpful for meetings, flights, and scheduling.
 ## Let us create a short array of meeting times in UTC.
@@ -559,6 +580,7 @@ meeting_data <- meeting_data %>%
 meeting_data
 
 ## QUESTION: How is this useful?
+I believe it makes it into more easier datapoints to do calculations and datapoints on. 
 
 ## The nycflights13 dataset includes flight data from New York City flights.
 
@@ -590,7 +612,7 @@ flight_timezones
 
 
 ## QUESTION: Why do dep_time_ny, dep_time_utc, and dep_time_la display different hours?
-
+They are ALL 3 in different timezones due to how big the US is. 
 
 ## TASK: Determine the departure hour and weekday in New York Time.
 flight_timezones <- flight_timezones %>%
@@ -599,14 +621,34 @@ flight_timezones <- flight_timezones %>%
 
 flight_timezones
 
+year month   day  hour minute carrier flight origin dest  dep_time_ny        
+<int> <int> <int> <dbl>  <dbl> <chr>    <int> <chr>  <chr> <dttm>             
+  1  2013     1     1     5     15 UA        1545 EWR    IAH   2013-01-01 05:15:00
+2  2013     1     1     5     29 UA        1714 LGA    IAH   2013-01-01 05:29:00
+3  2013     1     1     5     40 AA        1141 JFK    MIA   2013-01-01 05:40:00
+4  2013     1     1     5     45 B6         725 JFK    BQN   2013-01-01 05:45:00
+5  2013     1     1     6      0 DL         461 LGA    ATL   2013-01-01 06:00:00
+6  2013     1     1     5     58 UA        1696 EWR    ORD   2013-01-01 05:58:00
+7  2013     1     1     6      0 B6         507 EWR    FLL   2013-01-01 06:00:00
+8  2013     1     1     6      0 EV        5708 LGA    IAD   2013-01-01 06:00:00
+9  2013     1     1     6      0 B6          79 JFK    MCO   2013-01-01 06:00:00
+10  2013     1     1     6      0 AA         301 LGA    ORD   2013-01-01 06:00:00
+
 ## TASK: Determine how many of these practice flights depart during the course of each New York hour.
 flight_timezones %>%
   count(dep_hour_ny)
 
-## QUESTION: Why is local time better than UTC for human scheduling?
+A tibble: 2 × 2
+dep_hour_ny     n
+<int> <int>
+     5     5
+     6     5
 
+## QUESTION: Why is local time better than UTC for human scheduling?
+I imagine local time is better for most people as they are accustomed to their timezone.
 
 ##QUESTION: In one sentence, explain time zone conversion in lubridate.
+Ultizing tz(), we can convert any given time across different time zones into a easy notation.
 
 # ---------------------------------------------------------- #
 #### Part 2.0: Practicing your skills                       ####
@@ -628,6 +670,11 @@ flight_timezones %>%
 # (3) unite the genus and species names and name this new column "species". Separate the obsevations with a single space (" ")
 # (4) using the select function, remove "family", "genus", "subgenus", "longTrap", "latTrap", and "elevTrap"
 # (5) rename "arthOrder" to "order"
+
+arthropods <- read.csv("beneficials_unified.xlsx")
+arthropods <- arthropods %>%
+  select(arthOrder:deployedhours)
+
 
 
 #QUESTION: How many variables does the "arthropods" dataset have? Why does this number differ from the "beneficials" dataset? 
