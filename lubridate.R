@@ -347,7 +347,7 @@ flight_timespans %>%
 # ---------------------------------------------------------- #
 
 ## TASK: load in beneficials_unified.csv and rename it data_set
-data_set <-read.xlsx("beneficials_unified.xlsx.pdf")
+data_set <-read_excel("beneficials_unified.xlsx")
 ## Now we will clean the data set to only contain data with time 
 clean_time_data <- data_set %>% ## keep in assignmet 
   select(-(1:26), -(38:43)) ## keep in assignment 
