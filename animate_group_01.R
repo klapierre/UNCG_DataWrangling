@@ -140,11 +140,11 @@ anim_save("temperature_reveal.gif", animate(airquality_reveal, renderer = gifski
 
 airquality_clean <- na.omit(airquality)
 airquality_group <- ggplot(airquality_clean,aes(x = Temp, y = Ozone, group = Month, color = factor(Month))) +
-  geom_point() +
-  ease_aes("linear") +
-  labs(title = "Temperature vs Ozone by Month") +
-  shadow_trail()+
-  transition_components(Month)
+  geom_point(size=2) +
+  ease_aes("cubic-in-out") +
+  labs(title = "Temperature vs Ozone (Day: {frame_time})",x = "Temperature",y = "Ozone",color = "Month") +
+  shadow_trail(alpha=0.3)+
+  transition_components(Day)
 anim_save("temperature_group.gif", animate(airquality_group, renderer = gifski_renderer(),  nframes = 150,fps = 15,width = 600,height = 400))
 
 #Airquality is not the ideal data set to use with components, but you can still see how each month moves independently from eachother
