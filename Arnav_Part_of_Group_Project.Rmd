@@ -1,0 +1,245 @@
+---
+title: "Arnav_Part_of_Group_Project"
+author: "Arnav Pandey"
+date: "2026-04-20"
+output: pdf_document
+---
+
+--------------------------------------------------------------------------------  
+
+# Section 2: Formatting Text Using RMarkdown Syntax  
+
+--------------------------------------------------------------------------------
+
+Objective: learn how to format the appearance of your document in your chosen output format.
+Author: Arnav Pandey (a_pandey2@uncg.edu)   
+
+.........................
+
+## 2.1. Headings
+.........................
+
+Task: Read the question below, click **Knit** to render the document and return here to answer the question.  
+Question: What difference do you notice about the above line that starts with
+`# Section 2: Formatting a Report Using RMarkdown Syntax` compared to the line
+`Objective: learn to format how your document appears in the output of your choice`?  
+Answer:
+
+
+\
+
+Placing a hashtag (#) at the beginning of a line turns it into a heading. 
+RMarkdown supports six levels of headings. 
+
+\
+
+
+Task: Click Knit to observe how different heading levels below appear in the rendered output.
+
+# Line 1: This is an example to show different levels of headings in RMarkdown.
+## Line 2: Line 1: This is an example to show different levels of headings in RMarkdown.
+### Line 3: This is an example to show different levels of headings in RMarkdown.
+#### Line 4: This is an example to show different levels of headings in RMarkdown.
+##### Line 5: This is an example to show different levels of headings in RMarkdown.   
+###### Line 6: This is an example to show different levels of headings in RMarkdown.
+
+
+Question: What happens to the size of text when you increase the number of hashtags (#)?  
+Answer: 
+
+\
+
+
+In the example above, the higher the number of hashtags, the lower the heading level (smaller font).  
+
+Question: How many hashtags would you use if you wanted highest level heading (largest font)?  
+Answer: 
+
+\
+
+
+Question: In the rendered output, do Line 5 and Line 6 from above example appear in the same line?  
+Answer:
+
+\
+
+
+Task: Go to the metadata for this assignment and change the output from `pdf_document` to `html_document`.  
+Question: Did your Line 5 and Line 6 appear in different lines?  
+Answer:
+
+\
+
+
+Sometimes the way the program renders output differs between formats.
+You can leave two spaces at the end of the line for a line break.  
+
+Task: Change the output back to `pdf_document`.
+
+.........................
+
+## 2.2 Italics
+.........................  
+You may sometimes want to italicize text. RMarkdown allows you to do this easily.
+To make your text italics, you can enclose it within single asterisk `*[text]*`.
+
+*Line 1: This is an example to show how to make text italics.* 
+
+\
+
+Task: Rewrite Line 1 below and only italicize the word "italics." Leave two spaces at the end of sentence for a line break.  
+Answer:
+
+\
+
+You may be wondering if there is another way to make the text italics, and in fact, there is.
+You can also enclose your text within single underscore `_[text]_`.
+
+\
+
+
+Task: In the paragraph below, make "Arnav," "Biological Data Wrangling and Visualization" and "RMarkdown" italics in the following paragraph using
+both the methods (asterisks and underscore) mentioned above at least once. 
+My name is Arnav Pandey. I am currently enrolled in Biological Data Wrangling and Visualization (BIO 457/657).
+This is a task to use RMarkdown to make a text output italics.  
+
+\
+
+
+.........................
+
+## 2.3 Bold
+.........................  
+Sometimes you may want to bold your text to emphasize its importance. RMarkdown supports that as well.  
+  
+Task: Read the question below, click Knit, and return to answer the question below.
+Question: Which of the following lines gives you bold text?  
+Line 1. This is an example to show how to make text bold.  
+**Line 2: This is an example to show how to make text bold.**  
+Answer:  
+
+\
+
+You can use two asterisks before and after the text to make it bold (`**[text]**`).   
+There is also another way to make a text bold by enclosing your text within two underscores(`__[text]__`). 
+
+Don't believe me? Knit to see if the line below is bold.  
+
+__Line 3: This is an example to show how to make text bold.__
+
+\
+
+Like you practiced with italics, you can make any word or phrase within a sentence bold. See example of it below when you hit Knit.  
+Line 5: This is an example to show how to make text **bold**.  
+Line 4: This is an __example__ to show how to make text bold.   
+
+\
+
+Task: In the paragraph below, make "Arnav," "Biological Data Wrangling and Visualization" and "RMarkdown" bold in the following paragraph using
+both the methods (asterisks and underscores) mentioned above at least once.   
+My name is Arnav Pandey. I am currently enrolled in Biological Data Wrangling and Visualization (BIO 457/657).
+This is a task to use RMarkdown to make a text output bold.  
+
+\
+
+
+.........................
+
+## 2.4 Bold and Italics
+.........................
+
+Is there a way to make a text both bold and italics at the same time? Indeed, there is!
+You can enclose your text within three asterisks (`***[text]***`). or underscores (`___[text]___`).
+
+\
+
+Task: In the paragraph below, make "Arnav," "Biological Data Wrangling and Visualization" and "RMarkdown" bold italics using both the methods mentioned above at least once.   
+My name is Arnav Pandey. I am currently enrolled in Biological Data Wrangling and Visualization (BIO 457/657).
+This is a task to use RMarkdown to make a text output bold.  
+
+
+\
+\
+
+In sections 2.2, 2.3, and 2.4, you learnt how to make text italics, bold, or bold+italics by enclosing the text within one, two, and three asterisks or underscores, respecitvely. You might be tempted to start enclosing a text by underscore and end it using asterisk. For example:  
+
+*italics_  
+__bold**  
+***bold italics___   
+
+Above lines will not give your desired output, so you will have to be consistent with how you enclose your texts. Use the same symbols at both ends!
+
+
+.........................
+
+## 2.5 Bulleted list
+.........................
+
+In RMarkdown, you can list your items in the RMarkdown as an unordered (bulleted) list.
+
+To do that, you can follow these steps.
+Step 1: leave an empty line before list. 
+Step 2: Use '+', '-', or '*' followed by single space before you write your list item.  
+Step 3: To add another item, leave two spaces at the end of the previous item and go to a new line below and repeat Step 2.  
+
+Task: Knit to see how the items below appear in a list in the output.  
+
++ Apple
++ Banana 
++ Raspberry
+
+
+You can also nest subitems within an item. If you want a nested list as such, just indent the subitem that you want within an item with two spaces. Below is an example of it. 
+
+Task: Hit Knit to look at the output of the lines below:
+
+- Apple
+- Banana
+- Berries 
+  - Blueberries
+  - Strawberries 
+  - Raspberries 
+  - Blackberries
+  - Cranberries
+- Papaya
+
+\
+
+Task: Copy the above list below, add an item "Melon" and nest different types of melons as its subitems.
+Hit Knit to see your output.  
+
+
+
+.........................
+
+## 2.6 Numbered List
+.........................
+
+Getting a numbered list is even easier compared to unordered or bulleted list. 
+To generate a numbered list, you can follow these steps.
+Step 1: Leave an empty line before list. 
+Step 2: Use uppercase/lowercase English alphabets, Arabic numerals, uppercase or lowercase roman numerals followed by space before you write your list item. Be consistent how you want to list.
+Step 3: To add another item, leave two spaces at the end of the previous item and go to a new line below and repeat Step 2.  
+
+I. Apple  
+II. Banana  
+III. Raspberry  
+
+\
+
+You can also nest subitems within an item. If you want a nested list as such, just indent the subitem that you want within an item with three spaces. You can use different order format for your subitems than your primary item as well. Below is an example of it. 
+**Please be careful with spaces!**
+
+
+1. Apple
+2. Banana 
+3. Berries 
+   1. Blueberries
+   2. Strawberries 
+   3. Raspberries 
+   4. Blackberries
+   5. Cranberries
+4. Papaya  
+
+
+Note: If you want to use Roman Numerals, you may have to leave an empty line between items on list.
