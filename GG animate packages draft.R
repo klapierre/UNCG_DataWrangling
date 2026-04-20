@@ -87,8 +87,6 @@ library(hms)
   
 # What are your initial thoughts on what bubble graphs measure and their general
 # purpose?
-Bubble graphs utlize 3-4 variables to measure! The purpose of the bubble graph is 
-to reveal patterns across groups by allowing the colors separate different groups.
   
 # We will be using 3 variables: months, hour, and mean_temperature.
 # To graph this, we will need to reformat our data. 
@@ -104,8 +102,6 @@ rangeTemp <- tempData %>%
 # plotting each hour for this graph? 
 # HINT: Take a look at datapoints within rangeTemp and visualize the graph
 # it would make. 
-By averaging the hours, we will not have multiple datapoints stacked one another! 
-We will have cohesive points that cover each hour.
 
 # You will group by month and hour and the summarize the final column to find 
 # the mean Air. temperature. We will double check if there are any NA's we
@@ -139,11 +135,13 @@ ggplot(hourMonthAvg, aes(x = hour,y = mean_temp,color = month,size = mean_temp))
 # mean_temp_F from the "mean_temp" column. Alter the data to go from celsius to 
 # fahrenheit.
 # HINT: Conversion rate of "F -> C" is [ C = (F - 32)*(5/9) ]
-f_hourMonthAvg <- rangeTemp %>%
+
+hourMonthAvg <- rangeTemp %>%
   group_by(month, hour) %>%
   summarize(mean_temp = mean(Air.temperature, na.rm = TRUE)) %>%
-  mutate(mean_temp_F = (mean_temp * 9/5) + 32) %>% 
   ungroup()
+# Use this code to guide you to creating the "f_hourMonthAvg" dataframe. If we
+# are creating a new column, what is the function to do that?
 
 # With the new dataframe and the code before this, change the y label to "Average Temperature (°F)". What are the ranges for the y-axis now? 
 ggplot(f_hourMonthAvg, aes(x = hour,y = mean_temp_F,color = month,size = mean_temp_F)) +
@@ -192,8 +190,6 @@ library(gifski)
       labs(x = "Date",y = "Average Temperature (°C)",title = "Daily Average Temperature Over Time",subtitle = paste("Day:", data$date[day_index])) +
       theme_bw() +
       theme(plot.title = element_text(size = 14, face = "bold")) }
-
----> ggplot(), the function itself is making a graph under the following conditions. We have seen this similiar ggplot structure just in a few lines before this under gapminder. 
 
 # in this ggplot, we will be graphing each day with it's corresponding temperature.
 # Essentially a time series!
