@@ -65,6 +65,12 @@ airquality_temp <- ggplot(airquality, aes(x = Day, y = Temp)) +
   transition_time(Month)
 anim_save("temperature.gif", animate(airquality_temp, renderer = gifski_renderer()))
 
+airquality_temp <- ggplot(airquality, aes(x = Day, y = Temp)) +
+  geom_line() +
+  labs(title = "Temperature Over Days") +
+  transition_time(Month)
+anim_save("temperature.gif", animate(airquality_temp, renderer = gifski_renderer()))
+#Nothing load
 ##TASK: Now run this code
 
 airquality_temp <- ggplot(airquality, aes(x = Day, y = Temp)) +
@@ -73,8 +79,14 @@ airquality_temp <- ggplot(airquality, aes(x = Day, y = Temp)) +
   transition_time(Month)
 animate(airquality_temp)
 
+airquality_temp <- ggplot(airquality, aes(x = Day, y = Temp)) +
+  geom_line() +
+  labs(title = "Temperature Over Days") +
+  transition_time(Month)
+animate(airquality_temp)
+#Nothing load
 #QUESTION: What is the difference in saved outcome between the two codes?
-
+#I moved on because there was no animation
 ##QUESTION: What is the animate() function doing?
 
 ##QUESTION: What happens if we take out the transition_time() function?
