@@ -331,13 +331,11 @@ flight_timespans %>%
 #### Part 1.2: Date Arithmetic                            ####
 # ---------------------------------------------------------- #
 ## TASK: load in beneficials_unified.csv and rename it data_set
-data_set <-read.csv("beneficials_unified.xlsx")
-
-# this isn't working and I am a lot more concerned about my other classes and thesis proposal presentation right now, so I am going to set this aside for the time being. 
+data_set <-read.csv("beneficials_unified.csv")
 
 ## Now we will clean the data set to only contain data with time 
-clean_time_data <- data_set %>% 
-  select(-(1:25), -(38:43)) ## keep in assignment 
+clean_time_data <- data_set %>% ## keep in assignment 
+  select(-(1:26), -(38:43))
 
 ## now we will create a start datetime ##
 clean_time_data <- clean_time_data %>%
@@ -380,49 +378,47 @@ clean_time_data2 <- clean_time_data %>%
 # lets add 6 days to our start_datetime column in clean_time_data2
 clean_time_data2 <- clean_time_data2 %>%
   mutate(start_plus_7 = start_datetime + days(7))
-## Task- check the data set which column changed ? 
-start_day 
-##  question why would this be helpful ? 
-#  it can help us predict future dates and can help us compare a time window 
+
 ## TASK: Subtract month from clean_time_data2 
 clean_time_data2 <- clean_time_data2 %>%
   mutate(start_minus_1month = start_datetime - months(1))
-## TASK: View the dataset clean_time_data2- what do you see?
-# 2 new columns with information
-## why is this useful ?
 
 ## lets us check the difference between the end and start 
 clean_time_data2 <- clean_time_data %>%
   mutate(
     duration_calc = end_datetime - start_datetime
   )
-## what is the difference in column one #hint look at the end last column in the
-# dataset 
+## what is the difference in column one 
+#hint look at the end last column in the dataset 
 
 ## okay lets work with real time, first we are gonna look at the today's date
 today_date <- today ()
 ## now create a new dataset called my_birthday and include your own birthday. 
 ## if your birthday as already passed use another date- 
 ## hint ymd 
-my_birthday <- ymd("2002-09-05")
+my_birthday <- ymd("1998-11-20")
 # now we will create data set called my birthday this year 
 my_birthday_this_year <- ymd(paste0(year(today_date), "-07-20"))
 ## create a dataset called birthday_time and subtract my_birthday_this_year and 
 ## today_data
 birthday_time <- my_birthday_this_year - today_date
 ## TASK: View this dataset you just create ? what does this value mean?
+# i believe my_birthday_this_year shows the time between today (7/20) and my birthday (11/20)
 
 ## Okay now lets figure out what day it is gonna be 60 days from now
 # TASK - Add 30 days to today_date and rename the dataset to days_30
 days_30 <- today_date + days(30)
 # question: what is the day 30 days from now? 
+# 2026/05/20 UTC
 
 ## Task: create another data set with today_date but subtract 30 days and rename
 # to days_minus_30
 days_minus_30 <- today_date - days(30)
 ## what is the date ?
+# 2026/03/21 UTC
 
 ## question: How is lubridate and arithmetic useful? 
+# it can be used to calculate how much time has passed or will pass from a provided date
 
 # ---------------------------------------------------------- #
 #### Part 1.3: Time Zones                                 ####
