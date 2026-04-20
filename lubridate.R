@@ -210,7 +210,6 @@ flight_timespans<-flights %>% slice(1:20)
 # The time_hour column already contains a date-time value.
 # We will use this as a simple starting time for each flight.
 # TASK: Create a new column called departure_time from the time_hour column.
-hhhhhhhhhhhhhhhhhh
 flight_timespans<-flight_timespans %>% mutate(departure_time=time_hour)
 # A duration is an exact amount of time.
 # Lubridate creates durations with functions like dseconds(), dminutes(), dhours(), and ddays().
@@ -348,7 +347,7 @@ flight_timespans %>%
 # ---------------------------------------------------------- #
 
 ## TASK: load in beneficials_unified.csv and rename it data_set
-data_set <-read.csv("beneficials_unified.csv")
+data_set <-read.xlsx("beneficials_unified.xlsx.pdf")
 ## Now we will clean the data set to only contain data with time 
 clean_time_data <- data_set %>% ## keep in assignmet 
   select(-(1:26), -(38:43)) ## keep in assignment 
@@ -454,18 +453,26 @@ days_minus_30 <- today_date - days(30)
 time_utc <- ymd_hms("2026-04-14 18:00:00", tz = "UTC")
 time_utc
 
+time_utc <- ymd_hms("2026-04-14 18:00:00", tz = "UTC")
+time_utc
 ## QUESTION: What does the 'tz' argument produce?
-
+#The 'UTC' (Coordinated Universal Time) time zone
 ## TASK: Determine the time zone of 
 tz(time_utc)
-
+tz(time_utc)
+#'UTC' is the timezone
 ## The with_tz() function shows the exact same moment in a different timezone.
 time_ny <- with_tz(time_utc, tzone = "America/New_York")
 time_ny
 
+time_ny <- with_tz(time_utc, tzone = "America/New_York")
+time_ny
 ## QUESTION: Has the actual moment in time changed?
-
+#No, the exact moment was changed into the NY timezone (14:00:00 EDT)
 ##TASK: Convert time_UTC to Los Angeles time.
+time_la <- with_tz(time_utc, tzone = "America/Los_Angeles")
+time_la
+
 time_la <- with_tz(time_utc, tzone = "America/Los_Angeles")
 time_la
 
@@ -473,17 +480,24 @@ time_la
 time_chicago <- with_tz(time_utc, tzone = "America/Chicago")
 time_chicago
 
+time_chicago <- with_tz(time_utc, tzone = "America/Chicago")
+time_chicago
 ## TASK: Convert time_UTC to Tokyo time.
 time_tokyo <- with_tz(time_utc, tzone = "Asia/Tokyo")
 time_tokyo
 
+time_tokyo <- with_tz(time_utc, tzone = "Asia/Tokyo")
+time_tokyo
 ## TASK: Print all converted times.
-
+print(time_utc)
+print(time_tokyo)
+print(time_ny)
+print(time_la)
+print(time_chicago)
 ##QUESTION: Why do the shown clock times appear different?
-
-
+#Each time is in a different time zone.
 ##QUESTION: Are these different moments?
-
+#No these are not different moments.
 
 ## Force_tz() is a handy function.
 ## With_tz() keeps the current moment in time.
@@ -492,17 +506,26 @@ time_tokyo
 time_with_tz <- with_tz(time_utc, tzone = "America/New_York")
 time_force_tz <- force_tz(time_utc, tzone = "America/New_York")
 
+time_with_tz <- with_tz(time_utc, tzone = "America/New_York")
+time_force_tz <- force_tz(time_utc, tzone = "America/New_York")
 ## TASK: Run the two objects below.
 time_with_tz
 time_force_tz
 
+time_with_tz
+time_force_tz
 ## QUESTION: What's the main difference between with_tz() and force_tz()?
-
+# The with_tz() function shows the exact same moment in a different timezone. The force_tz() maintains the same clock time while changing the attached zone.
+#time_with_tz the exact moment was not messed with, only the time zone was. In time_force_tz the clock time was the same, except the time zone.
 
 ##TASK: Determine the time zone for both items.
 tz(time_with_tz)
 tz(time_force_tz)
 
+tz(time_with_tz)
+#America/New York
+tz(time_force_tz)
+#America/New York
 ## Time zones are helpful for meetings, flights, and scheduling.
 ## Let us create a short array of meeting times in UTC.
 meeting_times_utc <- ymd_hms(c("2026-04-14 13:00:00",
@@ -510,10 +533,16 @@ meeting_times_utc <- ymd_hms(c("2026-04-14 13:00:00",
                                "2026-04-14 20:45:00"), tz = "UTC")
 meeting_times_utc
 
+meeting_times_utc <- ymd_hms(c("2026-04-14 13:00:00",
+                               "2026-04-14 16:30:00",
+                               "2026-04-14 20:45:00"), tz = "UTC")
+meeting_times_utc
 ## TASK: Convert the meeting times to New York time.
 meeting_times_ny <- with_tz(meeting_times_utc, tzone = "America/New_York")
 meeting_times_ny
 
+meeting_times_ny <- with_tz(meeting_times_utc, tzone = "America/New_York")
+meeting_times_ny
 ## TASK: Add the meeting timings to a dataframe.
 meeting_data <- data.frame(
   meeting_id = 1:3,
@@ -521,6 +550,11 @@ meeting_data <- data.frame(
   ny_time = meeting_times_ny)
 meeting_data
 
+meeting_data <- data.frame(
+  meeting_id = 1:3,
+  utc_time = meeting_times_utc,
+  ny_time = meeting_times_ny)
+meeting_data
 ## TASK: Determine the hour and weekday of the New York meeting times.
 meeting_data <- meeting_data %>%
   mutate(ny_hour = hour(ny_time),
@@ -528,14 +562,20 @@ meeting_data <- meeting_data %>%
 
 meeting_data
 
-## QUESTION: How is this useful?
+meeting_data <- meeting_data %>%
+  mutate(ny_hour = hour(ny_time),
+         ny_day = wday(ny_time, label = TRUE, abbr = FALSE))
 
+meeting_data
+## QUESTION: How is this useful?
+#Organizes the data to better anaylze the times. We can convert into different time zones and determine the hour and day for each time.
 ## The nycflights13 dataset includes flight data from New York City flights.
 
 ## Lubridate can be used to create date time columns and practice time zones.
 
 ## TASK: Review the first few rows of the flights dataset.
-
+head(flights)
+flights
 ## TASK: Create a smaller practice dataframe by selecting flight columns.
 flight_timezones <- flights %>%
   select(year, month, day, hour, minute, carrier, flight, origin, dest) %>%
@@ -543,41 +583,60 @@ flight_timezones <- flights %>%
 
 flight_timezones
 
+flight_timezones <- flights %>%
+  select(year, month, day, hour, minute, carrier, flight, origin, dest) %>%
+  slice(1:10)
+
+flight_timezones
 ## Because these flights depart from New York, the mentioned times are New York local time.
 ## TASK: Add a New York departure time column.
 flight_timezones <- flight_timezones %>%
   mutate(dep_time_ny = make_datetime(year, month, day, hour, minute,
                                      tz = "America/New_York"))
+flight_timezones
 
+flight_timezones <- flight_timezones %>%
+  mutate(dep_time_ny = make_datetime(year, month, day, hour, minute,
+                                     tz = "America/New_York"))
 flight_timezones
 ## TASK: Convert dep_time_ny into UTC and Los Angeles time.
 flight_timezones <- flight_timezones %>%
   mutate(dep_time_utc = with_tz(dep_time_ny, tzone = "UTC"),
          dep_time_la = with_tz(dep_time_ny, tzone = "America/Los_Angeles"))
-
 flight_timezones
 
-
+flight_timezones <- flight_timezones %>%
+  mutate(dep_time_utc = with_tz(dep_time_ny, tzone = "UTC"),
+         dep_time_la = with_tz(dep_time_ny, tzone = "America/Los_Angeles"))
+flight_timezones
 
 ## QUESTION: Why do dep_time_ny, dep_time_utc, and dep_time_la display different hours?
 
-
+#The hours changed based on the different time zones, however they re are still the exact same moment
 ## TASK: Determine the departure hour and weekday in New York Time.
 flight_timezones <- flight_timezones %>%
   mutate(dep_hour_ny = hour(dep_time_ny),
          dep_day_ny = wday(dep_time_ny, label = TRUE, abbr = FALSE))
+flight_timezones
 
+flight_timezones <- flight_timezones %>%
+  mutate(dep_hour_ny = hour(dep_time_ny),
+         dep_day_ny = wday(dep_time_ny, label = TRUE, abbr = FALSE))
 flight_timezones
 
 ## TASK: Determine how many of these practice flights depart during the course of each New York hour.
 flight_timezones %>%
   count(dep_hour_ny)
 
+flight_timezones %>%
+  count(dep_hour_ny)
+#5 flights depart at 5am
+#5 flights depart at 6am
 ## QUESTION: Why is local time better than UTC for human scheduling?
-
+#The local time is better for human scheduling because it aligns with the sun, human circadian rhythms, and local business hours. The UTC causes daily routines to shift arbitraily, making it impractical for coordinating sleep, work, or social events.
 
 ##QUESTION: In one sentence, explain time zone conversion in lubridate.
-
+#If you use "with_tz()" function, the time zone will change but keeping the same point in time, the "force_tz()" function changes the time zone and a different point in time.
 # ---------------------------------------------------------- #
 #### Part 2.0: Practicing your skills                       ####
 # ---------------------------------------------------------- 
