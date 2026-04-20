@@ -348,35 +348,54 @@ gap_anim+
 ## QUESTION: What is wrong with your animation? Why do you think this is happening
 ## HINT: Remember that transition_time is continuous. Check out ?view_step()
 ?view_step
+# Nothing appeared for me. It should have been because view_step() uses discrete
+# data while years is the continuous data.
 
 ## Remember that iris dataset we loaded earlier? Now we're gonna switch to it!
+data("iris")
+head(iris)
 
 ## TASK: Using iris, plot Petal Length (x) vs Petal Width (y), colored by species.
 ## Save this as iris_anim. Add the appropiate labels, title, and transition. 
 ## Remove the legend.
 ## Hint: For your title, remember that your data are discrete, not continuous.
+iris_anim <- ggplot(iris,
+                    aes(x = Petal.Length,
+                        y = Petal.Width,
+                        color = Species))+
+  geom_point()+
+  labs(title = "Species:{closest_state}",
+       x ="Petal Length",
+       y = "Petal Width")+
+  theme(legend.position = "none")+
+  transition_states(Species)
+
+iris_anim
 
 ## We looked at enter_fade() and exit_shrink() previously, let's explore some more 
 ## animation effects. This, like easing, falls under the umbrella of Tweening!
 
 ## TASK: Add enter_fade() and exit_fade() effects
+iris_anim+
+  enter_fade()+
+  exit_fade()
 
 ## TASK: Run the lines of code below and descriptively annotate what each function does.
 ## Hint: If you're unsure, run them piece-by-piece!
 
-iris_anim + enter_fly(x_loc = 0) + exit_fly(x_loc = 1)
+iris_anim + enter_fly(x_loc = 0) + exit_fly(x_loc = 1) #points fly in to the plot from left side and exit to the right
 
-iris_anim + enter_drift(y_mod = 1) + exit_drift(x_mod = 1) 
+iris_anim + enter_drift(y_mod = 1) + exit_drift(x_mod = 1) #points drift in vertically and exit horizontally
 
-iris_anim + enter_recolor(color = "pink") + exit_recolor(color = "brown")
+iris_anim + enter_recolor(color = "pink") + exit_recolor(color = "brown") #points change color when they appear and disappear
 
-iris_anim + enter_grow(size = 10) + exit_shrink(size = 0.1)
+iris_anim + enter_grow(size = 10) + exit_shrink(size = 0.1) #points grow large when appearing and shrink when disappearing
 
-iris_anim + enter_grow(size = 0.1) + exit_shrink(size = 10)
+iris_anim + enter_grow(size = 0.1) + exit_shrink(size = 10) #points appear small and grow till they disappear
 
-iris_ease <- iris_base +
-  transition_states(Species) +
-  ease_aes("bounce-in-out")
+iris_ease <- iris_base + # it makes new iris_ease ggplot from iris_base
+  transition_states(Species) + # it transitions between species
+  ease_aes("bounce-in-out") # it creates bouncing effect upon entering 
 
 ## We can actually combine several transitions together. Let's take iris_anim,
 ## which has discrete transition_states and apply transition_reveal() by Petal.Length.
