@@ -457,7 +457,7 @@ library(hms)
 # Create a new column with the months.
 rangeTemp <- tempData %>%
   mutate(time = hms::as_hms(time), hour = hour(time),
-         month = month(date, label = TRUE, abbr = TRUE)
+         month = month(date, label = TRUE, abbr = TRUE))
          
          # QUESTION: Why would it be a good idea to average the hourly temperatures 
          # instead of plotting each hour for this graph? 
