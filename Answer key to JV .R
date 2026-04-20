@@ -92,7 +92,7 @@ library(hms)
 
 # What are your initial thoughts on what bubble graphs measure and their general
 # purpose?
-Bubble graphs utlize 3-4 variables to measure! The purpose of the bubble graph is 
+---> Bubble graphs utlize 3-4 variables to measure! The purpose of the bubble graph is 
 to reveal patterns across groups by allowing the colors separate different groups.
 
 # We will be using 3 variables: months, hour, and mean_temperature.
@@ -109,7 +109,7 @@ rangeTemp <- tempData %>%
          # plotting each hour for this graph? 
          # HINT: Take a look at datapoints within rangeTemp and visualize the graph
          # it would make. 
-         By averaging the hours, we will not have multiple datapoints stacked one another! 
+         ---> By averaging the hours, we will not have multiple datapoints stacked one another! 
            We will have cohesive points that cover each hour.
          
          # You will group by month and hour and the summarize the final column to find 
@@ -136,6 +136,8 @@ rangeTemp <- tempData %>%
          
          # When reviewing the data, the temperature is very low, why is that?
          # HINT: How do we measure temperature in science?
+         ---> The temperature is in celsius, so we would need to do a little math if we wanted the data 
+         to be formatted that way.
          
          # Correct this by changing the y label to "Average Temperature (°C)"!
          
@@ -151,7 +153,7 @@ rangeTemp <- tempData %>%
            ungroup()
          # Use this code to guide you to creating the "f_hourMonthAvg" dataframe. If we
          # are creating a new column, what is the function to do that?
-         
+         ---> It would be mutate, but it should present in this 
          f_hourMonthAvg <- rangeTemp %>%
            group_by(month, hour) %>%
            summarize(mean_temp = mean(Air.temperature, na.rm = TRUE)) %>%
