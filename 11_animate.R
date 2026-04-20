@@ -370,7 +370,7 @@ iris_anim <- ggplot(iris,
   theme(legend.position = "none")+
   transition_states(Species)
 
-iris_anim
+animate(iris_anim)
 
 ## We looked at enter_fade() and exit_shrink() previously, let's explore some more 
 ## animation effects. This, like easing, falls under the umbrella of Tweening!
@@ -393,18 +393,20 @@ iris_anim + enter_grow(size = 10) + exit_shrink(size = 0.1) #points grow large w
 
 iris_anim + enter_grow(size = 0.1) + exit_shrink(size = 10) #points appear small and grow till they disappear
 
-iris_ease <- iris_base + # it makes new iris_ease ggplot from iris_base
+iris_ease <- iris_anim + #I changed it to iris_anim because iris_base was never introduced # it makes new iris_ease ggplot from iris_anim
   transition_states(Species) + # it transitions between species
-  ease_aes("bounce-in-out") # it creates bouncing effect upon entering 
+  ease_aes("bounce-in-out") # it creates bouncing effect upon entering and exiting
 
 ## We can actually combine several transitions together. Let's take iris_anim,
 ## which has discrete transition_states and apply transition_reveal() by Petal.Length.
 ## TASK: Run the code below
 
-(iris_reveal <- iris_anim + transition_reveal(Petal.Length))
+(iris_reveal <- (iris_anim) + transition_reveal(Petal.Length))
 
 ## QUESTION: What does your animation look like? Why do you think this is the case?
 ## Hint: Look at the usage for transition_reveal().
+?transition_reveal()
+# The data points appear along the Petal Length as a continuous variable.
 
 ## TASK: Write 3 lines of code using different shadows to display point trajectories.
 ## Do not use shadow_null()
