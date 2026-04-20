@@ -30,7 +30,7 @@ dt_practice <- as_datetime(946684860)
 
 # QUESTION: Run the code above to convert the Unix measurement to ymd_hms format using the ‘as_datetime’ function. What date and time does the timestamp correspond to?
 dt_practice
-[1] "2000-01-01 00:01:00 UTC"
+1 "2000-01-01 00:01:00 UTC"
 
 # Unix timestamps are also measured in days since January 1st, 1970. The ‘as_date’ function can be used to convert these measurements to ymd format.
 # QUESTION: What holiday does the 20392 Unix days timestamp correspond to? What year? HINT: Use the ‘as_date’ function to convert days to ymd format. 
@@ -38,7 +38,7 @@ dt_practice
 dt_holiday <- as_date(20392)
 dt_holiday
 
-[1] "2025-10-31" - Halloween!
+1 "2025-10-31" - Halloween!
 
 # Unix timestamps can also measure seconds passed since 00:00:00 (with no corresponding date or time zone). The ‘as_hms' function can be used to convert these measurements to hms format. 
 # TASK: Run the following code to convert 10,000 seconds to hours. 
@@ -48,7 +48,7 @@ print(dt_time <- hms::as_hms(10000))
 #QUESTION: How many hours are 86,400 seconds? HINT: Use the ‘as_hms’ function to convert seconds to hms format.
 
 print(dt_time_86 <- hms::as_hms(86400)) = 24:00:00
-24 hours!
+# 24 hours!
 
 # ----------------------------------- #
 ### 1.1 PARSING DATES AND TIMES ####                                           
@@ -59,22 +59,22 @@ print(dt_time_86 <- hms::as_hms(86400)) = 24:00:00
 # TASK: Run the following lines of code to view how lubridate converts different date-time formats.
 
 ymd_hms("2026-04-14 14:00:00")
-[1] "2026-04-14 14:00:00 UTC"
+"2026-04-14 14:00:00 UTC"
 
 ydm_hms("2026-14-04 14:00:00")
-[1] "2026-04-14 14:00:00 UTC"
+"2026-04-14 14:00:00 UTC"
 
 mdy_hms("04/14/2026 14:00:00")
-[1] "2026-04-14 14:00:00 UTC"
+"2026-04-14 14:00:00 UTC"
 
 dmy_hms("14 Apr 2026 14:00:00")
-[1] "2026-04-14 14:00:00 UTC"
+"2026-04-14 14:00:00 UTC"
 
 # TIP: If your data only includes dates without a timestamsp, you can use the same functions by removing '_hms' from the function. 
 #TASK: Run the following lines of code to convert these dates that lack time values.
 
 ymd("20260414")
-[1] "2026-04-14"
+"2026-04-14"
 
 ydm("2026-14-04")
 [1] "2026-04-14"
@@ -368,7 +368,7 @@ I imagine intervals can be useful due to it not being restricted to a timezone o
 # ---------------------------------------------------------- #
 
 ## TASK: load in beneficials_unified.csv and rename it data_set
-data_set <-read.csv("beneficials_unified.xlsx")
+data_set <-read.csv("beneficials_unified.csv")
 ## Now we will clean the data set to only contain data with time 
 clean_time_data <- data_set %>% ## keep in assignmet 
   select(-(1:26), -(38:43)) ## keep in assignment 
@@ -671,20 +671,28 @@ Ultizing tz(), we can convert any given time across different time zones into a 
 # (4) using the select function, remove "family", "genus", "subgenus", "longTrap", "latTrap", and "elevTrap"
 # (5) rename "arthOrder" to "order"
 
-arthropods <- read.csv("beneficials_unified.xlsx")
+arthropods <- read.csv("beneficials_unified.csv")
 arthropods <- arthropods %>%
   select(arthOrder:deployedhours)
-
+arthropods <- arthropods %>%
+  unite(species, genus, species, sep = " ")
+arthropods <- arthropods %>%
+  select(-family, -genus, -subgenus, -longTrap, -latTrap, -elevTrap)
+arthropods <- arthropods %>%
+  rename(order = arthOrder)
 
 
 #QUESTION: How many variables does the "arthropods" dataset have? Why does this number differ from the "beneficials" dataset? 
-
+26 variables. it's because we have remove previous columns.'
 
 #Great! Now we can start using the lubridate package!
 
 #TASK: Parse out the data 
 # (1) make a new dataframe and label it "arthropods_clean" from the arthropods data. 
 # (2) using the mutate function make a two new columns called "start_datetime" and "end_datetime". Use the "make_datetime()" function to do this. Add the startYear, startMonth, startDay, startHour, startMinute to make the "start_datetime". Add the endYear, endMonth, endDay, endHour, endMinute to make the "end_datetime".
+arthropods_clean <- arthropods
+arthropods_clean <- arthropods_clean %>%
+  mutate(start_datetime = make_datetime(year = startYear,month = startMonth,day = startDay,hour = startHour,min = startMinute),end_datetime = make_datetime(year = endYear,month = endMonth,day = endDay,hour = endHour,min = endMinute))
 
 
 
@@ -703,21 +711,46 @@ arthropods <- arthropods %>%
 # (3) mutate the columns to parse out the data in the mdy_hms format using "mdy_hms()" 
 # HINT: you will need yo use "paste()" within the mdy_hms() function. 
 
+arthropods_broken <- arthropods_clean
+arthropods_broken <- arthropods_clean %>%
+  mutate(start_date = format(start_datetime, "%B %d, %Y"),start_time = format(start_datetime, "%I:%M:%S %p"),end_date   = format(end_datetime, "%B %d, %Y"),end_time   = format(end_datetime, "%I:%M:%S %p"))
+
+
 
 #TASK: Let's determine how my months each Order of insect was trapped for. Annotate each line of the code below to describe what we are telling R to do. 
 
 total_trap_time <- arthropods %>% 
   mutate(start_datetime = make_datetime(startYear, startMonth, startDay, startHour, startMinute),
          end_datetime   = make_datetime(endYear, endMonth, endDay, endHour, endMinute)) %>%
-  group_by(order) %>%
+  group_by(arthOrder) %>%
   summarize(first_trap = min(start_datetime, na.rm = TRUE),
             last_trap  = max(end_datetime, na.rm = TRUE), 
-            time_trapped = interval(first_trap, last_trap) %/% months(1)) %>% # HINT: "%/% months(1)" is counting whole months
+            time_trapped = interval(first_trap, last_trap) %/% months(1)) %>% # 
+  ungroup()
+# HINT: "%/% months(1)" is counting whole months
+
+# Create a new dataframe called total_trap_time from the datafrane arthropods. Then seperate by year, month,day,hour, and minute.
+# group the data by arthropod order, summarize trapping time by order. 
+# For the first trap, create it as a start time. For the last trap, with end date. 
+# Creates time interval. 
+# remove group to keep what is needed. 
+
+total_trap_time <- arthropods %>%
+  mutate(start_datetime = make_datetime(startYear, startMonth, startDay, startHour, startMinute),end_datetime   = make_datetime(endYear, endMonth, endDay, endHour, endMinute)) %>%
+  group_by(arthOrder) %>%
+  summarize(first_trap   = min(start_datetime, na.rm = TRUE),last_trap    = max(end_datetime, na.rm = TRUE),time_trapped = interval(first_trap, last_trap) %/% months(1)) %>%
   ungroup()
 
 
 #QUESTION: How many months were the traps set for each order?
+total_trap_time$time_trapped
+[1] 14 15  1 49 14
 
 
 #TASK: Plot the total_trap time for each order using geom_col. Color fill the bars by order. Label each axis, use theme_bw(), and position the legend on the bottom right of the graph. 
+ggplot(total_trap_time, aes(x = arthOrder, y = time_trapped, fill = arthOrder)) +
+  geom_col() +
+  labs(x = "Arthropod Order",y = "Total Trapping Time (Months)",fill = "Order") +
+  theme_bw() +
+  theme(legend.position = "bottom right")
 
