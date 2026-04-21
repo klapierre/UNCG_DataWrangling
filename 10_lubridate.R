@@ -105,7 +105,7 @@ flight_data_parsed <- broken_flights %>% mutate(flight_time = hms::as_hms(flight
 #HINT: Use the mutate function with the appropriate parsing function form the previous section.
 
 flight_data_parsed <- flight_data_parsed %>% mutate(flight_date = mdy(flight_date)) #Example
-head(flight_data_parsed)
+head(flight_data_parsed)f
 # ---------------------------------------------------------- #
 ### 1.2 GETTING AND SETTING DATES AND TIMES ####                        
 # ---------------------------------------------------------- #
