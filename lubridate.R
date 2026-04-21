@@ -39,7 +39,7 @@ dt_holiday <- as_date(20392)
 
 # Unix timestamps can also measure seconds passed since 00:00:00 (with no corresponding date or time zone). The ‘as_hms' function can be used to convert these measurements to hms format. 
 # TASK: Run the following code to convert 10,000 seconds to hours. 
-
+print(dt_time <- hms::as_hms(10000))
 print(dt_time <- hms::as_hms(10000))
 #Output was 02:46:40
 #QUESTION: How many hours are 86,400 seconds? HINT: Use the ‘as_hms’ function to convert seconds to hms format.
@@ -106,6 +106,11 @@ broken_flights <- flights %>%
     flight_time = format(time_hour, "%I: %M: %S %p")) %>% 
   select(flight, tailnum, origin, dest, flight_date, flight_time)
 
+broken_flights <- flights %>%
+  mutate(
+    flight_date = format(time_hour, "%B %d, %Y"), 
+    flight_time = format(time_hour, "%I: %M: %S %p")) %>% 
+  select(flight, tailnum, origin, dest, flight_date, flight_time)
 #TASK: Run the following code to convert flight times back to formal time objects in the flight_data_parsed dataframe.
 
 flight_data_parsed <- broken_flights %>% mutate(flight_time = hms::as_hms(flight_time))
