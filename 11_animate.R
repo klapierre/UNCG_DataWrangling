@@ -620,7 +620,7 @@ gifski(png_files,gif_file = "dailyAvg_timeseries.gif",width = 900,height = 600,d
 # making graph have essential markings that would be difficult to add to GIFs.
 
 # QUESTION: What are some examples that Magick can be useful in animating a graph? 
-
+Magick can be useful for combining plot images into a gif, adding effects between frames 
 # We will start with a function, that will plot our dataframe into a adjustable graph.
 
 make_daily_bubble <- function(data, day_index) {
@@ -675,7 +675,7 @@ animation <- image_animate(image_join(watermarked), fps = 10)
 image_write(animation, "dailyAvg_bubble_watermarked.gif")
 
 # QUESTION: In your animation, what month has the highest temperature? 
-
+the month with the highest twmperature appears to be august 
 # Magick appears to take longer than Gifski to create the GIF in your files so 
 # as I stated before, feel free to rerun the code to wake R-studio up. 
 
