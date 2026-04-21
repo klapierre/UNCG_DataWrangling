@@ -623,7 +623,7 @@ rangeTemp <- tempData %>%
            theme(plot.title = element_text(size = 14, face = "bold"),legend.position = "bottom")
          
          
-         # Let's make a graph of the temperature in fahrenheit! 
+         # Let's make a graph of the  temperature in fahrenheit! 
          # Create a new dataframe called "f_hourMonthAvg" with a column labeled " 
          # mean_temp_F from the "mean_temp" column. Alter the data to go from celsius to 
          # fahrenheit.
