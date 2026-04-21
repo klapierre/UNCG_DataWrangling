@@ -449,6 +449,7 @@ ggplot(dailyAvg, aes(x = date, y = mean_temp)) +
 # dailyAvg dataframe? Why?
 # Hint: The graph is comparing Date vs mean Temperature. 
 
+a scatter plot can show the points, but the line graph represents this kind of time series data more clearly 
 
 #================================
  # Gapminder: Another approach to complex graphing
@@ -463,7 +464,7 @@ library(hms)
 
 # QUESTION: What are your initial thoughts on what bubble graphs measure and their general
 # purpose?
-
+help you compare magnitude, relationships and patterns across groups all in one grpah. in Gapminder.
 # We will be using 3 variables: months, hour, and mean_temperature.
 # To graph this, we will need to reformat our data. 
 
@@ -475,7 +476,8 @@ rangeTemp <- tempData %>%
          month = month(date, label = TRUE, abbr = TRUE)
          
          # QUESTION: Why would it be a good idea to average the hourly temperatures 
-         # instead of plotting each hour for this graph? 
+         # instead of plotting each hourfor this graph? 
+         averaging the hourly tempatures is a good idea because plotting every single hour can make the grpah to crowded and nosiy 
          # HINT: Take a look at datapoints within rangeTemp and visualize the graph
          # it would make. 
          
@@ -502,6 +504,7 @@ rangeTemp <- tempData %>%
            theme(plot.title = element_text(size = 14, face = "bold"),legend.position = "bottom")
          
          # QUESTION: When reviewing the data, the temperature is very low, why is that?
+         the temp looks low becasue you are averaging all hourly temp including the cooler nightimes and early mornings.
          # HINT: How do we measure temperature in science?
          
          # Correct this by changing the y label to "Average Temperature (°C)"!
@@ -558,6 +561,7 @@ rangeTemp <- tempData %>%
            # flexibility so that the dataframe/graph can be adjusted if need to.
            # QUESTION: Take a look at the code below, what do you think ggplot is doing here? Does the
            # coding look familiar?
+         its setting up a scatterplot in ggplot using the data frame I made 
            
            make_timeseries_plot <- function(data, day_index) {
              ggplot(data[1:day_index, ], aes(x = date,y = mean_temp)) +
@@ -575,10 +579,11 @@ rangeTemp <- tempData %>%
          dir.create("frames_timeseries", showWarnings = FALSE)
          
          # QUESTION: What does dir.create stand for? And where do you expect this folder to end up?
-         
+         stands for directory create it is used to make a new folder in R
          # Now we instruct R how we want the Frame-generation loop to work.
          
          # QUESTION: Why do you think we are start on day 2 and why may it be more useful?
+         Becasue day 1 has no previous day to compare to the starting on day 2 makes it easier to see day-to-day changes  
          # HINT: We are making a time series graph, what makes it different from a 
          # scatter plot?
          
