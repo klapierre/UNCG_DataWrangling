@@ -16,6 +16,7 @@
 # HINT: look at past assignments to compete these steps.
 
 # We will also have to do some other data cleaning, to do this load tidyverse as well.
+library(lubridate)
 library(tidyverse)
 # ---------------------------------------------------------- #
 ### 1.0 CONVERTING DATES AND TIMES ####                                           
@@ -24,15 +25,19 @@ library(tidyverse)
 # A Unix timestamp measures the number of seconds that have passed since January 1st, 1970 at 00:00:00 UTC; this is referred to as the 'Epoch'. This is useful for computing systems because it stores all time measurements as one large number, rather than more complex formats such as month/day/year. The date-times functions in lubridate allow users to quickly convert Unix measurements to more user-friendly formats.  
 
 dt_practice <- as_datetime(946684860)
+dt_practice
 
 # QUESTION: Run the code above to convert the Unix measurement to ymd_hms format using the ‘as_datetime’ function. What date and time does the timestamp correspond to?
 
+##January 1, 2000 at 00:01:00 (UTC)
 
 # Unix timestamps are also measured in days since January 1st, 1970. The ‘as_date’ function can be used to convert these measurements to ymd format.
 # QUESTION: What holiday does the 20392 Unix days timestamp correspond to? What year? HINT: Use the ‘as_date’ function to convert days to ymd format. 
 
 dt_holiday <- as_date(20392)
+dt_holiday
 
+##Halloween, 2025
 
 # Unix timestamps can also measure seconds passed since 00:00:00 (with no corresponding date or time zone). The ‘as_hms' function can be used to convert these measurements to hms format. 
 # TASK: Run the following code to convert 10,000 seconds to hours. 
@@ -42,7 +47,7 @@ print(dt_time <- hms::as_hms(10000))
 #QUESTION: How many hours are 86,400 seconds? HINT: Use the ‘as_hms’ function to convert seconds to hms format.
 
 print(dt_time_86 <- hms::as_hms(86400))
-
+##24 Hours
 
 # ----------------------------------- #
 ### 1.1 PARSING DATES AND TIMES ####                                           
@@ -71,11 +76,14 @@ ydm("07-04-12")
 
 # QUESTION: Is the output value correct? Why not? Rewrite the code with the same input using the correct function below. 
 
+##Incorrect, ydm interprets as year-day-month but we want mdy format for the proper date.
+
 mdy("07-04-12") 
+
 
 #TASK: Use any of the parsing functions to convert your birthday into standard date format in the space below. 
 
-mdy("November 22nd, 2001") #Example
+mdy("November 9th, 2001")
 
 # Parsing data is super convenient, but what if we want to parse an entire column at once?
 #TASK: Load the nycflights13 dataset. Run the following code to "break" the dataset (turning the timestamps into strings) so we can practice parsing date-times.
@@ -97,7 +105,7 @@ flight_data_parsed <- broken_flights %>% mutate(flight_time = hms::as_hms(flight
 #HINT: Use the mutate function with the appropriate parsing function form the previous section.
 
 flight_data_parsed <- flight_data_parsed %>% mutate(flight_date = mdy(flight_date)) #Example
-
+head(flight_data_parsed)
 # ---------------------------------------------------------- #
 ### 1.2 GETTING AND SETTING DATES AND TIMES ####                        
 # ---------------------------------------------------------- #
