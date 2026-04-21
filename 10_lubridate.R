@@ -80,7 +80,6 @@ ydm("07-04-12")
 
 mdy("07-04-12") 
 
-
 #TASK: Use any of the parsing functions to convert your birthday into standard date format in the space below. 
 
 mdy("November 9th, 2001")
@@ -105,7 +104,7 @@ flight_data_parsed <- broken_flights %>% mutate(flight_time = hms::as_hms(flight
 #HINT: Use the mutate function with the appropriate parsing function form the previous section.
 
 flight_data_parsed <- flight_data_parsed %>% mutate(flight_date = mdy(flight_date)) #Example
-head(flight_data_parsed)f
+head(flight_data_parsed)
 # ---------------------------------------------------------- #
 ### 1.2 GETTING AND SETTING DATES AND TIMES ####                        
 # ---------------------------------------------------------- #
@@ -131,6 +130,8 @@ second(todays_timestamp)
 week(todays_timestamp) 
 wday(todays_timestamp)
 
+##Number of weeks from the beginning of the year
+##Day of the week - Sunday = 1, Monday = 2, etc.
 
 #TASK: What if we wanted to create new column in our flights dataset listing the day of the week of the flight? Run the following code to create a flight_day column in our flight_data_parsed dataset.
 
@@ -139,10 +140,13 @@ flight_data_parsed <- flight_data_parsed %>% mutate(flight_day = wday(flight_dat
 #QUESTION: What do 'label' and 'abbr' mean in the code above?
 # HINT: Try running the code without the 'label' and 'abbr' arguments.
 
+##label returns the day as a name 
+##abbr is false so it returns the full name of the day instead of abbreviated
 
 #TASK: Create a new column called 'flight_month' in the flight_data_parsed dataset that lists the names of the months that the flights took place. 
 
-
+flight_data_parsed <- flight_data_parsed %>%
+  mutate(flight_month = month(flight_date, label = TRUE, abbr = FALSE))
 
 # ---------------------------------------------------------- #
 ### 1.3 ROUNDING DATES AND TIMES ####                                  
