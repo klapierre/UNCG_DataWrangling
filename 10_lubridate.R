@@ -562,6 +562,8 @@ flight_timezones %>%
 
 #TASK: You will notice that this data has a lot of redundant observations. Load the "beneficials_unified.csv" into R using the read.csv function and name the dataframe "beneficials".
 
+beneficials <- read.csv("beneficials_unified.csv")
+
 # TASK: Using the same workflow, lets make a dataframe of only the data that we will be using for lubridate. 
 # (1) name the new dataframe "arthropods" and use the beneficials data
 # (2) there is a lot of redundant data and again, we want to make a dataframe that only has the data we will need. For this dataframe, we will only be using the columns "arthOrder" through "deployedhours". Use the select function to select all columns between (and including) "arthOrder" and "deployedhours". Hint: you should have a total of 27 columns after this is done. Revisit previous assignments to select for large chunks without having to type all the column names you wish to include. 
@@ -569,9 +571,18 @@ flight_timezones %>%
 # (4) using the select function, remove "family", "genus", "subgenus", "longTrap", "latTrap", and "elevTrap"
 # (5) rename "arthOrder" to "order"
 
+arthropods <- beneficials %>% 
+  select(arthOrder:deployedhours) %>% 
+  unite("species", genus, species, sep = " ") %>% 
+  select (- family, -subgenus, -lonTrap, -latTrap, -elevTrap) %>% 
+  rename(order = arthOrder)
 
 #QUESTION: How many variables does the "arthropods" dataset have? Why does this number differ from the "beneficials" dataset? 
+#21 variables. This differs from the beneficials dataset because we only selected columns between 
+#arthOrder and deployedhours, united two columns, and then removed 5 columns.
 
+ncol(arthropods) #21
+ncol(beneficials) #46
 
 #Great! Now we can start using the lubridate package!
 
@@ -579,7 +590,9 @@ flight_timezones %>%
 # (1) make a new dataframe and label it "arthropods_clean" from the arthropods data. 
 # (2) using the mutate function make a two new columns called "start_datetime" and "end_datetime". Use the "make_datetime()" function to do this. Add the startYear, startMonth, startDay, startHour, startMinute to make the "start_datetime". Add the endYear, endMonth, endDay, endHour, endMinute to make the "end_datetime".
 
-
+arthropods_clean <- arthropods %>% 
+  mutate(start_datetime = make_datetime(startYear, startMonth, startDay, startHour, startMinute),
+  end_datetime = make_datetime(endYear, endMonth, endDay, endHour, endMinute))
 
 # Great! Now we want to parse out the columns that we just made. 
 
@@ -588,7 +601,13 @@ flight_timezones %>%
 # (2) use the format function on the "start_datetime" and make new columns for "start_date". "start_time", "end_date" and "end_time" and format the dates using " = format(x, "%B %d, %Y")" and for the times use " = format(x, "%I:%M:%S %p")"
 #HINT: Example of part of the code: new data name <- arthropod_clean %>% mutate(start_date = format(start_datetime, "%B %d, %Y"))...
 
-
+arthropods_broken <- arthropods_clean %>% 
+  mutate(start_date = format(start_datetime, "%B %d, %Y"),
+  start_time= format(start_datetime, "%I:%M:%S %p"),
+  end_date= format(end_datetime, "%B %d, %Y"),
+  end_time= format(end_datetime, "%I:%M:%S %p"))
+  
+  
 
 # TASK: Now we want to parse them back together.
 # (1) call this new dataframe "arthropods_parsed" but pull data from the arthropods_broken dataframe. 
@@ -596,21 +615,51 @@ flight_timezones %>%
 # (3) mutate the columns to parse out the data in the mdy_hms format using "mdy_hms()" 
 # HINT: you will need yo use "paste()" within the mdy_hms() function. 
 
+arthropods_parsed <- arthropods_broken %>% 
+  mutate(
+  start_datetime_parsed = mdy_hms(paste(start_date, start_time)), 
+  end_datetime_parsed   = mdy_hms(paste(end_date, end_time)))
 
 #TASK: Let's determine how my months each Order of insect was trapped for. Annotate each line of the code below to describe what we are telling R to do. 
 
-total_trap_time <- arthropods %>% 
+total_trap_time <- arthropods %>% #use arthropds dataset and name new dataset total_trap_time
   mutate(start_datetime = make_datetime(startYear, startMonth, startDay, startHour, startMinute),
-         end_datetime   = make_datetime(endYear, endMonth, endDay, endHour, endMinute)) %>%
-  group_by(order) %>%
-  summarize(first_trap = min(start_datetime, na.rm = TRUE),
-            last_trap  = max(end_datetime, na.rm = TRUE), 
+         end_datetime   = make_datetime(endYear, endMonth, endDay, endHour, endMinute)) %>% 
+  #Mutate(start_datetime = make_datetime creates a column from the columns with 
+  #start year, month, day, hour and minute. The same thing is done for the new column end_datetime
+  )
+  group_by(order) %>% #groups by order for summary
+  summarize(first_trap = min(start_datetime, na.rm = TRUE), #Shows min value in start_datetime column
+            last_trap  = max(end_datetime, na.rm = TRUE),  #shows max value in end_datetime column
             time_trapped = interval(first_trap, last_trap) %/% months(1)) %>% # HINT: "%/% months(1)" is counting whole months
-  ungroup()
+  #time_trapped shows the interval (in months) between first and last trapping  
+     ungroup()# ungroups since it was grouped by order in the code above
 
 
 #QUESTION: How many months were the traps set for each order?
-
-
+  
+  #Araneae 14
+  
+  #Coleoptera 15
+  
+  
+  #Diptera 1
+  
+  
+  #Hymenoptera 49
+ 
+  
+  #Opiliones 15
+  
+  
 #TASK: Plot the total_trap time for each order using geom_col. Color fill the bars by order. Label each axis, use theme_bw(), and position the legend on the bottom right of the graph. 
-
+  library(ggplot2)
+  library(dplyr)
+  
+  ggplot(total_trap_time, aes(x= order, y= time_trapped, fill= order)) +
+  geom_col() +
+    xlab("Order") +
+    ylab("Trapping Time by Month") +
+    ggtitle("Total Trap Time for each Order") +
+    theme_bw() +
+    theme(legend.position = "bottom")
