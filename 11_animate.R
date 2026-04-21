@@ -223,6 +223,7 @@ data("iris")
 ## These are the two datasets we'll be using for this section! Check them out using
 ## head() or glimpse()
 ## QUESTION: Which dataset is inherently time-based and why does that matter for animation?
+the iris datasheet is not time based becasue it just contains flower measurementes and speices lables with no time variable 
 
 ## TASK: Create a filtered gapminder dataset for North America only
 
@@ -231,7 +232,7 @@ data("iris")
 ## Add transparency, labels, and a theme of your choice. Save this as an object named gap_plot.
 
 ## QUESTION: Why is grouping important when animating repeated entities like countries?
-
+grouping is important because it tells gganimate which points belong to the same country across frames 
 ## TASK: Animate by year using transition_time(). Save this as gap_anim.
 
 
@@ -263,20 +264,21 @@ gap_anim + ease_aes("bounce-in-out")
 
 ## QUESTION: What does the -in-out easing argument do to our animation? 
 ## Hint: Check ?ease_aes().
-                
+the in-out aplies the easing effect to both the start and the end of the transtion              
 ## QUESTION: How does easing change the perception of movement over time?
-
+easing changes the perception of movement by changing how fast or slow objects move during different parts of trnasition 
 ## gganimate also has view functions to change the framing of our animation
 ## over our data. 
 
 ## TASK: Add view_follow() to gap_anim to track evolving clusters
 
 ## QUESTION: What does view_follow() do? Why might this be useful?
-
+makes the plot window move and rescale with the data as the animation plays.instead of keeping one fixed frame the whole time 
 ## TASK: Try to apply view_step() to gap_anim.
 
 ## This gives us an animation, but something is wrong.
 ## QUESTION: What is wrong with your animation? Why do you think this is happening
+this happens because transition_time() is continuous, but view_step() changes the view in different steps 
 ## HINT: Remember that transition_time is continuous. Check out ?view_step()
 
 ## Remember that iris dataset we loaded earlier? Now we're gonna switch to it!
@@ -316,7 +318,7 @@ iris_ease <- iris_base +
 
 ## QUESTION: What does your animation look like? Why do you think this is the case?
 ## Hint: Look at the usage for transition_reveal().
-
+the animation looks a little akward to me becasue trnasition_reveal() is designed for continous orderd data, but iris_anim already uses trnastion_states() for the discrete varibale Species. 
 ## TASK: Write 3 lines of code using different shadows to display point trajectories.
 ## Do not use shadow_null()
 
@@ -364,10 +366,10 @@ europe_life <- europe_sf %>%
   ease_aes("linear"))
 
 ## QUESTION: Why might animations be useful for visualizing spatial data?
-
+there useful for spatial data because they let you see how patterns change across both space and time instead of looking at one basic map 
 ## QUESTION: What are some potential weaknesses of animating. 
 ## Hint: Think about how slow your computer probably ran!
-             
+  weaknesses of animating are that it can be slow, resource heavy and maybe be harder to interoet than a basic plot            
 
 # 1.2: FINALE: Other useful packages ---------------------------------------------------####
 # gifski, magick, gapminder
