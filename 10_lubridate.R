@@ -164,6 +164,7 @@ ceiling_date(mdy("April 15 2026"), "month")
 
 
 round_date(mdy("April 16 2026"), "month")
+##Rounds to the nearest unit
 
 # QUESTION: Run the following line of code. What do you think the 'rollback' function does? What do you think the 'roll_to_first' and  'preserve_hms' arguments do?
 # HINT: Try running the code with different 'roll_to_first' and  'preserve_hms' arguments.
@@ -171,8 +172,14 @@ round_date(mdy("April 16 2026"), "month")
 
 rollback(todays_timestamp, roll_to_first = FALSE, preserve_hms = TRUE)
 
+##rollback moves the date to the previous month
+##roll_to_first goes to first day or last day of previous month
+##preserve_hms keeps the same time or resets it to 0
+
 # TASK: Create a dataframe named 'flight_data_rounded' from our 'flight_data_parsed' dataframe that includes a column named 'rounded_flight_date' that rounds the flight date to the nearest month. 
 
+flight_data_rounded <- flight_data_parsed %>%
+  mutate(rounded_flight_date = round_date(flight_date, "month"))
 
 # ---------------------------------------------------------- #
 #### Part 1.1: Duration & Intervals                       ####
