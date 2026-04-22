@@ -613,6 +613,10 @@ tempData <- temp %>%
 # Hint: Think about how we would write the ggplot code. How would the datapoints 
 # appear on the graph?
 
+## I think the 'time' column wouldn't mix well with the 'Hour' and 'Minute' columns, since they are very numerical but need to blend together for a complete graph/animation.
+
+
+
 # There are only 2 variables that we need to retrieve from tempData: date and
 # Air.temperature. Although, there are multiple temperatures with the same date! 
 # We can tidy up the number of days by taking the average of each date.
@@ -654,9 +658,21 @@ ggplot(dailyAvg, aes(x = date, y = mean_temp)) +
 # "Daily Average Temperature" and the x-axis to "Months". Give it a title 
 # called:"Daily Average Temp. in 2003".
 
+ggplot(dailyAvg, aes(x = date, y = mean_temp)) +
+  geom_line(color = "steelblue", linewidth = 1.2) +
+  geom_point(color = "orange", size = 2) +
+  labs(x = "Months", y = "Daily Average Temperature", title = "Daily Average Temp. in 2003") +
+  theme_bw() +
+  theme(plot.title = element_text(size = 14, face = "bold"),axis.title = element_text(size = 12))
+
+
+
 # QUESTION: Between these two graphs, which graph would be better represent the
 # dailyAvg dataframe? Why?
 # Hint: The graph is comparing Date vs mean Temperature. 
+
+## I think they can both be helpful in their own ways, but I'd prefer the scatter plot with the trend line, as we're talking about an average. Although the first graph does better at depicting each instance.
+
 
 
 #================================
@@ -673,6 +689,10 @@ library(hms)
 # QUESTION: What are your initial thoughts on what bubble graphs measure and their general
 # purpose?
 
+## Bubble graphs seem to show the relationship between multiple objects at once, allowing us to see how everything interacts with each other, rather than just a couple variables at a time. For general purpose, it would help us when trying to look at patterns and comparisons.
+
+
+
 # We will be using 3 variables: months, hour, and mean_temperature.
 # To graph this, we will need to reformat our data. 
 
@@ -683,10 +703,14 @@ rangeTemp <- tempData %>%
   mutate(time = hms::as_hms(time), hour = hour(time),
          month = month(date, label = TRUE, abbr = TRUE))
 
-# QUESTION: Why would it be a good idea to average the hourly temperatures 
+# QUESTION: Why would it be a good idea to average the hourly temperatures
 # instead of plotting each hour for this graph? 
 # HINT: Take a look at datapoints within rangeTemp and visualize the graph
 # it would make. 
+
+## Well, each hourly data point will make the graph more cluttered and jagged, while the average will smooth it out. Averaging will also show the broad pattern to focus on and creates a simplified version for easier visual consumptionand comparison.
+
+
 
 # You will group by month and hour and the summarize the final column to find 
 # the mean Air. temperature. We will double check if there are any NA's we
@@ -713,7 +737,21 @@ ggplot(hourMonthAvg, aes(x = hour,y = mean_temp,color = month,size = mean_temp))
 # QUESTION: When reviewing the data, the temperature is very low, why is that?
 # HINT: How do we measure temperature in science?
 
+## The temperature is measured in Celsius, not Fahrenheit.
+
+
+
 # Correct this by changing the y label to "Average Temperature (°C)"!
+
+ggplot(hourMonthAvg, aes(x = hour,y = mean_temp,color = month,size = mean_temp)) +
+  geom_point(alpha = 0.7) +
+  scale_size(range = c(3, 12)) +
+  scale_x_continuous(breaks = seq(0, 23, 2)) +
+  labs(x = "Hour of Day (0–23)",y = "Average Temperature (°C) ",color = "Month",size = "Temperature",title = "Hourly Average Temperature by Month") +
+  theme_bw() +
+  theme(plot.title = element_text(size = 14, face = "bold"),legend.position = "bottom")
+
+
 
 # Let's make a graph of the temperature in fahrenheit! 
 # Create a new dataframe called "f_hourMonthAvg" with a column labeled " 
@@ -726,8 +764,20 @@ hourMonthAvg <- rangeTemp %>%
   group_by(month, hour) %>%
   summarize(mean_temp = mean(Air.temperature, na.rm = TRUE)) %>%
   ungroup()
-# Use this code to guide you to creating the "f_hourMonthAvg" dataframe. If we
-# are creating a new column, what is the function to do that?
+# Use this code to guide you to creating the "f_hourMonthAvg" dataframe.
+
+f_hourMonthAvg <- hourMonthAvg %>%
+  mutate(mean_temp_F = (mean_temp * 9/5) + 32)
+
+## I used this instead, because the code given as a guide felt overly complicated to just make a new column for Fahrenheit temperatures.
+
+
+
+# If we are creating a new column, what is the function to do that?
+
+## The 'mutate()' function creates a new column.
+
+
 
 # With the new dataframe and the code before this, change the y label to "Average Temperature (°F)". What are the ranges for the y-axis now? 
 ggplot(f_hourMonthAvg, aes(x = hour,y = mean_temp_F,color = month,size = mean_temp_F)) +
@@ -737,6 +787,10 @@ ggplot(f_hourMonthAvg, aes(x = hour,y = mean_temp_F,color = month,size = mean_te
   labs(x = "Hour of Day (0–23)",y = "Average Temperature (°F)",color = "Month",size = "Temperature (°F)",title = "Hourly Average Temperature by Month") +
   theme_bw() +
   theme(plot.title = element_text(size = 14, face = "bold"),legend.position = "bottom")
+
+## The ranges for the y-axis are from 60-100 F with what is shown, but more like 50-110 F withwhat isn't shown.
+
+
 
 # Although there is a bit of clutter in our bubble graph, it shows a nice 
 # overlapping on the temperatures throughout their given months. 
@@ -763,6 +817,10 @@ library(gifski)
 # For this section, we are using the dataframe "dailyAvg", why do you think this 
 # is an easier dataframe to animate versus the hourMonthAvg?
 
+## A simple date within one column is a lot easier to manage within an animated plot rather than two specific time points within two separate columns.
+
+
+
 # To start the animation process, we want to make a function that allows for 
 # flexibility so that the dataframe/graph can be adjusted if need to.
 # QUESTION: Take a look at the code below, what do you think ggplot is doing here? Does the
@@ -776,6 +834,10 @@ make_timeseries_plot <- function(data, day_index) {
     theme_bw() +
     theme(plot.title = element_text(size = 14, face = "bold")) }
 
+## ggplot is creating a function that plots our hourMonthAvg in Celsius.
+
+
+
 # in this ggplot, we will be graphing each day with it's corresponding temperature.
 # Essentially a time series!
 
@@ -785,11 +847,19 @@ dir.create("frames_timeseries", showWarnings = FALSE)
 
 # QUESTION: What does dir.create stand for? And where do you expect this folder to end up?
 
+## 'dir.create' stands for 'directory create' and the folder ends up in the current working directory.
+
+
+
 # Now we instruct R how we want the Frame-generation loop to work.
 
 # QUESTION: Why do you think we are start on day 2 and why may it be more useful?
 # HINT: We are making a time series graph, what makes it different from a 
 # scatter plot?
+
+## You start on day 2, because you need a previous data point for comparison/calculation. Without that previous data point, there could be errors or missing values, because R doesn't know what to do.
+
+
 
 # The value p creates a plot for day 1, which begins the data or the start
 # of the animation.
@@ -824,6 +894,10 @@ library(magick)
 # making graph have essential markings that would be difficult to add to GIFs.
 
 # QUESTION: What are some examples that Magick can be useful in animating a graph? 
+
+## It could help with combining frames into a gif or video, you can control the speed of the gif or video, you can crop or loop, etc.
+
+
 
 # We will start with a function, that will plot our dataframe into a adjustable graph.
 
@@ -879,6 +953,10 @@ animation <- image_animate(image_join(watermarked), fps = 10)
 image_write(animation, "dailyAvg_bubble_watermarked.gif")
 
 # QUESTION: In your animation, what month has the highest temperature? 
+
+## I had a couple issues getting this segment to work, so I hope I got this correct, but for me it was August (month 8).
+
+
 
 # Magick appears to take longer than Gifski to create the GIF in your files so 
 # as I stated before, feel free to rerun the code to wake R-studio up. 
