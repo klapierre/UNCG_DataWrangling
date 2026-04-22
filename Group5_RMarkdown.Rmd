@@ -1,6 +1,6 @@
 ---
 title: "Group5_RMarkdown"
-author: "Arnav Pandey"
+author: "Arnav Pandey, Themesha Parker"
 date: "2026-04-07"
 output: pdf_document
 ---
