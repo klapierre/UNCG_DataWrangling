@@ -321,15 +321,48 @@ data("iris")
 ## head() or glimpse()
 ## QUESTION: Which dataset is inherently time-based and why does that matter for animation?
 
+## The data set "gapminder" is time-based. This matters for animation because it makes the an evolution-of-events easier to create. Time-based animations will have similar traits with one-another, where time is the key factor in the animation progression.
+
+
+
 ## TASK: Create a filtered gapminder dataset for North America only
+
+gapminder_north_america <- gapminder %>%
+  filter(continent =="Americas",
+         country %in% c("United States", "Canada", "Mexico", "Costa Rica", "Puerto Rico", "Dominican Republic", "Cuba"))
+
+
 
 ## TASK: Build a scatterplot of GDP vs life expectancy. Set size to population and
 ## group by country. Apply a log transform to the x-axis.
 ## Add transparency, labels, and a theme of your choice. Save this as an object named gap_plot.
 
+gap_plot <- ggplot(gapminder_north_america, aes(x = gdpPercap, 
+                                                y = lifeExp,
+                                                size = pop,
+                                                color = country)) +
+  geom_point(alpha = 0.5) +
+  scale_x_log10() +
+  labs(title = "GDP vs Life Expectancy in North America",
+       x = "GDP per capita",
+       y = "Life Expectancy") +
+  theme_minimal()
+
+
+
 ## QUESTION: Why is grouping important when animating repeated entities like countries?
 
+## When there's so much information listed in a data set or a plot, it's easy to lose track of everything. If everything is grouped to specific things, it's easier to coordinate and understand where it all belongs.
+
+
+
 ## TASK: Animate by year using transition_time(). Save this as gap_anim.
+
+gap_anim <- gap_plot +
+  transition_time(year) +
+  labs(title = "Year: {frame_time}") +
+  ease_aes('linear')
+
 
 
 ## We've already investigated the ease_aes() function using linear easing. This
@@ -339,42 +372,79 @@ data("iris")
 
 # -in applies the easing function without any modification
 gap_anim + ease_aes('cubic-in')
+## The animation starts slowly and accelerates.
 
 gap_anim + ease_aes('elastic-in')
+## The animation slowly oscillates its position, somewhat like a spring.
 
 gap_anim + ease_aes('circular-in')
+## The animation starts slowly and accelerates but in a circular motion.
 
 gap_anim + ease_aes("bounce-in")
+## The animation bounces back and forth into position, accelerating.
 
 # -out applies the easing function in reverse
-gap_anim + ease_aes('elastic-in')
+gap_anim + ease_aes('elastic-out')
+## The animation quickly oscillates its position, somewhat like a spring.
 
-gap_anim + ease_aes('circular-in')
+gap_anim + ease_aes('circular-out')
+## The animation starts quick and slows but in a circular motion.
 
-gap_anim + ease_aes("bounce-in")
+gap_anim + ease_aes("bounce-out")
+## The animation bounces back and forth into position, decelerating.
 
 # we can combine them into -in-out
 gap_anim + ease_aes('circular-in-out')
+## The animation starts slow and accelerates, but slows down near the end, while following it's circular path.
 
 gap_anim + ease_aes("bounce-in-out")
+## The animation bounces smoothly between positions, because it mixes the acceleration and deceleration into one.
+
+
 
 ## QUESTION: What does the -in-out easing argument do to our animation? 
 ## Hint: Check ?ease_aes().
 
+## '-in-out' uses both '-in' and '-out' easing functions. So, we might see something start slow, then go fast, then slow down again. We might also see something more stabilized because it mixed both the fast and slow paces.
+
+
+
 ## QUESTION: How does easing change the perception of movement over time?
+
+## Since easing functions set the tempo, smoothness, and overall feel of the animation, we capture the perception of movement different across the variations of easing.
+
+
 
 ## gganimate also has view functions to change the framing of our animation
 ## over our data. 
 
 ## TASK: Add view_follow() to gap_anim to track evolving clusters
 
+gap_anim +
+  view_follow(fixed_x = FALSE, fixed_y = FALSE)
+
+
+
 ## QUESTION: What does view_follow() do? Why might this be useful?
 
+## 'view_follow()' has zooming and panning effects during the animation, so we can keep the points centered into frame as they change over time. This can be useful if we're trracking a complex data set or trying to smooth transitions or trying to insert focus for viewers.
+
+
+
 ## TASK: Try to apply view_step() to gap_anim.
+
+gap_anim +
+  view_step()
+
+
 
 ## This gives us an animation, but something is wrong.
 ## QUESTION: What is wrong with your animation? Why do you think this is happening
 ## HINT: Remember that transition_time is continuous. Check out ?view_step()
+
+## For me, the viewing seems choppy and disorienting. This is happening because the code is reading step-by-step with each interval being changed.
+
+
 
 ## Remember that iris dataset we loaded earlier? Now we're gonna switch to it!
 
@@ -383,27 +453,56 @@ gap_anim + ease_aes("bounce-in-out")
 ## Remove the legend.
 ## Hint: For your title, remember that your data are discrete, not continuous.
 
+iris_anim <- ggplot(iris, aes(x = Petal.Length,
+                              y = Petal.Width,
+                              color = Species)) +
+  geom_point() +
+  labs(title = "Petal Length vs Petal Width by Species",
+       x = "Petal Length",
+       y = "Petal Width") +
+  transition_states(Species) +
+  theme_minimal() +
+  theme(legend.position = "none")
+
+
+
 ## We looked at enter_fade() and exit_shrink() previously, let's explore some more 
 ## animation effects. This, like easing, falls under the umbrella of Tweening!
 
 ## TASK: Add enter_fade() and exit_fade() effects
 
+iris_anim +
+  enter_fade() +
+  exit_shrink()
+
 ## TASK: Run the lines of code below and descriptively annotate what each function does.
 ## Hint: If you're unsure, run them piece-by-piece!
 
 iris_anim + enter_fly(x_loc = 0) + exit_fly(x_loc = 1)
+## This makes the points fly in from the left and out on the right.
 
 iris_anim + enter_drift(y_mod = 1) + exit_drift(x_mod = 1) 
+## This makes the points drift from below the plot and then move to the right as they leave.
 
 iris_anim + enter_recolor(color = "pink") + exit_recolor(color = "brown")
+## This changes the color of the points to pink as they enter the plot, and changes the color to brown as they exit.
 
 iris_anim + enter_grow(size = 10) + exit_shrink(size = 0.1)
+## The points grow in size as they enter and shrink as they exit.
 
 iris_anim + enter_grow(size = 0.1) + exit_shrink(size = 10)
+## The points start small as they enter but keep growing as they exit.
 
 iris_ease <- iris_base +
+## This creates a new object called 'iris_ease' from a pre-existing object called 'iris_base'.
+  
   transition_states(Species) +
+## This adds a transition effect using the 'Species' column.
+  
   ease_aes("bounce-in-out")
+## This applies easing to the animation, creating a bounce that will speed up and slow down.
+
+
 
 ## We can actually combine several transitions together. Let's take iris_anim,
 ## which has discrete transition_states and apply transition_reveal() by Petal.Length.
@@ -414,6 +513,10 @@ iris_ease <- iris_base +
 ## QUESTION: What does your animation look like? Why do you think this is the case?
 ## Hint: Look at the usage for transition_reveal().
 
+## The plot gradually fills in with points, until the end. The data moves from left to right. It is done this way because 'transition_reveal()' is made to gradually show data in a specific order (So, Petal.Length in this case).
+
+
+
 ## TASK: Write 3 lines of code using different shadows to display point trajectories.
 ## Do not use shadow_null()
 
@@ -422,6 +525,10 @@ iris_reveal + shadow_trail()
 iris_reveal + shadow_wake()
 
 iris_reveal + shadow_mark()
+
+## I'm a bit confused, because it seems like the lines of code above are already done for me, so I'm either missing the point or don't have to do anything. I'm not sure if I'm supposed to make new code or add into the parentheses or just leave it be.
+
+
 
 ## gganimate can also be used to represent spatial data. We're going to bounce back
 ## to gapminder now! (You could say this section has bounce-in-out easing)
@@ -462,8 +569,15 @@ europe_life <- europe_sf %>%
 
 ## QUESTION: Why might animations be useful for visualizing spatial data?
 
+## Animations can be useful for visualizing spatial data because it's an easy method to show change over time, the flow of the data, or emphasizing certain aspects of data.
+
+
+
 ## QUESTION: What are some potential weaknesses of animating. 
 ## Hint: Think about how slow your computer probably ran!
+
+##Obviously, my computer took forever to process animations. There are lots of files too, so file size is a problem. Sometimes there can be color blind concerns, but I suppose that can be fixed with different color palettes. There's also an added complexity and maintenance when visualizing continuing data. Animations can also be overwhelming if you had no clue what it was about and had to suddenly consume everything moving at once.
+
 
 
 # 1.2: FINALE: Other useful packages ---------------------------------------------------####
