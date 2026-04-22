@@ -372,7 +372,8 @@ flight_timespans %>%
 # ---------------------------------------------------------- #
 
 ## TASK: load in beneficials_unified.csv and rename it data_set
-data_set <-read.csv("beneficials_unified.csv")
+library(readxl)
+data_set <- read_excel("beneficials_unified.xlsx")
 ## Now we will clean the data set to only contain data with time 
 clean_time_data <- data_set %>% ## keep in assignmet 
   select(-(1:26), -(38:43)) ## keep in assignment 
@@ -411,6 +412,8 @@ clean_time_data2 <- clean_time_data %>%
   )
 ## Question: why did we do this step? 
 
+##To break into smaller parts to analyze better.
+
 # Okay, now that we have cleaned up our data we are ready for the math!
 ## lubridate can help you calculate time in the past and present--
 
@@ -418,48 +421,66 @@ clean_time_data2 <- clean_time_data %>%
 clean_time_data2 <- clean_time_data2 %>%
   mutate(start_plus_7 = start_datetime + days(7))
 ## Task- check the data set which column changed ? 
-start_day 
-##  question why would this be helpful ? 
+
+head(clean_time_data2)
+##new column was added
+
+##question why would this be helpful ? 
+
 #  it can help us predict future dates and can help us compare a time window 
+
 ## TASK: Subtract month from clean_time_data2 
 clean_time_data2 <- clean_time_data2 %>%
   mutate(start_minus_1month = start_datetime - months(1))
-## TASK: View the dataset clean_time_data2- what do you see?
-# 2 new columns with information
-## why is this useful ?
 
-## lets us check the difference between the end and start 
+## TASK: View the dataset clean_time_data2- what do you see?
+##2 new columns with information
+
+#Why is this useful ?
+
+##Lets us check the difference between the end and start 
+
 clean_time_data2 <- clean_time_data %>%
   mutate(
     duration_calc = end_datetime - start_datetime
   )
-## what is the difference in column one #hint look at the end last column in the
-# dataset 
+##What is the difference in column one #hint look at the end last column in the dataset 
+
+#Shows time difference between end and start
 
 ## okay lets work with real time, first we are gonna look at the today's date
 today_date <- today ()
 ## now create a new dataset called my_birthday and include your own birthday. 
 ## if your birthday as already passed use another date- 
 ## hint ymd 
-my_birthday <- ymd("2002-09-05")
+my_birthday <- ymd("2001-11-09")
 # now we will create data set called my birthday this year 
-my_birthday_this_year <- ymd(paste0(year(today_date), "-07-20"))
+my_birthday_this_year <- ymd(paste0(year(today_date), "-11-09"))
 ## create a dataset called birthday_time and subtract my_birthday_this_year and 
 ## today_data
 birthday_time <- my_birthday_this_year - today_date
 ## TASK: View this dataset you just create ? what does this value mean?
 
+birthday_time
+##Number of days until my birthday
+
 ## Okay now lets figure out what day it is gonna be 60 days from now
 # TASK - Add 30 days to today_date and rename the dataset to days_30
 days_30 <- today_date + days(30)
 # question: what is the day 30 days from now? 
+days_30
+##2026-05-21
 
 ## Task: create another data set with today_date but subtract 30 days and rename
 # to days_minus_30
 days_minus_30 <- today_date - days(30)
 ## what is the date ?
+days_minus_30
+##2026-03-22
 
 ## question: How is lubridate and arithmetic useful? 
+
+##Easier to calculate and compare dates/times
 
 # ---------------------------------------------------------- #
 #### Part 1.3: Time Zones                                 ####
