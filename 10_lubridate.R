@@ -665,9 +665,24 @@ flight_timezones %>%
 # (4) using the select function, remove "family", "genus", "subgenus", "longTrap", "latTrap", and "elevTrap"
 # (5) rename "arthOrder" to "order"
 
+library(readxl)
+
+beneficials <- read_excel("beneficials_unified.xlsx")
+
+arthropods <- beneficials %>%
+  select(
+    arthOrder, family, genus, subgenus, species,
+    startYear, startMonth, startDay, startHour, startMinute,
+    endYear, endMonth, endDay, endHour, endMinute,
+    lonTrap, latTrap, elevTrap, deployedhours
+  ) %>%
+  unite("species", genus, species, sep = " ") %>%
+  select(-family, -subgenus, -lonTrap, -latTrap, -elevTrap) %>%
+  rename(order = arthOrder)
 
 #QUESTION: How many variables does the "arthropods" dataset have? Why does this number differ from the "beneficials" dataset? 
 
+##arthropods has 12 variables and is different from beneficials bc we cleaned it up (removed columns, selected only a few, merged)
 
 #Great! Now we can start using the lubridate package!
 
@@ -675,7 +690,10 @@ flight_timezones %>%
 # (1) make a new dataframe and label it "arthropods_clean" from the arthropods data. 
 # (2) using the mutate function make a two new columns called "start_datetime" and "end_datetime". Use the "make_datetime()" function to do this. Add the startYear, startMonth, startDay, startHour, startMinute to make the "start_datetime". Add the endYear, endMonth, endDay, endHour, endMinute to make the "end_datetime".
 
-
+arthropods_clean <- arthropods %>%
+  mutate(
+    start_datetime = make_datetime(startYear, startMonth, startDay, startHour, startMinute),
+    end_datetime = make_datetime(endYear, endMonth, endDay, endHour, endMinute))
 
 # Great! Now we want to parse out the columns that we just made. 
 
@@ -684,7 +702,12 @@ flight_timezones %>%
 # (2) use the format function on the "start_datetime" and make new columns for "start_date". "start_time", "end_date" and "end_time" and format the dates using " = format(x, "%B %d, %Y")" and for the times use " = format(x, "%I:%M:%S %p")"
 #HINT: Example of part of the code: new data name <- arthropod_clean %>% mutate(start_date = format(start_datetime, "%B %d, %Y"))...
 
-
+arthropods_broken <- arthropods_clean %>%
+  mutate(
+    start_date = format(start_datetime, "%B %d, %Y"),
+    start_time = format(start_datetime, "%I:%M:%S %p"),
+    end_date = format(end_datetime, "%B %d, %Y"),
+    end_time = format(end_datetime, "%I:%M:%S %p"))
 
 # TASK: Now we want to parse them back together.
 # (1) call this new dataframe "arthropods_parsed" but pull data from the arthropods_broken dataframe. 
@@ -692,21 +715,39 @@ flight_timezones %>%
 # (3) mutate the columns to parse out the data in the mdy_hms format using "mdy_hms()" 
 # HINT: you will need yo use "paste()" within the mdy_hms() function. 
 
+arthropods_parsed <- arthropods_broken %>%
+  mutate(
+    start_datetime_parsed = mdy_hms(paste(start_date, start_time)),
+    end_datetime_parsed = mdy_hms(paste(end_date, end_time)))
 
 #TASK: Let's determine how my months each Order of insect was trapped for. Annotate each line of the code below to describe what we are telling R to do. 
 
-total_trap_time <- arthropods %>% 
-  mutate(start_datetime = make_datetime(startYear, startMonth, startDay, startHour, startMinute),
-    end_datetime   = make_datetime(endYear, endMonth, endDay, endHour, endMinute)) %>%
-  group_by(order) %>%
-  summarize(first_trap = min(start_datetime, na.rm = TRUE),
-    last_trap  = max(end_datetime, na.rm = TRUE), 
-    time_trapped = interval(first_trap, last_trap) %/% months(1)) %>% # HINT: "%/% months(1)" is counting whole months
-  ungroup()
+total_trap_time <- arthropods %>% ##Take arthopods data set
+  mutate(start_datetime = make_datetime(startYear, startMonth, startDay, startHour, startMinute), ## Create a proper start datetime from separate year, month, day, hour, minute columns
+    end_datetime   = make_datetime(endYear, endMonth, endDay, endHour, endMinute)) %>% ##Create a proper end datetime from separate year, month, day, hour, minute columns
+  group_by(order) %>% ## Group the data by arthropod order
+  summarize(first_trap = min(start_datetime, na.rm = TRUE), ## Find earliest trapping date for each order
+    last_trap  = max(end_datetime, na.rm = TRUE), ##Find last trapping date for each order
+    time_trapped = interval(first_trap, last_trap) %/% months(1)) %>% # HINT: "%/% months(1)" is counting whole months ##Calculate how many months traps were active between first and last dates
+  ungroup() ##remove grouping
 
-
+total_trap_time
 #QUESTION: How many months were the traps set for each order?
 
+##Araneae:14
+##Coleoptera:15
+##Diptera:1
+##Hymenoptera:49
+##Opiliones:14
 
 #TASK: Plot the total_trap time for each order using geom_col. Color fill the bars by order. Label each axis, use theme_bw(), and position the legend on the bottom right of the graph. 
 
+ggplot(total_trap_time, aes(x = order, y = time_trapped, fill = order)) +
+  geom_col() +
+  labs(
+    x = "Arthropod Order",
+    y = "Months Trapped",
+    title = "Total Trap Time by Arthropod Order"
+  ) +
+  theme_bw() +
+  theme(legend.position = "bottom")
