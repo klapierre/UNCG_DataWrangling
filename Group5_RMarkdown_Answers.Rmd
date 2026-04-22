@@ -258,3 +258,234 @@ You can also nest subitems within an item. If you want a nested list as such, ju
 
 
 Note: If you want to use Roman Numerals, you may have to leave an empty line between items on list.
+------------------------------------------------------------------------
+## Section 4: Add Visualizations and Tables to Your Report
+
+### Goal
+
+In this section, you will create graphs and a summary table using the
+mtcars data set. You will also practice describing patterns that you
+observe in the output.
+
+Before beginning, make sure you can access the mtcars dataset. Run the
+line below to preview the first few rows.
+
+head(mtcars)
+
+Also make sure you have Tidyverse installed! Run the line of code below.
+
+library(tidyverse)
+
+------------------------------------------------------------------------
+
+## Part A: Create a Scatterplot
+
+The variables wt and mpg in the mtcars data set can help us explore the
+relationship between car weight and fuel efficiency.
+
+### Task
+
+Create a scatter plot with wt on the x-axis and mpg on the y-axis.
+
+**Hint:** use the plot() function
+
+```{r scatterplot}
+plot(mtcars$wt, mtcars$mpg)
+```
+
+### Task
+
+Modify your scatterplot so that it includes: a title, an x-axis label, a
+y-axis label, a point color of your choice
+
+**Hint:** Think back to previous assignments(main=, xlab= ,ylab=, and
+col=)
+
+```{r scatterplot_labeled}
+plot(mtcars$wt, mtcars$mpg,
+     main = "Weight vs MPG",
+     xlab = "Weight (1000 lbs)",
+     ylab = "Miles per Gallon",
+     col = "violet")
+```
+
+### Question
+
+What does each point in this scatterplot represent?
+
+**Your answer:** 
+Each point represents one car in the dataset and shows that car’s weight and fuel efficiency (mpg).
+
+### Question
+
+What relationship do you observe between weight and mpg?
+
+**Your answer:** 
+As weight increases, mpg decreases. Heavier cars tend to have lower fuel efficiency.
+
+### Question
+
+Does the graph suggest a positive relationship, a negative relationship,
+or no relationship? Explain your answer.
+
+**Your answer:**
+The graph shows a negative relationship because the points trend downward as weight increases, meaning mpg decreases as weight increases.
+
+------------------------------------------------------------------------
+
+## Part B: Create a Boxplot
+
+The variable cyl shows the number of cylinders in each car. A boxplot
+can help compare fuel efficiency across cylinder groups.
+
+### Task 
+
+Create a boxplot of mpg by cyl using the boxplot function
+
+```{r boxplot1}
+boxplot(mpg ~ cyl, data = mtcars)
+```
+
+### Task 
+
+Modify your boxplot so that it includes: a title, an x-axis label, a
+y-axis label, and a fill color of your choice
+
+```{r boxplot2}
+boxplot(mpg ~ cyl, data = mtcars,
+        main = "MPG by Number of Cylinders",
+        xlab = "Number of Cylinders",
+        ylab = "Miles per Gallon",
+        col = "purple")
+```
+
+### Question
+
+What does each box in this plot represent?
+
+**Your answer:** 
+Each box represents the distribution of mpg values for a specific cylinder group.
+
+### Question
+
+Which cylinder group appears to have the highest fuel efficiency?
+
+**Your answer:** 
+The 4-cylinder group has the highest fuel efficiency
+
+### Question
+
+Which cylinder group appears to have the lowest fuel efficiency?
+
+**Your answer:** 
+The 8-cylinder group has the lowest fuel efficiency.
+
+### Question
+
+Based on the boxplot, how does fuel efficiency seem to change as the
+number of cylinders increases?
+
+**Your answer:** 
+Fuel efficiency decreases as the number of cylinders increases. Cars with more cylinders tend to have lower mpg.
+
+------------------------------------------------------------------------
+
+## Part C: Create a Summary Table
+
+You will now create a table showing the average miles per gallon for
+each cylinder group.
+
+### Task 
+
+Use dplyr to calculate the average mpg for each value of cyl. Rename the
+data avg_mpg_by_cyl
+
+**Hint:** you need to group the data by cyl then summarize the mean of
+mpg.
+
+Use the space below to write your code:
+
+```{r summary_table}
+avg_mpg_by_cyl <- mtcars %>% group_by(cyl) %>%
+  summarise(avg_mpg = mean(mpg))
+```
+
+### Task 
+
+Display your results as a clean table.
+
+Use the space below to write your code:
+
+```{r formatted_table}
+avg_mpg_by_cyl
+```
+
+### Question
+
+What does this table show?
+
+**Your answer:** 
+The table shows the average miles per gallon for each cylinder group, summarizing fuel efficiency across the groups.
+
+### Question
+
+Which cylinder group has the highest average mpg?
+
+**Your answer:** 
+The 4-cylinder group has the highest average mpg.
+
+### Question
+
+Which cylinder group has the lowest average mpg?
+
+**Your answer:** 
+The 8-cylinder group has the lowest average mpg.
+
+------------------------------------------------------------------------
+
+## Part D: Compare the Visuals
+
+Now that you have created both graphs and the table, compare the
+information they provide.
+
+### Question 
+
+How does the scatterplot help you understand the relationship between
+weight and fuel efficiency?
+
+**Your answer:** 
+The scatterplot shows individual data points and helps visualize the relationship between weight and mpg, showing that heavier cars have lower fuel efficiency.
+
+### Question 
+
+How does the boxplot help you compare different groups of cars?
+
+**Your answer:** 
+The boxplot groups cars by cylinder count and shows the spread of mpg within each group, making it easier to compare fuel efficiency across different groups.
+
+------------------------------------------------------------------------
+
+## Part E: Now you try
+
+1.  Use a different variable from mtcars to make an additional scatter
+    plot.
+2.  Change the color of your scatterplot.
+
+Write your code below:
+
+```{r Now_you_try}
+plot(mtcars$hp, mtcars$mpg,
+     main = "Horsepower vs MPG",
+     xlab = "Horsepower",
+     ylab = "Miles per Gallon",
+     col = "darkblue")
+```
+
+### Question
+
+What did you change, and how did it affect the output?
+
+**Your answer:** 
+I changed the x-variable from weight to horsepower and changed the color of the scatterplot. This allowed me to explore a different relationship in the data and improved the visual appearance of the graph.
+
+------------------------------------------------------------------------
