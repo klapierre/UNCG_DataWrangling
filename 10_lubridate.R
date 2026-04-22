@@ -501,14 +501,19 @@ time_utc
 
 ## QUESTION: What does the 'tz' argument produce?
 
+##Assigns a time zone
+
 ## TASK: Determine the time zone of 
 tz(time_utc)
+##UTC
 
 ## The with_tz() function shows the exact same moment in a different timezone.
 time_ny <- with_tz(time_utc, tzone = "America/New_York")
 time_ny
 
 ## QUESTION: Has the actual moment in time changed?
+
+##No, just different time zone
 
 ##TASK: Convert time_UTC to Los Angeles time.
 time_la <- with_tz(time_utc, tzone = "America/Los_Angeles")
@@ -523,12 +528,19 @@ time_tokyo <- with_tz(time_utc, tzone = "Asia/Tokyo")
 time_tokyo
 
 ## TASK: Print all converted times.
+time_utc
+time_ny
+time_la
+time_chicago
+time_tokyo
 
 ##QUESTION: Why do the shown clock times appear different?
 
+##Different time zones
 
 ##QUESTION: Are these different moments?
 
+##No
 
 ## Force_tz() is a handy function.
 ## With_tz() keeps the current moment in time.
@@ -543,6 +555,8 @@ time_force_tz
 
 ## QUESTION: What's the main difference between with_tz() and force_tz()?
 
+##with_tz() keeps same moment just changes how it is shown  
+#forze_tz() changes actual moment by reassigning time zone
 
 ##TASK: Determine the time zone for both items.
 tz(time_with_tz)
@@ -575,6 +589,8 @@ meeting_data
 
 ## QUESTION: How is this useful?
 
+##Helps compare time across different locations
+
 ## The nycflights13 dataset includes flight data from New York City flights.
 
 ## Lubridate can be used to create date time columns and practice time zones.
@@ -606,6 +622,7 @@ flight_timezones
 
 ## QUESTION: Why do dep_time_ny, dep_time_utc, and dep_time_la display different hours?
 
+##Different time zones
 
 ## TASK: Determine the departure hour and weekday in New York Time.
 flight_timezones <- flight_timezones %>%
@@ -617,11 +634,15 @@ flight_timezones
 ## TASK: Determine how many of these practice flights depart during the course of each New York hour.
 flight_timezones %>%
   count(dep_hour_ny)
+##5 at 5am and 5 at 6am
 
 ## QUESTION: Why is local time better than UTC for human scheduling?
 
+##Easier for people to understand
 
 ##QUESTION: In one sentence, explain time zone conversion in lubridate.
+
+##Time zone conversion changes how a time is seen across locations while showing the same moment.
 
 # ---------------------------------------------------------- #
 #### Part 2.0: Practicing your skills                       ####
