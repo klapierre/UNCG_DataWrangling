@@ -303,9 +303,15 @@ flight_timespans %>% count(short_or_long=="short")
 
 ## TASK: load in beneficials_unified.csv and rename it data_set
 data_set <-read.csv("beneficials_unified.csv")
+
+install.packages("readxls")
+library(readxl)
+data_set <- read_excel("beneficials_unified.xlsx")
 ## Now we will clean the data set to only contain data with time 
-clean_time_data <- data_set %>% ## keep in assignmet 
+clean_time_data <- data_set %>% ## keep in assignment 
   select(-(1:26), -(38:43)) ## keep in assignment 
+clean_time_data <- data_set %>% 
+  select(-(1:26), -(38:43))
 ## now we will create a start datetime ##
 clean_time_data <- clean_time_data %>%
   mutate(
@@ -329,6 +335,7 @@ clean_time_data <- clean_time_data %>%
     )
   )
 ## TASK: check each new dataset what do you see? ##
+# theres a single dataset with the two new columns
 #there should be a new column added in the end of the data set with the year,
 #month, day, hour and minute together. 
 ## Type in the following code below --
@@ -340,7 +347,7 @@ clean_time_data2 <- clean_time_data %>%
     start_weekday = wday(start_datetime, label = TRUE)
   )
 ## Question: why did we do this step? 
-
+# we made the data a bit easier to manipulate by separating the dates into month, day, and year columns
 # Okay, now that we have cleaned up our data we are ready for the math!
 ## lubridate can help you calculate time in the past and present--
 
@@ -349,7 +356,8 @@ clean_time_data2 <- clean_time_data2 %>%
   mutate(start_plus_7 = start_datetime + days(7))
 ## Task- check the data set which column changed ? 
 start_day 
-##  question why would this be helpful ? 
+#theres an extra column called start_plus_7
+##  question why would this be helpful ?
 #  it can help us predict future dates and can help us compare a time window 
 ## TASK: Subtract month from clean_time_data2 
 clean_time_data2 <- clean_time_data2 %>%
@@ -357,7 +365,8 @@ clean_time_data2 <- clean_time_data2 %>%
 ## TASK: View the dataset clean_time_data2- what do you see?
 # 2 new columns with information
 ## why is this useful ?
-
+view(clean_time_data2)
+#future date prediction?
 ## lets us check the difference between the end and start 
 clean_time_data2 <- clean_time_data %>%
   mutate(
@@ -365,32 +374,33 @@ clean_time_data2 <- clean_time_data %>%
   )
 ## what is the difference in column one #hint look at the end last column in the
 # dataset 
-
+# the last column is a more precise duration because it uses the hour and minute of the day to do this calculation rather than just whole hour
 ## okay lets work with real time, first we are gonna look at the today's date
 today_date <- today ()
 ## now create a new dataset called my_birthday and include your own birthday. 
 ## if your birthday as already passed use another date- 
 ## hint ymd 
-my_birthday <- ymd("2002-09-05")
+my_birthday <- ymd("2002-11-04")
 # now we will create data set called my birthday this year 
-my_birthday_this_year <- ymd(paste0(year(today_date), "-07-20"))
+my_birthday_this_year <- ymd(paste0(year(today_date), "-11-04"))
 ## create a dataset called birthday_time and subtract my_birthday_this_year and 
 ## today_data
 birthday_time <- my_birthday_this_year - today_date
 ## TASK: View this dataset you just create ? what does this value mean?
-
+view(birthday_time)
+#it gives the number of days until my next birthday
 ## Okay now lets figure out what day it is gonna be 60 days from now
 # TASK - Add 30 days to today_date and rename the dataset to days_30
 days_30 <- today_date + days(30)
 # question: what is the day 30 days from now? 
-
+#May 22nd, 2026
 ## Task: create another data set with today_date but subtract 30 days and rename
 # to days_minus_30
 days_minus_30 <- today_date - days(30)
 ## what is the date ?
-
+#March 23rd, 2026
 ## question: How is lubridate and arithmetic useful? 
-
+# it is useful for performing calculations on dates
 # ---------------------------------------------------------- #
 #### Part 1.3: Time Zones                                 ####
 # ---------------------------------------------------------- #
@@ -409,16 +419,17 @@ time_utc <- ymd_hms("2026-04-14 18:00:00", tz = "UTC")
 time_utc
 
 ## QUESTION: What does the 'tz' argument produce?
-
+# the timezone specified
 ## TASK: Determine the time zone of 
 tz(time_utc)
+#UTC (coordinated universal time)
 
 ## The with_tz() function shows the exact same moment in a different timezone.
 time_ny <- with_tz(time_utc, tzone = "America/New_York")
 time_ny
 
 ## QUESTION: Has the actual moment in time changed?
-
+#no but the time has
 ##TASK: Convert time_UTC to Los Angeles time.
 time_la <- with_tz(time_utc, tzone = "America/Los_Angeles")
 time_la
@@ -432,12 +443,15 @@ time_tokyo <- with_tz(time_utc, tzone = "Asia/Tokyo")
 time_tokyo
 
 ## TASK: Print all converted times.
-
+time_chicago
+time_la
+time_ny
+time_tokyo
 ##QUESTION: Why do the shown clock times appear different?
-
+#because these are all different time zones in different areas of the world
 
 ##QUESTION: Are these different moments?
-
+#no
 
 ## Force_tz() is a handy function.
 ## With_tz() keeps the current moment in time.
@@ -451,12 +465,12 @@ time_with_tz
 time_force_tz
 
 ## QUESTION: What's the main difference between with_tz() and force_tz()?
-
+#with_tz() keeps the time of the specified timezone, force_tz() changes the time to match the UTC time
 
 ##TASK: Determine the time zone for both items.
 tz(time_with_tz)
 tz(time_force_tz)
-
+# they're both NYC timezone (EDT)
 ## Time zones are helpful for meetings, flights, and scheduling.
 ## Let us create a short array of meeting times in UTC.
 meeting_times_utc <- ymd_hms(c("2026-04-14 13:00:00",
@@ -483,13 +497,14 @@ meeting_data <- meeting_data %>%
 meeting_data
 
 ## QUESTION: How is this useful?
-
+#it is useful for converting times for someone in a different timezone
 ## The nycflights13 dataset includes flight data from New York City flights.
 
 ## Lubridate can be used to create date time columns and practice time zones.
 
 ## TASK: Review the first few rows of the flights dataset.
-
+library(nycflights13)
+head(flights)
 ## TASK: Create a smaller practice dataframe by selecting flight columns.
 flight_timezones <- flights %>%
   select(year, month, day, hour, minute, carrier, flight, origin, dest) %>%
@@ -514,7 +529,7 @@ flight_timezones
 
 
 ## QUESTION: Why do dep_time_ny, dep_time_utc, and dep_time_la display different hours?
-
+# because they are different time zones
 
 ## TASK: Determine the departure hour and weekday in New York Time.
 flight_timezones <- flight_timezones %>%
@@ -528,10 +543,10 @@ flight_timezones %>%
   count(dep_hour_ny)
 
 ## QUESTION: Why is local time better than UTC for human scheduling?
-
+# because it would make sense to a person in that time zone more quickly than having to convert it or potentially missing the difference in time altogether
 
 ##QUESTION: In one sentence, explain time zone conversion in lubridate.
-
+# lubridate allows users to convert from one time zone to another which could be very useful for global data that needs to reach people in many different time zones
 # ---------------------------------------------------------- #
 #### Part 2.0: Practicing your skills                       ####
 # ---------------------------------------------------------- 
@@ -545,56 +560,100 @@ flight_timezones %>%
 # We will need to tidy this data before we can start practicing with lubridate.
 
 #TASK: You will notice that this data has a lot of redundant observations. Load the "beneficials_unified.csv" into R using the read.csv function and name the dataframe "beneficials".
-
+read_excel("beneficials_unified.xlsx")
 # TASK: Using the same workflow, lets make a dataframe of only the data that we will be using for lubridate. 
 # (1) name the new dataframe "arthropods" and use the beneficials data
 # (2) there is a lot of redundant data and again, we want to make a dataframe that only has the data we will need. For this dataframe, we will only be using the columns "arthOrder" through "deployedhours". Use the select function to select all columns between (and including) "arthOrder" and "deployedhours". Hint: you should have a total of 27 columns after this is done. Revisit previous assignments to select for large chunks without having to type all the column names you wish to include. 
 # (3) unite the genus and species names and name this new column "species". Separate the obsevations with a single space (" ")
 # (4) using the select function, remove "family", "genus", "subgenus", "longTrap", "latTrap", and "elevTrap"
 # (5) rename "arthOrder" to "order"
-
+arthropods<-read_excel("beneficials_unified.xlsx") %>% 
+  select(arthOrder:deployedhours) %>% 
+  mutate(species=paste(genus,species,sep=" ")) %>% 
+  select(-family,-genus,-subgenus,-lonTrap,-latTrap,-elevTrap) %>% 
+  rename(order=arthOrder)
 
 #QUESTION: How many variables does the "arthropods" dataset have? Why does this number differ from the "beneficials" dataset? 
-
+#21,because we removed several columns
 
 #Great! Now we can start using the lubridate package!
 
 #TASK: Parse out the data 
 # (1) make a new dataframe and label it "arthropods_clean" from the arthropods data. 
-# (2) using the mutate function make a two new columns called "start_datetime" and "end_datetime". Use the "make_datetime()" function to do this. Add the startYear, startMonth, startDay, startHour, startMinute to make the "start_datetime". Add the endYear, endMonth, endDay, endHour, endMinute to make the "end_datetime".
-
+# (2) using the mutate function make a two new columns called "start_datetime" and "end_datetime". 
+# Use the "make_datetime()" function to do this. Add the startYear, startMonth, 
+# startDay, startHour, startMinute to make the "start_datetime". Add the endYear, endMonth, 
+# endDay, endHour, endMinute to make the "end_datetime".
+arthropods_clean<-arthropods %>% 
+  mutate(start_datetime=make_datetime(year=startYear,
+                                      month=startMonth,
+                                      day=startDay,
+                                      hour=startHour,
+                                      min=startMinute),
+         end_datetime=make_datetime(year=endYear,
+                                    month=endMonth,
+                                    day=endDay,
+                                    hour=endHour,
+                                    min=endMinute)) 
 
 
 # Great! Now we want to parse out the columns that we just made. 
 
 # TASK: First in order to do this, we will need to mess up the columns then put them back together. This dataset was already cleaned before it was uploaded. We We will "mess" up the data, so we can clean it again. By using "format(start_datetime, "%B %d, %Y")" and "format(start_datetime, "%I:%M:%S %p")" we are purposefully changing the clean data so we can practice more!
 # (1) using the arthropods_clean data, call this new dataframe "arthropods_broken"
-# (2) use the format function on the "start_datetime" and make new columns for "start_date". "start_time", "end_date" and "end_time" and format the dates using " = format(x, "%B %d, %Y")" and for the times use " = format(x, "%I:%M:%S %p")"
+# (2) use the format function on the "start_datetime" and make new columns for "start_date". "start_time", 
+# "end_date" and "end_time" and format the dates using " = format(x, "%B %d, %Y")" 
+# and for the times use " = format(x, "%I:%M:%S %p")"
 #HINT: Example of part of the code: new data name <- arthropod_clean %>% mutate(start_date = format(start_datetime, "%B %d, %Y"))...
-
+arthropods_broken <- arthropods_clean %>% mutate(start_date = format(start_datetime, "%B %d, %Y"),
+                                                start_time = format(start_datetime, "%I:%M:%S %p"),
+                                                end_date = format (end_datetime,"%B %d, %Y" ),
+                                                end_time = format (end_datetime,"%I:%M:%S %p" ))
 
 
 # TASK: Now we want to parse them back together.
 # (1) call this new dataframe "arthropods_parsed" but pull data from the arthropods_broken dataframe. 
-# (2) make two new columns using the mutate function. Name these new columns "start_datetime_parsed" and "end_datetime_parsed"
+# (2) make two new columns using the mutate function. Name these new columns "start_datetime_parsed" 
+# and "end_datetime_parsed"
 # (3) mutate the columns to parse out the data in the mdy_hms format using "mdy_hms()" 
 # HINT: you will need yo use "paste()" within the mdy_hms() function. 
-
+arthropods_parsed<-arthropods_broken %>% 
+  mutate(start_datetime_parsed=mdy_hms(paste(start_date,start_time)),
+         end_datetime_parsed=mdy_hms(paste(end_date,end_time)))
 
 #TASK: Let's determine how my months each Order of insect was trapped for. Annotate each line of the code below to describe what we are telling R to do. 
 
 total_trap_time <- arthropods %>% 
+  #uses data from the arthropods dataframe for a new one called total_trap_time
   mutate(start_datetime = make_datetime(startYear, startMonth, startDay, startHour, startMinute),
+         #makes a new column combining the specified columns following the new column name
          end_datetime   = make_datetime(endYear, endMonth, endDay, endHour, endMinute)) %>%
+  #same as previous line but with end time instead of start time
   group_by(order) %>%
+  # groups the data by the order column
   summarize(first_trap = min(start_datetime, na.rm = TRUE),
+            #finds the earliest trap time/date for each group (of order)
             last_trap  = max(end_datetime, na.rm = TRUE), 
+            #finds the latest trap time.date for each group (of order)
             time_trapped = interval(first_trap, last_trap) %/% months(1)) %>% # HINT: "%/% months(1)" is counting whole months
+#creates a new column that lists the interval for the first and last traps for each group in whole months
   ungroup()
+#ungroups the data for future use
 
 
 #QUESTION: How many months were the traps set for each order?
-
-
+#Araneae-14
+#Coleoptera-15
+#Diptera-1
+#Hymenoptera-49
+#Opiliones-14
 #TASK: Plot the total_trap time for each order using geom_col. Color fill the bars by order. Label each axis, use theme_bw(), and position the legend on the bottom right of the graph. 
+library(ggplot2)
+ggplot(total_trap_time, aes(x = order, y = time_trapped, fill = order)) +
+  geom_col() +
+    xlab ("Order")+
+    ylab ("Trap Time (months)") +
+  theme_bw() +
+  theme(legend.position = c(1, 0),legend.justification = c(1,0))
 
+    
