@@ -271,11 +271,15 @@ anim_save("airquality_ozone.gif", animate(airquality_ozone, renderer = gifski_re
 
 print(airquality_ozone)
 
+# this looks so insane but I am not really sure what I am doing wrong !! 
 
 
 ##GREAT JOB!!!
 
 ##Reminder to reset your working directory
+
+
+
 
 
 # 1.1 Expanding on gganimate use cases ----------------------------------------####
