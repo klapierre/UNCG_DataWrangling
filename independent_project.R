@@ -87,7 +87,20 @@ T3 <- T3 %>%
 T4 <- T4 %>% 
   mutate(date_open = as.Date(j_open - 1, origin = "2015-01-01"),
          site = as.factor(site),
+<<<<<<< Updated upstream
          pollen_limitation = as.numeric(pollen_limitation))
+=======
+         pollen_limitation = as.numeric(pollen_limitation)) 
+
+# T4 has a nasty outlier, let's remove it first.
+Q1 <- quantile(T4$pollen_limitation, 0.25, na.rm = T)
+Q3 <- quantile(T4$pollen_limitation, 0.75, na.rm = T)
+IQR <- Q3 - Q1
+
+# Filter the dataframe
+T4 <- T4 %>% 
+  filter(pollen_limitation >= (Q1 - 1.5 * IQR) & pollen_limitation <= (Q3 + 1.5 * IQR))
+>>>>>>> Stashed changes
 
 T5 <- T5 %>% 
   mutate(date_open = as.Date(j_open - 1, origin = "2015-01-01"),
@@ -229,7 +242,11 @@ T2_date_summary <- T2 %>%
   labs(title = "Pollen Limitation Effect on Seed Set",
        x = "Pollen Limitation",
        y = "Seed Set (%)"))
+<<<<<<< Updated upstream
 ## Remove outlier
+=======
+
+>>>>>>> Stashed changes
 
 # Visualize the results of each pollination treatment on Seed Set %
 (plot_T5 <- T5 %>% 
