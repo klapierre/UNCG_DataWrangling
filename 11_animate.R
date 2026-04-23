@@ -42,23 +42,17 @@ data("airquality")
 ##will delete this folder, and change working directory at the end)
 
 ##TASK: Write code using the head() function to get a glimpse of the dataset
+head(airquality)
 
 ##QUESTION: One of the most basic animations is showing change overtime, what 
 ##columns in could we use to show this?
 
+#Days, months and actual time
+
 ##TASK: Below is the skeleton of a line plot, rewrite the code to have Day as the 
 ##x axis and temp as the y axis, then give the plot a descriptive title
 
-ggplot(airquality, aes(x = ?, y = ?)) +
-  geom_line()
-
-##TASK: Run the code below
-
-airquality_temp <- ggplot(airquality, aes(x = Day, y = Temp)) +
-  geom_line() +
-  labs(title = "Temperature Over Days") +
-  transition_time(Month)
-anim_save("temperature.gif", animate(airquality_temp, renderer = gifski_renderer()))
+ggplot(airquality, aes(x = Day, y = Temp)) + geom_line() + labs(title = "Temperature Over Days")
 
 ##TASK: Now run this code
 
@@ -70,9 +64,15 @@ animate(airquality_temp)
 
 #QUESTION: What is the difference in saved outcome between the two codes?
 
+#The first code created a plot that doesnt move whereas the second code created an animation
+
 ##QUESTION: What is the animate() function doing?
 
+#The animate function makes animations by generating frames.
+
 ##QUESTION: What happens if we take out the transition_time() function?
+
+#If its removed than the plot wont be animated and a regular graph will be displayed
 
 ##Now that we have a simple animation we can apply other functions to make the
 ##Animation easier to view and understand
@@ -88,19 +88,29 @@ anim_save("temperature_titles.gif", animate(airquality_temp, renderer = gifski_r
 
 ##QUESTION: What is the new title of the graph?
 
+#Frame_time
+
 ##QUESTION: Why would someone choose to use the {frame_time} argument instead of 
 ##just typing a whole new title?
+
+#because the title will automatically be updated for the frames
 
 ##QUESTION: Transitions can be used to control how smooth the animation plays
 ##What are some characteristics of the animation that might be helpful to modify?
 
+#the number of frames, the transitions and the effects
+
 ##Run the code below
-airquality_temp <- ggplot(airquality, aes(x = Day, y = Temp)) +
-  geom_line() +
+airquality_temp <- ggplot(airquality, aes(x = Day, y = Temp)) + geom_line() +
+  # creates a line graph of temperature over days
   ease_aes('linear')+
+  #Makes animation move linear
   labs(title = "Month: {frame_time}") +
+  #Updates title for each frame
   transition_time(Month)
+#Plot animated over the month to show progression in time
 anim_save("temperature_ease.gif", animate(airquality_temp, renderer = gifski_renderer()))
+#Animation saved as a gif file
 
 ##TASK: Annotate the code above with descriptive comments
 
@@ -122,12 +132,16 @@ airquality_temp <- ggplot(airquality, aes(x = Day, y = Temp)) +
 anim_save("temperature_mark.gif", animate(airquality_temp, renderer = gifski_renderer()))
 
 ##QUESTION: What is the difference between shadow_trail and shadow_mark?
+#The shadow trail shows a trial that fades liek a shadow behind the data moving and 
+#Theres also shadow mark where points are visible showing the past positions 
 
 ##transition_time gives us continuous animations, but we can also use 
 ##transition_states to make discrete ones instead
 
 ##Quesion: Considering what you know about different graphs in ggplot, what 
 ##types of graph should you use transition_states() instead of transition_time()?
+
+#We should use transition states so we can see the different states
 
 ##Below is an example of using transition_states()
 
@@ -140,6 +154,9 @@ anim_save("temperature_states.gif", animate(airquality_discrete, renderer = gifs
 ##QUESTION: Other than the type of graph, what is the main difference in the code 
 ##when using transition_states() instead of transition_time()?
 
+#The main difference is that transition states uses states and changes the labels based on the closest state
+#whereas the transition time uses the continuous time and updates the labels
+
 ##Below is an example using a 3rd transition, transition_reveal()
 
 airquality_reveal <- ggplot(airquality, aes(x = Day, y = Temp)) +
@@ -148,6 +165,8 @@ airquality_reveal <- ggplot(airquality, aes(x = Day, y = Temp)) +
 anim_save("temperature_reveal.gif", animate(airquality_reveal, renderer = gifski_renderer()))
 
 ##TASK/QUESTION: Use the the help tab and the animation above to describe what transition_reveal does.
+
+#Transition reveal, reveals data step by step instead of just frames 
 
 ##If you have more complicated data, you can also use transition_components to animate by group, see below
 
@@ -165,6 +184,8 @@ anim_save("temperature_group.gif", animate(airquality_group, renderer = gifski_r
 
 ##QUESTION: When would using transition_components be the most beneficial in visualizing data?
 
+#To see how different groups or pieces of data move over time
+
 ##Just like when you are animating a slideshow, often having elements disapear in
 ##in interesting ways helps draw people to your visual. In gganimate you can do 
 ##this by using enter and exit functions
@@ -176,24 +197,38 @@ airquality_discrete +
 ##TASK: rewrite the code above to utilize alternative enter and exit functions: 
 ##https://gganimate.com/reference/enter_exit.html
 
+airquality_discrete + enter_grow() + exit_fade()
+
 ##QUESTION: Take a look at the help for the animate() function, what other arguments can be used?
+
+#The nframes, fps, width, duration, renderer arguments
 
 ##TASK: Using the airquality_temp animation, adjust the animation to have a 
 ##height of ##400, a width of 600, 100 frames, and have a speed of 10 frames per second
+
+animate(airquality_temp, nframes = 100, fps = 10, width = 600, height = 400)
 
 ##TASK: Fix the code below, and insert comments to to inform on the changes you made
 ##There are 3 mistakes, hint, it should not be a line graph, and all other functions 
 ##are correct, only the arguments may be incorrect
 
 airquality_discrete <- ggplot(airquality, aes(x = Day, y = Temp)) +
-  geom_line() +
+  geom_point() +
+  #To make it not a line graph because we dont want that
   transition_states(Month) +
-  labs(title = "Day: {frame_time}")
+  labs(title = "month: {closest_state}")
+#Changed day to month and changed the title
 anim_save("temperature_discrete2.gif", animate(airquality_discrete, renderer = gifski_renderer()))
+#Animation gets saved
 
 ##Now it is time to test your skills. Make a new animation that shows ozone levels 
 #overtime. Call it airquality_ozone. Use a shadow functions, an ease_aes() function, 
 #and either an enter or exit function.
+
+airquality_ozone <- ggplot(airquality, aes(x = Day, y = Ozone)) + geom_line() +
+ease_aes("linear") + labs(title = "Month: {frame_time}", y = "Ozone") + shadow_trail() +
+transition_time(Month)
+anim_save("ozone.gif", animate(airquality_ozone, renderer = gifski_renderer()))
 
 ##GREAT JOB!!!
 
@@ -658,3 +693,8 @@ image_write(animation, "dailyAvg_bubble_watermarked.gif")
 
 # Magick appears to take longer than Gifski to create the GIF in your files so 
 # as I stated before, feel free to rerun the code to wake R-studio up. 
+
+
+
+
+
