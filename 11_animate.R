@@ -86,7 +86,7 @@ airquality_temp <- ggplot(airquality, aes(x = Day, y = Temp)) +
   geom_line() +
   labs(title = "Temperature Over Days")
 animate(airquality_temp)
-# It only provided one single graph.
+# It gave me an error message.
 
 ##Now that we have a simple animation we can apply other functions to make the
 ##Animation easier to view and understand
@@ -231,15 +231,6 @@ anim_save("temperature_discrete2.gif", animate(airquality_discrete, renderer = g
 ##Now it is time to test your skills. Make a new animation that shows ozone levels 
 #overtime. Call it airquality_ozone. Use a shadow functions, an ease_aes() function, 
 #and either an enter or exit function.
-airquality_ozone <- ggplot(airquality_clean,aes(x = Day, y = Ozone))+
-  geom_line() +
-  ease_aes("linear") +
-  labs(title = "Month: {frame_time}") +
-  transition_time(Month)+
-  shadow_trail(alpha=0.3)+
-  enter_grow()+
-anim_save("ozone_time.gif", animate(airquality_ozone, renderer = gifski_renderer(),  nframes = 150,fps = 15,width = 600,height = 400))
-
 
 ##GREAT JOB!!!
 
@@ -250,6 +241,15 @@ setwd("/Users/a_pandey2/Desktop/github/UNCG_DataWrangling")
 # 1.1 Expanding on gganimate use cases ----------------------------------------####
 
 ## TASK: Load datasets used in this section
+airquality_ozone <- ggplot(airquality_clean,aes(x = Day, y = Ozone))+
+  geom_line() +
+  ease_aes("linear") +
+  labs(title = "Month: {frame_time}") +
+  transition_time(Month)+
+  shadow_trail(alpha=0.3)+
+  enter_grow()
+anim_save("ozone_time.gif", animate(airquality_ozone, renderer = gifski_renderer(),  nframes = 150,fps = 15,width = 600,height = 400))
+
 
 data("gapminder")
 data("iris")
@@ -714,7 +714,7 @@ rangeTemp <- tempData %>%
            p <- make_timeseries_plot(dailyAvg, i)
            ggsave(filename = sprintf("frames_timeseries/frame_%04d.png", i),plot = p,width = 8,height = 5) }
          
-         ggsave(filename = sprintf("frames_daily/frame_%04d.png", i),plot = p,width = 8, height = 5))
+#         ggsave(filename = sprintf("frames_daily/frame_%04d.png", i),plot = p,width = 8, height = 5)) # This line was already in the code and I had no idea what it did.
 
 # lastly, with ggsave(), we save the data as a PNG file. the frames will come 
 # out with the name frames_001, frames_002 and so on. 
