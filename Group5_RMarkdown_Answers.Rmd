@@ -405,11 +405,12 @@ mpg.
 
 Use the space below to write your code:
 
-```{r summary_table}
-avg_mpg_by_cyl <- mtcars %>% group_by(cyl) %>%
+```{r summary_table, echo=TRUE}
+library(tidyverse)
+avg_mpg_by_cyl <- mtcars %>% 
+  group_by(cyl) %>%
   summarise(avg_mpg = mean(mpg))
 ```
-
 ### Task 
 
 Display your results as a clean table.
