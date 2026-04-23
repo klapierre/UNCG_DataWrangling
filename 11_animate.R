@@ -27,7 +27,7 @@ pacman::p_load(tidyverse,
 ##gganimate is integrated into tidyverse, but just in case load it manually to 
 ##ensure you have what you need
 
-##Although we will talk about gifski indepth later, it is the easiest way to render 
+##Although we will talk about gifski in depth later, it is the easiest way to render 
 ##and view our animations, so we will need to use it here as well
 
 ##TASK: For this assignment we are going to use a dataset built into R, Load it 
@@ -42,14 +42,16 @@ data("airquality")
 ##will delete this folder, and change working directory at the end)
 
 ##TASK: Write code using the head() function to get a glimpse of the dataset
+head(airquality)
 
 ##QUESTION: One of the most basic animations is showing change overtime, what 
 ##columns in could we use to show this?
+# the month and day columns
 
 ##TASK: Below is the skeleton of a line plot, rewrite the code to have Day as the 
 ##x axis and temp as the y axis, then give the plot a descriptive title
 
-ggplot(airquality, aes(x = ?, y = ?)) +
+ggplot(airquality, aes(x = Day, y = Temp)) +
   geom_line()
 
 ##TASK: Run the code below
@@ -60,6 +62,8 @@ airquality_temp <- ggplot(airquality, aes(x = Day, y = Temp)) +
   transition_time(Month)
 anim_save("temperature.gif", animate(airquality_temp, renderer = gifski_renderer()))
 
+print(airquality_temp)
+
 ##TASK: Now run this code
 
 airquality_temp <- ggplot(airquality, aes(x = Day, y = Temp)) +
@@ -68,11 +72,15 @@ airquality_temp <- ggplot(airquality, aes(x = Day, y = Temp)) +
   transition_time(Month)
 animate(airquality_temp)
 
+
 #QUESTION: What is the difference in saved outcome between the two codes?
+# the first code just saves 100 individual images within one single image, whereas the second code saves 100 images separately (all representing a part of the animation)
 
 ##QUESTION: What is the animate() function doing?
+# it makes the graph move along the transition time
 
 ##QUESTION: What happens if we take out the transition_time() function?
+# it no longer animates because there is no time frame applied for it to transition along
 
 ##Now that we have a simple animation we can apply other functions to make the
 ##Animation easier to view and understand
@@ -86,21 +94,28 @@ airquality_temp <- ggplot(airquality, aes(x = Day, y = Temp)) +
   transition_time(Month)
 anim_save("temperature_titles.gif", animate(airquality_temp, renderer = gifski_renderer()))
 
+print(airquality_temp)
+
 ##QUESTION: What is the new title of the graph?
+# month (number)
 
 ##QUESTION: Why would someone choose to use the {frame_time} argument instead of 
 ##just typing a whole new title?
+# so that it changes along with the animation
 
 ##QUESTION: Transitions can be used to control how smooth the animation plays
 ##What are some characteristics of the animation that might be helpful to modify?
+# you could make it move slower 
 
 ##Run the code below
-airquality_temp <- ggplot(airquality, aes(x = Day, y = Temp)) +
-  geom_line() +
-  ease_aes('linear')+
-  labs(title = "Month: {frame_time}") +
-  transition_time(Month)
-anim_save("temperature_ease.gif", animate(airquality_temp, renderer = gifski_renderer()))
+airquality_temp <- ggplot(airquality, aes(x = Day, y = Temp)) + # loading in airquality data, mapping Day to x-axis and Temp to y-axis
+  geom_line() + # adding the line plot
+  ease_aes('linear')+ # set animation "ease" to be linear
+  labs(title = "Month: {frame_time}") + # set the title to move in accordance with the date in the data
+  transition_time(Month) # animate the plot by months
+anim_save("temperature_ease.gif", animate(airquality_temp, renderer = gifski_renderer())) # save the plot as an animation
+
+print(airquality_temp)
 
 ##TASK: Annotate the code above with descriptive comments
 
@@ -113,6 +128,8 @@ airquality_temp <- ggplot(airquality, aes(x = Day, y = Temp)) +
   transition_time(Month)
 anim_save("temperature_trail.gif", animate(airquality_temp, renderer = gifski_renderer()))
 
+print(airquality_temp)
+
 airquality_temp <- ggplot(airquality, aes(x = Day, y = Temp)) +
   geom_line() +
   ease_aes('linear')+
@@ -122,12 +139,14 @@ airquality_temp <- ggplot(airquality, aes(x = Day, y = Temp)) +
 anim_save("temperature_mark.gif", animate(airquality_temp, renderer = gifski_renderer()))
 
 ##QUESTION: What is the difference between shadow_trail and shadow_mark?
+# shadow_trail leaves the trace of each previous data line, but shadow_mark only shows the first data line 
 
 ##transition_time gives us continuous animations, but we can also use 
 ##transition_states to make discrete ones instead
 
 ##Quesion: Considering what you know about different graphs in ggplot, what 
 ##types of graph should you use transition_states() instead of transition_time()?
+# when there are discrete variables, it is best to use transition_states(). When the variables are continuous, transition_time() is the best option.
 
 ##Below is an example of using transition_states()
 
@@ -137,8 +156,11 @@ airquality_discrete <- ggplot(airquality, aes(x = Day, y = Temp)) +
   labs(title = "Month: {closest_state}")
 anim_save("temperature_states.gif", animate(airquality_discrete, renderer = gifski_renderer()))
 
+print(airquality_discrete)
+
 ##QUESTION: Other than the type of graph, what is the main difference in the code 
 ##when using transition_states() instead of transition_time()?
+# the label is pulling from "closest state" rather than "frame_time" 
 
 ##Below is an example using a 3rd transition, transition_reveal()
 
@@ -147,7 +169,10 @@ airquality_reveal <- ggplot(airquality, aes(x = Day, y = Temp)) +
   transition_reveal(Day)
 anim_save("temperature_reveal.gif", animate(airquality_reveal, renderer = gifski_renderer()))
 
+print(airquality_reveal)
+
 ##TASK/QUESTION: Use the the help tab and the animation above to describe what transition_reveal does.
+# transition_reveal "shows"reveals" the data along the x-axis
 
 ##If you have more complicated data, you can also use transition_components to animate by group, see below
 
@@ -160,40 +185,93 @@ airquality_group <- ggplot(airquality_clean,aes(x = Temp, y = Ozone, group = Mon
   transition_components(Day)
 anim_save("temperature_group.gif", animate(airquality_group, renderer = gifski_renderer(),  nframes = 150,fps = 15,width = 600,height = 400))
 
+print(airquality_group)
+
 #Airquality is not the ideal data set to use with components, but you can 
-#still see how each month moves independently from eachother
+#still see how each month moves independently from each other
 
 ##QUESTION: When would using transition_components be the most beneficial in visualizing data?
+# this is useful for showing how individual components of a data set change over continuous time, particularly when we see significant trends in seasonality with the data
 
 ##Just like when you are animating a slideshow, often having elements disapear in
 ##in interesting ways helps draw people to your visual. In gganimate you can do 
 ##this by using enter and exit functions
 
 airquality_discrete +
-  enter_fade()+
-  exit_shrink()
+  enter_fade(alpha = .5) +
+  exit_shrink(size = 0)
 
 ##TASK: rewrite the code above to utilize alternative enter and exit functions: 
 ##https://gganimate.com/reference/enter_exit.html
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ##QUESTION: Take a look at the help for the animate() function, what other arguments can be used?
+# you can adjust the number of frames, the framerate, the duration (length of animation), the detail, the dimensions of the plot, the number of times the first and last frame repeat, etc. 
 
 ##TASK: Using the airquality_temp animation, adjust the animation to have a 
 ##height of ##400, a width of 600, 100 frames, and have a speed of 10 frames per second
 
-##TASK: Fix the code below, and insert comments to to inform on the changes you made
-##There are 3 mistakes, hint, it should not be a line graph, and all other functions 
-##are correct, only the arguments may be incorrect
+airquality_temp <- ggplot(airquality_clean, 
+                          aes(x = Temp, 
+                              y = Ozone, 
+                              group = Month, 
+                              color = factor(Month))) +
+  geom_point(size=2) +
+  ease_aes("cubic-in-out") +
+  labs(title = "Temperature vs Ozone (Day: {frame_time})",
+       x = "Temperature",
+       y = "Ozone",
+       color = "Month") +
+  shadow_trail(alpha=0.3)+
+  transition_components(Day)
+anim_save("temperature_group.gif", animate(airquality_group, renderer = gifski_renderer(),  nframes = 100,fps = 10, width = 600,height = 400))
 
-airquality_discrete <- ggplot(airquality, aes(x = Day, y = Temp)) +
-  geom_line() +
+##TASK: Fix the code below, and insert comments to to inform on the changes you made
+##There are 3 mistakes, hint, it should not be a line graph, and all other functions are correct, only the arguments may be incorrect
+
+temperature_discrete <- ggplot(airquality, aes(x = Day, y = Temp)) + #changed the title of the object 
+  geom_point() + # changed this from geom_line()
   transition_states(Month) +
-  labs(title = "Day: {frame_time}")
-anim_save("temperature_discrete2.gif", animate(airquality_discrete, renderer = gifski_renderer()))
+  labs(title = "Day: {closest_state}") # changed the argument to {closest_state}
+anim_save("temperature_discrete2.gif", animate(temperature_discrete, renderer = gifski_renderer())) # changed the object being animated to temperature_discrete
+
+print(temperature_discrete)
 
 ##Now it is time to test your skills. Make a new animation that shows ozone levels 
-#overtime. Call it airquality_ozone. Use a shadow functions, an ease_aes() function, 
-#and either an enter or exit function.
+#overtime. Call it airquality_ozone. Use a shadow functions, an ease_aes() function, and either an enter or exit function.
+
+airquality_ozone <- ggplot(airquality, aes(x = Day, y = Ozone)) + 
+  geom_line() + 
+  transition_states(Month) +
+  ease_aes('linear') +
+  shadow_mark() +
+  labs(title = "Day: {closest_state}") 
+anim_save("airquality_ozone.gif", animate(airquality_ozone, renderer = gifski_renderer())) 
+
+print(airquality_ozone)
+
+
 
 ##GREAT JOB!!!
 
@@ -457,7 +535,7 @@ library(hms)
 # Create a new column with the months.
 rangeTemp <- tempData %>%
   mutate(time = hms::as_hms(time), hour = hour(time),
-         month = month(date, label = TRUE, abbr = TRUE)
+         month = month(date, label = TRUE, abbr = TRUE))
          
          # QUESTION: Why would it be a good idea to average the hourly temperatures 
          # instead of plotting each hour for this graph? 
