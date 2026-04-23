@@ -154,23 +154,26 @@ flight_data_parsed <- flight_data_parsed %>% mutate(flight_month = month(flight_
 
 # TASK: The functions 'floor_date' and 'ceiling_date' will round down and up to the nearest unit, respectively. Run the following lines of code and take note of the output values.
 
-floor_date(mdy("April 15 2026"), "month")
-ceiling_date(mdy("April 15 2026"), "month")
+floor_date(mdy("April 15 2026"), "month") #2026-04-01
+ceiling_date(mdy("April 15 2026"), "month") #2026-05-01
 
 # QUESTION: The 'round_date' function is a general rounding function. Run the following line of code. Does 'round_date' round up or down?
 # HINT: April has 30 days. 
-
+#Rounds up to 2026-05-01
 
 round_date(mdy("April 16 2026"), "month")
 
 # QUESTION: Run the following line of code. What do you think the 'rollback' function does? What do you think the 'roll_to_first' and  'preserve_hms' arguments do?
 # HINT: Try running the code with different 'roll_to_first' and  'preserve_hms' arguments.
 
-
 rollback(todays_timestamp, roll_to_first = FALSE, preserve_hms = TRUE)
 
-# TASK: Create a dataframe named 'flight_data_rounded' from our 'flight_data_parsed' dataframe that includes a column named 'rounded_flight_date' that rounds the flight date to the nearest month. 
+#Rollback goes to the month before and retains the same day
 
+
+# TASK: Create a dataframe named 'flight_data_rounded' from our 'flight_data_parsed' dataframe that includes a column named 'rounded_flight_date' that rounds the flight date to the nearest month. 
+flight_data_rounded <- flight_data_parsed %>% 
+  mutate(rounded_flight_date = round_date(flight_date, "month"))
 
 # ---------------------------------------------------------- #
 #### Part 1.1: Duration & Intervals                       ####
@@ -180,14 +183,18 @@ rollback(todays_timestamp, roll_to_first = FALSE, preserve_hms = TRUE)
 # In this section, we will practice creating durations, adding durations to times, creating intervals, and measuring how long an interval lasts.
 
 # TASK: Create a smaller dataframe called 'flight_timespans'using the first 20 rows of flights.
+flight_timespans <- head(flights, 20)
 
 # The time_hour column already contains a date-time value.
 # We will use this as a simple starting time for each flight.
 # TASK: Create a new column called departure_time from the time_hour column.
+flight_timespans <- flight_timespans %>% 
+  mutate(departure_time = time_hour)
 
 # A duration is an exact amount of time.
 # Lubridate creates durations with functions like dseconds(), dminutes(), dhours(), and ddays().
 # Question: What does the "d' stand for in these functions? 
+#duration in (whatever measure of time is listed after)
 
 # TASK: Run the following examples.
 dseconds(30)
@@ -318,6 +325,7 @@ clean_time_data <- clean_time_data %>%
     )
   )
 ## TASK: create a end datetime ##
+
 clean_time_data <- clean_time_data %>%
   mutate(
     end_datetime = make_datetime(
@@ -348,7 +356,8 @@ clean_time_data2 <- clean_time_data %>%
 clean_time_data2 <- clean_time_data2 %>%
   mutate(start_plus_7 = start_datetime + days(7))
 ## Task- check the data set which column changed ? 
-start_day 
+start_plus_7
+
 ##  question why would this be helpful ? 
 #  it can help us predict future dates and can help us compare a time window 
 ## TASK: Subtract month from clean_time_data2 
@@ -357,7 +366,7 @@ clean_time_data2 <- clean_time_data2 %>%
 ## TASK: View the dataset clean_time_data2- what do you see?
 # 2 new columns with information
 ## why is this useful ?
-
+#Lets us adjust or maniupulate the month without changing other aspects of the data such as day or year.
 ## lets us check the difference between the end and start 
 clean_time_data2 <- clean_time_data %>%
   mutate(
@@ -365,32 +374,33 @@ clean_time_data2 <- clean_time_data %>%
   )
 ## what is the difference in column one #hint look at the end last column in the
 # dataset 
-
+#I am sorry, but I do not understand this question.
 ## okay lets work with real time, first we are gonna look at the today's date
 today_date <- today ()
 ## now create a new dataset called my_birthday and include your own birthday. 
 ## if your birthday as already passed use another date- 
 ## hint ymd 
-my_birthday <- ymd("2002-09-05")
+my_birthday <- ymd("2005-4-24")
 # now we will create data set called my birthday this year 
-my_birthday_this_year <- ymd(paste0(year(today_date), "-07-20"))
+my_birthday_this_year <- ymd(paste0(year(today_date), "-04-24"))
 ## create a dataset called birthday_time and subtract my_birthday_this_year and 
 ## today_data
 birthday_time <- my_birthday_this_year - today_date
 ## TASK: View this dataset you just create ? what does this value mean?
-
+#This is the days between the todays date and my birthday
 ## Okay now lets figure out what day it is gonna be 60 days from now
 # TASK - Add 30 days to today_date and rename the dataset to days_30
 days_30 <- today_date + days(30)
-# question: what is the day 30 days from now? 
+# question: what is the day 30 days from now? 2026-05-23 UTC
 
 ## Task: create another data set with today_date but subtract 30 days and rename
 # to days_minus_30
 days_minus_30 <- today_date - days(30)
 ## what is the date ?
-
+#2026-03-24 UTC
 ## question: How is lubridate and arithmetic useful? 
-
+#Lubrudate and arithmetic can be useful in adding or subtracting months, days, or years
+#without changing the entire date and determining the date or time if certain times are added or taken away.
 # ---------------------------------------------------------- #
 #### Part 1.3: Time Zones                                 ####
 # ---------------------------------------------------------- #
@@ -628,7 +638,8 @@ total_trap_time <- arthropods %>% #use arthropds dataset and name new dataset to
   #Mutate(start_datetime = make_datetime creates a column from the columns with 
   #start year, month, day, hour and minute. The same thing is done for the new column end_datetime
   )
-  group_by(order) %>% #groups by order for summary
+
+group_by(order) %>% #groups by order for summary
   summarize(first_trap = min(start_datetime, na.rm = TRUE), #Shows min value in start_datetime column
             last_trap  = max(end_datetime, na.rm = TRUE),  #shows max value in end_datetime column
             time_trapped = interval(first_trap, last_trap) %/% months(1)) %>% # HINT: "%/% months(1)" is counting whole months
