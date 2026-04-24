@@ -809,7 +809,3 @@ image_write(animation, "dailyAvg_bubble_watermarked.gif")
 # Magick appears to take longer than Gifski to create the GIF in your files so 
 # as I stated before, feel free to rerun the code to wake R-studio up. 
 
-
-
-
-
