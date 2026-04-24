@@ -55,7 +55,10 @@ head(airquality)
 ##x axis and temp as the y axis, then give the plot a descriptive title
 
 ggplot(airquality, aes(x = Day, y = Temp)) +
-  geom_line()
+  geom_line()+
+  labs(title = "Temperature Over Days",
+       x = "Day",
+       y = "Temperature")
 
 ##TASK: Run the code below
 
@@ -76,10 +79,10 @@ animate(airquality_temp)
 
 #QUESTION: What is the difference in saved outcome between the two codes?
 # The first one saved as one single gif file while the second lines of code had it
-# as multiple files.
+# as multiple files. Animate is previewing the animation while anim_save saved the gif.
 
 ##QUESTION: What is the animate() function doing?
-# Animate() function is animating the different files as one.
+# Animate() function is animating the different files as one and previewing
 
 ##QUESTION: What happens if we take out the transition_time() function?
 airquality_temp <- ggplot(airquality, aes(x = Day, y = Temp)) +
@@ -97,7 +100,7 @@ animate(airquality_temp)
 airquality_temp <- ggplot(airquality, aes(x = Day, y = Temp)) +
   geom_line() +
   labs(title = "Month: {frame_time}") +
-  transition_time(Month)
+  transition_states(Month)
 anim_save("temperature_titles.gif", animate(airquality_temp, renderer = gifski_renderer()))
  
 airquality_temp
@@ -192,7 +195,7 @@ anim_save("temperature_group.gif", animate(airquality_group, renderer = gifski_r
 #still see how each month moves independently from eachother
 
 ##QUESTION: When would using transition_components be the most beneficial in visualizing data?
-# It would be beneficial when we want to animate single data points or the components at a time
+# It would be beneficial when we want to animate single data points or a group components at a time
 # rather than entire plot at once.
 
 ##Just like when you are animating a slideshow, often having elements disapear in
@@ -232,15 +235,6 @@ anim_save("temperature_discrete2.gif", animate(airquality_discrete, renderer = g
 #overtime. Call it airquality_ozone. Use a shadow functions, an ease_aes() function, 
 #and either an enter or exit function.
 
-##GREAT JOB!!!
-
-##Reminder to reset your working directory
-setwd("/Users/a_pandey2/Desktop/github/UNCG_DataWrangling")
-
-
-# 1.1 Expanding on gganimate use cases ----------------------------------------####
-
-## TASK: Load datasets used in this section
 airquality_ozone <- ggplot(airquality_clean,aes(x = Day, y = Ozone))+
   geom_line() +
   ease_aes("linear") +
@@ -250,6 +244,18 @@ airquality_ozone <- ggplot(airquality_clean,aes(x = Day, y = Ozone))+
   enter_grow()
 anim_save("ozone_time.gif", animate(airquality_ozone, renderer = gifski_renderer(),  nframes = 150,fps = 15,width = 600,height = 400))
 
+
+
+
+##GREAT JOB!!!
+
+##Reminder to reset your working directory
+setwd("/Users/a_pandey2/Desktop/github/UNCG_DataWrangling")
+
+
+# 1.1 Expanding on gganimate use cases ----------------------------------------####
+
+## TASK: Load datasets used in this section
 
 data("gapminder")
 data("iris")
@@ -264,9 +270,8 @@ head (iris)
 # also used time to make variations in the speed of animation as well.
 
 ## TASK: Create a filtered gapminder dataset for North America only
-# There is no north america but Americas
 gapminder_americas <- gapminder %>% 
-  filter (continent == "Americas")
+  filter (country %in% c("United States", "Canada", "Mexico"))
 
 ## TASK: Build a scatterplot of GDP vs life expectancy. Set size to population and
 ## group by country. Apply a log transform to the x-axis.
@@ -350,7 +355,8 @@ gap_anim+
 ## HINT: Remember that transition_time is continuous. Check out ?view_step()
 ?view_step
 # Nothing appeared for me. It should have been because view_step() uses discrete
-# data while years is the continuous data.
+# data and jumps between frames while years is the continuous data and tracks
+# moving frame.
 
 ## Remember that iris dataset we loaded earlier? Now we're gonna switch to it!
 data("iris")
@@ -740,7 +746,9 @@ library(magick)
 # Although it's not intended for animation, it is a essential backbone to 
 # making graph have essential markings that would be difficult to add to GIFs.
 
-# QUESTION: What are some examples that Magick can be useful in animating a graph? 
+# QUESTION: What are some examples that Magick can be useful in animating a graph?
+# It be useful in adding watermarks to your animations or adjust brightness/contrast
+# of your animation.
 
 # We will start with a function, that will plot our dataframe into a adjustable graph.
 
@@ -787,7 +795,7 @@ logo_small <- image_scale(logo, "150x150")
 
 # This will overlay it onto the graph.
 watermarked <- lapply(img_list, function(frame) {
-  image_composite(frame, logo_faded, offset = "+20+20") })
+  image_composite(frame, logo_small, offset = "+20+20") })
 
 # This will combine the frames into a compressed GIF.
 animation <- image_animate(image_join(watermarked), fps = 10)
@@ -796,6 +804,7 @@ animation <- image_animate(image_join(watermarked), fps = 10)
 image_write(animation, "dailyAvg_bubble_watermarked.gif")
 
 # QUESTION: In your animation, what month has the highest temperature? 
+# July
 
 # Magick appears to take longer than Gifski to create the GIF in your files so 
 # as I stated before, feel free to rerun the code to wake R-studio up. 
