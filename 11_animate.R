@@ -467,6 +467,9 @@ tempData <- temp %>%
 # Hint: Think about how we would write the ggplot code. How would the datapoints 
 # appear on the graph?
 
+#No because we havent summarized the data and if we graph now then everything would start 
+#to overlap
+
 # There are only 2 variables that we need to retrieve from tempData: date and
 # Air.temperature. Although, there are multiple temperatures with the same date! 
 # We can tidy up the number of days by taking the average of each date.
@@ -736,8 +739,4 @@ image_write(animation, "dailyAvg_bubble_watermarked.gif")
 
 # Magick appears to take longer than Gifski to create the GIF in your files so 
 # as I stated before, feel free to rerun the code to wake R-studio up. 
-
-
-
-
 
