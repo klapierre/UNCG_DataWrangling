@@ -247,15 +247,24 @@ data("iris")
 ## QUESTION: Which dataset is inherently time-based and why does that matter for animation?
 
 ## TASK: Create a filtered gapminder dataset for North America only
+north_america <- gapminder %>%
+  filter(continent == "Americas")
 
 ## TASK: Build a scatterplot of GDP vs life expectancy. Set size to population and
 ## group by country. Apply a log transform to the x-axis.
 ## Add transparency, labels, and a theme of your choice. Save this as an object named gap_plot.
 
+gap_plot <- ggplot(north_america, aes(x = gdpPercap, y = lifeExp, size = pop, group = country)) +
+geom_point(alpha = 0.6) + scale_x_log10() + labs(title = "GDP per Capita vs Life Expectancy",
+x = "GDP per Capita", y = "Life Expectancy", size = "Population") + theme_bw()
+
 ## QUESTION: Why is grouping important when animating repeated entities like countries?
+
+#It groups a country's animation with it for the entire animation
 
 ## TASK: Animate by year using transition_time(). Save this as gap_anim.
 
+gap_anim <- gap_plot + transition_time(year) + labs(title = "Year: {frame_time}")
 
 ## We've already investigated the ease_aes() function using linear easing. This
 ## changes the ways that our frames are animated together. This is called tweening.
@@ -264,42 +273,59 @@ data("iris")
 
 # -in applies the easing function without any modification
 gap_anim + ease_aes('cubic-in')
+#slows down movement and speeds up patterns
 
 gap_anim + ease_aes('elastic-in')
+#elastic stretching motion before it starts
 
 gap_anim + ease_aes('circular-in')
+#circular type of acceleration
 
 gap_anim + ease_aes("bounce-in")
+#movements kind of bounces
 
 # -out applies the easing function in reverse
 gap_anim + ease_aes('elastic-in')
 
-gap_anim + ease_aes('circular-in')
-
-gap_anim + ease_aes("bounce-in")
-
 # we can combine them into -in-out
 gap_anim + ease_aes('circular-in-out')
+#circular and slowly starts, speeds up, then goes slowly
 
 gap_anim + ease_aes("bounce-in-out")
+
+#Bounces at the start and end
 
 ## QUESTION: What does the -in-out easing argument do to our animation? 
 ## Hint: Check ?ease_aes().
 
+#It makes the animation start slowly then faster
+
 ## QUESTION: How does easing change the perception of movement over time?
+
+#Changes how the animation moves between frames, like bouncing
 
 ## gganimate also has view functions to change the framing of our animation
 ## over our data. 
 
 ## TASK: Add view_follow() to gap_anim to track evolving clusters
 
+gap_anim + view_follow()
+
 ## QUESTION: What does view_follow() do? Why might this be useful?
 
+#The window atually follows the data while it moves and this helps with keeping 
+#all the data in view as it changes
+
 ## TASK: Try to apply view_step() to gap_anim.
+
+gap_anim + view_step()
 
 ## This gives us an animation, but something is wrong.
 ## QUESTION: What is wrong with your animation? Why do you think this is happening
 ## HINT: Remember that transition_time is continuous. Check out ?view_step()
+
+#Animation looks weird probably because view step is supposed to show specific steps
+#Thats why its so jerky and weird
 
 ## Remember that iris dataset we loaded earlier? Now we're gonna switch to it!
 
@@ -308,23 +334,34 @@ gap_anim + ease_aes("bounce-in-out")
 ## Remove the legend.
 ## Hint: For your title, remember that your data are discrete, not continuous.
 
+iris_anim <- ggplot(iris, aes(x = Petal.Length, y = Petal.Width, color = Species)) +
+geom_point() + labs(title = "Species: {closest_state}", x = "Petal Length", y = "Petal Width") +
+transition_states(Species) + theme_bw() + theme(legend.position = "none")
+
 ## We looked at enter_fade() and exit_shrink() previously, let's explore some more 
 ## animation effects. This, like easing, falls under the umbrella of Tweening!
 
 ## TASK: Add enter_fade() and exit_fade() effects
 
+iris_anim + enter_fade() + exit_fade()
+
 ## TASK: Run the lines of code below and descriptively annotate what each function does.
 ## Hint: If you're unsure, run them piece-by-piece!
 
 iris_anim + enter_fly(x_loc = 0) + exit_fly(x_loc = 1)
+#The points fly in through the x and out to the 1
 
 iris_anim + enter_drift(y_mod = 1) + exit_drift(x_mod = 1) 
+#The points drift in and out at 1
 
 iris_anim + enter_recolor(color = "pink") + exit_recolor(color = "brown")
+#Points start as pink and change to brown when they leave
 
 iris_anim + enter_grow(size = 10) + exit_shrink(size = 0.1)
+#Points enter at a big size (10) and leave at a size of 0.1
 
 iris_anim + enter_grow(size = 0.1) + exit_shrink(size = 10)
+#Enter at a small size of 0.1 and leaves at a size of 10
 
 iris_ease <- iris_base +
   transition_states(Species) +
@@ -339,12 +376,15 @@ iris_ease <- iris_base +
 ## QUESTION: What does your animation look like? Why do you think this is the case?
 ## Hint: Look at the usage for transition_reveal().
 
+#Points showed through the petals and they reveal the data in the order of the petal
+#length variable, although it makes it look weird.
+
 ## TASK: Write 3 lines of code using different shadows to display point trajectories.
 ## Do not use shadow_null()
 
 iris_reveal + shadow_trail()
 
-iris_reveal + shadow_wake()
+iris_reveal + shadow_wake(wake_length = 0.3)
 
 iris_reveal + shadow_mark()
 
@@ -353,13 +393,11 @@ iris_reveal + shadow_mark()
 
 ## TASK: Run the code below to setup our spatial data.
 world_sf <- ne_countries(scale = "medium", returnclass = "sf")
+
 europe_sf <- filter(world_sf, continent == "Europe")
-gap_europe <- gapminder %>%
-  filter(continent == "Europe",
-         year >= 1965) %>%
-  mutate(iso_a3 = countrycode::countrycode(country,
-                                           "country.name",
-                                           "iso3c"))
+gap_europe <- gapminder %>% filter(continent == "Europe", year >= 1965) %>% mutate(iso_a3 = countrycode::countrycode(country,
+"country.name", "iso3c"))
+
 europe_life <- europe_sf %>%
   left_join(gap_europe, by = "iso_a3")
 
@@ -387,8 +425,13 @@ europe_life <- europe_sf %>%
 
 ## QUESTION: Why might animations be useful for visualizing spatial data?
 
+#Animations can make it easier to see  patterns and differences, its also better to show changes over time
+
 ## QUESTION: What are some potential weaknesses of animating. 
 ## Hint: Think about how slow your computer probably ran!
+
+#The animations can take up alot of space to make and to view and it can also be slow and
+#be hard to specify rhings specifically
 
 
 # 1.2: FINALE: Other useful packages ---------------------------------------------------####
