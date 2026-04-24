@@ -643,10 +643,14 @@ library(gifski)
 # For this section, we are using the dataframe "dailyAvg", why do you think this 
 # is an easier dataframe to animate versus the hourMonthAvg?
 
+#Because instead of all the points we are looking only at the average 
+
 # To start the animation process, we want to make a function that allows for 
 # flexibility so that the dataframe/graph can be adjusted if need to.
 # QUESTION: Take a look at the code below, what do you think ggplot is doing here? Does the
 # coding look familiar?
+
+#Its adjusting the lines and how everything looks in the graph
 
 make_timeseries_plot <- function(data, day_index) {
   ggplot(data[1:day_index, ], aes(x = date,y = mean_temp)) +
@@ -665,11 +669,15 @@ dir.create("frames_timeseries", showWarnings = FALSE)
 
 # QUESTION: What does dir.create stand for? And where do you expect this folder to end up?
 
+#A new folder called frames timeseries was created
+
 # Now we instruct R how we want the Frame-generation loop to work.
 
 # QUESTION: Why do you think we are start on day 2 and why may it be more useful?
 # HINT: We are making a time series graph, what makes it different from a 
 # scatter plot?
+
+#There needs to be points so a line can be drawn so we can see whats animated
 
 # The value p creates a plot for day 1, which begins the data or the start
 # of the animation.
