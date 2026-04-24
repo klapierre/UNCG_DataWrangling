@@ -713,6 +713,8 @@ library(magick)
 
 # QUESTION: What are some examples that Magick can be useful in animating a graph? 
 
+#It can be used to add labels and to resize images.
+
 # We will start with a function, that will plot our dataframe into a adjustable graph.
 
 make_daily_bubble <- function(data, day_index) {
@@ -766,7 +768,9 @@ animation <- image_animate(image_join(watermarked), fps = 10)
 # Lastly, this will save your GIF into your files!
 image_write(animation, "dailyAvg_bubble_watermarked.gif")
 
-# QUESTION: In your animation, what month has the highest temperature? 
+# QUESTION: In your animation, what month has the highest temperature?
+
+#July and august usually have the highest temperature
 
 # Magick appears to take longer than Gifski to create the GIF in your files so 
 # as I stated before, feel free to rerun the code to wake R-studio up. 
