@@ -511,9 +511,19 @@ ggplot(dailyAvg, aes(x = date, y = mean_temp)) +
 # "Daily Average Temperature" and the x-axis to "Months". Give it a title 
 # called:"Daily Average Temp. in 2003".
 
+ggplot(dailyAvg, aes(x = date, y = mean_temp)) +
+  geom_point() +
+  geom_smooth(method = "loess", se = FALSE, color = "red") +
+  labs(x = "Months", 
+       y = "Daily Average Temperature", 
+       title = "Daily Average Temp. in 2003") +
+  theme_bw()
+
 # QUESTION: Between these two graphs, which graph would be better represent the
 # dailyAvg dataframe? Why?
 # Hint: The graph is comparing Date vs mean Temperature. 
+
+#The line graph is better because the data shows how the temperature changes over time
 
 
 #================================
