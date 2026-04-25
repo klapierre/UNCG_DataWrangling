@@ -320,9 +320,13 @@ nrow(mtcars)
 ```
 
 #TASK: Write a code to find the number of columns in the 'mtcars' dataset using the ncol() function. Remember to use a new chunk of code.
+Answer:
+```{r}
+ncol(mtcars)
+```
 
 #QUESTION: What is the result showing in your script?
-
+Answer:11
 #The 'disp' column in the dataset stands for engine displacement. Engine displacement tells you how big the engine is in cubic inches. 
 #The 'mpg' column stands for fuel efficiency in miles per gallon. 
 #Lets plot a graph showing fuel efficiency over displacement for each car.
@@ -330,7 +334,11 @@ nrow(mtcars)
 plot(mtcars$disp, mtcars$mpg)
 
 #QUESTION: What trend is the plot showing?
-
+Answer: As engine displacement increases, the mpg (fuel efficiency/ miles per gallon) decreases 
+                                    OR
+As the size of the engine increases, the mpg (fuel efficiency/ miles per gallon) decreases 
+                                    OR
+negative correlation 
 #We can also use ggplot to run this within our chunk of code.
 #This permits our plot to be displayed in the final report once "knit".   
 ```{r}
@@ -379,15 +387,25 @@ mtcars %>%
 ```
 
 #QUESTION: Which car has the highest fuel efficiency? 
-
+Answer: Toyota Corolla
 #QUESTION: What is the size of it's engine?
-
+Answer: 71.1 cubic inches
 #TASK: Use code to create a plot comparing disp vs hp from the 'mtcars' dataset. With the following:  
 #Use the 'disp' data for the x-axis and labeled 'Engine Size (cubic inches)'
 #Use the 'hp' data for the y-axis and labeled 'Horsepower (HP)'
 #Add an appropriate title for the plot with a 'bold' font
 #Add a legend colored by 'car_name' and labeled "Car Types" 
-
+Answer:
+```{r}
+ggplot(mtcars,aes(x=disp,y=hp, color=factor(car_name)))+
+  geom_point()+
+  labs(
+    x="Engine Size (cubic inches)",
+    y="Horsepower",
+    title="Horsepower vs Engine Size",
+         color="Car Types")+
+  theme(plot.title = element_text(face="bold"))
+```
 
 #Lets organize the horsepower from highest to lowest. Run the following.
 ```{r}
@@ -397,9 +415,12 @@ mtcars %>%
 ```
 
 #QUESTION: What trend is the plot showing between engine size and horsepower? 
+Answer: As engine displacement (size) increases, the horsepower increases. 
+                                OR 
+Positive correlation between engine size and horsepower.
 
 #QUESTION: Which cars have the highest and lowest hp?
-
+Answer: Maserati Bora has the highest horsepower (335 hp) and Honda Civic has the lowest horsepower (52 hp).
 #Don't forget to save your changes. 
 
 ----------------------------------------
