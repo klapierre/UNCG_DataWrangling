@@ -1,9 +1,90 @@
 ---
 title: "Group5_RMarkdown"
-author: "Arnav Pandey, Themesha Parker, Michelle Bautista Canuto, Dhanush Devanand"
+
+author: "Arnav Pandey, Themesha Parker, Michelle Bautista Canuto, Dhanush Devanand,
+Jaslyn Davenport"
+=======
 date: "2026-04-07"
 output: pdf_document
 ---
+# Section 1: Create, Save, and Knit Your First R Markdown File
+
+Objective: Learn how to create and generate a basic R Markdown document.  
+
+.........................
+
+## 1.1 How I Created a New R Markdown File
+.........................
+
+To begin, open RStudio and create a new R Markdown file.  
+Go to **File > New File > R Markdown**.  
+
+Question: What do you think happens when the new file is opened?  
+Answer:  
+
+
+.........................
+
+## 1.2 Install and Load Packages
+.........................
+
+Before knitting your file, make sure the required packages are installed and loaded.
+
+Task: Run the following in the Console:
+
+install.packages("rmarkdown")
+install.packages("knitr")
+library(rmarkdown)
+library(knitr)
+
+Question: Why are these packages needed?
+Answer:
+
+.........................
+## 1.3 Modify the YAML Header
+
+At the top of the file, you will see the YAML header between two sets of ---
+This section controls the document settings.
+
+Task: Change the YAML header so that it includes:
+a new title
+your name as the author
+the date
+PDF output
+
+Example:
+title: "My First R Markdown File"
+author: "Jaslyn Davenport"
+date: "April 2026"
+output: pdf_document
+Question: What is the purpose of the YAML header?
+Answer:
+The YAML header controls how the document is formatted and displayed. It includes information like the title, author, date, and the type of file that will be created when the document is knitted.
+.........................
+##1.4 Save and Knit file
+
+After editing the file, save it as an .Rmd file.
+Then click the Knit button at the top of RStudio.
+
+If you get an error message about LaTeX or TinyTeX, install TinyTeX by running:
+install.packages("tinytex")
+tinytex::install_tinytex()
+Then click Knit again.
+
+Question: What happens when you click Knit?
+Answer:
+
+Question: What type of file is created?
+Answer:
+
+.........................
+##1.5 Final observation
+After knitting, compare the .Rmd file to the final PDF.
+
+Question: How is the output file different from the source file?
+Answer:
+
+
 
 --------------------------------------------------------------------------------  
 
