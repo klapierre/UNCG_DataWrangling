@@ -1,0 +1,637 @@
+---
+title: "Group5_RMarkdown_Answers"
+author: "Arnav Pandey, Themesha Parker"
+date: "2026-04-20"
+output: pdf_document
+---
+
+--------------------------------------------------------------------------------  
+
+# Section 2: Formatting Text Using RMarkdown Syntax  
+
+--------------------------------------------------------------------------------
+
+Objective: learn how to format the appearance of your document in your chosen output format.
+Author: Arnav Pandey (a_pandey2@uncg.edu)   
+
+.........................
+
+## 2.1. Headings
+.........................
+
+Task: Read the question below, click **Knit** to render the document and return here to answer the question.  
+Question: What difference do you notice about the above line that starts with
+`# Section 2: Formatting a Report Using RMarkdown Syntax` compared to the line
+`Objective: learn to format how your document appears in the output of your choice`?  
+Answer: The font is large and bold in line starting with `# section 2.` while the other line
+seems to be normal.
+
+\
+
+Placing a hashtag (#) at the beginning of a line turns it into a heading. 
+RMarkdown supports six levels of headings. 
+
+\
+
+
+Task: Click Knit to observe how different heading levels below appear in the rendered output.
+
+# Line 1: This is an example to show different levels of headings in RMarkdown.
+## Line 2: Line 1: This is an example to show different levels of headings in RMarkdown.
+### Line 3: This is an example to show different levels of headings in RMarkdown.
+#### Line 4: This is an example to show different levels of headings in RMarkdown.
+##### Line 5: This is an example to show different levels of headings in RMarkdown.   
+###### Line 6: This is an example to show different levels of headings in RMarkdown.
+
+
+Question: What happens to the size of text when you increase the number of hashtags (#)?  
+Answer: Increasing numbers of hashtags decreases the font size.
+
+\
+
+
+In the example above, the higher the number of hashtags, the lower the heading level (smaller font).  
+
+Question: How many hashtags would you use if you wanted highest level heading (largest font)?  
+Answer: 1
+
+\
+
+
+Question: In the rendered output, do Line 5 and Line 6 from above example appear in the same line?  
+Answer: Yes
+
+\
+
+
+Task: Go to the metadata for this assignment and change the output from `pdf_document` to `html_document`.  
+Question: Did your Line 5 and Line 6 appear in different lines?  
+Answer: No
+
+\
+
+
+Sometimes the way the program renders output differs between formats.
+You can leave two spaces at the end of the line for a line break.  
+
+Task: Change the output back to `pdf_document`.
+
+.........................
+
+## 2.2 Italics
+.........................  
+You may sometimes want to italicize text. RMarkdown allows you to do this easily.
+To make your text italics, you can enclose it within single asterisk `*[text]*`.
+
+*Line 1: This is an example to show how to make text italics.* 
+
+\
+
+Task: Rewrite Line 1 below and only italicize the word "italics." Leave two spaces at the end of sentence for a line break.  
+Answer: Line 1: This is an example to show how to make text *italics*.
+
+\
+
+You may be wondering if there is another way to make the text italics, and in fact, there is.
+You can also enclose your text within single underscore `_[text]_`.
+
+\
+
+
+Task: In the paragraph below, make "Arnav," "Biological Data Wrangling and Visualization" and "RMarkdown" italics in the following paragraph using both the methods (asterisks and underscore) mentioned above at least once. 
+My name is *Arnav* Pandey. I am currently enrolled in _Biological Data Wrangling and Visualization_ (BIO 457/657).
+This is a task to use *RMarkdown* to make a text output italics.  
+
+\
+
+
+.........................
+
+## 2.3 Bold
+.........................  
+Sometimes you may want to bold your text to emphasize its importance. RMarkdown supports that as well.  
+  
+Task: Read the question below, click Knit, and return to answer the question below.
+Question: Which of the following lines gives you bold text?  
+Line 1. This is an example to show how to make text bold.  
+**Line 2: This is an example to show how to make text bold.**  
+Answer:  Line 2
+
+\
+
+You can use two asterisks before and after the text to make it bold (`**[text]**`).   
+There is also another way to make a text bold by enclosing your text within two underscores(`__[text]__`). 
+
+Don't believe me? Knit to see if the line below is bold.  
+
+__Line 3: This is an example to show how to make text bold.__
+
+\
+
+Like you practiced with italics, you can make any word or phrase within a sentence bold. See example of it below when you hit Knit.  
+Line 5: This is an example to show how to make text **bold**.  
+Line 4: This is an __example__ to show how to make text bold.   
+
+\
+
+Task: In the paragraph below, make "Arnav," "Biological Data Wrangling and Visualization" and "RMarkdown" bold in the following paragraph using
+both the methods (asterisks and underscores) mentioned above at least once.   
+My name is **Arnav** Pandey. I am currently enrolled in __Biological Data Wrangling and Visualization__(BIO 457/657).
+This is a task to use __RMarkdown__ to make a text output bold.  
+
+\
+
+
+.........................
+
+## 2.4 Bold and Italics
+.........................
+
+Is there a way to make a text both bold and italics at the same time? Indeed, there is!
+You can enclose your text within three asterisks (`***[text]***`). or underscores (`___[text]___`).
+
+\
+
+Task: In the paragraph below, make "Arnav," "Biological Data Wrangling and Visualization" and "RMarkdown" bold italics using both the methods mentioned above at least once.   
+My name is ***Arnav*** Pandey. I am currently enrolled in ___Biological Data Wrangling and Visualization___ (BIO 457/657).
+This is a task to use ***RMarkdown*** to make a text output bold.  
+
+
+\
+\
+
+In sections 2.2, 2.3, and 2.4, you learnt how to make text italics, bold, or bold+italics by enclosing the text within one, two, and three asterisks or underscores, respecitvely. You might be tempted to start enclosing a text by underscore and end it using asterisk. For example:  
+
+*italics_  
+__bold**  
+***bold italics___   
+
+Above lines will not give your desired output, so you will have to be consistent with how you enclose your texts. Use the same symbols at both ends!
+
+
+.........................
+
+## 2.5 Bulleted list
+.........................
+
+In RMarkdown, you can list your items in the RMarkdown as an unordered (bulleted) list.
+
+To do that, you can follow these steps.
+Step 1: leave an empty line before list. 
+Step 2: Use '+', '-', or '*' followed by single space before you write your list item.  
+Step 3: To add another item, leave two spaces at the end of the previous item and go to a new line below and repeat Step 2.  
+
+Task: Knit to see how the items below appear in a list in the output.  
+
++ Apple
++ Banana 
++ Raspberry
+
+
+You can also nest subitems within an item. If you want a nested list as such, just indent the subitem that you want within an item with two spaces. Below is an example of it. 
+
+Task: Hit Knit to look at the output of the lines below:
+
+- Apple
+- Banana
+- Berries 
+  - Blueberries
+  - Strawberries 
+  - Raspberries 
+  - Blackberries
+  - Cranberries
+- Papaya
+
+\
+
+Task: Copy the above list below, add an item "Melon" and nest different types of melons as its subitems.
+Hit Knit to see your output.  
+
+- Apple
+- Banana
+- Berries 
+  - Blueberries
+  - Strawberries 
+  - Raspberries 
+  - Blackberries
+  - Cranberries
+- Papaya
+- Melon
+  - Watermelon
+  - Cantaloupe
+  - Honeydew
+  - Canary Melon
+\
+
+
+
+.........................
+
+## 2.6 Numbered List
+.........................
+
+Getting a numbered list is even easier compared to unordered or bulleted list. 
+To generate a numbered list, you can follow these steps.
+Step 1: Leave an empty line before list. 
+Step 2: Use uppercase/lowercase English alphabets, Arabic numerals, uppercase or lowercase roman numerals followed by space before you write your list item. Be consistent how you want to list.
+Step 3: To add another item, leave two spaces at the end of the previous item and go to a new line below and repeat Step 2.  
+
+I. Apple  
+II. Banana  
+III. Raspberry  
+
+\
+
+You can also nest subitems within an item. If you want a nested list as such, just indent the subitem that you want within an item with three spaces. You can use different order format for your subitems than your primary item as well. Below is an example of it. 
+**Please be careful with spaces!**
+
+
+1. Apple
+2. Banana 
+3. Berries 
+   1. Blueberries
+   2. Strawberries 
+   3. Raspberries 
+   4. Blackberries
+   5. Cranberries
+4. Papaya  
+
+
+Note: If you want to use Roman Numerals, you may have to leave an empty line between items on list.
+-------------------------------------------------------------------------------  
+
+# Section 3: Inserting Code Chunks and Running Basic R Code  
+
+--------------------------------------------------------------------------------
+#We can insert a code chunk by clicking on the green-button with a "c" on the inside and a "+" on the upper left. 
+#Click "R". 
+#We can insert functions within the chunk of code. We will see this next. 
+
+#QUESTION: What is a code chunk? (hint look back at the slides in Canvas)
+Answer: A distinct section of the document that contains executable code. The chunks are executed and their results are automatically embedded into the final report
+                              OR
+Isolated blocks of R code that execute during the knitting process and render directly into the final document. 
+#TASK: Practice inserting a code chunk. Run a simple calculation such as "2+2" below {r}. Run this code by clicking on the green side-triangle button: 
+Answer:
+```{r}
+2+2
+```
+
+#Next, let's assign variables. Run the following variables:
+x<-10
+y<-5
+#To view the contents of the variable x, just type 'x' and run
+x
+
+#TASK: Write a chunk of code mulitpliying the variables x and y.
+Answer:
+```{r}
+x*y
+```
+
+#QUESTION: What was the result? 
+Answer: 50
+#We will analyze the built-in 'mtcars' dataset. Run the following chunk of code.
+
+```{r}
+head(mtcars)
+```
+#QUESTION: What do you think the head() function does?
+Answer: Displays the first few rows of a data set
+#To display the summary statistics for the dataset use the summary() function. Run the following chunk of code.
+```{r}
+summary(mtcars)
+```
+
+#Within a new chunk of code, we will code to import the entire mtcars dataset.
+#Run the following code by clicking on the green side-triangle button for "Run Current Chunk"
+```{r mtcars}
+data(mtcars)
+```
+
+#QUESTION: After running the previous code, view the dataframe of mtcars. How many variables are in the mtcars dataset? 
+Answer: 11
+#Or you can view the dataset in the console by typing "mtcars" and click 'Run Selected Lines'. 
+mtcars
+
+#To find the number of rows in the dataset, we can use the nrow() function within a new chunk of code. Run the following code.
+```{r}
+nrow(mtcars)
+```
+
+#TASK: Write a code to find the number of columns in the 'mtcars' dataset using the ncol() function. Remember to use a new chunk of code.
+
+#QUESTION: What is the result showing in your script?
+
+#The 'disp' column in the dataset stands for engine displacement. Engine displacement tells you how big the engine is in cubic inches. 
+#The 'mpg' column stands for fuel efficiency in miles per gallon. 
+#Lets plot a graph showing fuel efficiency over displacement for each car.
+#Run the following code.
+plot(mtcars$disp, mtcars$mpg)
+
+#QUESTION: What trend is the plot showing?
+
+#We can also use ggplot to run this within our chunk of code.
+#This permits our plot to be displayed in the final report once "knit".   
+```{r}
+library(ggplot2)
+ggplot(mtcars, aes(x=disp, y=mpg)) + geom_point()
+```
+
+#Let's change the labels of the x-axis to 'Engine Size (cubic inches)' 
+#Let's change the y-axis to 'Miles Per Gallon'
+#Let's add a title called "Fuel Efficiency vs Engine Size".
+```{r}
+ggplot(mtcars,aes(x=disp, y=mpg))+geom_point()+
+  labs(
+    x="Engine Size (cubic inches)",
+    y="Miles Per Gallon",
+    title="Fuel Efficiency vs Engine Size"
+  )
+```
+
+#We could add a legend to show which car each point corresponds to. 
+#But first, we should add a column displaying the car names using dplyr.
+```{r}
+library(dplyr)
+mtcars<-mtcars %>% 
+  mutate(car_name=rownames(mtcars))
+```
+
+#Lets'bold' the title 
+#Let's add a legend to differentiate each point.
+```{r}
+ggplot(mtcars,aes(x=disp,y=mpg, color=factor(car_name)))+
+  geom_point()+
+  labs(
+    x="Engine Size (cubic inches)",
+    y="Miles Per Gallon",
+    title="Fuel Efficiency vs Engine Size",
+         color="Car Types")+
+  theme(plot.title = element_text(face="bold"))
+```
+
+#Lets organize the fuel efficiency from highest to lowest. Run the following.
+```{r}
+mtcars %>%
+  select(mpg,disp) %>% 
+  arrange(desc(mpg))
+```
+
+#QUESTION: Which car has the highest fuel efficiency? 
+
+#QUESTION: What is the size of it's engine?
+
+#TASK: Use code to create a plot comparing disp vs hp from the 'mtcars' dataset. With the following:  
+#Use the 'disp' data for the x-axis and labeled 'Engine Size (cubic inches)'
+#Use the 'hp' data for the y-axis and labeled 'Horsepower (HP)'
+#Add an appropriate title for the plot with a 'bold' font
+#Add a legend colored by 'car_name' and labeled "Car Types" 
+
+
+#Lets organize the horsepower from highest to lowest. Run the following.
+```{r}
+mtcars %>%
+  select(hp,disp) %>% 
+  arrange(desc(hp))
+```
+
+#QUESTION: What trend is the plot showing between engine size and horsepower? 
+
+#QUESTION: Which cars have the highest and lowest hp?
+
+#Don't forget to save your changes. 
+
+----------------------------------------
+------------------------------------------------------------------------
+## Section 4: Add Visualizations and Tables to Your Report
+
+### Goal
+
+In this section, you will create graphs and a summary table using the
+mtcars data set. You will also practice describing patterns that you
+observe in the output.
+
+Before beginning, make sure you can access the mtcars dataset. Run the
+line below to preview the first few rows.
+
+head(mtcars)
+
+Also make sure you have Tidyverse installed! Run the line of code below.
+
+library(tidyverse)
+
+------------------------------------------------------------------------
+
+## Part A: Create a Scatterplot
+
+The variables wt and mpg in the mtcars data set can help us explore the
+relationship between car weight and fuel efficiency.
+
+### Task
+
+Create a scatter plot with wt on the x-axis and mpg on the y-axis.
+
+**Hint:** use the plot() function
+
+```{r scatterplot}
+plot(mtcars$wt, mtcars$mpg)
+```
+
+### Task
+
+Modify your scatterplot so that it includes: a title, an x-axis label, a
+y-axis label, a point color of your choice
+
+**Hint:** Think back to previous assignments(main=, xlab= ,ylab=, and
+col=)
+
+```{r scatterplot_labeled}
+plot(mtcars$wt, mtcars$mpg,
+     main = "Weight vs MPG",
+     xlab = "Weight (1000 lbs)",
+     ylab = "Miles per Gallon",
+     col = "violet")
+```
+
+### Question
+
+What does each point in this scatterplot represent?
+
+**Your answer:** 
+Each point represents one car in the dataset and shows that car’s weight and fuel efficiency (mpg).
+
+### Question
+
+What relationship do you observe between weight and mpg?
+
+**Your answer:** 
+As weight increases, mpg decreases. Heavier cars tend to have lower fuel efficiency.
+
+### Question
+
+Does the graph suggest a positive relationship, a negative relationship,
+or no relationship? Explain your answer.
+
+**Your answer:**
+The graph shows a negative relationship because the points trend downward as weight increases, meaning mpg decreases as weight increases.
+
+------------------------------------------------------------------------
+
+## Part B: Create a Boxplot
+
+The variable cyl shows the number of cylinders in each car. A boxplot
+can help compare fuel efficiency across cylinder groups.
+
+### Task 
+
+Create a boxplot of mpg by cyl using the boxplot function
+
+```{r boxplot1}
+boxplot(mpg ~ cyl, data = mtcars)
+```
+
+### Task 
+
+Modify your boxplot so that it includes: a title, an x-axis label, a
+y-axis label, and a fill color of your choice
+
+```{r boxplot2}
+boxplot(mpg ~ cyl, data = mtcars,
+        main = "MPG by Number of Cylinders",
+        xlab = "Number of Cylinders",
+        ylab = "Miles per Gallon",
+        col = "purple")
+```
+
+### Question
+
+What does each box in this plot represent?
+
+**Your answer:** 
+Each box represents the distribution of mpg values for a specific cylinder group.
+
+### Question
+
+Which cylinder group appears to have the highest fuel efficiency?
+
+**Your answer:** 
+The 4-cylinder group has the highest fuel efficiency
+
+### Question
+
+Which cylinder group appears to have the lowest fuel efficiency?
+
+**Your answer:** 
+The 8-cylinder group has the lowest fuel efficiency.
+
+### Question
+
+Based on the boxplot, how does fuel efficiency seem to change as the
+number of cylinders increases?
+
+**Your answer:** 
+Fuel efficiency decreases as the number of cylinders increases. Cars with more cylinders tend to have lower mpg.
+
+------------------------------------------------------------------------
+
+## Part C: Create a Summary Table
+
+You will now create a table showing the average miles per gallon for
+each cylinder group.
+
+### Task 
+
+Use dplyr to calculate the average mpg for each value of cyl. Rename the
+data avg_mpg_by_cyl
+
+**Hint:** you need to group the data by cyl then summarize the mean of
+mpg.
+
+Use the space below to write your code:
+
+```{r summary_table, echo=TRUE}
+library(tidyverse)
+avg_mpg_by_cyl <- mtcars %>% 
+  group_by(cyl) %>%
+  summarise(avg_mpg = mean(mpg))
+```
+### Task 
+
+Display your results as a clean table.
+
+Use the space below to write your code:
+
+```{r formatted_table}
+avg_mpg_by_cyl
+```
+
+### Question
+
+What does this table show?
+
+**Your answer:** 
+The table shows the average miles per gallon for each cylinder group, summarizing fuel efficiency across the groups.
+
+### Question
+
+Which cylinder group has the highest average mpg?
+
+**Your answer:** 
+The 4-cylinder group has the highest average mpg.
+
+### Question
+
+Which cylinder group has the lowest average mpg?
+
+**Your answer:** 
+The 8-cylinder group has the lowest average mpg.
+
+------------------------------------------------------------------------
+
+## Part D: Compare the Visuals
+
+Now that you have created both graphs and the table, compare the
+information they provide.
+
+### Question 
+
+How does the scatterplot help you understand the relationship between
+weight and fuel efficiency?
+
+**Your answer:** 
+The scatterplot shows individual data points and helps visualize the relationship between weight and mpg, showing that heavier cars have lower fuel efficiency.
+
+### Question 
+
+How does the boxplot help you compare different groups of cars?
+
+**Your answer:** 
+The boxplot groups cars by cylinder count and shows the spread of mpg within each group, making it easier to compare fuel efficiency across different groups.
+
+------------------------------------------------------------------------
+
+## Part E: Now you try
+
+1.  Use a different variable from mtcars to make an additional scatter
+    plot.
+2.  Change the color of your scatterplot.
+
+Write your code below:
+
+```{r Now_you_try}
+plot(mtcars$hp, mtcars$mpg,
+     main = "Horsepower vs MPG",
+     xlab = "Horsepower",
+     ylab = "Miles per Gallon",
+     col = "darkblue")
+```
+
+### Question
+
+What did you change, and how did it affect the output?
+
+**Your answer:** 
+I changed the x-variable from weight to horsepower and changed the color of the scatterplot. This allowed me to explore a different relationship in the data and improved the visual appearance of the graph.
+
+------------------------------------------------------------------------
