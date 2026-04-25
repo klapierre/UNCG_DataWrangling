@@ -1,6 +1,6 @@
 ---
 title: "Group5_RMarkdown"
-author: "Arnav Pandey, Themesha Parker, Michelle Bautista Canuto, Dhanush Devanand
+author: "Arnav Pandey, Themesha Parker, Michelle Bautista Canuto, Dhanush Devanand"
 date: "2026-04-07"
 output: pdf_document
 ---
@@ -935,8 +935,6 @@ additional resources. The syntax is `[link text](URL)`.
 Add the following clickable link somewhere in your document and Knit:
 
 `[R Markdown documentation](https://rmarkdown.rstudio.com)`
-
-It will render like this: [R Markdown documentation](https://rmarkdown.rstudio.com)
 
 ### Check
 
