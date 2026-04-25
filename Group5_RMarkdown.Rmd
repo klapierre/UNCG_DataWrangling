@@ -932,7 +932,9 @@ additional resources. The syntax is `[link text](URL)`.
 
 ### Task
 
-Add the following clickable link somewhere in your document and Knit:https://rmarkdown.rstudio.com/
+Add the following clickable link somewhere in your document and Knit:
+
+`[R Markdown documentation](https://rmarkdown.rstudio.com)`
 
 It will render like this: [R Markdown documentation](https://rmarkdown.rstudio.com)
 
