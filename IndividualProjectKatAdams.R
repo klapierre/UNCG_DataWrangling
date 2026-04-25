@@ -142,8 +142,7 @@ ggplot(CombinedDataClean, aes(x = Performance, fill = AdultDiet))+
   ylab("Frequency") +
   labs(title = "Beetle Performance Distribution and Diet",
     subtitle = "Data from: Building a beetle: how larval environment leads to adult
-    performance in a horned beetle")+
-  scale_color_manual(values = 'red', 'green', 'blue')
+    performance in a horned beetle")
 ggsave("Beetle_Performance_Diet.png", width=6, height=4, units="in", dpi=300)
 #This figure serves to display the difference in beetle performance based on diet.
 #Visually, it appears that adult diet did not have a significant effect on performance.
