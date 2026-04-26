@@ -73,10 +73,13 @@ airquality_temp <- ggplot(airquality, aes(x = Day, y = Temp)) +
 animate(airquality_temp)
 
 #QUESTION: What is the difference in saved outcome between the two codes?
-
+# The first code saves the graph as a gif in the gganimate folder and the second code
+# animates the graph in R. 
 ##QUESTION: What is the animate() function doing?
-
+# The animate() function turns our graph into an animation and shows up in the viewer 
+#tab in the bottom right.
 ##QUESTION: What happens if we take out the transition_time() function?
+# If we take out the transition_time() function it will remove the animation on the graph. 
 
 ##Now that we have a simple animation we can apply other functions to make the
 ##Animation easier to view and understand
@@ -91,20 +94,30 @@ airquality_temp <- ggplot(airquality, aes(x = Day, y = Temp)) +
 anim_save("temperature_titles.gif", animate(airquality_temp, renderer = gifski_renderer()))
 
 ##QUESTION: What is the new title of the graph?
+# Month: 5 through 9 
 
 ##QUESTION: Why would someone choose to use the {frame_time} argument instead of 
 ##just typing a whole new title?
+# Someone would choose to use the {frame_time} argument instead of just typing a whole
+# new title because it automatically updates the months. 
 
 ##QUESTION: Transitions can be used to control how smooth the animation plays
 ##What are some characteristics of the animation that might be helpful to modify?
-
+# Some characteristics of the animation that might be helpful to modify are the speed, 
+# number of frames and how smooth it is between the frames. 
 ##Run the code below
 airquality_temp <- ggplot(airquality, aes(x = Day, y = Temp)) +
+  # creates a animated line plot.The x value is Day and the y value is the temp. 
   geom_line() +
+  # Creates a line connecting temp values with days. 
   ease_aes('linear')+
+  # Sets the speed of the animation to linear.
   labs(title = "Month: {frame_time}") +
+  # Adds a title that updates the title depending on the frame. 
   transition_time(Month)
+  # Animates the graph using the Month column.
 anim_save("temperature_ease.gif", animate(airquality_temp, renderer = gifski_renderer()))
+  # Saves the animation as a gif using gifski render. 
 
 ##TASK: Annotate the code above with descriptive comments
 
