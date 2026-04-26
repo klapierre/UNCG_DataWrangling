@@ -285,7 +285,6 @@ print(airquality_ozone)
 # 1.1 Expanding on gganimate use cases ----------------------------------------####
 
 ## TASK: Load datasets used in this section
-
 data("gapminder")
 data("iris")
 

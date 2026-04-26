@@ -201,14 +201,14 @@ crs(mamm_vect) <- crs(nv_elevation)
 jpeg("nv_target_map.jpg", width = 3000, height = 3000, res = 375)
 
 # Plot elevation
-plot(nv_elevation, col = terrain.colors(215))
+plot(nv_elevation, col = terrain.colors(100))
 
 # Add county boundaries
-lines(NV_county, alpha = .3)
+lines(NV_county, alpha = .1)
 
 # Assign custom species point colors
 species_colors <- c("Tamias minimus" = "#0293C7",
-                    "Tamias umbrinus" = "white",
+                    "Tamias umbrinus" = "ivory3",
                     "Urocitellus beldingi" = "#CD0000",
                     "Urocitellus mollis" = "black")
 
@@ -216,17 +216,18 @@ point_cols <- species_colors[mamm_vect$species]
 
 # Plot points onto map
 points(mamm_vect,
-       col = point_cols,
-       pch = 16,
-       cex = 1,
-       alpha = 0.7)
+       col = "black",
+       bg = scales::alpha(point_cols, 0.5),
+       pch = 21,
+       cex = 1.5,
+       alpha = 0.6)
 
 # Add legend
 legend("bottomleft",
        inset = c(0.20, 0.05), 
        legend = names(species_colors),
        col = species_colors,
-       pch = 16,
+       pch = 21,
        title = "Species")
 
 # Close the device 
@@ -234,7 +235,10 @@ dev.off()
 
 
 
-# UNCG specimen map -----------------------------------------------------------
+
+
+
+# UNCG target specimen map -----------------------------------------------------------
 
 # Now I want to make the same map, but only plot specimens collected by UNCG
 # I already have a cleaned dataset of UNCG specimens that I downloaded from Arctos, where more of our most recent capture data has been uploaded
@@ -314,16 +318,17 @@ lines(NV_county, alpha = .3)
 
 # Assign custom species point colors
 species_colors <- c("Tamias minimus" = "#0293C7",
-                    "Tamias umbrinus" = "white",
+                    "Tamias umbrinus" = "ivory3",
                     "Urocitellus beldingi" = "#CD0000")
 
 point_cols <- species_colors[UNCG_mamm_vect$species]
 
 # Plot points onto map
 points(UNCG_mamm_vect,
-       col = point_cols,
-       pch = 16,
-       cex = 1,
+       col = "black",
+       bg = scales::alpha(point_cols, 0.2),
+       pch = 21,
+       cex = 1.5,
        alpha = 0.6)
 
 # Add legend
@@ -331,7 +336,7 @@ legend("bottomleft",
        inset = c(0.20, 0.05), 
        legend = names(species_colors),
        col = species_colors,
-       pch = 16,
+       pch = 21,
        title = "Species")
 
 # Close the device 
