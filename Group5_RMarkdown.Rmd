@@ -36,6 +36,8 @@ install.packages("rmarkdown")
 install.packages("knitr")
 library(rmarkdown)
 library(knitr)
+install.packages("tinytex")
+tinytex::install_tinyt
 
 Question: Why are these packages needed?
 Answer:
@@ -460,7 +462,7 @@ mtcars %>%
 
 ------------------------------------------------------------------------
 ## Section 4: Add Visualizations and Tables to Your Report
-
+------------------------------------------------------------------------
 ### Goal
 
 In this section, you will create graphs and a summary table using the
