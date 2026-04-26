@@ -10,7 +10,7 @@
 
 # Pacman is a really convenient package for installing and  loading other packages
 # install it if you haven't already
-# install.packages("pacman")
+install.packages("pacman")
 pacman::p_load(tidyverse,
                gganimate,
                gapminder,
@@ -198,33 +198,12 @@ print(airquality_group)
 ##this by using enter and exit functions
 
 airquality_discrete +
-  enter_fade(alpha = .5) +
-  exit_shrink(size = 0)
+  enter_grow(size = 2) +
+  exit_shrink(size = .5)
+animate(airquality_discrete)
 
 ##TASK: rewrite the code above to utilize alternative enter and exit functions: 
 ##https://gganimate.com/reference/enter_exit.html
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 ##QUESTION: Take a look at the help for the animate() function, what other arguments can be used?
 # you can adjust the number of frames, the framerate, the duration (length of animation), the detail, the dimensions of the plot, the number of times the first and last frame repeat, etc. 
@@ -245,7 +224,7 @@ airquality_temp <- ggplot(airquality_clean,
        color = "Month") +
   shadow_trail(alpha=0.3)+
   transition_components(Day)
-anim_save("temperature_group.gif", animate(airquality_group, renderer = gifski_renderer(),  nframes = 100,fps = 10, width = 600,height = 400))
+anim_save("temperature_group.gif", animate(airquality_group, renderer = gifski_renderer(),  nframes = 100,fps = 10, width = 600, height = 400))
 
 ##TASK: Fix the code below, and insert comments to to inform on the changes you made
 ##There are 3 mistakes, hint, it should not be a line graph, and all other functions are correct, only the arguments may be incorrect
@@ -266,20 +245,15 @@ airquality_ozone <- ggplot(airquality, aes(x = Day, y = Ozone)) +
   transition_states(Month) +
   ease_aes('linear') +
   shadow_mark() +
-  labs(title = "Day: {closest_state}") 
+  labs(title = "Day: {closest_state}") +
+  exit_shrink(size = .5) 
+
+
 anim_save("airquality_ozone.gif", animate(airquality_ozone, renderer = gifski_renderer())) 
 
 print(airquality_ozone)
 
 # this looks so insane but I am not really sure what I am doing wrong !! 
-
-
-##GREAT JOB!!!
-
-##Reminder to reset your working directory
-
-
-
 
 
 # 1.1 Expanding on gganimate use cases ----------------------------------------####
@@ -288,20 +262,46 @@ print(airquality_ozone)
 data("gapminder")
 data("iris")
 
+head(iris)
+head(gapminder)
+
 ## These are the two datasets we'll be using for this section! Check them out using
 ## head() or glimpse()
 ## QUESTION: Which dataset is inherently time-based and why does that matter for animation?
+# the gapminder dataset is time-based, as it has a year column, and this makes it a better option for applying animations to
 
 ## TASK: Create a filtered gapminder dataset for North America only
+North_America <- gapminder %>%
+  filter(country %in% c("United States", "Canada", "Mexico", "Puerto Rico"))
 
 ## TASK: Build a scatterplot of GDP vs life expectancy. Set size to population and
 ## group by country. Apply a log transform to the x-axis.
 ## Add transparency, labels, and a theme of your choice. Save this as an object named gap_plot.
+gap_plot <- ggplot(North_America,
+                   aes(x = gdpPercap,
+                       y = lifeExp,
+                       size = pop,
+                       group = country,
+                       color = country)) +
+  geom_point(alpha = 1) +
+  scale_x_log10() +
+  labs(title = "GDP vs Life Expectancy in North America",
+       x = "GDP per Capita",
+       y = "Life Expectancy",
+       size = "Population") +
+  theme_classic()
+
+print(gap_plot)
 
 ## QUESTION: Why is grouping important when animating repeated entities like countries?
+# because we are showing the same countries over a range of different dates and it helps visualization remain consistent
 
 ## TASK: Animate by year using transition_time(). Save this as gap_anim.
+gap_anim <- gap_plot +
+  labs(title = "Year: {frame_time}") +
+  transition_time(year)
 
+print(gap_anim)
 
 ## We've already investigated the ease_aes() function using linear easing. This
 ## changes the ways that our frames are animated together. This is called tweening.
@@ -309,13 +309,13 @@ data("iris")
 ## TASK: Run the code below and descriptively annotate which each function does. 
 
 # -in applies the easing function without any modification
-gap_anim + ease_aes('cubic-in')
+gap_anim + ease_aes('cubic-in') #speeds up and slows down movement quickly
 
-gap_anim + ease_aes('elastic-in')
+gap_anim + ease_aes('elastic-in') # jitters back and forth quickly before moving to the next point
 
-gap_anim + ease_aes('circular-in')
+gap_anim + ease_aes('circular-in') #speeds up animation time every few years
 
-gap_anim + ease_aes("bounce-in")
+gap_anim + ease_aes("bounce-in") # the data points seem to slightly jump back before going forward
 
 # -out applies the easing function in reverse
 gap_anim + ease_aes('elastic-in')
