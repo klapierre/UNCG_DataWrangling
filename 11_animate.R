@@ -480,6 +480,7 @@ tempData <- temp %>%
 # make this data not ideal to graph? Why or why not?
 # Hint: Think about how we would write the ggplot code. How would the datapoints 
 # appear on the graph?
+##ANSWER: There are several temperature points at different times for each date. This would cause a lot of noise on a plot that covers a large amount of time. 
 
 # There are only 2 variables that we need to retrieve from tempData: date and
 # Air.temperature. Although, there are multiple temperatures with the same date! 
@@ -521,11 +522,16 @@ ggplot(dailyAvg, aes(x = date, y = mean_temp)) +
 # TASK: Create a new scatter plot by changing the labels of the y-axis to 
 # "Daily Average Temperature" and the x-axis to "Months". Give it a title 
 # called:"Daily Average Temp. in 2003".
+ggplot(dailyAvg, aes(x = date, y = mean_temp)) +
+  geom_point() +
+  geom_smooth(method = "loess", se = FALSE, color = "red") +
+  theme_bw() +
+  labs(title = "Daily Average Temp in 2003", x = "Months", y = "Daily Average Temperature")
 
 # QUESTION: Between these two graphs, which graph would be better represent the
 # dailyAvg dataframe? Why?
 # Hint: The graph is comparing Date vs mean Temperature. 
-
+#ANSWER: I think that the scatter plot is a better visualization of the data because the trend line makes it easier to interpret. 
 
 #================================
  # Gapminder: Another approach to complex graphing
@@ -540,6 +546,7 @@ library(hms)
 
 # QUESTION: What are your initial thoughts on what bubble graphs measure and their general
 # purpose?
+#ANSWER: I think that they make sense as a way to show several different relationships at one time, but it could potentially make the graph difficult to read.
 
 # We will be using 3 variables: months, hour, and mean_temperature.
 # To graph this, we will need to reformat our data. 
@@ -549,12 +556,13 @@ library(hms)
 # Create a new column with the months.
 rangeTemp <- tempData %>%
   mutate(time = hms::as_hms(time), hour = hour(time),
-         month = month(date, label = TRUE, abbr = TRUE)
+         month = month(date, label = TRUE, abbr = TRUE))
          
          # QUESTION: Why would it be a good idea to average the hourly temperatures 
          # instead of plotting each hour for this graph? 
          # HINT: Take a look at datapoints within rangeTemp and visualize the graph
          # it would make. 
+          ##ANSWER: Because there are multiple measurements for each hour based on minutes, this  would create a lot of noise on the graph. 
          
          # You will group by month and hour and the summarize the final column to find 
          # the mean Air. temperature. We will double check if there are any NA's we
@@ -574,12 +582,13 @@ rangeTemp <- tempData %>%
            geom_point(alpha = 0.7) +
            scale_size(range = c(3, 12)) +
            scale_x_continuous(breaks = seq(0, 23, 2)) +
-           labs(x = "Hour of Day (0–23)",y = "Average Temperature ",color = "Month",size = "Temperature",title = "Hourly Average Temperature by Month") +
+           labs(x = "Hour of Day (0–23)",y = "Average Temperature (°C)",color = "Month",size = "Temperature",title = "Hourly Average Temperature by Month") +
            theme_bw() +
            theme(plot.title = element_text(size = 14, face = "bold"),legend.position = "bottom")
          
          # QUESTION: When reviewing the data, the temperature is very low, why is that?
          # HINT: How do we measure temperature in science?
+         ##ANSWER: The temperature is in celcius
          
          # Correct this by changing the y label to "Average Temperature (°C)"!
          
@@ -590,12 +599,15 @@ rangeTemp <- tempData %>%
          # HINT: Conversion rate of "F -> C" is would look something like this 
          # (mean_temp * 9/5) + 32)
          
-         hourMonthAvg <- rangeTemp %>%
+         f_hourMonthAvg <- rangeTemp %>% 
            group_by(month, hour) %>%
            summarize(mean_temp = mean(Air.temperature, na.rm = TRUE)) %>%
-           ungroup()
+           ungroup() %>% 
+           mutate(mean_temp_F = (mean_temp * 9/5) + 32)
+         
          # Use this code to guide you to creating the "f_hourMonthAvg" dataframe. If we
          # are creating a new column, what is the function to do that?
+         #ANSWER: mutate
          
          # With the new dataframe and the code before this, change the y label to "Average Temperature (°F)". What are the ranges for the y-axis now? 
          ggplot(f_hourMonthAvg, aes(x = hour,y = mean_temp_F,color = month,size = mean_temp_F)) +
@@ -630,11 +642,13 @@ rangeTemp <- tempData %>%
          
          # For this section, we are using the dataframe "dailyAvg", why do you think this 
          # is an easier dataframe to animate versus the hourMonthAvg?
+         #ANSWER: Because there are less datapoints and they are more spread out over time.
         
            # To start the animation process, we want to make a function that allows for 
            # flexibility so that the dataframe/graph can be adjusted if need to.
            # QUESTION: Take a look at the code below, what do you think ggplot is doing here? Does the
            # coding look familiar?
+         #ANSWER: I think that ggplot is setting the design of the plot and specifying which parts of the data to plot.
            
            make_timeseries_plot <- function(data, day_index) {
              ggplot(data[1:day_index, ], aes(x = date,y = mean_temp)) +
@@ -642,8 +656,9 @@ rangeTemp <- tempData %>%
                geom_point(color = "red", size = 3) +
                labs(x = "Date",y = "Average Temperature (°C)",title = "Daily Average Temperature Over Time",subtitle = paste("Day:", data$date[day_index])) +
                theme_bw() +
-               theme(plot.title = element_text(size = 14, face = "bold")) }
-         
+               theme(plot.title = element_text(size = 14, face = "bold")) 
+             }
+          
          # in this ggplot, we will be graphing each day with it's corresponding temperature.
          # Essentially a time series!
          
@@ -652,20 +667,22 @@ rangeTemp <- tempData %>%
          dir.create("frames_timeseries", showWarnings = FALSE)
          
          # QUESTION: What does dir.create stand for? And where do you expect this folder to end up?
+         ##ANSWER: I think that it stands for create directory. I expect it to show up in my current directory.
          
          # Now we instruct R how we want the Frame-generation loop to work.
          
          # QUESTION: Why do you think we are start on day 2 and why may it be more useful?
          # HINT: We are making a time series graph, what makes it different from a 
          # scatter plot?
+         ##ANSWER: Because the first frame will be consistent with the rest of the series in showing a trend.
          
          # The value p creates a plot for day 1, which begins the data or the start
          # of the animation.
-         for (i in 2:nrow(dailyAvg)) {
+         for (i in 2:nrow(dailyAvg)) { 
            p <- make_timeseries_plot(dailyAvg, i)
-           ggsave(filename = sprintf("frames_timeseries/frame_%04d.png", i),plot = p,width = 8,height = 5) }
-         
-         ggsave(filename = sprintf("frames_daily/frame_%04d.png", i),plot = p,width = 8, height = 5) }
+         ggsave(filename = sprintf("frames_timeseries/frame_%04d.png", i),plot = p,width = 8,height = 5) 
+         ggsave(filename = sprintf("frames_daily/frame_%04d.png", i),plot = p,width = 8, height = 5)
+         }
 
 # lastly, with ggsave(), we save the data as a PNG file. the frames will come 
 # out with the name frames_001, frames_002 and so on. 
@@ -683,6 +700,7 @@ gifski(png_files,gif_file = "dailyAvg_timeseries.gif",width = 900,height = 600,d
 #--------------------------------
  # Magick: Image editor
 #--------------------------------
+install.packages("magick")
   library(magick)
 
 # MagicK, is an image editor so it's primary purposes involve combining images,
@@ -692,17 +710,27 @@ gifski(png_files,gif_file = "dailyAvg_timeseries.gif",width = 900,height = 600,d
 # making graph have essential markings that would be difficult to add to GIFs.
 
 # QUESTION: What are some examples that Magick can be useful in animating a graph? 
+##ANSWER: If you want to add any image to the animation. These could be images that contextualize the data or watermarks. 
 
 # We will start with a function, that will plot our dataframe into a adjustable graph.
 
-make_daily_bubble <- function(data, day_index) {
-  ggplot(data[1:day_index, ], aes(x = date,y = mean_temp)) +
+make_timeseries_plot <- function(data, day_index) {
+  ggplot(data[1:day_index, ], aes(x = date, y = mean_temp)) +
     geom_point(aes(size = mean_temp, color = mean_temp), alpha = 0.7) +
     scale_size(range = c(4, 12)) +
     scale_color_viridis_c() +
-    labs(x = "Date",y = "Average Temperature (°C)",title = "Daily Average Temperature Over Time",subtitle = paste("Day:", data$date[day_index])) +
+    labs(
+      x = "Date",
+      y = "Average Temperature (°C)",
+      title = "Daily Average Temperature Over Time",
+      subtitle = paste("Day:", data$date[day_index])
+    ) +
     theme_bw() +
-    theme(plot.title = element_text(size = 14, face = "bold"),legend.position = "bottom") }
+    theme(
+      plot.title = element_text(size = 14, face = "bold"),
+      legend.position = "bottom"
+    )
+}
 
 #This animation will display the bubble chart. Where the color and size correlate
 # with the temperature as the dates move horiztonally. 
@@ -715,8 +743,10 @@ dir.create("frames_daily_magick", showWarnings = FALSE)
 
 for (i in seq_len(nrow(dailyAvg))) {
   p <- make_daily_bubble(dailyAvg, i)
-  ggsave(
-    filename = sprintf("frames_daily_magick/frame_%04d.png", i),plot = p,width = 8, height = 5 ) }
+ggsave(
+  filename = sprintf("frames_daily_magick/frame_%04d.png", i),plot = p,width = 8, height = 5 )
+}
+   
 
 # MagicK differs from Gifski in creation steps of the GIF, but the end result 
 # is the essentially the same but with cosmetic attributes.
@@ -747,6 +777,7 @@ animation <- image_animate(image_join(watermarked), fps = 10)
 image_write(animation, "dailyAvg_bubble_watermarked.gif")
 
 # QUESTION: In your animation, what month has the highest temperature? 
+##ANSWER: July
 
 # Magick appears to take longer than Gifski to create the GIF in your files so 
 # as I stated before, feel free to rerun the code to wake R-studio up. 
