@@ -88,7 +88,6 @@ QUESTION: How is the output file different from the source file?
   ANSWER: It is a pop up window that is lacking the output and the date. It does have a title and me as the author!
   
   
-  
   --------------------------------------------------------------------------------  
   
   # Section 2: Formatting Text Using RMarkdown Syntax  
@@ -109,7 +108,7 @@ TASK: Read the question below, click **Knit** to render the document and return 
 QUESTION: What difference do you notice about the above line that starts with
 `# Section 2: Formatting a Report Using RMarkdown Syntax` compared to the line
 `Objective: learn to format how your document appears in the output of your choice`?  
-  ANSWER:
+  ANSWER:In the section 2, there is a hashtag leading the line while in objective, there is no hashtag present.
   
   \
 
