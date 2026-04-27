@@ -210,7 +210,7 @@ TASK: Read the question below, click Knit, and return to answer the question bel
 QUESTION: Which of the following lines gives you bold text?  
 Line 1. This is an example to show how to make text bold.  
 **Line 2: This is an example to show how to make text bold.**  
-ANSWER:  
+ANSWER:line 2 gives you the bold text because it is surrounded by double the astersiks  
 
 \
 
@@ -233,7 +233,7 @@ TASK: In the paragraph below, make "Arnav," "Biological Data Wrangling and Visua
 My name is Arnav Pandey. I am currently enrolled in Biological Data Wrangling and Visualization (BIO 457/657). This is a TASK: to use RMarkdown to make a text output bold.  
 
 \
-
+My name is **Arnav** Pandey. I am currently enrolled in __Biological Data Wrangling and Visualization__ (BIO 457/657). This is a TASK: to use **RMarkdown** to make a text output bold.
 .........................
 
 ## 2.4 Bold and Italics
@@ -247,7 +247,7 @@ You can enclose your text within three asterisks (`***[text]***`). or underscore
 TASK: In the paragraph below, make "Arnav," "Biological Data Wrangling and Visualization" and "RMarkdown" bold italics using both the methods mentioned above at least once.   
 My name is Arnav Pandey. I am currently enrolled in Biological Data Wrangling and Visualization (BIO 457/657). This is a TASK: to use RMarkdown to make a text output bold.  
 
-
+My name is ***Arnav*** Pandey. I am currently enrolled in ___Biological Data Wrangling and Visualization___ (BIO 457/657). This is a TASK: to use ***RMarkdown*** to make a text output bold.  
 \
 
 In sections 2.2, 2.3, and 2.4, you learnt how to make text italics, bold, or bold+italics by enclosing the text within one, two, and three asterisks or underscores, respectively. You might be tempted to start enclosing a text by underscore and end it using asterisk. For example:  
@@ -296,6 +296,19 @@ TASK: Hit Knit to look at the output of the lines below:
 TASK: Copy the above list below, add an item "Melon" and nest different types of melons as its subitems.
 Hit Knit to see your output.  
 
+- Apple
+- Banana
+- Berries 
+  - Blueberries
+  - Strawberries 
+  - Raspberries 
+  - Blackberries
+  - Cranberries
+- Papaya
+- Melon
+  - Watermelon
+  - Cantaloupe
+  - Honeydew
 .........................
 
 ## 2.6 Numbered List
