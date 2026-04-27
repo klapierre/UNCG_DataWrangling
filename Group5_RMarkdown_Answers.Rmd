@@ -1,6 +1,6 @@
 ---
 title: "Group5_RMarkdown_Answers"
-author: "Arnav Pandey, Themesha Parker, Dhanush Devanand"
+author: "Arnav Pandey, Themesha Parker,Michelle Bautista Canuto, Dhanush Devanand"
 date: "2026-04-20"
 output: pdf_document
 ---
@@ -975,7 +975,7 @@ this, then Knit:
 ---
 title: "Group5_RMarkdown"
 author: "Arnav Pandey, Themesha Parker, Michelle Bautista Canuto, Dhanush Devanand"
-date: "2026-04-07"
+date: "2026-04-26"
 output:
   html_document:
     toc: true
