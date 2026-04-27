@@ -4,7 +4,6 @@ author: Arnav Pandey, Themesha Parker, Michelle Bautista Canuto, Dhanush Devanan
   Jaslyn Davenport
 date: "2026-04-26"
 output:
-  word_document: default
   html_document: default
 ---
 # Section 1: Create, Save, and Knit Your First R Markdown File
@@ -152,7 +151,7 @@ ANSWER: No, they are different in color as well as being different in italizatio
 TASK: Go to the metadata for this assignment and change the output from `pdf_document` to `html_document`.  
 
 QUESTION: Did your Line 5 and Line 6 appear in different lines?  
-ANSWER:
+ANSWER: yes, the formats of the lines are only different by size versus colors from the word document before.
 
 \
 
