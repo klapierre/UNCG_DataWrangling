@@ -457,7 +457,7 @@ europe_life <- europe_sf %>%
   
   # Please load in "LD_temperature_data_1.csv", this can be located in the 
   # Powerpoint and likely to be in canvas as well!
-  
+LD_temperature_data_1 <- read.csv("LD_temperature_data_1.csv")
 library(tidyverse)
 library(dplyr)
 
@@ -476,7 +476,8 @@ tempData <- temp %>%
 # make this data not ideal to graph? Why or why not?
 # Hint: Think about how we would write the ggplot code. How would the datapoints 
 # appear on the graph?
-
+# The data is not ideal to graph because time and date are separated into two columns.
+# This makes it hard to graph in a continuous timeline or animation. 
 # There are only 2 variables that we need to retrieve from tempData: date and
 # Air.temperature. Although, there are multiple temperatures with the same date! 
 # We can tidy up the number of days by taking the average of each date.
@@ -517,12 +518,21 @@ ggplot(dailyAvg, aes(x = date, y = mean_temp)) +
 # TASK: Create a new scatter plot by changing the labels of the y-axis to 
 # "Daily Average Temperature" and the x-axis to "Months". Give it a title 
 # called:"Daily Average Temp. in 2003".
+ggplot(dailyAvg, aes(x = date, y = mean_temp)) +
+  geom_point() +
+  geom_smooth(method = "loess", se = FALSE, color = "red") +
+  labs(
+    title = "Daily Average Temp. in 2003",
+    x = "Months",
+    y = "Daily Average Temperature"
+  ) +
+  theme_bw()
 
 # QUESTION: Between these two graphs, which graph would be better represent the
 # dailyAvg dataframe? Why?
 # Hint: The graph is comparing Date vs mean Temperature. 
-
-
+# Both graphs contain the same information in terms of data but only the titles of the 
+# x and y axis changed. Both compare date vs mean temp. 
 #================================
  # Gapminder: Another approach to complex graphing
 #================================
@@ -536,7 +546,8 @@ library(hms)
 
 # QUESTION: What are your initial thoughts on what bubble graphs measure and their general
 # purpose?
-
+# Bubble graphs help you connect three variables and they are used when you need more than two 
+# values in a graph. 
 # We will be using 3 variables: months, hour, and mean_temperature.
 # To graph this, we will need to reformat our data. 
 
@@ -551,7 +562,8 @@ rangeTemp <- tempData %>%
          # instead of plotting each hour for this graph? 
          # HINT: Take a look at datapoints within rangeTemp and visualize the graph
          # it would make. 
-         
+# It is a good idea to average the hourly temperatures instead of plotting each hour
+# for this graph because it will make the graph clearer and reduce clutter.
          # You will group by month and hour and the summarize the final column to find 
          # the mean Air. temperature. We will double check if there are any NA's we
          # missed.Then ungroup to have 3 columns/variables in a dataframe
@@ -576,24 +588,33 @@ rangeTemp <- tempData %>%
          
          # QUESTION: When reviewing the data, the temperature is very low, why is that?
          # HINT: How do we measure temperature in science?
-         
+         # The temperature is very low because it is measured in Celsius. 
          # Correct this by changing the y label to "Average Temperature (°C)"!
-         
+         ggplot(hourMonthAvg, aes(x = hour,y = mean_temp,color = month,size = mean_temp)) +
+           geom_point(alpha = 0.7) +
+           scale_size(range = c(3, 12)) +
+           scale_x_continuous(breaks = seq(0, 23, 2)) +
+           labs(x = "Hour of Day (0–23)",y = "Average Temperature (°C) ",color = "Month",size = "Temperature",title = "Hourly Average Temperature by Month") +
+           theme_bw() +
+           theme(plot.title = element_text(size = 14, face = "bold"),legend.position = "bottom")
          # Let's make a graph of the temperature in fahrenheit! 
          # Create a new dataframe called "f_hourMonthAvg" with a column labeled " 
          # mean_temp_F from the "mean_temp" column. Alter the data to go from celsius to 
          # fahrenheit.
          # HINT: Conversion rate of "F -> C" is would look something like this 
          # (mean_temp * 9/5) + 32)
+         f_hourMonthAvg <- hourMonthAvg %>%
+           mutate(mean_temp_F = (mean_temp * 9/5) + 32)
          
          hourMonthAvg <- rangeTemp %>%
            group_by(month, hour) %>%
            summarize(mean_temp = mean(Air.temperature, na.rm = TRUE)) %>%
            ungroup()
          # Use this code to guide you to creating the "f_hourMonthAvg" dataframe. If we
-         # are creating a new column, what is the function to do that?
+         # are creating a new column, what is the function to do that? mutate
          
          # With the new dataframe and the code before this, change the y label to "Average Temperature (°F)". What are the ranges for the y-axis now? 
+         # 60 through 100 
          ggplot(f_hourMonthAvg, aes(x = hour,y = mean_temp_F,color = month,size = mean_temp_F)) +
            geom_point(alpha = 0.7) +
            scale_size(range = c(3, 12)) +
@@ -626,6 +647,8 @@ rangeTemp <- tempData %>%
          
          # For this section, we are using the dataframe "dailyAvg", why do you think this 
          # is an easier dataframe to animate versus the hourMonthAvg?
+         # "dailyAvg is easier to animate than hourMonthAvg because there is less data points and
+         # The data is cleaner. 
         
            # To start the animation process, we want to make a function that allows for 
            # flexibility so that the dataframe/graph can be adjusted if need to.
