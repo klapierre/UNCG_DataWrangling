@@ -378,7 +378,7 @@ gap_anim + ease_aes("bounce-in-out")
 #gap_anim + view_follow()
 
 ## QUESTION: What does view_follow() do? Why might this be useful?
-#changes the plot view to follow the moving data. This is useful when the points
+# it changes the plot view to follow the moving data. This is useful when the points
 #move across a large range and you want the viewer to focus on the active cluster.
 
 ## TASK: Try to apply view_step() to gap_anim.
