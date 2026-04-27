@@ -248,18 +248,50 @@ data("iris")
 
 ## These are the two datasets we'll be using for this section! Check them out using
 ## head() or glimpse()
+head(gapminder)
+head(iris)
 ## QUESTION: Which dataset is inherently time-based and why does that matter for animation?
+## Gapminder is time based, meaning we can use that for the animation.
 
 ## TASK: Create a filtered gapminder dataset for North America only
+americas <- filter(gapminder, continent == "Americas")
+US <- filter(americas, country == "United States")
+Mexico <- filter(americas, country == "Mexico")
+Canada <- filter(americas, country == "Canada")
+Guatemala <- filter(americas, country == "Guatemala")
+Haiti <- filter(americas, country == "Haiti")
+Dominican_Republic <- filter(americas, country == "Dominican Republic")
+Honduras <- filter(americas, country == "Honduras")
+Cuba <- filter(americas, country == "Cuba")
+Nicaragua <- filter(americas, country == "Nicaragua")
+El_Salvador <- filter(americas, country == "El Salvador")
+Costa_Rica <- filter(americas, country == "Costa Rica")
+Panama <- filter(americas, country == "Panama")
+Puerto_Rico <- filter(americas, country == "Puerto Rico")
+Jamaica <- filter(americas, country == "Jamaica")
+north_america <- rbind(US, Mexico, Canada, Guatemala, Haiti, Dominican_Republic, Honduras, Cuba, Nicaragua, El_Salvador, Costa_Rica, Panama, Puerto_Rico, Jamaica)
+rename(north_america, "GDP" = gdpPercap)
 
 ## TASK: Build a scatterplot of GDP vs life expectancy. Set size to population and
 ## group by country. Apply a log transform to the x-axis.
 ## Add transparency, labels, and a theme of your choice. Save this as an object named gap_plot.
+gap_plot <- ggplot(north_america, aes(x = GDP, y = lifeExp)) +
+  geom_line() +
+  transition_states(country) +
+  labs(title = "{closest_state}")
+anim_save("North_America.gif", animate(gap_plot, renderer = gifski_renderer()))
+animate(gap_plot)
 
 ## QUESTION: Why is grouping important when animating repeated entities like countries?
+## It keeps things organized.
 
 ## TASK: Animate by year using transition_time(). Save this as gap_anim.
-
+gap_anim <- ggplot(north_america, aes(x = GDP, y = lifeExp)) +
+  geom_line() +
+  transition_time(country) +
+  labs(title = "{frame_time}")
+anim_save("North_America2.gif", animate(gap_anim, renderer = gifski_renderer()))
+animate(gap_anim)
 
 ## We've already investigated the ease_aes() function using linear easing. This
 ## changes the ways that our frames are animated together. This is called tweening.
@@ -287,23 +319,33 @@ gap_anim + ease_aes('circular-in-out')
 
 gap_anim + ease_aes("bounce-in-out")
 
+##They're all different animation styles.
+
 ## QUESTION: What does the -in-out easing argument do to our animation? 
 ## Hint: Check ?ease_aes().
+?ease_aes
+##BAsically animates the transition to make the last half reversed.
                 
 ## QUESTION: How does easing change the perception of movement over time?
+## Changes the way it's displayed.
 
 ## gganimate also has view functions to change the framing of our animation
 ## over our data. 
 
 ## TASK: Add view_follow() to gap_anim to track evolving clusters
+view_follow(gap_anim)
 
 ## QUESTION: What does view_follow() do? Why might this be useful?
+## Makes a snapshot of the current frame.
 
 ## TASK: Try to apply view_step() to gap_anim.
+view_step(gap_anim)
+## Gives the next static transition.
 
 ## This gives us an animation, but something is wrong.
 ## QUESTION: What is wrong with your animation? Why do you think this is happening
 ## HINT: Remember that transition_time is continuous. Check out ?view_step()
+## There's too many factors?
 
 ## Remember that iris dataset we loaded earlier? Now we're gonna switch to it!
 
@@ -311,6 +353,11 @@ gap_anim + ease_aes("bounce-in-out")
 ## Save this as iris_anim. Add the appropiate labels, title, and transition. 
 ## Remove the legend.
 ## Hint: For your title, remember that your data are discrete, not continuous.
+iris_anim <- ggplot(iris, aes(x = Petal.Length, y = Petal.Width)) +
+  geom_line() +
+  labs(title = "Petal Length vs Width") +
+  transition_time(Species)
+animate(iris_anim)
 
 ## We looked at enter_fade() and exit_shrink() previously, let's explore some more 
 ## animation effects. This, like easing, falls under the umbrella of Tweening!
