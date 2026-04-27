@@ -487,7 +487,8 @@ tempData <- temp %>%
   mutate(date = as.Date(date, format = "%m/%d/%Y"),time = hms::as_hms(time))
 
 # Now, lets observe the timeTemp dataframe! Do you notice anything that would 
-# make this data not ideal to graph? Why or why not?
+# make this data not ideal to graph? Why or why not? 
+#The time and date are split therefore not continuous. 
 # Hint: Think about how we would write the ggplot code. How would the datapoints 
 # appear on the graph?
 
@@ -531,11 +532,18 @@ ggplot(dailyAvg, aes(x = date, y = mean_temp)) +
 # TASK: Create a new scatter plot by changing the labels of the y-axis to 
 # "Daily Average Temperature" and the x-axis to "Months". Give it a title 
 # called:"Daily Average Temp. in 2003".
+ggplot(dailyAvg, aes(x = date, y = mean_temp)) +
+  geom_point() +
+  geom_smooth(method = "loess", se = FALSE, color = "red") +
+  labs(x = "Months",
+    y = "Daily Average Temperature",
+    title = "Daily Average Temp. in 2003") +
+  theme_bw()
 
 # QUESTION: Between these two graphs, which graph would be better represent the
 # dailyAvg dataframe? Why?
 # Hint: The graph is comparing Date vs mean Temperature. 
-
+#ANSWER: The first one that we made is better becuase it took the averages over a longer period of time rather than just in 2003. 
 
 #================================
  # Gapminder: Another approach to complex graphing
