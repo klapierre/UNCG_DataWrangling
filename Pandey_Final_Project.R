@@ -26,11 +26,26 @@ rename_meiosis1 <- rename(.data = raw_meiosis1,
                        escrt_observed_meiosis1="Number SPB with ESCRT")
 
 ## Fill empty fields with data above it for columns strain_meiosis1,""date_meiosis1,"           
-# and "meiosis"
+## and "meiosis"
 
 fill_meiosis1<- rename_meiosis1%>%
   fill(strain_meiosis1:meiosis)
 
-# Assigning meiosis I phases
+## Assigning meiosis I phases
+
+phase_meiosis1 <- fill_meiosis1 %>% 
+  mutate(phase = ifelse(spindlelength_meiosis1 < 2.42, "Pre-meiosis",
+                        ifelse (spindlelength_meiosis1 <= 5.66, "Early Anaphase B",
+                                ifelse (spindlelength_meiosis1 <= 8.91, "Mid Anaphase B",
+                                        "Late Anaphase B"))))
+
+
+## Calculating percentage recruitment of ESCRT per SPB observed
+percentage_meiosis1 <- phase_meiosis1 %>% 
+  group_by(strain_meiosis1, date_meiosis1, phase) %>% 
+  summarize(total_spb_observed_meiosis1 = sum(spb_observed_meiosis1),
+            total_escrt_observed_meiosis1 = sum(escrt_observed_meiosis1),
+            percentage_escrt_per_spb_meiosis1 = (total_escrt_observed_meiosis1/total_spb_observed_meiosis1)*100) %>% 
+  ungroup()
 
 
