@@ -343,10 +343,17 @@ Click "R".
 #TASK: Practice inserting a code chunk. Run a simple calculation such as "2+2" below {r}. Run this code by clicking on the green side-triangle button: 
 
 #Next, let's assign variables. Run the following variables:
+```{r}
 x<-10
 y<-5
+```
+
+
 #To view the contents of the variable x, just type 'x' and run
+```{r}
 x
+```
+
 
 #TASK: Write a chunk of code mulitpliying the variables x and y.
 
