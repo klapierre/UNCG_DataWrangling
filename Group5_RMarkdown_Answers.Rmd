@@ -1,6 +1,6 @@
 ---
 title: "Group5_RMarkdown_Answers"
-author: "Arnav Pandey, Themesha Parker,Michelle Bautista Canuto, Dhanush Devanand"
+author: "Arnav Pandey, Themesha Parker,Michelle Bautista Canuto, Dhanush Devanand, Jaslyn Davenport"
 date: "2026-04-20"
 output: pdf_document
 ---
