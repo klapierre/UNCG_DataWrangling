@@ -25,6 +25,8 @@ rename_meiosis1 <- rename(.data = raw_meiosis1,
                        spb_observed_meiosis1="Number of SPB observed",
                        escrt_observed_meiosis1="Number SPB with ESCRT")
 
+colnames(rename_meiosis1)
+
 ## Fill empty fields with data above it for columns strain_meiosis1,""date_meiosis1,"           
 ## and "meiosis"
 
@@ -40,12 +42,48 @@ phase_meiosis1 <- fill_meiosis1 %>%
                                         "Late Anaphase B"))))
 
 
-## Calculating percentage recruitment of ESCRT per SPB observed
-percentage_meiosis1 <- phase_meiosis1 %>% 
+## Calculating percentage recruitment of ESCRT per SPB observed separately for different strains, bioreps, and phases
+percentage_strains_bioreps_phase_meiosis1 <- phase_meiosis1 %>% 
   group_by(strain_meiosis1, date_meiosis1, phase) %>% 
   summarize(total_spb_observed_meiosis1 = sum(spb_observed_meiosis1),
             total_escrt_observed_meiosis1 = sum(escrt_observed_meiosis1),
-            percentage_escrt_per_spb_meiosis1 = (total_escrt_observed_meiosis1/total_spb_observed_meiosis1)*100) %>% 
+            percentage_escrt_biorep_meiosis1 = (total_escrt_observed_meiosis1/total_spb_observed_meiosis1)*100) %>% 
+  select(-total_spb_observed_meiosis1, - total_escrt_observed_meiosis1) %>% 
   ungroup()
+
+## Calculating percentage recruitment of ESCRT per SPB observed separately for different strains and bioreps regardless of bioreps
+percentage_strains_phase_meiosis1 <- percentage_strains_bioreps_phase_meiosis1 %>% 
+  group_by(strain_meiosis1, phase) %>% 
+  mutate(average_percentage_per_strain_meiosis1 = mean(percentage_escrt_biorep_meiosis1)) %>% 
+  ungroup()
+
+
+# For meiosis II ----------------------------------------------------------
+
+
+## Change column names
+colnames(raw_meiosis2)
+
+rename_meiosis2 <- rename(.data = raw_meiosis2,
+                          strain_meiosis2="Strain",
+                          date_meiosis2="Date",
+                          meiosis="Meiosis",
+                          series_meiosis2="Series",
+                          spindlelength_1_meiosis2="Spindle Length 1",
+                          spb_observed_1_meiosis2="Number of SPB observed 1",
+                          escrt_observed_1_meiosis2="Number SPB with ESCRT 1",
+                          spindlelength_2_meiosis2="Spindle Length 2",
+                          spb_observed_2_meiosis2="Number of SPB observed 2",
+                          escrt_observed_2_meiosis2="Number SPB with ESCRT 2")
+
+colnames(rename_meiosis2)
+
+
+## Fill empty fields with data above it for columns strain_meiosis2,""date_meiosis2,"           
+## and "meiosis"
+
+fill_meiosis2<- rename_meiosis2%>%
+  fill(strain_meiosis2:meiosis)
+
 
 
