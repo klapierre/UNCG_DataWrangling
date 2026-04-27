@@ -250,18 +250,33 @@ data("iris")
 
 ## These are the two datasets we'll be using for this section! Check them out using
 ## head() or glimpse()
+head(gapminder) head(iris)
 ## QUESTION: Which dataset is inherently time-based and why does that matter for animation?
-
+# gapminder is time-based and it matters for animation because it shows you changes over time.
 ## TASK: Create a filtered gapminder dataset for North America only
-
+gap_na <- gapminder %>% 
+  filter(continent == "Americas")
 ## TASK: Build a scatterplot of GDP vs life expectancy. Set size to population and
 ## group by country. Apply a log transform to the x-axis.
 ## Add transparency, labels, and a theme of your choice. Save this as an object named gap_plot.
+gap_plot <- ggplot(gap_na, aes(x = gdpPercap, y = lifeExp,
+                               size = pop, group = country)) +
+  geom_point(alpha = 0.6) +
+  scale_x_log10() +
+  labs(
+    title = "GDP vs Life Expectancy",
+    x = "GDP per Capita (log scale)",
+    y = "Life Expectancy",
+    size = "Population"
+  ) +
+  theme_dark()
 
 ## QUESTION: Why is grouping important when animating repeated entities like countries?
-
+# grouping is important when animating repeated entities like countries because it keeps
+# all the countries data together.It also tracks each country's changes over time. 
 ## TASK: Animate by year using transition_time(). Save this as gap_anim.
-
+gap_anim <- gap_plot +
+  transition_time(year)
 
 ## We've already investigated the ease_aes() function using linear easing. This
 ## changes the ways that our frames are animated together. This is called tweening.
@@ -270,13 +285,13 @@ data("iris")
 
 # -in applies the easing function without any modification
 gap_anim + ease_aes('cubic-in')
-
+# slowly moves and gradually speeds up.
 gap_anim + ease_aes('elastic-in')
-
+# Moves in steps and have a bounce effect to it. 
 gap_anim + ease_aes('circular-in')
-
+# Moves in a smooth circular motion.
 gap_anim + ease_aes("bounce-in")
-                
+# Moves with a bounce effect and gradually moves to the top of the graph. 
 # -out applies the easing function in reverse
 gap_anim + ease_aes('elastic-in')
 
@@ -291,22 +306,29 @@ gap_anim + ease_aes("bounce-in-out")
 
 ## QUESTION: What does the -in-out easing argument do to our animation? 
 ## Hint: Check ?ease_aes().
-                
+# The -in-out easing argument makes the animation start slowly, then it speeds up and 
+# slows down to the end. This creates a smoother animation.
 ## QUESTION: How does easing change the perception of movement over time?
-
+# Easing changes the perception of the movement over time by changing the speed of 
+# the transitions.
 ## gganimate also has view functions to change the framing of our animation
 ## over our data. 
 
 ## TASK: Add view_follow() to gap_anim to track evolving clusters
-
+gap_anim +
+  view_follow()
 ## QUESTION: What does view_follow() do? Why might this be useful?
-
+# view_follow() focuses on the changing data. This might be useful because it makes
+# it easier to track the changes over time. 
 ## TASK: Try to apply view_step() to gap_anim.
-
+gap_anim +
+  view_step()
+  
 ## This gives us an animation, but something is wrong.
 ## QUESTION: What is wrong with your animation? Why do you think this is happening
 ## HINT: Remember that transition_time is continuous. Check out ?view_step()
-
+#  The animation is not appearing on the graph. This is happening because view_step()
+# works with step based transitions not continuous transitions which our plot is. 
 ## Remember that iris dataset we loaded earlier? Now we're gonna switch to it!
 
 ## TASK: Using iris, plot Petal Length (x) vs Petal Width (y), colored by species.
