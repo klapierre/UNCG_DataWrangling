@@ -713,6 +713,7 @@ gifski(png_files,gif_file = "dailyAvg_timeseries.gif",width = 900,height = 600,d
  # Magick: Image editor
 #--------------------------------
   library(magick)
+install.packages("magick")
 
 # MagicK, is an image editor so it's primary purposes involve combining images,
 # text, cropping and layering. Think of as R-studios' version of photoshop!
@@ -721,6 +722,7 @@ gifski(png_files,gif_file = "dailyAvg_timeseries.gif",width = 900,height = 600,d
 # making graph have essential markings that would be difficult to add to GIFs.
 
 # QUESTION: What are some examples that Magick can be useful in animating a graph? 
+#It can give you more control when you are building your animations. 
 
 # We will start with a function, that will plot our dataframe into a adjustable graph.
 
@@ -745,7 +747,7 @@ dir.create("frames_daily_magick", showWarnings = FALSE)
 for (i in seq_len(nrow(dailyAvg))) {
   p <- make_daily_bubble(dailyAvg, i)
   ggsave(
-    filename = sprintf("frames_daily_magick/frame_%04d.png", i),plot = p,width = 8, height = 5 ) }
+    filename = sprintf("frames_daily_magick/frame_%04d.png", i),plot = p,width = 8, height = 5 ) } #every time I run this code, it never gives me the carrot in the console and wont let me run other code???? I have to press esc to stop it.
 
 # MagicK differs from Gifski in creation steps of the GIF, but the end result 
 # is the essentially the same but with cosmetic attributes.
@@ -767,15 +769,17 @@ logo_small <- image_scale(logo, "150x150")
 
 # This will overlay it onto the graph.
 watermarked <- lapply(img_list, function(frame) {
-  image_composite(frame, logo_faded, offset = "+20+20") })
+  image_composite(frame, logo_small, offset = "+20+20") })
 
 # This will combine the frames into a compressed GIF.
 animation <- image_animate(image_join(watermarked), fps = 10)
 
 # Lastly, this will save your GIF into your files!
-image_write(animation, "dailyAvg_bubble_watermarked.gif")
+(image_write(animation, "dailyAvg_bubble_watermarked.gif"))
 
 # QUESTION: In your animation, what month has the highest temperature? 
+
+#august
 
 # Magick appears to take longer than Gifski to create the GIF in your files so 
 # as I stated before, feel free to rerun the code to wake R-studio up. 
