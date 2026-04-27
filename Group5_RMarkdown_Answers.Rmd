@@ -77,7 +77,7 @@ You can leave two spaces at the end of the line for a line break.
 Task: Change the output back to `pdf_document`.
 
 Task: **Go back** to all the above example lines "Line 1" thru "Line 6" within
-single set of three backticks (```       ```) to avoid conflicts with rest of the assignment.
+single set of three backticks ``` to avoid conflicts with rest of the assignment.
 Go back above and do as below:
 
 ```
