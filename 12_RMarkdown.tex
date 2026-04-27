@@ -1,0 +1,1515 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\documentclass[
+]{article}
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{longtable,booktabs,array}
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={Wasps\_Rule},
+  pdfauthor={Tanner Lyons},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{Wasps\_Rule}
+\author{Tanner Lyons}
+\date{2026-04-27}
+
+\begin{document}
+\maketitle
+
+\section{Section 1: Create, Save, and Knit Your First R Markdown
+File}\label{section-1-create-save-and-knit-your-first-r-markdown-file}
+
+Author: Jaslyn Davenport
+(\href{mailto:jcdavenport@uncg.edu}{\nolinkurl{jcdavenport@uncg.edu}})
+
+Objective: Learn how to create and generate a basic R Markdown document.
+
+\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots.
+
+\subsection{1.1 How I Created a New R Markdown
+File}\label{how-i-created-a-new-r-markdown-file}
+
+\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots.
+
+To begin, open RStudio and create a new R Markdown file.\\
+Go to \textbf{File \textgreater{} New File \textgreater{} R Markdown}.
+
+QUESTION: What do you think happens when the new file is opened?\\
+ANSWER: A new, blank R markdown file is created.
+
+\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots.
+
+\subsection{1.2 Install and Load
+Packages}\label{install-and-load-packages}
+
+\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots.
+
+Before knitting your file, make sure the required packages are installed
+and loaded.
+
+TASK: Run the following in the Console:
+
+install.packages(``rmarkdown'') install.packages(``knitr'')
+library(rmarkdown) library(knitr) install.packages(``tinytex'')
+tinytex::install\_tinytex()
+
+QUESTION: Why are these packages needed? ANSWER: These packages are used
+to format markdown text and combine markdown elements into single,
+cohesive outputs.
+
+\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots. \#\# 1.3 Modify the
+YAML Header
+
+At the top of the file, you will see the YAML header between two sets of
+--- This section controls the document settings.
+
+TASK: Change the YAML header so that it includes: a new title your name
+as the author the date PDF output
+
+Example: title: ``My First R Markdown File'' author: ``Jaslyn
+Davenport'' date: ``April 2026'' output: pdf\_document
+
+QUESTION: What is the purpose of the YAML header? ANSWER: The YAML
+header attributes the authors and provides formatting context.
+
+\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots. \#\#1.4 Save and Knit
+file
+
+After editing the file, save it as an .Rmd file. Then click the Knit
+button at the top of RStudio.
+
+If you get an error message about LaTeX or TinyTeX, install TinyTeX by
+running: install.packages(``tinytex'') tinytex::install\_tinytex() Then
+click Knit again.
+
+QUESTION: What happens when you click Knit? ANSWER:
+
+QUESTION: What type of file is created? ANSWER:
+
+\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots. \#\#1.5 Final
+observation After knitting, compare the .Rmd file to the final PDF.
+
+QUESTION: How is the output file different from the source file? ANSWER:
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{Section 2: Formatting Text Using RMarkdown
+Syntax}\label{section-2-formatting-text-using-rmarkdown-syntax}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+Author: Arnav Pandey
+(\href{mailto:a_pandey2@uncg.edu}{\nolinkurl{a\_pandey2@uncg.edu}})
+
+Objective: learn how to format the appearance of your document in your
+chosen output format.
+
+\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots.
+
+\subsection{2.1. Headings}\label{headings}
+
+\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots.
+
+TASK: Read the question below, click \textbf{Knit} to render the
+document and return here to answer the question.
+
+QUESTION: What difference do you notice about the above line that starts
+with
+\texttt{\#\ Section\ 2:\ Formatting\ a\ Report\ Using\ RMarkdown\ Syntax}
+compared to the line
+\texttt{Objective:\ learn\ to\ format\ how\ your\ document\ appears\ in\ the\ output\ of\ your\ choice}?\\
+ANSWER:
+
+\hfill\break
+
+Placing a hashtag (\#) at the beginning of a line turns it into a
+heading. RMarkdown supports six levels of headings.
+
+\hfill\break
+
+TASK: Click Knit to observe how different heading levels below appear in
+the rendered output.
+
+\section{Line 1: This is an example to show different levels of headings
+in
+RMarkdown.}\label{line-1-this-is-an-example-to-show-different-levels-of-headings-in-rmarkdown.}
+
+\subsection{Line 2: Line 1: This is an example to show different levels
+of headings in
+RMarkdown.}\label{line-2-line-1-this-is-an-example-to-show-different-levels-of-headings-in-rmarkdown.}
+
+\subsubsection{Line 3: This is an example to show different levels of
+headings in
+RMarkdown.}\label{line-3-this-is-an-example-to-show-different-levels-of-headings-in-rmarkdown.}
+
+\paragraph{Line 4: This is an example to show different levels of
+headings in
+RMarkdown.}\label{line-4-this-is-an-example-to-show-different-levels-of-headings-in-rmarkdown.}
+
+\subparagraph{Line 5: This is an example to show different levels of
+headings in
+RMarkdown.}\label{line-5-this-is-an-example-to-show-different-levels-of-headings-in-rmarkdown.}
+
+Line 6: This is an example to show different levels of headings in
+RMarkdown.
+
+QUESTION: What happens to the size of text when you increase the number
+of hashtags (\#)?\\
+ANSWER:
+
+\hfill\break
+
+In the example above, the higher the number of hashtags, the lower the
+heading level (smaller font).
+
+QUESTION: How many hashtags would you use if you wanted highest level
+heading (largest font)?\\
+ANSWER:
+
+\hfill\break
+
+QUESTION: In the rendered output, do Line 5 and Line 6 from above
+example appear in the same line?\\
+ANSWER:
+
+\hfill\break
+
+TASK: Go to the metadata for this assignment and change the output from
+\texttt{pdf\_document} to \texttt{html\_document}.
+
+QUESTION: Did your Line 5 and Line 6 appear in different lines?\\
+ANSWER:
+
+\hfill\break
+
+Sometimes the way the program renders output differs between formats.
+You can leave two spaces at the end of the line for a line break.
+
+TASK: Change the output back to \texttt{pdf\_document}.
+
+TASK: \textbf{Go back}to all the above example lines ``Line 1'' thru
+``Line 6'' within single set of three backticks ```. Go back above and
+do as below:
+
+\begin{verbatim}
+
+# Line 1: This is an example to show different levels of headings in RMarkdown.
+## Line 2: Line 1: This is an example to show different levels of headings in RMarkdown.
+### Line 3: This is an example to show different levels of headings in RMarkdown.
+#### Line 4: This is an example to show different levels of headings in RMarkdown.
+##### Line 5: This is an example to show different levels of headings in RMarkdown.   
+###### Line 6: This is an example to show different levels of headings in RMarkdown.
+\end{verbatim}
+
+\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots.
+
+\subsection{2.2 Italics}\label{italics}
+
+\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots.\\
+You may sometimes want to italicize text. RMarkdown allows you to do
+this easily. To make your text italics, you can enclose it within single
+asterisk \texttt{*{[}text{]}*}.
+
+\emph{Line 1: This is an example to show how to make text italics.}
+
+\hfill\break
+
+TASK: Rewrite Line 1 below and only italicize the word ``italics.''
+Leave two spaces at the end of sentence for a line break.\\
+ANSWER:
+
+\hfill\break
+
+You may be wondering if there is another way to make the text italics,
+and in fact, there is. You can also enclose your text within single
+underscore \texttt{\_{[}text{]}\_}.
+
+\hfill\break
+
+TASK: In the paragraph below, make ``Arnav,'' ``Biological Data
+Wrangling and Visualization'' and ``RMarkdown'' italics in the following
+paragraph using both the methods (asterisks and underscore) mentioned
+above at least once.
+
+My name is Arnav Pandey. I am currently enrolled in Biological Data
+Wrangling and Visualization (BIO 457/657).This is a TASK: to use
+RMarkdown to make a text output italics.
+
+\hfill\break
+
+\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots.
+
+\subsection{2.3 Bold}\label{bold}
+
+\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots.\\
+Sometimes you may want to bold your text to emphasize its importance.
+RMarkdown supports that as well.
+
+TASK: Read the question below, click Knit, and return to answer the
+question below.
+
+QUESTION: Which of the following lines gives you bold text?\\
+Line 1. This is an example to show how to make text bold.\\
+\textbf{Line 2: This is an example to show how to make text bold.}\\
+ANSWER:
+
+\hfill\break
+
+You can use two asterisks before and after the text to make it bold
+(\texttt{**{[}text{]}**}).\\
+There is also another way to make a text bold by enclosing your text
+within two underscores(\texttt{\_\_{[}text{]}\_\_}).
+
+Don't believe me? Knit to see if the line below is bold.
+
+\textbf{Line 3: This is an example to show how to make text bold.}
+
+\hfill\break
+
+Like you practiced with italics, you can make any word or phrase within
+a sentence bold. See example of it below when you hit Knit.\\
+Line 5: This is an example to show how to make text \textbf{bold}.\\
+Line 4: This is an \textbf{example} to show how to make text bold.
+
+\hfill\break
+
+TASK: In the paragraph below, make ``Arnav,'' ``Biological Data
+Wrangling and Visualization'' and ``RMarkdown'' bold in the following
+paragraph using both the methods (asterisks and underscores) mentioned
+above at least once.\\
+My name is Arnav Pandey. I am currently enrolled in Biological Data
+Wrangling and Visualization (BIO 457/657). This is a TASK: to use
+RMarkdown to make a text output bold.
+
+\hfill\break
+
+\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots.
+
+\subsection{2.4 Bold and Italics}\label{bold-and-italics}
+
+\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots.
+
+Is there a way to make a text both bold and italics at the same time?
+Indeed, there is! You can enclose your text within three asterisks
+(\texttt{***{[}text{]}***}). or underscores
+(\texttt{\_\_\_{[}text{]}\_\_\_}).
+
+\hfill\break
+
+TASK: In the paragraph below, make ``Arnav,'' ``Biological Data
+Wrangling and Visualization'' and ``RMarkdown'' bold italics using both
+the methods mentioned above at least once.\\
+My name is Arnav Pandey. I am currently enrolled in Biological Data
+Wrangling and Visualization (BIO 457/657). This is a TASK: to use
+RMarkdown to make a text output bold.
+
+\hfill\break
+
+In sections 2.2, 2.3, and 2.4, you learnt how to make text italics,
+bold, or bold+italics by enclosing the text within one, two, and three
+asterisks or underscores, respectively. You might be tempted to start
+enclosing a text by underscore and end it using asterisk. For example:
+
+*italics\_\\
+\_\_bold**\\
+***bold italics\_\_\_
+
+Above lines will not give your desired output, so you will have to be
+consistent with how you enclose your texts. Use the same symbols at both
+ends!
+
+\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots.
+
+\subsection{2.5 Bulleted list}\label{bulleted-list}
+
+\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots.
+
+In RMarkdown, you can list your items in the RMarkdown as an unordered
+(bulleted) list.
+
+To do that, you can follow these steps. Step 1: leave an empty line
+before list. Step 2: Use `+', `-', or '*' followed by single space
+before you write your list item.\\
+Step 3: To add another item, leave two spaces at the end of the previous
+item and go to a new line below and repeat Step 2.
+
+TASK: Knit to see how the items below appear in a list in the output.
+
+\begin{itemize}
+\tightlist
+\item
+  Apple
+\item
+  Banana
+\item
+  Raspberry
+\end{itemize}
+
+You can also nest subitems within an item. If you want a nested list as
+such, just indent the subitem that you want within an item with two
+spaces. Below is an example of it.
+
+TASK: Hit Knit to look at the output of the lines below:
+
+\begin{itemize}
+\tightlist
+\item
+  Apple
+\item
+  Banana
+\item
+  Berries
+
+  \begin{itemize}
+  \tightlist
+  \item
+    Blueberries
+  \item
+    Strawberries
+  \item
+    Raspberries
+  \item
+    Blackberries
+  \item
+    Cranberries
+  \end{itemize}
+\item
+  Papaya
+\end{itemize}
+
+\hfill\break
+
+TASK: Copy the above list below, add an item ``Melon'' and nest
+different types of melons as its subitems. Hit Knit to see your output.
+
+\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots.
+
+\subsection{2.6 Numbered List}\label{numbered-list}
+
+\ldots\ldots\ldots\ldots\ldots\ldots\ldots\ldots.
+
+Getting a numbered list is even easier compared to unordered or bulleted
+list. To generate a numbered list, you can follow these steps. Step 1:
+Leave an empty line before list. Step 2: Use uppercase/lowercase English
+alphabets, Arabic numerals, uppercase or lowercase roman numerals
+followed by space before you write your list item. Be consistent how you
+want to list. Step 3: To add another item, leave two spaces at the end
+of the previous item and go to a new line below and repeat Step 2.
+
+I. Apple\\
+II. Banana\\
+III. Raspberry
+
+\hfill\break
+
+You can also nest subitems within an item. If you want a nested list as
+such, just indent the subitem that you want within an item with three
+spaces. You can use different order format for your subitems than your
+primary item as well. Below is an example of it. \textbf{Please be
+careful with spaces!}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Apple
+\item
+  Banana
+\item
+  Berries
+
+  \begin{enumerate}
+  \def\labelenumii{\arabic{enumii}.}
+  \tightlist
+  \item
+    Blueberries
+  \item
+    Strawberries
+  \item
+    Raspberries
+  \item
+    Blackberries
+  \item
+    Cranberries
+  \end{enumerate}
+\item
+  Papaya
+\end{enumerate}
+
+Note: If you want to use Roman Numerals, you may have to leave an empty
+line between items on list.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{Section 3: Inserting Code Chunks and Running Basic R
+Code}\label{section-3-inserting-code-chunks-and-running-basic-r-code}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+Author: Michelle Bautista Canuto
+(\href{mailto:m_bautistac@uncg.edu}{\nolinkurl{m\_bautistac@uncg.edu}})
+We can insert a code chunk by clicking on the green-button with a ``c''
+on the inside and a ``+'' on the upper left. Click ``R''. We can insert
+functions within the chunk of code. We will see this next.
+
+QUESTION: What is a code chunk? (hint look back at the slides in Canvas)
+ANSWER:
+
+TASK: Practice inserting a code chunk. Run a simple calculation such as
+``2+2'' below \{r\}. Run this code by clicking on the green
+side-triangle button:
+
+Next, let's assign variables. Run the following variables:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x}\OtherTok{\textless{}{-}}\DecValTok{10}
+\NormalTok{y}\OtherTok{\textless{}{-}}\DecValTok{5}
+\end{Highlighting}
+\end{Shaded}
+
+To view the contents of the variable x, just type `x' and run
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{x}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 10
+\end{verbatim}
+
+TASK: Write a chunk of code mulitpliying the variables x and y.
+
+QUESTION: What was the result? ANSWER:
+
+We will analyze the built-in `mtcars' dataset. Run the following chunk
+of code.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{head}\NormalTok{(mtcars)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                    mpg cyl disp  hp drat    wt  qsec vs am gear carb
+## Mazda RX4         21.0   6  160 110 3.90 2.620 16.46  0  1    4    4
+## Mazda RX4 Wag     21.0   6  160 110 3.90 2.875 17.02  0  1    4    4
+## Datsun 710        22.8   4  108  93 3.85 2.320 18.61  1  1    4    1
+## Hornet 4 Drive    21.4   6  258 110 3.08 3.215 19.44  1  0    3    1
+## Hornet Sportabout 18.7   8  360 175 3.15 3.440 17.02  0  0    3    2
+## Valiant           18.1   6  225 105 2.76 3.460 20.22  1  0    3    1
+\end{verbatim}
+
+QUESTION: What do you think the head() function does? ANSWER:
+
+To display the summary statistics for the dataset use the summary()
+function. Run the following chunk of code.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(mtcars)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       mpg             cyl             disp             hp       
+##  Min.   :10.40   Min.   :4.000   Min.   : 71.1   Min.   : 52.0  
+##  1st Qu.:15.43   1st Qu.:4.000   1st Qu.:120.8   1st Qu.: 96.5  
+##  Median :19.20   Median :6.000   Median :196.3   Median :123.0  
+##  Mean   :20.09   Mean   :6.188   Mean   :230.7   Mean   :146.7  
+##  3rd Qu.:22.80   3rd Qu.:8.000   3rd Qu.:326.0   3rd Qu.:180.0  
+##  Max.   :33.90   Max.   :8.000   Max.   :472.0   Max.   :335.0  
+##       drat             wt             qsec             vs        
+##  Min.   :2.760   Min.   :1.513   Min.   :14.50   Min.   :0.0000  
+##  1st Qu.:3.080   1st Qu.:2.581   1st Qu.:16.89   1st Qu.:0.0000  
+##  Median :3.695   Median :3.325   Median :17.71   Median :0.0000  
+##  Mean   :3.597   Mean   :3.217   Mean   :17.85   Mean   :0.4375  
+##  3rd Qu.:3.920   3rd Qu.:3.610   3rd Qu.:18.90   3rd Qu.:1.0000  
+##  Max.   :4.930   Max.   :5.424   Max.   :22.90   Max.   :1.0000  
+##        am              gear            carb      
+##  Min.   :0.0000   Min.   :3.000   Min.   :1.000  
+##  1st Qu.:0.0000   1st Qu.:3.000   1st Qu.:2.000  
+##  Median :0.0000   Median :4.000   Median :2.000  
+##  Mean   :0.4062   Mean   :3.688   Mean   :2.812  
+##  3rd Qu.:1.0000   3rd Qu.:4.000   3rd Qu.:4.000  
+##  Max.   :1.0000   Max.   :5.000   Max.   :8.000
+\end{verbatim}
+
+Within a new chunk of code, we will code to import the entire mtcars
+dataset. Run the following code by clicking on the green side-triangle
+button for ``Run Current Chunk''
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{data}\NormalTok{(mtcars)}
+\end{Highlighting}
+\end{Shaded}
+
+QUESTION: After running the previous code, view the dataframe of mtcars.
+How many variables are in the mtcars dataset? ANSWER:
+
+Or you can view the dataset in the console by typing ``mtcars'' and
+click `Run Selected Lines'. mtcars
+
+To find the number of rows in the dataset, we can use the nrow()
+function within a new chunk of code. Run the following code.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{nrow}\NormalTok{(mtcars)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## [1] 32
+\end{verbatim}
+
+TASK: Write a code to find the number of columns in the `mtcars' dataset
+using the ncol() function. Remember to use a new chunk of code.
+
+QUESTION: What is the result showing in your script? ANSWER:
+
+The `disp' column in the dataset stands for engine displacement. Engine
+displacement tells you how big the engine is in cubic inches. The `mpg'
+column stands for fuel efficiency in miles per gallon. Lets plot a graph
+showing fuel efficiency over displacement for each car. Run the
+following code. plot(mtcars\(disp, mtcars\)mpg)
+
+QUESTION: What trend is the plot showing? ANSWER:
+
+We can also use ggplot to run this within our chunk of code. This
+permits our plot to be displayed in the final report once ``knit''.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(ggplot2)}
+\FunctionTok{ggplot}\NormalTok{(mtcars, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{disp, }\AttributeTok{y=}\NormalTok{mpg)) }\SpecialCharTok{+} \FunctionTok{geom\_point}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{12_RMarkdown_files/12_RMarkdown_files/figure-latex/unnamed-chunk-6-1.pdf}}
+
+Let's change the labels of the x-axis to `Engine Size (cubic inches)'
+Let's change the y-axis to `Miles Per Gallon' Let's add a title called
+``Fuel Efficiency vs Engine Size''.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(mtcars,}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{disp, }\AttributeTok{y=}\NormalTok{mpg))}\SpecialCharTok{+}\FunctionTok{geom\_point}\NormalTok{()}\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}
+    \AttributeTok{x=}\StringTok{"Engine Size (cubic inches)"}\NormalTok{,}
+    \AttributeTok{y=}\StringTok{"Miles Per Gallon"}\NormalTok{,}
+    \AttributeTok{title=}\StringTok{"Fuel Efficiency vs Engine Size"}
+\NormalTok{  )}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{12_RMarkdown_files/12_RMarkdown_files/figure-latex/unnamed-chunk-7-1.pdf}}
+
+We could add a legend to show which car each point corresponds to. But
+first, we should add a column displaying the car names using dplyr.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(dplyr)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## 
+## Attaching package: 'dplyr'
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:stats':
+## 
+##     filter, lag
+\end{verbatim}
+
+\begin{verbatim}
+## The following objects are masked from 'package:base':
+## 
+##     intersect, setdiff, setequal, union
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mtcars}\OtherTok{\textless{}{-}}\NormalTok{mtcars }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{mutate}\NormalTok{(}\AttributeTok{car\_name=}\FunctionTok{rownames}\NormalTok{(mtcars))}
+\end{Highlighting}
+\end{Shaded}
+
+Lets'bold' the title Let's add a legend to differentiate each point.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(mtcars,}\FunctionTok{aes}\NormalTok{(}\AttributeTok{x=}\NormalTok{disp,}\AttributeTok{y=}\NormalTok{mpg, }\AttributeTok{color=}\FunctionTok{factor}\NormalTok{(car\_name)))}\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{()}\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}
+    \AttributeTok{x=}\StringTok{"Engine Size (cubic inches)"}\NormalTok{,}
+    \AttributeTok{y=}\StringTok{"Miles Per Gallon"}\NormalTok{,}
+    \AttributeTok{title=}\StringTok{"Fuel Efficiency vs Engine Size"}\NormalTok{,}
+         \AttributeTok{color=}\StringTok{"Car Types"}\NormalTok{)}\SpecialCharTok{+}
+  \FunctionTok{theme}\NormalTok{(}\AttributeTok{plot.title =} \FunctionTok{element\_text}\NormalTok{(}\AttributeTok{face=}\StringTok{"bold"}\NormalTok{))}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{12_RMarkdown_files/12_RMarkdown_files/figure-latex/unnamed-chunk-9-1.pdf}}
+
+Lets organize the fuel efficiency from highest to lowest. Run the
+following.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mtcars }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(mpg,disp) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{arrange}\NormalTok{(}\FunctionTok{desc}\NormalTok{(mpg))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                      mpg  disp
+## Toyota Corolla      33.9  71.1
+## Fiat 128            32.4  78.7
+## Honda Civic         30.4  75.7
+## Lotus Europa        30.4  95.1
+## Fiat X1-9           27.3  79.0
+## Porsche 914-2       26.0 120.3
+## Merc 240D           24.4 146.7
+## Datsun 710          22.8 108.0
+## Merc 230            22.8 140.8
+## Toyota Corona       21.5 120.1
+## Hornet 4 Drive      21.4 258.0
+## Volvo 142E          21.4 121.0
+## Mazda RX4           21.0 160.0
+## Mazda RX4 Wag       21.0 160.0
+## Ferrari Dino        19.7 145.0
+## Merc 280            19.2 167.6
+## Pontiac Firebird    19.2 400.0
+## Hornet Sportabout   18.7 360.0
+## Valiant             18.1 225.0
+## Merc 280C           17.8 167.6
+## Merc 450SL          17.3 275.8
+## Merc 450SE          16.4 275.8
+## Ford Pantera L      15.8 351.0
+## Dodge Challenger    15.5 318.0
+## Merc 450SLC         15.2 275.8
+## AMC Javelin         15.2 304.0
+## Maserati Bora       15.0 301.0
+## Chrysler Imperial   14.7 440.0
+## Duster 360          14.3 360.0
+## Camaro Z28          13.3 350.0
+## Cadillac Fleetwood  10.4 472.0
+## Lincoln Continental 10.4 460.0
+\end{verbatim}
+
+QUESTION: Which car has the highest fuel efficiency? ANSWER:
+
+QUESTION: What is the size of it's engine? ANSWER:
+
+TASK: Use code to create a plot comparing disp vs hp from the `mtcars'
+dataset. With the following:\\
+Use the `disp' data for the x-axis and labeled `Engine Size (cubic
+inches)' Use the `hp' data for the y-axis and labeled `Horsepower (HP)'
+Add an appropriate title for the plot with a `bold' font Add a legend
+colored by `car\_name' and labeled ``Car Types''
+
+Lets organize the horsepower from highest to lowest. Run the following.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\NormalTok{mtcars }\SpecialCharTok{\%\textgreater{}\%}
+  \FunctionTok{select}\NormalTok{(hp,disp) }\SpecialCharTok{\%\textgreater{}\%} 
+  \FunctionTok{arrange}\NormalTok{(}\FunctionTok{desc}\NormalTok{(hp))}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##                      hp  disp
+## Maserati Bora       335 301.0
+## Ford Pantera L      264 351.0
+## Duster 360          245 360.0
+## Camaro Z28          245 350.0
+## Chrysler Imperial   230 440.0
+## Lincoln Continental 215 460.0
+## Cadillac Fleetwood  205 472.0
+## Merc 450SE          180 275.8
+## Merc 450SL          180 275.8
+## Merc 450SLC         180 275.8
+## Hornet Sportabout   175 360.0
+## Pontiac Firebird    175 400.0
+## Ferrari Dino        175 145.0
+## Dodge Challenger    150 318.0
+## AMC Javelin         150 304.0
+## Merc 280            123 167.6
+## Merc 280C           123 167.6
+## Lotus Europa        113  95.1
+## Mazda RX4           110 160.0
+## Mazda RX4 Wag       110 160.0
+## Hornet 4 Drive      110 258.0
+## Volvo 142E          109 121.0
+## Valiant             105 225.0
+## Toyota Corona        97 120.1
+## Merc 230             95 140.8
+## Datsun 710           93 108.0
+## Porsche 914-2        91 120.3
+## Fiat 128             66  78.7
+## Fiat X1-9            66  79.0
+## Toyota Corolla       65  71.1
+## Merc 240D            62 146.7
+## Honda Civic          52  75.7
+\end{verbatim}
+
+QUESTION: What trend is the plot showing between engine size and
+horsepower? ANSWER:
+
+QUESTION: Which cars have the highest and lowest hp? ANSWER:
+
+Don't forget to save and commit your changes.
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 0\tabcolsep) * \real{1.0000}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+\#\# Section 4: Add Visualizations and Tables to Your Report
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Author: Themesha Parker
+(\href{mailto:tlparker@uncg.edu}{\nolinkurl{tlparker@uncg.edu}}) \\
+\#\#\# Goal \\
+In this section, you will create graphs and a summary table using the
+mtcars data set. You will also practice describing patterns that you
+observe in the output. \\
+Before beginning, make sure you can access the mtcars dataset. Run the
+line below to preview the first few rows. \\
+head(mtcars) \\
+Also make sure you have Tidyverse installed! Run the line of code
+below. \\
+library(tidyverse) \\
+\end{longtable}
+
+\subsection{Part A: Create a
+Scatterplot}\label{part-a-create-a-scatterplot}
+
+The variables wt and mpg in the mtcars data set can help us explore the
+relationship between car weight and fuel efficiency.
+
+\subsubsection{TASK:}\label{task}
+
+Create a scatter plot with wt on the x-axis and mpg on the y-axis.
+
+\textbf{Hint:} use the plot() function
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Write your code below this line}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{TASK:}\label{task-1}
+
+Modify your scatterplot so that it includes: a title, an x-axis label, a
+y-axis label, a point color of your choice
+
+\textbf{Hint:} Think back to previous assignments(main=, xlab= ,ylab=,
+and col=)
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Write your updated scatterplot code below this line}
+\end{Highlighting}
+\end{Shaded}
+
+QUESTION: What does each point in this scatterplot represent? ANSWER:
+
+QUESTION: What relationship do you observe between weight and mpg?
+ANSWER:
+
+QUESTION: Does the graph suggest a positive relationship, a negative
+relationship, or no relationship? Explain your answer. ANSWER:
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{Part B: Create a Boxplot}\label{part-b-create-a-boxplot}
+
+The variable cyl shows the number of cylinders in each car. A boxplot
+can help compare fuel efficiency across cylinder groups.
+
+\subsubsection{TASK:}\label{task-2}
+
+Create a boxplot of mpg by cyl using the boxplot function
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Write your code below this line}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{TASK:}\label{task-3}
+
+Modify your boxplot so that it includes: a title, an x-axis label, a
+y-axis label, and a fill color of your choice
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Write your updated boxplot code below this line}
+\end{Highlighting}
+\end{Shaded}
+
+QUESTION: What does each box in this plot represent? ANSWER:
+
+QUESTION: Which cylinder group appears to have the highest fuel
+efficiency? ANSWER:
+
+QUESTION: Which cylinder group appears to have the lowest fuel
+efficiency? ANSWER:
+
+QUESTION: Based on the boxplot, how does fuel efficiency seem to change
+as the number of cylinders increases? ANSWER:
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{Part C: Create a Summary
+Table}\label{part-c-create-a-summary-table}
+
+You will now create a table showing the average miles per gallon for
+each cylinder group.
+
+\subsubsection{TASK:}\label{task-4}
+
+Use dplyr to calculate the average mpg for each value of cyl. Rename the
+data avg\_mpg\_by\_cyl
+
+\textbf{Hint:} you need to group the data by cyl then summarize the mean
+of mpg.
+
+Use the space below to write your code:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Write your code below this line}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{TASK:}\label{task-5}
+
+Display your results as a clean table.
+
+Use the space below to write your code:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Write your code below this line}
+\end{Highlighting}
+\end{Shaded}
+
+QUESTION: What does this table show? ANSWER:
+
+QUESTION: Which cylinder group has the highest average mpg? ANSWER:
+
+QUESTION: Which cylinder group has the lowest average mpg? ANSWER:
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{Part D: Compare the
+Visuals}\label{part-d-compare-the-visuals}
+
+Now that you have created both graphs and the table, compare the
+information they provide.
+
+QUESTION: How does the scatterplot help you understand the relationship
+between weight and fuel efficiency? ANSWER:
+
+QUESTION: How does the boxplot help you compare different groups of
+cars? ANSWER:
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{Part E: Now you try}\label{part-e-now-you-try}
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  Use a different variable from mtcars to make an additional scatter
+  plot.
+\item
+  Change the color of your scatterplot.
+\end{enumerate}
+
+Write your code below:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\CommentTok{\# Write your code below this line}
+\end{Highlighting}
+\end{Shaded}
+
+QUESTION: What did you change, and how did it affect the output? ANSWER:
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\section{----------------------------------------------------------}\label{section}
+
+\section{Section 5: Improve and Finalize Your R Markdown
+Report}\label{section-5-improve-and-finalize-your-r-markdown-report}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\textbf{Objective:} Learn how to make your report more polished,
+readable, and professional. In this section, we will take everything we
+have learned and improve the overall quality of our R Markdown report so
+it is easier to read and more useful.
+
+Author: Dhanush Devanand
+(\href{mailto:s_devanand@uncg.edu}{\nolinkurl{s\_devanand@uncg.edu}})
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{Step 1: Understanding Inline R
+Code}\label{step-1-understanding-inline-r-code}
+
+So far, we have been writing code in chunks. However, sometimes we want
+to include results directly inside our text. \textbf{Inline R code}
+allows us to insert calculations into sentences without a separate code
+chunk.
+
+\subsubsection{TASK:}\label{task-6}
+
+Copy and paste the following lines directly into your R Markdown
+document, \textbf{outside} of any code chunk, and then Knit:
+
+\begin{verbatim}
+The mtcars dataset has 32 rows and 12 columns.
+The average miles per gallon (mpg) is 20.09.
+\end{verbatim}
+
+\subsubsection{Check}\label{check}
+
+Did the numbers appear automatically in your rendered sentence?
+
+QUESTION: What is inline R code, and how is it different from a regular
+code chunk? ANSWER:
+
+QUESTION: Why is inline R code useful when working with a dataset that
+might be updated or changed over time? ANSWER:
+
+\subsubsection{TASK:}\label{task-7}
+
+Now try writing your own inline R code sentence. Using the mtcars
+dataset, write a sentence that includes the maximum horsepower value
+using inline R code. The function \texttt{max()} will be helpful here.
+
+\textbf{Your sentence:} {[}Write your sentence with inline R code
+here.{]}
+
+\subsubsection{Why This Matters}\label{why-this-matters}
+
+Inline R code makes your report dynamic. If the dataset changes, your
+results will automatically update without you needing to rewrite
+anything. This is especially important in professional or scientific
+reports where accuracy matters.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{Step 2: Improving Readability by Hiding
+Code}\label{step-2-improving-readability-by-hiding-code}
+
+Sometimes, showing all code can make a report look cluttered. If we only
+care about the output --- like a graph --- we can hide the code using
+the \texttt{echo=FALSE} chunk option.
+
+\subsubsection{TASK:}\label{task-8}
+
+The chunk below currently shows the code when knitted. Add
+\texttt{echo=FALSE} inside the curly braces so that only the plot
+appears in the output, not the code. Then Knit your document.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{plot}\NormalTok{(mtcars}\SpecialCharTok{$}\NormalTok{wt, mtcars}\SpecialCharTok{$}\NormalTok{mpg,}
+     \AttributeTok{main =} \StringTok{"Weight vs MPG"}\NormalTok{,}
+     \AttributeTok{xlab =} \StringTok{"Weight (1000 lbs)"}\NormalTok{,}
+     \AttributeTok{ylab =} \StringTok{"Miles Per Gallon"}\NormalTok{)}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{12_RMarkdown_files/12_RMarkdown_files/figure-latex/unnamed-chunk-12-1.pdf}}
+
+\textbf{Hint:} Your chunk header should look like this when you are
+done:
+\texttt{\textasciigrave{}\textasciigrave{}\textasciigrave{}\{r\ echo=FALSE\}}
+
+\subsubsection{Check}\label{check-1}
+
+Do you see the plot in the output but \textbf{not} the code that created
+it?
+
+QUESTION: Why might you want to hide code in a final report? ANSWER:
+
+QUESTION: Can you think of a situation where you would want to
+\textbf{show} your code in a report rather than hide it? Who might be
+reading that report? ANSWER:
+
+\subsubsection{TASK:}\label{task-9}
+
+Now apply \texttt{echo=FALSE} to the ggplot chunk you created back in
+Section 3. Knit the document and confirm only the plot appears.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{Step 3: Removing Warnings and
+Messages}\label{step-3-removing-warnings-and-messages}
+
+When you load packages or run certain functions, R sometimes prints
+extra warnings and messages that are not important to the reader. These
+can make your report look messy. You can suppress them using the chunk
+options \texttt{message=FALSE} and \texttt{warning=FALSE}.
+
+\subsubsection{TASK: --- Part A: See the messages
+first}\label{task-part-a-see-the-messages-first}
+
+Run the chunk below \textbf{without} any chunk options and Knit. Read
+through the output carefully and write down any extra messages or
+warnings you notice below.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{library}\NormalTok{(tidyverse)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## -- Attaching core tidyverse packages ------------------------ tidyverse 2.0.0 --
+## v forcats   1.0.1     v stringr   1.6.0
+## v lubridate 1.9.4     v tibble    3.3.1
+## v purrr     1.2.1     v tidyr     1.3.2
+## v readr     2.1.6     
+## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()    masks stats::lag()
+## i Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become errors
+\end{verbatim}
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{summary}\NormalTok{(mtcars)}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+##       mpg             cyl             disp             hp       
+##  Min.   :10.40   Min.   :4.000   Min.   : 71.1   Min.   : 52.0  
+##  1st Qu.:15.43   1st Qu.:4.000   1st Qu.:120.8   1st Qu.: 96.5  
+##  Median :19.20   Median :6.000   Median :196.3   Median :123.0  
+##  Mean   :20.09   Mean   :6.188   Mean   :230.7   Mean   :146.7  
+##  3rd Qu.:22.80   3rd Qu.:8.000   3rd Qu.:326.0   3rd Qu.:180.0  
+##  Max.   :33.90   Max.   :8.000   Max.   :472.0   Max.   :335.0  
+##       drat             wt             qsec             vs        
+##  Min.   :2.760   Min.   :1.513   Min.   :14.50   Min.   :0.0000  
+##  1st Qu.:3.080   1st Qu.:2.581   1st Qu.:16.89   1st Qu.:0.0000  
+##  Median :3.695   Median :3.325   Median :17.71   Median :0.0000  
+##  Mean   :3.597   Mean   :3.217   Mean   :17.85   Mean   :0.4375  
+##  3rd Qu.:3.920   3rd Qu.:3.610   3rd Qu.:18.90   3rd Qu.:1.0000  
+##  Max.   :4.930   Max.   :5.424   Max.   :22.90   Max.   :1.0000  
+##        am              gear            carb         car_name        
+##  Min.   :0.0000   Min.   :3.000   Min.   :1.000   Length:32         
+##  1st Qu.:0.0000   1st Qu.:3.000   1st Qu.:2.000   Class :character  
+##  Median :0.0000   Median :4.000   Median :2.000   Mode  :character  
+##  Mean   :0.4062   Mean   :3.688   Mean   :2.812                     
+##  3rd Qu.:1.0000   3rd Qu.:4.000   3rd Qu.:4.000                     
+##  Max.   :1.0000   Max.   :5.000   Max.   :8.000
+\end{verbatim}
+
+\textbf{What messages or warnings did you see?} {[}Write your response
+here.{]}
+
+\subsubsection{TASK: --- Part B: Suppress the
+messages}\label{task-part-b-suppress-the-messages}
+
+Now add \texttt{message=FALSE} and \texttt{warning=FALSE} to the chunk
+header above and Knit again.
+
+\textbf{Hint:} Your chunk header should look like this when you are
+done:
+\texttt{\textasciigrave{}\textasciigrave{}\textasciigrave{}\{r\ message=FALSE,\ warning=FALSE\}}
+
+\subsubsection{Check}\label{check-2}
+
+Did the extra messages disappear from your rendered output?
+
+QUESTION: What is the difference between \texttt{message=FALSE} and
+\texttt{warning=FALSE}? When might you need to use both at the same
+time? ANSWER:
+
+QUESTION: Is it always a good idea to suppress warnings? Can you think
+of a case where seeing a warning might actually be important? ANSWER:
+
+\subsubsection{Why This Matters}\label{why-this-matters-1}
+
+Hiding unnecessary messages keeps your report clean and professional,
+especially when sharing results with someone who does not need to see
+behind-the-scenes R output. However, always make sure you understand
+what a warning means before choosing to hide it.
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{\texorpdfstring{Step 4: Hiding Code AND Output with
+\texttt{include=FALSE}}{Step 4: Hiding Code AND Output with include=FALSE}}\label{step-4-hiding-code-and-output-with-includefalse}
+
+In Step 2, you learned that \texttt{echo=FALSE} hides the code but still
+shows the output. Sometimes you may want to run a chunk silently ---
+hiding both the code and the output entirely. This is done with
+\texttt{include=FALSE}.
+
+This is useful for setup steps like loading libraries or defining
+variables that need to run but do not need to appear in the report.
+
+\subsubsection{TASK:}\label{task-10}
+
+Run the chunk below as-is and Knit. Note what appears in the output.
+Then change the chunk option from \texttt{echo=FALSE} to
+\texttt{include=FALSE} and Knit again.
+
+\begin{verbatim}
+##   mean_mpg max_hp min_wt
+## 1    20.09    335  1.513
+\end{verbatim}
+
+\textbf{Hint:} Your chunk header should look like this when you are
+done:
+\texttt{\textasciigrave{}\textasciigrave{}\textasciigrave{}\{r\ include=FALSE\}}
+
+\subsubsection{Check}\label{check-3}
+
+When using \texttt{include=FALSE}, does anything from this chunk appear
+in the rendered output?
+
+QUESTION: What is the difference between \texttt{echo=FALSE} and
+\texttt{include=FALSE}? ANSWER:
+
+QUESTION: Give an example of when you would use \texttt{include=FALSE}
+in a real report. ANSWER:
+
+\subsubsection{TASK:}\label{task-11}
+
+Now use the \texttt{my\_summary} object created in the chunk above
+inside an inline R code sentence below. Even though the chunk is hidden,
+the object is still available to use. Copy and paste the lines below
+\textbf{outside} of a code chunk and Knit to confirm the values appear.
+
+\begin{verbatim}
+The average miles per gallon across all cars is 20.09 and the most powerful engine produces 335 horsepower.
+\end{verbatim}
+
+\subsubsection{Check}\label{check-4}
+
+Did the inline values populate correctly even though the chunk that
+created them was hidden?
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{Step 5: Controlling Figure
+Size}\label{step-5-controlling-figure-size}
+
+When creating plots in R Markdown, you can control the size of your
+figures directly in the chunk header using \texttt{fig.width} and
+\texttt{fig.height}. This helps make your report look clean and
+consistent.
+
+\subsubsection{TASK:}\label{task-12}
+
+Run the chunk below and Knit to see the default figure size.
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ggplot}\NormalTok{(mtcars, }\FunctionTok{aes}\NormalTok{(}\AttributeTok{x =}\NormalTok{ wt, }\AttributeTok{y =}\NormalTok{ mpg)) }\SpecialCharTok{+}
+  \FunctionTok{geom\_point}\NormalTok{(}\AttributeTok{color =} \StringTok{"steelblue"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{labs}\NormalTok{(}\AttributeTok{title =} \StringTok{"Weight vs Fuel Efficiency"}\NormalTok{,}
+       \AttributeTok{x =} \StringTok{"Weight (1000 lbs)"}\NormalTok{,}
+       \AttributeTok{y =} \StringTok{"Miles Per Gallon"}\NormalTok{) }\SpecialCharTok{+}
+  \FunctionTok{theme\_bw}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\pandocbounded{\includegraphics[keepaspectratio]{12_RMarkdown_files/12_RMarkdown_files/figure-latex/unnamed-chunk-15-1.pdf}}
+
+\subsubsection{TASK:}\label{task-13}
+
+Now add \texttt{fig.width=8} and \texttt{fig.height=4} to the chunk
+header and Knit again.
+
+\textbf{Hint:} Your chunk header should look like this when you are
+done:
+\texttt{\textasciigrave{}\textasciigrave{}\textasciigrave{}\{r\ fig.width=8,\ fig.height=4\}}
+
+\subsubsection{Check}\label{check-5}
+
+Did the shape of the plot change in your rendered output?
+
+QUESTION: How did changing \texttt{fig.width} and \texttt{fig.height}
+affect the appearance of your plot? ANSWER:
+
+QUESTION: Why might consistent figure sizing matter in a professional or
+academic report? ANSWER:
+
+\subsubsection{TASK:}\label{task-14}
+
+Try setting \texttt{fig.width=4} and \texttt{fig.height=6} on the same
+chunk. Knit and observe how the plot changes. Describe what you notice
+below.
+
+\textbf{Observation:} {[}Write your response here.{]}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{Step 6: Adding a Table of
+Contents}\label{step-6-adding-a-table-of-contents}
+
+A table of contents makes it easier to navigate your report, especially
+as it gets longer. You can add one by modifying the YAML header at the
+very top of your \texttt{.Rmd} file.
+
+\subsubsection{TASK:}\label{task-15}
+
+Make sure the YAML header at the very top of your document looks like
+this, then Knit:
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\PreprocessorTok{{-}{-}{-}}
+\FunctionTok{title}\KeywordTok{:}\AttributeTok{ }\StringTok{"Group5\_RMarkdown"}
+\FunctionTok{author}\KeywordTok{:}\AttributeTok{ }\StringTok{"Arnav Pandey, Themesha Parker, Michelle Bautista Canuto, Dhanush Devanand"}
+\FunctionTok{date}\KeywordTok{:}\AttributeTok{ }\StringTok{"2026{-}04{-}26"}
+\FunctionTok{output}\KeywordTok{:}
+\AttributeTok{  }\FunctionTok{html\_document}\KeywordTok{:}
+\AttributeTok{    }\FunctionTok{toc}\KeywordTok{:}\AttributeTok{ }\CharTok{true}
+\PreprocessorTok{{-}{-}{-}}
+\end{Highlighting}
+\end{Shaded}
+
+\subsubsection{Check}\label{check-6}
+
+Do you now see a table of contents at the top of your rendered HTML
+document?
+
+QUESTION: How does a table of contents improve the readability of a long
+report? ANSWER:
+
+QUESTION: The table of contents is automatically generated from your
+headings. What does this tell you about the importance of using proper
+heading levels (\texttt{\#}, \texttt{\#\#}, \texttt{\#\#\#}) throughout
+your document? ANSWER:
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{Step 7: Adding Hyperlinks}\label{step-7-adding-hyperlinks}
+
+You can include clickable links in your report to point readers to
+additional resources. The syntax is \texttt{{[}link\ text{]}(URL)}.
+
+\subsubsection{TASK:}\label{task-16}
+
+Add the following clickable link somewhere in your document and Knit:
+
+\texttt{{[}R\ Markdown\ documentation{]}(https://rmarkdown.rstudio.com)}
+
+\subsubsection{Check}\label{check-7}
+
+Does the link appear clickable after knitting?
+
+\subsubsection{TASK:}\label{task-17}
+
+Now add a second hyperlink of your own. Find a webpage related to
+something covered in this assignment --- for example, the mtcars
+dataset, ggplot2, or R Markdown chunk options --- and add it below using
+the same syntax.
+
+\textbf{Your hyperlink:} {[}Write your hyperlink here.{]}
+
+QUESTION: When might adding a hyperlink be useful in a data report?
+ANSWER:
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{Step 8: Writing a Strong
+Conclusion}\label{step-8-writing-a-strong-conclusion}
+
+Every report should end with a short conclusion that summarizes what was
+done and what was found.
+
+\subsubsection{TASK:}\label{task-18}
+
+Write a short paragraph (3--5 sentences) below summarizing what you did
+in this assignment. Consider:
+
+\begin{itemize}
+\tightlist
+\item
+  What dataset did you use?
+\item
+  What visualizations or analyses did you create?
+\item
+  What improvements did you make to the report in Section 5?
+\item
+  Why is R Markdown useful for communicating data?
+\end{itemize}
+
+\textbf{Your conclusion:} {[}Write your response here.{]}
+
+\subsubsection{TASK:}\label{task-19}
+
+Now rewrite at least one sentence from your conclusion so that it
+includes inline R code. For example, instead of writing ``the dataset
+has 32 rows,'' use \texttt{32} to generate that number automatically.
+
+\textbf{Your updated sentence with inline R code:} {[}Write your
+sentence here.{]}
+
+\begin{center}\rule{0.5\linewidth}{0.5pt}\end{center}
+
+\subsection{Step 9: Final Check and
+Knit}\label{step-9-final-check-and-knit}
+
+Before submitting, go through the checklist below to make sure
+everything is working correctly. In your \texttt{.Rmd} file, replace
+each \texttt{{[}\ {]}} with \texttt{{[}x{]}} once you have confirmed
+that step.
+
+\begin{itemize}
+\tightlist
+\item[$\square$]
+  Inline R code displays correctly in rendered text
+\item[$\square$]
+  Plots appear in the output without showing code (\texttt{echo=FALSE})
+\item[$\square$]
+  A chunk runs silently using \texttt{include=FALSE}
+\item[$\square$]
+  No unnecessary warnings or messages appear (\texttt{message=FALSE},
+  \texttt{warning=FALSE})
+\item[$\square$]
+  Figure sizes have been adjusted using \texttt{fig.width} and
+  \texttt{fig.height}
+\item[$\square$]
+  Table of contents is visible at the top of the document
+\item[$\square$]
+  At least two hyperlinks are present and clickable
+\item[$\square$]
+  Conclusion paragraph is included with at least one inline R code value
+\end{itemize}
+
+Once all boxes are checked, click \textbf{Knit} one final time to
+generate your completed report.
+
+\end{document}
