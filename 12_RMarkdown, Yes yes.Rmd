@@ -494,7 +494,7 @@ Use the 'hp' data for the y-axis and labeled 'Horsepower (HP)'
 Add an appropriate title for the plot with a 'bold' font
 Add a legend colored by 'car_name' and labeled "Car Types" 
 
-```{r}
+```{r echo=FALSE}
 ggplot(mtcars,aes(x=disp,y=hp, color=factor(car_name)))+
   geom_point()+
   labs(
@@ -556,9 +556,9 @@ Create a scatter plot with wt on the x-axis and mpg on the y-axis.
 **Hint:** use the plot() function
 
 ```{r scatterplot}
-# Write your code below this line
-
-
+plot(mtcars$wt, mtcars$mpg,
+     xlab = "Weight (1000 lbs)",
+     ylab = "Miles per Gallon",
 
 ```
 
@@ -571,21 +571,23 @@ y-axis label, a point color of your choice
 col=)
 
 ```{r scatterplot_labeled}
-# Write your updated scatterplot code below this line
-
-
+plot(mtcars$wt, mtcars$mpg,
+     main = "Relationship Between Car Weight and Fuel Efficiency",
+     xlab = "Weight (1000 lbs)",
+     ylab = "Miles per Gallon",
+     col = "seagreen")
 
 ```
 
 QUESTION: What does each point in this scatterplot represent?
-ANSWER:
+ANSWER: Based on the weight of a car, how fuel efficient the car is
 
 QUESTION: What relationship do you observe between weight and mpg?
-ANSWER:
+ANSWER: The heavier the car, the less fuel efficient it is
 
 QUESTION: Does the graph suggest a positive relationship, a negative relationship,
 or no relationship? Explain your answer.
-ANSWER:
+ANSWER: There is a negative relationship between the two since as the weight of the car increases, the fuel efficiency decreases
 
 ------------------------------------------------------------------------
 
@@ -599,7 +601,9 @@ can help compare fuel efficiency across cylinder groups.
 Create a boxplot of mpg by cyl using the boxplot function
 
 ```{r boxplot1}
-# Write your code below this line
+boxplot(mpg ~ cyl, data = mtcars,
+        xlab = "Number of Cylinders",
+        ylab = "Miles per Gallon")
 
 
 
@@ -611,24 +615,28 @@ Modify your boxplot so that it includes: a title, an x-axis label, a
 y-axis label, and a fill color of your choice
 
 ```{r boxplot2}
-# Write your updated boxplot code below this line
+boxplot(mpg ~ cyl, data = mtcars,
+        main = "Fuel Efficiency by Number of Cylinders",
+        xlab = "Number of Cylinders",
+        ylab = "Miles per Gallon",
+        col = "lightblue")
 
 
 
 ```
 
 QUESTION: What does each box in this plot represent?
-ANSWER:
+ANSWER: Shows the spread and normal gas efficientcy based on # of cylinders
 
 QUESTION: Which cylinder group appears to have the highest fuel efficiency?
-ANSWER:
+ANSWER: The 4 cylinders has the highest fuel efficiency
 
 QUESTION: Which cylinder group appears to have the lowest fuel efficiency?
-ANSWER:
+ANSWER: The 8 cylinders has the lowest fuel efficiency
 
 QUESTION: Based on the boxplot, how does fuel efficiency seem to change as the
 number of cylinders increases?
-ANSWER:
+ANSWER: The more cylinders the less fuel efficient the car is
 
 ------------------------------------------------------------------------
 
@@ -648,7 +656,11 @@ mpg.
 Use the space below to write your code:
 
 ```{r summary_table}
-# Write your code below this line
+library(dplyr)
+
+avg_mpg_by_cyl <- mtcars %>%
+  group_by(cyl) %>%
+  summarise(avg_mpg = mean(mpg))
 
 
 
@@ -661,20 +673,20 @@ Display your results as a clean table.
 Use the space below to write your code:
 
 ```{r formatted_table}
-# Write your code below this line
+avg_mpg_by_cyl
 
 
 
 ```
 
 QUESTION: What does this table show?
-ANSWER:
+ANSWER: Shows the cylinders with average miles per gallon.
 
 QUESTION: Which cylinder group has the highest average mpg?
-ANSWER:
+ANSWER: The 4 cylinder cars
 
 QUESTION: Which cylinder group has the lowest average mpg?
-ANSWER:
+ANSWER: The 8 cylinder cars
 
 ------------------------------------------------------------------------
 
@@ -685,10 +697,10 @@ information they provide.
 
 QUESTION: How does the scatterplot help you understand the relationship between
 weight and fuel efficiency?
-ANSWER:
+ANSWER: Helps you visualize the trend of the data. You can visually see all of the points and where they land
 
 QUESTION: How does the boxplot help you compare different groups of cars?
-ANSWER:
+ANSWER: Shows a spread of the results with the max, min and average.
 
 ------------------------------------------------------------------------
 
@@ -701,14 +713,18 @@ ANSWER:
 Write your code below:
 
 ```{r Now_you_try}
-# Write your code below this line
+plot(mtcars$hp, mtcars$mpg,
+     main = "Horsepower vs Fuel Efficiency",
+     xlab = "Horsepower",
+     ylab = "Miles per Gallon",
+     col = "darkgreen")
 
 
 
 ```
 
 QUESTION: What did you change, and how did it affect the output?
-ANSWER:
+ANSWER: Coompared horsepower to miles per gallon, and of course all of the labels and color. Now There is still a negative trend, but has you look at the horsepower on the x-axis and how that impacts gas efficiency.
 
 ------------------------------------------------------------------------
 
@@ -740,17 +756,20 @@ document, **outside** of any code chunk, and then Knit:
     The mtcars dataset has `r nrow(mtcars)` rows and `r ncol(mtcars)` columns.
     The average miles per gallon (mpg) is `r round(mean(mtcars$mpg), 2)`.
 
+The mtcars dataset has `r nrow(mtcars)` rows and `r ncol(mtcars)` columns.
+    The average miles per gallon (mpg) is `r round(mean(mtcars$mpg), 2)`.
+    
 ### Check
 
 Did the numbers appear automatically in your rendered sentence?
 
 QUESTION: What is inline R code, and how is it different from a regular code
 chunk?
-ANSWER:
+ANSWER: Yes the numbers did appear. It appears that inline code can be integrated into text, but call from code. Which is really cool
 
 QUESTION: Why is inline R code useful when working with a dataset that might be
 updated or changed over time?
-ANSWER:
+ANSWER: You can call portions of the code instead of having to repeatedly check and figure out what the value should be.
 
 ### TASK:
 
@@ -758,7 +777,7 @@ Now try writing your own inline R code sentence. Using the mtcars
 dataset, write a sentence that includes the maximum horsepower value
 using inline R code. The function `max()` will be helpful here.
 
-**Your sentence:** [Write your sentence with inline R code here.]
+**Your sentence:** The maximum horsepower in the mtcars dataset is `r max(mtcars$hp)`.
 
 ### Why This Matters
 
@@ -781,7 +800,7 @@ The chunk below currently shows the code when knitted. Add `echo=FALSE`
 inside the curly braces so that only the plot appears in the output, not
 the code. Then Knit your document.
 
-```{r}
+```{r echo=FALSE}
 plot(mtcars$wt, mtcars$mpg,
      main = "Weight vs MPG",
      xlab = "Weight (1000 lbs)",
@@ -796,11 +815,11 @@ plot(mtcars$wt, mtcars$mpg,
 Do you see the plot in the output but **not** the code that created it?
 
 QUESTION: Why might you want to hide code in a final report?
-ANSWER:
+ANSWER: If your report is not about the code, it takes up a lot of space and a lot of people might not understand the meaning making it depicted as just clutter.
 
 QUESTION: Can you think of a situation where you would want to **show** your code
 in a report rather than hide it? Who might be reading that report?
-ANSWER:
+ANSWER: Someone who know how to use R, and wants to understand how you generated your numbers and figures.
 
 ### TASK:
 
