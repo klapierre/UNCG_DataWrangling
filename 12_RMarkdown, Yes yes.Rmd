@@ -74,17 +74,17 @@ tinytex::install_tinytex()
 Then click Knit again.
 
 QUESTION: What happens when you click Knit?
-ANSWER:
+ANSWER: It downloads the document as the file type specified at the top
 
 QUESTION: What type of file is created?
-ANSWER:
+ANSWER: PDF file
 
 .........................
 ##1.5 Final observation
 After knitting, compare the .Rmd file to the final PDF.
 
 QUESTION: How is the output file different from the source file?
-ANSWER:
+ANSWER: The output file is in a PDF format, the texts are slightly differet, the YAML is not a full title section that is all pretty.
 
 
 
@@ -108,7 +108,7 @@ TASK: Read the question below, click **Knit** to render the document and return 
 QUESTION: What difference do you notice about the above line that starts with
 `# Section 2: Formatting a Report Using RMarkdown Syntax` compared to the line
 `Objective: learn to format how your document appears in the output of your choice`?  
-ANSWER:
+ANSWER: The text is a lot larger and bolder
 
 \
 
@@ -118,7 +118,7 @@ RMarkdown supports six levels of headings.
 \
 
 TASK: Click Knit to observe how different heading levels below appear in the rendered output.
-
+```
 
 # Line 1: This is an example to show different levels of headings in RMarkdown.
 ## Line 2: Line 1: This is an example to show different levels of headings in RMarkdown.
@@ -126,29 +126,29 @@ TASK: Click Knit to observe how different heading levels below appear in the ren
 #### Line 4: This is an example to show different levels of headings in RMarkdown.
 ##### Line 5: This is an example to show different levels of headings in RMarkdown.   
 ###### Line 6: This is an example to show different levels of headings in RMarkdown.
-
+```
 
 QUESTION: What happens to the size of text when you increase the number of hashtags (#)?  
-ANSWER: 
+ANSWER: The more hashtags there are the smaller the text is
 
 \
 
 In the example above, the higher the number of hashtags, the lower the heading level (smaller font).  
 
 QUESTION: How many hashtags would you use if you wanted highest level heading (largest font)?  
-ANSWER: 
+ANSWER: You would use 1 hashtag
 
 \
 
 QUESTION: In the rendered output, do Line 5 and Line 6 from above example appear in the same line?  
-ANSWER:
+ANSWER: Yes
 
 \
 
 TASK: Go to the metadata for this assignment and change the output from `pdf_document` to `html_document`.  
 
 QUESTION: Did your Line 5 and Line 6 appear in different lines?  
-ANSWER:
+ANSWER: Yes
 
 \
 
@@ -182,7 +182,7 @@ To make your text italics, you can enclose it within single asterisk `*[text]*`.
 \
 
 TASK: Rewrite Line 1 below and only italicize the word "italics." Leave two spaces at the end of sentence for a line break.  
-ANSWER:
+ANSWER: Line 1: This is an example to show how to make text *italics*.  
 
 \
 
@@ -193,7 +193,7 @@ You can also enclose your text within single underscore `_[text]_`.
 
 TASK: In the paragraph below, make "Arnav," "Biological Data Wrangling and Visualization" and "RMarkdown" italics in the following paragraph using both the methods (asterisks and underscore) mentioned above at least once.  
 
-My name is Arnav Pandey. I am currently enrolled in Biological Data Wrangling and Visualization (BIO 457/657).This is a TASK: to use RMarkdown to make a text output italics.  
+My name is *Arnav* Pandey. I am currently enrolled in _Biological Data Wrangling and Visualization_ (BIO 457/657).This is a TASK: to use *RMarkdown* to make a text output italics.  
 
 \
 
@@ -208,7 +208,7 @@ TASK: Read the question below, click Knit, and return to answer the question bel
 QUESTION: Which of the following lines gives you bold text?  
 Line 1. This is an example to show how to make text bold.  
 **Line 2: This is an example to show how to make text bold.**  
-ANSWER:  
+ANSWER: Line 2 would give your the bold text 
 
 \
 
@@ -227,8 +227,9 @@ Line 4: This is an __example__ to show how to make text bold.
 
 \
 
-TASK: In the paragraph below, make "Arnav," "Biological Data Wrangling and Visualization" and "RMarkdown" bold in the following paragraph using both the methods (asterisks and underscores) mentioned above at least once.     
-My name is Arnav Pandey. I am currently enrolled in Biological Data Wrangling and Visualization (BIO 457/657). This is a TASK: to use RMarkdown to make a text output bold.  
+TASK: In the paragraph below, make "Arnav," "Biological Data Wrangling and Visualization" and "RMarkdown" bold in the following paragraph using both the methods (asterisks and underscores) mentioned above at least once.   
+
+My name is **Arnav** Pandey. I am currently enrolled in __Biological Data Wrangling and Visualization__ (BIO 457/657). This is a TASK: to use **RMarkdown** to make a text output bold.  
 
 \
 
@@ -242,8 +243,9 @@ You can enclose your text within three asterisks (`***[text]***`). or underscore
 
 \
 
-TASK: In the paragraph below, make "Arnav," "Biological Data Wrangling and Visualization" and "RMarkdown" bold italics using both the methods mentioned above at least once.   
-My name is Arnav Pandey. I am currently enrolled in Biological Data Wrangling and Visualization (BIO 457/657). This is a TASK: to use RMarkdown to make a text output bold.  
+TASK: In the paragraph below, make "Arnav," "Biological Data Wrangling and Visualization" and "RMarkdown" bold italics using both the methods mentioned above at least once.  
+
+My name is ***Arnav*** Pandey. I am currently enrolled in ___Biological Data Wrangling and Visualization___ (BIO 457/657). This is a TASK: to use ***RMarkdown*** to make a text output bold.  
 
 
 \
@@ -292,7 +294,21 @@ TASK: Hit Knit to look at the output of the lines below:
 \
 
 TASK: Copy the above list below, add an item "Melon" and nest different types of melons as its subitems.
-Hit Knit to see your output.  
+Hit Knit to see your output. 
+
+- Apple
+- Banana
+- Berries 
+  - Blueberries
+  - Strawberries 
+  - Raspberries 
+  - Blackberries
+  - Cranberries
+- Papaya 
+- Melon 
+  - Watermelon 
+  - Canteloupe 
+  - Honeydew
 
 .........................
 
