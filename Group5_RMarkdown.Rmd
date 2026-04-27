@@ -9,8 +9,9 @@ date: "2026-04-26"
 output: pdf_document
 ---
 # Section 1: Create, Save, and Knit Your First R Markdown File
+Author: Jaslyn Davenport (jcdavenport@uncg.edu)
 
-Objective: Learn how to create and generate a basic R Markdown document.  
+Objective: Learn how to create and generate a basic R Markdown document. 
 
 .........................
 
@@ -95,8 +96,9 @@ Answer:
 
 --------------------------------------------------------------------------------
 
-Objective: learn how to format the appearance of your document in your chosen output format.
 Author: Arnav Pandey (a_pandey2@uncg.edu)   
+
+Objective: learn how to format the appearance of your document in your chosen output format.
 
 .........................
 
@@ -109,7 +111,6 @@ Question: What difference do you notice about the above line that starts with
 `Objective: learn to format how your document appears in the output of your choice`?  
 Answer:
 
-
 \
 
 Placing a hashtag (#) at the beginning of a line turns it into a heading. 
@@ -117,9 +118,7 @@ RMarkdown supports six levels of headings.
 
 \
 
-
 Task: Click Knit to observe how different heading levels below appear in the rendered output.
-
 
 
 # Line 1: This is an example to show different levels of headings in RMarkdown.
@@ -130,12 +129,10 @@ Task: Click Knit to observe how different heading levels below appear in the ren
 ###### Line 6: This is an example to show different levels of headings in RMarkdown.
 
 
-
 Question: What happens to the size of text when you increase the number of hashtags (#)?  
 Answer: 
 
 \
-
 
 In the example above, the higher the number of hashtags, the lower the heading level (smaller font).  
 
@@ -144,19 +141,16 @@ Answer:
 
 \
 
-
 Question: In the rendered output, do Line 5 and Line 6 from above example appear in the same line?  
 Answer:
 
 \
-
 
 Task: Go to the metadata for this assignment and change the output from `pdf_document` to `html_document`.  
 Question: Did your Line 5 and Line 6 appear in different lines?  
 Answer:
 
 \
-
 
 Sometimes the way the program renders output differs between formats.
 You can leave two spaces at the end of the line for a line break.  
@@ -176,8 +170,6 @@ single set of three backticks ```. Go back above and do as below:
 ###### Line 6: This is an example to show different levels of headings in RMarkdown.
 
 ```
-
-
 .........................
 
 ## 2.2 Italics
@@ -199,14 +191,11 @@ You can also enclose your text within single underscore `_[text]_`.
 
 \
 
+Task: In the paragraph below, make "Arnav," "Biological Data Wrangling and Visualization" and "RMarkdown" italics in the following paragraph using both the methods (asterisks and underscore) mentioned above at least once.  
 
-Task: In the paragraph below, make "Arnav," "Biological Data Wrangling and Visualization" and "RMarkdown" italics in the following paragraph using
-both the methods (asterisks and underscore) mentioned above at least once. 
-My name is Arnav Pandey. I am currently enrolled in Biological Data Wrangling and Visualization (BIO 457/657).
-This is a task to use RMarkdown to make a text output italics.  
+My name is Arnav Pandey. I am currently enrolled in Biological Data Wrangling and Visualization (BIO 457/657).This is a task to use RMarkdown to make a text output italics.  
 
 \
-
 
 .........................
 
@@ -237,13 +226,10 @@ Line 4: This is an __example__ to show how to make text bold.
 
 \
 
-Task: In the paragraph below, make "Arnav," "Biological Data Wrangling and Visualization" and "RMarkdown" bold in the following paragraph using
-both the methods (asterisks and underscores) mentioned above at least once.   
-My name is Arnav Pandey. I am currently enrolled in Biological Data Wrangling and Visualization (BIO 457/657).
-This is a task to use RMarkdown to make a text output bold.  
+Task: In the paragraph below, make "Arnav," "Biological Data Wrangling and Visualization" and "RMarkdown" bold in the following paragraph using both the methods (asterisks and underscores) mentioned above at least once.     
+My name is Arnav Pandey. I am currently enrolled in Biological Data Wrangling and Visualization (BIO 457/657). This is a task to use RMarkdown to make a text output bold.  
 
 \
-
 
 .........................
 
@@ -256,11 +242,9 @@ You can enclose your text within three asterisks (`***[text]***`). or underscore
 \
 
 Task: In the paragraph below, make "Arnav," "Biological Data Wrangling and Visualization" and "RMarkdown" bold italics using both the methods mentioned above at least once.   
-My name is Arnav Pandey. I am currently enrolled in Biological Data Wrangling and Visualization (BIO 457/657).
-This is a task to use RMarkdown to make a text output bold.  
+My name is Arnav Pandey. I am currently enrolled in Biological Data Wrangling and Visualization (BIO 457/657). This is a task to use RMarkdown to make a text output bold.  
 
 
-\
 \
 
 In sections 2.2, 2.3, and 2.4, you learnt how to make text italics, bold, or bold+italics by enclosing the text within one, two, and three asterisks or underscores, respecitvely. You might be tempted to start enclosing a text by underscore and end it using asterisk. For example:  
@@ -270,7 +254,6 @@ __bold**
 ***bold italics___   
 
 Above lines will not give your desired output, so you will have to be consistent with how you enclose your texts. Use the same symbols at both ends!
-
 
 .........................
 
@@ -310,8 +293,6 @@ Task: Hit Knit to look at the output of the lines below:
 Task: Copy the above list below, add an item "Melon" and nest different types of melons as its subitems.
 Hit Knit to see your output.  
 
-
-
 .........................
 
 ## 2.6 Numbered List
@@ -343,15 +324,18 @@ You can also nest subitems within an item. If you want a nested list as such, ju
    5. Cranberries
 4. Papaya  
 
-
 Note: If you want to use Roman Numerals, you may have to leave an empty line between items on list.
+
 -------------------------------------------------------------------------------  
 
 # Section 3: Inserting Code Chunks and Running Basic R Code  
 
 --------------------------------------------------------------------------------
-#We can insert a code chunk by clicking on the green-button with a "c" on the inside and a "+" on the upper left. 
-#Click "R". 
+
+
+Author: Michelle Bautista Canuto (m_bautistac@uncg.edu)
+We can insert a code chunk by clicking on the green-button with a "c" on the inside and a "+" on the upper left. 
+Click "R". 
 #We can insert functions within the chunk of code. We will see this next. 
 
 #QUESTION: What is a code chunk? (hint look back at the slides in Canvas)
@@ -482,6 +466,8 @@ mtcars %>%
 ------------------------------------------------------------------------
 ## Section 4: Add Visualizations and Tables to Your Report
 ------------------------------------------------------------------------
+Author: Themesha Parker (tlparker@uncg.edu)
+
 ### Goal
 
 In this section, you will create graphs and a summary table using the
@@ -716,7 +702,7 @@ and professional. In this section, we will take everything we have
 learned and improve the overall quality of our R Markdown report so it
 is easier to read and more useful.
 
-Author: Dhanush Devanand
+Author: Dhanush Devanand (s_devanand@uncg.edu)
 
 ------------------------------------------------------------------------
 
