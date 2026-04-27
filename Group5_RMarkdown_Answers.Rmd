@@ -379,10 +379,17 @@ Answer:
 ```
 
 #Next, let's assign variables. Run the following variables:
+```{r}
 x<-10
 y<-5
+```
+
+
 #To view the contents of the variable x, just type 'x' and run
+```{r}
 x
+```
+
 
 #TASK: Write a chunk of code mulitpliying the variables x and y.
 Answer:
