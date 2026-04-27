@@ -149,21 +149,37 @@ hour(todays_timestamp)
 minute(todays_timestamp)
 second(todays_timestamp)
 
+Finds the date
+Finds the year
+Finds the month
+Finds the day
+Finds the hour
+Finds the minute
+Finds the second
+
 #QUESTION: Run the following lines of code. What do you think each function is finding?
 
 week(todays_timestamp) 
 wday(todays_timestamp)
 
+Finds the week number
+Finds the week day
 
 #TASK: What if we wanted to create new column in our flights dataset listing the day of the week of the flight? Run the following code to create a flight_day column in our flight_data_parsed dataset.
+We would need to mutate and set the new column name to flight_day.
 
 flight_data_parsed <- flight_data_parsed %>% mutate(flight_day = wday(flight_date, label = TRUE, abbr = FALSE))
 
 #QUESTION: What do 'label' and 'abbr' mean in the code above?
 # HINT: Try running the code without the 'label' and 'abbr' arguments.
+Label appears to pull character/word values. while the abbr looks like it will create abbreviations of long words such as monday to mon. 
 
+flight_data_parsed2 <- flight_data_parsed %>% mutate(flight_day = wday(flight_date))
 
 #TASK: Create a new column called 'flight_month' in the flight_data_parsed dataset that lists the names of the months that the flights took place. 
+
+flight_data_parsed3 <- flight_data_parsed %>% 
+  mutate(flight_month = month(flight_date, label = TRUE, abbr = FALSE))
 
 
 
@@ -176,21 +192,27 @@ flight_data_parsed <- flight_data_parsed %>% mutate(flight_day = wday(flight_dat
 # TASK: The functions 'floor_date' and 'ceiling_date' will round down and up to the nearest unit, respectively. Run the following lines of code and take note of the output values.
 
 floor_date(mdy("April 15 2026"), "month")
+[1] "2026-04-01"
 ceiling_date(mdy("April 15 2026"), "month")
+[1] "2026-05-01"
 
 # QUESTION: The 'round_date' function is a general rounding function. Run the following line of code. Does 'round_date' round up or down?
 # HINT: April has 30 days. 
-
+[1] "2026-05-01"
+It rounded up but assuming that 16 is past the half way point, it would make sense to assume that the result will go to May. 
 
 round_date(mdy("April 16 2026"), "month")
 
 # QUESTION: Run the following line of code. What do you think the 'rollback' function does? What do you think the 'roll_to_first' and  'preserve_hms' arguments do?
 # HINT: Try running the code with different 'roll_to_first' and  'preserve_hms' arguments.
-
+Understanding the definitino of rollback's'and seeing the function, I believe the date provided goes back to the month before. 
+[1] "2026-03-31 12:51:34 EDT"
 
 rollback(todays_timestamp, roll_to_first = FALSE, preserve_hms = TRUE)
 
 # TASK: Create a dataframe named 'flight_data_rounded' from our 'flight_data_parsed' dataframe that includes a column named 'rounded_flight_date' that rounds the flight date to the nearest month. 
+flight_data_rounded <- flight_data_parsed %>% 
+  mutate(rounded_flight_date = round_date(flight_date, "month"))
 
 
 # ---------------------------------------------------------- #
@@ -228,7 +250,7 @@ ddays(1)
 # We can convert those minute values into durations with dminutes().
 # EXAMPLE: Run this line to turn air_time into a duration.
 flight_timespans_1 <- flight_timespans %>%
-  mutate(flight_duration = dminutes(air_time))
+  mutate(flight_duration = dminutes(flight_time))
 Error in `mutate()`:
   ℹ In argument: `flight_duration = dminutes(air_time)`.
 Caused by error:
@@ -246,13 +268,14 @@ Looks like it converst minutes into seconds.
 departure_time_example <- dmy_hms("01-01-2013 05:00:00")
 
 departure_time_example + dhours(2)
-
+[1] "2013-01-01 07:00:00 UTC"
 # TASK: Add 1 hour to departure_time_example.
 departure_time_example + dhours(1)
-
+[1] "2013-01-01 06:00:00 UTC"
 
 # TASK: Add 90 minutes to departure_time_example.
 departure_time_example + dminutes(90)
+[1] "2013-01-01 06:30:00 UTC"
 
 # We can do the same thing with the flight data.
 # If we add flight_duration to departure_time, we get an estimated arrival time.
@@ -268,10 +291,18 @@ flight_data_parsed %>%
 
 
 # QUESTION: What happens when we add flight_duration to departure_time?
+It looks like a new timestamp is created, allowing us to look at the time in a different format.
 
 # TASK: Which flight in this data has the longest duration?
 # Only view these columns (carrier, flight, origin, dest, air_time).
 # HINT: Arrange the table from largest to smallest air_time.
+343
+N644JB
+EWR
+PBI
+2013-01-01
+06:00:00
+Tuesday
 
 # An interval is different from a duration.
 # A duration is only a length of time.
