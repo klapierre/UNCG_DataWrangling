@@ -654,6 +654,8 @@ rangeTemp <- tempData %>%
            # flexibility so that the dataframe/graph can be adjusted if need to.
            # QUESTION: Take a look at the code below, what do you think ggplot is doing here? Does the
            # coding look familiar?
+# ggplot is making a time series plot that reveals more data over time. This allows the animation to show only 
+# parts of the dataset based on the time index. 
            
            make_timeseries_plot <- function(data, day_index) {
              ggplot(data[1:day_index, ], aes(x = date,y = mean_temp)) +
@@ -671,12 +673,14 @@ rangeTemp <- tempData %>%
          dir.create("frames_timeseries", showWarnings = FALSE)
          
          # QUESTION: What does dir.create stand for? And where do you expect this folder to end up?
-         
+         # dir.create() stands for create a directory. This folder should end up in the current working directory. 
          # Now we instruct R how we want the Frame-generation loop to work.
          
          # QUESTION: Why do you think we are start on day 2 and why may it be more useful?
          # HINT: We are making a time series graph, what makes it different from a 
          # scatter plot?
+         # We start on day 2 because the first point has nothing to connect to. It may be more
+         # useful because it immediately shows movement and trends between data points.
          
          # The value p creates a plot for day 1, which begins the data or the start
          # of the animation.
@@ -711,7 +715,8 @@ gifski(png_files,gif_file = "dailyAvg_timeseries.gif",width = 900,height = 600,d
 # making graph have essential markings that would be difficult to add to GIFs.
 
 # QUESTION: What are some examples that Magick can be useful in animating a graph? 
-
+# Some examples that magick can be useful in animating a graph are editing or creating plot images and
+# Creating custom frame by frame animations. 
 # We will start with a function, that will plot our dataframe into a adjustable graph.
 
 make_daily_bubble <- function(data, day_index) {
@@ -754,7 +759,7 @@ img_list <- lapply(frames, image_read)
 # These codes import the image and readjust the scaling of the image.
 logo <- image_read("My_cat_as_a_watermark.png")
 logo_small <- image_scale(logo, "150x150")
-
+# missing ? img_list <- lapply(frames, image_read)
 # This will overlay it onto the graph.
 watermarked <- lapply(img_list, function(frame) {
   image_composite(frame, logo_faded, offset = "+20+20") })
@@ -766,7 +771,7 @@ animation <- image_animate(image_join(watermarked), fps = 10)
 image_write(animation, "dailyAvg_bubble_watermarked.gif")
 
 # QUESTION: In your animation, what month has the highest temperature? 
-
+# July had the highest temperature. 
 # Magick appears to take longer than Gifski to create the GIF in your files so 
 # as I stated before, feel free to rerun the code to wake R-studio up. 
 
