@@ -185,7 +185,7 @@ To make your text italics, you can enclose it within single asterisk `*[text]*`.
 
 TASK: Rewrite Line 1 below and only italicize the word "italics." Leave two spaces at the end of sentence for a line break.  
 ANSWER:
-
+Line 1: This is an example to show how to make text *italics.*  
 \
 
 You may be wondering if there is another way to make the text italics, and in fact, there is.
@@ -196,8 +196,8 @@ You can also enclose your text within single underscore `_[text]_`.
 TASK: In the paragraph below, make "Arnav," "Biological Data Wrangling and Visualization" and "RMarkdown" italics in the following paragraph using both the methods (asterisks and underscore) mentioned above at least once.  
 
 My name is Arnav Pandey. I am currently enrolled in Biological Data Wrangling and Visualization (BIO 457/657).This is a TASK: to use RMarkdown to make a text output italics.  
-
-\
+ 
+\My name is *Arnav* Pandey. I am currently enrolled in _Biological Data Wrangling and Visualization_ (BIO 457/657). This is a TASK: to use *RMarkdown* to make a text output italics.  
 
 .........................
 
