@@ -143,12 +143,15 @@ anim_save("temperature_mark.gif", animate(airquality_temp, renderer = gifski_ren
 animate(airquality_temp)
 
 ##QUESTION: What is the difference between shadow_trail and shadow_mark?
+## Shadow trail leaves all the previous lines while shadow mark leaves only
+## some of them.
 
 ##transition_time gives us continuous animations, but we can also use 
 ##transition_states to make discrete ones instead
 
 ##Quesion: Considering what you know about different graphs in ggplot, what 
 ##types of graph should you use transition_states() instead of transition_time()?
+## If there's significant difference between states.
 
 ##Below is an example of using transition_states()
 
@@ -157,9 +160,11 @@ airquality_discrete <- ggplot(airquality, aes(x = Day, y = Temp)) +
   transition_states(Month) +
   labs(title = "Month: {closest_state}")
 anim_save("temperature_states.gif", animate(airquality_discrete, renderer = gifski_renderer()))
+animate(airquality_discrete)
 
 ##QUESTION: Other than the type of graph, what is the main difference in the code 
 ##when using transition_states() instead of transition_time()?
+## Transition time more frequently puttinglines on the graph than tansition states.
 
 ##Below is an example using a 3rd transition, transition_reveal()
 
@@ -167,8 +172,10 @@ airquality_reveal <- ggplot(airquality, aes(x = Day, y = Temp)) +
   geom_line() +
   transition_reveal(Day)
 anim_save("temperature_reveal.gif", animate(airquality_reveal, renderer = gifski_renderer()))
+animate(airquality_temp)
 
 ##TASK/QUESTION: Use the the help tab and the animation above to describe what transition_reveal does.
+## It reveals the data along a given dimension.
 
 ##If you have more complicated data, you can also use transition_components to animate by group, see below
 
@@ -180,37 +187,48 @@ airquality_group <- ggplot(airquality_clean,aes(x = Temp, y = Ozone, group = Mon
   shadow_trail(alpha=0.3)+
   transition_components(Day)
 anim_save("temperature_group.gif", animate(airquality_group, renderer = gifski_renderer(),  nframes = 150,fps = 15,width = 600,height = 400))
+animate(airquality_group)
 
 #Airquality is not the ideal data set to use with components, but you can 
 #still see how each month moves independently from eachother
 
 ##QUESTION: When would using transition_components be the most beneficial in visualizing data?
+## If there's several portions to be graphed.
 
-##Just like when you are animating a slideshow, often having elements disapear in
+##Just like when you are animating a slideshow, often having elements disapear
 ##in interesting ways helps draw people to your visual. In gganimate you can do 
 ##this by using enter and exit functions
 
 airquality_discrete +
-  enter_fade()+
-  exit_shrink()
+  enter_grow()+
+  exit_fly()
 
 ##TASK: rewrite the code above to utilize alternative enter and exit functions: 
 ##https://gganimate.com/reference/enter_exit.html
 
 ##QUESTION: Take a look at the help for the animate() function, what other arguments can be used?
+## nframes, fps, duration, detail, renderer, device, ref_frame, start_pause, end_pause, and rewind.
 
 ##TASK: Using the airquality_temp animation, adjust the animation to have a 
 ##height of ##400, a width of 600, 100 frames, and have a speed of 10 frames per second
+airquality_temp <- ggplot(airquality, aes(x = Day, y = Temp)) +
+  geom_line() +
+  ease_aes('linear')+
+  labs(title = "Month: {frame_time}") +
+  shadow_mark()+
+  transition_time(Month)
+animate(airquality_temp, nframes = 100, fps = 10, height = 400, width = 600)
 
 ##TASK: Fix the code below, and insert comments to to inform on the changes you made
 ##There are 3 mistakes, hint, it should not be a line graph, and all other functions 
 ##are correct, only the arguments may be incorrect
 
 airquality_discrete <- ggplot(airquality, aes(x = Day, y = Temp)) +
-  geom_line() +
+  geom_point() + ## Changed the plot type.
   transition_states(Month) +
-  labs(title = "Day: {frame_time}")
+  labs(title = "Month: {closest_state}") ## Day to month and frame_time to closest_state.
 anim_save("temperature_discrete2.gif", animate(airquality_discrete, renderer = gifski_renderer()))
+animate(airquality_discrete)
 
 ##Now it is time to test your skills. Make a new animation that shows ozone levels 
 #overtime. Call it airquality_ozone. Use a shadow functions, an ease_aes() function, 
