@@ -506,8 +506,8 @@ library(lubridate)
 # Here is the data formatted to plot as a time series. Feel free to change
 # the color of the graph for your visual appeal.
 ggplot(dailyAvg, aes(x = date, y = mean_temp)) +
-  geom_line(color = "steelblue", linewidth = 1.2) +
-  geom_point(color = "orange", size = 2) +
+  geom_line(color = "blue", linewidth = 1.2) +
+  geom_point(color = "purple", size = 2) +
   labs(x = "Date", y = "Daily Average Temperature", title = "Daily Average Temperature Over Time") +
   theme_bw() +
   theme(plot.title = element_text(size = 14, face = "bold"),axis.title = element_text(size = 12))
@@ -515,17 +515,24 @@ ggplot(dailyAvg, aes(x = date, y = mean_temp)) +
 # Here is the data formatted to plot as a scatter plot with a smooth trend line.
 ggplot(dailyAvg, aes(x = date, y = mean_temp)) +
   geom_point() +
-  geom_smooth(method = "loess", se = FALSE, color = "red") +
+  geom_smooth(method = "loess", se = FALSE, color = "pink") +
   theme_bw()
 
 # TASK: Create a new scatter plot by changing the labels of the y-axis to 
 # "Daily Average Temperature" and the x-axis to "Months". Give it a title 
 # called:"Daily Average Temp. in 2003".
+ggplot(dailyAvg, aes(x = date, y = mean_temp)) +
+  xlab("Months")+
+  ylab("Daily Average Temperature")+
+labs(title = "Daily Average Temp. in 2003")+
+  geom_point() +
+  geom_smooth(method = "loess", se = FALSE, color = "pink") +
+  theme_bw()
 
 # QUESTION: Between these two graphs, which graph would be better represent the
 # dailyAvg dataframe? Why?
 # Hint: The graph is comparing Date vs mean Temperature. 
-
+## The second one due to it being easier to see the trend.
 
 #================================
  # Gapminder: Another approach to complex graphing
@@ -540,6 +547,7 @@ library(hms)
 
 # QUESTION: What are your initial thoughts on what bubble graphs measure and their general
 # purpose?
+## They probably measure things that are geographically based.
 
 # We will be using 3 variables: months, hour, and mean_temperature.
 # To graph this, we will need to reformat our data. 
@@ -550,122 +558,144 @@ library(hms)
 rangeTemp <- tempData %>%
   mutate(time = hms::as_hms(time), hour = hour(time),
          month = month(date, label = TRUE, abbr = TRUE))
+<<<<<<< HEAD
          
          # QUESTION: Why would it be a good idea to average the hourly temperatures 
          # instead of plotting each hour for this graph? 
          # HINT: Take a look at datapoints within rangeTemp and visualize the graph
          # it would make. 
+=======
+# QUESTION: Why would it be a good idea to average the hourly temperatures 
+# instead of plotting each hour for this graph? 
+# HINT: Take a look at datapoints within rangeTemp and visualize the graph
+# it would make. 
+## To avoid a lot of overlap between points.
+>>>>>>> Lots of assignment 11 files.
          
-         # You will group by month and hour and the summarize the final column to find 
-         # the mean Air. temperature. We will double check if there are any NA's we
-         # missed.Then ungroup to have 3 columns/variables in a dataframe
-         # called hourMonthAvg.
-         hourMonthAvg <- rangeTemp %>%
-           group_by(month, hour) %>%
-           summarize(mean_temp = mean(Air.temperature, na.rm = TRUE)) %>%
-           ungroup()
+# You will group by month and hour and the summarize the final column to find 
+# the mean air temperature. We will double check if there are any NA's we
+# missed.Then ungroup to have 3 columns/variables in a dataframe
+# called hourMonthAvg.
+hourMonthAvg <- rangeTemp %>%
+  group_by(month, hour) %>%
+  summarize(mean_temp = mean(Air.temperature, na.rm = TRUE)) %>%
+  ungroup()
          
-         # It is time to plot our bubble graph! You will utilize ggplot and graph by hour
-         # vs mean_temp. Make sure to set the color to follow the months and the size to 
-         # measure the mean_temp as well. There are further graph elements covered in 
-         # this code. 
+# It is time to plot our bubble graph! You will utilize ggplot and graph by hour
+# vs mean_temp. Make sure to set the color to follow the months and the size to 
+# measure the mean_temp as well. There are further graph elements covered in 
+# this code. 
          
-         ggplot(hourMonthAvg, aes(x = hour,y = mean_temp,color = month,size = mean_temp)) +
-           geom_point(alpha = 0.7) +
-           scale_size(range = c(3, 12)) +
-           scale_x_continuous(breaks = seq(0, 23, 2)) +
-           labs(x = "Hour of Day (0–23)",y = "Average Temperature ",color = "Month",size = "Temperature",title = "Hourly Average Temperature by Month") +
-           theme_bw() +
-           theme(plot.title = element_text(size = 14, face = "bold"),legend.position = "bottom")
+ggplot(hourMonthAvg, aes(x = hour,y = mean_temp,color = month,size = mean_temp)) +
+  geom_point(alpha = 0.7) +
+  scale_size(range = c(3, 12)) +
+  scale_x_continuous(breaks = seq(0, 23, 2)) +
+  labs(x = "Hour of Day (0–23)",y = "Average Temperature ",color = "Month",size = "Temperature",title = "Hourly Average Temperature by Month") +
+  theme_bw() +
+  theme(plot.title = element_text(size = 14, face = "bold"),legend.position = "bottom")
          
-         # QUESTION: When reviewing the data, the temperature is very low, why is that?
-         # HINT: How do we measure temperature in science?
+# QUESTION: When reviewing the data, the temperature is very low, why is that?
+# HINT: How do we measure temperature in science?
+## It's in Celcius.
+
+# Correct this by changing the y label to "Average Temperature (°C)"!
+ggplot(hourMonthAvg, aes(x = hour,y = mean_temp,color = month,size = mean_temp)) +
+  geom_point(alpha = 0.7) +
+  scale_size(range = c(3, 12)) +
+  scale_x_continuous(breaks = seq(0, 23, 2)) +
+  labs(x = "Hour of Day (0–23)",y = "Average Temperature (°C)",color = "Month",size = "Temperature",title = "Hourly Average Temperature by Month") +
+  theme_bw() +
+  theme(plot.title = element_text(size = 14, face = "bold"),legend.position = "bottom")
+
+# Let's make a graph of the temperature in fahrenheit! 
+# Create a new dataframe called "f_hourMonthAvg" with a column labeled
+# mean_temp_F from the "mean_temp" column. Alter the data to go from celsius to 
+# fahrenheit.
+# HINT: Conversion rate of "F -> C" is would look something like this 
+# (mean_temp * 9/5) + 32)
          
-         # Correct this by changing the y label to "Average Temperature (°C)"!
+hourMonthAvg <- rangeTemp %>%
+  group_by(month, hour) %>%
+  summarize(mean_temp = mean(Air.temperature, na.rm = TRUE)) %>%
+  ungroup()
+f_hourMonthAvg <- mutate(hourMonthAvg, "mean_temp_F" = mean_temp*9/5+32)
+# Use this code to guide you to creating the "f_hourMonthAvg" dataframe. If we
+# are creating a new column, what is the function to do that?
+## It's the mutate function.
          
-         # Let's make a graph of the temperature in fahrenheit! 
-         # Create a new dataframe called "f_hourMonthAvg" with a column labeled " 
-         # mean_temp_F from the "mean_temp" column. Alter the data to go from celsius to 
-         # fahrenheit.
-         # HINT: Conversion rate of "F -> C" is would look something like this 
-         # (mean_temp * 9/5) + 32)
+# With the new dataframe and the code before this, change the y label to "Average Temperature (°F)". What are the ranges for the y-axis now? 
+ggplot(f_hourMonthAvg, aes(x = hour,y = mean_temp_F,color = month,size = mean_temp_F)) +
+  geom_point(alpha = 0.7) +
+  scale_size(range = c(3, 12)) +
+  scale_x_continuous(breaks = seq(0, 23, 2)) +
+  labs(x = "Hour of Day (0–23)",y = "Average Temperature (°F)",color = "Month",size = "Temperature (°F)",title = "Hourly Average Temperature by Month") +
+  theme_bw() +
+  theme(plot.title = element_text(size = 14, face = "bold"),legend.position = "bottom")
+## The new range is 55 degrees to 110 degrees.
          
-         hourMonthAvg <- rangeTemp %>%
-           group_by(month, hour) %>%
-           summarize(mean_temp = mean(Air.temperature, na.rm = TRUE)) %>%
-           ungroup()
-         # Use this code to guide you to creating the "f_hourMonthAvg" dataframe. If we
-         # are creating a new column, what is the function to do that?
+# Although there is a bit of clutter in our bubble graph, it shows a nice 
+# overlapping on the temperatures throughout their given months. 
          
-         # With the new dataframe and the code before this, change the y label to "Average Temperature (°F)". What are the ranges for the y-axis now? 
-         ggplot(f_hourMonthAvg, aes(x = hour,y = mean_temp_F,color = month,size = mean_temp_F)) +
-           geom_point(alpha = 0.7) +
-           scale_size(range = c(3, 12)) +
-           scale_x_continuous(breaks = seq(0, 23, 2)) +
-           labs(x = "Hour of Day (0–23)",y = "Average Temperature (°F)",color = "Month",size = "Temperature (°F)",title = "Hourly Average Temperature by Month") +
-           theme_bw() +
-           theme(plot.title = element_text(size = 14, face = "bold"),legend.position = "bottom")
+# Now, lets consider how to animate this graph!
          
-         # Although there is a bit of clutter in our bubble graph, it shows a nice 
-         # overlapping on the temperatures throughout their given months. 
+#================================
+# Gifski: Graph animation and export
+#================================
+install.packages("gganimate")
+library(gganimate)
+library(gifski)
          
-         # Now, lets consider how to animate this graph!
+# Gifski, as mentioned before primarily focuses on animating graphs into a gif. 
+# This is done by taking multiple photos of the graph at different intervals or 
+# of the variables and then putting it together. The end result is almost like
+# a slideshow but continous.
+# We will learn how to create these collages of photos and download the gif!
          
-         #================================
-          # Gifski: Graph animation and export
-         #================================
-           install.packages("gganimate")
-         library(gganimate)
-         library(gifski)
+# FOR CLARITY: Gifski does not animate the data itself. It takes photos (PNG's) 
+# created from the date and combine them in a presentation compressed into a gif. 
+# Like a wheel of photos. 
          
-         # Gifski, as mentioned before primarily focuses on animating graphs into a gif. 
-         # This is done by taking multiple photos of the graph at different intervals or 
-         # of the variables and then putting it together. The end result is almost like
-         # a slideshow but continous.
-         # We will learn how to create these collages of photos and download the gif!
-         
-         # FOR CLARITY: Gifski does not animate the data itself. It takes photos (PNG's) 
-         # created from the date and combine them in a presentation compressed into a gif. 
-         # Like a wheel of photos. 
-         
-         # For this section, we are using the dataframe "dailyAvg", why do you think this 
-         # is an easier dataframe to animate versus the hourMonthAvg?
+# For this section, we are using the dataframe "dailyAvg", why do you think this 
+# is an easier dataframe to animate versus the hourMonthAvg?
         
-           # To start the animation process, we want to make a function that allows for 
-           # flexibility so that the dataframe/graph can be adjusted if need to.
-           # QUESTION: Take a look at the code below, what do you think ggplot is doing here? Does the
-           # coding look familiar?
+# To start the animation process, we want to make a function that allows for 
+# flexibility so that the dataframe/graph can be adjusted if need to.
+# QUESTION: Take a look at the code below, what do you think ggplot is doing here? Does the
+# coding look familiar?
            
-           make_timeseries_plot <- function(data, day_index) {
-             ggplot(data[1:day_index, ], aes(x = date,y = mean_temp)) +
-               geom_line(color = "steelblue", linewidth = 1.2) +
-               geom_point(color = "red", size = 3) +
-               labs(x = "Date",y = "Average Temperature (°C)",title = "Daily Average Temperature Over Time",subtitle = paste("Day:", data$date[day_index])) +
-               theme_bw() +
-               theme(plot.title = element_text(size = 14, face = "bold")) }
+make_timeseries_plot <- function(data, day_index) {
+  ggplot(data[1:day_index, ], aes(x = date,y = mean_temp)) +
+  geom_line(color = "steelblue", linewidth = 1.2) +
+  geom_point(color = "red", size = 3) +
+  labs(x = "Date",y = "Average Temperature (°C)",title = "Daily Average Temperature Over Time",subtitle = paste("Day:", data$date[day_index])) +
+  theme_bw() +
+  theme(plot.title = element_text(size = 14, face = "bold")) }
+## It looks similar to the previous section.
          
-         # in this ggplot, we will be graphing each day with it's corresponding temperature.
-         # Essentially a time series!
+# In this ggplot, we will be graphing each day with it's corresponding temperature.
+# Essentially a time series!
          
-         # Now that we have a function, we create a folder to hold the images to keep 
-         # our workspace tidy.
-         dir.create("frames_timeseries", showWarnings = FALSE)
+# Now that we have a function, we create a folder to hold the images to keep 
+# our workspace tidy.
+dir.create("frames_timeseries", showWarnings = FALSE)
          
-         # QUESTION: What does dir.create stand for? And where do you expect this folder to end up?
+# QUESTION: What does dir.create stand for? And where do you expect this folder to end up?
+## It makes a new directory inside the old directory.
+
+# Now we instruct R how we want the Frame-generation loop to work.
          
-         # Now we instruct R how we want the Frame-generation loop to work.
-         
-         # QUESTION: Why do you think we are start on day 2 and why may it be more useful?
-         # HINT: We are making a time series graph, what makes it different from a 
-         # scatter plot?
-         
-         # The value p creates a plot for day 1, which begins the data or the start
-         # of the animation.
-         for (i in 2:nrow(dailyAvg)) {
-           p <- make_timeseries_plot(dailyAvg, i)
-           ggsave(filename = sprintf("frames_timeseries/frame_%04d.png", i),plot = p,width = 8,height = 5) }
-         
-         ggsave(filename = sprintf("frames_daily/frame_%04d.png", i),plot = p,width = 8, height = 5) }
+# QUESTION: Why do you think we are start on day 2 and why may it be more useful?
+# HINT: We are making a time series graph, what makes it different from a 
+# scatter plot?
+## It's because it's a time lapse?
+
+# The value p creates a plot for day 1, which begins the data or the start
+# of the animation.
+for (i in 2:nrow(dailyAvg)) {
+  p <- make_timeseries_plot(dailyAvg, i)
+  ggsave(filename = sprintf("frames_timeseries/frame_%04d.png", i),plot = p,width = 8,height = 5) }
+
+ggsave(filename = sprintf("frames_daily/frame_%04d.png", i),plot = p,width = 8, height = 5) 
 
 # lastly, with ggsave(), we save the data as a PNG file. the frames will come 
 # out with the name frames_001, frames_002 and so on. 
