@@ -4,7 +4,7 @@ author: Arnav Pandey, Themesha Parker, Michelle Bautista Canuto, Dhanush Devanan
   Jaslyn Davenport
 date: "2026-04-26"
 output:
-  html_document: default
+  pdf_document: default
 ---
 # Section 1: Create, Save, and Knit Your First R Markdown File
 Author: Jaslyn Davenport (jcdavenport@uncg.edu)
