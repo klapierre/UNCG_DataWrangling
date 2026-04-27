@@ -661,7 +661,7 @@ rangeTemp <- tempData %>%
            # To start the animation process, we want to make a function that allows for 
            # flexibility so that the dataframe/graph can be adjusted if need to.
            # QUESTION: Take a look at the code below, what do you think ggplot is doing here? Does the
-           # coding look familiar?
+           # coding look familiar? #ANSWER: its setting up the animation.
            
            make_timeseries_plot <- function(data, day_index) {
              ggplot(data[1:day_index, ], aes(x = date,y = mean_temp)) +
@@ -679,12 +679,14 @@ rangeTemp <- tempData %>%
          dir.create("frames_timeseries", showWarnings = FALSE)
          
          # QUESTION: What does dir.create stand for? And where do you expect this folder to end up?
+         #It creates a folder in my working directory. 
          
          # Now we instruct R how we want the Frame-generation loop to work.
          
          # QUESTION: Why do you think we are start on day 2 and why may it be more useful?
          # HINT: We are making a time series graph, what makes it different from a 
          # scatter plot?
+         #Theres only one plot point on day one. Starting at day 2 gives you more data to animate. 
          
          # The value p creates a plot for day 1, which begins the data or the start
          # of the animation.
@@ -692,7 +694,7 @@ rangeTemp <- tempData %>%
            p <- make_timeseries_plot(dailyAvg, i)
            ggsave(filename = sprintf("frames_timeseries/frame_%04d.png", i),plot = p,width = 8,height = 5) }
          
-         ggsave(filename = sprintf("frames_daily/frame_%04d.png", i),plot = p,width = 8, height = 5) }
+         ggsave(filename = sprintf("frames_daily/frame_%04d.png", i),plot = p,width = 8, height = 5) 
 
 # lastly, with ggsave(), we save the data as a PNG file. the frames will come 
 # out with the name frames_001, frames_002 and so on. 
