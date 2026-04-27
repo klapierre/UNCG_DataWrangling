@@ -558,6 +558,7 @@ library(hms)
 
 # QUESTION: What are your initial thoughts on what bubble graphs measure and their general
 # purpose?
+#I like them because they show magnitudes better. 
 
 # We will be using 3 variables: months, hour, and mean_temperature.
 # To graph this, we will need to reformat our data. 
@@ -573,6 +574,7 @@ rangeTemp <- tempData %>%
          # instead of plotting each hour for this graph? 
          # HINT: Take a look at datapoints within rangeTemp and visualize the graph
          # it would make. 
+#ANSWER: It helps reduce noise.
          
          # You will group by month and hour and the summarize the final column to find 
          # the mean Air. temperature. We will double check if there are any NA's we
@@ -594,10 +596,11 @@ rangeTemp <- tempData %>%
            scale_x_continuous(breaks = seq(0, 23, 2)) +
            labs(x = "Hour of Day (0–23)",y = "Average Temperature ",color = "Month",size = "Temperature",title = "Hourly Average Temperature by Month") +
            theme_bw() +
-           theme(plot.title = element_text(size = 14, face = "bold"),legend.position = "bottom")
+           theme(plot.title = element_text(size = 14, face = "bold"),legend.position = "bottom") #FUN!
          
          # QUESTION: When reviewing the data, the temperature is very low, why is that?
          # HINT: How do we measure temperature in science?
+         #Its in Celsius
          
          # Correct this by changing the y label to "Average Temperature (°C)"!
          
@@ -614,6 +617,12 @@ rangeTemp <- tempData %>%
            ungroup()
          # Use this code to guide you to creating the "f_hourMonthAvg" dataframe. If we
          # are creating a new column, what is the function to do that?
+         
+         f_hourMonthAvg <- rangeTemp %>%
+           group_by(month, hour) %>%
+           summarize(mean_temp = mean(Air.temperature, na.rm = TRUE)) %>%
+           ungroup() %>%
+           mutate(mean_temp_F = (mean_temp * 9/5) + 32) #creates the new column
          
          # With the new dataframe and the code before this, change the y label to "Average Temperature (°F)". What are the ranges for the y-axis now? 
          ggplot(f_hourMonthAvg, aes(x = hour,y = mean_temp_F,color = month,size = mean_temp_F)) +
