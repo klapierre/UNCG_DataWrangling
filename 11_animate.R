@@ -331,46 +331,70 @@ gap_anim + ease_aes("bounce-in-out")
 
 ## QUESTION: What does the -in-out easing argument do to our animation? 
 ## Hint: Check ?ease_aes().
+# the first half of the transition is applied as-is, and the second half is reversed
 
 ## QUESTION: How does easing change the perception of movement over time?
+# If I am being honest, with this data, I can't really see a very visually significant difference between these different functions. I think I would need to see more specific applies examples of the functions applied in order to really understand how they can be useful in showing changes.
 
 ## gganimate also has view functions to change the framing of our animation
 ## over our data. 
 
 ## TASK: Add view_follow() to gap_anim to track evolving clusters
+gap_anim + view_follow()
 
 ## QUESTION: What does view_follow() do? Why might this be useful?
+# it shows the range of years and GDP along a moving grid, which helps show how the relationship between the tw factors changes over time.
 
 ## TASK: Try to apply view_step() to gap_anim.
+gap_anim + view_step()
 
 ## This gives us an animation, but something is wrong.
 ## QUESTION: What is wrong with your animation? Why do you think this is happening
 ## HINT: Remember that transition_time is continuous. Check out ?view_step()
+# this function is used for static data, so it is not working for our dataset
 
 ## Remember that iris dataset we loaded earlier? Now we're gonna switch to it!
 
 ## TASK: Using iris, plot Petal Length (x) vs Petal Width (y), colored by species.
-## Save this as iris_anim. Add the appropiate labels, title, and transition. 
+## Save this as iris_anim. Add the appropriate labels, title, and transition. 
 ## Remove the legend.
 ## Hint: For your title, remember that your data are discrete, not continuous.
+iris_anim <- ggplot(iris,
+                    aes(x = Petal.Length,
+                        y = Petal.Width,
+                        color = Species)) +
+  geom_point()+
+  labs(title = "Species:{closest_state}",
+       x ="Petal Length",
+       y = "Petal Width")+
+  theme_classic() +
+  transition_states(Species)
+
+animate(iris_anim)
+
 
 ## We looked at enter_fade() and exit_shrink() previously, let's explore some more 
 ## animation effects. This, like easing, falls under the umbrella of Tweening!
 
 ## TASK: Add enter_fade() and exit_fade() effects
+iris_anim +
+  enter_fade(alpha = 1) +
+  exit_fade(alpha = 1)
+
+animate(iris_anim)
 
 ## TASK: Run the lines of code below and descriptively annotate what each function does.
 ## Hint: If you're unsure, run them piece-by-piece!
 
-iris_anim + enter_fly(x_loc = 0) + exit_fly(x_loc = 1)
+iris_anim + enter_fly(x_loc = 0) + exit_fly(x_loc = 1) # data moves in from the left axis, separated by species 
 
-iris_anim + enter_drift(y_mod = 1) + exit_drift(x_mod = 1) 
+iris_anim + enter_drift(y_mod = 1) + exit_drift(x_mod = 1) # data is coming in from different parts of the graph ..... yeahhhhhhhh
 
-iris_anim + enter_recolor(color = "pink") + exit_recolor(color = "brown")
+iris_anim + enter_recolor(color = "pink") + exit_recolor(color = "brown") # data points are fading into different colors 
 
-iris_anim + enter_grow(size = 10) + exit_shrink(size = 0.1)
+iris_anim + enter_grow(size = 10) + exit_shrink(size = 0.1) # data points start large and decrease in size!! 
 
-iris_anim + enter_grow(size = 0.1) + exit_shrink(size = 10)
+iris_anim + enter_grow(size = 0.1) + exit_shrink(size = 10) # data points start small and get larger
 
 iris_ease <- iris_base +
   transition_states(Species) +
@@ -384,6 +408,8 @@ iris_ease <- iris_base +
 
 ## QUESTION: What does your animation look like? Why do you think this is the case?
 ## Hint: Look at the usage for transition_reveal().
+# data points are bouncing in one at a time, by species. the reveal function is showing individual species one by one
+
 
 ## TASK: Write 3 lines of code using different shadows to display point trajectories.
 ## Do not use shadow_null()
@@ -432,9 +458,11 @@ europe_life <- europe_sf %>%
     ease_aes("linear"))
 
 ## QUESTION: Why might animations be useful for visualizing spatial data?
+# we can see how trends change over time
 
 ## QUESTION: What are some potential weaknesses of animating. 
 ## Hint: Think about how slow your computer probably ran!
+# with really large datasets, it will probably take a long time to load
 
 
 # 1.2: FINALE: Other useful packages ---------------------------------------------------####
