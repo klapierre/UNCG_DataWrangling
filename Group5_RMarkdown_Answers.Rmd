@@ -76,6 +76,23 @@ You can leave two spaces at the end of the line for a line break.
 
 Task: Change the output back to `pdf_document`.
 
+Task: **Go back** to all the above example lines "Line 1" thru "Line 6" within
+single set of three backticks (```       ```) to avoid conflicts with rest of the assignment.
+Go back above and do as below:
+
+```
+
+# Line 1: This is an example to show different levels of headings in RMarkdown.
+## Line 2: Line 1: This is an example to show different levels of headings in RMarkdown.
+### Line 3: This is an example to show different levels of headings in RMarkdown.
+#### Line 4: This is an example to show different levels of headings in RMarkdown.
+##### Line 5: This is an example to show different levels of headings in RMarkdown.   
+###### Line 6: This is an example to show different levels of headings in RMarkdown.
+
+```
+
+
+
 .........................
 
 ## 2.2 Italics
