@@ -335,29 +335,50 @@ gap_anim +
 ## Save this as iris_anim. Add the appropiate labels, title, and transition. 
 ## Remove the legend.
 ## Hint: For your title, remember that your data are discrete, not continuous.
+iris_anim <- ggplot(iris, aes(x = Petal.Length, y= Petal.Width, color = Species)) +
+  geom_point() +
+  labs(
+    title = "Petal Measurements By Species",
+    x = "Petal Length",
+    y = "Petal Width"
+  ) +
+  transition_states(Species) +
+  theme_dark() +
+  theme(legend.position = "none")
 
 ## We looked at enter_fade() and exit_shrink() previously, let's explore some more 
 ## animation effects. This, like easing, falls under the umbrella of Tweening!
 
 ## TASK: Add enter_fade() and exit_fade() effects
-
+iris_anim <- ggplot(iris, aes(x = Petal.Length, y = Petal.Width, color = Species)) +
+  geom_point() +
+  labs(
+    title = "Petal Measurements by Species",
+    x = "Petal Length",
+    y = "Petal Width"
+  ) +
+  transition_states(Species) +
+  enter_fade() +
+  exit_fade() +
+  theme_minimal() +
+  theme(legend.position = "none")
 ## TASK: Run the lines of code below and descriptively annotate what each function does.
 ## Hint: If you're unsure, run them piece-by-piece!
 
 iris_anim + enter_fly(x_loc = 0) + exit_fly(x_loc = 1)
-
+# each group moves in right to left 
 iris_anim + enter_drift(y_mod = 1) + exit_drift(x_mod = 1) 
-
+# each group moves down and then to the right 
 iris_anim + enter_recolor(color = "pink") + exit_recolor(color = "brown")
-
+# changes the color to pink and brown gradually 
 iris_anim + enter_grow(size = 10) + exit_shrink(size = 0.1)
-
+# The points start of big and then shrink and disappear
 iris_anim + enter_grow(size = 0.1) + exit_shrink(size = 10)
-
+# The points start off small then grow in size. Then they disappear 
 iris_ease <- iris_base +
   transition_states(Species) +
   ease_aes("bounce-in-out")
-
+# adds a bouncing effect at the start and end of transitions. 
 ## We can actually combine several transitions together. Let's take iris_anim,
 ## which has discrete transition_states and apply transition_reveal() by Petal.Length.
 ## TASK: Run the code below
@@ -366,10 +387,12 @@ iris_ease <- iris_base +
 
 ## QUESTION: What does your animation look like? Why do you think this is the case?
 ## Hint: Look at the usage for transition_reveal().
+# The animation starts of with the lowest petal length and progresses to the largest. 
+# This is the case because transition_reveal() shows data in a continuous variable .
 
 ## TASK: Write 3 lines of code using different shadows to display point trajectories.
 ## Do not use shadow_null()
-
+# code provided 
 iris_reveal + shadow_trail()
 
 iris_reveal + shadow_wake()
@@ -414,10 +437,12 @@ europe_life <- europe_sf %>%
   ease_aes("linear"))
 
 ## QUESTION: Why might animations be useful for visualizing spatial data?
-
+# Animations might be useful for visualizing spatial data because it can show you 
+# how patterns change over time, making it easier for the viewer to understand the data.
 ## QUESTION: What are some potential weaknesses of animating. 
 ## Hint: Think about how slow your computer probably ran!
-             
+# Some potential weaknesses of animating is that it can be distracting or can cause confusion 
+# when done incorrectly. 
 
 # 1.2: FINALE: Other useful packages ---------------------------------------------------####
 # gifski, magick, gapminder
