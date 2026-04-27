@@ -363,23 +363,27 @@ animate(iris_anim)
 ## animation effects. This, like easing, falls under the umbrella of Tweening!
 
 ## TASK: Add enter_fade() and exit_fade() effects
+iris_anim +
+  enter_fade()+
+  exit_fade()
 
 ## TASK: Run the lines of code below and descriptively annotate what each function does.
 ## Hint: If you're unsure, run them piece-by-piece!
 
 iris_anim + enter_fly(x_loc = 0) + exit_fly(x_loc = 1)
-
+## Sets the enter and exit animations to fly.
 iris_anim + enter_drift(y_mod = 1) + exit_drift(x_mod = 1) 
-
+## Sets the enter and exit animations to drift.
 iris_anim + enter_recolor(color = "pink") + exit_recolor(color = "brown")
-
+## Uses pink to show entering points and brown for exiting points.
 iris_anim + enter_grow(size = 10) + exit_shrink(size = 0.1)
-
+## Sets the enter animation to grow and exit animation to shrink.
 iris_anim + enter_grow(size = 0.1) + exit_shrink(size = 10)
-
+## Same as the previous one, but with grow being smaller than shrinks.
 iris_ease <- iris_base +
   transition_states(Species) +
   ease_aes("bounce-in-out")
+## Makes the exit animation reverse of enter animation.
 
 ## We can actually combine several transitions together. Let's take iris_anim,
 ## which has discrete transition_states and apply transition_reveal() by Petal.Length.
@@ -389,6 +393,7 @@ iris_ease <- iris_base +
 
 ## QUESTION: What does your animation look like? Why do you think this is the case?
 ## Hint: Look at the usage for transition_reveal().
+## Sets petal Length as the variable used for the animation.
 
 ## TASK: Write 3 lines of code using different shadows to display point trajectories.
 ## Do not use shadow_null()
@@ -437,10 +442,11 @@ europe_life <- europe_sf %>%
   ease_aes("linear"))
 
 ## QUESTION: Why might animations be useful for visualizing spatial data?
+## It could be used to show a time lapse of data.
 
 ## QUESTION: What are some potential weaknesses of animating. 
 ## Hint: Think about how slow your computer probably ran!
-             
+## It could be hard on older computers.             
 
 # 1.2: FINALE: Other useful packages ---------------------------------------------------####
 # gifski, magick, gapminder
