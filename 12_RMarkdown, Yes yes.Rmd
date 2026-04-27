@@ -356,9 +356,14 @@ Click "R".
 We can insert functions within the chunk of code. We will see this next. 
 
 QUESTION: What is a code chunk? (hint look back at the slides in Canvas)
-ANSWER:
+ANSWER: A code chunk is a section inside of an rmarkdown file that is indicated to contain lines of code, so that it can properly be inserted into an alternative file type
  
 TASK: Practice inserting a code chunk. Run a simple calculation such as "2+2" below {r}. Run this code by clicking on the green side-triangle button: 
+
+```{r}
+2+2
+```
+
 
 Next, let's assign variables. Run the following variables:
 ```{r}
@@ -374,9 +379,13 @@ x
 
 
 TASK: Write a chunk of code mulitpliying the variables x and y.
+```{r}
+x*y
+```
+
 
 QUESTION: What was the result? 
-ANSWER:
+ANSWER: 50
 
 We will analyze the built-in 'mtcars' dataset. Run the following chunk of code.
 
@@ -384,7 +393,7 @@ We will analyze the built-in 'mtcars' dataset. Run the following chunk of code.
 head(mtcars)
 ```
 QUESTION: What do you think the head() function does?
-ANSWER:
+ANSWER: The head functions gives you a sneak peak at the data set. Specifically the first 6 rows.
 
 To display the summary statistics for the dataset use the summary() function. Run the following chunk of code.
 ```{r}
@@ -398,7 +407,7 @@ data(mtcars)
 ```
 
 QUESTION: After running the previous code, view the dataframe of mtcars. How many variables are in the mtcars dataset? 
-ANSWER:
+ANSWER: There are 11 variables
 
 Or you can view the dataset in the console by typing "mtcars" and click 'Run Selected Lines'. 
 mtcars
@@ -409,9 +418,13 @@ nrow(mtcars)
 ```
 
 TASK: Write a code to find the number of columns in the 'mtcars' dataset using the ncol() function. Remember to use a new chunk of code.
+```{r}
+ncol(mtcars)
+```
+
 
 QUESTION: What is the result showing in your script?
-ANSWER:
+ANSWER: The # of columns that the dataset has, 11
 
 The 'disp' column in the dataset stands for engine displacement. Engine displacement tells you how big the engine is in cubic inches. 
 The 'mpg' column stands for fuel efficiency in miles per gallon. 
@@ -420,7 +433,7 @@ Run the following code.
 plot(mtcars$disp, mtcars$mpg)
 
 QUESTION: What trend is the plot showing?
-ANSWER:
+ANSWER: There is a negative relationship between the engine displlacement and the fuel efficiency. The larger the displacement the lower the fuel efficiency.
 
 We can also use ggplot to run this within our chunk of code.
 This permits our plot to be displayed in the final report once "knit".   
@@ -470,16 +483,28 @@ mtcars %>%
 ```
 
 QUESTION: Which car has the highest fuel efficiency? 
-ANSWER:
+ANSWER: The toyota corolla
 
 QUESTION: What is the size of it's engine?
-ANSWER:
+ANSWER: 71.1
 
 TASK: Use code to create a plot comparing disp vs hp from the 'mtcars' dataset. With the following:  
 Use the 'disp' data for the x-axis and labeled 'Engine Size (cubic inches)'
 Use the 'hp' data for the y-axis and labeled 'Horsepower (HP)'
 Add an appropriate title for the plot with a 'bold' font
 Add a legend colored by 'car_name' and labeled "Car Types" 
+
+```{r}
+ggplot(mtcars,aes(x=disp,y=hp, color=factor(car_name)))+
+  geom_point()+
+  labs(
+    x="Engine Size (cubic inches)",
+    y="Horsepower (HP)",
+    title="Engine Size vs Horsepower",
+         color="Car Types")+
+  theme(plot.title = element_text(face="bold"))
+```
+
 
 
 Lets organize the horsepower from highest to lowest. Run the following.
@@ -490,10 +515,10 @@ mtcars %>%
 ```
 
 QUESTION: What trend is the plot showing between engine size and horsepower? 
-ANSWER:
+ANSWER: THere is a positive correlation between engine size and horsepower.The larger the engine the more horsepower.
 
 QUESTION: Which cars have the highest and lowest hp?
-ANSWER:
+ANSWER: The Maserati Bora has the highest HP and the Honda Civic has the lowest HP
 
 Don't forget to save and commit your changes. 
 
