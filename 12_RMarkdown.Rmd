@@ -110,7 +110,7 @@ TASK: Read the question below, click **Knit** to render the document and return 
 QUESTION: What difference do you notice about the above line that starts with
 `# Section 2: Formatting a Report Using RMarkdown Syntax` compared to the line
 `Objective: learn to format how your document appears in the output of your choice`?  
-  ANSWER:
+  ANSWER: One uses a "#" to signify a heading versus a simple sentence used within the assignment.
   
   \
 
@@ -131,26 +131,26 @@ Placing a hashtag (#) at the beginning of a line turns it into a heading.
   
   
   QUESTION: What happens to the size of text when you increase the number of hashtags (#)?  
-    ANSWER: 
+    ANSWER: The size of the text gets smaller the more "#'s" are used.
       
       \
     
     In the example above, the higher the number of hashtags, the lower the heading level (smaller font).  
     
     QUESTION: How many hashtags would you use if you wanted highest level heading (largest font)?  
-      ANSWER: 
+      ANSWER: 1.
       
       \
     
     QUESTION: In the rendered output, do Line 5 and Line 6 from above example appear in the same line?  
-      ANSWER:
+      ANSWER: No.
       
       \
     
     TASK: Go to the metadata for this assignment and change the output from `pdf_document` to `html_document`.  
     
     QUESTION: Did your Line 5 and Line 6 appear in different lines?  
-      ANSWER:
+      ANSWER: No.
       
       \
     
@@ -184,7 +184,7 @@ Placing a hashtag (#) at the beginning of a line turns it into a heading.
       \
     
     TASK: Rewrite Line 1 below and only italicize the word "italics." Leave two spaces at the end of sentence for a line break.  
-    ANSWER:
+    ANSWER: This is an example to show how to make text *italics*.
       
       \
     
