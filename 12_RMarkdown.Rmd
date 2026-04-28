@@ -21,7 +21,7 @@ To begin, open RStudio and create a new R Markdown file.
 Go to **File > New File > R Markdown**.  
 
 QUESTION: What do you think happens when the new file is opened?  
-  ANSWER:  
+  ANSWER: RStudio opens my .Rmd file in a similar way to how this assignment is set up. It has a title, my name, the date it was made, and the type of document (HTML in this case).
   
   
   .........................
@@ -41,7 +41,7 @@ install.packages("tinytex")
 tinytex::install_tinytex()
 
 QUESTION: Why are these packages needed?
-  ANSWER:
+  ANSWER: The "rmarkdown" package is a the core aspect for marking R Markdown documents, the "knitr" package is used to run code chunks, and "tinytex" allows PDFs to be created.
   
   .........................
 ## 1.3 Modify the YAML Header
@@ -62,7 +62,7 @@ date: "April 2026"
 output: pdf_document
 
 QUESTION: What is the purpose of the YAML header?
-  ANSWER:
+  ANSWER: The YAML header tells R Markdown what the document is and how to process it.
   
   .........................
 ##1.4 Save and Knit file
@@ -76,17 +76,17 @@ tinytex::install_tinytex()
 Then click Knit again.
 
 QUESTION: What happens when you click Knit?
-  ANSWER:
+  ANSWER: The .Rmd file was processed by R Markdown.
   
   QUESTION: What type of file is created?
-  ANSWER:
+  ANSWER: PDF.
   
   .........................
 ##1.5 Final observation
 After knitting, compare the .Rmd file to the final PDF.
 
 QUESTION: How is the output file different from the source file?
-  ANSWER:
+  ANSWER: It's in a paper layout with data visualized instead of a coding format.
   
   
   
