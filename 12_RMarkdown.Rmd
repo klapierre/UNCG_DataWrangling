@@ -716,11 +716,11 @@ plot(mtcars$disp, mtcars$hp,
       
       QUESTION: What is inline R code, and how is it different from a regular code
     chunk?
-      ANSWER:
+      ANSWER: Inline code is within the text, while regular code is it's own block.
       
       QUESTION: Why is inline R code useful when working with a dataset that might be
     updated or changed over time?
-      ANSWER:
+      ANSWER: Results are automatically updated too, since the code is within the structure itself, rather than having code outside of the the structure.
       
       ### TASK:
       
@@ -728,7 +728,7 @@ plot(mtcars$disp, mtcars$hp,
     dataset, write a sentence that includes the maximum horsepower value
     using inline R code. The function `max()` will be helpful here.
     
-    **Your sentence:** [Write your sentence with inline R code here.]
+    **Your sentence:** The car with the highest horsepower in the mtcars dataset has 'r max(mtcars$hp)' horsepower.
     
     ### Why This Matters
     
@@ -766,11 +766,11 @@ plot(mtcars$disp, mtcars$hp,
     Do you see the plot in the output but **not** the code that created it?
       
       QUESTION: Why might you want to hide code in a final report?
-      ANSWER:
+      ANSWER: Clarity, tidyness, seems more professional.
       
       QUESTION: Can you think of a situation where you would want to **show** your code
     in a report rather than hide it? Who might be reading that report?
-      ANSWER:
+      ANSWER: Assignments that are meant for research or being reproduced require the steps in the code to be available. Teaching is another example. 
       
       ### TASK:
       
@@ -813,11 +813,11 @@ plot(mtcars$disp, mtcars$hp,
       
       QUESTION: What is the difference between `message=FALSE` and `warning=FALSE`?
       When might you need to use both at the same time?
-      ANSWER:
+      ANSWER: 'message=FALSE' hides messages made by functions in-between chunks. 'warning=FALSE'hides warnings over non-critical issues. You'd use these if the code you're using gave both messages and warnings and you wanted it to be more tidy and straight to the point.
       
       QUESTION: Is it always a good idea to suppress warnings? Can you think of a case
     where seeing a warning might actually be important?
-      ANSWER:
+      ANSWER: It's not always a good idea to suppress warnings. If you miss warnings about NA values, you would have incomplete data. 
       
       ### Why This Matters
       
@@ -861,10 +861,10 @@ plot(mtcars$disp, mtcars$hp,
     rendered output?
       
       QUESTION: What is the difference between `echo=FALSE` and `include=FALSE`?
-      ANSWER:
+      ANSWER: 'echo=FALSE' hides code from the output, so all we get are the results. 'include=FALSE'doesn't show the code for the output or the output, but still runs the code.
       
       QUESTION: Give an example of when you would use `include=FALSE` in a real report.
-    ANSWER:
+    ANSWER: When you're just trying to test if the code works in general, without wanting to load a long list of code. When it's done and you know it works, everything still looks clean as if not much changed.
       
       ### TASK:
       
@@ -915,18 +915,18 @@ plot(mtcars$disp, mtcars$hp,
       
       QUESTION: How did changing `fig.width` and `fig.height` affect the appearance of
     your plot?
-      ANSWER:
+      ANSWER: 'fig.width' sets the width of the plot, while 'fig.height' sets the height of the plot.
       
       QUESTION: Why might consistent figure sizing matter in a professional or academic
     report?
-      ANSWER:
+      ANSWER: Tidyness, making sure nothing overlaps in odd ways, and making sure everything is readable.
       
       ### TASK:
       
       Try setting `fig.width=4` and `fig.height=6` on the same chunk. Knit
     and observe how the plot changes. Describe what you notice below.
     
-    **Observation:** [Write your response here.]
+    **Observation:** The plot became a little more narrow and a little taller too.
     
     ------------------------------------------------------------------------
       
@@ -958,12 +958,12 @@ plot(mtcars$disp, mtcars$hp,
     document?
       
       QUESTION: How does a table of contents improve the readability of a long report?
-      ANSWER:
+      ANSWER: A table of contents allows a reader to jump to specific sections easily, allows for an easy process to follow, and is more tidy because it often comes with sections and subsections.
       
       QUESTION: The table of contents is automatically generated from your headings.
     What does this tell you about the importance of using proper heading
     levels (`#`, `##`, `###`) throughout your document?
-      ANSWER:
+      ANSWER: It's very important to label headings correctly if you want the table of contents to be correct.
       
       ------------------------------------------------------------------------
       
@@ -992,7 +992,7 @@ plot(mtcars$disp, mtcars$hp,
     **Your hyperlink:** [Write your hyperlink here.]
     
     QUESTION: When might adding a hyperlink be useful in a data report?
-      ANSWER:
+      ANSWER: Additional information/resources outside of the data itself can be easily accessed without having to search for it. 
       
       ------------------------------------------------------------------------
       
@@ -1011,7 +1011,7 @@ plot(mtcars$disp, mtcars$hp,
       - What improvements did you make to the report in Section 5?
       - Why is R Markdown useful for communicating data?
       
-      **Your conclusion:** [Write your response here.]
+      **Your conclusion:** In conclusion, I used datasets like 'mtcars' to create scatterplots and boxplots and used R Markdown to format them in different ways. I improved the report by adding inline code, learning how to hide code, messages, warnings, and outputs, by modifying figures, adding a table of contents, and adding hyperlinks. R Markdown is useful for communicating data, because we can integrate code with the results, create a more reproducible format, create a clearer path to readers and make our code more tidy/professional.
     
     ### TASK:
     
@@ -1020,7 +1020,7 @@ plot(mtcars$disp, mtcars$hp,
 32 rows," use `` `r nrow(mtcars)` `` to generate that number
     automatically.
     
-    **Your updated sentence with inline R code:** [Write your sentence here.]
+    **Your updated sentence with inline R code:** In conclusion, I used datasets like 'mtcars' (which has 'r nrow(mtcars)' rows) to create scatterplots and boxplots and used R Markdown to format them in different ways. I improved the report by adding inline code, learning how to hide code, messages, warnings, and outputs, by modifying figures, adding a table of contents, and adding hyperlinks. R Markdown is useful for communicating data, because we can integrate code with the results, create a more reproducible format, create a clearer path to readers and make our code more tidy/professional.
     
     ------------------------------------------------------------------------
       
@@ -1030,14 +1030,14 @@ plot(mtcars$disp, mtcars$hp,
     everything is working correctly. In your `.Rmd` file, replace each `[ ]`
     with `[x]` once you have confirmed that step.
     
-    - [ ] Inline R code displays correctly in rendered text
-    - [ ] Plots appear in the output without showing code (`echo=FALSE`)
-    - [ ] A chunk runs silently using `include=FALSE`
-    - [ ] No unnecessary warnings or messages appear (`message=FALSE`, `warning=FALSE`)
-    - [ ] Figure sizes have been adjusted using `fig.width` and `fig.height`
-    - [ ] Table of contents is visible at the top of the document
-    - [ ] At least two hyperlinks are present and clickable
-    - [ ] Conclusion paragraph is included with at least one inline R code value
+    - [x] Inline R code displays correctly in rendered text
+    - [x] Plots appear in the output without showing code (`echo=FALSE`)
+    - [x] A chunk runs silently using `include=FALSE`
+    - [x] No unnecessary warnings or messages appear (`message=FALSE`, `warning=FALSE`)
+    - [x] Figure sizes have been adjusted using `fig.width` and `fig.height`
+    - [x] Table of contents is visible at the top of the document
+    - [x] At least two hyperlinks are present and clickable
+    - [x] Conclusion paragraph is included with at least one inline R code value
     
     Once all boxes are checked, click **Knit** one final time to generate
     your completed report.
