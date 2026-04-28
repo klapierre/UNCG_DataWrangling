@@ -85,5 +85,33 @@ colnames(rename_meiosis2)
 fill_meiosis2<- rename_meiosis2%>%
   fill(strain_meiosis2:meiosis)
 
+## Transforming the data such that all the spindle lengths, number of SPB observed, and
+# number of ESCRTs in SPB are under same column
+
+transform_meiosis2_1 <- fill_meiosis2 %>% 
+  select(strain_meiosis2, date_meiosis2, meiosis, series_meiosis2, spindlelength_1_meiosis2, spb_observed_1_meiosis2, escrt_observed_1_meiosis2) %>% 
+  rename(strain_meiosis2 = "strain_meiosis2",
+         date_meiosis2 = "date_meiosis2",
+         meiosis = "meiosis",
+         series_meiosis2 = "series_meiosis2",
+         spindlelength_meiosis2 = "spindlelength_1_meiosis2",
+         spb_observed_meiosis2 = "spb_observed_1_meiosis2",
+         escrt_observed_meiosis2 =  "escrt_observed_1_meiosis2")
+
+colnames(transform_meiosis2_1)
+
+transform_meiosis2_2<- fill_meiosis2 %>% 
+  select(strain_meiosis2, date_meiosis2, meiosis, series_meiosis2, spindlelength_2_meiosis2, spb_observed_2_meiosis2, escrt_observed_2_meiosis2) %>% 
+  rename(strain_meiosis2 = "strain_meiosis2",
+         date_meiosis2 = "date_meiosis2",
+         meiosis = "meiosis",
+         series_meiosis2 = "series_meiosis2",
+         spindlelength_meiosis2 = "spindlelength_2_meiosis2",
+         spb_observed_meiosis2 = "spb_observed_2_meiosis2",
+         escrt_observed_meiosis2 =  "escrt_observed_2_meiosis2")
+
+colnames(transform_meiosis2_2)
+
+transform_meiosis2 <- rbind(transform_meiosis2_1, transform_meiosis2_2)
 
 
