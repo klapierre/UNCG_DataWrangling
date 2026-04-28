@@ -184,7 +184,9 @@ Placing a hashtag (#) at the beginning of a line turns it into a heading.
       \
     
     TASK: Rewrite Line 1 below and only italicize the word "italics." Leave two spaces at the end of sentence for a line break.  
-    ANSWER: This is an example to show how to make text *italics*.
+    ANSWER: This is an example to show how to make text *italics*.  
+    
+    ## I can get this to work in my personal R Mardown file, but I can't get it to work for the assignment.
       
       \
     
@@ -210,7 +212,7 @@ Placing a hashtag (#) at the beginning of a line turns it into a heading.
     QUESTION: Which of the following lines gives you bold text?  
       Line 1. This is an example to show how to make text bold.  
     **Line 2: This is an example to show how to make text bold.**  
-      ANSWER:  
+      ANSWER:  Line 2.
       
       \
     
