@@ -541,14 +541,14 @@ Don't forget to save and commit your changes.
     ```
     
     QUESTION: What does each point in this scatterplot represent?
-      ANSWER:
+      ANSWER: Each point represents each car.
       
       QUESTION: What relationship do you observe between weight and mpg?
-      ANSWER:
+      ANSWER: A negative relationship, because the heavier the car, the lower the mpg.
       
       QUESTION: Does the graph suggest a positive relationship, a negative relationship,
     or no relationship? Explain your answer.
-    ANSWER:
+    ANSWER: A negative relationship, because the heavier the car, the lower the mpg.
       
       ------------------------------------------------------------------------
       
@@ -581,17 +581,17 @@ Don't forget to save and commit your changes.
     ```
     
     QUESTION: What does each box in this plot represent?
-      ANSWER:
+      ANSWER: Each box represents a group of cars with the same number of cylinders.
       
       QUESTION: Which cylinder group appears to have the highest fuel efficiency?
-      ANSWER:
+      ANSWER: 4.
       
       QUESTION: Which cylinder group appears to have the lowest fuel efficiency?
-      ANSWER:
+      ANSWER: 8.
       
       QUESTION: Based on the boxplot, how does fuel efficiency seem to change as the
     number of cylinders increases?
-      ANSWER:
+      ANSWER: The more cylinders, the lower the fuel efficiency.
       
       ------------------------------------------------------------------------
       
@@ -613,7 +613,9 @@ Don't forget to save and commit your changes.
       ```{r summary_table}
     # Write your code below this line
     
-    
+avg_mpg_by_cyl <- mtcars %>%
+    group_by(cyl) %>%
+    summarize(avg_mpg = mean(mpg))
     
     ```
     
@@ -626,18 +628,20 @@ Don't forget to save and commit your changes.
       ```{r formatted_table}
     # Write your code below this line
     
-    
+avg_mpg_by_cyl
+
+ ## I hope I'm not misreading this, it just sounds like you'd print the data set name and get a table of results.
     
     ```
     
     QUESTION: What does this table show?
-      ANSWER:
+      ANSWER: The average mpg for each cyl group.
       
       QUESTION: Which cylinder group has the highest average mpg?
-      ANSWER:
+      ANSWER: 4.
       
       QUESTION: Which cylinder group has the lowest average mpg?
-      ANSWER:
+      ANSWER: 8.
       
       ------------------------------------------------------------------------
       
@@ -648,10 +652,10 @@ Don't forget to save and commit your changes.
     
     QUESTION: How does the scatterplot help you understand the relationship between
     weight and fuel efficiency?
-      ANSWER:
+      ANSWER: It visually shows what each car represents, displays a clear trend, and shows what may be outliers.
       
       QUESTION: How does the boxplot help you compare different groups of cars?
-      ANSWER:
+      ANSWER: Box plots are an easy way to summarize distribution data, so we see mean, median, and outliers. 
       
       ------------------------------------------------------------------------
       
@@ -666,12 +670,15 @@ Don't forget to save and commit your changes.
       ```{r Now_you_try}
     # Write your code below this line
     
-    
+plot(mtcars$disp, mtcars$hp,
+     xlab = "Displacement (cu.in.)",
+     ylab = "Horsepower",
+     title = "Horsepower vs Engine Displacement")
     
     ```
     
     QUESTION: What did you change, and how did it affect the output?
-      ANSWER:
+      ANSWER: I took the weight vs mpg scatter plot and made it about horsepower vs engine displacement. The output is changed in the sense that the axes represent different factors, while each point still represents each individual car. There's now a positive correlation.
       
       ------------------------------------------------------------------------
       
