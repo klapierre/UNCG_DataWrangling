@@ -70,8 +70,6 @@ references_data <- untidy_data[, c("Species", "Parental.care.references", "Terre
 # This will create a dataframe specific to the author references.
 
 
-## Notes:
-
 # Each dataframe still contains the "Species" column, because we need to make sure the data ties together even when separated.
 
 # The "Species" column is unique in every instance, so so it works well.
@@ -81,5 +79,60 @@ references_data <- untidy_data[, c("Species", "Parental.care.references", "Terre
 ### ------ Tidying Our Character/Numerical Data ------ ###
 
 
+# Part 1 - Drop Unused Columns (Works)
+tidy_data <- untidy_char_num_data %>%
+  select(-care_in_males_binary,
+         -care_in_females_binary,
+         -nourishment_by_females,
+         -nourishment_by_females_binary,
+         -protection) %>%
+  
+# Part 2 - Type of Care (Current)
+  mutate(value = 1) %>%
+  pivot_wider(names_from = type_of_care,
+              values_from = value,
+              values_fill = 0) %>%
+  rename(No parental care = "no care",
+         Female parental care = "female-only care",
+         Male parental care = "male-only care",
+         Biparental care = "biparental care") %>%
+  select(-"either parent") %>%
 
-#
+# Part 3 - Direct Development
+  mutate(value = 1) %>%
+  pivot_wider(names_from = direct_development,
+              values from = value,
+              values_fill = 0) %>%
+  rename(Full body development = Present,
+         Tadpole development = Absent) %>%
+
+# Part 4 - Care Duration (Male/Female)
+  mutate(value = 1) %>%
+  pivot_wider(names_from = care_duration_in_females,
+              values_from = value,
+              names_prefix = "female_care",
+              values_fill = 0) %>%
+  pivot_wider(names_from = care_duration_in_males,
+              values_from = value,
+              names_prefix = "male_care",
+              values_fill = 0) %>%
+
+# Part 5 - Care Duration (Egg/Tadpole/Juvenile)
+  mutate(value = 1) %>%
+  pivot_wider(names_from = care_duration,
+              values_from = value,
+              values_fill = 0) %>%
+  rename(Parental egg care = "1",
+         Parental tadpole care = "2",
+         Parental juvenile care = "3") %>%
+
+# Part 6 - Male/Female Protection
+  mutate(value = 1) %>%
+  pivot_wider(names_from = protection_in_females,
+              values_from = value,
+              names_prefix = "female_protection",
+              values_fill = 0) %>%
+  pivot_wider(names_from = protection_in_males,
+              values_from = value,
+              names_prefix = "male_protection",
+              values_fill = 0) %>%
