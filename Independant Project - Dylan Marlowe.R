@@ -1,6 +1,7 @@
 ### ------ Preparation ------ ###
 
 
+
 ## Obtaining resources:
 
 # The data used is within this link:
@@ -39,4 +40,46 @@ untidy_data <- read.csv2("Vagi+et+al_S3+Supplementary+data.csv")
 # Basically, we had to download a .csv file of a .csv2 file, pushing us to re-read it as such within R Studio.
 
 
-### ------ Step 1 ------ ###
+
+### ------ Splitting One Dataframe Into Three Dataframes ------ ###
+
+
+
+# Our "untidy_data" dataset can be broken down into three sections:
+
+# 1.) Names (Species, Family, and Clade)
+# 2.) Character/numerical data
+# 3.) Authors of references
+
+# We are only going to be focusing on the character/numerical data, so we don't need the extra clutter.
+
+# At the same time, we don't want to delete the rest of the data, so we will just separate them into three distinct datasets.
+
+names_data <- untidy_data[, c("Species", "Family", "Clade")]
+
+# This will create a dataframe specific to the names.
+
+untidy_char_num_data <- untidy_data[, !names(untidy_data) %in% c("Family", "Clade", "Parental.care.references", "Terrestrial...aquatic.reproduction.references", "Direct.development.references", "Female.size.references", "Male.size.references", "Egg.size.references", "Clutch.size.references")]
+
+# This will create a dataframe specific to the character/numerical data.
+
+# When creating a new dataframe for the character/numerical data, it was easier choosing what to remove than what to add.
+
+references_data <- untidy_data[, c("Species", "Parental.care.references", "Terrestrial...aquatic.reproduction.references", "Direct.development.references", "Female.size.references", "Male.size.references", "Egg.size.references", "Clutch.size.references")]
+
+# This will create a dataframe specific to the author references.
+
+
+## Notes:
+
+# Each dataframe still contains the "Species" column, because we need to make sure the data ties together even when separated.
+
+# The "Species" column is unique in every instance, so so it works well.
+
+
+
+### ------ Tidying Our Character/Numerical Data ------ ###
+
+
+
+#
