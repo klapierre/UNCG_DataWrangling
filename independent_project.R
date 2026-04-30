@@ -73,13 +73,15 @@ T1 <- T1 %>%
   mutate(date = as.Date(j_day - 1, origin = "2015-01-01"),
          site = as.factor(site),
          visitation_rate = as.numeric(visitation_rate),
-         temperature = as.numeric(temperature))
+         temperature = as.numeric(temperature)
+         )
 
 T2 <- T2 %>% 
   mutate(site = as.factor(site),
          bee_abundance = as.numeric(bee_abundance),
          visitation_rate = as.numeric(visitation_rate),
-         competitor_count = as.numeric(competitor_count))
+         competitor_count = as.numeric(competitor_count)
+         )
 
 T3 <- T3 %>% 
   mutate(date_open = as.Date(j_open - 1 , origin = "2015-01-01"),
@@ -90,6 +92,7 @@ T4 <- T4 %>%
   mutate(date_open = as.Date(j_open - 1, origin = "2015-01-01"),
          site = as.factor(site),
          pollen_limitation = as.numeric(pollen_limitation))
+  
 
 # T4 has a nasty outlier, let's remove it first.
 Q1 <- quantile(T4$pollen_limitation, 0.25, na.rm = T)
@@ -103,7 +106,8 @@ T4 <- T4 %>%
 T5 <- T5 %>% 
   mutate(date_open = as.Date(j_open - 1, origin = "2015-01-01"),
          site = as.factor(site),
-         treatment = as.factor(treatment))
+         treatment = as.factor(treatment)
+         )
 
 # Verify data structure before proceeding
 glimpse(c(T1, T2, T3, T4, T5))
@@ -127,7 +131,8 @@ T2_site_summary <- T2 %>%
   summarize(
     mean_flowers = mean(flower_count, na.rm = T),
     mean_bees = mean(bee_abundance, na.rm = T),
-    mean_visitation = mean(visitation_rate, na.rm = T)) %>% 
+    mean_visitation = mean(visitation_rate, na.rm = T)
+    ) %>% 
   ungroup()
 
 T3_site_summary <- T3 %>% 
@@ -171,7 +176,8 @@ T2_date_summary <- T2 %>%
   summarize(
     mean_flowers = mean(flower_count, na.rm = T),
     mean_bees = mean(bee_abundance, na.rm = T),
-    mean_visitation = mean(visitation_rate, na.rm = T)) %>% 
+    mean_visitation = mean(visitation_rate, na.rm = T)
+    ) %>% 
   ungroup()
 
 
@@ -189,7 +195,8 @@ T2_date_summary <- T2 %>%
         x = "Date",
         y = "Flower Count",
         color = "Site") +
-   transition_reveal(date))
+   transition_reveal(date)
+ )
 
 # Visualize the relationship between flower abundance and bee visitation
 (plot_T1_visitation <- T1 %>% 
@@ -201,7 +208,8 @@ T2_date_summary <- T2 %>%
     labs(title = "Flower Abundance versus Bee Visitation",
          x = "Flower Count",
          y = "log(Visitation Rate + 1)",
-         color = "Site"))
+         color = "Site")
+  )
 
 # Visualize bee abundance over time
 (plot_T2 <- T2 %>% 
@@ -215,7 +223,8 @@ T2_date_summary <- T2 %>%
     labs(title = "Weekly Bee Abundance Across Sites",
          x = "Week",
          y  = "Bee Abundance",
-         color = "Site"))
+         color = "Site")
+  )
 
 # Visualize the relationship between Bee Visitation and Seed Set %
 (plot_T3 <- T3 %>% 
@@ -228,7 +237,8 @@ T2_date_summary <- T2 %>%
     labs(title = "Bee Visits versus Seed Set",
          x = "Bee Visits",
          y = "Seed Set (%)",
-         color = "Site"))
+         color = "Site")
+  )
 
 # Visualize the relationship between Pollen Limitation and Seed Set %
 (plot_T4 <- T4 %>% 
@@ -240,10 +250,12 @@ T2_date_summary <- T2 %>%
     labs(title = "Pollen Limitation Effect on Seed Set",
          x = "Pollen Limitation",
          y = "Seed Set (%)") +
-    stat_poly_eq(aes(label = paste(..eq.label.., ..p.value.label.., sep = "~")))
+    stat_poly_eq(aes(label = paste(..eq.label.., 
+                                   ..p.value.label.., 
+                                   sep = "~")))
 ) 
 # ^ Fought with this for a wile, only works with the .. before and after each label,
-# I'm not sure why!
+# I'm not sure why! This is a new package/technique to me.
 
 
 # Visualize the results of each pollination treatment on Seed Set %
@@ -264,7 +276,8 @@ T2_date_summary <- T2 %>%
                          c("hand", "open"),
                          c("hand", "pollinator exclusion"),
                          c("open", "pollinator exclusion")
-                       )))
+                       ))
+  )
 
 # Export ------------------------------------------------------------------
 
