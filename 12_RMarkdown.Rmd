@@ -716,13 +716,21 @@ Write your code below:
 
 ```{r Now_you_try}
 # Write your code below this line
-
+plot(
+  mtcars$hp,
+  mtcars$mpg,
+  main = "Horsepower vs Fuel Efficiency",
+  xlab = "Horsepower",
+  ylab = "Miles Per Gallon",
+  col = "red",
+  pch = 19
+)
 
 
 ```
 
 QUESTION: What did you change, and how did it affect the output?
-ANSWER:
+ANSWER:i changed the scatterplot varibales to compare horsepower and miles per gallon instead of weight and mpg.I also changed the point color to red.this made the plot show the relationship between horepower and ful efficiency. 
 
 ------------------------------------------------------------------------
 
@@ -760,11 +768,11 @@ Did the numbers appear automatically in your rendered sentence?
 
 QUESTION: What is inline R code, and how is it different from a regular code
 chunk?
-ANSWER:
+ANSWER:inline  r code lets you place R results directly inside a sentence using backticks and R.
 
 QUESTION: Why is inline R code useful when working with a dataset that might be
 updated or changed over time?
-ANSWER:
+ANSWER:unline R code is useful because it automatically updates the results in your sentences if the dataset changes.this help keep your report accurate without changing the numbers each time. 
 
 ### TASK:
 
@@ -772,7 +780,7 @@ Now try writing your own inline R code sentence. Using the mtcars
 dataset, write a sentence that includes the maximum horsepower value
 using inline R code. The function `max()` will be helpful here.
 
-**Your sentence:** [Write your sentence with inline R code here.]
+**Your sentence:** [Write your sentence with inline R code here.] r max(mtcars$hp)
 
 ### Why This Matters
 
