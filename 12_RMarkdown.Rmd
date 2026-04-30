@@ -549,7 +549,7 @@ Create a scatter plot with wt on the x-axis and mpg on the y-axis.
 
 ```{r scatterplot}
 # Write your code below this line
-
+plot(mtcars$wt, mtcars$mpg)
 
 
 ```
@@ -564,20 +564,27 @@ col=)
 
 ```{r scatterplot_labeled}
 # Write your updated scatterplot code below this line
-
+plot(
+  mtcars$wt,
+  mtcars$mpg,
+  main = "Car Weight vs Fuel Efficiency",
+  xlab = "Weight",
+  ylab = "Miles Per Gallon",
+  col = "blue"
+)
 
 
 ```
 
 QUESTION: What does each point in this scatterplot represent?
-ANSWER:
+ANSWER:each point represents one car in the mtcars dataset.the ooint shows that cars weight on the x-axis and its fuel effciency in miles per gallon 
 
 QUESTION: What relationship do you observe between weight and mpg?
-ANSWER:
+ANSWER:as weight increases,mpg generally decreases.heaiver cars tend to have lower fuel effciency 
 
 QUESTION: Does the graph suggest a positive relationship, a negative relationship,
 or no relationship? Explain your answer.
-ANSWER:
+ANSWER:the grpah suggestes a negative relationship because the points move downward as weight increases. this means cars with weight usally have lower mpg 
 
 ------------------------------------------------------------------------
 
