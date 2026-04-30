@@ -298,3 +298,73 @@ td_rename_reorder <- td_reintegration %>%
 
 
 
+## -- Bar Graph of Parental Care Type -- ##
+
+plot_care_type <- td_rename_reorder %>%
+  summarize(no_parental_care = sum(no_parental_care,
+                                   na.rm = TRUE),
+            male_parental_care = sum(male_parental_care,
+                                     na.rm = TRUE),
+            female_parental_care = sum(female_parental_care,
+                                       na.rm = TRUE),
+            biparental_care = sum(biparental_care,
+                                           na.rm = TRUE)) %>%
+  pivot_longer(everything(),
+               names_to = "care_type",
+               values_to = "count")
+
+
+ggplot(plot_care_type,
+       aes(x = care_type,
+           y = count,
+           fill = care_type)) +
+  geom_col() +
+  theme_minimal() +
+  labs(title = "Total Count of Parental Care Types",
+       x = "Care Type",
+       y = "Number of Observations") +
+  theme(legend.position = "none")
+
+
+## -- Bar Graph of Parental Behaviors -- ##
+
+plot_m_f_protection <- td_rename_reorder %>%
+  summarize(male_nest_protection = sum(male_nest_protection,
+                                   na.rm = TRUE),
+            female_nest_protection = sum(female_nest_protection,
+                                     na.rm = TRUE),
+            male_parental_attendance = sum(male_parental_attendance,
+                                       na.rm = TRUE),
+            female_parental_attendance = sum(female_parental_attendance,
+                                  na.rm = TRUE),
+            male_back_carrying = sum(male_back_carrying,
+                                             na.rm = TRUE),
+            female_back_carrying = sum(female_back_carrying,
+                                             na.rm = TRUE),
+            male_internal_carrying = sum(male_internal_carrying,
+                                             na.rm = TRUE),
+            female_internal_carrying = sum(female_internal_carrying,
+                                             na.rm = TRUE),
+            female_viviparity = sum(female_viviparity,
+                                             na.rm = TRUE)) %>%
+  pivot_longer(everything(),
+               names_to = "type",
+               values_to = "count") %>%
+  separate(type, into = c("sex", "behavior"),
+           sep = "_", extra = "merge")
+
+
+ggplot(plot_m_f_protection,
+       aes(x = behavior,
+           y = count,
+           fill = sex)) +
+  geom_col(position = "dodge") +
+  coord_flip() +
+  scale_y_continuous(breaks = seq(0,
+                                  max(plot_m_f_protection$count),
+                                  by = 25)) +
+  theme_minimal() +
+  labs(title = "Parental Behaviors by Sex",
+       x = "Behvaior",
+       y = "Number of Observations",
+       fill = "sex")
