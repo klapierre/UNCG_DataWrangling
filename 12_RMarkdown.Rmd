@@ -926,10 +926,10 @@ When using `include=FALSE`, does anything from this chunk appear in the
 rendered output?
 
 QUESTION: What is the difference between `echo=FALSE` and `include=FALSE`?
-ANSWER:
+ANSWER:echo=False hides the code but still shows the output,such as plots,tables or even results.
 
 QUESTION: Give an example of when you would use `include=FALSE` in a real report.
-ANSWER:
+ANSWER:i would use include=false for a setup chunck where i load packages or prepare/clean data.
 
 ### TASK:
 
@@ -937,7 +937,7 @@ Now use the `my_summary` object created in the chunk above inside an
 inline R code sentence below. Even though the chunk is hidden, the
 object is still available to use. Copy and paste the lines below
 **outside** of a code chunk and Knit to confirm the values appear.
-
+The average miles per gallon in the mtcars dataset is `r round(my_summary, 2)`.
     The average miles per gallon across all cars is `r my_summary$mean_mpg` and the most powerful engine produces `r my_summary$max_hp` horsepower.
 
 ### Check
@@ -973,25 +973,30 @@ again.
 
 **Hint:** Your chunk header should look like this when you are done:
 ` ```{r fig.width=8, fig.height=4} `
-
+```{r fig.width=8, fig.height=4}
+plot(mtcars$wt, mtcars$mpg,
+     main = "Car Weight vs Fuel Efficiency",
+     xlab = "Weight",
+     ylab = "Miles Per Gallon",
+     col = "blue")
 ### Check
 
 Did the shape of the plot change in your rendered output?
 
 QUESTION: How did changing `fig.width` and `fig.height` affect the appearance of
 your plot?
-ANSWER:
+ANSWER:changing fig.width=8 and fig.hieght=4 made the plot wider and shorter.this changed the shape of the grpah.
 
 QUESTION: Why might consistent figure sizing matter in a professional or academic
 report?
-ANSWER:
+ANSWER:consistent figure sizing makes the report look cleaner more organized and easer to read.
 
 ### TASK:
 
 Try setting `fig.width=4` and `fig.height=6` on the same chunk. Knit
 and observe how the plot changes. Describe what you notice below.
 
-**Observation:** [Write your response here.]
+**Observation:** [Write your response here.]changing width and hieght to 4 and 6 made the plot narrower and taller.the grpah looks more streched vertially and the points hav less horzontial space compared to woder points
 
 ------------------------------------------------------------------------
 
