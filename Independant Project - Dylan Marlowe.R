@@ -25,6 +25,7 @@ library(tidyverse)
 
 # "tidyverse" is a key package in tidying our data, as it contains many functions that allow us to alter and visualize our data in future steps.
 
+
 untidy_data <- read.csv2("Vagi+et+al_S3+Supplementary+data.csv")
 
 # Here, we are creating a dataframe, that we can use as a baseline for the rest of this project, out of the data we downloaded earlier.
@@ -379,3 +380,5 @@ ggplot(plot_m_f_protection,
 
 # Here, we are actually making the plot. I changed the position and scale of everything to better fit the idea in my head to allow for the best comparison I could think of. I think this one turned out really well.
 # Since we're comparing two groups in five different categories, we need the legend to discern what we're looking at, so we don't have the code removing it here.
+
+### ------ END ------ ###
