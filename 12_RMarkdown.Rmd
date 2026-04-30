@@ -862,21 +862,27 @@ I saw package loading messages from library(tidyverse) such as the tidyverse pac
 
 Now add `message=FALSE` and `warning=FALSE` to the chunk header above
 and Knit again.
-
+```{r, message=FALSE, warning=FALSE}
+library(tidyverse)
+summary(mtcars)
+```
 **Hint:** Your chunk header should look like this when you are done:
 ` ```{r message=FALSE, warning=FALSE} `
-
+```{r message=FALSE, warning=FALSE}
+library(tidyverse)
+summary(mtcars)
+```
 ### Check
 
 Did the extra messages disappear from your rendered output?
 
 QUESTION: What is the difference between `message=FALSE` and `warning=FALSE`?
 When might you need to use both at the same time?
-ANSWER:
+ANSWER:message=false hides regualr package messages, like when tidyverse loads and prints attached packages.waring=false hides waring messages,which happen R sees a possible issue but can still run code 
 
 QUESTION: Is it always a good idea to suppress warnings? Can you think of a case
 where seeing a warning might actually be important?
-ANSWER:
+ANSWER:no it is not always a good idea to suppress warings.warnings can tell you when something may be wrong with your code for data.
 
 ### Why This Matters
 
