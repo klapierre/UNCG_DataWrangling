@@ -1021,6 +1021,12 @@ output:
     toc: true
 ---
 ```
+title: "Group5_RMarkdown"
+author: "Arnav Pandey, Themesha Parker, Michelle Bautista Canuto, Dhanush Devanand"
+date: "2026-04-26"
+output:
+  html_document:
+    toc: true
 
 ### Check
 
@@ -1028,12 +1034,12 @@ Do you now see a table of contents at the top of your rendered HTML
 document?
 
 QUESTION: How does a table of contents improve the readability of a long report?
-ANSWER:
+ANSWER:a table of contnets makes a long report easier long report easier to navigate because readers can quickly see the main sections and jump to the part they need.
 
 QUESTION: The table of contents is automatically generated from your headings.
 What does this tell you about the importance of using proper heading
 levels (`#`, `##`, `###`) throughout your document?
-ANSWER:
+ANSWER:it shows that heading levels help organize the srcure of the report.using proper headings makes the table contents clear and helps readers understand which sections are main topics and which are smaller.
 
 ------------------------------------------------------------------------
 
@@ -1062,7 +1068,7 @@ syntax.
 **Your hyperlink:** [Write your hyperlink here.]
 
 QUESTION: When might adding a hyperlink be useful in a data report?
-ANSWER:
+ANSWER:adding a hyperlink is useful when you want readers to find more information about dataset methods and pacges or even sources.
 
 ------------------------------------------------------------------------
 
