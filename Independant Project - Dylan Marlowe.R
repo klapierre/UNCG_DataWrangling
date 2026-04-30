@@ -313,6 +313,8 @@ plot_care_type <- td_rename_reorder %>%
                names_to = "care_type",
                values_to = "count")
 
+# In this step, I'm creating a dataframe that has been pivoted and can be called when actually making the plot.
+
 
 ggplot(plot_care_type,
        aes(x = care_type,
@@ -324,6 +326,9 @@ ggplot(plot_care_type,
        x = "Care Type",
        y = "Number of Observations") +
   theme(legend.position = "none")
+
+# Here, we are taking our different parental care types and comparing them through a bar graph system. I thought this would be best, since I'm just summing up the binary 1s and counting them to show scale. 
+# I figured I didn't need a legend, since it's a simple comparison where the axes tell us everything we need to know.
 
 
 ## -- Bar Graph of Parental Behaviors -- ##
@@ -353,6 +358,9 @@ plot_m_f_protection <- td_rename_reorder %>%
   separate(type, into = c("sex", "behavior"),
            sep = "_", extra = "merge")
 
+# Much like the last plot, I'm creating a dataframe that has been pivoted and can be called when actually making the plot.
+# This version is slightly more complex, because we have more objects to use and the idea is to compare two groups together.
+
 
 ggplot(plot_m_f_protection,
        aes(x = behavior,
@@ -368,3 +376,6 @@ ggplot(plot_m_f_protection,
        x = "Behvaior",
        y = "Number of Observations",
        fill = "sex")
+
+# Here, we are actually making the plot. I changed the position and scale of everything to better fit the idea in my head to allow for the best comparison I could think of. I think this one turned out really well.
+# Since we're comparing two groups in five different categories, we need the legend to discern what we're looking at, so we don't have the code removing it here.
