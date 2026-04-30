@@ -654,7 +654,13 @@ Use the space below to write your code:
 
 ```{r summary_table}
 # Write your code below this line
+library(dplyr)
 
+avg_mpg_by_cyl <- mtcars %>%
+  group_by(cyl) %>%
+  summarize(avg_mpg = mean(mpg))
+
+avg_mpg_by_cyl
 
 
 ```
@@ -667,19 +673,22 @@ Use the space below to write your code:
 
 ```{r formatted_table}
 # Write your code below this line
-
+knitr::kable(
+  avg_mpg_by_cyl,
+  caption = "Average Miles Per Gallon by Cylinder Group"
+)
 
 
 ```
 
 QUESTION: What does this table show?
-ANSWER:
+ANSWER:this table shows the average miles per gallon for each cylinder group in mtcars dataset 
 
 QUESTION: Which cylinder group has the highest average mpg?
-ANSWER:
+ANSWER:the 4-cylinder group has the highest average mpg 
 
 QUESTION: Which cylinder group has the lowest average mpg?
-ANSWER:
+ANSWER:the 8-cylinder group has the lowest average mpg 
 
 ------------------------------------------------------------------------
 
