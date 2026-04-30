@@ -818,17 +818,24 @@ plot(mtcars$wt, mtcars$mpg,
 Do you see the plot in the output but **not** the code that created it?
 
 QUESTION: Why might you want to hide code in a final report?
-ANSWER:
+ANSWER:you might hide code to make the final report looks cleaner ans easier to read.
 
 QUESTION: Can you think of a situation where you would want to **show** your code
 in a report rather than hide it? Who might be reading that report?
-ANSWER:
+ANSWER:you would want to show your code if the reoirt is for a class,instructor, or research project where someone need to check how your got your results.
 
 ### TASK:
 
 Now apply `echo=FALSE` to the ggplot chunk you created back in Section
 3. Knit the document and confirm only the plot appears.
-
+```{r, echo=FALSE}
+ggplot(mtcars, aes(x = wt, y = mpg)) +
+  geom_point(color = "blue") +
+  labs(
+    title = "Car Weight vs Fuel Efficiency",
+    x = "Weight",
+    y = "Miles Per Gallon"
+  )
 ------------------------------------------------------------------------
 
 ## Step 3: Removing Warnings and Messages
@@ -850,7 +857,7 @@ summary(mtcars)
 ```
 
 **What messages or warnings did you see?** [Write your response here.]
-
+I saw package loading messages from library(tidyverse) such as the tidyverse packages being attached and possible conflicts with other functions.
 ### TASK: — Part B: Suppress the messages
 
 Now add `message=FALSE` and `warning=FALSE` to the chunk header above
