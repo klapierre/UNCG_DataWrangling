@@ -27,17 +27,19 @@ library(tidyverse)
 
 untidy_data <- read.csv2("Vagi+et+al_S3+Supplementary+data.csv")
 
-# Here, we are creating a dataframe that we can use as a baseline for the rest of this project, out of the data we downloaded earlier.
+# Here, we are creating a dataframe, that we can use as a baseline for the rest of this project, out of the data we downloaded earlier.
 
-# So, if you opened the .csv file you downloaded straight from your file folder, you would notice that everything seemed smashed into one column.
+# So, if you opened the .csv file you downloaded, you would notice that everything seemed smashed into one column.
 
-#We have a problem before we can even start.
+# We seem to have a problem before we can even start.
 
 # The "read.csv" function does not work, so we need to use the "read.csv2" function. 
 
 # The "read.csv" function reads through comma-separated files while the "read.csv2" function reads through semicolon-separated files.
 
-# Basically, we had to download a .csv file of a .csv2 file, pushing us to re-read it as such within R Studio.
+# Basically, we had to download a .csv version of a .csv2 file, forcing us to re-read it as such within R Studio.
+
+# Now we're back on track!
 
 
 
@@ -72,67 +74,111 @@ references_data <- untidy_data[, c("Species", "Parental.care.references", "Terre
 
 # Each dataframe still contains the "Species" column, because we need to make sure the data ties together even when separated.
 
-# The "Species" column is unique in every instance, so so it works well.
+# The "Species" column is unique in every instance, so it works well.
 
 
 
 ### ------ Tidying Our Character/Numerical Data ------ ###
 
 
-# Part 1 - Drop Unused Columns (Works)
-tidy_data <- untidy_char_num_data %>%
+## -- Part 1: Dropping Unused Columns -- ##
+
+tidy_data_part_1 <- untidy_char_num_data %>%
   select(-care_in_males_binary,
          -care_in_females_binary,
          -nourishment_by_females,
          -nourishment_by_females_binary,
-         -protection) %>%
+         -protection,
+         -care_duration_in_males,
+         -care_duration_in_females)
   
-# Part 2 - Type of Care (Current)
+## -- Part 2: Pivoting Type of Care Column -- ##
+
+tidy_data_part_2 <- tidy_data_part_1 %>%
+  filter(!is.na(type_of_care)) %>%
   mutate(value = 1) %>%
   pivot_wider(names_from = type_of_care,
               values_from = value,
               values_fill = 0) %>%
-  rename(No parental care = "no care",
-         Female parental care = "female-only care",
-         Male parental care = "male-only care",
-         Biparental care = "biparental care") %>%
-  select(-"either parent") %>%
+  rename(`no_parental_care` = `no care`,
+         `female_parental care` = `female-only care `,
+         `male_parental care` = `male-only care `,
+         `biparental_care` = `biparental care`) %>%
+  select(-"either parent")
 
-# Part 3 - Direct Development
+## -- Part 3: Pivoting Direct Development Column -- ##
+
+tidy_data_part_3 <- tidy_data_part_2 %>%
   mutate(value = 1) %>%
   pivot_wider(names_from = direct_development,
-              values from = value,
-              values_fill = 0) %>%
-  rename(Full body development = Present,
-         Tadpole development = Absent) %>%
-
-# Part 4 - Care Duration (Male/Female)
-  mutate(value = 1) %>%
-  pivot_wider(names_from = care_duration_in_females,
               values_from = value,
-              names_prefix = "female_care",
               values_fill = 0) %>%
-  pivot_wider(names_from = care_duration_in_males,
-              values_from = value,
-              names_prefix = "male_care",
-              values_fill = 0) %>%
+  rename(full_body_development = present,
+         tadpole_development = absent)
 
-# Part 5 - Care Duration (Egg/Tadpole/Juvenile)
+## -- Part 4: Pivoting Care Duration Column -- ##
+
+tidy_data_part_4 <- tidy_data_part_3 %>%
+  filter(!is.na(care_duration)) %>%
   mutate(value = 1) %>%
   pivot_wider(names_from = care_duration,
               values_from = value,
               values_fill = 0) %>%
-  rename(Parental egg care = "1",
-         Parental tadpole care = "2",
-         Parental juvenile care = "3") %>%
+  select(-`0`) %>%
+  rename(parental_egg_care = `1`,
+         parental_tadpole_care = `2`,
+         parental_juvenile_care = `3`)
 
-# Part 6 - Male/Female Protection
+## -- Part 5.1: Creating Male Protection Data -- ##
+
+tidy_data_males <- tidy_data_part_4 %>%
+  filter(!is.na(protection_in_males)) %>%
+  mutate(value = 1) %>%
+  pivot_wider(names_from = protection_in_males,
+              values_from = value,
+              values_fill = 0) %>%
+  select(-`0`) %>%
+  rename(male_nest_protection = `1`,
+         male_parental_attendance = `2`,
+         male_back_carrying = `3`,
+         male_internal_carrying = `4`) %>%
+  select("Species",
+         "male_nest_protection", 
+         "male_parental_attendance", 
+         "male_back_carrying", 
+         "male_internal_carrying")
+
+## -- Part 5.2: Creating Female Protection Data -- ##
+
+tidy_data_females <- tidy_data_part_4 %>%
+  filter(!is.na(protection_in_females)) %>%
   mutate(value = 1) %>%
   pivot_wider(names_from = protection_in_females,
               values_from = value,
-              names_prefix = "female_protection",
               values_fill = 0) %>%
-  pivot_wider(names_from = protection_in_males,
-              values_from = value,
-              names_prefix = "male_protection",
-              values_fill = 0) %>%
+  select(-`0`) %>%
+  rename(female_nest_protection = `1`,
+         female_parental_attendance = `2`,
+         female_back_carrying = `3`,
+         female_internal_carrying = `4`,
+         female_viviparity = `5`) %>%
+  select("Species",
+         "female_nest_protection",
+         "female_parental_attendance",
+         "female_back_carrying",
+         "female_internal_carrying",
+         "female_viviparity")
+  
+## -- Part 5.3: Combining Male and Female Protection Data -- ##
+
+tidy_data_m_f <- left_join(tidy_data_males,
+                           tidy_data_females,
+                           by = "Species")
+
+## -- Part 5.4: Reintegrating Protection Data Into Main Dataframe -- ##
+
+tidy_data_part_5 <- left_join(tidy_data_m_f,
+                              tidy_data_part_4,
+                              by = "Species") %>%
+  select(-c("protection_in_males",
+            "protection_in_females"))
