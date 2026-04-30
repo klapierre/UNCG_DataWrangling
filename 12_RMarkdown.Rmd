@@ -699,10 +699,10 @@ information they provide.
 
 QUESTION: How does the scatterplot help you understand the relationship between
 weight and fuel efficiency?
-ANSWER:
+ANSWER:the scatterplot shows that as car weight increases,fuel efficieny usally decreases 
 
 QUESTION: How does the boxplot help you compare different groups of cars?
-ANSWER:
+ANSWER:the boxplot helps compare mpg across different cylinder groups.
 
 ------------------------------------------------------------------------
 
