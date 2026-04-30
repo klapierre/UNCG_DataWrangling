@@ -599,7 +599,7 @@ Create a boxplot of mpg by cyl using the boxplot function
 
 ```{r boxplot1}
 # Write your code below this line
-
+boxplot(mpg ~ cyl, data = mtcars)
 
 
 ```
@@ -611,23 +611,29 @@ y-axis label, and a fill color of your choice
 
 ```{r boxplot2}
 # Write your updated boxplot code below this line
-
+boxplot(
+  mpg ~ cyl,
+  data = mtcars,
+  main = "Fuel Efficiency by Number of Cylinders",
+  xlab = "Number of Cylinders",
+  ylab = "Miles Per Gallon",
+  col = "lightblue")
 
 
 ```
 
 QUESTION: What does each box in this plot represent?
-ANSWER:
+ANSWER:each box represents the mpg values for cars in one cylinder group,such as 4-cylinder 6 and 8 cylinder 
 
 QUESTION: Which cylinder group appears to have the highest fuel efficiency?
-ANSWER:
+ANSWER:the 4-cylinder group appears to have the highest fuel effincey 
 
 QUESTION: Which cylinder group appears to have the lowest fuel efficiency?
-ANSWER:
+ANSWER:the 8-cylinder group appears to have the lowest fuel efficiency 
 
 QUESTION: Based on the boxplot, how does fuel efficiency seem to change as the
 number of cylinders increases?
-ANSWER:
+ANSWER:as the number of cylinders increases,fuel effciency seems to decrease.cars with 4 cylinders have highest mpg,while cars with 8 cylinders have the lowesr mpg 
 
 ------------------------------------------------------------------------
 
