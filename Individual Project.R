@@ -1,7 +1,100 @@
+#Loading in any packages I might need
 library(tidyverse)
+library(stringr)
+library(lubridate)
+#Loading the data set into my script
+plant_pollinators<-read.csv("SA02601_v6.csv", stringsAsFactors = FALSE)
+#Going through the names to see how I might need to adjust them
+colnames(plant_pollinators)
+#Getting a full idea of all the types of observations I have
+str(plant_pollinators)
+summary(plant_pollinators)
+head(plant_pollinators)
+# Convert all titles to lowercase, so they are a more standard format
+names(plant_pollinators) <- str_to_lower(names(plant_pollinators))
+# Replace spaces or weird characters with underscore, to match naming formats
+names(plant_pollinators) <- gsub(" ", "_", names(plant_pollinators))
+names(plant_pollinators) <- gsub("\\.", "_", names(plant_pollinators))
+#checking the names after adjusting them
+names(plant_pollinators)
+#To ensure that there are no human error extra characters, we are using the str_trim function on the priority columns
+plant_pollinators <- plant_pollinators %>%
+  mutate(
+    pltsp_name = str_trim(pltsp_name),
+    vissp_name = str_trim(vissp_name),
+    meadow = str_trim(meadow),
+    observer = str_trim(observer))
+# Remove any columns that are difficult to understand or are not applicable, etc.
+plant_pollinators <- plant_pollinators %>%
+  select( -start_time, -end_time, -pltsp_code,-vissp_code, -ref_no, -vissp_no, 
+          -qc_notes)
+# Remove rows missing species info
+plant_pollinators <- plant_pollinators %>%
+  filter(!is.na(pltsp_name), !is.na(vissp_name))
+# Remove empty strings
+plant_pollinators <- plant_pollinators %>%
+  filter(pltsp_name != "", vissp_name != "")
 
-plant_pollinators<-read.csv("SA02601_v6.csv")
+#Code to go through and edit to how I want it ####
+#Counting species interactions
+interaction_counts <- plant_pollinators %>%
+  group_by(pltsp_name, vissp_name) %>%
+  summarise(visits = n(), .groups = "drop")
 
+plant_visits <- plant_pollinators %>%
+  group_by(pltsp_name) %>%
+  summarise(total_visits = n(), .groups = "drop")
+
+pollinator_visits <- plant_pollinators %>%
+  group_by(vissp_name) %>%
+  summarise(total_visits = n(), .groups = "drop")
+
+#Top species code
+top_plants <- plant_visits %>%
+  arrange(desc(total_visits)) %>%
+  slice(1:10)
+
+top_pollinators <- pollinator_visits %>%
+  arrange(desc(total_visits)) %>%
+  slice(1:10)
+
+#Top plants figure
+ggplot(top_plants, aes(x = reorder(pltsp_name, total_visits), y = total_visits)) +
+  geom_col(fill = "darkgreen") +
+  coord_flip() +
+  labs(
+    title = "Top Plant Species by Visits",
+    x = "Plant Species",
+    y = "Visits"
+  ) +
+  theme_minimal()
+
+#Top Pollinators Figure
+ggplot(top_pollinators, aes(x = reorder(vissp_name, total_visits), y = total_visits)) +
+  geom_col(fill = "orange") +
+  coord_flip() +
+  labs(
+    title = "Top Pollinator Species",
+    x = "Pollinator Species",
+    y = "Visits"
+  ) +
+  theme_minimal()
+
+#Heatmap figure
+top_interactions <- interaction_counts %>%
+  filter(pltsp_name %in% top_plants$pltsp_name,
+         vissp_name %in% top_pollinators$vissp_name)
+
+ggplot(top_interactions,
+       aes(x = pltsp_name, y = vissp_name, fill = visits)) +
+  geom_tile() +
+  scale_fill_viridis_c() +
+  labs(
+    title = "Plant–Pollinator Interaction Heatmap",
+    x = "Plant",
+    y = "Pollinator"
+  ) +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
 
 
 #individual project take 2
