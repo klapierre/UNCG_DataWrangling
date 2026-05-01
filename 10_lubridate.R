@@ -168,7 +168,8 @@ round_date(mdy("April 16 2026"), "month")
 
 rollback(todays_timestamp, roll_to_first = FALSE, preserve_hms = TRUE)
 
-#Rollback goes to the month before and retains the same day
+#Rollback goes to the month before and retains the same day, roll_to_first goes
+#to the first day of the month before, and preserve_hms just keeps the same hms even when day/month is changes.
 
 
 # TASK: Create a dataframe named 'flight_data_rounded' from our 'flight_data_parsed' dataframe that includes a column named 'rounded_flight_date' that rounds the flight date to the nearest month. 
