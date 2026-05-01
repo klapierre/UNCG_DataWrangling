@@ -3,7 +3,8 @@ library(tidyverse)
 library(stringr)
 library(lubridate)
 #Loading the data set into my script
-plant_pollinators<-read.csv("SA02601_v6.csv", stringsAsFactors = FALSE)
+plant_pollinators<-read.csv("SA02601_v6.csv", 
+                            stringsAsFactors = FALSE)
 #Going through the names to see how I might need to adjust them
 colnames(plant_pollinators)
 #Getting a full idea of all the types of observations I have
@@ -24,45 +25,100 @@ plant_pollinators <- plant_pollinators %>%
     vissp_name = str_trim(vissp_name),
     meadow = str_trim(meadow),
     observer = str_trim(observer))
-# Remove any columns that are difficult to understand or are not applicable, etc.
+# Remove any columns that are difficult to understand or are not applicable, etc
 plant_pollinators <- plant_pollinators %>%
-  select( -start_time, -end_time, -pltsp_code,-vissp_code, -ref_no, -vissp_no, 
-          -qc_notes)
+  select( -start_time, -end_time, -pltsp_code,-vissp_code,
+          -ref_no, -vissp_no,-qc_notes)
 # Remove rows missing species info
 plant_pollinators <- plant_pollinators %>%
-  filter(!is.na(pltsp_name), !is.na(vissp_name))
+  filter(!is.na(pltsp_name), 
+         !is.na(vissp_name))
 # Remove empty strings
 plant_pollinators <- plant_pollinators %>%
-  filter(pltsp_name != "", vissp_name != "")
+  filter(pltsp_name != "",
+         vissp_name != "")
 #Change any names that are very difficult to understand
 plant_pollinators<-plant_pollinators %>%
   rename(plant_species=pltsp_name,
          visiter_name=vissp_name,
-         visiter_type=vissp_type,)
-
+         visiter_type=vissp_type)
+#I do not understand what the acronyms mean, so I need to make a list of all of
+#them, so I can change the inputs
+unique(plant_pollinators$wind)
+#For wind there is ST and BR
+#Convert wind Acronyms to understandable values
+plant_pollinators <- plant_pollinators %>%
+  mutate(
+    wind_category = case_when(
+      wind == "ST" ~ "still (no wind)",
+      wind == "BR" ~ "breeze",
+      TRUE ~ "unknown"))
+#Remove original Wind column
+plant_pollinators <- plant_pollinators %>%
+  select(-wind)
+#For clouds there is S, PC, C, and SH
+unique(plant_pollinators$clouds)
+#convert cloud acroynms to understandable values
+plant_pollinators <- plant_pollinators %>%
+  mutate(
+    cloud_category = case_when(
+      clouds == "S" ~ "sunny",
+      clouds == "PC" ~ "partly cloudy",
+      clouds == "C" ~ "cloudy",
+      clouds == "SH" ~ "showers",
+      TRUE ~ "unknown"))
+#Remove original cloud column
+plant_pollinators<-plant_pollinators %>%
+  select(-clouds)
+# Check for duplicate rows
+sum(duplicated(plant_pollinators))
+# View duplicate rows if any exist
+plant_pollinators[duplicated(plant_pollinators), ]
+# Check missing values
+colSums(is.na(plant_pollinators))
+# Check unique values for key variables
+unique(plant_pollinators$meadow)
+unique(plant_pollinators$visiter_type)
+#Make the dates easier to understand
+plant_pollinators <- plant_pollinators %>%
+  mutate(
+    sampledate = mdy(sampledate),
+    year = year(sampledate),
+    month = month(sampledate, label = TRUE),
+    day = day(sampledate)
+  )
 #Code to go through and edit to how I want it ####
 #Counting species interactions
 interaction_counts <- plant_pollinators %>%
-  group_by(plant_species, visiter_name) %>%
-  summarise(visits = n(), .groups = "drop")
-
+  group_by(plant_species, 
+           visiter_name) %>%
+  summarise(visits = n(), 
+            .groups = "drop")
 plant_visits <- plant_pollinators %>%
   group_by(plant_species) %>%
   summarise(total_visits = n(), .groups = "drop")
-
 pollinator_visits <- plant_pollinators %>%
   group_by(visiter_name) %>%
   summarise(total_visits = n(), .groups = "drop")
-
 #Top species code
 top_plants <- plant_visits %>%
   arrange(desc(total_visits)) %>%
   slice(1:10)
-
 top_pollinators <- pollinator_visits %>%
   arrange(desc(total_visits)) %>%
   slice(1:10)
-
+# Visits by meadow
+visits_by_meadow <- plant_pollinators %>%
+  group_by(meadow) %>%
+  summarise(visits = n(), .groups = "drop")
+# Visits by pollinator type
+visits_by_type <- plant_pollinators %>%
+  group_by(visiter_type) %>%
+  summarise(visits = n(), .groups = "drop")
+# Visits over time
+visits_by_month <- plant_pollinators %>%
+  group_by(month) %>%
+  summarise(visits = n(), .groups = "drop")
 #Top plants figure
 ggplot(top_plants, aes(x = reorder(plant_species, total_visits), y = total_visits)) +
   geom_col(fill = "darkgreen") +
@@ -73,7 +129,6 @@ ggplot(top_plants, aes(x = reorder(plant_species, total_visits), y = total_visit
     y = "Visits"
   ) +
   theme_minimal()
-
 #Top Pollinators Figure
 ggplot(top_pollinators, aes(x = reorder(visiter_name, total_visits), y = total_visits)) +
   geom_col(fill = "orange") +
@@ -84,14 +139,14 @@ ggplot(top_pollinators, aes(x = reorder(visiter_name, total_visits), y = total_v
     y = "Visits"
   ) +
   theme_minimal()
-
 #Heatmap figure
 top_interactions <- interaction_counts %>%
   filter(plant_species %in% top_plants$plant_species,
          visiter_name %in% top_pollinators$visiter_name)
-
 ggplot(top_interactions,
-       aes(x = plant_species, y = visiter_name, fill = visits)) +
+       aes(x = plant_species, 
+           y = visiter_name, 
+           fill = visits)) +
   geom_tile() +
   scale_fill_viridis_c() +
   labs(
@@ -100,7 +155,26 @@ ggplot(top_interactions,
     y = "Pollinator"
   ) +
   theme(axis.text.x = element_text(angle = 90, hjust = 1))
-
+#Visits by meadow Figure
+ggplot(visits_by_meadow, aes(x = meadow, y = visits)) +
+  geom_col(fill = "purple") +
+  labs(title = "Visits by Meadow") +
+  theme_minimal()
+#Visits by Pollinator type
+ggplot(visits_by_type, aes(x = visiter_type, y = visits)) +
+  geom_col(fill = "blue") +
+  theme_minimal()
+#Pollinator activity through the seasons Figure
+ggplot(visits_by_month, aes(x = month, y = visits, group = 1)) +
+  geom_line() +
+  geom_point() +
+  labs(title = "Pollinator Activity Over Time") +
+  theme_minimal()
+#Temperature influence on visitation Figure
+ggplot(plant_pollinators, aes(x = temp)) +
+  geom_bar(fill = "red") +
+  labs(title = "Visits by Temperature Category") +
+  theme_minimal()
 
 #individual project take 2
 #link:https://portal.edirepository.org/nis/mapbrowse?packageid=knb-lter-and.5216.8
