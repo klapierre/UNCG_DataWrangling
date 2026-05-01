@@ -110,18 +110,18 @@ plant_pollinators<-plant_pollinators%>%
 interaction_counts <- plant_pollinators %>%
   group_by(plant_species, 
            visiter_name) %>%
-  summarise(visits = n())
-ungroup()
+  summarise(visits = n()) %>%
+  ungroup()
 #Counting how many visits per plant species
 plant_visits <- plant_pollinators %>%
   group_by(plant_species) %>%
-  summarise(total_visits = n())
-ungroup()
+  summarise(total_visits = n()) %>%
+  ungroup()
 #Counting how many visits per visitor species
 pollinator_visits <- plant_pollinators %>%
   group_by(visiter_name) %>%
-  summarise(total_visits = n())
-ungroup()
+  summarise(total_visits = n()) %>%
+  ungroup()
 #Top species code
 top_plants <- plant_visits %>%
   arrange(desc(total_visits)) %>%
@@ -132,16 +132,27 @@ top_pollinators <- pollinator_visits %>%
 # Visits by meadow
 visits_by_meadow <- plant_pollinators %>%
   group_by(meadow) %>%
-  summarise(visits = n())
-ungroup()
+  summarise(visits = n()) %>%
+  ungroup()
 # Visits by pollinator type
 visits_by_type <- plant_pollinators %>%
   group_by(visiter_type) %>%
-  summarise(visits = n(), .groups = "drop")
+  summarise(visits = n()) %>%
+  ungroup()
 # Visits over time
 visits_by_month <- plant_pollinators %>%
   group_by(month) %>%
-  summarise(visits = n(), .groups = "drop")
+  summarise(visits = n())%>%
+  ungroup()
+#The figure above showed that none of the observations had any information #logged for month, so I am going to delete that column
+plant_pollinators<-plant_pollinators%>%
+  select(-month)
+#I am going to check for day and year as well
+unique(plant_pollinators$day)
+unique(plant_pollinators$year)
+#There is also no day data, so I will remove those columns as well
+plant_pollinators<-plant_pollinators%>%
+  select(-day, -year)
 #Top plants figure
 ggplot(top_plants, aes(x = reorder(plant_species, total_visits), y = total_visits)) +
   geom_col(fill = "darkgreen") +
@@ -186,12 +197,6 @@ ggplot(visits_by_meadow, aes(x = meadow, y = visits)) +
 #Visits by Pollinator type
 ggplot(visits_by_type, aes(x = visiter_type, y = visits)) +
   geom_col(fill = "blue") +
-  theme_minimal()
-#Pollinator activity through the seasons Figure
-ggplot(visits_by_month, aes(x = month, y = visits, group = 1)) +
-  geom_line() +
-  geom_point() +
-  labs(title = "Pollinator Activity Over Time") +
   theme_minimal()
 #Temperature influence on visitation Figure
 ggplot(plant_pollinators, aes(x = temp)) +
