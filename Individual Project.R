@@ -34,19 +34,24 @@ plant_pollinators <- plant_pollinators %>%
 # Remove empty strings
 plant_pollinators <- plant_pollinators %>%
   filter(pltsp_name != "", vissp_name != "")
+#Change any names that are very difficult to understand
+plant_pollinators<-plant_pollinators %>%
+  rename(plant_species=pltsp_name,
+         visiter_name=vissp_name,
+         visiter_type=vissp_type,)
 
 #Code to go through and edit to how I want it ####
 #Counting species interactions
 interaction_counts <- plant_pollinators %>%
-  group_by(pltsp_name, vissp_name) %>%
+  group_by(plant_species, visiter_name) %>%
   summarise(visits = n(), .groups = "drop")
 
 plant_visits <- plant_pollinators %>%
-  group_by(pltsp_name) %>%
+  group_by(plant_species) %>%
   summarise(total_visits = n(), .groups = "drop")
 
 pollinator_visits <- plant_pollinators %>%
-  group_by(vissp_name) %>%
+  group_by(visiter_name) %>%
   summarise(total_visits = n(), .groups = "drop")
 
 #Top species code
@@ -59,7 +64,7 @@ top_pollinators <- pollinator_visits %>%
   slice(1:10)
 
 #Top plants figure
-ggplot(top_plants, aes(x = reorder(pltsp_name, total_visits), y = total_visits)) +
+ggplot(top_plants, aes(x = reorder(plant_species, total_visits), y = total_visits)) +
   geom_col(fill = "darkgreen") +
   coord_flip() +
   labs(
@@ -70,7 +75,7 @@ ggplot(top_plants, aes(x = reorder(pltsp_name, total_visits), y = total_visits))
   theme_minimal()
 
 #Top Pollinators Figure
-ggplot(top_pollinators, aes(x = reorder(vissp_name, total_visits), y = total_visits)) +
+ggplot(top_pollinators, aes(x = reorder(visiter_name, total_visits), y = total_visits)) +
   geom_col(fill = "orange") +
   coord_flip() +
   labs(
@@ -82,11 +87,11 @@ ggplot(top_pollinators, aes(x = reorder(vissp_name, total_visits), y = total_vis
 
 #Heatmap figure
 top_interactions <- interaction_counts %>%
-  filter(pltsp_name %in% top_plants$pltsp_name,
-         vissp_name %in% top_pollinators$vissp_name)
+  filter(plant_species %in% top_plants$plant_species,
+         visiter_name %in% top_pollinators$visiter_name)
 
 ggplot(top_interactions,
-       aes(x = pltsp_name, y = vissp_name, fill = visits)) +
+       aes(x = plant_species, y = visiter_name, fill = visits)) +
   geom_tile() +
   scale_fill_viridis_c() +
   labs(
