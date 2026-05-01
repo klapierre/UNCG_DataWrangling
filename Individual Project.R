@@ -4,6 +4,7 @@ library(stringr)
 library(lubridate)
 #Loading the data set into my script
 plant_pollinators<-read.csv("SA02601_v6.csv", 
+#I am keeping strings as factors as false since I have so much non numerical data
                             stringsAsFactors = FALSE)
 #Going through the names to see how I might need to adjust them
 colnames(plant_pollinators)
@@ -18,7 +19,7 @@ names(plant_pollinators) <- gsub(" ", "_", names(plant_pollinators))
 names(plant_pollinators) <- gsub("\\.", "_", names(plant_pollinators))
 #checking the names after adjusting them
 names(plant_pollinators)
-#To ensure that there are no human error extra characters, we are using the str_trim function on the priority columns
+#To ensure that there are no human error extra characters, we are using the #str_trim function on the priority columns
 plant_pollinators <- plant_pollinators %>%
   mutate(
     pltsp_name = str_trim(pltsp_name),
@@ -89,17 +90,22 @@ plant_pollinators <- plant_pollinators %>%
   )
 #Code to go through and edit to how I want it ####
 #Counting species interactions
+#Counting how many interactions
 interaction_counts <- plant_pollinators %>%
   group_by(plant_species, 
            visiter_name) %>%
-  summarise(visits = n(), 
-            .groups = "drop")
+  summarise(visits = n())
+ungroup()
+#Counting how many visits per plant species
 plant_visits <- plant_pollinators %>%
   group_by(plant_species) %>%
-  summarise(total_visits = n(), .groups = "drop")
+  summarise(total_visits = n())
+ungroup()
+#Counting how many visits per visitor species
 pollinator_visits <- plant_pollinators %>%
   group_by(visiter_name) %>%
-  summarise(total_visits = n(), .groups = "drop")
+  summarise(total_visits = n())
+ungroup()
 #Top species code
 top_plants <- plant_visits %>%
   arrange(desc(total_visits)) %>%
@@ -110,7 +116,8 @@ top_pollinators <- pollinator_visits %>%
 # Visits by meadow
 visits_by_meadow <- plant_pollinators %>%
   group_by(meadow) %>%
-  summarise(visits = n(), .groups = "drop")
+  summarise(visits = n())
+ungroup()
 # Visits by pollinator type
 visits_by_type <- plant_pollinators %>%
   group_by(visiter_type) %>%
