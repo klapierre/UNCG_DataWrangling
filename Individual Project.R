@@ -88,6 +88,22 @@ plant_pollinators <- plant_pollinators %>%
     month = month(sampledate, label = TRUE),
     day = day(sampledate)
   )
+#I want to change the order of the columns to improve readability
+#First I will move all of the identification columns together
+plant_pollinators<-plant_pollinators %>%
+  relocate(plot_id, .after=dbcode)%>%
+  relocate(year,.after=dbcode)
+#Now I want to put the columns in the same order as in the id
+unique(plant_pollinators$plot_id)
+unique(plant_pollinators$meadow)
+plant_pollinators<-plant_pollinators%>%
+  relocate(complex,.after=plot_id)%>%
+  relocate(meadow,.after=complex)%>%
+  relocate(plot,.after=meadow)
+#Now we are going to move all of the abiotic factors together
+plant_pollinators<-plant_pollinators%>%
+  relocate(wind_category,.after=temp)%>%
+  relocate(cloud_category,.after=wind_category)
 #Code to go through and edit to how I want it ####
 #Counting species interactions
 #Counting how many interactions
