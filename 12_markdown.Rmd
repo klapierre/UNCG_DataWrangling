@@ -4,7 +4,7 @@ author: Arnav Pandey, Themesha Parker, Michelle Bautista Canuto, Dhanush Devanan
   Jaslyn Davenport
 date: "2026-04-26"
 output:
-  pdf_document: default
+    word_document: default
 ---
 # Section 1: Create, Save, and Knit Your First R Markdown File
 Author: Jaslyn Davenport (jcdavenport@uncg.edu)
@@ -187,16 +187,22 @@ To make your text italics, you can enclose it within single asterisk `*[text]*`.
 TASK: Rewrite Line 1 below and only italicize the word "italics." Leave two spaces at the end of sentence for a line break.  
 ANSWER:
 
+*Line 1: This is an example to show how to make text italics*
+
 \
 
 You may be wondering if there is another way to make the text italics, and in fact, there is.
 You can also enclose your text within single underscore `_[text]_`.
 
+_[Line 1: This is an example to show how to make text italics]_
+
 \
 
 TASK: In the paragraph below, make "Arnav," "Biological Data Wrangling and Visualization" and "RMarkdown" italics in the following paragraph using both the methods (asterisks and underscore) mentioned above at least once.  
 
-My name is Arnav Pandey. I am currently enrolled in Biological Data Wrangling and Visualization (BIO 457/657).This is a TASK: to use RMarkdown to make a text output italics.  
+_My name is Arnav Pandey. I am currently enrolled in Biological Data Wrangling and Visualization (BIO 457/657).This is a TASK: to use RMarkdown to make a text output italics._
+
+*My name is Arnav Pandey. I am currently enrolled in Biological Data Wrangling and Visualization (BIO 457/657).This is a TASK: to use RMarkdown to make a text output italics.*
 
 \
 
@@ -211,7 +217,7 @@ TASK: Read the question below, click Knit, and return to answer the question bel
 QUESTION: Which of the following lines gives you bold text?  
 Line 1. This is an example to show how to make text bold.  
 **Line 2: This is an example to show how to make text bold.**  
-ANSWER:  
+ANSWER:  Line 2 gave a bold text. 
 
 \
 
@@ -231,7 +237,7 @@ Line 4: This is an __example__ to show how to make text bold.
 \
 
 TASK: In the paragraph below, make "Arnav," "Biological Data Wrangling and Visualization" and "RMarkdown" bold in the following paragraph using both the methods (asterisks and underscores) mentioned above at least once.     
-My name is Arnav Pandey. I am currently enrolled in Biological Data Wrangling and Visualization (BIO 457/657). This is a TASK: to use RMarkdown to make a text output bold.  
+My name is **Arnav Pandey**. I am currently enrolled in Biological __Data Wrangling and Visualization (BIO 457/657)__. This is a TASK: to use **RMarkdown to make a text output bold**.  
 
 \
 
@@ -246,7 +252,7 @@ You can enclose your text within three asterisks (`***[text]***`). or underscore
 \
 
 TASK: In the paragraph below, make "Arnav," "Biological Data Wrangling and Visualization" and "RMarkdown" bold italics using both the methods mentioned above at least once.   
-My name is Arnav Pandey. I am currently enrolled in Biological Data Wrangling and Visualization (BIO 457/657). This is a TASK: to use RMarkdown to make a text output bold.  
+My name is ***Arnav Pandey***. I am currently enrolled in Biological ___Data Wrangling and Visualization (BIO 457/657)___. This is a TASK: to use ***RMarkdown*** to make a text output bold.  
 
 
 \
