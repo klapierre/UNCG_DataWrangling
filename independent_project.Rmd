@@ -1,9 +1,22 @@
 ---
-title: "independent_project"
+title: "BIO-657 Final Project: Flowering Timing & Competition"
 author: "Tanner Lyons"
-date: "2026-04-30"
-output: pdf_document
+date: "2026-05-04"
+output: html_document
 ---
+\
+
+# [Project Overview]{.ul} \
+\
+
+**Experimental Backround**
+The dataset that I chose is from the study by Kehrberger & Holzschuh (2019), which looked at how the timing of flowering influences pollinator interactions and reproductive success in the plant Primrose (*Primula vulgaris*). The phenology can have a strong impact on plant reproduction because flowering timing determines pollinator availability and competition. The primary goal of this study was to determine how flowering abundance, pollinator visitation rates, and environmental factors vary throughout a flowering season, and then how these factors are related to reproductive success. Data was collected across the 2015 flowering season for *P. vulgaris*. Site-level data was recorded daily and weekly to track flower abundance, pollinator activity, and environmental conditions. Individual flowers were also monitored for bud opening, pollination, and reproductive success. Two experimental treatments were also done, controlling pollination limitation and means of pollination.
+
+**Data Structure**
+Within the dataset, there are five data sheets with different coverage. The first sheet, T1, includes daily site-level observations at each site during surveying. It includes information about the flowering abundance of P. vulgaris, flowering abundance of other species, pollinator visitation rates, and temperature. The second sheet, T2, contains weekly summaries of flowering abundances, visitation rates, and bee abundance. The third sheet, T3, contains measurements taken from individual *P. vulgaris* flowers, including bud opening date, floral longevity, suitable pollinator hours per flower, seed set, floral mean temperature, and estimated visitation. T4 contains data for the pollen limitation experiment, and the resulting seed set percentage (reproductive success). T5 contains data for the pollen treatment experiment, like the treatment (naturally pollinated or hand pollinated), bud opening date, and seed set.
+
+  <small> Kehrberger, S., & Holzschuh, A. (2019). How does timing of flowering affect competition for pollinators, flower visitation and seed set in an early spring grassland plant? *Scientific Reports, 9*(1), 15593. https://doi.org/10.1038/s41598-019-51916-0
+
 
 ```{r, include = FALSE}
 pacman::p_load(tidyverse,
@@ -16,16 +29,23 @@ pacman::p_load(tidyverse,
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## Setup
+# [Project Workflow]{.ul} \
+\
 
-- Load the .xlsx file containing the dataset 
+## Setup \
+
+
+Load the .xlsx file containing the dataset. 
+
++ The readxl package pulls specific pages from our 5-page datasheet.
 ```{r}
 file <- "Kehrberger_Scientific_Reports.xlsx"
 ```
 
-Convert every sheet to a separate data frame
-  - Clean colnames using janitor
-  - Manually rename leftover names for clarity
+Convert every sheet to a separate data frame.
+
++ Clean column names using the janitor package's clean_names()
++ Manually rename leftover names for clarity using dplyr's rename()
 
 ```{r}
 T1 <- read_excel(file, sheet = "T1") %>% 
@@ -79,13 +99,14 @@ T5 <- read_excel(file, sheet = "T5") %>%
   )
 ```
 
+Correct Object Formats using dplyr's mutate().
 
-Convert Julian dates to Date objects
--if j_day = 1, date should = 2015-01-01
-Factorize categorical variables
-Fix incorrectly assigned numerical values (NAs as characters)
++ Convert Julian dates to Date objects using lubridate's as.Date().
+  - if j_day = 1, date should = 2015-01-01
++ Factorize categorical variables.
++ Fix incorrectly assigned numerical values (N/As as characters).
 
-```{r}
+```{r, warning = FALSE, message = FALSE}
 T1 <- T1 %>% 
   mutate(date = as.Date(j_day - 1, origin = "2015-01-01"),
          site = as.factor(site),
@@ -103,12 +124,14 @@ T2 <- T2 %>%
 T3 <- T3 %>% 
   mutate(date_open = as.Date(j_open - 1 , origin = "2015-01-01"),
          site = as.factor(site),
-         flower_id = as.factor(flower_id))
+         flower_id = as.factor(flower_id)
+         )
 
 T4 <- T4 %>% 
   mutate(date_open = as.Date(j_open - 1, origin = "2015-01-01"),
          site = as.factor(site),
-         pollen_limitation = as.numeric(pollen_limitation))
+         pollen_limitation = as.numeric(pollen_limitation)
+         )
 
 T5 <- T5 %>% 
   mutate(date_open = as.Date(j_open - 1, origin = "2015-01-01"),
@@ -118,24 +141,29 @@ T5 <- T5 %>%
 ```
 
 T4 has a really nasty outlier that'll interfere with our statistics, lets remove it!
+
 ```{r}
 Q1 <- quantile(T4$pollen_limitation, 0.25, na.rm = T)
 Q3 <- quantile(T4$pollen_limitation, 0.75, na.rm = T)
 IQR <- Q3 - Q1
 
 T4 <- T4 %>% 
-  filter(pollen_limitation >= (Q1 - 1.5 * IQR) & pollen_limitation <= (Q3 + 1.5 * IQR))
+  filter(pollen_limitation >= (Q1 - 1.5 * IQR) & pollen_limitation <= (Q3 + 1.5 * IQR)
+         )
 ```
 
-Verify data structure before proceeding
+Verify that the data structure is correct for all dataframes before proceeding.
+
 ```{r}
 glimpse(c(T1, T2, T3, T4, T5))
 ```
 
-## Data Transformation
 
-Summarize statistics across sites
-```{r}
+## Data Transformation \
+
+Summarize statistics across sites using dplyr's summarize().
+
+```{r, warning = FALSE, , message = FALSE}
 T1_site_summary <- T1 %>% 
   group_by(site) %>% 
   summarize(
@@ -181,7 +209,8 @@ T5_site_summary <- T5 %>%
   ungroup()
 ```
 
-Summarize stats across dates
+Summarize statistics across dates using dplyr's summarize().
+
 ```{r}
 T1_date_summary <- T1 %>% 
   group_by(date) %>% 
@@ -202,11 +231,15 @@ T2_date_summary <- T2 %>%
     ) %>% 
   ungroup()
 ```
+\
 
-## Visualization 
+## Visualization \
 
-Visualize flowering abundance over time using gganimate
-```{r}
+Visualize flowering abundance over time using gganimate.
+
++ Color by site.
++ Reveal the graph by date (x-axis).
+```{r, warning = FALSE, message = FALSE}
 (plot_T1_time <- T1 %>% 
    ggplot(aes(x = date,
               y = flower_count,
@@ -222,8 +255,16 @@ Visualize flowering abundance over time using gganimate
  )
 ```
 
-Visualize the relationship between flower abundance and bee visitation
-```{r}
+**Figure 1.**
+The amount of *Primula vulgaris* flowers sharply increases  across most sites around late March and begins to fall off around mid April. This line's up with the approximately three week flowering period that is expected for this species. \
+\
+
+Visualize the relationship between flower abundance and bee visitation.
+
++ Color by site.
++ Apply log+1 scaling to visitation_rate.
+  - These values are too small to accurately visualize trends.
+```{r, warning = FALSE}
 (plot_T1_visitation <- T1 %>% 
     ggplot(aes(x = flower_count,
                y = log1p(visitation_rate),
@@ -236,9 +277,16 @@ Visualize the relationship between flower abundance and bee visitation
          color = "Site")
   )
 ```
+ 
+**Figure 2.**
+Flower count and bee visitation rate appear to have a negative relationship, when only looking at values that aren't  highly clustered due to extremely small visitation rates. This relationship appears very weak, though. \
+\
 
-Visualize bee abundance over time across each site
-```{r}
+Visualize bee abundance over time across each site.
+
++ Color by site.
++ Apply bin scaling to the x-axis to make weeks discrete.
+```{r, warning = FALSE}
 (plot_T2 <- T2 %>% 
     ggplot(aes(x = week,
                y = bee_abundance,
@@ -254,8 +302,15 @@ Visualize bee abundance over time across each site
   )
 ```
 
-Visualize the relationship between Bee Visitation and Seed Set %
-```{r}
+**Figure 3.**
+Bee abundance fluctuates weekly across most sites, with a distinctly elevated amounts between weeks 13 through 16, which aligns with the flowering period of *Primula vulgaris*. Site's 1 and 3 also experienced heavy peaks around week 18, which is likely attributed to other flowering species. These other species are accounted for in this dataset, but not this manipulation. \
+\
+
+Visualize the relationship between Bee Visitation and Seed Set %.
+
++ Color by site.
++ Smooth trends using a linear model.
+```{r, warning = FALSE, message = FALSE}
 (plot_T3 <- T3 %>% 
     ggplot(aes(x = bee_visits,
                y = seed_set,
@@ -270,8 +325,14 @@ Visualize the relationship between Bee Visitation and Seed Set %
   )
 ```
 
-Visualize the relationship between Pollen Limitation and Seed Set %
-```{r}
+**Figure 4.** Bee visitation is loosely positively related with seed set across most sites and negatively at site 4, which has fewer observations. The positive relationship is expetced, as these flowers rely on insect pollination to produce seeds. Several individuals have high seed set but low bee visitation, which is likely explained by non-bee pollinators or bees that were not observed (observer bias). \
+\
+
+Visualize the relationship between Pollen Limitation and Seed Set %.
+
++ Smooth trends using a linear model.
++ Add the equation and p-value of the lm using ggpmisc's stat_poly_eq().
+```{r, warning = FALSE, message = FALSE}
 (plot_T4 <- T4 %>% 
     ggplot(aes(x = pollen_limitation,
                y = seed_set)) +
@@ -285,13 +346,16 @@ Visualize the relationship between Pollen Limitation and Seed Set %
                                    ..p.value.label.., 
                                    sep = "~")))
 ) 
-# ^ Fought with this for a wile, only works with the .. before and after each label,
-# I'm not sure why! This is a new package/technique to me.
 ```
 
-Visualize the results of each pollination treatment on Seed Set %
-  -Add statistical significance w/ ggpubr
-```{r}
+**Figure 5.**
+As the rate of pollen limitation increases, the percentage seed set significantly decreases at 19.6% per unit (**, p = 0.002). \
+\
+
+Visualize the results of each pollination treatment on Seed Set %.
+
++ Add p-values using ggpubr's stat_compare_means().
+```{r, warning = FALSE}
 (plot_T5 <- T5 %>% 
     ggplot(aes(x = treatment,
                y = seed_set,
@@ -312,23 +376,31 @@ Visualize the results of each pollination treatment on Seed Set %
   )
 ```
 
-# Export Results
+**Figure 6.**
+The percentage seed set between the hand pollinated control, open to pollinators treatment, and the pollinator exclusion treatment. The difference between the control and open treatment was not significantly different (p = 0.66). The difference between the control and the pollinator exclusion treatment was highly significantly different (\*\*\*\*, p = 6.6e-15). The difference between the open treatment and the pollinator exclusion treatment were also significantly different (\*\*\*, p = 2.4e-14). \
+\
 
-```{r}
-# Export summary statistics as csv files
-#write_csv(T1_date_summary, "T1_date_summary.csv")
-#write_csv(T1_site_summary, "T1_site_summary.csv")
-#write_csv(T2_date_summary, "T2_date_summary.csv")
-#write_csv(T2_site_summary, "T2_site_summary.csv")
-#write_csv(T3_site_summary, "T3_site_summary.csv")
-#write_csv(T4_site_summary, "T4_site_summary.csv")
-#write_csv(T5_site_summary, "T5_site_summary.csv")
+## Export Results \ 
 
-# Export figures as .png and .gif files
-#anim_save("T1_FlowerAbundance.gif", plot_T1_time, width = 1600, height = 1000)
-#ggsave("T1_VisitationRate.png", plot_T1_visitation, height = 5, width = 8)
-#ggsave("T2_BeeAbundance.png", plot_T2, height = 5, width = 8)
-#ggsave("T3_BeePollination.png", plot_T3, height = 5, width = 8)
-#ggsave("T4_PollenLimitation.png", plot_T4, height = 5, width = 8)
-#ggsave("T5_PollinationTreatment.png", plot_T5, height = 5, width = 8)
+Export summary statistics dataframes as .csv files.
+
+```{r, warning = FALSE, message = FALSE}
+write_csv(T1_date_summary, "T1_date_summary.csv")
+write_csv(T1_site_summary, "T1_site_summary.csv")
+write_csv(T2_date_summary, "T2_date_summary.csv")
+write_csv(T2_site_summary, "T2_site_summary.csv")
+write_csv(T3_site_summary, "T3_site_summary.csv")
+write_csv(T4_site_summary, "T4_site_summary.csv")
+write_csv(T5_site_summary, "T5_site_summary.csv")
+```
+
+Export figures as .png and .gif files.
+
+```{r, warning = FALSE, message = FALSE}
+# anim_save("T1_FlowerAbundance.gif", plot_T1_time, width = 1600, height = 1000)
+ggsave("T1_VisitationRate.png", plot_T1_visitation, height = 5, width = 8)
+ggsave("T2_BeeAbundance.png", plot_T2, height = 5, width = 8)
+ggsave("T3_BeePollination.png", plot_T3, height = 5, width = 8)
+ggsave("T4_PollenLimitation.png", plot_T4, height = 5, width = 8)
+ggsave("T5_PollinationTreatment.png", plot_T5, height = 5, width = 8)
 ```
