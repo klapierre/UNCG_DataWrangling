@@ -179,7 +179,7 @@ ggplot() +
                color = "black") +
   theme_classic() +
   coord_fixed(1.25) +
-  geom_point(data = mammal_data,
+  geom_point(data = NV_mammal_data,
              aes(x = lon, y = lat, color = species),
              size = 1,
              alpha = 0.7)
@@ -230,16 +230,6 @@ mamm_vect <- vect(sf_mamm)
 
 # Make sure CRS matches raster
 crs(mamm_vect) <- crs(nv_elevation)
-
-# Now plot together and save as JPEG:
-# Open a high-quality JPEG device
-jpeg("nv_target_map.jpg", width = 3000, height = 3000, res = 375)
-
-# Plot elevation
-plot(nv_elevation, col = terrain.colors(100))
-
-# Add county boundaries
-lines(NV_county, alpha = .1)
 
 #   FIGURE 1
 # Now plot together and save as JPEG:   
