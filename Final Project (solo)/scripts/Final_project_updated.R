@@ -514,8 +514,6 @@ ggplot(urocitellus, aes(x = elevation,
 
 
 
-
-
 # CROP MAP ---------------------------------------------------------------------
 # Toiyabe approximate coordinates
 toiyabe <- c(-117.948733, 38.457651)
@@ -535,7 +533,6 @@ nv_crop <- crop(nv_elevation, ext_box)
 # plot
 plot(nv_crop, col = hcl.colors(100, palette = "BluYl"))
 lines(NV_county)
-
 
 
 
