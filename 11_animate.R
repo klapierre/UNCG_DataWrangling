@@ -713,7 +713,8 @@ gifski(png_files,gif_file = "dailyAvg_timeseries.gif",width = 900,height = 600,d
 #--------------------------------
  # Magick: Image editor
 #--------------------------------
-  library(magick)
+install.packages("magick")  
+library(magick)
 
 # MagicK, is an image editor so it's primary purposes involve combining images,
 # text, cropping and layering. Think of as R-studios' version of photoshop!
@@ -722,6 +723,7 @@ gifski(png_files,gif_file = "dailyAvg_timeseries.gif",width = 900,height = 600,d
 # making graph have essential markings that would be difficult to add to GIFs.
 
 # QUESTION: What are some examples that Magick can be useful in animating a graph? 
+## It possibly allows more flexibility with what can be done.
 
 # We will start with a function, that will plot our dataframe into a adjustable graph.
 
@@ -768,7 +770,7 @@ logo_small <- image_scale(logo, "150x150")
 
 # This will overlay it onto the graph.
 watermarked <- lapply(img_list, function(frame) {
-  image_composite(frame, logo_faded, offset = "+20+20") })
+  image_composite(frame, logo_small, offset = "+20+20") })
 
 # This will combine the frames into a compressed GIF.
 animation <- image_animate(image_join(watermarked), fps = 10)
@@ -780,8 +782,3 @@ image_write(animation, "dailyAvg_bubble_watermarked.gif")
 
 # Magick appears to take longer than Gifski to create the GIF in your files so 
 # as I stated before, feel free to rerun the code to wake R-studio up. 
-
-
-
-
-
