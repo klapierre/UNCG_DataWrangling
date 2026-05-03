@@ -165,7 +165,7 @@ ggplot ()+
   geom_point(data = biorep_614,
                aes (x = phase,
                     y = percentage_escrt_biorep_meiosis1),
-               width = 0, size = 2, alpha = 0.6, color = "brown" )+
+               size = 2, alpha = 0.6, color = "brown" )+
   geom_point(data = summary_614,
                   aes(x = phase,
                       y = average_percentage_per_strain_meiosis1),
@@ -192,7 +192,7 @@ ggplot ()+
   geom_point (data = biorep_615,
                aes (x = phase,
                     y = percentage_escrt_biorep_meiosis1),
-               width = 0, size = 2, alpha = 0.6, color = "brown" )+
+               size = 2, alpha = 0.6, color = "brown" )+
   geom_point(data = summary_615,
              aes(x = phase,
                  y = average_percentage_per_strain_meiosis1),
@@ -219,7 +219,7 @@ ggplot ()+
   geom_point (data = biorep_650,
                aes (x = phase,
                     y = percentage_escrt_biorep_meiosis1),
-               width = 0, size = 2, alpha = 0.6, color = "brown" )+
+                size = 2, alpha = 0.6, color = "brown" )+
   geom_point(data = summary_650,
              aes(x = phase,
                  y = average_percentage_per_strain_meiosis1),
@@ -248,7 +248,7 @@ ggplot ()+
   geom_point (data = biorep_614,
                aes (x = phase,
                     y = percentage_escrt_biorep_meiosis2),
-               width = 0, size = 2, alpha = 0.6, color = "brown" )+
+                size = 2, alpha = 0.6, color = "brown" )+
   geom_point(data = summary_614,
              aes(x = phase,
                  y = average_percentage_per_strain_meiosis2),
@@ -275,7 +275,7 @@ ggplot ()+
   geom_point (data = biorep_615,
                aes (x = phase,
                     y = percentage_escrt_biorep_meiosis2),
-               width = 0, size = 2, alpha = 0.6, color = "brown" )+
+                size = 2, alpha = 0.6, color = "brown" )+
   geom_point(data = summary_615,
              aes(x = phase,
                  y = average_percentage_per_strain_meiosis2),
@@ -302,7 +302,7 @@ ggplot ()+
   geom_point (data = biorep_650,
                aes (x = phase,
                     y = percentage_escrt_biorep_meiosis2),
-               width = 0, size = 2, alpha = 0.6, color = "brown" )+
+               size = 2, alpha = 0.6, color = "brown" )+
   geom_point(data = summary_650,
              aes(x = phase,
                  y = average_percentage_per_strain_meiosis2),
