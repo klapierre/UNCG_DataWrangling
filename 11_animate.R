@@ -558,6 +558,7 @@ library(hms)
 rangeTemp <- tempData %>%
   mutate(time = hms::as_hms(time), hour = hour(time),
          month = month(date, label = TRUE, abbr = TRUE))
+<<<<<<< HEAD
 
          
          # QUESTION: Why would it be a good idea to average the hourly temperatures 
@@ -565,11 +566,14 @@ rangeTemp <- tempData %>%
          # HINT: Take a look at datapoints within rangeTemp and visualize the graph
          # it would make. 
 
+=======
+>>>>>>> 6eb690692f4ff8bb3df630f286903bbd39731388
 # QUESTION: Why would it be a good idea to average the hourly temperatures 
 # instead of plotting each hour for this graph? 
 # HINT: Take a look at datapoints within rangeTemp and visualize the graph
 # it would make. 
 ## To avoid a lot of overlap between points.
+<<<<<<< HEAD
 
 # You will group by month and hour and the summarize the final column to find 
 # the mean air temperature. We will double check if there are any NA's we
@@ -580,6 +584,18 @@ hourMonthAvg <- rangeTemp %>%
   summarize(mean_temp = mean(Air.temperature, na.rm = TRUE)) %>%
   ungroup()
          
+=======
+         
+# You will group by month and hour and the summarize the final column to find 
+# the mean air temperature. We will double check if there are any NA's we
+# missed.Then ungroup to have 3 columns/variables in a dataframe
+# called hourMonthAvg.
+hourMonthAvg <- rangeTemp %>%
+  group_by(month, hour) %>%
+  summarize(mean_temp = mean(Air.temperature, na.rm = TRUE)) %>%
+  ungroup()
+         
+>>>>>>> 6eb690692f4ff8bb3df630f286903bbd39731388
 # It is time to plot our bubble graph! You will utilize ggplot and graph by hour
 # vs mean_temp. Make sure to set the color to follow the months and the size to 
 # measure the mean_temp as well. There are further graph elements covered in 

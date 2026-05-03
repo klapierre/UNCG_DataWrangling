@@ -107,6 +107,14 @@ streamTempRename <- rename(.data=streamTemp,
 # TASK: Write your own code to find the column names of our new dataframe 
 # (streamTempRename). 
 
+colnames(streamTempRename)
+
+streamTempRename
+
+colnames(streamTempRename)
+
+colnames(streamTempRename)
+
 
 
 
