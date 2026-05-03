@@ -1,2 +1,0 @@
-# Independant project 
-
