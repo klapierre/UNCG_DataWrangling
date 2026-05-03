@@ -4,7 +4,7 @@ author: Arnav Pandey, Themesha Parker, Michelle Bautista Canuto, Dhanush Devanan
   Jaslyn Davenport
 date: "2026-04-26"
 output:
-  word_document: default
+ word_document: default
   pdf_document: default
 ---
 # Section 1: Create, Save, and Knit Your First R Markdown File
@@ -112,7 +112,7 @@ TASK: Read the question below, click **Knit** to render the document and return 
 QUESTION: What difference do you notice about the above line that starts with
 `# Section 2: Formatting a Report Using RMarkdown Syntax` compared to the line
 `Objective: learn to format how your document appears in the output of your choice`?  
-ANSWER:
+ANSWER: The one with a # is a heading nand the other line is normal text. 
 
 \
 
@@ -133,26 +133,26 @@ TASK: Click Knit to observe how different heading levels below appear in the ren
 
 
 QUESTION: What happens to the size of text when you increase the number of hashtags (#)?  
-ANSWER: 
+ANSWER: The text becomes smaller 
 
 \
 
 In the example above, the higher the number of hashtags, the lower the heading level (smaller font).  
 
 QUESTION: How many hashtags would you use if you wanted highest level heading (largest font)?  
-ANSWER: 
+ANSWER: one
 
 \
 
 QUESTION: In the rendered output, do Line 5 and Line 6 from above example appear in the same line?  
-ANSWER:
+ANSWER: No
 
 \
 
 TASK: Go to the metadata for this assignment and change the output from `pdf_document` to `html_document`.  
 
 QUESTION: Did your Line 5 and Line 6 appear in different lines?  
-ANSWER:
+ANSWER: yes 
 
 \
 
