@@ -216,7 +216,8 @@ My project will use data from the 2024 dataset “Database of present and future
   # The wnv_continent_corr dataframe assigns continents to regions so that the data
   # can be mapped using the sf package. 
   
-  wnv_avg_corr <- wnv_corr %>% 
+  wnv_avg_corr <- wnv_corr %>%
+    mutate(Correlation = abs(Correlation)) %>% 
     group_by(Region, Type) %>%
     summarize(mean_corr = mean(Correlation)) %>% 
     ungroup()
@@ -266,15 +267,15 @@ My project will use data from the 2024 dataset “Database of present and future
     theme_void() +
     theme(panel.spacing = unit(1, "lines"),
           plot.margin = margin(r = 10, l = 10),
-          plot.title = element_text(hjust = 0.5, face = "bold", size = 14,
+          plot.title = element_text(hjust = 0.5, face = "bold", size = 17,
                                     margin = margin(b = 5, t = 5)),
           plot.subtitle = element_text(hjust = 0.5, 
-                                       face = "italic", size = 13,
+                                       face = "italic", size = 15,
                                        margin = margin(b = 5, t = 5)),
           strip.text = element_text(face = "bold", size = 13, 
                                     margin = margin(b = 10, t = 10),
                                     color = "#2b428f"),
-          legend.title = element_text(face = "bold", size = 10),
+          legend.title = element_text(face = "bold", size = 14),
           legend.position = c(0.35, 0.02), 
           legend.direction = "horizontal",           
           legend.text = element_text(size = 8, 
@@ -285,12 +286,14 @@ My project will use data from the 2024 dataset “Database of present and future
           labs(title = str_wrap("Regional Divergence in Ecological and 
                                 Demographic Drivers of WNV Incidence"),
               subtitle = str_wrap("Z-score standardization reveals a divergence 
-                                  in WNV drivers across continents by providing 
-                                  a uniform scale for comparison. Ecological 
-                                  factors are more influential overall and 
-                                  strongest in PAL regions, while population 
+                                  in WNV drivers across continents by comparing contribution in each
+                                  region to the average contribution across all regions 
+                                  and variables. Population factors are more influential overall and 
+                                  strongest in AFR regions, while ecological 
                                   factors are weaker in comparison but slightly 
-                                  stronger in PAL regions.")) 
+                                  stronger in AFR regions. This shows that while population
+                                  factors dominate both regions, the intensity of all 
+                                  drivers is most pronounced in the AFR region.", width = 130))
 ```
 
 # Part Four: Pie Charts
@@ -354,10 +357,10 @@ My project will use data from the 2024 dataset “Database of present and future
         "corr_roads" = "Distance to Roads", 
         "corr_railroads" = "Distance to Railroads")) +
     theme_void() + 
-    theme(plot.title = element_text(hjust = 0.5, face = "bold", size = 14,
+    theme(plot.title = element_text(hjust = 0.5, face = "bold", size = 17,
                                     margin = margin(b = 2, t = 1)),
           plot.subtitle = element_text(hjust = 0.5, face = "italic",
-                                       size = 13,
+                                       size = 15,
                                        margin = margin(b = 10, t = 5)),
           legend.title = element_text(hjust = 0, face = "bold", size = 12),
           plot.margin = margin(r = 10, l = 10),
@@ -373,11 +376,13 @@ My project will use data from the 2024 dataset “Database of present and future
                                 Factors to WNV Incidence"), 
                subtitle = str_wrap("Population factors, primarily distance to 
                                     infrastructure, have the highest contribution 
-                                    to WNV incidence across all regions, with more 
-                                    influence in the PAL region. Ecological factors 
-                                    are more significant in AFR regions, 
+                                    to WNV incidence across all regions, showing their 
+                                    greatest relative contribution in the PAL region,
+                                    despite overall contribution being higher in AFR.
+                                    Ecological factors are more significant in AFR regions, 
                                     particularly maximum temperature and annual 
-                                    precipitation."),
+                                    precipitation, which represent a larger proportion of 
+                                    the local drivers than in PAL.", width = 100),
                 fill = "Ecological and Population\nFactors")
 ```
 
