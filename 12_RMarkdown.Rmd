@@ -1,11 +1,10 @@
 ---
-title: "Group5_RMarkdown"
-author: Arnav Pandey, Themesha Parker, Michelle Bautista Canuto, Dhanush Devanand,
-  Jaslyn Davenport
-date: "2026-04-26"
-output:
-  word_document: default
-  pdf_document: default
+title: "Group5_RMarkdown_Assignment"
+author: Amaliya Brown Doyoyo
+date: "2026-04-27"
+output: 
+  pdf_document:
+    toc: true
 ---
 # Section 1: Create, Save, and Knit Your First R Markdown File
 Author: Jaslyn Davenport (jcdavenport@uncg.edu)
@@ -21,7 +20,7 @@ To begin, open RStudio and create a new R Markdown file.
 Go to **File > New File > R Markdown**.  
 
 QUESTION: What do you think happens when the new file is opened?  
-ANSWER:  
+ANSWER:  You get to set up the document by assigning a date, authors, and choosing the output for the document. 
 
 
 .........................
@@ -41,7 +40,7 @@ install.packages("tinytex")
 tinytex::install_tinytex()
 
 QUESTION: Why are these packages needed?
-ANSWER:
+ANSWER: To make it possible to create an r markdown project and use the knit option to see your progress. 
 
 .........................
 ## 1.3 Modify the YAML Header
@@ -62,7 +61,7 @@ date: "April 2026"
 output: pdf_document
 
 QUESTION: What is the purpose of the YAML header?
-ANSWER:
+ANSWER: It sets up the document by giving it a name and date, it also lets users determine the output of their file. 
 
 .........................
 ##1.4 Save and Knit file
@@ -76,17 +75,17 @@ tinytex::install_tinytex()
 Then click Knit again.
 
 QUESTION: What happens when you click Knit?
-ANSWER:
+ANSWER: It generates a file of the document.
 
 QUESTION: What type of file is created?
-ANSWER:
+ANSWER: A PDF file.
 
 .........................
 ##1.5 Final observation
 After knitting, compare the .Rmd file to the final PDF.
 
 QUESTION: How is the output file different from the source file?
-ANSWER:
+ANSWER: It does not include all of the extra formatting information in the coding boxes, and it formats the text in the PDF to include the headings and different text sizes.
 
 
 
@@ -110,7 +109,7 @@ TASK: Read the question below, click **Knit** to render the document and return 
 QUESTION: What difference do you notice about the above line that starts with
 `# Section 2: Formatting a Report Using RMarkdown Syntax` compared to the line
 `Objective: learn to format how your document appears in the output of your choice`?  
-ANSWER:
+ANSWER: The "Section 2" line is a header and the "Objective" line is normal text.
 
 \
 
@@ -121,7 +120,7 @@ RMarkdown supports six levels of headings.
 
 TASK: Click Knit to observe how different heading levels below appear in the rendered output.
 
-
+```
 # Line 1: This is an example to show different levels of headings in RMarkdown.
 ## Line 2: Line 1: This is an example to show different levels of headings in RMarkdown.
 ### Line 3: This is an example to show different levels of headings in RMarkdown.
@@ -129,28 +128,29 @@ TASK: Click Knit to observe how different heading levels below appear in the ren
 ##### Line 5: This is an example to show different levels of headings in RMarkdown.   
 ###### Line 6: This is an example to show different levels of headings in RMarkdown.
 
+```
 
 QUESTION: What happens to the size of text when you increase the number of hashtags (#)?  
-ANSWER: 
+ANSWER: The text gets smaller.
 
 \
 
 In the example above, the higher the number of hashtags, the lower the heading level (smaller font).  
 
 QUESTION: How many hashtags would you use if you wanted highest level heading (largest font)?  
-ANSWER: 
+ANSWER: I would use one. 
 
 \
 
 QUESTION: In the rendered output, do Line 5 and Line 6 from above example appear in the same line?  
-ANSWER:
+ANSWER: Yes.
 
 \
 
 TASK: Go to the metadata for this assignment and change the output from `pdf_document` to `html_document`.  
 
 QUESTION: Did your Line 5 and Line 6 appear in different lines?  
-ANSWER:
+ANSWER: Yes.
 
 \
 
@@ -184,7 +184,7 @@ To make your text italics, you can enclose it within single asterisk `*[text]*`.
 \
 
 TASK: Rewrite Line 1 below and only italicize the word "italics." Leave two spaces at the end of sentence for a line break.  
-ANSWER:
+ANSWER: Line 1: This is an example to show how to make text *italics*.  
 
 \
 
@@ -195,7 +195,7 @@ You can also enclose your text within single underscore `_[text]_`.
 
 TASK: In the paragraph below, make "Arnav," "Biological Data Wrangling and Visualization" and "RMarkdown" italics in the following paragraph using both the methods (asterisks and underscore) mentioned above at least once.  
 
-My name is Arnav Pandey. I am currently enrolled in Biological Data Wrangling and Visualization (BIO 457/657).This is a TASK: to use RMarkdown to make a text output italics.  
+My name is *Arnav* Pandey. I am currently enrolled in _Biological Data Wrangling and Visualization_ (BIO 457/657).This is a TASK: to use *RMarkdown* to make a text output italics.  
 
 \
 
@@ -210,7 +210,7 @@ TASK: Read the question below, click Knit, and return to answer the question bel
 QUESTION: Which of the following lines gives you bold text?  
 Line 1. This is an example to show how to make text bold.  
 **Line 2: This is an example to show how to make text bold.**  
-ANSWER:  
+ANSWER:  Line 2
 
 \
 
@@ -230,7 +230,7 @@ Line 4: This is an __example__ to show how to make text bold.
 \
 
 TASK: In the paragraph below, make "Arnav," "Biological Data Wrangling and Visualization" and "RMarkdown" bold in the following paragraph using both the methods (asterisks and underscores) mentioned above at least once.     
-My name is Arnav Pandey. I am currently enrolled in Biological Data Wrangling and Visualization (BIO 457/657). This is a TASK: to use RMarkdown to make a text output bold.  
+My name is **Arnav** Pandey. I am currently enrolled in __Biological Data Wrangling and Visualization__ (BIO 457/657). This is a TASK: to use **RMarkdown** to make a text output bold.  
 
 \
 
@@ -245,7 +245,7 @@ You can enclose your text within three asterisks (`***[text]***`). or underscore
 \
 
 TASK: In the paragraph below, make "Arnav," "Biological Data Wrangling and Visualization" and "RMarkdown" bold italics using both the methods mentioned above at least once.   
-My name is Arnav Pandey. I am currently enrolled in Biological Data Wrangling and Visualization (BIO 457/657). This is a TASK: to use RMarkdown to make a text output bold.  
+My name is ***Arnav*** Pandey. I am currently enrolled in ___Biological Data Wrangling and Visualization___ (BIO 457/657). This is a TASK: to use ***RMarkdown*** to make a text output bold.  
 
 
 \
@@ -296,6 +296,19 @@ TASK: Hit Knit to look at the output of the lines below:
 TASK: Copy the above list below, add an item "Melon" and nest different types of melons as its subitems.
 Hit Knit to see your output.  
 
+- Apple
+- Banana
+- Berries 
+  - Blueberries
+  - Strawberries 
+  - Raspberries 
+  - Blackberries
+  - Cranberries
+- Papaya
+- Melon
+  - Watermelon
+  - Honeydew
+
 .........................
 
 ## 2.6 Numbered List
@@ -342,9 +355,16 @@ Click "R".
 We can insert functions within the chunk of code. We will see this next. 
 
 QUESTION: What is a code chunk? (hint look back at the slides in Canvas)
-ANSWER:
+ANSWER: A place to insert code in the document (that will actually run).
  
 TASK: Practice inserting a code chunk. Run a simple calculation such as "2+2" below {r}. Run this code by clicking on the green side-triangle button: 
+
+```{r}
+
+2 + 2
+
+```
+
 
 Next, let's assign variables. Run the following variables:
 ```{r}
@@ -361,8 +381,13 @@ x
 
 TASK: Write a chunk of code mulitpliying the variables x and y.
 
+```{r}
+x*y
+
+```
+
 QUESTION: What was the result? 
-ANSWER:
+ANSWER: 50
 
 We will analyze the built-in 'mtcars' dataset. Run the following chunk of code.
 
@@ -370,7 +395,7 @@ We will analyze the built-in 'mtcars' dataset. Run the following chunk of code.
 head(mtcars)
 ```
 QUESTION: What do you think the head() function does?
-ANSWER:
+ANSWER: Shows a summary of a dataset and its values.
 
 To display the summary statistics for the dataset use the summary() function. Run the following chunk of code.
 ```{r}
@@ -384,7 +409,7 @@ data(mtcars)
 ```
 
 QUESTION: After running the previous code, view the dataframe of mtcars. How many variables are in the mtcars dataset? 
-ANSWER:
+ANSWER: 11.
 
 Or you can view the dataset in the console by typing "mtcars" and click 'Run Selected Lines'. 
 mtcars
@@ -396,8 +421,12 @@ nrow(mtcars)
 
 TASK: Write a code to find the number of columns in the 'mtcars' dataset using the ncol() function. Remember to use a new chunk of code.
 
+```{r}
+ncol(mtcars)
+```
+
 QUESTION: What is the result showing in your script?
-ANSWER:
+ANSWER: 11.
 
 The 'disp' column in the dataset stands for engine displacement. Engine displacement tells you how big the engine is in cubic inches. 
 The 'mpg' column stands for fuel efficiency in miles per gallon. 
@@ -405,8 +434,13 @@ Lets plot a graph showing fuel efficiency over displacement for each car.
 Run the following code.
 plot(mtcars$disp, mtcars$mpg)
 
+```{r}
+plot(mtcars$disp, mtcars$mpg)
+
+``` 
+
 QUESTION: What trend is the plot showing?
-ANSWER:
+ANSWER: mpg vs engine displacement. 
 
 We can also use ggplot to run this within our chunk of code.
 This permits our plot to be displayed in the final report once "knit".   
@@ -456,16 +490,29 @@ mtcars %>%
 ```
 
 QUESTION: Which car has the highest fuel efficiency? 
-ANSWER:
+ANSWER: Toyota Corolla.
 
 QUESTION: What is the size of it's engine?
-ANSWER:
+ANSWER: 71.1.
 
 TASK: Use code to create a plot comparing disp vs hp from the 'mtcars' dataset. With the following:  
 Use the 'disp' data for the x-axis and labeled 'Engine Size (cubic inches)'
 Use the 'hp' data for the y-axis and labeled 'Horsepower (HP)'
 Add an appropriate title for the plot with a 'bold' font
 Add a legend colored by 'car_name' and labeled "Car Types" 
+
+```{r echo = FALSE}
+
+ggplot(mtcars,aes(x=disp,y=hp, color=rownames(mtcars)))+
+  geom_point()+
+  labs(
+    x="Engine Size (cubic inches)",
+    y="Horsepower (HP)",
+    color = "Car Types",
+    title="Engine Size vs Horespower")+
+  theme(plot.title = element_text(face="bold"))
+
+```
 
 
 Lets organize the horsepower from highest to lowest. Run the following.
@@ -476,10 +523,10 @@ mtcars %>%
 ```
 
 QUESTION: What trend is the plot showing between engine size and horsepower? 
-ANSWER:
+ANSWER: Engine size increases with horsepower.
 
 QUESTION: Which cars have the highest and lowest hp?
-ANSWER:
+ANSWER: Maserati Bora has the highest HP and Honda Civic has the lowest.
 
 Don't forget to save and commit your changes. 
 
@@ -519,7 +566,13 @@ Create a scatter plot with wt on the x-axis and mpg on the y-axis.
 ```{r scatterplot}
 # Write your code below this line
 
-
+ggplot(mtcars,aes(x=wt,y=mpg))+
+  geom_point()+
+  labs(
+    x="Car Weight",
+    y="Fuel Efficiency",
+    title="Car Weight vs Fuel Efficiency")+
+  theme(plot.title = element_text(face="bold"))
 
 ```
 
@@ -534,19 +587,25 @@ col=)
 ```{r scatterplot_labeled}
 # Write your updated scatterplot code below this line
 
-
+ggplot(mtcars,aes(x=wt,y=mpg))+
+  geom_point(color = "green")+
+  labs(
+    x="Car Weight",
+    y="Fuel Efficiency",
+    title="Car Weight vs Fuel Efficiency")+
+  theme(plot.title = element_text(face="bold"))
 
 ```
 
 QUESTION: What does each point in this scatterplot represent?
-ANSWER:
+ANSWER: An individual car type.
 
 QUESTION: What relationship do you observe between weight and mpg?
-ANSWER:
+ANSWER: mpg decreases with weight.
 
 QUESTION: Does the graph suggest a positive relationship, a negative relationship,
 or no relationship? Explain your answer.
-ANSWER:
+ANSWER: negative relationship because as car weight increases mpg decreases.
 
 ------------------------------------------------------------------------
 
@@ -562,7 +621,13 @@ Create a boxplot of mpg by cyl using the boxplot function
 ```{r boxplot1}
 # Write your code below this line
 
-
+ggplot(mtcars,aes(x=factor(cyl),y=mpg))+
+  geom_boxplot()+
+  labs(
+    x="Number of Cylinders",
+    y="Fuel Efficiency",
+    title="Number of Cylinders vs Fuel Efficiency")+
+  theme(plot.title = element_text(face="bold"))
 
 ```
 
@@ -574,22 +639,28 @@ y-axis label, and a fill color of your choice
 ```{r boxplot2}
 # Write your updated boxplot code below this line
 
-
+ggplot(mtcars,aes(x=factor(cyl),y=mpg))+
+  geom_boxplot(fill = "pink")+
+  labs(
+    x="Number of Cylinders",
+    y="Fuel Efficiency",
+    title="Number of Cylinders vs Fuel Efficiency")+
+  theme(plot.title = element_text(face="bold"))
 
 ```
 
 QUESTION: What does each box in this plot represent?
-ANSWER:
+ANSWER: The respective mpg for cars with a certain amount of cylinders.
 
 QUESTION: Which cylinder group appears to have the highest fuel efficiency?
-ANSWER:
+ANSWER: 4 cylinder cars.
 
 QUESTION: Which cylinder group appears to have the lowest fuel efficiency?
-ANSWER:
+ANSWER: 8 cylinder cars.
 
 QUESTION: Based on the boxplot, how does fuel efficiency seem to change as the
 number of cylinders increases?
-ANSWER:
+ANSWER: It decreasaes.
 
 ------------------------------------------------------------------------
 
@@ -611,7 +682,9 @@ Use the space below to write your code:
 ```{r summary_table}
 # Write your code below this line
 
-
+avg_mpg_by_cyl <- mtcars %>%
+  group_by(cyl) %>%
+  summarize(avg_mpg = mean(mpg))
 
 ```
 
@@ -624,18 +697,18 @@ Use the space below to write your code:
 ```{r formatted_table}
 # Write your code below this line
 
-
+print(avg_mpg_by_cyl)
 
 ```
 
 QUESTION: What does this table show?
-ANSWER:
+ANSWER: car cylinders vs average mpg.
 
 QUESTION: Which cylinder group has the highest average mpg?
-ANSWER:
+ANSWER: 4 cylinder cars.
 
 QUESTION: Which cylinder group has the lowest average mpg?
-ANSWER:
+ANSWER: 8 cylinder cars.
 
 ------------------------------------------------------------------------
 
@@ -646,10 +719,10 @@ information they provide.
 
 QUESTION: How does the scatterplot help you understand the relationship between
 weight and fuel efficiency?
-ANSWER:
+ANSWER: It shows a continuous relationship between car weight and fuel efficiency.
 
 QUESTION: How does the boxplot help you compare different groups of cars?
-ANSWER:
+ANSWER: It shows a categorical relationship between number of cylinders and fuel efficiency. 
 
 ------------------------------------------------------------------------
 
@@ -664,12 +737,19 @@ Write your code below:
 ```{r Now_you_try}
 # Write your code below this line
 
+ggplot(mtcars,aes(x=qsec,y=mpg))+
+  geom_point(color = "purple")+
+  labs(
+    x="Quarter Mile Time",
+    y="Fuel Efficiency",
+    title="Quarter Mile Time vs Fuel Efficiency")+
+  theme(plot.title = element_text(face="bold"))
 
 
 ```
 
 QUESTION: What did you change, and how did it affect the output?
-ANSWER:
+ANSWER: I changed it to fuel efficiency vs quarter mile time, the output shows a very weak positive relationship.
 
 ------------------------------------------------------------------------
 
@@ -703,15 +783,15 @@ document, **outside** of any code chunk, and then Knit:
 
 ### Check
 
-Did the numbers appear automatically in your rendered sentence?
+Did the numbers appear automatically in your rendered sentence? Yes.
 
 QUESTION: What is inline R code, and how is it different from a regular code
 chunk?
-ANSWER:
+ANSWER: Code chunks are meant to run the code and inline R code is meant to display certain parts of the code.
 
 QUESTION: Why is inline R code useful when working with a dataset that might be
 updated or changed over time?
-ANSWER:
+ANSWER: It will automatically update whenever the code is changed.
 
 ### TASK:
 
@@ -719,7 +799,7 @@ Now try writing your own inline R code sentence. Using the mtcars
 dataset, write a sentence that includes the maximum horsepower value
 using inline R code. The function `max()` will be helpful here.
 
-**Your sentence:** [Write your sentence with inline R code here.]
+**Your sentence:** The maximum horsepower in the mtcars dataset is `r max(mtcars$hp)`.
 
 ### Why This Matters
 
@@ -742,7 +822,7 @@ The chunk below currently shows the code when knitted. Add `echo=FALSE`
 inside the curly braces so that only the plot appears in the output, not
 the code. Then Knit your document.
 
-```{r}
+```{r echo = FALSE}
 plot(mtcars$wt, mtcars$mpg,
      main = "Weight vs MPG",
      xlab = "Weight (1000 lbs)",
@@ -757,11 +837,11 @@ plot(mtcars$wt, mtcars$mpg,
 Do you see the plot in the output but **not** the code that created it?
 
 QUESTION: Why might you want to hide code in a final report?
-ANSWER:
+ANSWER: If the report is more focused on the data itself than the coding. 
 
 QUESTION: Can you think of a situation where you would want to **show** your code
 in a report rather than hide it? Who might be reading that report?
-ANSWER:
+ANSWER: In an assignment like our individual project a professor might want to see the code. 
 
 ### TASK:
 
@@ -783,12 +863,12 @@ Run the chunk below **without** any chunk options and Knit. Read through
 the output carefully and write down any extra messages or warnings you
 notice below.
 
-```{r}
+```{r message = FALSE, warning = FALSE}
 library(tidyverse)
 summary(mtcars)
 ```
 
-**What messages or warnings did you see?** [Write your response here.]
+**What messages or warnings did you see?** Conflicts =  x dplyr::filter() masks stats::filter(), x dplyr::lag()    masks stats::lag().
 
 ### TASK: — Part B: Suppress the messages
 
@@ -800,15 +880,15 @@ and Knit again.
 
 ### Check
 
-Did the extra messages disappear from your rendered output?
+Did the extra messages disappear from your rendered output? Yes.
 
 QUESTION: What is the difference between `message=FALSE` and `warning=FALSE`?
 When might you need to use both at the same time?
-ANSWER:
+ANSWER: Message hides any messages and warning hides warnings. To get the cleanest output, you might want to add both. 
 
 QUESTION: Is it always a good idea to suppress warnings? Can you think of a case
 where seeing a warning might actually be important?
-ANSWER:
+ANSWER: No, an example might be if you're making an assignment and want to show examples of coding errors. 
 
 ### Why This Matters
 
@@ -834,7 +914,7 @@ Run the chunk below as-is and Knit. Note what appears in the output.
 Then change the chunk option from `echo=FALSE` to `include=FALSE` and
 Knit again.
 
-```{r echo=FALSE}
+```{r include=FALSE}
 library(dplyr)
 my_summary <- mtcars %>%
   summarize(mean_mpg = round(mean(mpg), 2),
@@ -849,13 +929,13 @@ my_summary
 ### Check
 
 When using `include=FALSE`, does anything from this chunk appear in the
-rendered output?
+rendered output? Yes, the code chunk disappears. 
 
 QUESTION: What is the difference between `echo=FALSE` and `include=FALSE`?
-ANSWER:
+ANSWER: echo = FALSE hides the code but shows the output while incude = FALSE hides everything.
 
 QUESTION: Give an example of when you would use `include=FALSE` in a real report.
-ANSWER:
+ANSWER: To hide any code that's setting up the document (loading libraries, etc).
 
 ### TASK:
 
@@ -869,7 +949,7 @@ object is still available to use. Copy and paste the lines below
 ### Check
 
 Did the inline values populate correctly even though the chunk that
-created them was hidden?
+created them was hidden? Yes
 
 ------------------------------------------------------------------------
 
@@ -883,7 +963,7 @@ This helps make your report look clean and consistent.
 
 Run the chunk below and Knit to see the default figure size.
 
-```{r}
+```{r fig.width=4, fig.height=6}
 ggplot(mtcars, aes(x = wt, y = mpg)) +
   geom_point(color = "steelblue") +
   labs(title = "Weight vs Fuel Efficiency",
@@ -902,22 +982,22 @@ again.
 
 ### Check
 
-Did the shape of the plot change in your rendered output?
+Did the shape of the plot change in your rendered output? Yes
 
 QUESTION: How did changing `fig.width` and `fig.height` affect the appearance of
 your plot?
-ANSWER:
+ANSWER: It changed the size of the outputted plot. 
 
 QUESTION: Why might consistent figure sizing matter in a professional or academic
 report?
-ANSWER:
+ANSWER: It makes the report appear more professional and clean.
 
 ### TASK:
 
 Try setting `fig.width=4` and `fig.height=6` on the same chunk. Knit
 and observe how the plot changes. Describe what you notice below.
 
-**Observation:** [Write your response here.]
+**Observation:** The plot size changed to become longer instead of wider. 
 
 ------------------------------------------------------------------------
 
@@ -949,12 +1029,12 @@ Do you now see a table of contents at the top of your rendered HTML
 document?
 
 QUESTION: How does a table of contents improve the readability of a long report?
-ANSWER:
+ANSWER: It is better for organization. 
 
 QUESTION: The table of contents is automatically generated from your headings.
 What does this tell you about the importance of using proper heading
 levels (`#`, `##`, `###`) throughout your document?
-ANSWER:
+ANSWER: You want to use proper heading levels so that the table of contents is correct.
 
 ------------------------------------------------------------------------
 
@@ -971,7 +1051,7 @@ Add the following clickable link somewhere in your document and Knit:
 
 ### Check
 
-Does the link appear clickable after knitting?
+Does the link appear clickable after knitting? Yes
 
 ### TASK:
 
@@ -980,10 +1060,10 @@ something covered in this assignment — for example, the mtcars dataset,
 ggplot2, or R Markdown chunk options — and add it below using the same
 syntax.
 
-**Your hyperlink:** [Write your hyperlink here.]
+**Your hyperlink:** [R Markdown documentation](https://www.w3schools.com/R/r_stat_data_set.asp)
 
 QUESTION: When might adding a hyperlink be useful in a data report?
-ANSWER:
+ANSWER: You could link to the original dataset and/or papers and references. 
 
 ------------------------------------------------------------------------
 
@@ -1002,7 +1082,9 @@ in this assignment. Consider:
 - What improvements did you make to the report in Section 5?
 - Why is R Markdown useful for communicating data?
 
-**Your conclusion:** [Write your response here.]
+**Your conclusion:** I used the mtcars dataset to create box plots and scatterplots of the different variables. These included
+mpg vs car weight, cylinder number vs mpg, etc. In section 5 I changed the sizes of the generated plots. R Markdown is useful in communicating
+data because it organizes coding into a reader friendly document.
 
 ### TASK:
 
@@ -1011,7 +1093,8 @@ includes inline R code. For example, instead of writing "the dataset has
 32 rows," use `` `r nrow(mtcars)` `` to generate that number
 automatically.
 
-**Your updated sentence with inline R code:** [Write your sentence here.]
+**Your updated sentence with inline R code:** I used the mtcars dataset to create box plots and scatterplots of the different variables; the
+dataset included `` `r nrow(mtcars)` `` rows and `` `r ncol(mtcars)` `` columns. 
 
 ------------------------------------------------------------------------
 
@@ -1021,14 +1104,14 @@ Before submitting, go through the checklist below to make sure
 everything is working correctly. In your `.Rmd` file, replace each `[ ]`
 with `[x]` once you have confirmed that step.
 
-- [ ] Inline R code displays correctly in rendered text
-- [ ] Plots appear in the output without showing code (`echo=FALSE`)
-- [ ] A chunk runs silently using `include=FALSE`
-- [ ] No unnecessary warnings or messages appear (`message=FALSE`, `warning=FALSE`)
-- [ ] Figure sizes have been adjusted using `fig.width` and `fig.height`
-- [ ] Table of contents is visible at the top of the document
-- [ ] At least two hyperlinks are present and clickable
-- [ ] Conclusion paragraph is included with at least one inline R code value
+- [X] Inline R code displays correctly in rendered text
+- [X] Plots appear in the output without showing code (`echo=FALSE`)
+- [X] A chunk runs silently using `include=FALSE`
+- [X] No unnecessary warnings or messages appear (`message=FALSE`, `warning=FALSE`)
+- [X] Figure sizes have been adjusted using `fig.width` and `fig.height`
+- [X] Table of contents is visible at the top of the document
+- [X] At least two hyperlinks are present and clickable
+- [X] Conclusion paragraph is included with at least one inline R code value
 
 Once all boxes are checked, click **Knit** one final time to generate
 your completed report.
