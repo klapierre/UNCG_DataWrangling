@@ -717,7 +717,7 @@ Don't forget to save and commit your changes.
     to include results directly inside our text. **Inline R code** allows us
     to insert calculations into sentences without a separate code chunk.
     
-    ### TASK:
+    ### TASK: 
     
     Copy and paste the following lines directly into your R Markdown
     document, **outside** of any code chunk, and then Knit:
@@ -731,11 +731,11 @@ Don't forget to save and commit your changes.
       
       QUESTION: What is inline R code, and how is it different from a regular code
     chunk?
-      ANSWER:
+      ANSWER: Inline R code is R code written inside a sentence using backticks and r. A regular code chunk is separate from the text and shows code in its own section. 
       
       QUESTION: Why is inline R code useful when working with a dataset that might be
     updated or changed over time?
-      ANSWER:
+      ANSWER: Inline R code is useful because the numbers update automatically if the dataset changes. 
       
       ### TASK:
       
@@ -743,7 +743,7 @@ Don't forget to save and commit your changes.
     dataset, write a sentence that includes the maximum horsepower value
     using inline R code. The function `max()` will be helpful here.
     
-    **Your sentence:** [Write your sentence with inline R code here.]
+    the maximum horsepower value in the mtcars dataset is 'r max(mtcars&hp'.
     
     ### Why This Matters
     
@@ -766,7 +766,7 @@ Don't forget to save and commit your changes.
     inside the curly braces so that only the plot appears in the output, not
     the code. Then Knit your document.
     
-    ```{r}
+    ```{r echo=FALSE}
     plot(mtcars$wt, mtcars$mpg,
          main = "Weight vs MPG",
          xlab = "Weight (1000 lbs)",
@@ -781,16 +781,27 @@ Don't forget to save and commit your changes.
     Do you see the plot in the output but **not** the code that created it?
       
       QUESTION: Why might you want to hide code in a final report?
-      ANSWER:
+      ANSWER: You might hide code in a final report so the reader can focus on the results instead of behind the scenes things. 
       
       QUESTION: Can you think of a situation where you would want to **show** your code
     in a report rather than hide it? Who might be reading that report?
-      ANSWER:
+      ANSWER: I would show code if the report was for a teacher/professor, classmate, or a researcher who needs to check how the results were created.
       
       ### TASK:
       
       Now apply `echo=FALSE` to the ggplot chunk you created back in Section
     3. Knit the document and confirm only the plot appears.
+    
+    ```{r echo=FALSE}
+    ggplot(mtcars,aes(x=disp,y=hp, color=factor(car_name))) +
+      geom_point() +
+      labs(
+        x="Engine Size (cubic inches)",
+        y="Horsepower (HP)",
+        title="Horsepower vs Engine Size",
+        color="Car Types")+
+      theme(plot.title = element_text(face="bold"))
+    ```
     
     ------------------------------------------------------------------------
       
@@ -812,7 +823,7 @@ Don't forget to save and commit your changes.
     summary(mtcars)
     ```
     
-    **What messages or warnings did you see?** [Write your response here.]
+    **What messages or warnings did you see?** [ I see package loading messages from tidyverse.]
     
     ### TASK: — Part B: Suppress the messages
     
@@ -824,15 +835,15 @@ Don't forget to save and commit your changes.
     
     ### Check
     
-    Did the extra messages disappear from your rendered output?
+    Did the extra messages disappear from your rendered output? Yes it did.
       
       QUESTION: What is the difference between `message=FALSE` and `warning=FALSE`?
       When might you need to use both at the same time?
-      ANSWER:
+      ANSWER: message=FALSE hides regular package messages, and warning=FALSE hides warning messages. You might use both when you want a clean final report. 
       
       QUESTION: Is it always a good idea to suppress warnings? Can you think of a case
     where seeing a warning might actually be important?
-      ANSWER:
+      ANSWER: It is not always good to suppress warnings because some warnings tell you something important, like missing data or a problem with the code.
       
       ### Why This Matters
       
@@ -870,16 +881,24 @@ Don't forget to save and commit your changes.
     **Hint:** Your chunk header should look like this when you are done:
       ` ```{r include=FALSE} `
     
+    ```{r include=FALSE}
+    library(dplyr)
+    my_summary <- mtcars %>%
+      summarize(mean_mpg = round(mean(mpg), 2),
+                max_hp = max(hp),
+                min_wt = min(wt))
+    my_summary
+    ```
     ### Check
     
     When using `include=FALSE`, does anything from this chunk appear in the
     rendered output?
       
       QUESTION: What is the difference between `echo=FALSE` and `include=FALSE`?
-      ANSWER:
+      ANSWER: echo=FALSE hides the code but still shows the output. include=FALSE hides both the code and the output, but still runs the code. 
       
       QUESTION: Give an example of when you would use `include=FALSE` in a real report.
-    ANSWER:
+    ANSWER: I would use include=FALSE for setup code, like loading packages or creating variables that are needed later but dont need to appear in the report.
       
       ### TASK:
       
@@ -893,7 +912,8 @@ Don't forget to save and commit your changes.
     ### Check
     
     Did the inline values populate correctly even though the chunk that
-    created them was hidden?
+    created them was hidden? Yes the inline values populated correctly. 
+      
       
       ------------------------------------------------------------------------
       
@@ -924,24 +944,43 @@ Don't forget to save and commit your changes.
     **Hint:** Your chunk header should look like this when you are done:
       ` ```{r fig.width=8, fig.height=4} `
     
+    
+    ```{r fig.width=8, fig.height=4}
+    ggplot(mtcars, aes(x = wt, y = mpg)) +
+      geom_point(color = "steelblue") +
+      labs(title = "Weight vs Fuel Efficiency",
+           x = "Weight (1000 lbs)",
+           y = "Miles Per Gallon") +
+      theme_bw()
+    ```
+    
     ### Check
     
     Did the shape of the plot change in your rendered output?
       
       QUESTION: How did changing `fig.width` and `fig.height` affect the appearance of
     your plot?
-      ANSWER:
+      ANSWER: Changing fig.width and fig.height changed the shape and size of the plot. The plot became wider and shorter.
       
       QUESTION: Why might consistent figure sizing matter in a professional or academic
     report?
-      ANSWER:
+      ANSWER: Consistent figures matters because it makes the report look organized and professional. 
       
       ### TASK:
       
       Try setting `fig.width=4` and `fig.height=6` on the same chunk. Knit
     and observe how the plot changes. Describe what you notice below.
     
-    **Observation:** [Write your response here.]
+    ```{r fig.width=4, fig.height=6}
+    ggplot(mtcars, aes(x = wt, y = mpg)) +
+      geom_point(color = "steelblue") +
+      labs(title = "Weight vs Fuel Efficiency",
+           x = "Weight (1000 lbs)",
+           y = "Miles Per Gallon") +
+      theme_bw()
+    ```
+    
+    **Observation:** [The plot became taller and narrower.]
     
     ------------------------------------------------------------------------
       
@@ -973,12 +1012,12 @@ Don't forget to save and commit your changes.
     document?
       
       QUESTION: How does a table of contents improve the readability of a long report?
-      ANSWER:
+      ANSWER: A table of contents makes a long report easier to find things because readers can quickly jump to different sections.
       
       QUESTION: The table of contents is automatically generated from your headings.
     What does this tell you about the importance of using proper heading
     levels (`#`, `##`, `###`) throughout your document?
-      ANSWER:
+      ANSWER: This shows that proper heading levels are important because the table of contents is created from the headings in the document. 
       
       ------------------------------------------------------------------------
       
@@ -995,7 +1034,7 @@ Don't forget to save and commit your changes.
     
     ### Check
     
-    Does the link appear clickable after knitting?
+    Does the link appear clickable after knitting? Yes it does.
       
       ### TASK:
       
@@ -1004,10 +1043,10 @@ Don't forget to save and commit your changes.
     ggplot2, or R Markdown chunk options — and add it below using the same
     syntax.
     
-    **Your hyperlink:** [Write your hyperlink here.]
+    **Your hyperlink:** [ggplot2 documentation](https://ggplot2.tidyverse.org)
     
     QUESTION: When might adding a hyperlink be useful in a data report?
-      ANSWER:
+      ANSWER: Adding a hyperlink is useful when readers might want to learn more about a dataset, package, method, or source used in a report. 
       
       ------------------------------------------------------------------------
       
@@ -1026,7 +1065,7 @@ Don't forget to save and commit your changes.
       - What improvements did you make to the report in Section 5?
       - Why is R Markdown useful for communicating data?
       
-      **Your conclusion:** [Write your response here.]
+      **Your conclusion:** [In this assignment, I used the mtcars dataset to practice creating and formatting an R Markdown report. I made scatterplots, boxplots, and summary tables to explore relationships between variables like weight, miles per gallon, cylinders, displacement, and horsepower. I also improved the report by hiding code, removing extra messages, changing figure sizes, adding a table of contents, and including hyperlinks. R Markdown is useful because it combines writing code, and results in one document.]
     
     ### TASK:
     
@@ -1035,7 +1074,7 @@ Don't forget to save and commit your changes.
 32 rows," use `` `r nrow(mtcars)` `` to generate that number
     automatically.
     
-    **Your updated sentence with inline R code:** [Write your sentence here.]
+    **Your updated sentence with inline R code:** [In this assignment, I used the mtcars dataset to practice creating and formatting an R Markdown report. The mtcars dataset has 'r nrow(mtcars)' rows and 'r ncol(mtcars)' columns. I made scatterplots, boxplots, and summary tables to explore relationships between variables like weight, miles per gallon, cylinders, displacement, and horsepower. I also improved the report by hiding code, removing extra messages, changing figure sizes, adding a table of contents, and including hyperlinks. R Markdown is useful because it combines writing code, and results in one document.]
     
     ------------------------------------------------------------------------
       
@@ -1045,14 +1084,14 @@ Don't forget to save and commit your changes.
     everything is working correctly. In your `.Rmd` file, replace each `[ ]`
     with `[x]` once you have confirmed that step.
     
-    - [ ] Inline R code displays correctly in rendered text
-    - [ ] Plots appear in the output without showing code (`echo=FALSE`)
-    - [ ] A chunk runs silently using `include=FALSE`
-    - [ ] No unnecessary warnings or messages appear (`message=FALSE`, `warning=FALSE`)
-    - [ ] Figure sizes have been adjusted using `fig.width` and `fig.height`
-    - [ ] Table of contents is visible at the top of the document
-    - [ ] At least two hyperlinks are present and clickable
-    - [ ] Conclusion paragraph is included with at least one inline R code value
+    - [X ] Inline R code displays correctly in rendered text
+    - [X ] Plots appear in the output without showing code (`echo=FALSE`)
+    - [X ] A chunk runs silently using `include=FALSE`
+    - [X ] No unnecessary warnings or messages appear (`message=FALSE`, `warning=FALSE`)
+    - [X ] Figure sizes have been adjusted using `fig.width` and `fig.height`
+    - [X ] Table of contents is visible at the top of the document
+    - [X ] At least two hyperlinks are present and clickable
+    - [X ] Conclusion paragraph is included with at least one inline R code value
     
     Once all boxes are checked, click **Knit** one final time to generate
     your completed report.
