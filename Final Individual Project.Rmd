@@ -1,0 +1,311 @@
+---
+title: "Final Individual Project"
+author: "Hazel McLester"
+date: "2026-05-03"
+output: html_document
+---
+
+#Loading in any packages I might need
+```{r, message=FALSE}
+library(tidyverse)
+library(stringr)
+library(lubridate)
+```
+
+#Loading the data set into my script
+```{r, message=FALSE}
+plant_pollinators<-read.csv(("SA02601_v6.csv"),
+                            stringsAsFactors = FALSE) 
+#I am keeping strings as factors as false since I have so much non numerical data
+```
+
+#Going through the names to see how I might need to adjust them
+```{r, message=FALSE}
+colnames(plant_pollinators)
+```
+
+#Getting a full idea of all the types of observations I have
+```{r, message=FALSE}
+str(plant_pollinators)
+summary(plant_pollinators)
+head(plant_pollinators)
+```
+
+#Convert all titles to lowercase, so they are a more standard format
+```{r, message=FALSE}
+names(plant_pollinators) <- str_to_lower(names(plant_pollinators))
+```
+
+#Replace spaces or weird characters with underscore, to match naming formats
+```{r, message=FALSE}
+names(plant_pollinators) <- gsub(" ", "_", names(plant_pollinators))
+names(plant_pollinators) <- gsub("\\.", "_", names(plant_pollinators))
+```
+
+#Checking the names after adjusting them
+```{r, message=FALSE}
+names(plant_pollinators)
+```
+
+#To ensure that there are no human error extra characters, we are using the #str_trim function on the priority columns
+```{r, message=FALSE}
+plant_pollinators <- plant_pollinators %>%
+  mutate(
+    pltsp_name = str_trim(pltsp_name),
+    vissp_name = str_trim(vissp_name),
+    meadow = str_trim(meadow),
+    observer = str_trim(observer))
+```
+
+#Remove any columns that are difficult to understand or are not applicable, etc
+```{r, message=FALSE}
+plant_pollinators <- plant_pollinators %>%
+  select( -start_time, -end_time, -pltsp_code,-vissp_code,
+          -ref_no, -vissp_no,-qc_notes)
+```
+
+#Remove rows missing species info
+```{r, message=FALSE}
+plant_pollinators <- plant_pollinators %>%
+  filter(!is.na(pltsp_name), 
+         !is.na(vissp_name))
+```
+
+#Remove empty strings
+```{r, message=FALSE}
+plant_pollinators <- plant_pollinators %>%
+  filter(pltsp_name != "",
+         vissp_name != "")
+```
+
+#Change any names that are very difficult to understand
+```{r, message=FALSE}
+plant_pollinators<-plant_pollinators %>%
+  rename(plant_species=pltsp_name,
+         visiter_name=vissp_name,
+         visiter_type=vissp_type)
+```
+
+#I do not understand what the acronyms mean, so I need to make a list of all of
+#them, so I can change the inputs
+```{r, message=FALSE}
+unique(plant_pollinators$wind)
+```
+
+#For wind there is ST and BR
+#Convert wind Acronyms to understandable values
+```{r, message=FALSE}
+plant_pollinators <- plant_pollinators %>%
+  mutate(
+    wind_category = case_when(
+      wind == "ST" ~ "still (no wind)",
+      wind == "BR" ~ "breeze",
+      TRUE ~ "unknown"))
+```
+
+#Remove original Wind column
+```{r, message=FALSE}
+plant_pollinators <- plant_pollinators %>%
+  select(-wind)
+```
+
+#For clouds there is S, PC, C, and SH
+```{r, message=FALSE}
+unique(plant_pollinators$clouds)
+```
+
+#Convert cloud acroynms to understandable values
+```{r, message=FALSE}
+plant_pollinators <- plant_pollinators %>%
+  mutate(
+    cloud_category = case_when(
+      clouds == "S" ~ "sunny",
+      clouds == "PC" ~ "partly cloudy",
+      clouds == "C" ~ "cloudy",
+      clouds == "SH" ~ "showers",
+      TRUE ~ "unknown"))
+```
+
+#Remove original cloud column
+```{r, message=FALSE}
+plant_pollinators<-plant_pollinators %>%
+  select(-clouds)
+```
+
+#Check unique values for key variables
+```{r, message=FALSE}
+unique(plant_pollinators$meadow)
+unique(plant_pollinators$visiter_type)
+```
+
+#I want to change the order of the columns to improve readability
+#First I will move all of the identification columns together
+```{r, message=FALSE}
+plant_pollinators<-plant_pollinators %>%
+  relocate(plot_id, .after=dbcode)%>%
+  relocate(year,.after=dbcode)
+```
+
+#Now I want to put the columns in the same order as in the id
+```{r, message=FALSE}
+unique(plant_pollinators$plot_id)
+unique(plant_pollinators$meadow)
+plant_pollinators<-plant_pollinators%>%
+  relocate(complex,.after=plot_id)%>%
+  relocate(meadow,.after=complex)%>%
+  relocate(plot,.after=meadow)
+```
+
+#Now we are going to move all of the abiotic factors together
+```{r, message=FALSE}
+plant_pollinators<-plant_pollinators%>%
+  relocate(wind_category,.after=temp)%>%
+  relocate(cloud_category,.after=wind_category)
+```
+
+#Code to go through and edit to how I want it ####
+#Counting species interactions
+#Counting how many interactions
+```{r, message=FALSE}
+interaction_counts <- plant_pollinators %>%
+  group_by(plant_species, 
+           visiter_name) %>%
+  summarise(visits = n()) %>%
+  ungroup()
+```
+
+#Counting how many visits per plant species
+```{r, message=FALSE}
+plant_visits <- plant_pollinators %>%
+  group_by(plant_species) %>%
+  summarise(total_visits = n()) %>%
+  ungroup()
+```
+
+#Counting how many visits per visitor species
+```{r, message=FALSE}
+pollinator_visits <- plant_pollinators %>%
+  group_by(visiter_name) %>%
+  summarise(total_visits = n()) %>%
+  ungroup()
+```
+
+#Top species code
+```{r, message=FALSE}
+top_plants <- plant_visits %>%
+  arrange(desc(total_visits)) %>%
+  slice(1:10)
+top_pollinators <- pollinator_visits %>%
+  arrange(desc(total_visits)) %>%
+  slice(1:10)
+```
+
+#Visits by meadow
+```{r, message=FALSE}
+visits_by_meadow <- plant_pollinators %>%
+  group_by(meadow) %>%
+  summarise(visits = n()) %>%
+  ungroup()
+```
+
+#Visits by pollinator type
+```{r, message=FALSE}
+visits_by_type <- plant_pollinators %>%
+  group_by(visiter_type) %>%
+  summarise(visits = n()) %>%
+  ungroup()
+```
+
+#Visits over time
+```{r, message=FALSE}
+visits_by_year <- plant_pollinators %>%
+  group_by(year) %>%
+  summarise(visits = n())%>%
+  ungroup()
+```
+
+#Visits by temp
+```{r, message=FALSE}
+visits_by_temp <- plant_pollinators %>%
+  group_by(temp) %>%
+  summarise(visits = n()) %>%
+  ungroup()
+```
+
+#Top plants figure
+```{r, message=FALSE}
+ggplot(top_plants, aes(x = reorder(plant_species, total_visits), y = total_visits)) +
+  geom_col(fill = "darkgreen") +
+  coord_flip() +
+  labs(
+    title = "Top Plant Species by Visits",
+    x = "Plant Species",
+    y = "Visits"
+  ) +
+  theme_minimal()
+```
+
+#Top Pollinators Figure
+```{r, message=FALSE}
+ggplot(top_pollinators, aes(x = reorder(visiter_name, total_visits), y = total_visits)) +
+  geom_col(fill = "orange") +
+  coord_flip() +
+  labs(
+    title = "Top Pollinator Species",
+    x = "Pollinator Species",
+    y = "Visits"
+  ) +
+  theme_minimal()
+```
+
+#Heatmap figure
+```{r, message=FALSE}
+top_interactions <- interaction_counts %>%
+  filter(plant_species %in% top_plants$plant_species,
+         visiter_name %in% top_pollinators$visiter_name)
+ggplot(top_interactions,
+       aes(x = plant_species, 
+           y = visiter_name, 
+           fill = visits)) +
+  geom_tile() +
+  scale_fill_viridis_c() +
+  labs(
+    title = "Plant–Pollinator Interaction Heatmap",
+    x = "Plant",
+    y = "Pollinator"
+  ) +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1))
+```
+
+#Visits by meadow Figure
+```{r, message=FALSE}
+ggplot(visits_by_meadow, aes(x = meadow, y = visits)) +
+  geom_col(fill = "purple") +
+  labs(title = "Visits by Meadow") +
+  theme_minimal()
+```
+
+#Temperature influence on visitation Figure
+```{r, message=FALSE}
+ggplot(visits_by_temp, aes(x = temp, y = visits)) +
+  geom_point() +
+  labs(title = "Visits vs Temperature",
+       x = "Temperature",
+       y = "Number of Visits") +
+  coord_cartesian(ylim = c(0, 4000))
+  theme_minimal()
+```
+  
+
+#individual project Introduction/Proposal
+
+#link:https://portal.edirepository.org/nis/mapbrowse?packageid=knb-lter-and.5216.8
+#Citation:Seo, E., J.A. Jones, R.A. Hutchinson, and V.W. Pfeiffer. 2022. Plant Pollinator data at HJ Andrews Experimental Forest, 2011 to 2021 ver 8. Environmental Data Initiative. https://doi.org/10.6073/pasta/eec55cbc3dbfc56428629773737ab3e5 (Accessed 2026-03-15).
+
+#This is a set of data that is a record of plants and their pollinators an how environmental factors such as soil moisture, temperature, and size of a meadow influences plant/pollinator relationships.Based on the data set the data was recorded by having someone watch a meadow and observe the plants in the meadow, and each time there was a pollinator and plant interaction a new observation was logged. Most meadow watches seemed to be about 3min, but it varies between person it looks like. This data set along with other collected by this set of people was done to add to the limited amount of long term recorded data about plant/pollinator relationships.This data was collected from 18 meadows in the Willamette national forest which is located in Oregon. Although the overall experiments tests influence of meadow size and soil moisture, the data set used for this project primarily records occurrence of plant pollinator interactions. Weather and wind measurements are consistently recorded throughout the data set, but temperature is not. There are large gaps throughout the data set that is missing temperature data which means I will be focusing on how temperature influences pollinators rather than the plants themselves since I do not have that soil temp recording. 
+
+#Some things that I am interested in looking it as the the relationship between abiotic and biotic factors. I wonder if there is a correlation between wind or clouds and what type of insects visit the plant. My suspicion is that there will be less pollinators on windier days and cloudier days. I would also like to look at the types of insects that visit each type of plant.From a brief look at the data it looks like the genus Epicauta primarily has fly and beetle visitors rather than bee visitors.Although I am not provided info about the size of each meadow in this data set, I can compare the different meadows and plots to see differences in species diversity between them, and because this is a long term study I suspect that there will be plant diversity differences between the years.So, another one of my question is how has plant and pollinator diversity shifted overtime, and which meadows have more diversity, and which have less.
+
+#When it comes to cleaning this data the first thing I would do is remove any information that is extra or unnecessary for the end dataset. That means columns such as DBCode and entity will be merged, observer will be removed, notes will be removed. All of the id information might be condensed so that there is less visual clutter. For example there is both a plotId and plot column when the plotId includes the plot column so there does not need to be both. I will want to move the minute observed closer to the species of the plant and visitor. I also am going to figure out what plant species there is the most data for and use that species of plant as the basis for my figures. There are some variables that I do not understand what they mean so I will change the contents of wind and clouds to contain descriptions that make more sense. I will get rid of the species code and visitor code columns and change the names of the species name and visitor name to be easier to understand.I then want to take the data and produce a histogram that shows how many insects visit each  species of plant. Then I would also like to make a dot plot that shows # of insects that arrive on a temperature gradient. To look at diversity overtime, I might need to make a mini dataset that contains summaries of how many occurrences per meadow per year there are, and this would be another data set that would benefit from choosing one species of plant rather than the many included in this data set.
+
+
