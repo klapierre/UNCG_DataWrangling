@@ -558,20 +558,19 @@ library(hms)
 rangeTemp <- tempData %>%
   mutate(time = hms::as_hms(time), hour = hour(time),
          month = month(date, label = TRUE, abbr = TRUE))
-<<<<<<< HEAD
+
          
          # QUESTION: Why would it be a good idea to average the hourly temperatures 
          # instead of plotting each hour for this graph? 
          # HINT: Take a look at datapoints within rangeTemp and visualize the graph
          # it would make. 
-=======
+
 # QUESTION: Why would it be a good idea to average the hourly temperatures 
 # instead of plotting each hour for this graph? 
 # HINT: Take a look at datapoints within rangeTemp and visualize the graph
 # it would make. 
 ## To avoid a lot of overlap between points.
->>>>>>> Lots of assignment 11 files.
-         
+
 # You will group by month and hour and the summarize the final column to find 
 # the mean air temperature. We will double check if there are any NA's we
 # missed.Then ungroup to have 3 columns/variables in a dataframe

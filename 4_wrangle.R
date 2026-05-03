@@ -106,40 +106,36 @@ streamTempRename <- rename(.data=streamTemp,
 
 # TASK: Write your own code to find the column names of our new dataframe 
 # (streamTempRename). 
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
 
->>>>>>> Fixing the assignment 4 and assignment 8 code once again.
+
+
+
+
+
+
+
+
+
 colnames(streamTempRename)
 
 streamTempRename
 
 colnames(streamTempRename)
-<<<<<<< HEAD
->>>>>>> Section 1.1 of assignment 4 done.
-=======
+
+
+
 streamTempRename
->>>>>>> Renaming techincal difficulteis.
-=======
-colnames(streamTempRename)
->>>>>>> Section 1.1 of assignment 4 done.
-=======
-streamTempRename
->>>>>>> Renaming techincal difficulteis.
-=======
-colnames(streamTempRename)
->>>>>>> Section 1.1 of assignment 4 done.
-=======
+
 
 colnames(streamTempRename)
 
->>>>>>> Fixing the assignment 4 and assignment 8 code once again.
+
+streamTempRename
+
+
+colnames(streamTempRename)
+
+colnames(streamTempRename)
 
 # QUESTION: What differences do you notice from before? In your own words, what 
 # did each line from the rename function do? Why might this function be useful 
