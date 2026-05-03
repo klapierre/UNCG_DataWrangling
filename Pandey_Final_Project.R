@@ -39,7 +39,11 @@ phase_meiosis1 <- fill_meiosis1 %>%
   mutate(phase = ifelse(spindlelength_meiosis1 < 2.42, "Pre-meiosis /I",
                         ifelse (spindlelength_meiosis1 <= 5.66, "Early Anaphase B/I",
                                 ifelse (spindlelength_meiosis1 <= 8.91, "Mid Anaphase B/I",
-                                        "Late Anaphase B/I"))))
+                                        "Late Anaphase B/I"))),
+          phase = factor (phase, levels = c("Pre-meiosis /I", 
+                                           "Early Anaphase B/I", 
+                                           "Mid Anaphase B/I", 
+                                           "Late Anaphase B/I")))
 
 
 ## Calculating percentage recruitment of ESCRT per SPB observed separately for different strains, bioreps, and phases
@@ -54,7 +58,8 @@ percentage_strains_bioreps_phase_meiosis1 <- phase_meiosis1 %>%
 ## Calculating percentage recruitment of ESCRT per SPB observed separately for different strains and bioreps regardless of bioreps
 percentage_strains_phase_meiosis1 <- percentage_strains_bioreps_phase_meiosis1 %>% 
   group_by(strain_meiosis1, phase) %>% 
-  mutate(average_percentage_per_strain_meiosis1 = mean(percentage_escrt_biorep_meiosis1)) %>% 
+  mutate(average_percentage_per_strain_meiosis1 = mean(percentage_escrt_biorep_meiosis1),
+         se_meiosis1 = sd(percentage_escrt_biorep_meiosis1)/sqrt(n())) %>% 
   ungroup()
 
 
@@ -121,7 +126,11 @@ phase_meiosis2 <- transform_meiosis2 %>%
   mutate(phase = ifelse(spindlelength_meiosis2 < 1.71, "Pre-meiosis /II",
                         ifelse (spindlelength_meiosis2 <= 3.68, "Early Anaphase B/II",
                                 ifelse (spindlelength_meiosis2 <= 5.65, "Mid Anaphase B/II",
-                                        "Late Anaphase B/II"))))
+                                        "Late Anaphase B/II"))),
+         phase = factor (phase, levels = c("Pre-meiosis /II", 
+                                    "Early Anaphase B/II", 
+                                    "Mid Anaphase B/II", 
+                                    "Late Anaphase B/II")))
 
 
 ## Calculating percentage recruitment of ESCRT per SPB observed separately for different strains, bioreps, and phases
@@ -136,10 +145,12 @@ percentage_strains_bioreps_phase_meiosis2 <- phase_meiosis2 %>%
 ## Calculating percentage recruitment of ESCRT per SPB observed separately for different strains and bioreps regardless of bioreps
 percentage_strains_phase_meiosis2 <- percentage_strains_bioreps_phase_meiosis2 %>% 
   group_by(strain_meiosis2, phase) %>% 
-  mutate(average_percentage_per_strain_meiosis2 = mean(percentage_escrt_biorep_meiosis2)) %>% 
+  mutate(average_percentage_per_strain_meiosis2 = mean(percentage_escrt_biorep_meiosis2),
+         se_meiosis2 = sd(percentage_escrt_biorep_meiosis2)/sqrt(n())) %>% 
   ungroup()
 
 
+# Plotting the data -------------------------------------------------------
 
-
+## Meiosis I data
 
