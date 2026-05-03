@@ -567,8 +567,7 @@ Create a scatter plot with wt on the x-axis and mpg on the y-axis.
 **Hint:** use the plot() function
 
 ```{r scatterplot}
-# Write your code below this line
-
+plot(mtcars$wt, mtcars$mpg)
 
 
 ```
@@ -582,21 +581,25 @@ y-axis label, a point color of your choice
 col=)
 
 ```{r scatterplot_labeled}
-# Write your updated scatterplot code below this line
-
+plot(mtcars$wt, mtcars$mpg,
+     main = "Weight vs MPG",
+     xlab = "Weight",
+     ylab = "MPG",
+     col = "pink",
+     pch = 16)
 
 
 ```
 
 QUESTION: What does each point in this scatterplot represent?
-ANSWER:
+ANSWER: Each point represents a car showing the weight vs mpg. 
 
 QUESTION: What relationship do you observe between weight and mpg?
-ANSWER:
+ANSWER: There is a negative relationship between weight and mpg. 
 
 QUESTION: Does the graph suggest a positive relationship, a negative relationship,
 or no relationship? Explain your answer.
-ANSWER:
+ANSWER: Negative relationship because as weight increases mpg decreases. 
 
 ------------------------------------------------------------------------
 
@@ -610,8 +613,7 @@ can help compare fuel efficiency across cylinder groups.
 Create a boxplot of mpg by cyl using the boxplot function
 
 ```{r boxplot1}
-# Write your code below this line
-
+boxplot(mtcars$mpg ~ mtcars$cyl)
 
 
 ```
@@ -622,24 +624,27 @@ Modify your boxplot so that it includes: a title, an x-axis label, a
 y-axis label, and a fill color of your choice
 
 ```{r boxplot2}
-# Write your updated boxplot code below this line
-
+boxplot(mtcars$mpg ~ mtcars$cyl,
+        xlab = "Number of Cylinders",
+        ylab = "Miles Per Gallon (MPG)",
+        main = "MPG by Cylinder Count",
+        col = "lightpink")
 
 
 ```
 
 QUESTION: What does each box in this plot represent?
-ANSWER:
+ANSWER:Each box represents Mpg for cars with the same number of cylinders.
 
 QUESTION: Which cylinder group appears to have the highest fuel efficiency?
-ANSWER:
+ANSWER: 4- cylinder
 
 QUESTION: Which cylinder group appears to have the lowest fuel efficiency?
-ANSWER:
+ANSWER: 8- cylinder
 
 QUESTION: Based on the boxplot, how does fuel efficiency seem to change as the
 number of cylinders increases?
-ANSWER:
+ANSWER: As the cylinders increase the fuel efficiency decreases. 
 
 ------------------------------------------------------------------------
 
@@ -659,8 +664,9 @@ mpg.
 Use the space below to write your code:
 
 ```{r summary_table}
-# Write your code below this line
-
+avg_mpg_by_cyl <- mtcars %>%
+  group_by(cyl) %>%
+  summarise(avg_mpg = mean(mpg))
 
 
 ```
@@ -672,20 +678,19 @@ Display your results as a clean table.
 Use the space below to write your code:
 
 ```{r formatted_table}
-# Write your code below this line
-
+print(avg_mpg_by_cyl)
 
 
 ```
 
 QUESTION: What does this table show?
-ANSWER:
+ANSWER: The table shows the average mpg for cars in the same clyinder group. 
 
 QUESTION: Which cylinder group has the highest average mpg?
-ANSWER:
+ANSWER: 4- cylinder 
 
 QUESTION: Which cylinder group has the lowest average mpg?
-ANSWER:
+ANSWER: 8- cylinder 
 
 ------------------------------------------------------------------------
 
@@ -696,10 +701,12 @@ information they provide.
 
 QUESTION: How does the scatterplot help you understand the relationship between
 weight and fuel efficiency?
-ANSWER:
+ANSWER: The scatterplot helps us understand the relationship betweeen weight and 
+fuel efficiency by looking at the negative trend. 
 
 QUESTION: How does the boxplot help you compare different groups of cars?
-ANSWER:
+ANSWER: The boxplot helps me compare different groups of cars by seeing how each 
+cylinder group compare to there MPG.
 
 ------------------------------------------------------------------------
 
@@ -712,14 +719,18 @@ ANSWER:
 Write your code below:
 
 ```{r Now_you_try}
-# Write your code below this line
-
+plot(mtcars$hp, mtcars$mpg,
+     xlab = "Horsepower (HP)",
+     ylab = "Miles Per Gallon (MPG)",
+     main = "MPG vs Horsepower",
+     col = "purple",
+     pch = 16)
 
 
 ```
 
 QUESTION: What did you change, and how did it affect the output?
-ANSWER:
+ANSWER: I changed the wt to hp. This affected the output by creating different correlation. But the trend remained the same which is negative. 
 
 ------------------------------------------------------------------------
 
@@ -754,14 +765,15 @@ document, **outside** of any code chunk, and then Knit:
 ### Check
 
 Did the numbers appear automatically in your rendered sentence?
-
+yes 
 QUESTION: What is inline R code, and how is it different from a regular code
 chunk?
-ANSWER:
+ANSWER: In line code is code written within the text and regualr code chunk is a 
+section of code. 
 
 QUESTION: Why is inline R code useful when working with a dataset that might be
 updated or changed over time?
-ANSWER:
+ANSWER: It will automatically change the data to the updated version. 
 
 ### TASK:
 
@@ -769,7 +781,9 @@ Now try writing your own inline R code sentence. Using the mtcars
 dataset, write a sentence that includes the maximum horsepower value
 using inline R code. The function `max()` will be helpful here.
 
-**Your sentence:** [Write your sentence with inline R code here.]
+**Your sentence:** The maximum horsepower value is `r max(mtcars$hp)`. 
+
+
 
 ### Why This Matters
 

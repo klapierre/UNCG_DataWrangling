@@ -28,3 +28,6 @@ plot(pressure)
 ```
 
 Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+  The mtcars dataset has `r nrow(mtcars)` rows and `r ncol(mtcars)` columns.
+    The average miles per gallon (mpg) is `r round(mean(mtcars$mpg), 2)`.
