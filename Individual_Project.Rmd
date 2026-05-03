@@ -1,58 +1,59 @@
 ---
 title: "Individual Project"
-output: html_document
+author: Amaliya Brown Doyoyo
+date: "2026-04-27"
+output: 
+  pdf_document:
+    toc: true
 ---
-<style>
-body {
-  font-family: "Times New Roman", Times, serif;
-  font-size: 12pt;
-}
-</style>
 
-Amaliya Brown Doyoyo<br>
-BIO 456<br>
-May 4 2026<br>
-Individual Project<br> 
+\pagebreak
 
-
-**Overview**
+# Overview
 
 West Nile Virus (WNV) is an enveloped, single-stranded, RNA virus that causes West Nile fever; an infection that can range from mild, flu-like symptoms to life-threatening central nervous system effects. Mosquitoes, particularly those of the Culex species, are the primary vectors for WNV, with birds acting as the primary reservoir. WNV is considered a tropical disease; however, rising global temperatures have coincided with its increased incidence in the northern hemisphere. Because humans are almost exclusively infected with WNV through mosquito bites, ecological factors play an important role in the epidemiology of the disease. Environmental conditions such as temperature and precipitation can determine mosquito abundance in certain regions, while human demographic factors, like population density and proximity to travel infrastructure like railways, influence the frequency of vector-human contact and the spread of the virus to new regions.  
 
 My project will use data from the 2024 dataset “Database of present and future situation of West Nile virus in the Afro-Palaearctic Pathogeographic System,” to compare the relationships between climate variables (temperature and precipitation) and population demographics (population density, access to travel) to WNV incidence across both afrotropic (Africa) and palaearctic (Europe and Asia) regions. I hypothesize that environmental variables will have a stronger association with WNV incidence in both regions.
 
-**Pseudocode/Workflow**
+# Pseudocode/Workflow
 
-I will be using the packages tidyverse, ggplot2, sf, and rnaturalearth. <br>
-
-Part One: I will tidy the data (making the afro_clean and pala_clean dataframes) before working on my figures. <br>
-  - Create a ‘kelvin_to_celsius’ function to use on the temperature values in the dataset. <br>
-  - Tidy both dataframes using a pipe with the select (to select the columns of interest: mean temp, max temp, min temp, precipitation,   population density, distance to cities, distance to railroads, distance to roads), rename (renaming columns), mutate with         ‘kelvin_to_celcius’ (on the temperature columns), mutate with as.numeric (on all non-numeric column), drop_na, and mutate(Region = “”)  (changing the values in the Region column to “Afrotropical” or “Palaearctic”) functions. <br>
-  
-  
-Part Two: My first figure will be a bar graph comparing the correlation between select ecological and population factors on WNV incidence in both AFR and PAL regions. <br>
-  - Make a wnv_combined dataframe using the bindrows function on afro_clean and pala_clean. <br>
-  - Make a wnv_corr dataframe from the wnv_combined dataframe. Group by Region. Use the summarize function to make new correlation columns using the cor command with “complete.obs” (to delete any missing values) to find the correlation between each factor and WNV frequency. Use pivot longer on all columns (except for Region) to turn the variable columns into rows that correspond to their respective correlation in a new “Correlation” column. Use the mutate function to create a “Type” column assigning each variable to “Ecological” or “Population”. <br>
-  - Make the bar graphs using ggplot with wnv_corr. Set the x axis as “variable”, using the reorder argument to list them in ascending order based on correlation value. Set the y axis as correlation, filling with ‘Region’ for optimal comparison. Use geom_col to make the bar graphs, and coord_flip to make them horizontal for optimal virtualization. Use facet_wrap to generate two bar graphs for both ecological and population data. Change the appearance of the figure manually with theme functions. <br>
-  
-  
-Part Three: Make a map of the average WNV frequency for all ecological/population variables for both AFR and PAL regions. Uses Z-score to standardise the data for clearer comparison. <br>
-  - Make the wnv_avg_corr dataframe from the wnv_corr dataframe. Group by Region and Type, then use the summarize function to find the mean correlation for each Region and Type. Use the mutate function to create a column for Z-scores. <br>
-  - Make a wnv_continent_corr dataframe from the wnv_avg_corr dataframe. Use the mutate function to assign AFR and PAL to their respective continents with the case_when function. Make an asia_data dataframe from the wnv_avg_corr dataframe with the filter and mutate to manually assign the PAL values to the asian continent. Update the wnv_continent_corr dataframe by binding the original dataframe with the asia_data dataframe. <br>
-  - Create a world dataframe using the ne_countries functions from the sf package. Create a map_data dataframe for the plot by using left_join to join the wnv_continent_corr data with the world data by continent, using the “many-to-many” argument since both dataframes are matching several rows of data. Use the filter function to remove any countries outside of the regions of interest. <br>
-  - Use ggplot with map_data to create a map. Use geom_sf to fill the map with zscore data and facet_wrap to make two maps for ecological and population data. Change the appearance of the figure manually with theme functions. <br>
-  
-  
-Part Four: Make pie charts comparing the estimated contribution of each variable on WNV in each region and in both regions combined. <br>
-  - Create  a pie_normalized dataframe from wnv_corr that uses the mutate function to make a correlation column including squared correlation values (to make positive); group by Region and use the mutate function to make a percentage column that shows the estimated percent contribution of each factor (contribution of single factor / sum of all factors). <br>
-  - Create a combined_pie dataset from the pie_normalized dataset; group by variable and use the summarize function to find the mean percentage for each variable. Use the mutate function to change the “Region” values to “Both.” <br>
-  - Create the final_pie_data dataframe using the bindrows function on pie_normalized and combined_pie to combine both datasets. <br>
-  - Use ggplot on final_pie_data with y as estimated percentage filled with variable values for optimal identification. Use geom_col and coord_polar to make the pie charts. Use facet_wraps to make three pie charts for each region. Change the appearance of the figure manually with theme functions. <br>
+**I will be using the packages tidyverse, ggplot2, sf, and rnaturalearth.**
 
 
+
+**Part One:** *I will tidy the data (making the afro_clean and pala_clean dataframes) before working on my figures.*
+
+1. Create a ‘kelvin_to_celsius’ function to use on the temperature values in the dataset.
+2. Tidy both dataframes using a pipe with the select (to select the columns of interest: mean temp, max temp, min temp, precipitation,   population density, distance to cities, distance to railroads, distance to roads), rename (renaming columns), mutate with         ‘kelvin_to_celcius’ (on the temperature columns), mutate with as.numeric (on all non-numeric column), drop_na, and mutate(Region = “”)  (changing the values in the Region column to “Afrotropical” or “Palaearctic”) functions. <br>
+  
+  
+**Part Two:** *My first figure will be a bar graph comparing the correlation between select ecological and population factors on WNV incidence in both AFR and PAL regions.*
+
+1. Make a wnv_combined dataframe using the bindrows function on afro_clean and pala_clean.
+2. Make a wnv_corr dataframe from the wnv_combined dataframe. Group by Region. Use the summarize function to make new correlation columns using the cor command with “complete.obs” (to delete any missing values) to find the correlation between each factor and WNV frequency. Use pivot longer on all columns (except for Region) to turn the variable columns into rows that correspond to their respective correlation in a new “Correlation” column. Use the mutate function to create a “Type” column assigning each variable to “Ecological” or “Population”. 
+3. Make the bar graphs using ggplot with wnv_corr. Set the x axis as “variable”, using the reorder argument to list them in ascending order based on correlation value. Set the y axis as correlation, filling with ‘Region’ for optimal comparison. Use geom_col to make the bar graphs, and coord_flip to make them horizontal for optimal virtualization. Use facet_wrap to generate two bar graphs for both ecological and population data. Change the appearance of the figure manually with theme functions. 
+  
+  
+**Part Three:** *Make a map of the average WNV frequency for all ecological/population variables for both AFR and PAL regions. Uses Z-score to standardise the data for clearer comparison.*
+
+1. Make the wnv_avg_corr dataframe from the wnv_corr dataframe. Group by Region and Type, then use the summarize function to find the mean correlation for each Region and Type. Use the mutate function to create a column for Z-scores. 
+2. Make a wnv_continent_corr dataframe from the wnv_avg_corr dataframe. Use the mutate function to assign AFR and PAL to their respective continents with the case_when function. Make an asia_data dataframe from the wnv_avg_corr dataframe with the filter and mutate to manually assign the PAL values to the asian continent. Update the wnv_continent_corr dataframe by binding the original dataframe with the asia_data dataframe.
+3. Create a world dataframe using the ne_countries functions from the sf package. Create a map_data dataframe for the plot by using left_join to join the wnv_continent_corr data with the world data by continent, using the “many-to-many” argument since both dataframes are matching several rows of data. Use the filter function to remove any countries outside of the regions of interest. 
+4. Use ggplot with map_data to create a map. Use geom_sf to fill the map with zscore data and facet_wrap to make two maps for ecological and population data. Change the appearance of the figure manually with theme functions. 
+  
+  
+**Part Four:** *Make pie charts comparing the estimated contribution of each variable on WNV in each region and in both regions combined.*
+
+1. Create  a pie_normalized dataframe from wnv_corr that uses the mutate function to make a correlation column including squared correlation values (to make positive); group by Region and use the mutate function to make a percentage column that shows the estimated percent contribution of each factor (contribution of single factor / sum of all factors). 
+2. Create a combined_pie dataset from the pie_normalized dataset; group by variable and use the summarize function to find the mean percentage for each variable. Use the mutate function to change the “Region” values to “Both.” 
+3. Create the final_pie_data dataframe using the bindrows function on pie_normalized and combined_pie to combine both datasets. 
+4. Use ggplot on final_pie_data with y as estimated percentage filled with variable values for optimal identification. Use geom_col and coord_polar to make the pie charts. Use facet_wraps to make three pie charts for each region. Change the appearance of the figure manually with theme functions. 
+
+\pagebreak
+
+# Part One: Set up
 
 ```{r, echo=TRUE, results='hide', message=FALSE, warning=FALSE, fig.width = 12, fig.height = 7, out.width = NULL, dpi = 300}
-
 # -----------------------------------------------------------------------
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 ##### Comparing the Effects of Ecological vs Population Factors on West 
@@ -69,7 +70,7 @@ Part Four: Make pie charts comparing the estimated contribution of each variable
   # II. Downloading Data
   afrotropical <- read.csv("Afrotropical_region.csv")
   palaearctic <- read.csv("Palaearctic_region.csv")
-
+  
 # ---------------------------
 # PART ONE: Tidying the Data
 # ---------------------------
@@ -117,6 +118,11 @@ Part Four: Make pie charts comparing the estimated contribution of each variable
     drop_na() %>% 
     mutate(Region = "Palaearctic")
   
+```
+
+# Part Two: Bar Graphs
+
+``` {r, echo=TRUE, results='hide', message=FALSE, warning=FALSE, fig.width = 12, fig.height = 7, out.width = NULL, dpi = 300}
 # ---------------------------
 # PART TWO: Bar Graphs
 # ---------------------------
@@ -196,7 +202,10 @@ Part Four: Make pie charts comparing the estimated contribution of each variable
                              correlated with WNV incidence.", width = 130),
           x = NULL, 
           y = "Correlation Coefficient")
+```
 
+# Part Three: Maps
+``` {r, echo=TRUE, results='hide', message=FALSE, warning=FALSE, fig.width = 12, fig.height = 7, out.width = NULL, dpi = 300}
 # ---------------------------
 # PART THREE: Maps
 # ---------------------------
@@ -282,7 +291,10 @@ Part Four: Make pie charts comparing the estimated contribution of each variable
                                   strongest in PAL regions, while population 
                                   factors are weaker in comparison but slightly 
                                   stronger in PAL regions.")) 
-  
+```
+
+# Part Four: Pie Charts
+``` {r, echo=TRUE, results='hide', message=FALSE, warning=FALSE, fig.width = 12, fig.height = 7, out.width = NULL, dpi = 300}
 # ---------------------------
 # PART FOUR: Pie Charts
 # ---------------------------
@@ -369,8 +381,8 @@ Part Four: Make pie charts comparing the estimated contribution of each variable
                 fill = "Ecological and Population\nFactors")
 ```
 
-
-**References**<br>
+\pagebreak
+# References
 
 CDC. (2024, May 17). West Nile: Symptoms, Diagnosis, & Treatment. West Nile Virus. https://www.cdc.gov/west-nile-virus/symptoms-diagnosis-treatment/index.html<br>
 
