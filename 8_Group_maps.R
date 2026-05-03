@@ -88,10 +88,10 @@ state_frost_data <- select(state_data, "State", "Frost")
 
 #View the new dataset and confirm that it is correct.
 state_frost_data
-<<<<<<< HEAD
 
-=======
->>>>>>> 6eb690692f4ff8bb3df630f286903bbd39731388
+
+
+
 
 #Now we need to use the tigris package to download a shapefile called 'states'
 #of all of US states that we would like to plot. We set cb = TRUE 
@@ -144,7 +144,7 @@ us_states_frost_2 <- left_join(states, state_frost_data, by = c("State"))
 
 us_states_frost_2 <- left_join(states, state_frost_data, by = c("State"))
 
-<<<<<<< HEAD
+
 us_states_frost <- left_join(states, frost_data, by = c("State"))
 
 
@@ -166,15 +166,14 @@ us_states_frost_2 <- left_join(states, state_frost_data, by = c("State"))
 us_states_frost_2 <- left_join(states, state_frost_data, by = c("State"))
 
 
-=======
->>>>>>> 6eb690692f4ff8bb3df630f286903bbd39731388
+
+
 
 #Next we will use ggplot to construct a map of the US States and number of Frost
 #days
 #Task: Run the following code and annotate the significance of each line of code.
 
 ggplot(us_states_frost) +
-<<<<<<< HEAD
 
 
 
@@ -186,26 +185,6 @@ ggplot(us_states_frost) +
 
 
 
-
-
-  ## Creates a plot of the frost days accross the country.
-
-
-
-  ## Creates a plot of the frost days accross the country.
-
-
-  ## Creates a plot of the frost days accross the country.
-
-
-  ## Creates a plot of the frost days accross the country.
-
-
-  ## Creates a plot of the frost days accross the country.
-
-
-
-  ## Creates a plot of the frost days accross the country.
 
 
 
@@ -219,6 +198,20 @@ ggplot(us_states_frost) +
   ## Creates a plot of the frost days accross the country.
 
 
+  ## Creates a plot of the frost days accross the country.
+
+
+  ## Creates a plot of the frost days accross the country.
+
+
+
+  ## Creates a plot of the frost days accross the country.
+
+
+
+  ## Creates a plot of the frost days accross the country.
+
+
 
   ## Creates a plot of the frost days accross the country.
 
@@ -226,10 +219,17 @@ ggplot(us_states_frost) +
   ## Creates a plot of the frost days accross the country.
 
 
-=======
+
   ## Creates a plot of the frost days accross the country.
 
->>>>>>> 6eb690692f4ff8bb3df630f286903bbd39731388
+
+  ## Creates a plot of the frost days accross the country.
+
+
+
+  ## Creates a plot of the frost days accross the country.
+
+
   geom_sf(aes(fill = Frost), color = "blue") +
   ## Uses the color blue as an indicator of number of frost days.
   theme_minimal() +
