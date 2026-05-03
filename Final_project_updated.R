@@ -153,7 +153,7 @@ ggplot() +
 
 library(geodata)
 
-#global administrative data level 1 is state
+# global administrative data level 1 is state
 NEV <- gadm(country = "USA", level = 1, path = ".")
 
 # level 2 is counties
@@ -162,7 +162,7 @@ NV_county <- gadm(country = "USA", level = 2, path = ".")
 # remove counties outside of nevada for map clarity: 
 NV_county <- NV_county[NV_county$NAME_1 == "Nevada", ]
 
-#plot shape of nevada no details
+# plot shape of nevada no details
 plot(NEV[NEV$NAME_1 == "Nevada", ]) 
 nev <- NEV[NEV$NAME_1 == "Nevada", ]
 
@@ -182,7 +182,6 @@ NV_map <- lines(NV_county)
 
 # Because the elevation map is being plotted with plot() (base R), the sf or dataframe points won’t automatically layer on top unless the are converted to a compatible spatial format.
 
-
 # convert mammal data to georeferenced object (joining lat and long)
 sf_mamm <- mammal_data %>% 
   st_as_sf(coords = c("lon", "lat"),
@@ -195,7 +194,7 @@ mamm_vect <- vect(sf_mamm)
 crs(mamm_vect) <- crs(nv_elevation)
 
 
-# Now plot together and save as JPEG: ---------------------------------------------------------
+# Now plot together and save as JPEG:
 
 # Open a high-quality JPEG device
 jpeg("nv_target_map.jpg", width = 3000, height = 3000, res = 375)
@@ -235,12 +234,9 @@ dev.off()
 
 
 
+# McLean lab data target specimen map ------------------------------------------
 
-
-
-# UNCG target specimen map -----------------------------------------------------------
-
-# Now I want to make the same map, but only plot specimens collected by UNCG
+# Now I want to make the same map, but only plot specimens collected by McLean lab on previous field expeditions
 # I already have a cleaned dataset of UNCG specimens that I downloaded from Arctos, where more of our most recent capture data has been uploaded
 
 # filter only UNCG specimens from institution column
@@ -304,8 +300,7 @@ UNCG_mamm_vect <- vect(UNCG_sf_mamm)
 # Make sure CRS matches raster
 crs(UNCG_mamm_vect) <- crs(nv_elevation)
 
-
-# Now plot together: ----------------------------------------------------------
+# Now plot together: 
 
 # Open a high-quality JPEG device
 jpeg("UNCG_target_map.jpg", width = 3000, height = 3000, res = 275)
@@ -343,7 +338,9 @@ legend("bottomleft",
 dev.off()
 
 
-# Maps built with  Arctos data ------------------------------------------------
+
+
+# First attempt at thesis project target species elevation maps - built from Arctos data, only preserved specimen records (less accurate) ------------------
 arctos_data <- read.csv("arctos_target_species.csv")
 
 colnames(arctos_data)
@@ -396,6 +393,78 @@ ggplot(urocitellus, aes(x = elevation,
   scale_fill_manual(values = c("#812c1f", "#d74a35")) +
   geom_histogram(binwidth=100) +
   xlim(1500, 10000) +
+  theme_classic() +
+  labs(title = "Urocitellus elevation")
+
+
+
+
+# new attempt at elevation maps - built from GBIF specimen records (all types, more accurate) ----------------------------------------------------------------
+species_accounts <- read.csv("all_accounts.csv")
+
+colnames(species_accounts)
+
+# remove columns
+species_accounts <- species_accounts %>%
+  select(-gbifID, -datasetKey, -occurrenceID,
+         -kingdom, -phylum, -class, -infraspecificEpithet,
+         -taxonRank,
+         -scientificName, -verbatimScientificName,
+         -verbatimScientificNameAuthorship,
+         -occurrenceStatus,
+         -individualCount,
+         -publishingOrgKey,
+         -coordinateUncertaintyInMeters, -coordinatePrecision,
+         -elevationAccuracy,
+         -depth, -depthAccuracy,
+         -day, -month,
+         -taxonKey, -speciesKey,
+         -collectionCode, -catalogNumber, -recordNumber,
+         -identifiedBy, -dateIdentified,
+         -license, -rightsHolder, -recordedBy, -typeStatus,
+         -establishmentMeans, -lastInterpreted, 
+         -mediaType, -issue)
+
+# Rename columns 
+species_accounts <- rename(.data=species_accounts,   
+                           country=countryCode,
+                           state=stateProvince,,
+                           date=eventDate,
+                           lat=decimalLatitude,
+                           lon=decimalLongitude,
+                           institution=institutionCode)
+
+# removing rows without elevation data
+species_accounts <- species_accounts %>%
+  drop_na(elevation)
+
+# subset tamias genus data 
+tamias <- species_accounts %>%
+  filter(species == "Tamias minimus" | species == "Tamias umbrinus")
+
+# subset urocitellus genus data
+urocitellus <- species_accounts %>%
+  filter(species == "Urocitellus mollis" | species == "Urocitellus beldingi")
+
+
+
+# creating Tamias histogram based on elevation 
+ggplot(tamias, aes(x = elevation,
+                   fill = species)) + 
+  scale_fill_manual(values = c("#88bc5e", "#364b25")) +
+  geom_histogram(binwidth=80) +
+  xlim(1000, 3500) +
+  ylim(0, 150) +
+  theme_classic() +
+  labs(title = "Tamias elevation")
+
+# creating Urocitellus histogram based on elevation 
+ggplot(urocitellus, aes(x = elevation,
+                        fill = species)) + 
+  scale_fill_manual(values = c("#812c1f", "#d74a35")) +
+  geom_histogram(binwidth=80) +
+  xlim(1000, 3000) +
+  ylim(0, 30) +
   theme_classic() +
   labs(title = "Urocitellus elevation")
 
