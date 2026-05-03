@@ -122,6 +122,7 @@ RMarkdown supports six levels of headings.
 \
 
 TASK: Click Knit to observe how different heading levels below appear in the rendered output.
+```
 
 
 # Line 1: This is an example to show different levels of headings in RMarkdown.
@@ -131,7 +132,7 @@ TASK: Click Knit to observe how different heading levels below appear in the ren
 ##### Line 5: This is an example to show different levels of headings in RMarkdown.   
 ###### Line 6: This is an example to show different levels of headings in RMarkdown.
 
-
+```
 QUESTION: What happens to the size of text when you increase the number of hashtags (#)?  
 ANSWER: The text becomes smaller 
 
@@ -185,8 +186,10 @@ To make your text italics, you can enclose it within single asterisk `*[text]*`.
 
 \
 
-TASK: Rewrite Line 1 below and only italicize the word "italics." Leave two spaces at the end of sentence for a line break.  
+TASK: Rewrite'Line 1 below and only italicize the word "italics." Leave two spaces at the end of sentence for a line break.  
 ANSWER:
+
+Line 1: This is an example to show how to make text *italics*.
 
 \
 
