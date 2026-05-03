@@ -144,6 +144,11 @@ visits_by_month <- plant_pollinators %>%
   group_by(month) %>%
   summarise(visits = n())%>%
   ungroup()
+#Visits by temp
+visits_by_temp <- plant_pollinators %>%
+  group_by(temp) %>%
+  summarise(visits = n()) %>%
+  ungroup()
 #The figure above showed that none of the observations had any information #logged for month, so I am going to delete that column
 plant_pollinators<-plant_pollinators%>%
   select(-month)
@@ -199,10 +204,14 @@ ggplot(visits_by_type, aes(x = visiter_type, y = visits)) +
   geom_col(fill = "blue") +
   theme_minimal()
 #Temperature influence on visitation Figure
-ggplot(plant_pollinators, aes(x = temp)) +
-  geom_bar(fill = "red") +
-  labs(title = "Visits by Temperature Category") +
+ggplot(visits_by_temp, aes(x = temp, y = visits)) +
+  geom_point() +
+  labs(title = "Visits vs Temperature",
+       x = "Temperature",
+       y = "Number of Visits") +
+  coord_cartesian(ylim = c(0, 4000))
   theme_minimal()
+  
 
 #individual project take 2
 #link:https://portal.edirepository.org/nis/mapbrowse?packageid=knb-lter-and.5216.8
