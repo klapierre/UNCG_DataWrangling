@@ -1,7 +1,7 @@
 ---
 title: "12_RMarkdown"
 author: "Bailey Dixon"
-date: "`r Sys.Date()`"
+date: "1 May 2026"
 output: pdf_document
 ---
 
@@ -37,7 +37,7 @@ To begin, open RStudio and create a new R Markdown file.
 Go to **File > New File > R Markdown**.  
 
 QUESTION: What do you think happens when the new file is opened?  
-ANSWER:  
+ANSWER:  A new .rmd file is created that I will insert my own info into
 
 .........................
 
@@ -56,7 +56,7 @@ install.packages("tinytex")
 tinytex::install_tinytex()
 
 QUESTION: Why are these packages needed?
-ANSWER:
+ANSWER: in order to build and save rmarkdown files and use the knit function
 
 .........................
 ## 1.3 Modify the YAML Header
@@ -77,7 +77,7 @@ date: "April 2026"
 output: pdf_document
 
 QUESTION: What is the purpose of the YAML header?
-ANSWER:
+ANSWER: it gives the document a title, the authors can inster their names, and determine the output type
 
 .........................
 ##1.4 Save and Knit file
@@ -91,17 +91,17 @@ tinytex::install_tinytex()
 Then click Knit again.
 
 QUESTION: What happens when you click Knit?
-ANSWER:
+ANSWER: it pulls open the pdf file I am currently working on
 
 QUESTION: What type of file is created?
-ANSWER:
+ANSWER: PDF
 
 .........................
 ##1.5 Final observation
 After knitting, compare the .Rmd file to the final PDF.
 
 QUESTION: How is the output file different from the source file?
-ANSWER:
+ANSWER: the output file is just the text from the rmd file (which is written within the rstudio console) in PDF format
 
 
 
@@ -125,7 +125,7 @@ TASK: Read the question below, click **Knit** to render the document and return 
 QUESTION: What difference do you notice about the above line that starts with
 `# Section 2: Formatting a Report Using RMarkdown Syntax` compared to the line
 `Objective: learn to format how your document appears in the output of your choice`?  
-ANSWER:
+ANSWER: 'Section 2' text is slightly larger, bolded and separated by solid lines, while the 'objective' line is smaller, not bold, and followed by a dotted line
 
 \
 
@@ -136,7 +136,7 @@ RMarkdown supports six levels of headings.
 
 TASK: Click Knit to observe how different heading levels below appear in the rendered output.
 
-
+```
 # Line 1: This is an example to show different levels of headings in RMarkdown.
 ## Line 2: Line 1: This is an example to show different levels of headings in RMarkdown.
 ### Line 3: This is an example to show different levels of headings in RMarkdown.
@@ -144,28 +144,29 @@ TASK: Click Knit to observe how different heading levels below appear in the ren
 ##### Line 5: This is an example to show different levels of headings in RMarkdown.   
 ###### Line 6: This is an example to show different levels of headings in RMarkdown.
 
+```
 
 QUESTION: What happens to the size of text when you increase the number of hashtags (#)?  
-ANSWER: 
+ANSWER: it gets smaller, but the bolding remains the same! 
 
 \
 
 In the example above, the higher the number of hashtags, the lower the heading level (smaller font).  
 
 QUESTION: How many hashtags would you use if you wanted highest level heading (largest font)?  
-ANSWER: 
+ANSWER: 1 hashtag
 
 \
 
 QUESTION: In the rendered output, do Line 5 and Line 6 from above example appear in the same line?  
-ANSWER:
+ANSWER: yes, which could be useful for writing a caption for a figure
 
 \
 
 TASK: Go to the metadata for this assignment and change the output from `pdf_document` to `html_document`.  
 
 QUESTION: Did your Line 5 and Line 6 appear in different lines?  
-ANSWER:
+ANSWER: yes
 
 \
 
@@ -199,7 +200,7 @@ To make your text italics, you can enclose it within single asterisk `*[text]*`.
 \
 
 TASK: Rewrite Line 1 below and only italicize the word "italics." Leave two spaces at the end of sentence for a line break.  
-ANSWER:
+ANSWER: Line 1: This is an example to show how to make text *italics.*  
 
 \
 
@@ -210,7 +211,7 @@ You can also enclose your text within single underscore `_[text]_`.
 
 TASK: In the paragraph below, make "Arnav," "Biological Data Wrangling and Visualization" and "RMarkdown" italics in the following paragraph using both the methods (asterisks and underscore) mentioned above at least once.  
 
-My name is Arnav Pandey. I am currently enrolled in Biological Data Wrangling and Visualization (BIO 457/657).This is a TASK: to use RMarkdown to make a text output italics.  
+My name is *Arnav* Pandey. I am currently enrolled in _Biological Data Wrangling and Visualization_ (BIO 457/657).This is a TASK: to use *RMarkdown* to make a text output italics.  
 
 \
 
