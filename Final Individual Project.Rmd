@@ -232,7 +232,7 @@ visits_by_temp <- plant_pollinators %>%
   ungroup()
 ```
 
-#Top plants figure
+#Top plants figure. Shows which plant species are most prevelent in the study.
 ```{r, message=FALSE}
 ggplot(top_plants, aes(x = reorder(plant_species, total_visits), y = total_visits)) +
   geom_col(fill = "darkgreen") +
@@ -245,7 +245,7 @@ ggplot(top_plants, aes(x = reorder(plant_species, total_visits), y = total_visit
   theme_minimal()
 ```
 
-#Top Pollinators Figure
+#Top Pollinators Figure. Shows which pollinators are the most prevelent in the #study.
 ```{r, message=FALSE}
 ggplot(top_pollinators, aes(x = reorder(visiter_name, total_visits), y = total_visits)) +
   geom_col(fill = "orange") +
@@ -258,7 +258,7 @@ ggplot(top_pollinators, aes(x = reorder(visiter_name, total_visits), y = total_v
   theme_minimal()
 ```
 
-#Heatmap figure
+#Heatmap figure. This figure shows all of the plants and pollinators and which #pollinators pollinate primarily what species.
 ```{r, message=FALSE}
 top_interactions <- interaction_counts %>%
   filter(plant_species %in% top_plants$plant_species,
@@ -277,7 +277,7 @@ ggplot(top_interactions,
   theme(axis.text.x = element_text(angle = 90, hjust = 1))
 ```
 
-#Visits by meadow Figure
+#Visits by meadow Figure. Given more information about what is in each meadow #this figure can be used to show what species grow and live in what sorts of #environments.
 ```{r, message=FALSE}
 ggplot(visits_by_meadow, aes(x = meadow, y = visits)) +
   geom_col(fill = "purple") +
@@ -285,7 +285,8 @@ ggplot(visits_by_meadow, aes(x = meadow, y = visits)) +
   theme_minimal()
 ```
 
-#Temperature influence on visitation Figure
+#Temperature influence on visitation Figure. Showing how when temperatures are 
+#Too low or too high there is an influence on the number of pollinators.
 ```{r, message=FALSE}
 ggplot(visits_by_temp, aes(x = temp, y = visits)) +
   geom_point() +
