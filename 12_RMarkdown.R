@@ -560,10 +560,7 @@ Don't forget to save and commit your changes.
     **Hint:** use the plot() function
     
     ```{r scatterplot}
-    # Write your code below this line
-    
-    
-    
+   plot(mtcars$wt, mtcars$mpg)
     ```
     
     ### TASK:
@@ -575,21 +572,18 @@ Don't forget to save and commit your changes.
                                                  col=)
     
     ```{r scatterplot_labeled}
-    # Write your updated scatterplot code below this line
-    
-    
-    
+    plot(mtcars$wt, mtcars$mpg, main = "Car Weight vs Fuel Efficiency", xlab = "Weight", ylab = "Miles Per Gallon", col = "blue")
     ```
     
     QUESTION: What does each point in this scatterplot represent?
-      ANSWER:
+      ANSWER: Each point represents one car in the mtcars dataset.
       
       QUESTION: What relationship do you observe between weight and mpg?
-      ANSWER:
+      ANSWER: As weight increases, mpg usually decreases.
       
       QUESTION: Does the graph suggest a positive relationship, a negative relationship,
     or no relationship? Explain your answer.
-    ANSWER:
+    ANSWER: The graph suggests a negative relationship because heavier cars tend to have lower fuel efficiency. 
       
       ------------------------------------------------------------------------
       
@@ -603,10 +597,7 @@ Don't forget to save and commit your changes.
     Create a boxplot of mpg by cyl using the boxplot function
     
     ```{r boxplot1}
-    # Write your code below this line
-    
-    
-    
+   boxplot(mpg ~ cyl, data = mtcars)
     ```
     
     ### TASK: 
@@ -615,24 +606,21 @@ Don't forget to save and commit your changes.
     y-axis label, and a fill color of your choice
     
     ```{r boxplot2}
-    # Write your updated boxplot code below this line
-    
-    
-    
+    boxplot(mpg ~ cyl, data = mtcars, main = "Fuel Efficiency by Number of Cylinders", xlab = "Number of Cylinders", ylab = "Miles Per Gallon", col = "lightblue")
     ```
     
     QUESTION: What does each box in this plot represent?
-      ANSWER:
+      ANSWER: Each box represents the mpg values for cars with that number of cylinders.
       
       QUESTION: Which cylinder group appears to have the highest fuel efficiency?
-      ANSWER:
+      ANSWER: The 4 cylinder group has the highest fuel efficiency.
       
       QUESTION: Which cylinder group appears to have the lowest fuel efficiency?
-      ANSWER:
+      ANSWER: The 8 cylinder group has the lowest fuel efficiency.
       
       QUESTION: Based on the boxplot, how does fuel efficiency seem to change as the
     number of cylinders increases?
-      ANSWER:
+      ANSWER: Fuel efficiency seems to decrease as the number of cylinders increases.
       
       ------------------------------------------------------------------------
       
@@ -652,10 +640,9 @@ Don't forget to save and commit your changes.
     Use the space below to write your code:
       
       ```{r summary_table}
-    # Write your code below this line
-    
-    
-    
+   avg_mpg_by_cyl <- mtcars %>%
+     group_by(cyl) %>%
+     summarize(avg_mpg = mean(mpg))
     ```
     
     ### TASK: 
@@ -665,20 +652,17 @@ Don't forget to save and commit your changes.
     Use the space below to write your code:
       
       ```{r formatted_table}
-    # Write your code below this line
-    
-    
-    
+   knitr::kable(avg_mpg_by_cyl)
     ```
     
     QUESTION: What does this table show?
-      ANSWER:
+      ANSWER:This table shows the average miles per gallon for each cylinder group. 
       
       QUESTION: Which cylinder group has the highest average mpg?
-      ANSWER:
+      ANSWER: The 4 cylinder group has the highest average mpg. 
       
       QUESTION: Which cylinder group has the lowest average mpg?
-      ANSWER:
+      ANSWER: The 8 cylinder group has the lowest average mpg. 
       
       ------------------------------------------------------------------------
       
@@ -689,10 +673,10 @@ Don't forget to save and commit your changes.
     
     QUESTION: How does the scatterplot help you understand the relationship between
     weight and fuel efficiency?
-      ANSWER:
+      ANSWER: The scatterplot helps show the relationship between car weight and fuel efficiency by showing each car as a point. 
       
       QUESTION: How does the boxplot help you compare different groups of cars?
-      ANSWER:
+      ANSWER: The bloxplot helps compare fuel efficiency across different cylinder groups. 
       
       ------------------------------------------------------------------------
       
@@ -705,14 +689,11 @@ Don't forget to save and commit your changes.
     Write your code below:
       
       ```{r Now_you_try}
-    # Write your code below this line
-    
-    
-    
+   plot(mtcars$hp, mtcars$mpg, main = "Horsepower vs Fuel Efficiency", xlab = "Horsepower", ylab = "Miles Per Gallon", col = "purple")
     ```
     
     QUESTION: What did you change, and how did it affect the output?
-      ANSWER:
+      ANSWER: I changed the x-axis variable to horsepower and changed the color of the points to purple. This made the graph show the relationship between horsepower and fuel efficiency instead of weight and fuel efficiency.
       
       ------------------------------------------------------------------------
       
