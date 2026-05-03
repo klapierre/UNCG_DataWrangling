@@ -1,8 +1,8 @@
 
 # Loading necessary packages ----------------------------------------------
 
-install.packages("tidyverse")
-install.packages("readxl")
+#install.packages("tidyverse")
+#install.packages("readxl")
 library(tidyverse)
 library(readxl)
 
@@ -154,3 +154,165 @@ percentage_strains_phase_meiosis2 <- percentage_strains_bioreps_phase_meiosis2 %
 
 ## Meiosis I data
 
+### For 614 
+biorep_614 <- percentage_strains_bioreps_phase_meiosis1 %>% 
+  filter (strain_meiosis1 == "614")
+
+summary_614 <- percentage_strains_phase_meiosis1 %>% 
+  filter (strain_meiosis1 == "614")
+
+ggplot ()+
+  geom_point(data = biorep_614,
+               aes (x = phase,
+                    y = percentage_escrt_biorep_meiosis1),
+               width = 0, size = 2, alpha = 0.6, color = "brown" )+
+  geom_point(data = summary_614,
+                  aes(x = phase,
+                      y = average_percentage_per_strain_meiosis1),
+             color = "maroon")+
+  geom_errorbar (data = summary_614,
+                 aes (x = phase,
+                      ymin = average_percentage_per_strain_meiosis1 - se_meiosis1,
+                      ymax = average_percentage_per_strain_meiosis1 + se_meiosis1),
+                 width = 0.2,
+                 color ="maroon") +
+  labs (x = "Meiosis I phases",
+        y = "ESCRT recruitment (% of SPB)",
+        title = "Recruitment of Cmp7 at Meiosis I")
+
+
+### For 615
+biorep_615 <- percentage_strains_bioreps_phase_meiosis1 %>% 
+  filter (strain_meiosis1 == "615")
+
+summary_615 <- percentage_strains_phase_meiosis1 %>% 
+  filter (strain_meiosis1 == "615")
+
+ggplot ()+
+  geom_point (data = biorep_615,
+               aes (x = phase,
+                    y = percentage_escrt_biorep_meiosis1),
+               width = 0, size = 2, alpha = 0.6, color = "brown" )+
+  geom_point(data = summary_615,
+             aes(x = phase,
+                 y = average_percentage_per_strain_meiosis1),
+             color = "maroon")+
+  geom_errorbar (data = summary_615,
+                 aes (x = phase,
+                      ymin = average_percentage_per_strain_meiosis1 - se_meiosis1,
+                      ymax = average_percentage_per_strain_meiosis1 + se_meiosis1),
+                 width = 0.2,
+                 color ="maroon") +
+  labs (x = "Meiosis I phases",
+        y = "ESCRT recruitment (% of SPB)",
+        title = "Recruitment of Ist1 at Meiosis I")
+
+
+### For 650
+biorep_650 <- percentage_strains_bioreps_phase_meiosis1 %>% 
+  filter (strain_meiosis1 == "650")
+
+summary_650 <- percentage_strains_phase_meiosis1 %>% 
+  filter (strain_meiosis1 == "650")
+
+ggplot ()+
+  geom_point (data = biorep_650,
+               aes (x = phase,
+                    y = percentage_escrt_biorep_meiosis1),
+               width = 0, size = 2, alpha = 0.6, color = "brown" )+
+  geom_point(data = summary_650,
+             aes(x = phase,
+                 y = average_percentage_per_strain_meiosis1),
+             color = "maroon")+
+  geom_errorbar (data = summary_650,
+                 aes (x = phase,
+                      ymin = average_percentage_per_strain_meiosis1 - se_meiosis1,
+                      ymax = average_percentage_per_strain_meiosis1 + se_meiosis1),
+                 width = 0.2,
+                 color ="maroon") +
+  labs (x = "Meiosis I phases",
+        y = "ESCRT recruitment (% of SPB)",
+        title = "Recruitment of Vps32 at Meiosis I")
+
+
+## Meiosis II data
+
+### For 614 
+biorep_614 <- percentage_strains_bioreps_phase_meiosis2 %>% 
+  filter (strain_meiosis2 == "614")
+
+summary_614 <- percentage_strains_phase_meiosis2 %>% 
+  filter (strain_meiosis2 == "614")
+
+ggplot ()+
+  geom_point (data = biorep_614,
+               aes (x = phase,
+                    y = percentage_escrt_biorep_meiosis2),
+               width = 0, size = 2, alpha = 0.6, color = "brown" )+
+  geom_point(data = summary_614,
+             aes(x = phase,
+                 y = average_percentage_per_strain_meiosis2),
+             color = "maroon")+
+  geom_errorbar (data = summary_614,
+                 aes (x = phase,
+                      ymin = average_percentage_per_strain_meiosis2 - se_meiosis2,
+                      ymax = average_percentage_per_strain_meiosis2 + se_meiosis2),
+                 width = 0.2,
+                 color ="maroon") +
+  labs (x = "Meiosis II phases",
+        y = "ESCRT recruitment (% of SPB)",
+        title = "Recruitment of Cmp7 at Meiosis II")
+
+
+### For 615
+biorep_615 <- percentage_strains_bioreps_phase_meiosis2 %>% 
+  filter (strain_meiosis2 == "615")
+
+summary_615 <- percentage_strains_phase_meiosis2 %>% 
+  filter (strain_meiosis2 == "615")
+
+ggplot ()+
+  geom_point (data = biorep_615,
+               aes (x = phase,
+                    y = percentage_escrt_biorep_meiosis2),
+               width = 0, size = 2, alpha = 0.6, color = "brown" )+
+  geom_point(data = summary_615,
+             aes(x = phase,
+                 y = average_percentage_per_strain_meiosis2),
+             color = "maroon")+
+  geom_errorbar (data = summary_615,
+                 aes (x = phase,
+                      ymin = average_percentage_per_strain_meiosis2 - se_meiosis2,
+                      ymax = average_percentage_per_strain_meiosis2 + se_meiosis2),
+                 width = 0.2,
+                 color ="maroon") +
+  labs (x = "Meiosis II phases",
+        y = "ESCRT recruitment (% of SPB)",
+        title = "Recruitment of Ist1 at Meiosis II")
+
+
+### For 650
+biorep_650 <- percentage_strains_bioreps_phase_meiosis2 %>% 
+  filter (strain_meiosis2 == "650")
+
+summary_650 <- percentage_strains_phase_meiosis2 %>% 
+  filter (strain_meiosis2 == "650")
+
+ggplot ()+
+  geom_point (data = biorep_650,
+               aes (x = phase,
+                    y = percentage_escrt_biorep_meiosis2),
+               width = 0, size = 2, alpha = 0.6, color = "brown" )+
+  geom_point(data = summary_650,
+             aes(x = phase,
+                 y = average_percentage_per_strain_meiosis2),
+             color = "maroon")+
+  geom_errorbar (data = summary_650,
+                 aes (x = phase,
+                      ymin = average_percentage_per_strain_meiosis2 - se_meiosis2,
+                      ymax = average_percentage_per_strain_meiosis2 + se_meiosis2),
+                 width = 0.2,
+                 color ="maroon") +
+  labs (x = "Meiosis II phases",
+        y = "ESCRT recruitment (% of SPB)",
+        title = "Recruitment of Vps32 at Meiosis II")
