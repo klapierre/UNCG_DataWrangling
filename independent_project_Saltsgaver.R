@@ -237,7 +237,7 @@ ggplot(Time_to_Death_Stat, aes(x=Treatment_Group,y=Average)) +
                 linewidth=0.8) +
   labs(title = "Average Time to Death by Treatment Group",
        x = "Treatment Group",
-       y = "Average Time to Death") +
+       y = "Days from Collection") +
   theme_minimal(base_size = 14) +
   theme(
     plot.title = element_text(hjust = 0.9, face = "bold"),
@@ -259,7 +259,7 @@ ggplot(Time_to_Start_Stat, aes(x=Treatment_Group,y=Average)) +
                 linewidth=0.8) +
   labs(title = "Average Time to First Egg Laid by Treatment Group",
        x = "Treatment Group",
-       y = "Average Time to First Egg Laid") +
+       y = "Days from Collection") +
   theme_minimal(base_size = 14) +
   theme(
     plot.title = element_text(hjust = 0.9, face = "bold"),
@@ -281,7 +281,7 @@ ggplot(Time_to_Median_Stat, aes(x=Treatment_Group,y=Average)) +
                 linewidth=0.8) +
   labs(title = "Average Time to Median Egg Laid by Treatment Group",
        x = "Treatment Group",
-       y = "Average Time to Median Egg Laid") +
+       y = "Days from Collection") +
   theme_minimal(base_size = 14) +
   theme(
     plot.title = element_text(hjust = 0.9, face = "bold"),
@@ -303,7 +303,7 @@ ggplot(Time_to_End_Stat, aes(x=Treatment_Group,y=Average)) +
                 linewidth=0.8) +
   labs(title = "Average Time to Last Egg Laid by Treatment Group",
        x = "Treatment Group",
-       y = "Average Time to Last Egg Laid") +
+       y = "Days from Collection") +
   theme_minimal(base_size = 14) +
   theme(
     plot.title = element_text(hjust = 0.9, face = "bold"),
