@@ -9,7 +9,9 @@ output: word_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-#1. Project Overview: 
+
+# 1. Project Overview: 
+
 
 The dataset and research project was to determine if dogs can understand
 
@@ -44,14 +46,23 @@ The longer a dog stares, the more it is confirmed that the dogs understand
 
 the emotions being shown.
 
-#2. Project Workflow:
+
+# 2. Project Workflow:
+
 
 1. First I will load in the packages need to clean data and run code. 
 
 -tidyverse
+
 -readxl 
+
 -ggplot 2 
+
 -dply 
+
+-markdown 
+
+-knitr
 
 2. Next, I will import the dataset using readxl and save the dataset as an object title Emotions_Dogs. I will then inspect the data. 
 
@@ -64,6 +75,7 @@ the emotions being shown.
 - Date 
 - Control 
 - Positive/Negative (Represent in Valence column)
+
 I will keep the rest of the columns which will be used to create our digarams. 
 
 4. I will check for missing values and remove any missing values. 
@@ -100,7 +112,214 @@ Figure 4: Strength of Response
 
 - I will use a barplot using mean of abs_index and sex_sti to see the strength of the responses. 
 
-#3. R Script: 
+# 3. R Script: 
+
+ loading packages 
+ 
+```{r}
+library(tidyverse)
+library(readxl)
+library(ggplot2)
+library(dplyr)
+library(rmarkdown) 
+library(knitr) 
+```
+ 
+ Importing dataset 
+ 
+```{r}
+emotional_dogs <- read_excel("Data+Sheet 2.xlsx")
+```
+ 
+Inspecting dataset 
+
+```{r}
+head(emotional_dogs)
+str(emotional_dogs)
+summary(emotional_dogs)
+```
+ 
+ Cleaning dataseet
+ 
+```{r}
+clean_emotional_dogs <- emotional_dogs %>%
+  select(
+    dog,
+    sex,
+    spp_sti,
+    sex_sti,
+    matching,
+    condit,
+    group,
+    time_le,
+    time_ri,
+    index,
+    valence
+  ) %>%
+  na.omit()
+```
+
+Creating new variables
+
+```{r}
+clean_emotional_dogs <- clean_emotional_dogs %>%
+  mutate(
+    total_time = time_le + time_ri,
+
+    preference = case_when(
+      time_le > time_ri ~ "Left",
+      time_ri > time_le ~ "Right",
+      TRUE ~ "Equal"
+    ),
+
+    abs_index = abs(index)
+  )
+```
+
+Figure 1: Human vs Canine Emotional Reaction
+
+```{r}
+ggplot(clean_emotional_dogs, aes(x = spp_sti, y = valence)) +
+  geom_boxplot(width = 0.15, outlier.alpha = 0.3) +
+  labs(
+    title = "Human vs Canine Emotional Reactions",
+    x = "Stimulus Type",
+    y = "Valence"
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = "bold", size = 15),
+    axis.title = element_text(size = 13),
+    axis.text = element_text(size = 11),
+    panel.grid.major = element_line(color = adjustcolor("pink", alpha.f = 0.2)),
+    panel.background = element_rect(fill = "lavenderblush")
+  ) +
+  annotate(
+    "text",
+    x = Inf,
+    y = Inf,
+    label = "(1)",
+    hjust = 1.2,
+    vjust = 1.5,
+    size = 5
+  ) 
+```
+
+**Figure 1** This figure shows the difference in human vs canine emotional reactions. The dogs reacted a little more to human stimuli but the difference is slightly noticeable. 
+
+Figure 2: Matching vs Mismatching Stimuli
+
+```{r}
+clean_emotional_dogs <- clean_emotional_dogs %>%
+  mutate(
+    matching = as.factor(matching)
+  )
+
+clean_emotional_dogs <- clean_emotional_dogs %>%
+  mutate(
+    matching = trimws(as.character(matching)),
+    matching = case_when(
+      matching == "0" ~ "Mismatching",
+      matching == "1" ~ "Matching",
+      TRUE ~ NA_character_
+    ),
+    matching = factor(matching, levels = c("Mismatching", "Matching"))
+  )
+
+ggplot(clean_emotional_dogs, aes(x = matching, y = index)) +
+  geom_violin(trim = FALSE, alpha = 0.5) +
+  geom_boxplot(width = 0.1, outlier.alpha = 0.3) +
+  labs(
+    title = "Matching vs Mismatching Stimuli",
+    x = "Cue Condition",
+    y = "Preference Index"
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = "bold", size = 15),
+    axis.title = element_text(size = 13),
+    axis.text = element_text(size = 11),
+    panel.grid.major = element_line(color = adjustcolor("pink", alpha.f = 0.2)),
+    panel.background = element_rect(fill = "lavenderblush")
+  ) +
+  annotate(
+    "text",
+    x = Inf,
+    y = Inf,
+    label = "(2)",
+    hjust = 1.2,
+    vjust = 1.5,
+    size = 5
+  ) 
+```
+
+***Figure 2*** This figure shows 
+
+Figure 3: Male vs Female Stimuli 
+
+```{r}
+ggplot(clean_emotional_dogs, aes(x = sex_sti, y = valence)) +
+  stat_summary(fun = mean, geom = "point", size = 3) +
+  stat_summary(fun.data = mean_se, geom = "errorbar", width = 0.2) +
+  stat_summary(fun = mean, geom = "line", aes(group = 1)) +
+  labs(
+    title = "Emotional Response: Male vs Female Stimuli",
+    x = "Stimulus Sex",
+    y = "Mean Valence"
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = "bold", size = 15),
+    axis.title = element_text(size = 13),
+    axis.text = element_text(size = 11),
+    panel.grid.major = element_line(color = adjustcolor("pink", alpha.f = 0.2)),
+    panel.background = element_rect(fill = "lavenderblush")
+  ) +
+  annotate(
+    "text",
+    x = Inf,
+    y = Inf,
+    label = "(3)",
+    hjust = 1.2,
+    vjust = 1.5,
+    size = 5
+  ) 
+```
+
+Figure 4: Strength of response by Simulus Sex
+
+```{r}
+ggplot(clean_emotional_dogs, aes(x = sex_sti, y = abs_index)) +
+  stat_summary(fun = mean, geom = "col", alpha = 0.7) +
+  stat_summary(fun.data = mean_se, geom = "errorbar", width = 0.2) +
+  labs(
+    title = "Strength of Response by Stimulus Sex",
+    x = "Stimulus Sex",
+    y = "Mean Absolute Index"
+  ) +
+  theme_minimal() +
+  theme(
+    plot.title = element_text(hjust = 0.5, face = "bold", size = 15),
+    axis.title = element_text(size = 13),
+    axis.text = element_text(size = 11),
+    panel.grid.major = element_line(color = adjustcolor("pink", alpha.f = 0.2)),
+    panel.background = element_rect(fill = "lavenderblush")
+  ) +
+  annotate(
+    "text",
+    x = Inf,
+    y = Inf,
+    label = "(4)",
+    hjust = 1.2,
+    vjust = 1.5,
+    size = 5
+  ) 
+```
+
+
+
+ 
+
 
 
 
