@@ -1,0 +1,53 @@
+---
+title: "Independent project"
+author: "Michelle Leyva-Espino"
+date: "2026-05-04"
+output: word_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#1. Project Overview: 
+
+The dataset and research project was to determine if dogs can understand
+
+both humans and other dogs emotions. This is important for domestic dogs
+
+because humans express emotions differently than canines. In this
+
+experiment, they used facial and auditory cues and timed the amount of
+
+times the dog stared or reacted to the stimuli. 17 socialized dogs of
+
+different breeds were used. Male and female dogs, as well as human and
+
+canine stimuli, were used with positive and negative stimuli and
+
+matching or mismatching vocalizations. 
+
+
+The ecological questions I aim to address are if dogs can understand human
+
+and canine emotions. How do dogs react to facial expressions that do not
+
+match the auditory cues. Do dogs react more strongly to male or female 
+
+stimuli, and if so, how large is that difference. In conclusion, the goal
+
+of this experiment is to determine if dogs can understand human and canine 
+
+emotions by the amount of time the dog stares or reacts to the experiment. 
+
+The longer a dog stares, the more it is confirmed that the dogs understands
+
+the emotions being shown. 
+
+#2. Project Workflow:
+
+
+
+
+
+
