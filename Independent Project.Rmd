@@ -32,7 +32,7 @@ The ecological questions I aim to address are if dogs can understand human
 
 and canine emotions. How do dogs react to facial expressions that do not
 
-match the auditory cues. Do dogs react more strongly to male or female 
+match the auditory cues. How do dogs react more strongly to male or female 
 
 stimuli, and if so, how large is that difference. In conclusion, the goal
 
@@ -45,6 +45,9 @@ The longer a dog stares, the more it is confirmed that the dogs understands
 the emotions being shown. 
 
 #2. Project Workflow:
+
+
+
 
 
 
