@@ -568,7 +568,14 @@ Create a scatter plot with wt on the x-axis and mpg on the y-axis.
 
 ```{r scatterplot}
 # Write your code below this line
-
+ggplot(mtcars,aes(x=wt,y=mpg, color=factor(car_name)))+
+  geom_point()+
+  labs(
+    x="Weight",
+    y="Miles per Gallon",
+    title="Weight vs Miles per Gallon",
+         color="Car Types")+
+  theme(plot.title = element_text(face="bold"))
 
 
 ```
@@ -583,20 +590,27 @@ col=)
 
 ```{r scatterplot_labeled}
 # Write your updated scatterplot code below this line
-
+ggplot(mtcars,aes(x=wt,y=mpg, color=factor(car_name)))+
+  geom_point()+
+  labs(
+    x="Weight",
+    y="Miles per Gallon",
+    title="Weight vs Miles per Gallon",
+         color="Car Types")+
+  theme(plot.title = element_text(face="bold"))
 
 
 ```
 
 QUESTION: What does each point in this scatterplot represent?
-ANSWER:
+ANSWER: An model and make of car.
 
 QUESTION: What relationship do you observe between weight and mpg?
-ANSWER:
+ANSWER: Heavier cars get less miles per gallon.
 
 QUESTION: Does the graph suggest a positive relationship, a negative relationship,
 or no relationship? Explain your answer.
-ANSWER:
+ANSWER: Negative relationship, as higher weights correlate with lower MPG.
 
 ------------------------------------------------------------------------
 
@@ -611,8 +625,8 @@ Create a boxplot of mpg by cyl using the boxplot function
 
 ```{r boxplot1}
 # Write your code below this line
-
-
+ggplot(mtcars, aes(x = factor(cyl), y = mpg)) +
+  geom_boxplot()
 
 ```
 
@@ -623,23 +637,27 @@ y-axis label, and a fill color of your choice
 
 ```{r boxplot2}
 # Write your updated boxplot code below this line
-
+ggplot(mtcars, aes(x = factor(cyl), y = mpg)) +
+  geom_boxplot(fill = "royalblue") +
+  labs(title = "MPG by # of Cylinders",
+       x = "Cylinders",
+       y = "Miles Per Gallon")
 
 
 ```
 
 QUESTION: What does each box in this plot represent?
-ANSWER:
+ANSWER: The distribution of mpg among car models with that number of cylinders.
 
 QUESTION: Which cylinder group appears to have the highest fuel efficiency?
-ANSWER:
+ANSWER: Four cylinder engines.
 
 QUESTION: Which cylinder group appears to have the lowest fuel efficiency?
-ANSWER:
+ANSWER: 8 cylinder engines.
 
 QUESTION: Based on the boxplot, how does fuel efficiency seem to change as the
 number of cylinders increases?
-ANSWER:
+ANSWER: Fuel efficiency seems to drop the more cylinders a car has.
 
 ------------------------------------------------------------------------
 
