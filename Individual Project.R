@@ -5,7 +5,7 @@ library(lubridate)
 #Loading the data set into my script
 plant_pollinators<-read.csv("SA02601_v6.csv", 
 #I am keeping strings as factors as false since I have so much non numerical data
-                            stringsAsFactors = FALSE)
+                            stringsAsFactors = TRUE)
 #Going through the names to see how I might need to adjust them
 colnames(plant_pollinators)
 #Getting a full idea of all the types of observations I have
