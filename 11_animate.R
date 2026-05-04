@@ -12,13 +12,13 @@
 # install it if you haven't already
  install.packages("pacman")
 pacman::p_load(tidyverse,
-              gganimate,
-              gapminder,
-              gifski,
-              sf,
-              rnaturalearth,
-              rnaturalearthdata,
-              countrycode)
+     gganimate,
+     gapminder,
+     gifski,
+     sf,
+     rnaturalearth,
+     rnaturalearthdata,
+     countrycode)
 
 
 # 1.0 gg animate fundamentals -------------------------------------------------####
@@ -306,14 +306,14 @@ gap_anim + ease_aes('elastic-in')
 gap_anim + ease_aes('circular-in')
 
 gap_anim + ease_aes("bounce-in")
-                
+       
 # -out applies the easing function in reverse
 gap_anim + ease_aes('elastic-in')
 
 gap_anim + ease_aes('circular-in')
 
 gap_anim + ease_aes("bounce-in")
-                
+       
 # we can combine them into -in-out
 gap_anim + ease_aes('circular-in-out')
 
@@ -325,7 +325,7 @@ gap_anim + ease_aes("bounce-in-out")
 ## Hint: Check ?ease_aes().
 ?ease_aes
 ##BAsically animates the transition to make the last half reversed.
-                
+       
 ## QUESTION: How does easing change the perception of movement over time?
 ## Changes the way it's displayed.
 
@@ -412,10 +412,10 @@ world_sf <- ne_countries(scale = "medium", returnclass = "sf")
 europe_sf <- filter(world_sf, continent == "Europe")
 gap_europe <- gapminder %>%
   filter(continent == "Europe",
-         year >= 1965) %>%
+year >= 1965) %>%
   mutate(iso_a3 = countrycode::countrycode(country,
-                                           "country.name",
-                                           "iso3c"))
+       "country.name",
+       "iso3c"))
 europe_life <- europe_sf %>%
   left_join(gap_europe, by = "iso_a3")
 
@@ -423,8 +423,8 @@ europe_life <- europe_sf %>%
 (europe_anim <- ggplot(europe_life) +
   
   geom_sf(aes(fill = lifeExp),
-          color = "white",
-          linewidth = 0.2) +
+ color = "white",
+ linewidth = 0.2) +
   
   coord_sf(
     xlim = c(-15, 35),
@@ -433,7 +433,7 @@ europe_life <- europe_sf %>%
   ) +
   
   scale_fill_viridis_c(option = "plasma",
-                       na.value = "grey90") +
+     na.value = "grey90") +
   
   labs(title = "European Life Expectancy Over Time: {frame_time}",
        fill = "Life Expectancy") +
@@ -446,7 +446,7 @@ europe_life <- europe_sf %>%
 
 ## QUESTION: What are some potential weaknesses of animating. 
 ## Hint: Think about how slow your computer probably ran!
-## It could be hard on older computers.             
+## It could be hard on older computers.    
 
 # 1.2: FINALE: Other useful packages ---------------------------------------------------####
 # gifski, magick, gapminder
@@ -557,23 +557,21 @@ library(hms)
 # Create a new column with the months.
 rangeTemp <- tempData %>%
   mutate(time = hms::as_hms(time), hour = hour(time),
-         month = month(date, label = TRUE, abbr = TRUE))
-<<<<<<< HEAD
+month = month(date, label = TRUE, abbr = TRUE))
 
-         
-         # QUESTION: Why would it be a good idea to average the hourly temperatures 
-         # instead of plotting each hour for this graph? 
-         # HINT: Take a look at datapoints within rangeTemp and visualize the graph
-         # it would make. 
 
-=======
->>>>>>> 6eb690692f4ff8bb3df630f286903bbd39731388
+
+# QUESTION: Why would it be a good idea to average the hourly temperatures 
+# instead of plotting each hour for this graph? 
+# HINT: Take a look at datapoints within rangeTemp and visualize the graph
+# it would make. 
+
 # QUESTION: Why would it be a good idea to average the hourly temperatures 
 # instead of plotting each hour for this graph? 
 # HINT: Take a look at datapoints within rangeTemp and visualize the graph
 # it would make. 
 ## To avoid a lot of overlap between points.
-<<<<<<< HEAD
+
 
 # You will group by month and hour and the summarize the final column to find 
 # the mean air temperature. We will double check if there are any NA's we
@@ -583,9 +581,9 @@ hourMonthAvg <- rangeTemp %>%
   group_by(month, hour) %>%
   summarize(mean_temp = mean(Air.temperature, na.rm = TRUE)) %>%
   ungroup()
-         
-=======
-         
+
+
+
 # You will group by month and hour and the summarize the final column to find 
 # the mean air temperature. We will double check if there are any NA's we
 # missed.Then ungroup to have 3 columns/variables in a dataframe
@@ -594,13 +592,13 @@ hourMonthAvg <- rangeTemp %>%
   group_by(month, hour) %>%
   summarize(mean_temp = mean(Air.temperature, na.rm = TRUE)) %>%
   ungroup()
-         
->>>>>>> 6eb690692f4ff8bb3df630f286903bbd39731388
+
+
 # It is time to plot our bubble graph! You will utilize ggplot and graph by hour
 # vs mean_temp. Make sure to set the color to follow the months and the size to 
 # measure the mean_temp as well. There are further graph elements covered in 
 # this code. 
-         
+
 ggplot(hourMonthAvg, aes(x = hour,y = mean_temp,color = month,size = mean_temp)) +
   geom_point(alpha = 0.7) +
   scale_size(range = c(3, 12)) +
@@ -608,7 +606,7 @@ ggplot(hourMonthAvg, aes(x = hour,y = mean_temp,color = month,size = mean_temp))
   labs(x = "Hour of Day (0–23)",y = "Average Temperature ",color = "Month",size = "Temperature",title = "Hourly Average Temperature by Month") +
   theme_bw() +
   theme(plot.title = element_text(size = 14, face = "bold"),legend.position = "bottom")
-         
+
 # QUESTION: When reviewing the data, the temperature is very low, why is that?
 # HINT: How do we measure temperature in science?
 ## It's in Celcius.
@@ -628,7 +626,7 @@ ggplot(hourMonthAvg, aes(x = hour,y = mean_temp,color = month,size = mean_temp))
 # fahrenheit.
 # HINT: Conversion rate of "F -> C" is would look something like this 
 # (mean_temp * 9/5) + 32)
-         
+
 hourMonthAvg <- rangeTemp %>%
   group_by(month, hour) %>%
   summarize(mean_temp = mean(Air.temperature, na.rm = TRUE)) %>%
@@ -637,7 +635,7 @@ f_hourMonthAvg <- mutate(hourMonthAvg, "mean_temp_F" = mean_temp*9/5+32)
 # Use this code to guide you to creating the "f_hourMonthAvg" dataframe. If we
 # are creating a new column, what is the function to do that?
 ## It's the mutate function.
-         
+
 # With the new dataframe and the code before this, change the y label to "Average Temperature (°F)". What are the ranges for the y-axis now? 
 ggplot(f_hourMonthAvg, aes(x = hour,y = mean_temp_F,color = month,size = mean_temp_F)) +
   geom_point(alpha = 0.7) +
@@ -647,29 +645,29 @@ ggplot(f_hourMonthAvg, aes(x = hour,y = mean_temp_F,color = month,size = mean_te
   theme_bw() +
   theme(plot.title = element_text(size = 14, face = "bold"),legend.position = "bottom")
 ## The new range is 55 degrees to 110 degrees.
-         
+
 # Although there is a bit of clutter in our bubble graph, it shows a nice 
 # overlapping on the temperatures throughout their given months. 
-         
+
 # Now, lets consider how to animate this graph!
-         
+
 #================================
 # Gifski: Graph animation and export
 #================================
 install.packages("gganimate")
 library(gganimate)
 library(gifski)
-         
+
 # Gifski, as mentioned before primarily focuses on animating graphs into a gif. 
 # This is done by taking multiple photos of the graph at different intervals or 
 # of the variables and then putting it together. The end result is almost like
 # a slideshow but continous.
 # We will learn how to create these collages of photos and download the gif!
-         
+
 # FOR CLARITY: Gifski does not animate the data itself. It takes photos (PNG's) 
 # created from the date and combine them in a presentation compressed into a gif. 
 # Like a wheel of photos. 
-         
+
 # For this section, we are using the dataframe "dailyAvg", why do you think this 
 # is an easier dataframe to animate versus the hourMonthAvg?
         
@@ -677,7 +675,7 @@ library(gifski)
 # flexibility so that the dataframe/graph can be adjusted if need to.
 # QUESTION: Take a look at the code below, what do you think ggplot is doing here? Does the
 # coding look familiar?
-           
+  
 make_timeseries_plot <- function(data, day_index) {
   ggplot(data[1:day_index, ], aes(x = date,y = mean_temp)) +
   geom_line(color = "steelblue", linewidth = 1.2) +
@@ -686,19 +684,19 @@ make_timeseries_plot <- function(data, day_index) {
   theme_bw() +
   theme(plot.title = element_text(size = 14, face = "bold")) }
 ## It looks similar to the previous section.
-         
+
 # In this ggplot, we will be graphing each day with it's corresponding temperature.
 # Essentially a time series!
-         
+
 # Now that we have a function, we create a folder to hold the images to keep 
 # our workspace tidy.
 dir.create("frames_timeseries", showWarnings = FALSE)
-         
+
 # QUESTION: What does dir.create stand for? And where do you expect this folder to end up?
 ## It makes a new directory inside the old directory.
 
 # Now we instruct R how we want the Frame-generation loop to work.
-         
+
 # QUESTION: Why do you think we are start on day 2 and why may it be more useful?
 # HINT: We are making a time series graph, what makes it different from a 
 # scatter plot?
