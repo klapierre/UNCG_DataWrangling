@@ -8,7 +8,8 @@
 # 2. To do this in a way that each step is traceable and reproducible.
 # To this end we'll continue to familiarize ourselves with the dplyr package and 
 # dive into the tidyr package.
-
+library(dplyr)
+library(tidyr)
 
 # ---------------------------------------------------------- #
 #### SET UP:                                              ####
@@ -43,8 +44,9 @@
 # it to a dataframe named streamTemp. Clean up the column names to the following:
 # data, time, calispell, smalle, winchester
 # HINT: Check last week's assignment if you forget how to read data into R.
-
-
+streamTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv")
+streamTemp <- rename(streamTemp, "data" = "Date", "time" = "Time", "calispell" = "Calispell.Cr.Temp.C.", "smalle" = "Smalle.Cr.Temp.C.", "winchester" = "Winchester.Cr.Temp..C.")
+head(streamTemp)
 # ---------------------------------------------------------- #
 ### PART 1.1: SUMMARIZING DATA                            ####
 # ---------------------------------------------------------- #
@@ -58,23 +60,26 @@ streamTempLength <- streamTemp %>%
 
 # QUESTION: When you open the streamTempLength dataframe, what value is in each 
 # column?
-
+## The number of observations for each stream.
 
 # QUESTION: How does this number compare to the number of observations listed by
 # the dataframe in the R environment tab?
-
+## The length one has only 1 observation while the original has 61,100 observations.
 
 # QUESTION: Based on your previous answers, what do you think the length 
 # function does?
-
+## Shows how many observations are in each column.
 
 # It can be a bit tedious to type out all the column names and the length 
 # function multiple times. The across() function within the summarize() step can
 # help us to identify multiple columns to summarize the data for. Try running 
 # the following code:
 streamTempLength <- streamTemp %>% 
+  ## Makes the streamTempLength dataframe from streamTemp
   summarize(across(.cols=c('calispell', 'smalle', 'winchester'), 
+                   ## Sets the focus of the summarization on the 3 specified columns.
                    .fns=length))
+## Does it by length of each column.
 
 # TASK: Using comments in the code above, describe what each line is doing.
 
@@ -88,15 +93,15 @@ streamTempSummary <- streamTemp %>%
                    .fns=list(maximum=max, mean=mean, minimim=min)))
 
 # TASK: Write code to view the column names of the streamTempSummary dataframe.
-
+colnames(streamTempSummary)
 
 # QUESTION: How does R know what to name each column when we use the summarize 
 # function above?
-
+## It does it based on the specified calculations.
 
 # QUESTION: What values do you see for the columns when you open up the 
 # dataframe streamTempSummary? Why do you think this is?
-
+## It has NA for all of them likely due to having NAs in the mix.
 
 # Recall that our data had a lot of missing values. R doesn't know how to find 
 # the mean, max, or min of a group of observations that include NAs.
@@ -110,11 +115,13 @@ streamTempSummary <- streamTemp %>%
 # QUESTION: Now what values do you see for the columns when you open up the 
 # dataframe streamTempSummary? What line of the above code removed the NAs from 
 # our data?
-
+## It actually gave the corresponding values in each column. The last line removed
+## all the NAs.
 
 # QUESTION: What happened to the column we created in the beginning called 
 # data_type? Where did the date and time columns go?
-
+## They disappeared due to not being within the specified columns in the previous
+## function.
 
 # RECOMMENDED: Take a look at the summarize help file, particularly the "Useful 
 # functions" section to see all of the different ways you can summarize your 
