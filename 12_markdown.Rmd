@@ -1,11 +1,13 @@
 ---
 title: "Group5_RMarkdown"
-author: Arnav Pandey, Themesha Parker, Michelle Bautista Canuto, Dhanush Devanand,
-  Jaslyn Davenport
+author: "Arnav Pandey, Themesha Parker, Michelle Bautista Canuto, Dhanush Devanand"
 date: "2026-04-26"
 output:
-    word_document: default
+  html_document:
+    toc: true
 ---
+
+
 # Section 1: Create, Save, and Knit Your First R Markdown File
 Author: Jaslyn Davenport (jcdavenport@uncg.edu)
 
@@ -957,7 +959,7 @@ This helps make your report look clean and consistent.
 
 Run the chunk below and Knit to see the default figure size.
 
-```{r fig.width=8, fig.height=4}
+```{r fig.width=4, fig.height=4}
 ggplot(mtcars, aes(x = wt, y = mpg)) +
   geom_point(color = "steelblue") +
   labs(title = "Weight vs Fuel Efficiency",
@@ -968,7 +970,7 @@ ggplot(mtcars, aes(x = wt, y = mpg)) +
 
 ### TASK:
 
-Now add `fig.width=8` and `fig.height=4` to the chunk header and Knit
+Now add `fig.width=8` and `fig.height=6` to the chunk header and Knit
 again.
 
 **Hint:** Your chunk header should look like this when you are done:
@@ -981,18 +983,18 @@ Yes, It became wider and shorter.
 
 QUESTION: How did changing `fig.width` and `fig.height` affect the appearance of
 your plot?
-ANSWER: Width changes how wide the graph is (length). While the height 
+ANSWER: Width changes how wide the graph is (length). While the height becomes taller/shorter.
 
 QUESTION: Why might consistent figure sizing matter in a professional or academic
 report?
-ANSWER: 
+ANSWER: It's more professional to have graphs be the same size as it is easier to publish and convert. 
 
 ### TASK:
 
 Try setting `fig.width=4` and `fig.height=6` on the same chunk. Knit
 and observe how the plot changes. Describe what you notice below.
 
-**Observation:** [Write your response here.]
+**Observation:** [ The graph is now shaped hotdog style. ]
 
 ------------------------------------------------------------------------
 
@@ -1022,14 +1024,15 @@ output:
 
 Do you now see a table of contents at the top of your rendered HTML
 document?
+Yes
 
 QUESTION: How does a table of contents improve the readability of a long report?
-ANSWER:
+ANSWER: It allows readers to easily access and understand what to expect within the research report. 
 
 QUESTION: The table of contents is automatically generated from your headings.
 What does this tell you about the importance of using proper heading
 levels (`#`, `##`, `###`) throughout your document?
-ANSWER:
+ANSWER: It keeps the look consistent as well help R-studio locate what is a heading and what is not.
 
 ------------------------------------------------------------------------
 
@@ -1044,9 +1047,12 @@ Add the following clickable link somewhere in your document and Knit:
 
 `[R Markdown documentation](https://rmarkdown.rstudio.com)`
 
+[R Markdown documentation](https://rmarkdown.rstudio.com)
+
 ### Check
 
 Does the link appear clickable after knitting?
+Yes
 
 ### TASK:
 
@@ -1055,10 +1061,10 @@ something covered in this assignment — for example, the mtcars dataset,
 ggplot2, or R Markdown chunk options — and add it below using the same
 syntax.
 
-**Your hyperlink:** [Write your hyperlink here.]
+**Your hyperlink:** [R Markdown documentation](https://ggplot2.tidyverse.org/)
 
 QUESTION: When might adding a hyperlink be useful in a data report?
-ANSWER:
+ANSWER: It is always helpful to have hyperlinks for an online data report as it makes background and extended research more accessible for the readers. 
 
 ------------------------------------------------------------------------
 
@@ -1077,7 +1083,7 @@ in this assignment. Consider:
 - What improvements did you make to the report in Section 5?
 - Why is R Markdown useful for communicating data?
 
-**Your conclusion:** [Write your response here.]
+**Your conclusion:** [In this research report, we worked with the ***mtcars*** data set and used it to look at the relationship of horsepower to cyclinder. By learning new features, we can now hide long lines of code and display graphs easily on a document. It is beneficial to use R Markdown as it provides a clean and easy approach to communicating raw data.]
 
 ### TASK:
 
@@ -1086,7 +1092,7 @@ includes inline R code. For example, instead of writing "the dataset has
 32 rows," use `` `r nrow(mtcars)` `` to generate that number
 automatically.
 
-**Your updated sentence with inline R code:** [Write your sentence here.]
+**Your updated sentence with inline R code:** [In this research report, we worked with the ***mtcars*** data set and used it to look at the relationship of horsepower to cyclinder, such as `r round(mean(mtcars$mpg), 2)` vs `r round(mean(mtcars$hp), 2)`. By learning new features, we can now hide long lines of code and display graphs easily on a document. It is beneficial to use R Markdown as it provides a clean and easy approach to communicating raw data.]
 
 ------------------------------------------------------------------------
 
@@ -1096,14 +1102,14 @@ Before submitting, go through the checklist below to make sure
 everything is working correctly. In your `.Rmd` file, replace each `[ ]`
 with `[x]` once you have confirmed that step.
 
-- [ ] Inline R code displays correctly in rendered text
-- [ ] Plots appear in the output without showing code (`echo=FALSE`)
-- [ ] A chunk runs silently using `include=FALSE`
-- [ ] No unnecessary warnings or messages appear (`message=FALSE`, `warning=FALSE`)
-- [ ] Figure sizes have been adjusted using `fig.width` and `fig.height`
-- [ ] Table of contents is visible at the top of the document
-- [ ] At least two hyperlinks are present and clickable
-- [ ] Conclusion paragraph is included with at least one inline R code value
+- [x] Inline R code displays correctly in rendered text
+- [x] Plots appear in the output without showing code (`echo=FALSE`)
+- [x] A chunk runs silently using `include=FALSE`
+- [x] No unnecessary warnings or messages appear (`message=FALSE`, `warning=FALSE`)
+- [x] Figure sizes have been adjusted using `fig.width` and `fig.height`
+- [x] Table of contents is visible at the top of the document
+- [x] At least two hyperlinks are present and clickable
+- [x] Conclusion paragraph is included with at least one inline R code value
 
 Once all boxes are checked, click **Knit** one final time to generate
 your completed report.
