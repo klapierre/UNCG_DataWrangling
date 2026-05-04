@@ -502,7 +502,19 @@ TASK: Use code to create a plot comparing disp vs hp from the 'mtcars' dataset. 
 Use the 'disp' data for the x-axis and labeled 'Engine Size (cubic inches)'
 Use the 'hp' data for the y-axis and labeled 'Horsepower (HP)'
 Add an appropriate title for the plot with a 'bold' font
-Add a legend colored by 'car_name' and labeled "Car Types" 
+Add a legend colored by 'car_name' and labeled "Car Types"
+
+```{r}
+ggplot(mtcars,aes(x=disp,y=hp, color=factor(car_name)))+
+  geom_point()+
+  labs(
+    x="Engine Size (cubic inches)",
+    y="Horsepower (HP)",
+    title="Horsepower vs Engine Size",
+         color="Car Types")+
+  theme(plot.title = element_text(face="bold"))
+```
+
 
 
 Lets organize the horsepower from highest to lowest. Run the following.
@@ -513,10 +525,11 @@ mtcars %>%
 ```
 
 QUESTION: What trend is the plot showing between engine size and horsepower? 
-ANSWER:
+ANSWER: Larger engine size correlates with higher horsepower.
 
 QUESTION: Which cars have the highest and lowest hp?
-ANSWER:
+ANSWER: The Maserati Bora has the highest horsepower while the Honda Civic has 
+the lowest.
 
 Don't forget to save and commit your changes. 
 
