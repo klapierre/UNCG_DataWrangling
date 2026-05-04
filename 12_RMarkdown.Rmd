@@ -415,18 +415,24 @@ nrow(mtcars)
 ```
 
 TASK: Write a code to find the number of columns in the 'mtcars' dataset using the ncol() function. Remember to use a new chunk of code.
+```{r}
+ncol(mtcars)
+```
 
 QUESTION: What is the result showing in your script?
-ANSWER:
+ANSWER:11
 
 The 'disp' column in the dataset stands for engine displacement. Engine displacement tells you how big the engine is in cubic inches. 
 The 'mpg' column stands for fuel efficiency in miles per gallon. 
 Lets plot a graph showing fuel efficiency over displacement for each car.
 Run the following code.
 plot(mtcars$disp, mtcars$mpg)
+```{r}
+plot(mtcars$disp, mtcars$mpg)
+```
 
 QUESTION: What trend is the plot showing?
-ANSWER:
+ANSWER:a decrease in mpg as engine displacement increases
 
 We can also use ggplot to run this within our chunk of code.
 This permits our plot to be displayed in the final report once "knit".   
@@ -476,16 +482,26 @@ mtcars %>%
 ```
 
 QUESTION: Which car has the highest fuel efficiency? 
-ANSWER:
+ANSWER:toyota corolla
 
 QUESTION: What is the size of it's engine?
-ANSWER:
+ANSWER:71.1 cu in
 
 TASK: Use code to create a plot comparing disp vs hp from the 'mtcars' dataset. With the following:  
 Use the 'disp' data for the x-axis and labeled 'Engine Size (cubic inches)'
 Use the 'hp' data for the y-axis and labeled 'Horsepower (HP)'
 Add an appropriate title for the plot with a 'bold' font
 Add a legend colored by 'car_name' and labeled "Car Types" 
+```{r}
+ggplot(mtcars,aes(x=disp,y=hp, color=factor(car_name)))+
+  geom_point()+
+  labs(
+    x="Engine Size (cubic inches)",
+    y="Horsepower (HP)",
+    title="Horsepower vs Engine Size",
+         color="Car Types")+
+  theme(plot.title = element_text(face="bold"))
+```
 
 
 Lets organize the horsepower from highest to lowest. Run the following.
@@ -496,10 +512,10 @@ mtcars %>%
 ```
 
 QUESTION: What trend is the plot showing between engine size and horsepower? 
-ANSWER:
+ANSWER: for the most part, the variables increase together
 
 QUESTION: Which cars have the highest and lowest hp?
-ANSWER:
+ANSWER:maserati bora (highest), honda civic (lowest)
 
 Don't forget to save and commit your changes. 
 
@@ -538,7 +554,7 @@ Create a scatter plot with wt on the x-axis and mpg on the y-axis.
 
 ```{r scatterplot}
 # Write your code below this line
-
+plot(mtcars$wt, mtcars$mpg)
 
 
 ```
@@ -553,20 +569,24 @@ col=)
 
 ```{r scatterplot_labeled}
 # Write your updated scatterplot code below this line
-
+plot(mtcars$wt, mtcars$mpg,
+     xlab = "Weight (1000s of lbs)",
+     ylab = "Miles Per Gallon",
+     main = "MPG vs Weight",
+     col = "red")
 
 
 ```
 
 QUESTION: What does each point in this scatterplot represent?
-ANSWER:
+ANSWER:a different car type
 
 QUESTION: What relationship do you observe between weight and mpg?
-ANSWER:
+ANSWER: as weight increases, mileage decreases
 
 QUESTION: Does the graph suggest a positive relationship, a negative relationship,
 or no relationship? Explain your answer.
-ANSWER:
+ANSWER: negative relationship because as one increases the other decreases
 
 ------------------------------------------------------------------------
 
@@ -581,7 +601,7 @@ Create a boxplot of mpg by cyl using the boxplot function
 
 ```{r boxplot1}
 # Write your code below this line
-
+boxplot(mpg ~ cyl, data = mtcars)
 
 
 ```
@@ -593,23 +613,27 @@ y-axis label, and a fill color of your choice
 
 ```{r boxplot2}
 # Write your updated boxplot code below this line
-
+boxplot(mpg ~ cyl, data = mtcars,
+        xlab = "Number of Cylinders",
+        ylab = "Miles Per Gallon",
+        main = "MPG vs Number of Cylinders",
+        col = "blue")
 
 
 ```
 
 QUESTION: What does each box in this plot represent?
-ANSWER:
+ANSWER: it shows the distribution of mileage of cars in that cylinder category
 
 QUESTION: Which cylinder group appears to have the highest fuel efficiency?
-ANSWER:
+ANSWER:4 cylinders
 
 QUESTION: Which cylinder group appears to have the lowest fuel efficiency?
-ANSWER:
+ANSWER:8 cylinders
 
 QUESTION: Based on the boxplot, how does fuel efficiency seem to change as the
 number of cylinders increases?
-ANSWER:
+ANSWER: it decreases
 
 ------------------------------------------------------------------------
 
@@ -630,7 +654,10 @@ Use the space below to write your code:
 
 ```{r summary_table}
 # Write your code below this line
-
+avg_mpg_by_cyl<- mtcars %>% 
+  group_by(cyl) %>% 
+  summarise(avg_mpg=mean(mpg)) %>% 
+  ungroup()
 
 
 ```
@@ -643,19 +670,19 @@ Use the space below to write your code:
 
 ```{r formatted_table}
 # Write your code below this line
-
+print(avg_mpg_by_cyl)
 
 
 ```
 
 QUESTION: What does this table show?
-ANSWER:
+ANSWER: the average mpg for each cylinder group
 
 QUESTION: Which cylinder group has the highest average mpg?
-ANSWER:
+ANSWER: 4
 
 QUESTION: Which cylinder group has the lowest average mpg?
-ANSWER:
+ANSWER: 8
 
 ------------------------------------------------------------------------
 
@@ -666,10 +693,10 @@ information they provide.
 
 QUESTION: How does the scatterplot help you understand the relationship between
 weight and fuel efficiency?
-ANSWER:
+ANSWER: as the weight increases the mpg decrease, so fuel efficiency gets worse as the weight of a car increases
 
 QUESTION: How does the boxplot help you compare different groups of cars?
-ANSWER:
+ANSWER: it helps you visualize the spread of the fuel efficiency of cars in that cylinder class
 
 ------------------------------------------------------------------------
 
@@ -683,13 +710,16 @@ Write your code below:
 
 ```{r Now_you_try}
 # Write your code below this line
-
-
+plot(mtcars$qsec, mtcars$mpg,
+     xlab = "Quarter Mile Time (sec)",
+     ylab = "Miles Per Gallon",
+     main = "MPG vs Quarter Mile Time",
+     col = "purple")
 
 ```
 
 QUESTION: What did you change, and how did it affect the output?
-ANSWER:
+ANSWER: i used the quarter mile time vs the mpg and the new plot has a less strong correlation
 
 ------------------------------------------------------------------------
 
