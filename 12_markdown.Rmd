@@ -498,7 +498,7 @@ Use the 'hp' data for the y-axis and labeled 'Horsepower (HP)'
 Add an appropriate title for the plot with a 'bold' font
 Add a legend colored by 'car_name' and labeled "Car Types" 
 
-```{r}
+```{r echo=FALSE}
 mtcars$car_name <- rownames(mtcars)
 
 ggplot(mtcars, aes(x = disp, y = hp, color = car_name)) +
@@ -566,7 +566,9 @@ Create a scatter plot with wt on the x-axis and mpg on the y-axis.
 
 ```{r scatterplot}
 # Write your code below this line
-
+plot(mtcars$wt, mtcars$mpg,
+     xlab = "Weight (1000 lbs)",
+     ylab = "Miles per Gallon (MPG)")
 
 
 ```
@@ -581,20 +583,24 @@ col=)
 
 ```{r scatterplot_labeled}
 # Write your updated scatterplot code below this line
-
+plot(mtcars$wt, mtcars$mpg,
+     main = "Weight vs Fuel Efficiency",
+     xlab = "Weight (1000 lbs)",
+     ylab = "Miles per Gallon (MPG)",
+     col = "blue")
 
 
 ```
 
 QUESTION: What does each point in this scatterplot represent?
-ANSWER:
+ANSWER: A car with its' specific weight.
 
 QUESTION: What relationship do you observe between weight and mpg?
-ANSWER:
+ANSWER: negative, The higher the weight is, the lower the mpg tends to be. 
 
 QUESTION: Does the graph suggest a positive relationship, a negative relationship,
 or no relationship? Explain your answer.
-ANSWER:
+ANSWER: Negative, due to it's overall trend of going downwards. 
 
 ------------------------------------------------------------------------
 
@@ -609,8 +615,10 @@ Create a boxplot of mpg by cyl using the boxplot function
 
 ```{r boxplot1}
 # Write your code below this line
-
-
+boxplot(mpg ~ cyl, data = mtcars,
+        xlab = "Number of Cylinders",
+        ylab = "Miles per Gallon (MPG)",
+        main = "Fuel Efficiency by Cylinder Count")
 
 ```
 
@@ -621,23 +629,27 @@ y-axis label, and a fill color of your choice
 
 ```{r boxplot2}
 # Write your updated boxplot code below this line
-
+boxplot(mpg ~ cyl, data = mtcars,
+        main = "Fuel Efficiency by Cylinder Count",
+        xlab = "Number of Cylinders",
+        ylab = "Miles per Gallon (MPG)",
+        col = "purple")
 
 
 ```
 
 QUESTION: What does each box in this plot represent?
-ANSWER:
+ANSWER: Groups of cars by number of cyclinders.
 
 QUESTION: Which cylinder group appears to have the highest fuel efficiency?
-ANSWER:
+ANSWER: 4 cyclinders
 
 QUESTION: Which cylinder group appears to have the lowest fuel efficiency?
-ANSWER:
+ANSWER: 8 cyclinders.
 
 QUESTION: Based on the boxplot, how does fuel efficiency seem to change as the
 number of cylinders increases?
-ANSWER:
+ANSWER: Negative, The more cyclinders, the lower the fuel efficient the car is. 
 
 ------------------------------------------------------------------------
 
@@ -659,7 +671,9 @@ Use the space below to write your code:
 ```{r summary_table}
 # Write your code below this line
 
-
+avg_mpg_by_cyl <- mtcars %>% 
+  group_by(cyl) %>% 
+  summarize(mean_mpg = mean(mpg))
 
 ```
 
@@ -672,18 +686,19 @@ Use the space below to write your code:
 ```{r formatted_table}
 # Write your code below this line
 
+avg_mpg_by_cyl
 
 
 ```
 
 QUESTION: What does this table show?
-ANSWER:
+ANSWER: 2 columns with 3 rows. The rows = # of cylinders. Mean_miles per gallon
 
 QUESTION: Which cylinder group has the highest average mpg?
-ANSWER:
+ANSWER: 4
 
 QUESTION: Which cylinder group has the lowest average mpg?
-ANSWER:
+ANSWER: 8
 
 ------------------------------------------------------------------------
 
@@ -694,10 +709,10 @@ information they provide.
 
 QUESTION: How does the scatterplot help you understand the relationship between
 weight and fuel efficiency?
-ANSWER:
+ANSWER: It helps connect a overall trend by the individual car models.
 
 QUESTION: How does the boxplot help you compare different groups of cars?
-ANSWER:
+ANSWER: It helps display a overall trend among groups of car models. 
 
 ------------------------------------------------------------------------
 
@@ -711,13 +726,16 @@ Write your code below:
 
 ```{r Now_you_try}
 # Write your code below this line
-
+plot(mtcars$hp, mtcars$qsec,
+     xlab = "Horsepower (HP)",
+     ylab = "Quarter Mile Time (sec)",
+     col = "red")
 
 
 ```
 
 QUESTION: What did you change, and how did it affect the output?
-ANSWER:
+ANSWER: I looked at horsepower vs Quarter Mile Time. It is a negative trend still but it shows that the higher horse power cars individually have a lower quarter mile time. 
 
 ------------------------------------------------------------------------
 
@@ -746,20 +764,24 @@ to insert calculations into sentences without a separate code chunk.
 Copy and paste the following lines directly into your R Markdown
 document, **outside** of any code chunk, and then Knit:
 
-    The mtcars dataset has `r nrow(mtcars)` rows and `r ncol(mtcars)` columns.
-    The average miles per gallon (mpg) is `r round(mean(mtcars$mpg), 2)`.
+    **The mtcars dataset has `r nrow(mtcars)` rows and `r ncol(mtcars)` columns.
+    The average miles per gallon (mpg) is `r round(mean(mtcars$mpg), 2)`.**
+
+**The mtcars dataset has `r nrow(mtcars)` rows and `r ncol(mtcars)` columns.
+    The average miles per gallon (mpg) is `r round(mean(mtcars$mpg), 2)`.**
 
 ### Check
 
 Did the numbers appear automatically in your rendered sentence?
+Yes
 
 QUESTION: What is inline R code, and how is it different from a regular code
 chunk?
-ANSWER:
+ANSWER: Inline R code must reference to a particular variable within a dataset, like a reference point. It's different from a code chunk as it doesn't appear to do functions but more pulling data from the directed area and having the potential to manipulate what has been pulled. 
 
 QUESTION: Why is inline R code useful when working with a dataset that might be
 updated or changed over time?
-ANSWER:
+ANSWER: Inline R code can be beneficial with dynamic data due to the nature of how it pulls data, as it is a reference point. 
 
 ### TASK:
 
@@ -767,7 +789,7 @@ Now try writing your own inline R code sentence. Using the mtcars
 dataset, write a sentence that includes the maximum horsepower value
 using inline R code. The function `max()` will be helpful here.
 
-**Your sentence:** [Write your sentence with inline R code here.]
+**The cars from the mtcars that have the most horsepower are `r max(mtcars$hp)`.** [Write your sentence with inline R code here.]
 
 ### Why This Matters
 
@@ -790,7 +812,7 @@ The chunk below currently shows the code when knitted. Add `echo=FALSE`
 inside the curly braces so that only the plot appears in the output, not
 the code. Then Knit your document.
 
-```{r}
+```{r, echo=FALSE}
 plot(mtcars$wt, mtcars$mpg,
      main = "Weight vs MPG",
      xlab = "Weight (1000 lbs)",
@@ -805,11 +827,11 @@ plot(mtcars$wt, mtcars$mpg,
 Do you see the plot in the output but **not** the code that created it?
 
 QUESTION: Why might you want to hide code in a final report?
-ANSWER:
+ANSWER: It may clutter a research report which may only be presenting the results. It also may not aid an outsider reader that is trying to understand the data without having more additionally things to consider.
 
 QUESTION: Can you think of a situation where you would want to **show** your code
 in a report rather than hide it? Who might be reading that report?
-ANSWER:
+ANSWER: When preparing to publish or make data public, it is important to understand every single step gone into the data collection/anaylsis. Especially, if there are errors present in the data. By being able to backtrack, it can help further both the researchers and readers understanding of the study. 
 
 ### TASK:
 
@@ -831,12 +853,12 @@ Run the chunk below **without** any chunk options and Knit. Read through
 the output carefully and write down any extra messages or warnings you
 notice below.
 
-```{r}
+```{r message=FALSE, warning=FALSE }
 library(tidyverse)
 summary(mtcars)
 ```
 
-**What messages or warnings did you see?** [Write your response here.]
+**What messages or warnings did you see?** [it is a summary of the mtcars]
 
 ### TASK: — Part B: Suppress the messages
 
@@ -849,14 +871,15 @@ and Knit again.
 ### Check
 
 Did the extra messages disappear from your rendered output?
+Yes.
 
 QUESTION: What is the difference between `message=FALSE` and `warning=FALSE`?
 When might you need to use both at the same time?
-ANSWER:
+ANSWER: Message is to hide the messages from the functions that make graphs or datasets. While warning hides the warnings.
 
 QUESTION: Is it always a good idea to suppress warnings? Can you think of a case
 where seeing a warning might actually be important?
-ANSWER:
+ANSWER: I imagine it's not a great idea all the time due to how quickly code can break. A case where it would be important to have the warning is when a datapoint is missing or a function no longer working due to a dataframe name chaning.
 
 ### Why This Matters
 
@@ -882,7 +905,7 @@ Run the chunk below as-is and Knit. Note what appears in the output.
 Then change the chunk option from `echo=FALSE` to `include=FALSE` and
 Knit again.
 
-```{r echo=FALSE}
+```{r include=FALSE}
 library(dplyr)
 my_summary <- mtcars %>%
   summarize(mean_mpg = round(mean(mpg), 2),
@@ -898,12 +921,13 @@ my_summary
 
 When using `include=FALSE`, does anything from this chunk appear in the
 rendered output?
+I believe it doesn't, atleast I didn't see anything
 
 QUESTION: What is the difference between `echo=FALSE` and `include=FALSE`?
-ANSWER:
+ANSWER: I think Echo, allows a graph to appear but all the code is hidden. Include looks like it just hides everything.
 
 QUESTION: Give an example of when you would use `include=FALSE` in a real report.
-ANSWER:
+ANSWER: I think include can be used when tidying dataframes and do not want that to take up 3-6 pages of the report. 
 
 ### TASK:
 
@@ -914,10 +938,12 @@ object is still available to use. Copy and paste the lines below
 
     The average miles per gallon across all cars is `r my_summary$mean_mpg` and the most powerful engine produces `r my_summary$max_hp` horsepower.
 
+
 ### Check
 
 Did the inline values populate correctly even though the chunk that
 created them was hidden?
+Yes, the value did come. 
 
 ------------------------------------------------------------------------
 
@@ -931,7 +957,7 @@ This helps make your report look clean and consistent.
 
 Run the chunk below and Knit to see the default figure size.
 
-```{r}
+```{r fig.width=8, fig.height=4}
 ggplot(mtcars, aes(x = wt, y = mpg)) +
   geom_point(color = "steelblue") +
   labs(title = "Weight vs Fuel Efficiency",
@@ -951,14 +977,15 @@ again.
 ### Check
 
 Did the shape of the plot change in your rendered output?
+Yes, It became wider and shorter. 
 
 QUESTION: How did changing `fig.width` and `fig.height` affect the appearance of
 your plot?
-ANSWER:
+ANSWER: Width changes how wide the graph is (length). While the height 
 
 QUESTION: Why might consistent figure sizing matter in a professional or academic
 report?
-ANSWER:
+ANSWER: 
 
 ### TASK:
 
