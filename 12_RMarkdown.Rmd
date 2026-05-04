@@ -552,7 +552,8 @@ Create a scatter plot with wt on the x-axis and mpg on the y-axis.
 
 ```{r scatterplot}
 # Write your code below this line
-
+ggplot(mtcars, aes(x = wt, y = mpg)) +
+  geom_point()
 
 
 ```
@@ -567,20 +568,24 @@ col=)
 
 ```{r scatterplot_labeled}
 # Write your updated scatterplot code below this line
-
+ggplot(mtcars, aes(x = wt, y = mpg)) +
+  geom_point(color = "lightpink3") +
+  labs(x = "Car Weight (in 1000lbs)",
+       y = "Miles per Gallon (MPG)",
+       title = "Car Weight vs MPG")
 
 
 ```
 
 QUESTION: What does each point in this scatterplot represent?
-ANSWER:
+ANSWER:The MPG for various cars at various weights. 
 
 QUESTION: What relationship do you observe between weight and mpg?
-ANSWER:
+ANSWER: The heavier the car, the lower the MPG.
 
 QUESTION: Does the graph suggest a positive relationship, a negative relationship,
 or no relationship? Explain your answer.
-ANSWER:
+ANSWER: Negative. As cars become heavier, the MPG decreases. 
 
 ------------------------------------------------------------------------
 
@@ -595,7 +600,8 @@ Create a boxplot of mpg by cyl using the boxplot function
 
 ```{r boxplot1}
 # Write your code below this line
-
+ggplot(mtcars, aes(x = factor(cyl), y = mpg)) +
+         geom_boxplot()
 
 
 ```
@@ -607,23 +613,27 @@ y-axis label, and a fill color of your choice
 
 ```{r boxplot2}
 # Write your updated boxplot code below this line
-
+ggplot(mtcars, aes(x = factor(cyl), y = mpg)) +
+         geom_boxplot(color = "darkblue", fill ="cornflowerblue") +
+  labs(x = "Cylinders",
+       y = "Miles per Gallon (MPG)",
+       title = "Cylinder Effects on MPG") 
 
 
 ```
 
 QUESTION: What does each box in this plot represent?
-ANSWER:
+ANSWER:Cars with different numbers of cylinders. 
 
 QUESTION: Which cylinder group appears to have the highest fuel efficiency?
-ANSWER:
+ANSWER: 4 cylinder.
 
 QUESTION: Which cylinder group appears to have the lowest fuel efficiency?
-ANSWER:
+ANSWER: 8 cylinder.
 
 QUESTION: Based on the boxplot, how does fuel efficiency seem to change as the
 number of cylinders increases?
-ANSWER:
+ANSWER:As number of cyliners increases, fuel efficiency decreases.
 
 ------------------------------------------------------------------------
 
@@ -644,7 +654,10 @@ Use the space below to write your code:
 
 ```{r summary_table}
 # Write your code below this line
-
+avg_mpg_by_cyl <- mtcars %>%
+  group_by(cyl) %>%
+  summarise(avg_mpg = mean(mpg)) %>% 
+  ungroup()
 
 
 ```
@@ -657,19 +670,19 @@ Use the space below to write your code:
 
 ```{r formatted_table}
 # Write your code below this line
-
+(avg_mpg_by_cyl)
 
 
 ```
 
 QUESTION: What does this table show?
-ANSWER:
+ANSWER: Average miles per gallon for the cylinder groups.
 
 QUESTION: Which cylinder group has the highest average mpg?
-ANSWER:
+ANSWER:4.
 
 QUESTION: Which cylinder group has the lowest average mpg?
-ANSWER:
+ANSWER:8.
 
 ------------------------------------------------------------------------
 
@@ -680,10 +693,10 @@ information they provide.
 
 QUESTION: How does the scatterplot help you understand the relationship between
 weight and fuel efficiency?
-ANSWER:
+ANSWER: Scatterplots show the data in continuous variables. It shows us as the weight of the car increases, the fuel efficiency decreases. 
 
 QUESTION: How does the boxplot help you compare different groups of cars?
-ANSWER:
+ANSWER: The boxplot shows us the differences across quartiles and shows us the medians of each group. 
 
 ------------------------------------------------------------------------
 
@@ -697,13 +710,16 @@ Write your code below:
 
 ```{r Now_you_try}
 # Write your code below this line
-
-
+ggplot(mtcars, aes(x = mpg, y = hp)) +
+  geom_point(color = "orchid4") +
+  labs(x = "MPG",
+       y = "Horse Power",
+       title = "How much horse power was at the Kentucky Derby?")
 
 ```
 
 QUESTION: What did you change, and how did it affect the output?
-ANSWER:
+ANSWER:I changed the x-axis to MPG and the y-axis to horse power. As horse power decreases, MPG increases.
 
 ------------------------------------------------------------------------
 
