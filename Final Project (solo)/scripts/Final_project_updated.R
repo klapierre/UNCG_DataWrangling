@@ -643,7 +643,7 @@ lines(NV_county, alpha = .4)
 
 # Assign custom species point colors
 tamias_colors <- c("Tamias minimus" = "#CDCD00",
-                   "Tamias umbrinus" = "white")
+                   "Tamias umbrinus" = "seashell")
 
 tamias_cols <- tamias_colors[tamias_vect$species]
 
