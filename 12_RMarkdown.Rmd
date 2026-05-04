@@ -1,11 +1,10 @@
 ---
-title: "Group5_RMarkdown"
-author: Arnav Pandey, Themesha Parker, Michelle Bautista Canuto, Dhanush Devanand,
-  Jaslyn Davenport
+title: "Group5_RMarkdown Saltsgaver"
+author: Nicholas Saltsgaver
 date: "2026-04-26"
 output:
-  word_document: default
   pdf_document: default
+  word_document: default
 ---
 # Section 1: Create, Save, and Knit Your First R Markdown File
 Author: Jaslyn Davenport (jcdavenport@uncg.edu)
@@ -21,7 +20,7 @@ To begin, open RStudio and create a new R Markdown file.
 Go to **File > New File > R Markdown**.  
 
 QUESTION: What do you think happens when the new file is opened?  
-ANSWER:  
+ANSWER: It gives you a prompt to specify author and title and date of creation.
 
 
 .........................
@@ -41,7 +40,8 @@ install.packages("tinytex")
 tinytex::install_tinytex()
 
 QUESTION: Why are these packages needed?
-ANSWER:
+ANSWER: It seems like most of the packages are directly useful for running
+rmarkdown at all.
 
 .........................
 ## 1.3 Modify the YAML Header
@@ -62,7 +62,8 @@ date: "April 2026"
 output: pdf_document
 
 QUESTION: What is the purpose of the YAML header?
-ANSWER:
+ANSWER: To give credit / establish who created a given RMarkdown file and 
+when it was created.
 
 .........................
 ##1.4 Save and Knit file
@@ -76,17 +77,19 @@ tinytex::install_tinytex()
 Then click Knit again.
 
 QUESTION: What happens when you click Knit?
-ANSWER:
+ANSWER: It creates a .docx in your working directory of the markdown file.
 
 QUESTION: What type of file is created?
-ANSWER:
+ANSWER: .Docx although I sense it should've been a PDF, it seems that Knit has
+a dropdown that allows specifying a PDF.
 
 .........................
 ##1.5 Final observation
 After knitting, compare the .Rmd file to the final PDF.
 
 QUESTION: How is the output file different from the source file?
-ANSWER:
+ANSWER: The PDF is formatted slightly different, i.e. it doesn't just maintain
+the Rmarkdown file's format.
 
 
 
