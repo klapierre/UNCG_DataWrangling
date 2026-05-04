@@ -2,7 +2,10 @@
 title: "Independent project"
 author: "Michelle Leyva-Espino"
 date: "2026-05-04"
-output: word_document
+output: 
+    word_document:
+    toc: true
+    toc_depth: 4
 ---
 
 ```{r setup, include=FALSE}
@@ -10,7 +13,7 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 
-# 1. Project Overview: 
+# Project Overview: 
 
 
 The dataset and research project was to determine if dogs can understand
@@ -47,7 +50,7 @@ The longer a dog stares, the more it is confirmed that the dogs understand
 the emotions being shown.
 
 
-# 2. Project Workflow:
+# Project Workflow:
 
 
 1. First I will load in the packages need to clean data and run code. 
@@ -112,9 +115,9 @@ Figure 4: Strength of Response
 
 - I will use a barplot using mean of abs_index and sex_sti to see the strength of the responses. 
 
-# 3. R Script: 
+# R Script: 
 
- loading packages 
+## loading packages 
  
 ```{r}
 library(tidyverse)
@@ -125,13 +128,13 @@ library(rmarkdown)
 library(knitr) 
 ```
  
- Importing dataset 
+## Importing dataset 
  
 ```{r}
 emotional_dogs <- read_excel("Data+Sheet 2.xlsx")
 ```
  
-Inspecting dataset 
+## Inspecting dataset 
 
 ```{r}
 head(emotional_dogs)
@@ -139,7 +142,7 @@ str(emotional_dogs)
 summary(emotional_dogs)
 ```
  
- Cleaning dataseet
+## Cleaning dataseet
  
 ```{r}
 clean_emotional_dogs <- emotional_dogs %>%
@@ -159,7 +162,7 @@ clean_emotional_dogs <- emotional_dogs %>%
   na.omit()
 ```
 
-Creating new variables
+## Creating new variables
 
 ```{r}
 clean_emotional_dogs <- clean_emotional_dogs %>%
@@ -175,6 +178,8 @@ clean_emotional_dogs <- clean_emotional_dogs %>%
     abs_index = abs(index)
   )
 ```
+
+## Figures
 
 Figure 1: Human vs Canine Emotional Reaction
 
@@ -205,7 +210,7 @@ ggplot(clean_emotional_dogs, aes(x = spp_sti, y = valence)) +
   ) 
 ```
 
-**Figure 1** This figure shows the difference in human vs canine emotional reactions. The dogs reacted a little more to human stimuli but the difference is slightly noticeable. 
+**Figure 1** This figure shows the comparison of dogs’ emotional valence responses to human versus canine stimuli. 
 
 Figure 2: Matching vs Mismatching Stimuli
 
@@ -253,7 +258,7 @@ ggplot(clean_emotional_dogs, aes(x = matching, y = index)) +
   ) 
 ```
 
-***Figure 2*** This figure shows 
+***Figure 2*** This figure shows the dogs’ preference index responses when cues were either matching or mismatching. This figure shows whether cue mismatch affects behavioral preference.
 
 Figure 3: Male vs Female Stimuli 
 
@@ -286,7 +291,9 @@ ggplot(clean_emotional_dogs, aes(x = sex_sti, y = valence)) +
   ) 
 ```
 
-Figure 4: Strength of response by Simulus Sex
+***Figure 3*** This figure shows the mean emotional valence responses of dogs to male versus female stimuli.
+
+Figure 4: Strength of response by Stimulus Sex
 
 ```{r}
 ggplot(clean_emotional_dogs, aes(x = sex_sti, y = abs_index)) +
@@ -315,6 +322,14 @@ ggplot(clean_emotional_dogs, aes(x = sex_sti, y = abs_index)) +
     size = 5
   ) 
 ```
+
+***Figure 4*** This figure shows the dogs’ responses (absolute preference index) to male and female stimuli.
+
+# Dataset 
+
+[Dataset](https://datadryad.org/dataset/doi:10.5061/dryad.tn888#citations)
+
+
 
 
 
