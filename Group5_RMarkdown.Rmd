@@ -1,0 +1,1182 @@
+---
+title: "Group5_RMarkdown"
+author: "Arnav Pandey, Themesha Parker, Michelle Bautista Canuto, Dhanush Devanand"
+date: "2026-04-26"
+output:
+  html_document:
+    toc: true
+---
+# Section 1: Create, Save, and Knit Your First R Markdown File
+Author: Jaslyn Davenport (jcdavenport@uncg.edu)
+
+Objective: Learn how to create and generate a basic R Markdown document. 
+
+.........................
+
+## 1.1 How I Created a New R Markdown File
+.........................
+
+To begin, open RStudio and create a new R Markdown file.  
+Go to **File > New File > R Markdown**.  
+
+Question: What do you think happens when the new file is opened?  
+Answer:mAn R Markdown formatted file is created using the title and author inputs.
+
+.........................
+
+## 1.2 Install and Load Packages
+.........................
+
+Before knitting your file, make sure the required packages are installed and loaded.
+
+Task: Run the following in the Console:
+
+install.packages("rmarkdown")
+install.packages("knitr")
+library(rmarkdown)
+library(knitr)
+install.packages("tinytex")
+tinytex::install_tinytex()
+
+Question: Why are these packages needed?
+Answer: To run the functions needed for this assignment.
+
+.........................
+## 1.3 Modify the YAML Header
+
+At the top of the file, you will see the YAML header between two sets of ---
+This section controls the document settings.
+
+Task: Change the YAML header so that it includes:
+a new title
+your name as the author
+the date
+PDF output
+
+Example:
+title: "My First R Markdown File"
+author: "Jaslyn Davenport"
+date: "April 2026"
+output: pdf_document
+Question: What is the purpose of the YAML header?
+Answer:
+The YAML header controls how the document is formatted and displayed. It includes information like the title, author, date, and the type of file that will be created when the document is knitted.
+.........................
+##1.4 Save and Knit file
+
+After editing the file, save it as an .Rmd file.
+Then click the Knit button at the top of RStudio.
+
+If you get an error message about LaTeX or TinyTeX, install TinyTeX by running:
+install.packages("tinytex")
+tinytex::install_tinytex()
+Then click Knit again.
+
+Question: What happens when you click Knit?
+Answer: A clean file is created based on my inputs.
+
+Question: What type of file is created?
+Answer:PDF
+
+.........................
+##1.5 Final observation
+After knitting, compare the .Rmd file to the final PDF.
+
+Question: How is the output file different from the source file?
+Answer: The font is different and the output looks like a clean file rather than a chunk of code.
+
+
+
+--------------------------------------------------------------------------------  
+
+# Section 2: Formatting Text Using RMarkdown Syntax  
+
+--------------------------------------------------------------------------------
+
+Author: Arnav Pandey (a_pandey2@uncg.edu)   
+
+Objective: learn how to format the appearance of your document in your chosen output format.
+
+.........................
+
+## 2.1. Headings
+.........................
+
+Task: Read the question below, click **Knit** to render the document and return here to answer the question.  
+Question: What difference do you notice about the above line that starts with
+`# Section 2: Formatting a Report Using RMarkdown Syntax` compared to the line
+`Objective: learn to format how your document appears in the output of your choice`?  
+Answer: the "Section 2" text is much larger.
+
+\
+
+Placing a hashtag (#) at the beginning of a line turns it into a heading. 
+RMarkdown supports six levels of headings. 
+
+\
+
+Task: Click Knit to observe how different heading levels below appear in the rendered output.
+
+```
+# Line 1: This is an example to show different levels of headings in RMarkdown.
+## Line 2: Line 1: This is an example to show different levels of headings in RMarkdown.
+### Line 3: This is an example to show different levels of headings in RMarkdown.
+#### Line 4: This is an example to show different levels of headings in RMarkdown.
+##### Line 5: This is an example to show different levels of headings in RMarkdown.   
+###### Line 6: This is an example to show different levels of headings in RMarkdown.
+
+```
+
+Question: What happens to the size of text when you increase the number of hashtags (#)?  
+Answer: It decreases.
+
+\
+
+In the example above, the higher the number of hashtags, the lower the heading level (smaller font).  
+
+Question: How many hashtags would you use if you wanted highest level heading (largest font)?  
+Answer: One.
+
+\
+
+Question: In the rendered output, do Line 5 and Line 6 from above example appear in the same line?  
+Answer: Yes.
+
+\
+
+Task: Go to the metadata for this assignment and change the output from `pdf_document` to `html_document`.  
+Question: Did your Line 5 and Line 6 appear in different lines?  
+Answer: Yes.
+
+\
+
+Sometimes the way the program renders output differs between formats.
+You can leave two spaces at the end of the line for a line break.  
+
+Task: Change the output back to `pdf_document`.
+
+Task: **Go back**to all the above example lines "Line 1" thru "Line 6" within
+single set of three backticks ```. Go back above and do as below:
+
+```
+
+# Line 1: This is an example to show different levels of headings in RMarkdown.
+## Line 2: Line 1: This is an example to show different levels of headings in RMarkdown.
+### Line 3: This is an example to show different levels of headings in RMarkdown.
+#### Line 4: This is an example to show different levels of headings in RMarkdown.
+##### Line 5: This is an example to show different levels of headings in RMarkdown.   
+###### Line 6: This is an example to show different levels of headings in RMarkdown.
+
+```
+.........................
+
+## 2.2 Italics
+.........................  
+You may sometimes want to italicize text. RMarkdown allows you to do this easily.
+To make your text italics, you can enclose it within single asterisk `*[text]*`.
+
+*Line 1: This is an example to show how to make text italics.* 
+
+\
+
+Task: Rewrite Line 1 below and only italicize the word "italics." Leave two spaces at the end of sentence for a line break.  
+Answer: Line 1: This is an example to show how to make text *italics.*  
+
+\
+
+You may be wondering if there is another way to make the text italics, and in fact, there is.
+You can also enclose your text within single underscore `_[text]_`.
+
+\
+
+Task: In the paragraph below, make "Arnav," "Biological Data Wrangling and Visualization" and "RMarkdown" italics in the following paragraph using both the methods (asterisks and underscore) mentioned above at least once.  
+
+My name is *Arnav* Pandey. I am currently enrolled in _Biological Data Wrangling and Visualization_ (BIO 457/657).This is a task to use _RMarkdown_ to make a text output italics.  
+
+\
+
+.........................
+
+## 2.3 Bold
+.........................  
+Sometimes you may want to bold your text to emphasize its importance. RMarkdown supports that as well.  
+  
+Task: Read the question below, click Knit, and return to answer the question below.
+Question: Which of the following lines gives you bold text?  
+Line 1. This is an example to show how to make text bold.  
+**Line 2: This is an example to show how to make text bold.**  
+Answer:  Line 2.
+
+\
+
+You can use two asterisks before and after the text to make it bold (`**[text]**`).   
+There is also another way to make a text bold by enclosing your text within two underscores(`__[text]__`). 
+
+Don't believe me? Knit to see if the line below is bold.  
+
+__Line 3: This is an example to show how to make text bold.__
+
+\
+
+Like you practiced with italics, you can make any word or phrase within a sentence bold. See example of it below when you hit Knit.  
+Line 5: This is an example to show how to make text **bold**.  
+Line 4: This is an __example__ to show how to make text bold.   
+
+\
+
+Task: In the paragraph below, make "Arnav," "Biological Data Wrangling and Visualization" and "RMarkdown" bold in the following paragraph using both the methods (asterisks and underscores) mentioned above at least once.     
+My name is **Arnav** Pandey. I am currently enrolled in __Biological Data Wrangling and Visualization__ (BIO 457/657). This is a task to use __RMarkdown__ to make a text output bold.  
+
+\
+
+.........................
+
+## 2.4 Bold and Italics
+.........................
+
+Is there a way to make a text both bold and italics at the same time? Indeed, there is!
+You can enclose your text within three asterisks (`***[text]***`). or underscores (`___[text]___`).
+
+\
+
+Task: In the paragraph below, make "Arnav," "Biological Data Wrangling and Visualization" and "RMarkdown" bold italics using both the methods mentioned above at least once.   
+My name is ***Arnav*** Pandey. I am currently enrolled in ___Biological Data Wrangling and Visualization___ (BIO 457/657). This is a task to use ___RMarkdown___ to make a text output bold.  
+
+
+\
+
+In sections 2.2, 2.3, and 2.4, you learnt how to make text italics, bold, or bold+italics by enclosing the text within one, two, and three asterisks or underscores, respecitvely. You might be tempted to start enclosing a text by underscore and end it using asterisk. For example:  
+
+*italics_  
+__bold**  
+***bold italics___   
+
+Above lines will not give your desired output, so you will have to be consistent with how you enclose your texts. Use the same symbols at both ends!
+
+.........................
+
+## 2.5 Bulleted list
+.........................
+
+In RMarkdown, you can list your items in the RMarkdown as an unordered (bulleted) list.
+
+To do that, you can follow these steps.
+Step 1: leave an empty line before list. 
+Step 2: Use '+', '-', or '*' followed by single space before you write your list item.  
+Step 3: To add another item, leave two spaces at the end of the previous item and go to a new line below and repeat Step 2.  
+
+Task: Knit to see how the items below appear in a list in the output.  
+
++ Apple
++ Banana 
++ Raspberry
+
+
+You can also nest subitems within an item. If you want a nested list as such, just indent the subitem that you want within an item with two spaces. Below is an example of it. 
+
+Task: Hit Knit to look at the output of the lines below:
+
+- Apple
+- Banana
+- Berries 
+  - Blueberries
+  - Strawberries 
+  - Raspberries 
+  - Blackberries
+  - Cranberries
+- Papaya
+
+\
+
+Task: Copy the above list below, add an item "Melon" and nest different types of melons as its subitems.
+Hit Knit to see your output.  
+
+- Apple
+- Banana
+- Berries 
+  - Blueberries
+  - Strawberries 
+  - Raspberries 
+  - Blackberries
+  - Cranberries
+- Papaya
+- Melon  
+  - Watermelon  
+  - Cantaloupe  
+  - Honeydew
+
+.........................
+
+## 2.6 Numbered List
+.........................
+
+Getting a numbered list is even easier compared to unordered or bulleted list. 
+To generate a numbered list, you can follow these steps.
+Step 1: Leave an empty line before list. 
+Step 2: Use uppercase/lowercase English alphabets, Arabic numerals, uppercase or lowercase roman numerals followed by space before you write your list item. Be consistent how you want to list.
+Step 3: To add another item, leave two spaces at the end of the previous item and go to a new line below and repeat Step 2.  
+
+I. Apple  
+II. Banana  
+III. Raspberry  
+
+\
+
+You can also nest subitems within an item. If you want a nested list as such, just indent the subitem that you want within an item with three spaces. You can use different order format for your subitems than your primary item as well. Below is an example of it. 
+**Please be careful with spaces!**
+
+
+1. Apple
+2. Banana 
+3. Berries 
+   1. Blueberries
+   2. Strawberries 
+   3. Raspberries 
+   4. Blackberries
+   5. Cranberries
+4. Papaya  
+
+Note: If you want to use Roman Numerals, you may have to leave an empty line between items on list.
+
+-------------------------------------------------------------------------------  
+
+# Section 3: Inserting Code Chunks and Running Basic R Code  
+
+--------------------------------------------------------------------------------
+
+
+Author: Michelle Bautista Canuto (m_bautistac@uncg.edu)
+We can insert a code chunk by clicking on the green-button with a "c" on the inside and a "+" on the upper left. 
+Click "R". 
+#We can insert functions within the chunk of code. We will see this next. 
+
+#QUESTION: What is a code chunk? (hint look back at the slides in Canvas)
+#It is a block that will be read as code and executed. The result of the code appears in the output document.
+
+#TASK: Practice inserting a code chunk. Run a simple calculation such as "2+2" below {r}. Run this code by clicking on the green side-triangle button: 
+
+```{r}
+2+2
+```
+
+
+#Next, let's assign variables. Run the following variables:
+```{r}
+x<-10
+y<-5
+```
+
+
+#To view the contents of the variable x, just type 'x' and run
+```{r}
+x
+```
+
+
+#TASK: Write a chunk of code mulitpliying the variables x and y.
+```{r}
+x*y
+```
+
+#QUESTION: What was the result? 
+#50.
+
+#We will analyze the built-in 'mtcars' dataset. Run the following chunk of code.
+
+```{r}
+head(mtcars)
+```
+#QUESTION: What do you think the head() function does?
+#It displays a preview of the dataset.
+
+#To display the summary statistics for the dataset use the summary() function. Run the following chunk of code.
+```{r}
+summary(mtcars)
+```
+
+#Within a new chunk of code, we will code to import the entire mtcars dataset.
+#Run the following code by clicking on the green side-triangle button for "Run Current Chunk"
+```{r mtcars}
+data(mtcars)
+```
+
+#QUESTION: After running the previous code, view the dataframe of mtcars. How many variables are in the mtcars dataset? 
+#11.
+
+#Or you can view the dataset in the console by typing "mtcars" and click 'Run Selected Lines'. 
+mtcars
+
+#To find the number of rows in the dataset, we can use the nrow() function within a new chunk of code. Run the following code.
+```{r}
+nrow(mtcars)
+```
+
+#TASK: Write a code to find the number of columns in the 'mtcars' dataset using the ncol() function. Remember to use a new chunk of code.
+```{r}
+ncol(mtcars)
+```
+
+#QUESTION: What is the result showing in your script?
+#11.
+
+#The 'disp' column in the dataset stands for engine displacement. Engine displacement tells you how big the engine is in cubic inches. 
+#The 'mpg' column stands for fuel efficiency in miles per gallon. 
+#Lets plot a graph showing fuel efficiency over displacement for each car.
+#Run the following code.
+plot(mtcars$disp, mtcars$mpg)
+
+#QUESTION: What trend is the plot showing?
+#A negative relationship.
+
+#We can also use ggplot to run this within our chunk of code.
+#This permits our plot to be displayed in the final report once "knit".   
+```{r}
+library(ggplot2)
+ggplot(mtcars, aes(x=disp, y=mpg)) + geom_point()
+```
+
+#Let's change the labels of the x-axis to 'Engine Size (cubic inches)' 
+#Let's change the y-axis to 'Miles Per Gallon'
+#Let's add a title called "Fuel Efficiency vs Engine Size".
+```{r}
+ggplot(mtcars,aes(x=disp, y=mpg))+geom_point()+
+  labs(
+    x="Engine Size (cubic inches)",
+    y="Miles Per Gallon",
+    title="Fuel Efficiency vs Engine Size"
+  )
+```
+
+#We could add a legend to show which car each point corresponds to. 
+#But first, we should add a column displaying the car names using dplyr.
+```{r}
+library(dplyr)
+mtcars<-mtcars %>% 
+  mutate(car_name=rownames(mtcars))
+```
+
+#Lets'bold' the title 
+#Let's add a legend to differentiate each point.
+```{r}
+ggplot(mtcars,aes(x=disp,y=mpg, color=factor(car_name)))+
+  geom_point()+
+  labs(
+    x="Engine Size (cubic inches)",
+    y="Miles Per Gallon",
+    title="Fuel Efficiency vs Engine Size",
+         color="Car Types")+
+  theme(plot.title = element_text(face="bold"))
+```
+
+#Lets organize the fuel efficiency from highest to lowest. Run the following.
+```{r}
+mtcars %>%
+  select(mpg,disp) %>% 
+  arrange(desc(mpg))
+```
+
+#QUESTION: Which car has the highest fuel efficiency? 
+#Toyota Corolla.
+
+#QUESTION: What is the size of it's engine?
+#71.1 Cubic inches.
+
+#TASK: Use code to create a plot comparing disp vs hp from the 'mtcars' dataset. With the following:  
+#Use the 'disp' data for the x-axis and labeled 'Engine Size (cubic inches)'
+#Use the 'hp' data for the y-axis and labeled 'Horsepower (HP)'
+#Add an appropriate title for the plot with a 'bold' font
+#Add a legend colored by 'car_name' and labeled "Car Types" 
+```{r echo=FALSE}
+ggplot(mtcars,aes(x=disp,y=hp, color=factor(car_name)))+
+  geom_point()+
+  labs(
+    x="Engine Size (cubic inches)",
+    y="Horsepower (HP)",
+    title="Fuel Efficiency vs Horsepower",
+         color="Car Types")+
+  theme(plot.title = element_text(face="bold"))
+```
+
+
+#Lets organize the horsepower from highest to lowest. Run the following.
+```{r}
+mtcars %>%
+  select(hp,disp) %>% 
+  arrange(desc(hp))
+```
+
+#QUESTION: What trend is the plot showing between engine size and horsepower? 
+#A positive relationship.
+
+#QUESTION: Which cars have the highest and lowest hp?
+#The highest is the Maserati Bora and the lowest is the Honda Civic.
+
+#Don't forget to save your changes. 
+
+------------------------------------------------------------------------
+## Section 4: Add Visualizations and Tables to Your Report
+------------------------------------------------------------------------
+Author: Themesha Parker (tlparker@uncg.edu)
+
+### Goal
+
+In this section, you will create graphs and a summary table using the
+mtcars data set. You will also practice describing patterns that you
+observe in the output.
+
+Before beginning, make sure you can access the mtcars dataset. Run the
+line below to preview the first few rows.
+
+head(mtcars)
+
+Also make sure you have Tidyverse installed! Run the line of code below.
+
+library(tidyverse)
+
+------------------------------------------------------------------------
+
+## Part A: Create a Scatterplot
+
+The variables wt and mpg in the mtcars data set can help us explore the
+relationship between car weight and fuel efficiency.
+
+### Task
+
+Create a scatter plot with wt on the x-axis and mpg on the y-axis.
+
+**Hint:** use the plot() function
+
+```{r scatterplot}
+# Write your code below this line
+ggplot(mtcars,aes(x=wt,y=mpg))+
+  geom_point()
+
+```
+
+### Task
+
+Modify your scatterplot so that it includes: a title, an x-axis label, a
+y-axis label, a point color of your choice
+
+**Hint:** Think back to previous assignments(main=, xlab= ,ylab=, and
+col=)
+
+```{r scatterplot_labeled}
+# Write your updated scatterplot code below this line
+ggplot(mtcars,aes(x=wt,y=mpg, color=factor(car_name)))+
+  geom_point()+
+  labs(
+    x="Weight",
+    y="Miles per Gallon",
+    title="Weight vs. Fuel Efficiency",
+         color="Car Types")
+
+
+```
+
+### Question
+
+What does each point in this scatterplot represent?
+
+**Your answer:** One car type.
+
+### Question
+
+What relationship do you observe between weight and mpg?
+
+**Your answer:** A negative relationship.
+
+### Question
+
+Does the graph suggest a positive relationship, a negative relationship,
+or no relationship? Explain your answer.
+
+**Your answer:** Negative. As weight increases, MPG appears to decrease.
+
+------------------------------------------------------------------------
+
+## Part B: Create a Boxplot
+
+The variable cyl shows the number of cylinders in each car. A boxplot
+can help compare fuel efficiency across cylinder groups.
+
+### Task 
+
+Create a boxplot of mpg by cyl using the boxplot function
+
+```{r boxplot1}
+# Write your code below this line
+ggplot(mtcars,aes(group=mpg,x=cyl))+
+  geom_boxplot()
+
+```
+
+### Task 
+
+Modify your boxplot so that it includes: a title, an x-axis label, a
+y-axis label, and a fill color of your choice
+
+```{r boxplot2}
+# Write your updated boxplot code below this line
+
+ggplot(mtcars,aes(group=mpg,x=cyl))+
+  geom_boxplot(aes(fill='blue'))+
+  labs(
+    x="Cylinder Number",
+    y="Miles per Gallon",
+    title="Cylinder Number vs. Fuel Efficiency")
+
+```
+
+### Question
+
+What does each box in this plot represent?
+
+**Your answer:** Groups of cylinder numbers.
+
+### Question
+
+Which cylinder group appears to have the highest fuel efficiency?
+
+**Your answer:** 4-6.
+
+### Question
+
+Which cylinder group appears to have the lowest fuel efficiency?
+
+**Your answer:** 6-8.
+
+### Question
+
+Based on the boxplot, how does fuel efficiency seem to change as the
+number of cylinders increases?
+
+**Your answer:** It decreases.
+
+------------------------------------------------------------------------
+
+## Part C: Create a Summary Table
+
+You will now create a table showing the average miles per gallon for
+each cylinder group.
+
+### Task 
+
+Use dplyr to calculate the average mpg for each value of cyl. Rename the
+data avg_mpg_by_cyl
+
+**Hint:** you need to group the data by cyl then summarize the mean of
+mpg.
+
+Use the space below to write your code:
+
+```{r summary_table}
+# Write your code below this line
+mtcars %>%
+  group_by(cyl) %>% 
+  summarise(MPGMean=mean(mpg))
+
+
+```
+
+### Task 
+
+Display your results as a clean table.
+
+Use the space below to write your code:
+
+```{r formatted_table}
+# Write your code below this line
+mtcars %>%
+  group_by(cyl) %>% 
+  summarise(MPGMean=mean(mpg))
+
+
+```
+
+### Question
+
+What does this table show?
+
+**Your answer:** The mean MPG for different cylinder numbers.
+
+### Question
+
+Which cylinder group has the highest average mpg?
+
+**Your answer:** 4.
+
+### Question
+
+Which cylinder group has the lowest average mpg?
+
+**Your answer:** 8.
+
+------------------------------------------------------------------------
+
+## Part D: Compare the Visuals
+
+Now that you have created both graphs and the table, compare the
+information they provide.
+
+### Question 
+
+How does the scatterplot help you understand the relationship between
+weight and fuel efficiency?
+
+**Your answer:** It clearly displays the relationship in a visually obvious way.
+
+### Question 
+
+How does the boxplot help you compare different groups of cars?
+
+**Your answer:** It displays how groups of cars compare in terms of fuel efficiency based on their cylinder count.
+
+------------------------------------------------------------------------
+
+## Part E: Now you try
+
+1.  Use a different variable from mtcars to make an additional scatter
+    plot.
+2.  Change the color of your scatterplot.
+
+Write your code below:
+
+```{r Now_you_try}
+# Write your code below this line
+ggplot(mtcars,aes(x=disp,y=qsec))+
+  geom_point(aes(colour="blue"))
+
+
+```
+
+### Question
+
+What did you change, and how did it affect the output?
+
+**Your answer:** I changed both variables, which completely changed the graph.
+
+------------------------------------------------------------------------
+
+# ---------------------------------------------------------- #
+# Section 5: Improve and Finalize Your R Markdown Report
+
+------------------------------------------------------------------------
+
+**Objective:** Learn how to make your report more polished, readable,
+and professional. In this section, we will take everything we have
+learned and improve the overall quality of our R Markdown report so it
+is easier to read and more useful.
+
+Author: Dhanush Devanand (s_devanand@uncg.edu)
+
+------------------------------------------------------------------------
+
+## Step 1: Understanding Inline R Code
+
+So far, we have been writing code in chunks. However, sometimes we want
+to include results directly inside our text. **Inline R code** allows us
+to insert calculations into sentences without a separate code chunk.
+
+### Task
+
+Copy and paste the following lines directly into your R Markdown
+document, **outside** of any code chunk, and then Knit:
+
+    The mtcars dataset has `r nrow(mtcars)` rows and `r ncol(mtcars)` columns.
+    The average miles per gallon (mpg) is `r round(mean(mtcars$mpg), 2)`.
+
+### Check
+
+Did the numbers appear automatically in your rendered sentence?
+Yes.
+
+### Question
+
+What is inline R code, and how is it different from a regular code
+chunk?
+
+**Answer:** It allows you to insert code directly into your R markdown output without having to use code chunks. This lets you do things like incorporate code into normal sentences.
+
+### Question
+
+Why is inline R code useful when working with a dataset that might be
+updated or changed over time?
+
+**Answer:** It will use the given data, no matter how that data may change.
+
+### Task
+
+Now try writing your own inline R code sentence. Using the mtcars
+dataset, write a sentence that includes the maximum horsepower value
+using inline R code. The function `max()` will be helpful here.
+
+**Your sentence:** In the mtcars dataset, there is a maximum horsepower value of `r max(mtcars$hp)`.
+
+### Why This Matters
+
+Inline R code makes your report dynamic. If the dataset changes, your
+results will automatically update without you needing to rewrite
+anything. This is especially important in professional or scientific
+reports where accuracy matters.
+
+------------------------------------------------------------------------
+
+## Step 2: Improving Readability by Hiding Code
+
+Sometimes, showing all code can make a report look cluttered. If we only
+care about the output — like a graph — we can hide the code using the
+`echo=FALSE` chunk option.
+
+### Task
+
+The chunk below currently shows the code when knitted. Add `echo=FALSE`
+inside the curly braces so that only the plot appears in the output, not
+the code. Then Knit your document.
+
+```{r echo=FALSE}
+plot(mtcars$wt, mtcars$mpg,
+     main = "Weight vs MPG",
+     xlab = "Weight (1000 lbs)",
+     ylab = "Miles Per Gallon")
+```
+
+**Hint:** Your chunk header should look like this when you are done:
+` ```{r echo=FALSE} `
+
+### Check
+
+Do you see the plot in the output but **not** the code that created it?
+yes.
+
+### Question
+
+Why might you want to hide code in a final report?
+
+**Answer:** Because the important part is the data itself, not how exactly you coded it to be displayed.
+
+### Question
+
+Can you think of a situation where you would want to **show** your code
+in a report rather than hide it? Who might be reading that report?
+
+**Answer:** You might want to show your code if you want your figures to be reproducible or verifiable.
+
+### Task
+
+Now apply `echo=FALSE` to the ggplot chunk you created back in Section
+3. Knit the document and confirm only the plot appears.
+
+------------------------------------------------------------------------
+
+## Step 3: Removing Warnings and Messages
+
+When you load packages or run certain functions, R sometimes prints
+extra warnings and messages that are not important to the reader. These
+can make your report look messy. You can suppress them using the chunk
+options `message=FALSE` and `warning=FALSE`.
+
+### Task — Part A: See the messages first
+
+Run the chunk below **without** any chunk options and Knit. Read through
+the output carefully and write down any extra messages or warnings you
+notice below.
+
+```{r message=FALSE, warning=FALSE}
+library(tidyverse)
+summary(mtcars)
+```
+
+**What messages or warnings did you see?** ##-- Attaching core tidyverse packages------------------------ tidyverse 2.0.0-
+## v forcats 1.0.1
+v stringr 1.6.0
+## v lubridate 1.9.5
+## v purrr
+## v readr
+1.2.0
+v tibble
+v tidyr
+3.3.0
+1.3.2
+2.2.0
+##-- Conflicts------------------------------------------ tidyverse_conflicts()-
+## x dplyr::filter() masks stats::filter()
+## x dplyr::lag()
+masks stats::lag()
+## i Use the conflicted package (<http://conflicted.r-lib.org/>) to force all conflicts to become error
+
+### Task — Part B: Suppress the messages
+
+Now add `message=FALSE` and `warning=FALSE` to the chunk header above
+and Knit again.
+
+**Hint:** Your chunk header should look like this when you are done:
+` ```{r message=FALSE, warning=FALSE} `
+
+### Check
+
+Did the extra messages disappear from your rendered output?
+Yes.
+
+### Question
+
+What is the difference between `message=FALSE` and `warning=FALSE`?
+When might you need to use both at the same time?
+
+**Answer:** Message is for messages R gives you about how your code was output or about certain settings or variables that may be active. Warning is for warnings about parts of your code that may create an error. You may need to use both if they are both irrelevant to your output.
+
+### Question
+
+Is it always a good idea to suppress warnings? Can you think of a case
+where seeing a warning might actually be important?
+
+**Answer:** Seeing a warning might be important if you miss an error when writing the code itself.
+
+### Why This Matters
+
+Hiding unnecessary messages keeps your report clean and professional,
+especially when sharing results with someone who does not need to see
+behind-the-scenes R output. However, always make sure you understand
+what a warning means before choosing to hide it.
+
+------------------------------------------------------------------------
+
+## Step 4: Hiding Code AND Output with `include=FALSE`
+
+In Step 2, you learned that `echo=FALSE` hides the code but still shows
+the output. Sometimes you may want to run a chunk silently — hiding both
+the code and the output entirely. This is done with `include=FALSE`.
+
+This is useful for setup steps like loading libraries or defining
+variables that need to run but do not need to appear in the report.
+
+### Task
+
+Run the chunk below as-is and Knit. Note what appears in the output.
+Then change the chunk option from `echo=FALSE` to `include=FALSE` and
+Knit again.
+
+```{r include=FALSE}
+library(dplyr)
+my_summary <- mtcars %>%
+  summarize(mean_mpg = round(mean(mpg), 2),
+            max_hp = max(hp),
+            min_wt = min(wt))
+my_summary
+```
+
+**Hint:** Your chunk header should look like this when you are done:
+` ```{r include=FALSE} `
+
+### Check
+
+When using `include=FALSE`, does anything from this chunk appear in the
+rendered output?
+No.
+
+### Question
+
+What is the difference between `echo=FALSE` and `include=FALSE`?
+
+**Answer:** Echo only excludes the code while include excludes both the code and output.
+
+### Question
+
+Give an example of when you would use `include=FALSE` in a real report.
+
+**Answer:** For lines where you were loading in packages, renaming variables, or doing other background data-cleaning steps.
+
+### Task
+
+Now use the `my_summary` object created in the chunk above inside an
+inline R code sentence below. Even though the chunk is hidden, the
+object is still available to use. Copy and paste the lines below
+**outside** of a code chunk and Knit to confirm the values appear.
+
+    The average miles per gallon across all cars is `r my_summary$mean_mpg` and the most powerful engine produces `r my_summary$max_hp` horsepower.
+
+### Check
+
+Did the inline values populate correctly even though the chunk that
+created them was hidden?
+Yes.
+
+------------------------------------------------------------------------
+
+## Step 5: Controlling Figure Size
+
+When creating plots in R Markdown, you can control the size of your
+figures directly in the chunk header using `fig.width` and `fig.height`.
+This helps make your report look clean and consistent.
+
+### Task
+
+Run the chunk below and Knit to see the default figure size.
+
+```{r fig.width=4, fig.height=6}
+ggplot(mtcars, aes(x = wt, y = mpg)) +
+  geom_point(color = "steelblue") +
+  labs(title = "Weight vs Fuel Efficiency",
+       x = "Weight (1000 lbs)",
+       y = "Miles Per Gallon") +
+  theme_bw()
+```
+
+### Task
+
+Now add `fig.width=8` and `fig.height=4` to the chunk header and Knit
+again.
+
+**Hint:** Your chunk header should look like this when you are done:
+` ```{r fig.width=8, fig.height=4} `
+
+### Check
+
+Did the shape of the plot change in your rendered output?
+Yes.
+
+### Question
+
+How did changing `fig.width` and `fig.height` affect the appearance of
+your plot?
+
+**Answer:** It resized it to be more appropriate.
+
+### Question
+
+Why might consistent figure sizing matter in a professional or academic
+report?
+
+**Answer:** It might make your formatting cleaner or your figure easier to see and parse.
+
+### Task
+
+Try setting `fig.width=4` and `fig.height=6` on the same chunk. Knit
+and observe how the plot changes. Describe what you notice below.
+
+**Observation:** The plot is now taller than it is wide and overall smaller.
+
+------------------------------------------------------------------------
+
+## Step 6: Adding a Table of Contents
+
+A table of contents makes it easier to navigate your report, especially
+as it gets longer. You can add one by modifying the YAML header at the
+very top of your `.Rmd` file.
+
+### Task
+
+Make sure the YAML header at the very top of your document looks like
+this, then Knit:
+
+```yaml
+---
+title: "Group5_RMarkdown"
+author: "Arnav Pandey, Themesha Parker, Michelle Bautista Canuto, Dhanush Devanand"
+date: "2026-04-26"
+output:
+  html_document:
+    toc: true
+---
+```
+
+### Check
+
+Do you now see a table of contents at the top of your rendered HTML
+document?
+Yes.
+
+### Question
+
+How does a table of contents improve the readability of a long report?
+
+**Answer:** It lets people easily navigate to the specific section they want to read.
+
+### Question
+
+The table of contents is automatically generated from your headings.
+What does this tell you about the importance of using proper heading
+levels (`#`, `##`, `###`) throughout your document?
+
+**Answer:** Using proper heading levels is essential for your table of contents to generate correctly.
+
+------------------------------------------------------------------------
+
+## Step 7: Adding Hyperlinks
+
+You can include clickable links in your report to point readers to
+additional resources. The syntax is `[link text](URL)`.
+
+### Task
+
+Add the following clickable link somewhere in your document and Knit:
+
+`[R Markdown documentation](https://rmarkdown.rstudio.com)`
+
+### Check
+
+Does the link appear clickable after knitting?
+Yes.
+
+### Task
+
+Now add a second hyperlink of your own. Find a webpage related to
+something covered in this assignment — for example, the mtcars dataset,
+ggplot2, or R Markdown chunk options — and add it below using the same
+syntax.
+
+**Your hyperlink:** `[R Markdown project slides](https://uncg.instructure.com/courses/148960/files/18648685?module_item_id=4541372)`
+
+### Question
+
+When might adding a hyperlink be useful in a data report?
+
+**Answer:** It might be useful to guide readers to an external resource that provides more information.
+
+------------------------------------------------------------------------
+
+## Step 8: Writing a Strong Conclusion
+
+Every report should end with a short conclusion that summarizes what was
+done and what was found.
+
+### Task
+
+Write a short paragraph (3–5 sentences) below summarizing what you did
+in this assignment. Consider:
+
+- What dataset did you use?
+- What visualizations or analyses did you create?
+- What improvements did you make to the report in Section 5?
+- Why is R Markdown useful for communicating data?
+
+**Your conclusion:** For this assignment, we used the dataset "mtcars", which is included in the R program and provides various information about different types of cars. This dataset includes 12 distinct variables (including car type).We created several graphs based on this dataset, including scatterplots and a boxplot, to visually display the data and analyze the relationships between various variables. In Section 5, we improved the report by hiding certain chunks of code and messages as well as adding a table of contents, clickable links, and inline text. R Markdown is a very useful data communication tool. It allows one to utilize the convenience of the R program while still being able to easily generate an output that looks clean rather than one that looks like unpolished code chunks.
+
+### Task
+
+Now rewrite at least one sentence from your conclusion so that it
+includes inline R code. For example, instead of writing "the dataset has
+32 rows," use `` `r nrow(mtcars)` `` to generate that number
+automatically.
+
+**Your updated sentence with inline R code:** This dataset includes `r ncol(mtcars)` distinct variables (including car type).
+
+------------------------------------------------------------------------
+
+## Step 9: Final Check and Knit
+
+Before submitting, go through the checklist below to make sure
+everything is working correctly. In your `.Rmd` file, replace each `[ ]`
+with `[x]` once you have confirmed that step.
+
+- [X] Inline R code displays correctly in rendered text
+- [X] Plots appear in the output without showing code (`echo=FALSE`)
+- [X] A chunk runs silently using `include=FALSE`
+- [X] No unnecessary warnings or messages appear (`message=FALSE`, `warning=FALSE`)
+- [X] Figure sizes have been adjusted using `fig.width` and `fig.height`
+- [X] Table of contents is visible at the top of the document
+- [X] At least two hyperlinks are present and clickable
+- [X] Conclusion paragraph is included with at least one inline R code value
+
+Once all boxes are checked, click **Knit** one final time to generate
+your completed report.
