@@ -2,10 +2,7 @@
 title: "Independent project"
 author: "Michelle Leyva-Espino"
 date: "2026-05-04"
-output: 
-    word_document:
-    toc: true
-    toc_depth: 4
+output: word_document
 ---
 
 ```{r setup, include=FALSE}
