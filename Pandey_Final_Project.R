@@ -1,8 +1,8 @@
 
 # Loading necessary packages ----------------------------------------------
 
-#install.packages("tidyverse")
-#install.packages("readxl")
+install.packages("tidyverse")
+install.packages("readxl")
 library(tidyverse)
 library(readxl)
 
@@ -178,7 +178,7 @@ ggplot ()+
                  color ="maroon") +
   labs (x = "Meiosis I phases",
         y = "ESCRT recruitment (% of SPB)",
-        title = "Recruitment of Cmp7 at Meiosis I")
+        title = "Recruitment of Cmp7 at Meiosis I Nuclear Envelope Hole")
 
 
 ### For 615
@@ -205,7 +205,7 @@ ggplot ()+
                  color ="maroon") +
   labs (x = "Meiosis I phases",
         y = "ESCRT recruitment (% of SPB)",
-        title = "Recruitment of Ist1 at Meiosis I")
+        title = "Recruitment of Ist1 at Meiosis I Nuclear Envelope Hole")
 
 
 ### For 650
@@ -232,7 +232,7 @@ ggplot ()+
                  color ="maroon") +
   labs (x = "Meiosis I phases",
         y = "ESCRT recruitment (% of SPB)",
-        title = "Recruitment of Vps32 at Meiosis I")
+        title = "Recruitment of Vps32 at Meiosis I Nuclear Envelope Hole")
 
 
 ## Meiosis II data
@@ -261,7 +261,7 @@ ggplot ()+
                  color ="maroon") +
   labs (x = "Meiosis II phases",
         y = "ESCRT recruitment (% of SPB)",
-        title = "Recruitment of Cmp7 at Meiosis II")
+        title = "Recruitment of Cmp7 at Meiosis II Nuclear Envelope Hole")
 
 
 ### For 615
@@ -288,7 +288,7 @@ ggplot ()+
                  color ="maroon") +
   labs (x = "Meiosis II phases",
         y = "ESCRT recruitment (% of SPB)",
-        title = "Recruitment of Ist1 at Meiosis II")
+        title = "Recruitment of Ist1 at Meiosis II Nuclear Envelope Hole")
 
 
 ### For 650
@@ -315,4 +315,4 @@ ggplot ()+
                  color ="maroon") +
   labs (x = "Meiosis II phases",
         y = "ESCRT recruitment (% of SPB)",
-        title = "Recruitment of Vps32 at Meiosis II")
+        title = "Recruitment of Vps32 at Meiosis II Nuclear Envelope Hole")
