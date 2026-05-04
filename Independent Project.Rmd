@@ -13,9 +13,9 @@ knitr::opts_chunk$set(echo = TRUE)
 
 The dataset and research project was to determine if dogs can understand
 
-both humans and other dogs emotions. This is important for domestic dogs
+both humans and other dogs’ emotions. This is important for domestic dogs
 
-because humans express emotions differently than canines. In this
+because humans’ express emotions differently than canines. In this
 
 experiment, they used facial and auditory cues and timed the amount of
 
@@ -32,7 +32,7 @@ The ecological questions I aim to address are if dogs can understand human
 
 and canine emotions. How do dogs react to facial expressions that do not
 
-match the auditory cues. How do dogs react more strongly to male or female 
+match the auditory cues. Do dogs react more strongly to male or female 
 
 stimuli, and if so, how large is that difference. In conclusion, the goal
 
@@ -40,11 +40,72 @@ of this experiment is to determine if dogs can understand human and canine
 
 emotions by the amount of time the dog stares or reacts to the experiment. 
 
-The longer a dog stares, the more it is confirmed that the dogs understands
+The longer a dog stares, the more it is confirmed that the dogs understand
 
-the emotions being shown. 
+the emotions being shown.
 
 #2. Project Workflow:
+
+1. First I will load in the packages need to clean data and run code. 
+
+-tidyverse
+-readxl 
+-ggplot 2 
+-dply 
+
+2. Next, I will import the dataset using readxl and save the dataset as an object title Emotions_Dogs. I will then inspect the data. 
+
+3. Clean and tidy the dataset by removing the following columns. 
+
+- Trial 
+- Sequence 
+- Observer 
+- Notes 
+- Date 
+- Control 
+- Positive/Negative (Represent in Valence column)
+I will keep the rest of the columns which will be used to create our digarams. 
+
+4. I will check for missing values and remove any missing values. 
+
+- I will check side_con, matching and index columns. 
+- I will convert columns in factors to make the data cleaner. 
+
+5. Create new variables 
+
+- I will create a new column with left and right interaction time together for a cleaner data set. 
+- I will also create abs_index variable to see the strength of the response. 
+
+6. Next I will test the differences by comparing
+
+- mean valence 
+- mean index 
+- mean total_ time 
+
+7. Lastly I will create figures to answers the questions in project overview section. 
+
+Figure 1: Human vs Canine Emotional Reaction
+
+- I will use a boxplot using valance and spp_sti columns
+
+Figure 2: Matching vs Mismatching Stimuli 
+
+- I will use a boxplot using valance and matching columns 
+
+Figure 3: Male vs Female Stimuli 
+
+- I will use a Boxplot using valance and sex_sti in order to determine the difference in dogs reactions between females and males. 
+
+Figure 4: Strength of Response  
+
+- I will use a barplot using mean of abs_index and sex_sti to see the strength of the responses. 
+
+#3. R Script: 
+
+
+
+
+
 
 
 
