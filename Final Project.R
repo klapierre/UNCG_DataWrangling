@@ -20,7 +20,7 @@ library(ggplot2)
 ===============================================================================
  Sec 1.0: Tidy up - Breaking down to 3 Treatments
 ===============================================================================
-# We will be pulling the data from the "Trial3_JV.csv". This 
+# I will be pulling the data from the "Trial3_JV.csv". This 
 # file contains all of the data that was collected from Trial 3 of the lipid 
 # droplet count. 
 
@@ -61,7 +61,7 @@ $ Diameter: num [1:837] 20.52 22.32 6.09 14.64 21.92 ...
 # by Control, DMSO, and Naringenin (Nar). I can do this by the filter() 
 # function.
 
-# This pulls all the controls. We can double check the observations to determine
+# This pulls all the controls. I can double check the observations to determine
 # if the dataframe sorted correctly. Which, the total number of observations 
 # is currently 837. When filtering out the control, it becomes 397, signifying
 # that the dataframe has been split out perfectly.
@@ -82,15 +82,15 @@ nar_3 <- trial3_Com %>%
 # Hold on! How did the 3 dataframes created not equal to 837 observations? 
 # Clearly, I didn't account for something in my code. 
 
-# By double checking, the Sample column, we see that all values does have the 
+# By double checking, the Sample column, I can see that all values does have the 
 # desired treatment letter (C, D, N) but each treatment is paired through A-B. 
 # This means I must be more specific on how I identify the filter!
 
 con_3 <- trial3_Com %>% 
   filter(substr(Sample, 1, 1) == "C")
 
-# By running substr, we can determine the order that we are looking for the 
-# desired trial! For example: 1, 1 shows that you are looking for one C and 
+# By running substr, I can determine the order that I am looking for! 
+# For example: 1, 1 shows that you are looking for one C and 
 # that is should be in the 1st spot of the value.
 
 # The observations of con_3 went from 397 to 266 observations!
@@ -122,12 +122,12 @@ nar_3 <- trial3_Com %>%
   Sec 1.1: Tidy up - Group by ranges
 ===============================================================================
 
-# Now that we have our treatments sorted, we want to compare the diameters of 
+# Now that I have the treatments sorted, I want to compare the diameters of 
 # the lipid droplets per trial. In order to reduce the number of individual
-# points, we want to sort them into 3 ranges: small(x < 8.0), 
+# points, I want to sort them into 3 ranges: small(x < 8.0), 
 # medium (8.1-16.09), and Large (16.1).
 
-# We will start with control: 
+# I will start with control: 
 # First, I create a new column that will label each row's diameter to their 
 # range size.
 
@@ -137,9 +137,9 @@ con3_range <- con_3 %>%
       Diameter > 8 & Diameter <= 16 ~ "8–16",
       Diameter > 16 ~ "> 16"))
 
-# Then, we tally up the total number of each range. We can double check the
+# Then, I tally up the total number of each range. I can double check the
 # numbers to observations by using count() within the desired column. 
-# We combine all the samples that fall under these 3 ranges to create 3 groups.
+# I combine all the samples that fall under these 3 ranges to create 3 groups.
 
 con3_range %>%
   count(DiameterRange)
@@ -163,7 +163,7 @@ con3_TotalRange <- con3_TotalRange %>%
   mutate(DiameterRange = factor(DiameterRange, levels = c("<= 8", "8–16", "> 16"))) %>%
   arrange(DiameterRange)
 
-# Finally, we can double check the format of the data by visualizing the data
+# Finally, I can double check the format of the data by visualizing the data
 # in a column graph. The tile of the column graph will be "Diameter Range of 
 # Control Samples", x axis will be "Diameter Range (um)" since the diameters 
 # are measured in micrometer, and lastly, the y axis will be called "Control 
@@ -184,7 +184,7 @@ ggplot(con3_TotalRange , aes(x = DiameterRange, y = Control_Sample)) +
 # data. It helps understand how the lipid droplet diameters would look across 
 # 5 different samples within the control treatment. 
 
-# Now, we will repeat the same for the DMSO and Nar treatments.
+# Now, I will repeat the same for the DMSO and Nar treatments.
 
 dmso3_range <- dmso_3 %>%
   mutate(DiameterRange = case_when(
@@ -281,7 +281,7 @@ mnar3_TotalRange  <- nar3_TotalRange  %>% mutate(Treatment = "nar")
 
 all_treatments <- bind_rows(mcon3_TotalRange, mdmso3_TotalRange, mnar3_TotalRange)
 
-# Great! Now that we have all the treatments combined, we can plot a column 
+# Great! Now that I have all the treatments combined, I can plot a column 
 # graph.
 
 ggplot(all_treatments, aes(x = DiameterRange, y = Control_Sample, fill = Treatment)) +
@@ -311,8 +311,8 @@ ggplot(all_treatments, aes(x = DiameterRange, y = Control_Sample, fill = Treatme
   install.packages("ggmosaic")
 
 # Before graphing, I need to make sure that ggmosaic can recognize the right 
-# columns that are neccesary to plot the data. We would want diameter range to
-# be our x-axis while y-axis is the treatment. Although this may seem odd, many 
+# columns that are neccesary to plot the data. I want the diameter range to
+# be the x-axis while y-axis is the treatment. Although this may seem odd, many 
 # mosaic plots do follow a similar set up to the data display. 
 
 str(all_treatments)
@@ -321,7 +321,7 @@ $ DiameterRange : Factor w/ 3 levels "<= 8","8–16",..: 1 2 3 1 2 3 1 2 3
 $ Control_Sample: int [1:9] 134 61 71 121 66 83 225 56 20
 $ Treatment     : chr [1:9] "con" "con" "con" "dmso" ...
 
-# These are great results! The control_sample are numbers so we can graph the 
+# These are great results! The control_sample are numbers so I can graph the 
 # mosaic graph!
 
 mosaicplot(
@@ -365,7 +365,7 @@ mosaicplot(
 ===============================================================================
   Sec 3.1: Challenges - Looking into the total areas
 ===============================================================================
-# In this section, we are continuing to challenge the opposing theory that the 
+# In this section, I am continuing to challenge the opposing theory that the 
 # adipocytes are not receiving the equilvant amount of glucose based on the 
 # treatments. 
   
@@ -374,7 +374,7 @@ mosaicplot(
 # area. 
   
 # In our dataframes, I have area provided for each droplet counted. I can 
-# select this column so we can begin graphing it!
+# select this column so I can begin graphing it!
 
 con_area  <- con3_range  %>% select(Area)
 
@@ -402,7 +402,7 @@ area_summary <- data.frame(
 # can have many reasons behind it such as human error or biases when taking 
 # microscopy photos of the lipid droplet regions on each adipocyte. 
 
-# Regardless, of these concerns, we can still observe which trials have this 
+# Regardless, of these concerns, I can still observe which trials have this 
 # discrepancy.
 
 ===============================================================================
