@@ -337,7 +337,7 @@ mosaicplot(
 
 # Similar to a percentage chart, this further aids in understanding how 
 # naringenin is lowering the average largest lipid droplets and potentially
-# redistrubiting it out as smaller droplets!
+# redistributing it out as smaller droplets!
 
 ===============================================================================
   Sec 3.0: Challenges - Total counts comparison among trials
@@ -347,11 +347,9 @@ mosaicplot(
 # (Disproving that the naringenin treated cells were just adjusting to lower 
 # glucose uptake.) 
   
-  
 # The data would emphasis that naringenin caused the lipid 
 # distribution to spread out across the cell, decreasing the rise in potential 
 # insulin insensitivity. 
-  
   
   ggplot(all_treatments, aes(x = Treatment, y = Control_Sample, fill = Treatment)) +
   geom_boxplot() +
