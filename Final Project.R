@@ -287,11 +287,16 @@ all_treatments <- bind_rows(mcon3_TotalRange, mdmso3_TotalRange, mnar3_TotalRang
 ggplot(all_treatments, aes(x = DiameterRange, y = Control_Sample, fill = Treatment)) +
   geom_col(position = "dodge") +
   scale_y_continuous(breaks = seq(0, max(all_treatments$Control_Sample), by = 10)) +
+  scale_fill_manual(values = c(
+    "con"  = "purple",  
+    "dmso" = "blue",  
+    "nar"  = "red"   )) +
   labs(
     title = "Diameter Range Counts Across Treatments",
     x = "Diameter Range",
     y = "Count") +
   theme_minimal()
+
 
 # What is good about a column graph for this data is that it helps visualize 
 # the number of lipid droplets while also emphasizing the diameter ranges seen 
