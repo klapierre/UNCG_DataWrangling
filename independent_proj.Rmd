@@ -9,6 +9,8 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 This is my attempt at making an R-markdown document for my final independent project for BIO 457 Biological Data Wrangling and Visualization. I am using a dataset from CodeOcean called Migraine Classification Model by Paola A. Sánchez-Sánchez, José Rafael García-González, and Juan Manuel Rua Ascar.
 
+[Migraine Classification Model](https://codeocean.com/capsule/1269964/tree/v1)
+
 The data was recorded by medical personnel at the Centro Materno Infantil de Soledad in 2013.
 I chose this dataset because I too suffer from migraines. I was curious how my own symptoms compare to those of others.
 
