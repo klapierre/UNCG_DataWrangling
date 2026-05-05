@@ -198,13 +198,13 @@ ggplot(rubus_data, aes(x = YEAR, y = cover, color = field_id, group = field_id))
   labs(y = "% Cover", x = "Year", color = "Field ID") +
   theme_bw()
 
-# Same as above but animated. 
-ggplot(rubus_data, aes(x = YEAR, y = cover, color = field_id, group = field_id)) +
-  geom_line() +
-  geom_point() +
-  labs(y = "% Cover", x = "Year", color = "Field ID") +
-  theme_bw() +
-  transition_reveal(YEAR)
+# Same as above but animated. Commented out because of the billion images in the report. 
+# ggplot(rubus_data, aes(x = YEAR, y = cover, color = field_id, group = field_id)) +
+#   geom_line() +
+#   geom_point() +
+#   labs(y = "% Cover", x = "Year", color = "Field ID") +
+#   theme_bw() +
+#   transition_reveal(YEAR)
 
 # Plotting fields that are colonized
 ggplot(rubus_data, aes(x = YEAR,y = percent_colonized, color = field_id, group = field_id)) +
