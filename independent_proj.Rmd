@@ -1,0 +1,184 @@
+---
+title: "Independent Project"
+author: "Savannah Aldridge"
+date: "2026-05-05"
+output: html_document
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+This is my attempt at making an R-markdown document for my final independent project for BIO 457 Biological Data Wrangling and Visualization. I am using a dataset from CodeOcean called Migraine Classification Model by Paola A. Sánchez-Sánchez, José Rafael García-González, and Juan Manuel Rua Ascar.
+
+The data was recorded by medical personnel at the Centro Materno Infantil de Soledad in 2013.
+I chose this dataset because I too suffer from migraines. I was curious how my own symptoms compare to those of others.
+
+**From CodeOcean:**
+Attribute Information:
+Age: Patient's age
+Duration: duration of symptoms in last episode in days
+Frequency: Frequency of episodes per month
+Location: Unilateral or bilateral pain location (None - 0, Unilateral - 1, Bilateral - 2)
+Character: Throbbing or constant pain (None - 0, Thobbing - 1, Constant - 2)
+Intensity: Pain intensity, i.e., mild, medium, or severe (None - 0, Mild - 1, Medium - 2, Severe - 3)
+Nausea: Nauseous feeling (Not - 0, Yes - 1)
+Vomit: Vomiting (Not - 0, Yes - 1)
+Phonophobia: Noise sensitivity (Not - 0, Yes - 1)
+Photophobia: Light sensitivity (Not - 0, Yes - 1)
+Visual: Number of reversible visual symptoms
+Sensory: Number of reversible sensory symptoms
+Dysphasia: Lack of speech coordination (Not - 0, Yes - 1)
+Dysarthria: Disarticulated sounds and words (Not - 0, Yes - 1)
+Vertigo: Dizziness (Not - 0, Yes - 1)
+Tinnitus: Ringing in the ears (Not - 0, Yes - 1)
+Hypoacusis: Hearing loss (Not - 0, Yes - 1)
+Diplopia: Double vision (Not - 0, Yes - 1)
+Visual defect: Simultaneous frontal eye field and nasal field defect and in both eyes (Not - 0, Yes - 1)
+Ataxia: Lack of muscle control (Not - 0, Yes - 1)
+Conscience: Jeopardized conscience (Not - 0, Yes - 1)
+Paresthesia: Simultaneous bilateral paresthesia (Not - 0, Yes - 1)
+DPF: Family background (Not - 0, Yes - 1)
+Type: Diagnosis of migraine type (Typical aura with migraine, Migraine without aura, Typical aura without migraine, Familial hemiplegic migraine, Sporadic hemiplegic migraine, Basilar-type aura, Other) [247, 60, 20, 24, 14, 18, 17]
+
+I began by loading the necessary packages.
+Then I inputted the file into a local dataframe.
+```{r message=FALSE,warning=FALSE}
+library(dplyr)
+library(ggplot2)
+
+migraine_data <- read.csv("migraine_data.csv")
+
+```
+
+
+To get an idea of the structure of the dataset, I ran the following:
+
+```{r}
+head(migraine_data)
+str(migraine_data)
+anyNA(migraine_data)
+```
+The dataset contains `r nrow(migraine_data)` patient reports with `r ncol(migraine_data)` variables.
+
+I didn't want to keep all of the variables because several of them contained very few positive observations. I chose to keep the following variables: Age, Frequency, Location, Intensity, Nausea, Vomit, Phonophobia, Photophobia, DPF, Type.
+I also had to rename a few of them to make them easier to understand. To make it easier to read the dataset and use it for rendering plots, I chose to change the 0s and 1s(etc.) to more descriptive observations.
+
+```{r}
+migraine_data<-migraine_data %>% 
+  select(Age, Frequency, Location, Intensity, Nausea, Vomit, Phonophobia, Photophobia, DPF, Type) %>% 
+  rename(PainLoc=Location,
+         LightSens=Photophobia,
+         SoundSens=Phonophobia,
+         FamilyHist=DPF) %>% 
+  mutate(Nausea=case_when(Nausea == 0 ~ "No",
+                           Nausea == 1 ~ "Yes",
+                           TRUE ~ "unknown"),
+         Vomit=case_when(Vomit == 0 ~ "No",
+                         Vomit == 1 ~ "Yes",
+                         TRUE ~ "unknown"),
+         LightSens=case_when(LightSens == 0 ~ "No",
+                             LightSens == 1 ~ "Yes",
+                             TRUE ~ "unknown"),
+         SoundSens=case_when(SoundSens == 0 ~ "No",
+                             SoundSens == 1 ~ "Yes",
+                             TRUE ~ "unknown"),
+         FamilyHist=case_when(FamilyHist == 0 ~ "No",
+                           FamilyHist == 1 ~ "Yes",
+                           TRUE ~ "unknown"),
+         Intensity = case_when(Intensity == 0 ~ "None",
+                               Intensity == 1 ~ "Mild",
+                               Intensity == 2 ~ "Medium",
+                               Intensity == 3 ~ "Severe",
+                               TRUE ~ "unknown"))
+
+```
+
+I then wanted to group patients by their ages so that I could compare symptoms across age groups.
+
+```{r}
+sorted_migraine_data <- migraine_data %>% 
+  arrange(Age) %>% 
+  mutate(AgeGroup = cut(Age,
+                        breaks = c(0, 17, 25, 40, 65, 100),
+                        labels = c("Teen","Young Adult", "Adult", "Middle-aged", "Senior")))
+```
+
+For my first plot, I chose to compare average frequencies of migraines in patients (number of migraine days per month) across age groups. I wanted to include error bars so I calculated the averages of frequency and then the standard deviation and standard error.
+```{r}
+freq_migraine_data <- sorted_migraine_data %>% 
+  group_by(AgeGroup) %>% 
+  summarise(avg_freq_days=mean(Frequency,na.rm=TRUE),
+            sd_freq_days=sd(Frequency, na.rm=TRUE),
+            n = n(),
+            se_freq_days = sd_freq_days / sqrt(n)) %>% 
+  ungroup()
+```
+
+
+```{r}
+ggplot(freq_migraine_data,aes(x=AgeGroup,y=avg_freq_days,fill=AgeGroup))+
+  geom_bar(stat="identity")+
+  geom_errorbar(aes(
+    ymin = avg_freq_days - se_freq_days,
+    ymax = avg_freq_days + se_freq_days),
+    width = 0.2)+
+  labs(x= "Age Group",
+       y= "Average Migraine Days Per Month",
+       title = "Average Migraine Days Per Month by Age Group")+
+  theme_classic()
+```
+
+As mentioned, this graph compares the average number of migraine days per month across different age groups. The graph includes error bars with the standard error for each group.
+
+----------------------------------------------------------------------------------
+
+Next, I wanted to compare the location of pain (whether unilateral, bilateral, or nonexistent) with migraine type. I needed to change the pain location observations into descriptive words rather than numbers.
+```{r}
+table(migraine_data$PainLoc)
+
+pain_type_table<-migraine_data %>% 
+  mutate(PainLoc=case_when(PainLoc == 0 ~ "None",
+                            PainLoc == 1 ~ "Unilateral",
+                            PainLoc == 2 ~ "Bilateral",
+                            TRUE ~ "unknown")) %>% 
+  group_by(Type,PainLoc) %>% 
+  summarise(count=n(),
+            .groups = 'drop' ) %>% 
+  ungroup()
+```
+
+```{r}
+ggplot(pain_type_table, aes(x=count, y=Type, fill=PainLoc))+
+  geom_bar(stat = "identity")+
+  labs(y= 'Migraine Type',
+       x= 'Number of Observations',
+       title= 'Breakdown of Pain Location by Migraine Type')+
+  theme_classic()
+```
+
+This graph displays the location of pain in the head/neck between the different migraine types. Pain location was classified as unilateral, bilateral, or nonexistent. Patients who reported nonexistent pain only fell in the aura without migraine category, which makes sense.
+
+-----------------------------------------------------------------------------------
+
+Another comparison that I was interested in was family history and the different migraine types. I wanted to use a stacked bar graph to make it easy to visualize the number of patients who did and did not have a family history of migraines for each migraine type.
+
+```{r}
+migraine_famhist<-migraine_data %>% 
+  group_by(Type,FamilyHist)  %>% 
+  summarise(count=n(),.groups = 'drop' ) %>% 
+  ungroup()
+
+ggplot(migraine_famhist, aes(x=count, y=Type, fill=FamilyHist))+
+  geom_bar(stat = "identity")+
+  labs(y= 'Migraine Type',
+       x= 'Number of Observations',
+       title= 'Family History by Migraine Type')+
+  scale_fill_manual(values = c("Yes" = "lightgreen",
+                               "No" = "indianred"))
+
+```
+
+This stacked bar graph shows patient reports of family history of migraines in each migraine type. The data varied significantly between the migraine types. It doesn't seem like the data correlated much.
+
+-----------------------------------------------------------------------------------
+
+Honestly, I don't feel like this dataset had much to clean up or wrangle, so I do wish I had chosen another dataset instead. I had a hard time finding a dataset on migraines, but it is something that is important to me. The data had far more observations of patients with typical aura with migraine than any other migraine type, so I think that the data was likely skewed.
