@@ -678,7 +678,10 @@ Use the space below to write your code:
 
 ```{r summary_table}
 # Write your code below this line
-
+avg_mpg_by_cyl <- mtcars %>%
+  group_by(cyl) %>%
+  summarize(mean_value = mean(mpg, na.rm = TRUE)) %>%
+  ungroup()
 
 
 ```
@@ -691,19 +694,22 @@ Use the space below to write your code:
 
 ```{r formatted_table}
 # Write your code below this line
-
+avg_mpg_by_cyl <- mtcars %>%
+  group_by(cyl) %>%
+  summarize(mean_value = mean(mpg, na.rm = TRUE)) %>%
+  ungroup()
 
 
 ```
 
 QUESTION: What does this table show?
-ANSWER:
+ANSWER: The average mpg grouped by models with a certain number of cylinders.
 
 QUESTION: Which cylinder group has the highest average mpg?
-ANSWER:
+ANSWER: 4 cylinders.
 
 QUESTION: Which cylinder group has the lowest average mpg?
-ANSWER:
+ANSWER: 8 cylinders.
 
 ------------------------------------------------------------------------
 
@@ -714,10 +720,10 @@ information they provide.
 
 QUESTION: How does the scatterplot help you understand the relationship between
 weight and fuel efficiency?
-ANSWER:
+ANSWER: A scatterplot helps to show a trend in a visual manner for individual makes.
 
 QUESTION: How does the boxplot help you compare different groups of cars?
-ANSWER:
+ANSWER: A boxplot is good for showing the distribution within several groups.
 
 ------------------------------------------------------------------------
 
@@ -731,13 +737,22 @@ Write your code below:
 
 ```{r Now_you_try}
 # Write your code below this line
-
+ggplot(mtcars,aes(x=hp,y=mpg, color=factor(car_name)))+
+  geom_point()+
+  labs(
+    x="Horsepower",
+    y="Miles per Gallon",
+    title="Horsepower vs Miles per Gallon",
+         color="Car Types")+
+  theme(plot.title = element_text(face="bold"))
 
 
 ```
 
 QUESTION: What did you change, and how did it affect the output?
-ANSWER:
+ANSWER: I analyzed the relationship between Horsepower and MPG, substituting 
+weight for horsepower. Showing generally MPG trends down with higher horsepower
+vehicles.
 
 ------------------------------------------------------------------------
 
@@ -768,18 +783,23 @@ document, **outside** of any code chunk, and then Knit:
 
     The mtcars dataset has `r nrow(mtcars)` rows and `r ncol(mtcars)` columns.
     The average miles per gallon (mpg) is `r round(mean(mtcars$mpg), 2)`.
+    
+The mtcars dataset has `r nrow(mtcars)` rows and `r ncol(mtcars)` columns.
+    The average miles per gallon (mpg) is `r round(mean(mtcars$mpg), 2)`.
 
 ### Check
 
-Did the numbers appear automatically in your rendered sentence?
+Did the numbers appear automatically in your rendered sentence? Yes.
 
 QUESTION: What is inline R code, and how is it different from a regular code
 chunk?
-ANSWER:
+ANSWER: It's code which exists neatly within a markdown file, with the results
+of the code being displayed once knitted. Whereas in a code chunk the code
+is still visible.
 
 QUESTION: Why is inline R code useful when working with a dataset that might be
 updated or changed over time?
-ANSWER:
+ANSWER: It means that you will not have to retype your text as the dataset changes.
 
 ### TASK:
 
@@ -788,6 +808,9 @@ dataset, write a sentence that includes the maximum horsepower value
 using inline R code. The function `max()` will be helpful here.
 
 **Your sentence:** [Write your sentence with inline R code here.]
+
+    The mtcars dataset has `r nrow(mtcars)` rows and `r ncol(mtcars)` columns.
+    The average horsepower (hp) is `r round(mean(mtcars$hp), 2)`.
 
 ### Why This Matters
 
