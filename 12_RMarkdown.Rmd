@@ -1,12 +1,10 @@
 ---
-title: "Group5_RMarkdown Saltsgaver"
-author: "Nicholas Saltsgaver"
+title: "Group5_RMarkdown"
+author: "Arnav Pandey, Themesha Parker, Michelle Bautista Canuto, Dhanush Devanand"
 date: "2026-04-26"
 output:
-  pdf_document: default
-  word_document: default
   html_document:
-    df_print: paged
+    toc: true
 ---
 # Section 1: Create, Save, and Knit Your First R Markdown File
 Author: Jaslyn Davenport (jcdavenport@uncg.edu)
@@ -504,7 +502,7 @@ Use the 'hp' data for the y-axis and labeled 'Horsepower (HP)'
 Add an appropriate title for the plot with a 'bold' font
 Add a legend colored by 'car_name' and labeled "Car Types"
 
-```{r}
+```{r echo=FALSE}
 ggplot(mtcars,aes(x=disp,y=hp, color=factor(car_name)))+
   geom_point()+
   labs(
@@ -833,7 +831,7 @@ The chunk below currently shows the code when knitted. Add `echo=FALSE`
 inside the curly braces so that only the plot appears in the output, not
 the code. Then Knit your document.
 
-```{r}
+```{r echo=FALSE}
 plot(mtcars$wt, mtcars$mpg,
      main = "Weight vs MPG",
      xlab = "Weight (1000 lbs)",
@@ -845,14 +843,15 @@ plot(mtcars$wt, mtcars$mpg,
 
 ### Check
 
-Do you see the plot in the output but **not** the code that created it?
+Do you see the plot in the output but **not** the code that created it? Yes.
 
 QUESTION: Why might you want to hide code in a final report?
-ANSWER:
+ANSWER: It makes the document look cleaner.
 
 QUESTION: Can you think of a situation where you would want to **show** your code
 in a report rather than hide it? Who might be reading that report?
-ANSWER:
+ANSWER: In any case where it is important to see the inner workings of the 
+document generated, where readability is a secondary concern to transparency.
 
 ### TASK:
 
@@ -874,12 +873,13 @@ Run the chunk below **without** any chunk options and Knit. Read through
 the output carefully and write down any extra messages or warnings you
 notice below.
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 library(tidyverse)
 summary(mtcars)
 ```
 
-**What messages or warnings did you see?** [Write your response here.]
+**What messages or warnings did you see?** It notes several conflicts re: dyplr 
+and so on.
 
 ### TASK: — Part B: Suppress the messages
 
@@ -891,15 +891,16 @@ and Knit again.
 
 ### Check
 
-Did the extra messages disappear from your rendered output?
+Did the extra messages disappear from your rendered output? Yes.
 
 QUESTION: What is the difference between `message=FALSE` and `warning=FALSE`?
 When might you need to use both at the same time?
-ANSWER:
+ANSWER: Some messages may show up that do not constitute warnings.
 
 QUESTION: Is it always a good idea to suppress warnings? Can you think of a case
 where seeing a warning might actually be important?
-ANSWER:
+ANSWER: It may be useful to know of any critical errors rather than just warnings
+that do not effefct output.
 
 ### Why This Matters
 
@@ -925,7 +926,7 @@ Run the chunk below as-is and Knit. Note what appears in the output.
 Then change the chunk option from `echo=FALSE` to `include=FALSE` and
 Knit again.
 
-```{r echo=FALSE}
+```{r include=FALSE}
 library(dplyr)
 my_summary <- mtcars %>%
   summarize(mean_mpg = round(mean(mpg), 2),
@@ -940,13 +941,15 @@ my_summary
 ### Check
 
 When using `include=FALSE`, does anything from this chunk appear in the
-rendered output?
+rendered output? No.
 
 QUESTION: What is the difference between `echo=FALSE` and `include=FALSE`?
-ANSWER:
+ANSWER: Echo=FALSE merely ignores code whereas include=FALSE also hides the 
+output, i.e. any plots or tables.
 
 QUESTION: Give an example of when you would use `include=FALSE` in a real report.
-ANSWER:
+ANSWER: When running something that has essentially zero need to actually appear
+but perhaps serves as an intermediate step in calculations.
 
 ### TASK:
 
@@ -957,10 +960,12 @@ object is still available to use. Copy and paste the lines below
 
     The average miles per gallon across all cars is `r my_summary$mean_mpg` and the most powerful engine produces `r my_summary$max_hp` horsepower.
 
+The average miles per gallon across all cars is `r my_summary$mean_mpg` and the most powerful engine produces `r my_summary$max_hp` horsepower.
+
 ### Check
 
 Did the inline values populate correctly even though the chunk that
-created them was hidden?
+created them was hidden? Yes.
 
 ------------------------------------------------------------------------
 
@@ -974,7 +979,7 @@ This helps make your report look clean and consistent.
 
 Run the chunk below and Knit to see the default figure size.
 
-```{r}
+```{r fig.width=4, fig.height=6}
 ggplot(mtcars, aes(x = wt, y = mpg)) +
   geom_point(color = "steelblue") +
   labs(title = "Weight vs Fuel Efficiency",
@@ -993,22 +998,25 @@ again.
 
 ### Check
 
-Did the shape of the plot change in your rendered output?
+Did the shape of the plot change in your rendered output? Yes.
 
 QUESTION: How did changing `fig.width` and `fig.height` affect the appearance of
 your plot?
-ANSWER:
+ANSWER: It altered the width and height of the figure.
 
 QUESTION: Why might consistent figure sizing matter in a professional or academic
 report?
-ANSWER:
+ANSWER: It would simply look unprofessional to have widely varying sizes at times,
+or perhaps accessibility is a concern as well. Or perhaps its necessary to fit 
+onto a page.
 
 ### TASK:
 
 Try setting `fig.width=4` and `fig.height=6` on the same chunk. Knit
 and observe how the plot changes. Describe what you notice below.
 
-**Observation:** [Write your response here.]
+**Observation:** The width was halved and the height increased by 50%, making the
+plot rather different in appearance.
 
 ------------------------------------------------------------------------
 
@@ -1037,15 +1045,17 @@ output:
 ### Check
 
 Do you now see a table of contents at the top of your rendered HTML
-document?
+document? Yes.
 
 QUESTION: How does a table of contents improve the readability of a long report?
-ANSWER:
+ANSWER: It allows one to examine each section in advance and easily navigate to 
+any relevant section.
 
 QUESTION: The table of contents is automatically generated from your headings.
 What does this tell you about the importance of using proper heading
 levels (`#`, `##`, `###`) throughout your document?
-ANSWER:
+ANSWER: It shows if you're including a table of contents its crucial to use
+proper heading formatting.
 
 ------------------------------------------------------------------------
 
@@ -1060,9 +1070,11 @@ Add the following clickable link somewhere in your document and Knit:
 
 `[R Markdown documentation](https://rmarkdown.rstudio.com)`
 
+[R Markdown documentation](https://rmarkdown.rstudio.com)
+
 ### Check
 
-Does the link appear clickable after knitting?
+Does the link appear clickable after knitting? Yes.
 
 ### TASK:
 
@@ -1071,10 +1083,11 @@ something covered in this assignment — for example, the mtcars dataset,
 ggplot2, or R Markdown chunk options — and add it below using the same
 syntax.
 
-**Your hyperlink:** [Write your hyperlink here.]
+**Your hyperlink:** [GGPlot2](https://ggplot2.tidyverse.org/)
 
 QUESTION: When might adding a hyperlink be useful in a data report?
-ANSWER:
+ANSWER: It may help provide sources or acknowledgements allowing people to immediately
+navigate to relevant sources or others doing similar things.
 
 ------------------------------------------------------------------------
 
@@ -1093,7 +1106,9 @@ in this assignment. Consider:
 - What improvements did you make to the report in Section 5?
 - Why is R Markdown useful for communicating data?
 
-**Your conclusion:** [Write your response here.]
+
+
+**Your conclusion:** Within RMarkdown today the mtcars dataset was used to create several scatterplots and boxplots relating to the general trends in MPG by various other traits of said vehicles. RMarkdown has proven to be useful in generating a much neater report with code incorporated within it, that is you can generate what is effectively a neat final product without visible lines of code.
 
 ### TASK:
 
@@ -1102,7 +1117,7 @@ includes inline R code. For example, instead of writing "the dataset has
 32 rows," use `` `r nrow(mtcars)` `` to generate that number
 automatically.
 
-**Your updated sentence with inline R code:** [Write your sentence here.]
+**Your updated sentence with inline R code:** Within RMarkdown today the mtcars dataset was used to create several scatterplots and boxplots relating to the general trends in MPG by various other traits of said vehicles. For example the average horsepower was calculated to be `r round(mean(mtcars$hp), 2)` RMarkdown has proven to be useful in generating a much neater report with code incorporated within it, that is you can generate what is effectively a neat final product without visible lines of code.
 
 ------------------------------------------------------------------------
 
@@ -1112,14 +1127,14 @@ Before submitting, go through the checklist below to make sure
 everything is working correctly. In your `.Rmd` file, replace each `[ ]`
 with `[x]` once you have confirmed that step.
 
-- [ ] Inline R code displays correctly in rendered text
-- [ ] Plots appear in the output without showing code (`echo=FALSE`)
-- [ ] A chunk runs silently using `include=FALSE`
-- [ ] No unnecessary warnings or messages appear (`message=FALSE`, `warning=FALSE`)
-- [ ] Figure sizes have been adjusted using `fig.width` and `fig.height`
-- [ ] Table of contents is visible at the top of the document
-- [ ] At least two hyperlinks are present and clickable
-- [ ] Conclusion paragraph is included with at least one inline R code value
+- `[x]` Inline R code displays correctly in rendered text
+- `[x]` Plots appear in the output without showing code (`echo=FALSE`)
+- `[x]` A chunk runs silently using `include=FALSE`
+- `[x]` No unnecessary warnings or messages appear (`message=FALSE`, `warning=FALSE`)
+- `[x]` Figure sizes have been adjusted using `fig.width` and `fig.height`
+- `[x]` Table of contents is visible at the top of the document
+- `[x]` At least two hyperlinks are present and clickable
+- `[x]` Conclusion paragraph is included with at least one inline R code value
 
 Once all boxes are checked, click **Knit** one final time to generate
 your completed report.
