@@ -1,0 +1,579 @@
+---
+title: "Independent Project: Asexuality and Species Invasion"
+author: "Themesha Parker"
+date: "2026-04-12"
+output: html_document
+---
+
+# Project Overview
+
+This project uses a dataset from the Dryad Digital Repository examining the relationship between reproductive strategies and biological invasions across multiple species. The dataset includes information about species identity, organism type, year first reported as invasive, invaded range, origin range, whether the population is from the home or invaded range, reproductive mode, genetic diversity patterns, and polyploidy.
+
+Biological invasions are an important ecological issue because invasive species can disrupt ecosystems, reduce biodiversity, and alter community structure. One factor that may influence invasion success is reproductive strategy. Species that reproduce asexually may be able to establish new populations more easily because they do not require mates. The main question addressed in this project is whether asexual reproduction is more common in invaded populations than in home populations. I hypothesize that invaded populations will show a higher frequency of asexual reproduction because the ability to reproduce without mates may help populations establish quickly in new environments.
+
+# Proposed Workflow and Pseudo code
+
+1. Load the packages needed for data cleaning and graphing.
+2. Import the CSV file into R.
+3. Examine the dataset using `head()`, `glimpse()`, `summary()`, and `names()`.
+4. Check how many rows and columns are in the dataset.
+5. Check for missing values in every column.
+6. Convert categorical variables into factors.
+7. Rename selected variables so the code is easier to read.
+8. Create a main analysis dataset that removes rows missing the main variables.
+9. Summarize records by origin, reproduction, and organism type.
+10. Compare reproductive strategy between home and invaded populations.
+11. Compare reproductive strategy across organism types.
+12. Explore first reported invasion year using histograms and decade summaries.
+13. Explore polyploidy and genetic diversity as extra biological variables.
+14. Interpret whether the results support the hypothesis.
+
+# Load Packages
+
+```{r setup, message=FALSE, warning=FALSE}
+# The tidyverse package includes tools for data cleaning, summarizing, and graphing.
+# dplyr is useful for wrangling data.
+# ggplot2 is useful for creating figures.
+
+library(tidyverse)
+```
+
+# Import Data
+
+```{r import-data}
+# This line imports the CSV file and saves it as an object called invasion_data.
+
+invasion_data <- read.csv("Data.csv")
+
+# The head() function shows the first six rows of the dataset.
+# This helps confirm that the dataset loaded correctly.
+
+head(invasion_data)
+```
+
+# Examining the Dataset
+
+```{r examine-data}
+# glimpse() shows the column names, data types, and example values.
+# This is useful because R code must use exact column names.
+
+glimpse(invasion_data)
+
+# summary() gives a quick overview of each variable.
+# For numeric variables, it gives minimum, median, mean, and maximum values.
+# For character variables, it gives a general summary.
+
+summary(invasion_data)
+
+# names() lists all column names.
+# This helps make sure the code matches the dataset.
+
+names(invasion_data)
+```
+
+# Check Dataset Size
+
+```{r dataset-size}
+# dim() shows the number of rows and columns.
+# The first number is rows and the second number is columns.
+
+dim(invasion_data)
+
+# nrow() gives the number of rows.
+
+nrow(invasion_data)
+
+# ncol() gives the number of columns.
+
+ncol(invasion_data)
+```
+
+# Checking for Missing Values
+
+```{r missing-values-original}
+# Missing values are listed as NA in R.
+# This code counts how many missing values are in each column.
+
+colSums(is.na(invasion_data))
+```
+
+# Clean the Dataset
+
+```{r clean-data}
+# Several variables in this dataset are categories instead of measurements.
+# I convert those variables into factors so R treats them as groups.
+# This is helpful for summaries and graphs.
+
+invasion_clean <- invasion_data %>%
+  mutate(
+    Origin = as.factor(Origin),
+    Reproduction = as.factor(Reproduction),
+    Type = as.factor(Type),
+    Polyploid = as.factor(Polyploid),
+    Data.set = as.factor(Data.set)
+  )
+
+# Checking the cleaned dataset structure.
+
+glimpse(invasion_clean)
+```
+
+# Rename Variables for Easier Coding
+
+```{r rename-variables}
+# Some original column names contain periods.
+# I rename some columns with underscores to make the code easier to read.
+# This creates a new dataset called invasion_tidy.
+
+invasion_tidy <- invasion_clean %>%
+  rename(
+    first_reported = First.reported,
+    invaded_range = Invaded.range,
+    invaded_world = Invaded.world,
+    origin_range = Origin.range,
+    origin_world = Origin.world,
+    higher_genetic = Higher.genetic,
+    data_set = Data.set
+  )
+
+# Checking the new column names.
+
+names(invasion_tidy)
+
+# Viewing the first few rows.
+
+head(invasion_tidy)
+```
+
+# Check Missing Values After Tidying
+
+```{r missing-values-tidy}
+# This checks missing values again after renaming variables.
+# The missing value counts should be the same, but the names are easier to read.
+
+colSums(is.na(invasion_tidy))
+```
+
+# Create Main Analysis Dataset
+
+```{r main-analysis-dataset}
+# The main question compares reproductive strategy between home and invaded populations. Therefore, Origin and Reproduction are required variables.
+# Rows missing Origin or Reproduction cannot answer the main question, so they are removed.
+
+main_analysis <- invasion_tidy %>%
+  filter(!is.na(Origin)) %>%
+  filter(!is.na(Reproduction))
+
+# Checking how many rows are left after filtering.
+
+nrow(main_analysis)
+
+# Viewing the first few rows of the main analysis dataset.
+
+head(main_analysis)
+```
+
+# Summary: Records by Population Origin
+
+```{r origin-summary}
+# This table counts how many records are from home populations and invaded populations.
+
+origin_summary <- main_analysis %>%
+  group_by(Origin) %>%
+  summarize(
+    number_of_records = n(),
+    .groups = "drop"
+  )
+
+origin_summary
+```
+
+# Summary: Records by Reproductive Strategy
+
+```{r reproduction-summary}
+# This table counts how many records are sexual, asexual, or both.
+
+reproduction_summary <- main_analysis %>%
+  group_by(Reproduction) %>%
+  summarize(
+    number_of_records = n(),
+    .groups = "drop"
+  ) %>%
+  arrange(desc(number_of_records))
+
+reproduction_summary
+```
+
+# Summary: Records by Organism Type
+
+```{r type-summary}
+# This table counts the number of records for each organism type.
+# It helps show which groups are most common in the dataset.
+
+type_summary <- main_analysis %>%
+  filter(!is.na(Type)) %>%
+  group_by(Type) %>%
+  summarize(
+    number_of_records = n(),
+    .groups = "drop"
+  ) %>%
+  arrange(desc(number_of_records))
+
+type_summary
+```
+
+# Summary: Reproductive Strategy by Origin
+
+```{r reproduction-origin-summary}
+# It counts reproductive strategies separately for home and invaded populations.
+# I also calculate proportions and percentages because raw counts can be affected by sample size.
+
+reproduction_by_origin <- main_analysis %>%
+  group_by(Origin, Reproduction) %>%
+  summarize(
+    count = n(),
+    .groups = "drop"
+  ) %>%
+  group_by(Origin) %>%
+  mutate(
+    proportion = count / sum(count),
+    percent = proportion * 100
+  )
+
+reproduction_by_origin
+```
+
+# Figure 1: Reproductive Strategy by Origin
+
+```{r figure-1, fig.width=8, fig.height=5}
+# This bar graph compares reproductive strategies in home and invaded populations.
+# geom_col() is used because the counts were already calculated.
+# fill = Reproduction colors the bars by reproductive strategy.
+# scale_fill_manual() lets me choose the exact colors.
+
+ggplot(reproduction_by_origin, aes(x = Origin, y = count, fill = Reproduction)) +
+  geom_col(position = "dodge") +
+  scale_fill_manual(values = c(
+    "Asexual" = "hotpink",
+    "Sexual" = "skyblue",
+    "Both" = "purple"
+  )) +
+  labs(
+    title = "Reproductive Strategies in Home and Invaded Populations",
+    x = "Population Origin",
+    y = "Number of Records",
+    fill = "Reproductive Strategy"
+  ) +
+  theme_bw()
+```
+
+**Figure 1.** Reproductive strategies in home and invaded populations. Bars show the number of records classified as sexual, asexual, or both for populations from home and invaded ranges. This figure helps evaluate whether asexual reproduction is more common in invaded populations.
+
+# Figure 2: Proportion of Reproductive Strategies by Origin
+
+```{r figure-2, fig.width=8, fig.height=5}
+# This graph compares proportions.
+# Proportions are useful because the number of home and invaded records may not be equal.
+# position = "fill" makes each bar add up to 1, or 100%.
+
+ggplot(reproduction_by_origin, aes(x = Origin, y = proportion, fill = Reproduction)) +
+  geom_col(position = "fill") +
+  scale_fill_manual(values = c(
+    "Asexual" = "hotpink",
+    "Sexual" = "skyblue",
+    "Both" = "purple"
+  )) +
+  labs(
+    title = "Proportion of Reproductive Strategies by Population Origin",
+    x = "Population Origin",
+    y = "Proportion of Records",
+    fill = "Reproductive Strategy"
+  ) +
+  theme_bw()
+```
+
+**Figure 2.** Proportion of reproductive strategies by population origin. This figure compares the relative frequency of sexual, asexual, and mixed reproduction in home and invaded populations.
+
+# Summary: Reproductive Strategy by Organism Type
+
+```{r reproduction-type-summary}
+# This table summarizes reproductive strategy across organism types.
+# It helps show whether reproductive patterns differ among plants, invertebrates,
+# fish, mammals, pathogens, and other groups.
+
+reproduction_by_type <- main_analysis %>%
+  filter(!is.na(Type)) %>%
+  group_by(Type, Reproduction) %>%
+  summarize(
+    count = n(),
+    .groups = "drop"
+  ) %>%
+  group_by(Type) %>%
+  mutate(
+    proportion = count / sum(count),
+    percent = proportion * 100
+  )
+
+reproduction_by_type
+```
+
+# Figure 3: Reproductive Strategy by Organism Type
+
+```{r figure-3, fig.width=9, fig.height=5}
+# This figure compares reproductive strategies across organism types.
+# The x-axis labels are rotated to make them easier to read.
+
+ggplot(reproduction_by_type, aes(x = Type, y = count, fill = Reproduction)) +
+  geom_col(position = "dodge") +
+  scale_fill_manual(values = c(
+    "Asexual" = "hotpink",
+    "Sexual" = "skyblue",
+    "Both" = "purple"
+  )) +
+  labs(
+    title = "Reproductive Strategies Across Organism Types",
+    x = "Organism Type",
+    y = "Number of Records",
+    fill = "Reproductive Strategy"
+  ) +
+  theme_bw() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+**Figure 3.** Reproductive strategies across organism types. Bars show the number of records for each reproductive strategy within each organism group.
+
+# Figure 4: Number of Records by Organism Type
+
+```{r figure-4, fig.width=8, fig.height=5}
+# This graph shows the total number of records for each organism type.
+# reorder() arranges the bars by the number of records.
+# coord_flip() makes the bars horizontal so the labels are easier to read.
+
+ggplot(type_summary, aes(x = reorder(Type, number_of_records), y = number_of_records)) +
+  geom_col(fill = "skyblue", color = "black") +
+  coord_flip() +
+  labs(
+    title = "Number of Records by Organism Type",
+    x = "Organism Type",
+    y = "Number of Records"
+  ) +
+  theme_bw()
+```
+
+**Figure 4.** Number of records by organism type. This figure shows which organism groups are most common in the dataset.
+
+# Summary: First Reported Year
+
+```{r first-reported-summary}
+# This section summarizes the year species were first reported as invasive.
+# Missing years are removed because they cannot be used in the numeric summaries.
+
+year_summary <- main_analysis %>%
+  filter(!is.na(first_reported)) %>%
+  summarize(
+    earliest_year = min(first_reported),
+    latest_year = max(first_reported),
+    mean_year = mean(first_reported),
+    median_year = median(first_reported),
+    number_of_records = n()
+  )
+
+year_summary
+```
+
+# Figure 5: First Reported Invasion Year
+
+```{r figure-5, fig.width=8, fig.height=5}
+# This histogram shows the distribution of first reported invasion years.
+# Histograms are useful for numeric variables.
+# binwidth = 50, groups the data into 50 year intervals.
+
+ggplot(main_analysis, aes(x = first_reported)) +
+  geom_histogram(binwidth = 50, color = "black", fill = "skyblue") +
+  labs(
+    title = "Distribution of First Reported Invasion Years",
+    x = "Year First Reported as Invasive",
+    y = "Number of Records"
+  ) +
+  theme_bw()
+```
+
+**Figure 5.** Distribution of years when species were first reported as invasive. The histogram shows how many records fall within different time periods.
+
+# Creating Decade Groups
+
+```{r decade-groups}
+# The first_reported variable can also be grouped by decade.
+# floor(first_reported / 10) * 10 rounds each year down to the nearest decade.
+# For example, 1972 becomes 1970.
+
+decade_data <- main_analysis %>%
+  filter(!is.na(first_reported)) %>%
+  mutate(
+    decade = floor(first_reported / 10) * 10
+  )
+
+head(decade_data)
+```
+
+# Summary: Records by Decade
+
+```{r decade-summary}
+# This table counts how many invasion records appear in each decade.
+
+decade_summary <- decade_data %>%
+  group_by(decade) %>%
+  summarize(
+    number_of_records = n(),
+    .groups = "drop"
+  ) %>%
+  arrange(decade)
+
+decade_summary
+```
+
+# Figure 6: Records by Decade
+
+```{r figure-6, fig.width=9, fig.height=5}
+# This graph shows the number of invasion records by decade.
+# It is similar to the histogram but uses more clear decade categories.
+
+ggplot(decade_summary, aes(x = decade, y = number_of_records)) +
+  geom_col(fill = "lightblue", color = "black") +
+  labs(
+    title = "Number of Invasion Records by Decade",
+    x = "Decade",
+    y = "Number of Records"
+  ) +
+  theme_bw()
+```
+
+**Figure 6.** Number of invasion records by decade. This figure groups first reported invasion years into decades to show broader historical patterns.
+
+# Polyploidy Tidying
+
+```{r polyploid-tidying}
+# The Polyploid column uses 0 and 1.
+# I created clearer labels so the graph is easier to understand.
+# 1 means Polyploid.
+# 0 means Not Polyploid.
+
+polyploid_data <- main_analysis %>%
+  filter(!is.na(Polyploid)) %>%
+  mutate(
+    Polyploid_Status = case_when(
+      Polyploid == 1 ~ "Polyploid",
+      Polyploid == 0 ~ "Not Polyploid",
+      TRUE ~ NA_character_
+    )
+  ) %>%
+  mutate(
+    Polyploid_Status = as.factor(Polyploid_Status)
+  )
+
+head(polyploid_data)
+```
+
+# Summary: Polyploidy by Reproductive Strategy
+
+```{r polyploid-reproduction-summary}
+# This table counts polyploid and non-polyploid records by reproductive strategy.
+# Polyploidy can be related to reproduction, especially in plants.
+
+polyploid_reproduction <- polyploid_data %>%
+  filter(!is.na(Reproduction), !is.na(Polyploid_Status)) %>%
+  group_by(Reproduction, Polyploid_Status) %>%
+  summarize(
+    count = n(),
+    .groups = "drop"
+  ) %>%
+  group_by(Reproduction) %>%
+  mutate(
+    proportion = count / sum(count),
+    percent = proportion * 100
+  )
+
+polyploid_reproduction
+```
+
+# Figure 7: Polyploidy by Reproductive Strategy
+
+```{r figure-7, fig.width=8, fig.height=5}
+# This graph compares polyploidy status across reproductive strategies.
+# It provides extra context for the project.
+
+ggplot(polyploid_reproduction, aes(x = Reproduction, y = count, fill = Polyploid_Status)) +
+  geom_col(position = "dodge") +
+  scale_fill_manual(values = c(
+    "Polyploid" = "hotpink",
+    "Not Polyploid" = "skyblue"
+  )) +
+  labs(
+    title = "Polyploidy Status by Reproductive Strategy",
+    x = "Reproductive Strategy",
+    y = "Number of Records",
+    fill = "Polyploidy Status"
+  ) +
+  theme_bw()
+```
+
+**Figure 7.** Polyploidy status by reproductive strategy. Bars show the number of polyploid and non-polyploid records for each reproductive strategy.
+
+# Genetic Diversity Tidying
+
+```{r genetic-diversity-tidying}
+# The higher_genetic column uses coded numeric values.
+# I converted it to a factor for graphing because it represents categories.
+# Rows with missing higher_genetic values are removed for this exploratory analysis.
+
+genetic_data <- main_analysis %>%
+  filter(!is.na(higher_genetic)) %>%
+  mutate(
+    higher_genetic = as.factor(higher_genetic)
+  )
+
+glimpse(genetic_data)
+```
+
+# Summary: Higher Genetic Diversity by Origin
+
+```{r genetic-origin-summary}
+# This table compares the coded higher_genetic variable between home and invaded populations.
+
+genetic_origin_summary <- genetic_data %>%
+  group_by(Origin, higher_genetic) %>%
+  summarize(
+    count = n(),
+    .groups = "drop"
+  )
+
+genetic_origin_summary
+```
+
+# Figure 8: Higher Genetic Diversity by Origin
+
+```{r figure-8, fig.width=8, fig.height=5}
+# This exploratory figure shows whether the coded higher_genetic variable differs by origin.
+
+ggplot(genetic_origin_summary, aes(x = Origin, y = count, fill = higher_genetic)) +
+  geom_col(position = "dodge") +
+  labs(
+    title = "Higher Genetic Diversity Category by Population Origin",
+    x = "Population Origin",
+    y = "Number of Records",
+    fill = "Higher Genetic Category"
+  ) +
+  theme_bw()
+```
+
+**Figure 8.** Higher genetic diversity category by population origin. This exploratory figure compares the coded genetic diversity variable between home and invaded populations.
+
+# Final Interpretation
+
+The main goal of this project was to examine whether asexual reproduction is more common in invaded populations than in home populations. Figure 1 compares the number of sexual, asexual, and mixed reproduction records between home and invaded populations. Figure 2 uses proportions to make this comparison more balanced because raw counts can be affected by sample size differences. If asexual reproduction makes up a larger proportion of invaded records, that would support the hypothesis that asexual reproduction may help invasive populations establish in new environments.
+
+The organism type figures provide additional context. Figure 3 shows whether reproductive strategies differ across organism groups, while Figure 4 shows which organism types are most represented in the dataset. This matters because patterns in the full dataset may be influenced by certain groups being more common. Figure 5 and Figure 6 provide historical context by showing when species were first reported as invasive. The exploratory polyploidy and genetic diversity figures add biological context for understanding reproductive and invasion patterns.
+
+# Conclusion
+
+Overall, this investigates whether reproductive strategy is associated with biological invasion. The analysis compares reproductive strategies between home and invaded populations, across organism types, and across additional variables such as polyploidy and genetic diversity. These summaries and visualizations help evaluate whether asexual reproduction appears more common in invaded populations and whether this pattern may contribute to invasion success.
