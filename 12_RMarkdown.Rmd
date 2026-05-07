@@ -244,7 +244,7 @@ You can enclose your text within three asterisks (`***[text]***`). or underscore
 \
 
 TASK: In the paragraph below, make "Arnav," "Biological Data Wrangling and Visualization" and "RMarkdown" bold italics using both the methods mentioned above at least once.   
-My name is Arnav Pandey. I am currently enrolled in Biological Data Wrangling and Visualization (BIO 457/657). This is a TASK: to use RMarkdown to make a text output bold.  
+My name is ***Arnav*** Pandey. I am currently enrolled in ___Biological Data Wrangling and Visualization___ (BIO 457/657). This is a TASK: to use ***RMarkdown*** to make a text output bold.  
 
 
 \
