@@ -1,10 +1,8 @@
 ---
-title: "Group5_RMarkdown"
-author: Arnav Pandey, Themesha Parker, Michelle Bautista Canuto, Dhanush Devanand,
-  Jaslyn Davenport
-date: "2026-04-26"
+title: "Pigs"
+author: Chloe Houck
+date: "2026-05-07"
 output:
-  word_document: default
   pdf_document: default
 ---
 # Section 1: Create, Save, and Knit Your First R Markdown File
@@ -62,7 +60,7 @@ date: "April 2026"
 output: pdf_document
 
 QUESTION: What is the purpose of the YAML header?
-ANSWER:
+ANSWER: It basically dictates basic info about the document.
 
 .........................
 ##1.4 Save and Knit file
