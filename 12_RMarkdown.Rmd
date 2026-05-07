@@ -21,7 +21,7 @@ To begin, open RStudio and create a new R Markdown file.
 Go to **File > New File > R Markdown**.  
 
 QUESTION: What do you think happens when the new file is opened?  
-ANSWER:  
+ANSWER:  It likely makes a new R Markdown file.
 
 
 .........................
@@ -41,7 +41,7 @@ install.packages("tinytex")
 tinytex::install_tinytex()
 
 QUESTION: Why are these packages needed?
-ANSWER:
+ANSWER: Probably because they're used to make the file work.
 
 .........................
 ## 1.3 Modify the YAML Header
