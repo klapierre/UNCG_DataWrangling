@@ -74,10 +74,10 @@ tinytex::install_tinytex()
 Then click Knit again.
 
 QUESTION: What happens when you click Knit?
-ANSWER:
+ANSWER: It basically made a pdf file and let me view it.
 
 QUESTION: What type of file is created?
-ANSWER:
+ANSWER: Pdf
 
 .........................
 ##1.5 Final observation
