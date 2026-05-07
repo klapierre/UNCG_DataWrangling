@@ -294,6 +294,20 @@ TASK: Hit Knit to look at the output of the lines below:
 
 TASK: Copy the above list below, add an item "Melon" and nest different types of melons as its subitems.
 Hit Knit to see your output.  
+- Apple
+- Banana
+- Berries 
+  - Blueberries
+  - Strawberries 
+  - Raspberries 
+  - Blackberries
+  - Cranberries
+- Papaya 
+- Melon 
+  - Watermelon
+  - Musk Melon 
+  - Honeydew 
+  - Cantaloupe
 
 .........................
 
