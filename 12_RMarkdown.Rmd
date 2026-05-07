@@ -84,8 +84,8 @@ ANSWER: Pdf
 After knitting, compare the .Rmd file to the final PDF.
 
 QUESTION: How is the output file different from the source file?
-ANSWER:
-
+ANSWER: The output file is a pdf that can't be turned back into a rmd file.
+The source file can on the other hand be ourputted as a pdf.
 
 
 --------------------------------------------------------------------------------  
@@ -108,7 +108,7 @@ TASK: Read the question below, click **Knit** to render the document and return 
 QUESTION: What difference do you notice about the above line that starts with
 `# Section 2: Formatting a Report Using RMarkdown Syntax` compared to the line
 `Objective: learn to format how your document appears in the output of your choice`?  
-ANSWER:
+ANSWER: They're both bold, but the first one is also slightly bigger..?
 
 \
 
@@ -119,7 +119,7 @@ RMarkdown supports six levels of headings.
 
 TASK: Click Knit to observe how different heading levels below appear in the rendered output.
 
-
+```
 # Line 1: This is an example to show different levels of headings in RMarkdown.
 ## Line 2: Line 1: This is an example to show different levels of headings in RMarkdown.
 ### Line 3: This is an example to show different levels of headings in RMarkdown.
@@ -127,30 +127,31 @@ TASK: Click Knit to observe how different heading levels below appear in the ren
 ##### Line 5: This is an example to show different levels of headings in RMarkdown.   
 ###### Line 6: This is an example to show different levels of headings in RMarkdown.
 
+```
 
 QUESTION: What happens to the size of text when you increase the number of hashtags (#)?  
 ANSWER: 
 
-\
+The first line is the biggest and they get progressively smaller the lower you go.
 
 In the example above, the higher the number of hashtags, the lower the heading level (smaller font).  
 
 QUESTION: How many hashtags would you use if you wanted highest level heading (largest font)?  
 ANSWER: 
 
-\
+Just one
 
 QUESTION: In the rendered output, do Line 5 and Line 6 from above example appear in the same line?  
 ANSWER:
 
-\
+Yes
 
 TASK: Go to the metadata for this assignment and change the output from `pdf_document` to `html_document`.  
 
 QUESTION: Did your Line 5 and Line 6 appear in different lines?  
 ANSWER:
 
-\
+Yes
 
 Sometimes the way the program renders output differs between formats.
 You can leave two spaces at the end of the line for a line break.  
