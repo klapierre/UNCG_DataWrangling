@@ -209,7 +209,7 @@ TASK: Read the question below, click Knit, and return to answer the question bel
 QUESTION: Which of the following lines gives you bold text?  
 Line 1. This is an example to show how to make text bold.  
 **Line 2: This is an example to show how to make text bold.**  
-ANSWER:  
+ANSWER: It's the second line.
 
 \
 
@@ -229,7 +229,7 @@ Line 4: This is an __example__ to show how to make text bold.
 \
 
 TASK: In the paragraph below, make "Arnav," "Biological Data Wrangling and Visualization" and "RMarkdown" bold in the following paragraph using both the methods (asterisks and underscores) mentioned above at least once.     
-My name is Arnav Pandey. I am currently enrolled in Biological Data Wrangling and Visualization (BIO 457/657). This is a TASK: to use RMarkdown to make a text output bold.  
+My name is **Arnav** Pandey. I am currently enrolled in __Biological Data Wrangling and Visualization__ (BIO 457/657). This is a TASK: to use **RMarkdown** to make a text output bold.  
 
 \
 
