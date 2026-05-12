@@ -845,7 +845,7 @@ Did the extra messages disappear from your rendered output?
 Yes
 
 QUESTION: What is the difference between `message=FALSE` and `warning=FALSE`? When might you need to use both at the same time?
-ANSWER: Message is just extra messages that are relevent while warnings are actual warnings with the code. Using both gets rid of both.
+ANSWER: Message is just whatever is in the hashtagged section while warnings are actual warnings with the code. Using both gets rid of both.
 
 QUESTION: Is it always a good idea to suppress warnings? Can you think of a case where seeing a warning might actually be important?
 ANSWER: A warning might give the answer for why a section of code doesn't work.
@@ -874,7 +874,7 @@ Run the chunk below as-is and Knit. Note what appears in the output.
 Then change the chunk option from `echo=FALSE` to `include=FALSE` and
 Knit again.
 
-```{r echo=FALSE}
+```{r include=FALSE}
 library(dplyr)
 my_summary <- mtcars %>%
   summarize(mean_mpg = round(mean(mpg), 2),
@@ -890,12 +890,13 @@ my_summary
 
 When using `include=FALSE`, does anything from this chunk appear in the
 rendered output?
+No
 
 QUESTION: What is the difference between `echo=FALSE` and `include=FALSE`?
-ANSWER:
+ANSWER: The first one only hides the code while the second one hides the code, messages, and warnings.
 
 QUESTION: Give an example of when you would use `include=FALSE` in a real report.
-ANSWER:
+ANSWER: To make the data and figures clean to look at.
 
 ### TASK:
 
@@ -910,6 +911,7 @@ object is still available to use. Copy and paste the lines below
 
 Did the inline values populate correctly even though the chunk that
 created them was hidden?
+Yes
 
 ------------------------------------------------------------------------
 
@@ -923,7 +925,7 @@ This helps make your report look clean and consistent.
 
 Run the chunk below and Knit to see the default figure size.
 
-```{r}
+```{r fig.width=4, fig.height=6}
 ggplot(mtcars, aes(x = wt, y = mpg)) +
   geom_point(color = "steelblue") +
   labs(title = "Weight vs Fuel Efficiency",
@@ -944,20 +946,18 @@ again.
 
 Did the shape of the plot change in your rendered output?
 
-QUESTION: How did changing `fig.width` and `fig.height` affect the appearance of
-your plot?
-ANSWER:
+QUESTION: How did changing `fig.width` and `fig.height` affect the appearance of your plot?
+ANSWER: It made the width stretch out more.
 
-QUESTION: Why might consistent figure sizing matter in a professional or academic
-report?
-ANSWER:
+QUESTION: Why might consistent figure sizing matter in a professional or academic report?
+ANSWER: It makes it look more refined I guess.
 
 ### TASK:
 
 Try setting `fig.width=4` and `fig.height=6` on the same chunk. Knit
 and observe how the plot changes. Describe what you notice below.
 
-**Observation:** [Write your response here.]
+It makes it skinnier and taller.
 
 ------------------------------------------------------------------------
 
