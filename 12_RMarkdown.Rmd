@@ -704,14 +704,11 @@ ANSWER: It allows us to see overall trends in the distribution of the data.
 Write your code below:
 
 ```{r Now_you_try}
-# Write your code below this line
-
-
-
+plot(x = mtcars$wt, y = mtcars$hp, xlab = "Weight (thousands of pounds)", ylab = "Horsepower (HP)", main = "Weight vs Horsepower", col = "pink1")
 ```
 
 QUESTION: What did you change, and how did it affect the output?
-ANSWER:
+ANSWER: This graph shows the correlation between weight and horsepower.
 
 ------------------------------------------------------------------------
 
