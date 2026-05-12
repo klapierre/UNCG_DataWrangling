@@ -1,9 +1,10 @@
 ---
-title: "Pigs"
-author: Chloe Houck
-date: "2026-05-07"
+title: "Group5_RMarkdown"
+author: "Arnav Pandey, Themesha Parker, Michelle Bautista Canuto, Dhanush Devanand"
+date: "2026-04-26"
 output:
-  pdf_document: default
+  html_document:
+    toc: true
 ---
 # Section 1: Create, Save, and Knit Your First R Markdown File
 Author: Jaslyn Davenport (jcdavenport@uncg.edu)
@@ -987,14 +988,15 @@ output:
 
 Do you now see a table of contents at the top of your rendered HTML
 document?
+Yes
 
 QUESTION: How does a table of contents improve the readability of a long report?
-ANSWER:
+ANSWER: It makes it easier to navigate to specific sections without scrolling past sections you aren't interested.
 
 QUESTION: The table of contents is automatically generated from your headings.
 What does this tell you about the importance of using proper heading
 levels (`#`, `##`, `###`) throughout your document?
-ANSWER:
+ANSWER: It basically makes bullet points with more hashtags being further indented.
 
 ------------------------------------------------------------------------
 
