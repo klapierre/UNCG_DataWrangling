@@ -257,6 +257,7 @@ __bold**
 ***bold italics___   
 
 Above lines will not give your desired output, so you will have to be consistent with how you enclose your texts. Use the same symbols at both ends!
+`[R Markdown documentation](https://rmarkdown.rstudio.com)`
 
 .........................
 
@@ -1014,6 +1015,7 @@ Add the following clickable link somewhere in your document and Knit:
 ### Check
 
 Does the link appear clickable after knitting?
+Yes
 
 ### TASK:
 
@@ -1021,11 +1023,11 @@ Now add a second hyperlink of your own. Find a webpage related to
 something covered in this assignment — for example, the mtcars dataset,
 ggplot2, or R Markdown chunk options — and add it below using the same
 syntax.
+`[Mt cars dataset](http://kaggle.com/datasets/ruiromanini/mtcars)`
 
-**Your hyperlink:** [Write your hyperlink here.]
 
 QUESTION: When might adding a hyperlink be useful in a data report?
-ANSWER:
+ANSWER: To link back to relevent sources.
 
 ------------------------------------------------------------------------
 
