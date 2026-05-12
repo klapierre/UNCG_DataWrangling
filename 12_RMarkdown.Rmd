@@ -687,12 +687,11 @@ ANSWER: 8
 Now that you have created both graphs and the table, compare the
 information they provide.
 
-QUESTION: How does the scatterplot help you understand the relationship between
-weight and fuel efficiency?
-ANSWER:
+QUESTION: How does the scatterplot help you understand the relationship between weight and fuel efficiency?
+ANSWER: It provides a very easy way of comparing the data accross several datapoints.
 
 QUESTION: How does the boxplot help you compare different groups of cars?
-ANSWER:
+ANSWER: It allows us to see overall trends in the distribution of the data.
 
 ------------------------------------------------------------------------
 
