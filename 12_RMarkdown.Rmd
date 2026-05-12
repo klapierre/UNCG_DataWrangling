@@ -444,7 +444,7 @@ ANSWER: It shows a negative correlation between engine displacement and mpg.
 
 We can also use ggplot to run this within our chunk of code.
 This permits our plot to be displayed in the final report once "knit".   
-```{r}
+```{r echo=FALSE}
 library(ggplot2)
 ggplot(mtcars, aes(x=disp, y=mpg)) + geom_point()
 ```
@@ -452,7 +452,7 @@ ggplot(mtcars, aes(x=disp, y=mpg)) + geom_point()
 Let's change the labels of the x-axis to 'Engine Size (cubic inches)' 
 Let's change the y-axis to 'Miles Per Gallon'
 Let's add a title called "Fuel Efficiency vs Engine Size".
-```{r}
+```{r echo=FALSE}
 ggplot(mtcars,aes(x=disp, y=mpg))+geom_point()+
   labs(
     x="Engine Size (cubic inches)",
@@ -471,7 +471,7 @@ mtcars<-mtcars %>%
 
 Lets'bold' the title 
 Let's add a legend to differentiate each point.
-```{r}
+```{r echo=FALSE}
 ggplot(mtcars,aes(x=disp,y=mpg, color=factor(car_name)))+
   geom_point()+
   labs(
@@ -501,7 +501,7 @@ Use the 'hp' data for the y-axis and labeled 'Horsepower (HP)'
 Add an appropriate title for the plot with a 'bold' font
 Add a legend colored by 'car_name' and labeled "Car Types" 
 
-```{r}
+```{r echo=FALSE}
 ggplot(mtcars,aes(x=disp,y=hp, color=factor(car_name)))+
   geom_point()+
   labs(
@@ -781,7 +781,7 @@ The chunk below currently shows the code when knitted. Add `echo=FALSE`
 inside the curly braces so that only the plot appears in the output, not
 the code. Then Knit your document.
 
-```{r}
+```{r echo=FALSE}
 plot(mtcars$wt, mtcars$mpg,
      main = "Weight vs MPG",
      xlab = "Weight (1000 lbs)",
@@ -794,13 +794,13 @@ plot(mtcars$wt, mtcars$mpg,
 ### Check
 
 Do you see the plot in the output but **not** the code that created it?
+Yes
 
 QUESTION: Why might you want to hide code in a final report?
-ANSWER:
+ANSWER: To avoid having clunky data.
 
-QUESTION: Can you think of a situation where you would want to **show** your code
-in a report rather than hide it? Who might be reading that report?
-ANSWER:
+QUESTION: Can you think of a situation where you would want to **show** your code in a report rather than hide it? Who might be reading that report?
+ANSWER: If other scientists want to replicate your experiment, they'd likely want to use the same code.
 
 ### TASK:
 
