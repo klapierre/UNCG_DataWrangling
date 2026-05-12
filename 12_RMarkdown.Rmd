@@ -743,14 +743,14 @@ document, **outside** of any code chunk, and then Knit:
 ### Check
 
 Did the numbers appear automatically in your rendered sentence?
+Yes
 
 QUESTION: What is inline R code, and how is it different from a regular code
 chunk?
-ANSWER:
+ANSWER: It basically uses code to embed values into sections of regular text.
 
-QUESTION: Why is inline R code useful when working with a dataset that might be
-updated or changed over time?
-ANSWER:
+QUESTION: Why is inline R code useful when working with a dataset that might be updated or changed over time?
+ANSWER: You can just have it update automatically when the variable/observation is edited rather than manually changing the value at each instance.
 
 ### TASK:
 
@@ -758,7 +758,7 @@ Now try writing your own inline R code sentence. Using the mtcars
 dataset, write a sentence that includes the maximum horsepower value
 using inline R code. The function `max()` will be helpful here.
 
-**Your sentence:** [Write your sentence with inline R code here.]
+The mtcars dataset has `r max(mtcars$hp)` as the maximum horsepower.
 
 ### Why This Matters
 
