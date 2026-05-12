@@ -654,9 +654,10 @@ Use the space below to write your code:
 
 ```{r summary_table}
 # Write your code below this line
-
-
-
+library(dplyr)
+avg_mpg_by_cyl <- mtcars %>%
+  group_by(cyl) %>% 
+  summarise(mean_mpg = mean(mpg))
 ```
 
 ### TASK: 
@@ -667,19 +668,17 @@ Use the space below to write your code:
 
 ```{r formatted_table}
 # Write your code below this line
-
-
-
+knitr::kable(avg_mpg_by_cyl)
 ```
 
 QUESTION: What does this table show?
-ANSWER:
+ANSWER: It shows the average fuel efficiency for each cylinder rating.
 
 QUESTION: Which cylinder group has the highest average mpg?
-ANSWER:
+ANSWER: 4
 
 QUESTION: Which cylinder group has the lowest average mpg?
-ANSWER:
+ANSWER: 8
 
 ------------------------------------------------------------------------
 
