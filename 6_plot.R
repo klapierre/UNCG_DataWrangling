@@ -87,9 +87,9 @@
 #     Species column.
 # (3) Further filter the dataframe to include only fish that have been aged
 #     by removing any observations where ScaleAge is NA.
-
-
-
+redband <- read.csv("LowerSpokaneFish.csv") %>% 
+  filter(redband, "Species" = "RB") %>% 
+  filter(redband, !is.na("ScaleAge"))
 # ---------------------------------------------------------- #
 ### PART 1.1 AESTHETICS AND MAPPING                       ####
 # ---------------------------------------------------------- #
