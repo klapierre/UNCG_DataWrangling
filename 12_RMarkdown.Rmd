@@ -3,7 +3,7 @@ title: "Group5_RMarkdown"
 author: "Arnav Pandey, Themesha Parker, Michelle Bautista Canuto, Dhanush Devanand"
 date: "2026-04-26"
 output:
-  html_document:
+  pdf_document:
     toc: true
 ---
 # Section 1: Create, Save, and Knit Your First R Markdown File
@@ -120,7 +120,6 @@ RMarkdown supports six levels of headings.
 
 TASK: Click Knit to observe how different heading levels below appear in the rendered output.
 
-```
 # Line 1: This is an example to show different levels of headings in RMarkdown.
 ## Line 2: Line 1: This is an example to show different levels of headings in RMarkdown.
 ### Line 3: This is an example to show different levels of headings in RMarkdown.
@@ -128,7 +127,6 @@ TASK: Click Knit to observe how different heading levels below appear in the ren
 ##### Line 5: This is an example to show different levels of headings in RMarkdown.   
 ###### Line 6: This is an example to show different levels of headings in RMarkdown.
 
-```
 
 QUESTION: What happens to the size of text when you increase the number of hashtags (#)?  
 ANSWER: 
@@ -310,11 +308,11 @@ Hit Knit to see your output.
   - Musk Melon 
   - Honeydew 
   - Cantaloupe
-```{r}
+```{r echo=FALSE, message = FALSE, warning=FALSE, fig.width=4, fig.height=6, include =FALSE}
 ```
 
 
-```{r}
+```{r echo=FALSE, message = FALSE, warning=FALSE, fig.width=4, fig.height=6, include =FALSE}
 ```
 
 .........................
@@ -365,29 +363,29 @@ We can insert functions within the chunk of code. We will see this next.
 QUESTION: What is a code chunk? (hint look back at the slides in Canvas)
 ANSWER: A block of R code within a markdown document.
  
-TASK: Practice inserting a code chunk. Run a simple calculation such as "2+2" below {r}. Run this code by clicking on the green side-triangle button: 
+TASK: Practice inserting a code chunk. Run a simple calculation such as "2+2" below {r echo=FALSE, message = FALSE, warning=FALSE, fig.width=4, fig.height=6, include =FALSE}. Run this code by clicking on the green side-triangle button: 
 
-```{r}
+```{r echo=FALSE, message = FALSE, warning=FALSE, fig.width=4, fig.height=6, include =FALSE}
 2+2
 ```
 
 
 Next, let's assign variables. Run the following variables:
-```{r}
+```{r echo=FALSE, message = FALSE, warning=FALSE, fig.width=4, fig.height=6, include =FALSE}
 x<-10
 y<-5
 ```
 
 
 To view the contents of the variable x, just type 'x' and run
-```{r}
+```{r echo=FALSE, message = FALSE, warning=FALSE, fig.width=4, fig.height=6, include =FALSE}
 x
 ```
 
 
 TASK: Write a chunk of code mulitpliying the variables x and y.
 
-```{r}
+```{r echo=FALSE, message = FALSE, warning=FALSE, fig.width=4, fig.height=6, include =FALSE}
 x*y
 ```
 
@@ -397,20 +395,20 @@ ANSWER: 50
 
 We will analyze the built-in 'mtcars' dataset. Run the following chunk of code.
 
-```{r}
+```{r echo=FALSE, message = FALSE, warning=FALSE, fig.width=4, fig.height=6, include =FALSE}
 head(mtcars)
 ```
 QUESTION: What do you think the head() function does?
 ANSWER: Displays the first few rows of a dataset.
 
 To display the summary statistics for the dataset use the summary() function. Run the following chunk of code.
-```{r}
+```{r echo=FALSE, message = FALSE, warning=FALSE, fig.width=4, fig.height=6, include =FALSE}
 summary(mtcars)
 ```
 
 Within a new chunk of code, we will code to import the entire mtcars dataset.
 Run the following code by clicking on the green side-triangle button for "Run Current Chunk"
-```{r mtcars}
+```{r echo=FALSE, message = FALSE, warning=FALSE, fig.width=4, fig.height=6}
 data(mtcars)
 ```
 
@@ -421,13 +419,13 @@ Or you can view the dataset in the console by typing "mtcars" and click 'Run Sel
 mtcars
 
 To find the number of rows in the dataset, we can use the nrow() function within a new chunk of code. Run the following code.
-```{r}
+```{r echo=FALSE, message = FALSE, warning=FALSE, fig.width=4, fig.height=6, include =FALSE}
 nrow(mtcars)
 ```
 
 TASK: Write a code to find the number of columns in the 'mtcars' dataset using the ncol() function. Remember to use a new chunk of code.
 
-```{r}
+```{r echo=FALSE, message = FALSE, warning=FALSE, fig.width=4, fig.height=6, include =FALSE}
 ncol(mtcars)
 ```
 
@@ -446,7 +444,7 @@ ANSWER: It shows a negative correlation between engine displacement and mpg.
 
 We can also use ggplot to run this within our chunk of code.
 This permits our plot to be displayed in the final report once "knit".   
-```{r echo=FALSE}
+```{r echo=FALSE, message = FALSE, warning=FALSE, fig.width=4, fig.height=6, include =FALSE}
 library(ggplot2)
 ggplot(mtcars, aes(x=disp, y=mpg)) + geom_point()
 ```
@@ -454,7 +452,7 @@ ggplot(mtcars, aes(x=disp, y=mpg)) + geom_point()
 Let's change the labels of the x-axis to 'Engine Size (cubic inches)' 
 Let's change the y-axis to 'Miles Per Gallon'
 Let's add a title called "Fuel Efficiency vs Engine Size".
-```{r echo=FALSE}
+```{r echo=FALSE, message = FALSE, warning=FALSE, fig.width=4, fig.height=6}
 ggplot(mtcars,aes(x=disp, y=mpg))+geom_point()+
   labs(
     x="Engine Size (cubic inches)",
@@ -465,7 +463,7 @@ ggplot(mtcars,aes(x=disp, y=mpg))+geom_point()+
 
 We could add a legend to show which car each point corresponds to. 
 But first, we should add a column displaying the car names using dplyr.
-```{r}
+```{r echo=FALSE, message = FALSE, warning=FALSE, fig.width=4, fig.height=6, include =FALSE}
 library(dplyr)
 mtcars<-mtcars %>% 
   mutate(car_name=rownames(mtcars))
@@ -485,7 +483,7 @@ ggplot(mtcars,aes(x=disp,y=mpg, color=factor(car_name)))+
 ```
 
 Lets organize the fuel efficiency from highest to lowest. Run the following.
-```{r}
+```{r echo=FALSE, message = FALSE, warning=FALSE, fig.width=4, fig.height=6, include =FALSE}
 mtcars %>%
   select(mpg,disp) %>% 
   arrange(desc(mpg))
@@ -503,7 +501,7 @@ Use the 'hp' data for the y-axis and labeled 'Horsepower (HP)'
 Add an appropriate title for the plot with a 'bold' font
 Add a legend colored by 'car_name' and labeled "Car Types" 
 
-```{r echo=FALSE}
+```{
 ggplot(mtcars,aes(x=disp,y=hp, color=factor(car_name)))+
   geom_point()+
   labs(
@@ -516,7 +514,7 @@ ggplot(mtcars,aes(x=disp,y=hp, color=factor(car_name)))+
 
 
 Lets organize the horsepower from highest to lowest. Run the following.
-```{r}
+```{r echo=FALSE, message = FALSE, warning=FALSE, fig.width=4, fig.height=6, include =FALSE}
 mtcars %>%
   select(hp,disp) %>% 
   arrange(desc(hp))
@@ -563,7 +561,7 @@ Create a scatter plot with wt on the x-axis and mpg on the y-axis.
 
 **Hint:** use the plot() function
 
-```{r scatterplot}
+```{r echo=FALSE, message = FALSE, warning=FALSE, fig.width=4, fig.height=6, include =FALSE}
 # Write your code below this line
 
 plot(x = mtcars$wt, y = mtcars$mpg, xlab = "Weight (thousands of pounds)", ylab = "Miles Per Gallon", main = "Weight vs Fuel Efficiency")
@@ -578,7 +576,7 @@ y-axis label, a point color of your choice
 **Hint:** Think back to previous assignments(main=, xlab= ,ylab=, and
 col=)
 
-```{r scatterplot_labeled}
+```{r echo=FALSE, message = FALSE, warning=FALSE, fig.width=4, fig.height=6, include =FALSE}
 # Write your updated scatterplot code below this line
 
 plot(x = mtcars$wt, y = mtcars$mpg, xlab = "Weight (thousands of pounds)", ylab = "Miles Per Gallon", main = "Weight vs Fuel Efficiency", col = "pink1")
@@ -606,7 +604,7 @@ can help compare fuel efficiency across cylinder groups.
 
 Create a boxplot of mpg by cyl using the boxplot function
 
-```{r boxplot1}
+```{r echo=FALSE, message = FALSE, warning=FALSE, fig.width=4, fig.height=6, include =FALSE}
 # Write your code below this line
 boxplot(y = mtcars$cyl, x = mtcars$mpg)
 
@@ -618,7 +616,7 @@ boxplot(y = mtcars$cyl, x = mtcars$mpg)
 Modify your boxplot so that it includes: a title, an x-axis label, a
 y-axis label, and a fill color of your choice
 
-```{r boxplot2}
+```{r echo=FALSE, message = FALSE, warning=FALSE, fig.width=4, fig.height=6, include =FALSE}
 # Write your updated boxplot code below this line
 boxplot(y = mtcars$cyl, x = mtcars$mpg, ylab = "Cylinder Group", xlab = "Miles Per Gallon", main = "Cylinder Group vs Fuel Efficiency", col = "pink")
 
@@ -654,7 +652,7 @@ mpg.
 
 Use the space below to write your code:
 
-```{r summary_table}
+```{r echo=FALSE, message = FALSE, warning=FALSE, fig.width=4, fig.height=6, include =FALSE}
 # Write your code below this line
 library(dplyr)
 avg_mpg_by_cyl <- mtcars %>%
@@ -668,7 +666,7 @@ Display your results as a clean table.
 
 Use the space below to write your code:
 
-```{r formatted_table}
+```{r echo=FALSE, message = FALSE, warning=FALSE, fig.width=4, fig.height=6, include =FALSE}
 # Write your code below this line
 knitr::kable(avg_mpg_by_cyl)
 ```
@@ -705,7 +703,7 @@ ANSWER: It allows us to see overall trends in the distribution of the data.
 
 Write your code below:
 
-```{r Now_you_try}
+```{r echo=FALSE, message = FALSE, warning=FALSE, fig.width=4, fig.height=6, include =FALSE}
 plot(x = mtcars$wt, y = mtcars$hp, xlab = "Weight (thousands of pounds)", ylab = "Horsepower (HP)", main = "Weight vs Horsepower", col = "pink1")
 ```
 
@@ -783,7 +781,7 @@ The chunk below currently shows the code when knitted. Add `echo=FALSE`
 inside the curly braces so that only the plot appears in the output, not
 the code. Then Knit your document.
 
-```{r echo=FALSE}
+```{r echo=FALSE, message = FALSE, warning=FALSE, fig.width=4, fig.height=6}
 plot(mtcars$wt, mtcars$mpg,
      main = "Weight vs MPG",
      xlab = "Weight (1000 lbs)",
@@ -824,7 +822,7 @@ Run the chunk below **without** any chunk options and Knit. Read through
 the output carefully and write down any extra messages or warnings you
 notice below.
 
-```{r message=FALSE, warning=FALSE}
+```{r echo=FALSE, message = FALSE, warning=FALSE, fig.width=4, fig.height=6, include =FALSE}
 library(tidyverse)
 summary(mtcars)
 ```
@@ -876,7 +874,7 @@ Run the chunk below as-is and Knit. Note what appears in the output.
 Then change the chunk option from `echo=FALSE` to `include=FALSE` and
 Knit again.
 
-```{r include=FALSE}
+```{r echo=FALSE, message = FALSE, warning=FALSE, fig.width=4, fig.height=6, include =FALSE}
 library(dplyr)
 my_summary <- mtcars %>%
   summarize(mean_mpg = round(mean(mpg), 2),
@@ -927,7 +925,7 @@ This helps make your report look clean and consistent.
 
 Run the chunk below and Knit to see the default figure size.
 
-```{r fig.width=4, fig.height=6}
+```{r echo=FALSE, message = FALSE, warning=FALSE, fig.width=4, fig.height=6}
 ggplot(mtcars, aes(x = wt, y = mpg)) +
   geom_point(color = "steelblue") +
   labs(title = "Weight vs Fuel Efficiency",
@@ -1046,7 +1044,7 @@ in this assignment. Consider:
 - What improvements did you make to the report in Section 5?
 - Why is R Markdown useful for communicating data?
 
-**Your conclusion:** [Write your response here.]
+Scatterplots, boxplots, and tables were made comparing several variables from the mtcars dataset. Section 5 had a lot of ways of cleaning up and making the data look more professional. This is one of the advantages of R Markdown is letting you use all the functionality of R for the data without forcing people to see every unecessary detail.
 
 ### TASK:
 
@@ -1055,7 +1053,7 @@ includes inline R code. For example, instead of writing "the dataset has
 32 rows," use `` `r nrow(mtcars)` `` to generate that number
 automatically.
 
-**Your updated sentence with inline R code:** [Write your sentence here.]
+Scatterplots, boxplots, and tables were made comparing several variables from the mtcars dataset such as seeing that there are `r nrow(mtcars)` in the dataset.
 
 ------------------------------------------------------------------------
 
@@ -1064,15 +1062,14 @@ automatically.
 Before submitting, go through the checklist below to make sure
 everything is working correctly. In your `.Rmd` file, replace each `[ ]`
 with `[x]` once you have confirmed that step.
-
-- [ ] Inline R code displays correctly in rendered text
-- [ ] Plots appear in the output without showing code (`echo=FALSE`)
-- [ ] A chunk runs silently using `include=FALSE`
-- [ ] No unnecessary warnings or messages appear (`message=FALSE`, `warning=FALSE`)
-- [ ] Figure sizes have been adjusted using `fig.width` and `fig.height`
-- [ ] Table of contents is visible at the top of the document
-- [ ] At least two hyperlinks are present and clickable
-- [ ] Conclusion paragraph is included with at least one inline R code value
+- [x] Inline R code displays correctly in rendered text
+- [x] Plots appear in the output without showing code (`echo=FALSE`)
+- [x] A chunk runs silently using `include=FALSE`
+- [x] No unnecessary warnings or messages appear (`message=FALSE`, `warning=FALSE`)
+- [x] Figure sizes have been adjusted using `fig.width` and `fig.height`
+- [x] Table of contents is visible at the top of the document
+- [x] At least two hyperlinks are present and clickable
+- [x] Conclusion paragraph is included with at least one inline R code value
 
 Once all boxes are checked, click **Knit** one final time to generate
 your completed report.
