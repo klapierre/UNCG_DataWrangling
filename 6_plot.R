@@ -206,11 +206,13 @@ ggplot(redband, aes(x=Length, y=Weight)) +
 
 # TASK: Copy and paste the code above to make the same graph, but this time remove
 # as.factor() from the part where we color by ScaleAge.
-
+ggplot(redband, aes(x=Length, y=Weight)) + 
+  geom_point(aes(color=ScaleAge))
 
 # QUESTION: What differs between the graph where ScaleAge was wrapped in the
 # as.factor() statement and the graph where you removed as.factor()? Why?
-
+## It made the colors a blue gradient instead of a unique color for each age.
+## This is likely due to the blue gradient being a default.
 
 # TASK: Visit the ggplot Cookbook webpage at http://www.cookbook-r.com/Graphs/
 # This website is a great go-to place to find how to change all kinds of things
@@ -219,11 +221,13 @@ ggplot(redband, aes(x=Length, y=Weight)) +
 # TASK: Copy and paste the code for our previous graph below. Then modify the
 # aesthetics of the geometric object so that the size of the points varies with 
 # as.factor(ScaleAge).
-
+ggplot(redband, aes(x=Length, y=Weight)) + 
+  geom_point(aes(size=as.factor(ScaleAge)))
 
 # TASK: Modify the aesthetics of the geometric object from the previous graph
 # so that the size AND color of the points varies with ScaleAge.
-
+ggplot(redband, aes(x=Length, y=Weight)) + 
+  geom_point(aes(color=as.factor(ScaleAge), size = as.factor(ScaleAge)))
 
 # It is important to note that different kinds of geometric objects have different
 # types of associated aesthetics. Points and lines have colors, while bars and
@@ -232,12 +236,15 @@ ggplot(redband, aes(x = as.factor(ScaleAge), y = Weight)) +
   geom_boxplot(color = 'purple', fill = 'green')
 
 # QUESTION: What does color mean for boxplots? What does fill mean for boxplots?
-
+## Color is the color of the outline of all the lines while fill is the color of the boxes.
 
 # QUESTION: Why did we have to specify as.factor() for ScaleAge in the initial
 # aes() statement? 
-# HINT: Try running the code without that statement, what happens?
+## Without it, it only makes one box rather than multiple.
 
+# HINT: Try running the code without that statement, what happens?
+ggplot(redband, aes(x = ScaleAge, y = Weight)) + 
+  geom_boxplot(color = 'purple', fill = 'green')
 
 # ---------------------------------------------------------- #
 #### PART 1.5 ADDING A LAYER: STATISTICAL TRANSFORMATIONS #### 
