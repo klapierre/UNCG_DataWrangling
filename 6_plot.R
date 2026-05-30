@@ -323,7 +323,8 @@ ggplot(redband, aes(x = as.factor(ScaleAge), y = Weight)) +
 
 # QUESTION: What is the graph output? Note the scale of the y-axis. Does this seem
 # right to you? What do you think happened to result in this graph?
-
+## The scale of the y-axis shows 20k of unspecified units between each labeled
+## line.This is likely due to how high many of the weights go.
 
 # Typically, when plotting a bar graph we want to have the output show the mean
 # and standard error for each category. But unlike when we use the geom_boxplot 
@@ -340,7 +341,12 @@ ggplot(redband, aes(x = as.factor(ScaleAge), y = Weight)) +
 # (4) Mutates to create a new column called Weight_se that includes the standard
 #     error of weight for each group (se=1.96*sd).
 # HINT:Don't forget to remove NAs and ungroup at the appropriate place.
-
+redbandSummary <- filter(redband, !is.na(ScaleAge), !is.na(Weight)) %>% 
+  group_by(ScaleAge) %>% 
+  mutate(Weight_mean = mean(Weight)) %>% 
+  mutate(Weight_sd = sd(Weight)) %>% 
+  mutate(Weight_se = Weight_sd*1.96) %>% 
+  ungroup()
 
 # Let's try again to make our bargraph by running the following code:
 ggplot(redbandSummary, aes(x = as.factor(ScaleAge), y = Weight_mean)) + 
