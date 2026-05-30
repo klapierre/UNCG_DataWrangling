@@ -381,8 +381,8 @@ ggplot(redbandSummary, aes(x = as.factor(ScaleAge), y = Weight_mean)) +
 ggplot(redbandSummary, aes(x = as.factor(ScaleAge), y = Weight_mean)) + 
   geom_bar(stat='identity', fill = "#00a000", color = "#004000") +
   geom_errorbar(aes(ymin=Weight_mean-Weight_se,
-                    ymax=Weight_mean+Weight_se,
-                    width=0.4, color = "#402000"))
+                    ymax=Weight_mean+Weight_se, color = "#402000",
+                    width=0.4))
 
 # ---------------------------------------------------------- #
 #### PART 1.7 AESTHETICS PLACEMENT MATTERS!               #### 
@@ -397,7 +397,7 @@ ggplot(redband, aes(x = Length, y = Weight, color = as.factor(ScaleAge))) +
   geom_smooth(method='lm', se=F)
 
 # QUESTION: What is different about this graph from before?
-
+## It makes each colored line a different variable in the legend.
 
 # ---------------------------------------------------------- #
 #### PART 1.8: ALTERING SCALES                            ####
