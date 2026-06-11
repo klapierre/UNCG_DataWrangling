@@ -51,13 +51,15 @@
 # file for you.
 
 
+
+
 # TASK: Read in the data by running the following line of code.
 streamTemp <- read.csv("CalispellCreekandTributaryTemperatures.csv", 
                        stringsAsFactors = TRUE) 
 
 
 # QUESTION: What do you think stringsAsFactors mean?
-
+I think this means that the data will not work as a factor  
 
 # TASK: Let's learn a little more about our data. Run the following line of code.
 str(streamTemp)
